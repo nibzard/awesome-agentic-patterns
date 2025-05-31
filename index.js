@@ -1,9 +1,10 @@
 export default {
   async fetch(request, env, ctx) {
-    // Try to serve the static asset from the ASSETS binding.
-    // env.ASSETS is automatically populated by Cloudflare when [site] is configured.
+    // Try to serve the static asset from the __STATIC_CONTENT binding.
+    // This name is visible in your Worker's settings in the Cloudflare dashboard.
     try {
-      return await env.ASSETS.fetch(request);
+      // Use the actual binding name for your static assets
+      return await env.__STATIC_CONTENT.fetch(request);
     } catch (e) {
       // If the asset is not found, or there was an error, handle it.
       let pathname = new URL(request.url).pathname;
