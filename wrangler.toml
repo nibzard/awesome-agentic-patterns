@@ -5,4 +5,3 @@ compatibility_date = "2024-05-01" # Use a recent date
 # Configure for static asset serving from the 'site' directory (output of mkdocs build)
 [site]
 bucket = "./site" # Tells Wrangler where your static files are
-entry-point = "." # Serve from the root of your project
