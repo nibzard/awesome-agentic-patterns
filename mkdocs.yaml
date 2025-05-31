@@ -4,6 +4,9 @@ site_description: A curated list of awesome agentic patterns.
 site_author: Nikola Balic
 repo_name: nibzard/awesome-agentic-patterns
 repo_url: https://github.com/nibzard/awesome-agentic-patterns
+
+# docs_dir: .
+
 plugins:
     - mermaid2
 theme:
