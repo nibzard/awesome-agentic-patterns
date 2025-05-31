@@ -2,6 +2,7 @@ site_install:
 	pip install -r requirements.txt
 
 site_link:
+	mkdir -p $(CURDIR)/docs
 	ln -sf $(CURDIR)/README.md $(CURDIR)/docs/index.md
 	cp $(CURDIR)/CONTRIBUTING.md $(CURDIR)/docs/CONTRIBUTING.md
 	cp $(CURDIR)/LICENSE $(CURDIR)/docs/LICENSE
