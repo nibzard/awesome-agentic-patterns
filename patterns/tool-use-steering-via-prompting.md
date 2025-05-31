@@ -3,7 +3,6 @@ title: Tool Use Steering via Prompting
 status: best-practice
 authors: ["Boris Cherny (via Claude Code examples)"]
 category: Tool Use & Environment
-source: "https://www.nibzard.com/ampcode" # Placeholder, link to Boris Cherny's talk/Claude Code docs ideal
 tags: [tool use, prompting, agent guidance, custom tools, cli, natural language control]
 ---
 
@@ -19,5 +18,27 @@ Guide the agent's tool selection and execution through explicit natural language
 
 This pattern emphasizes the user's role in actively shaping the agent's behavior with respect to its available tools, rather than relying solely on autonomous tool selection.
 
+## Example (tool guidance flow)
+```mermaid
+flowchart TD
+    A[User Task] --> B[Available Tools]
+    A --> C[Explicit Guidance]
+    C --> D[Direct Tool Invocation]
+    C --> E[Teaching Tool Usage]
+    C --> F[Implicit Tool Suggestion]
+    C --> G[Deeper Reasoning Prompts]
+
+    B --> H[Agent Tool Selection]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+
+    H --> I[Tool Execution]
+    I --> J[Task Completion]
+```
+
 ## References
 - Based on examples and tips in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III, particularly "Steering Claude to Use Tools" and "Tip #3: Teach Claude to use *your* team's tools."
+
+[Source](https://www.nibzard.com/ampcode)

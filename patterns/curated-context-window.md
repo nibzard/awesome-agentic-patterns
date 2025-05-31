@@ -3,7 +3,6 @@ title: Curated Context Window
 status: 🔬 validated-in-production
 authors: ["Thorsten Ball"]
 category: Context & Memory
-source: "https://youtu.be/Cor-t9xC1ck?t=2680"
 tags: [context, memory, accuracy]
 ---
 
@@ -27,3 +26,5 @@ sequenceDiagram
 ## References
 
 * Episode 3's "context is sacred" + dedicated search agent pattern.
+
+[Source](https://youtu.be/Cor-t9xC1ck?t=2680)

@@ -3,7 +3,6 @@ title: Virtual Machine Operator Agent
 status: established
 authors: ["Amjad Masad"]
 category: Tool Use & Environment
-source: "https://www.nibzard.com/ampcode" # Placeholder, actual blog post URL needed if different
 tags: [computer operation, virtual machine, execution environment, agent capability]
 ---
 
@@ -19,5 +18,24 @@ Equip the AI agent with access to a dedicated virtual machine (VM) environment. 
 
 This pattern transforms the agent from a specialized tool into a more general-purpose digital operator.
 
+## Example (flow)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent
+    participant VM as Virtual Machine
+
+    User->>Agent: Complex Task Request
+    Agent->>VM: Execute Code/Scripts
+    Agent->>VM: Install Packages
+    Agent->>VM: File System Operations
+    Agent->>VM: Use CLI Tools/Apps
+    VM-->>Agent: Execution Results
+    Agent->>Agent: Process & Analyze Results
+    Agent-->>User: Task Completion Report
+```
+
 ## References
 - Based on Amjad Masad's description of advanced computer use agents: "People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer." (Quote from the "How AI Agents Are Reshaping Creation" blog post).
+
+[Source](https://www.nibzard.com/ampcode)

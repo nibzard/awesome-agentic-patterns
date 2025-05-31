@@ -21,5 +21,18 @@ Empower the AI agent to drive the entire research process. When given a research
 
 This pattern allows for a more dynamic and intelligent approach to information gathering, where the agent adapts its strategy in real-time.
 
+## Example (flow)
+```mermaid
+flowchart TD
+    A[Research Question] --> B[Formulate Search Query]
+    B --> C[Execute Search]
+    C --> D[Analyze Retrieved Information]
+    D --> E{Sufficient Information?}
+    E -->|No| F[Refine Search Strategy]
+    F --> B
+    E -->|Yes| G[Synthesize & Summarize Findings]
+    G --> H[Present Results to User]
+```
+
 ## References
 - Described in "How AI Agents Are Reshaping Creation": "That question goes to the agent, the agent formulates the searches in the form of tool calls. So it'll search the Web, it'll search some existing index or what have you, and it'll iterate until it's sort of satisfied with the amount of information that it gets, and then summarizes the output for you."

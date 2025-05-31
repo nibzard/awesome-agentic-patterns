@@ -19,5 +19,21 @@ Implement a system of layered configuration files (e.g., named `CLAUDE.md` or a 
 
 The agent intelligently merges or prioritizes these context layers, providing a rich, tailored baseline of information without manual intervention in each query.
 
+## Example (configuration hierarchy)
+```mermaid
+flowchart TD
+    A[Enterprise Root<br/>/enterprise/CLAUDE.md] --> E[Merged Context]
+    B[User Global<br/>~/.claude/CLAUDE.md] --> E
+    C[Project Root<br/>project/CLAUDE.md] --> E
+    D[Project Local<br/>project/CLAUDE.local.md] --> E
+    E --> F[Agent Context Window]
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style F fill:#ffebee
+```
+
 ## References
 - Based on the `CLAUDE.md` system described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.

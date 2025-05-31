@@ -20,5 +20,24 @@ Consciously design and adapt workflows, task structures, and human-agent interac
 
 This approach aims to create a collaborative environment where the agent's capabilities are maximized by a thoughtfully designed process.
 
+## Example (workflow adaptation)
+```mermaid
+flowchart TD
+    A[Traditional Workflow] --> B{Agent-Friendly?}
+    B -->|No| C[Redesign Process]
+    C --> D[Clear Goal Definition]
+    C --> E[Appropriate Autonomy]
+    C --> F[Structured I/O]
+    C --> G[Feedback Loops]
+    C --> H[Tool Provisioning]
+    D --> I[Optimized Workflow]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    B -->|Yes| I
+    I --> J[Enhanced Agent Performance]
+```
+
 ## References
 - Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."

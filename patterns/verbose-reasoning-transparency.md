@@ -3,7 +3,6 @@ title: Verbose Reasoning Transparency (Ctrl+R Style)
 status: best-practice
 authors: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
-source: "https://www.nibzard.com/ampcode" # Placeholder, link to Boris Cherny's talk/Claude Code docs ideal
 tags: [explainability, debugging, transparency, agent reasoning, verbose mode, introspection]
 ---
 
@@ -23,5 +22,27 @@ When activated, the verbose output might reveal:
 
 This transparency helps users understand the agent's decision-making process, identify issues if the agent is stuck or producing incorrect results, and learn how to prompt more effectively.
 
+## Example (transparency activation)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent
+    participant UI as Interface
+    
+    User->>Agent: Complex task request
+    Agent->>Agent: Process internally
+    Agent-->>User: Standard output
+    
+    User->>UI: Ctrl+R (or verbose command)
+    UI->>Agent: Request verbose details
+    Agent-->>UI: Internal reasoning steps
+    Agent-->>UI: Tool selection rationale
+    Agent-->>UI: Confidence scores
+    Agent-->>UI: Raw tool outputs
+    UI-->>User: Detailed transparency view
+```
+
 ## References
 -   Based on the `Ctrl+R` keybinding for showing verbose output in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
+
+[Source](https://www.nibzard.com/ampcode)

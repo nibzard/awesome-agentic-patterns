@@ -3,7 +3,6 @@ title: Extended Coherence Work Sessions
 status: rapidly-improving
 authors: ["Amjad Masad (observation)"] # Based on his commentary on the trend
 category: Reliability & Eval
-source: "https://www.nibzard.com/ampcode" # Placeholder, actual blog post URL needed
 tags: [coherence, long-running tasks, agent capability, llm, complex projects]
 ---
 
@@ -18,5 +17,24 @@ Utilize AI models and agent architectures that are specifically designed or have
 
 The goal is to enable agents to work on tasks for as long as a human counterpart might, without a degradation in the quality or relevance of their work.
 
+## Example (coherence over time)
+```mermaid
+gantt
+    title Agent Coherence Capabilities Over Time
+    dateFormat X
+    axisFormat %s
+
+    section Early Models
+    Short coherence window (minutes) :done, early, 0, 300
+
+    section Current Models
+    Extended coherence (hours) :active, current, 300, 10800
+
+    section Future Trend
+    All-day coherence :future, 10800, 86400
+```
+
 ## References
 - Highlighted in "How AI Agents Are Reshaping Creation": "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." This capability is described as a "qualitative shift."
+
+[Source](https://www.nibzard.com/ampcode)

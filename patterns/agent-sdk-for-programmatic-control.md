@@ -3,7 +3,6 @@ title: Agent SDK for Programmatic Control
 status: emerging
 authors: ["Anthropic (Claude Code SDK example)"]
 category: Tool Use & Environment
-source: "https://www.nibzard.com/ampcode" # Placeholder, link to specific SDK docs if available
 tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
 ---
 
@@ -20,6 +19,25 @@ Provide a Software Development Kit (SDK) that exposes the agent's core functiona
 
 The SDK typically includes libraries, command-line interfaces (CLIs) for scripting, and documentation for headless or embedded use of the agent.
 
+## Example (SDK integration)
+```mermaid
+flowchart TD
+    A[Application/Script] --> B[Agent SDK]
+    B --> C[Agent Core]
+    
+    B --> D[CLI Interface]
+    B --> E[Python Library]
+    B --> F[TypeScript Library]
+    
+    C --> G[Tool Access]
+    C --> H[Memory Management]
+    C --> I[Model Interface]
+    
+    G --> J[File System]
+    G --> K[Web API]
+    G --> L[Custom Tools]
+```
+
 ## Example CLI Usage (Conceptual, from Claude Code SDK info):
 ```bash
 $ claude -p "what did i do this week?" \
@@ -29,3 +47,5 @@ $ claude -p "what did i do this week?" \
 
 ## References
 -   Based on the description of the Claude Code SDK in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section VI.
+
+[Source](https://www.nibzard.com/ampcode)

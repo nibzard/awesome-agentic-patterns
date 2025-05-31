@@ -19,5 +19,25 @@ Guide the agent's tool selection and execution through explicit natural language
 
 This pattern emphasizes the user's role in actively shaping the agent's behavior with respect to its available tools, rather than relying solely on autonomous tool selection.
 
+## Example (tool guidance flow)
+```mermaid
+flowchart TD
+    A[User Task] --> B[Available Tools]
+    A --> C[Explicit Guidance]
+    C --> D[Direct Tool Invocation]
+    C --> E[Teaching Tool Usage]
+    C --> F[Implicit Tool Suggestion]
+    C --> G[Deeper Reasoning Prompts]
+    
+    B --> H[Agent Tool Selection]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Tool Execution]
+    I --> J[Task Completion]
+```
+
 ## References
 - Based on examples and tips in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III, particularly "Steering Claude to Use Tools" and "Tip #3: Teach Claude to use *your* team's tools."
