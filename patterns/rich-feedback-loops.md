@@ -26,6 +26,6 @@ sequenceDiagram
 
 ## References
 
-* Episode 1 & 3 discussions on "give it errors, not bigger prompts."
+* Raising An Agent - Episode 1 & 3 discussions on "give it errors, not bigger prompts."
 
 [Source](https://www.nibzard.com/ampcode)

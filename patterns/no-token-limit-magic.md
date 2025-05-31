@@ -33,6 +33,6 @@ flowchart TD
 ```
 
 ## References
-- Episode 2 cost discussion—$1000 prototype spend justified by productivity.
+- Raising An Agent - Episode 2 cost discussion—$1000 prototype spend justified by productivity.
 
 [Source](https://www.nibzard.com/ampcode)

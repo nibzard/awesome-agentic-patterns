@@ -3,7 +3,6 @@ title: Agent-Driven Research
 status: emerging
 authors: ["Yohei Nakajima (concept)"] # Attributed based on pioneering work mentioned
 category: Orchestration & Control
-source: "https://www.nibzard.com/ampcode" # Placeholder, actual blog post URL needed
 tags: [research, information retrieval, tool use, iterative process, autonomous search]
 ---
 
@@ -36,3 +35,5 @@ flowchart TD
 
 ## References
 - Described in "How AI Agents Are Reshaping Creation": "That question goes to the agent, the agent formulates the searches in the form of tool calls. So it'll search the Web, it'll search some existing index or what have you, and it'll iterate until it's sort of satisfied with the amount of information that it gets, and then summarizes the output for you."
+
+[Source](https://www.nibzard.com/silent-revolution)

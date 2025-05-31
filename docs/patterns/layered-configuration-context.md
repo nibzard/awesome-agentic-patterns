@@ -3,7 +3,6 @@ title: Layered Configuration Context (CLAUDE.md Style)
 status: established
 authors: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
-source: "https://www.nibzard.com/ampcode" # Placeholder, link to Boris Cherny's talk/Claude Code docs ideal
 tags: [context management, configuration, scoped context, automatic loading, CLAUDE.md]
 ---
 
@@ -12,6 +11,7 @@ AI agents require relevant context to perform effectively. Providing this contex
 
 ## Solution
 Implement a system of layered configuration files (e.g., named `CLAUDE.md` or a similar convention) that the agent automatically discovers and loads based on their location in the file system hierarchy. This allows for:
+
 -   **Enterprise/Organizational Context:** A root-level file (`/<enterprise_root>/CLAUDE.md`) for policies or information shared across all projects in an organization.
 -   **User-Specific Global Context:** A file in the user's home directory (`~/.claude/CLAUDE.md`) for personal preferences, common tools, or notes shared across all their projects.
 -   **Project-Specific Context:** A file within the project's root directory (`<project_root>/CLAUDE.md`), typically version-controlled, for project-specific instructions, architectural overviews, or key file descriptions.
@@ -27,7 +27,7 @@ flowchart TD
     C[Project Root<br/>project/CLAUDE.md] --> E
     D[Project Local<br/>project/CLAUDE.local.md] --> E
     E --> F[Agent Context Window]
-    
+
     style A fill:#e1f5fe
     style B fill:#f3e5f5
     style C fill:#e8f5e8
@@ -37,3 +37,5 @@ flowchart TD
 
 ## References
 - Based on the `CLAUDE.md` system described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
+
+[Source](https://www.nibzard.com/claude-code)

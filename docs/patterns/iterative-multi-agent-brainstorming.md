@@ -1,9 +1,8 @@
 ---
 title: Iterative Multi-Agent Brainstorming
-status: 🧪 experimental-but-awesome
+status: experimental-but-awesome
 authors: ["Boris Cherny (via Claude Code capability)"]
 category: Orchestration & Control
-source: "https://www.nibzard.com/ampcode" # Placeholder, link to Boris Cherny's talk/Claude Code docs ideal
 tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-agents, collaborative ideation]
 ---
 
@@ -21,8 +20,30 @@ Employ a multi-agent approach for brainstorming and idea generation. This involv
 
 This pattern leverages parallelism to explore a wider solution space and can lead to more creative or robust outcomes than a single agent might produce alone.
 
+## Example (parallel brainstorming)
+```mermaid
+flowchart TD
+    A[Core Problem/Task] --> B[Agent 1: Perspective A]
+    A --> C[Agent 2: Perspective B]
+    A --> D[Agent 3: Perspective C]
+
+    B --> E[Solution Set 1]
+    C --> F[Solution Set 2]
+    D --> G[Solution Set 3]
+
+    E --> H[Coordinator/Human]
+    F --> H
+    G --> H
+
+    H --> I[Synthesized Solutions]
+    H --> J[Common Themes]
+    H --> K[Best Ideas Selected]
+```
+
 ## Example
 -   "Use 3 parallel agents to brainstorm ideas for how to clean up `@services/aggregator/feed_service.cpp`." (from Claude Code examples)
 
 ## References
 -   Inspired by the example of using parallel agents for brainstorming in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III.
+
+[Source](https://www.nibzard.com/claude-code)

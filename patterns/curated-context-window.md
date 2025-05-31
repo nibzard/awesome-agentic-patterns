@@ -25,6 +25,6 @@ sequenceDiagram
 
 ## References
 
-* Episode 3's "context is sacred" + dedicated search agent pattern.
+* Raising An Agent - Episode 3's "context is sacred" + dedicated search agent pattern.
 
 [Source](https://www.nibzard.com/ampcode)
