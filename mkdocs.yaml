@@ -1,0 +1,47 @@
+site_name: Awesome Agentic Patterns
+site_url: https://agentic-patterns.com
+site_description: A curated list of awesome agentic patterns.
+site_author: Nikola Balic
+repo_name: nibzard/awesome-agentic-patterns
+repo_url: https://github.com/nibzard/awesome-agentic-patterns
+plugins:
+    - mermaid2
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: green
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nibzard
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/nibzard
+extra_css:
+    - css/extra.css
+nav:
+  - "Context is short, you need patterns.": "index.md"
+  - Patterns:
+      - "Context & Memory":
+          - "Curated Context Window": "patterns/curated-context-window.md"
+          - "Dynamic Context Injection (@mention & /commands)": "patterns/dynamic-context-injection.md"
+          - "Layered Configuration Context (CLAUDE.md Style)": "patterns/layered-configuration-context.md"
+      - "Feedback Loops":
+          - "Background Agent with CI Feedback": "patterns/background-agent-ci.md"
+          - "Rich Feedback Loops > Perfect Prompts": "patterns/rich-feedback-loops.md"
+      - "Orchestration & Control":
+          - "Agent-Driven Research": "patterns/agent-driven-research.md"
+          - "Inversion of Control": "patterns/inversion-of-control.md"
+          - "Iterative Multi-Agent Brainstorming": "patterns/iterative-multi-agent-brainstorming.md"
+          - "Sub-Agent Spawning": "patterns/sub-agent-spawning.md"
+      - "Reliability & Eval":
+          - "Extended Coherence Work Sessions": "patterns/extended-coherence-work-sessions.md"
+          - "No-Token-Limit Magic": "patterns/no-token-limit-magic.md"
+      - "Tool Use & Environment":
+          - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
+          - "Shell Command Contextualization (!)": "patterns/shell-command-contextualization.md"
+          - "Tool Use Steering via Prompting": "patterns/tool-use-steering-via-prompting.md"
+          - "Virtual Machine Operator Agent": "patterns/virtual-machine-operator-agent.md"
+      - "UX & Collaboration":
+          - "Agent-Friendly Workflow Design": "patterns/agent-friendly-workflow-design.md"
+          - "Verbose Reasoning Transparency (Ctrl+R Style)": "patterns/verbose-reasoning-transparency.md"
