@@ -1,6 +1,6 @@
 ---
 title: Sub-Agent Spawning
-status: 🔬 validated-in-production
+status: validated-in-production
 authors: ["Quinn Slack", "Thorsten Ball"]
 category: Orchestration & Control
 tags: [orchestration, context, scalability]
@@ -26,6 +26,6 @@ sequenceDiagram
 
 ## References
 
-* Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
+* Raising An Agent - Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
 
-[Source](https://ampcode.com/manual#sub-agents)
+[Source](https://www.nibzard.com/ampcode)

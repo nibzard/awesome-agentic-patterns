@@ -21,7 +21,7 @@ sequenceDiagram
     participant Interface
     participant Shell
     participant Agent
-    
+
     User->>Interface: !ls -la
     Interface->>Shell: Execute: ls -la
     Shell-->>Interface: Command output
@@ -36,4 +36,4 @@ sequenceDiagram
 ## References
 -   Based on the `!` (Exclamation mark) keybinding for Bash mode in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/claude-code)

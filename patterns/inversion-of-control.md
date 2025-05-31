@@ -1,6 +1,6 @@
 ---
 title: Inversion of Control
-status: 🔬 validated-in-production
+status: validated-in-production
 authors: ["Quinn Slack", "Thorsten Ball"]
 category: Orchestration & Control
 tags: [orchestration, autonomy, control]
@@ -26,4 +26,4 @@ sequenceDiagram
 
 * *Raising an Agent* — Episode 1, "It's a big bird, it can catch its own food."
 
-[Source](https://www.youtube.com/watch?v=Cor-t9xC1cklist=PL6zLuuRVa1_iUNbel-8MxxpqKIyesaubA)
+[Source](https://www.nibzard.com/ampcode)

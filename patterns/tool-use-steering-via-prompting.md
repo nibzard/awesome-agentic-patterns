@@ -41,4 +41,4 @@ flowchart TD
 ## References
 - Based on examples and tips in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III, particularly "Steering Claude to Use Tools" and "Tip #3: Teach Claude to use *your* team's tools."
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/claude-code)

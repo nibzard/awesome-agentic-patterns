@@ -28,11 +28,11 @@ sequenceDiagram
     participant User
     participant Agent
     participant UI as Interface
-    
+
     User->>Agent: Complex task request
     Agent->>Agent: Process internally
     Agent-->>User: Standard output
-    
+
     User->>UI: Ctrl+R (or verbose command)
     UI->>Agent: Request verbose details
     Agent-->>UI: Internal reasoning steps
@@ -45,4 +45,4 @@ sequenceDiagram
 ## References
 -   Based on the `Ctrl+R` keybinding for showing verbose output in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/claude-code)

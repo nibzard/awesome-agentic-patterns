@@ -3,7 +3,6 @@ title: Dynamic Context Injection (@mention & /commands)
 status: established
 authors: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
-source: "https://www.nibzard.com/ampcode" # Placeholder, link to Boris Cherny's talk/Claude Code docs ideal
 tags: [context management, dynamic context, lazy loading, slash commands, at-mention, interactive context]
 ---
 
@@ -41,3 +40,5 @@ sequenceDiagram
 
 ## References
 - Based on the at-mention and slash command features described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
+
+[Source](https://www.nibzard.com/claude-code)

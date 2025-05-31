@@ -41,4 +41,4 @@ flowchart TD
 ## References
 - Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/silent-revolution)

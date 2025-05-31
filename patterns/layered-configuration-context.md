@@ -37,4 +37,4 @@ flowchart TD
 ## References
 - Based on the `CLAUDE.md` system described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/claude-code)

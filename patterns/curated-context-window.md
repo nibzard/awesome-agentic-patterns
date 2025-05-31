@@ -1,6 +1,6 @@
 ---
 title: Curated Context Window
-status: 🔬 validated-in-production
+status: validated-in-production
 authors: ["Thorsten Ball"]
 category: Context & Memory
 tags: [context, memory, accuracy]
@@ -27,4 +27,4 @@ sequenceDiagram
 
 * Episode 3's "context is sacred" + dedicated search agent pattern.
 
-[Source](https://youtu.be/Cor-t9xC1ck?t=2680)
+[Source](https://www.nibzard.com/ampcode)

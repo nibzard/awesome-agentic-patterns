@@ -1,6 +1,6 @@
 ---
 title: Background Agent with CI Feedback
-status: 🔬 validated-in-production
+status: validated-in-production
 authors: ["Quinn Slack"]
 category: Feedback Loops
 tags: [asynchronous, ci, feedback]

@@ -37,4 +37,4 @@ gantt
 ## References
 - Highlighted in "How AI Agents Are Reshaping Creation": "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." This capability is described as a "qualitative shift."
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/silent-revolution)

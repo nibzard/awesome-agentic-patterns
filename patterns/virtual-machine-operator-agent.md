@@ -38,4 +38,4 @@ sequenceDiagram
 ## References
 - Based on Amjad Masad's description of advanced computer use agents: "People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer." (Quote from the "How AI Agents Are Reshaping Creation" blog post).
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/silent-revolution)

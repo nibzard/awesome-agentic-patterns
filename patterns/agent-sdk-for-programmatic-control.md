@@ -24,15 +24,15 @@ The SDK typically includes libraries, command-line interfaces (CLIs) for scripti
 flowchart TD
     A[Application/Script] --> B[Agent SDK]
     B --> C[Agent Core]
-    
+
     B --> D[CLI Interface]
     B --> E[Python Library]
     B --> F[TypeScript Library]
-    
+
     C --> G[Tool Access]
     C --> H[Memory Management]
     C --> I[Model Interface]
-    
+
     G --> J[File System]
     G --> K[Web API]
     G --> L[Custom Tools]
@@ -48,4 +48,4 @@ $ claude -p "what did i do this week?" \
 ## References
 -   Based on the description of the Claude Code SDK in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section VI.
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/claude-code)

@@ -1,6 +1,6 @@
 ---
 title: Iterative Multi-Agent Brainstorming
-status: 🧪 experimental-but-awesome
+status: experimental-but-awesome
 authors: ["Boris Cherny (via Claude Code capability)"]
 category: Orchestration & Control
 tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-agents, collaborative ideation]
@@ -46,4 +46,4 @@ flowchart TD
 ## References
 -   Inspired by the example of using parallel agents for brainstorming in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III.
 
-[Source](https://www.nibzard.com/ampcode)
+[Source](https://www.nibzard.com/claude-code)

@@ -1,6 +1,6 @@
 ---
 title: Rich Feedback Loops > Perfect Prompts
-status: 🔬 validated-in-production
+status: validated-in-production
 authors: ["Thorsten Ball", "Quinn Slack"]
 category: Feedback Loops
 tags: [feedback, testing, reliability]
@@ -28,4 +28,4 @@ sequenceDiagram
 
 * Episode 1 & 3 discussions on "give it errors, not bigger prompts."
 
-[Source](https://www.youtube.com/watch?v=Cor-t9xC1ck)
+[Source](https://www.nibzard.com/ampcode)
