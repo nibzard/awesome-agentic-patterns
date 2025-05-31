@@ -1,15 +1,45 @@
 export default {
   async fetch(request, env, ctx) {
-    // Try to serve the static asset from the __STATIC_CONTENT binding.
-    // This name is visible in your Worker's settings in the Cloudflare dashboard.
+    const assetFetcher = env.__STATIC_CONTENT__; // Note the double underscore
+
+    if (!assetFetcher) {
+      let availableKeys = "N/A";
+      try {
+        availableKeys = Object.keys(env).join(', ');
+      } catch (envError) {
+        availableKeys = "Error reading env keys";
+      }
+      return new Response(
+        "Static asset binding '__STATIC_CONTENT__' (double underscore) was not found in the Worker environment. " +
+        "Available top-level env keys: [" + availableKeys + "]",
+        { status: 500 }
+      );
+    }
+
     try {
-      // Use the actual binding name for your static assets
-      return await env.__STATIC_CONTENT.fetch(request);
+      // Check if the fetch method exists on the assetFetcher
+      if (typeof assetFetcher.fetch !== 'function') {
+        return new Response(
+          "The binding '__STATIC_CONTENT__' was found, but its '.fetch()' method is not a function. " +
+          "Type of '__STATIC_CONTENT__': " + typeof assetFetcher,
+          { status: 500 }
+        );
+      }
+      return await assetFetcher.fetch(request);
     } catch (e) {
-      // If the asset is not found, or there was an error, handle it.
-      let pathname = new URL(request.url).pathname;
-      // You could return a custom 404 page here if you add one to your static assets
-      return new Response(`Sorry, the page ${pathname} was not found.\n${e.message}`, { status: 404 });
+      let pathname = "N/A";
+      try {
+        pathname = new URL(request.url).pathname;
+      } catch (urlError) {
+        // Ignore if request.url is invalid
+      }
+
+      let errorDetails = `Error name: ${e.name}, Error message: ${e.message}`;
+
+      return new Response(
+        `Sorry, the page ${pathname} was not found or an error occurred while fetching with '__STATIC_CONTENT__'.\n${errorDetails}`,
+        { status: (e.name === 'NotFoundError' || (e.message && e.message.toLowerCase().includes("not found"))) ? 404 : 500 }
+      );
     }
   },
 };
