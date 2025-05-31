@@ -1,9 +1,14 @@
 export default {
   async fetch(request, env, ctx) {
-    // This worker doesn't need to do much as we're primarily serving static assets.
-    // You could add custom logic here if needed (e.g., custom headers, redirects)
-    // For now, let it pass through to allow Cloudflare to serve static assets.
-    // If no static asset matches, it will result in a 404 by default.
-    return new Response("Request handled by Worker. Static asset should be served if path matches.", { status: 200 });
+    // Try to serve the static asset from the ASSETS binding.
+    // env.ASSETS is automatically populated by Cloudflare when [site] is configured.
+    try {
+      return await env.ASSETS.fetch(request);
+    } catch (e) {
+      // If the asset is not found, or there was an error, handle it.
+      let pathname = new URL(request.url).pathname;
+      // You could return a custom 404 page here if you add one to your static assets
+      return new Response(`Sorry, the page ${pathname} was not found.\n${e.message}`, { status: 404 });
+    }
   },
 };
