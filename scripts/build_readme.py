@@ -69,6 +69,80 @@ def slug_from_filename(filepath):
     base = os.path.basename(filepath)
     return os.path.splitext(base)[0]
 
+def load_new_patterns_tracker(repo_root):
+    """
+    Load the list of patterns that should show NEW badges.
+    Returns a set of filenames (e.g., {'pattern-name.md'}).
+    """
+    tracker_path = os.path.join(repo_root, ".new-patterns-tracker.txt")
+    new_patterns = set()
+    
+    if os.path.exists(tracker_path):
+        with open(tracker_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                # Skip comments and empty lines
+                if line and not line.startswith('#'):
+                    # Stop reading when we hit "Previous patterns" section
+                    if "Previous patterns" in line:
+                        break
+                    new_patterns.add(line)
+    
+    return new_patterns
+
+def update_new_patterns_tracker(repo_root, current_patterns):
+    """
+    Update the tracker file when new patterns are detected.
+    Moves previous "new" patterns to the bottom section and adds new ones to top.
+    """
+    tracker_path = os.path.join(repo_root, ".new-patterns-tracker.txt")
+    
+    # Get currently tracked new patterns
+    existing_new = load_new_patterns_tracker(repo_root)
+    
+    # If there are patterns in the current new section, just return them
+    # (don't check for actual new files unless the current section is empty)
+    if existing_new:
+        return existing_new
+    
+    # Get all current pattern filenames
+    current_filenames = {os.path.basename(p['path']) for p in current_patterns}
+    
+    # Load all patterns (both new and previous) from tracker
+    all_tracked = set()
+    if os.path.exists(tracker_path):
+        with open(tracker_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    all_tracked.add(line)
+    
+    # Find truly new patterns (not in tracker at all)
+    newly_added = current_filenames - all_tracked
+    
+    if newly_added:
+        # We have new patterns, so move existing "new" to "previous"
+        with open(tracker_path, 'w', encoding='utf-8') as f:
+            f.write("# New Patterns Tracker\n")
+            f.write("# This file tracks which patterns should show \"NEW\" badges\n")
+            f.write("# Format: one filename per line (just the .md filename, no path)\n")
+            f.write("# When new patterns are added, previous ones are moved to the bottom section\n\n")
+            f.write("# Current NEW patterns (will show badges):\n")
+            
+            # Write newly added patterns
+            for pattern_file in sorted(newly_added):
+                f.write(f"{pattern_file}\n")
+            
+            f.write("\n# Previous patterns (no longer new):\n")
+            
+            # Write all previously tracked patterns
+            for pattern_file in sorted(all_tracked):
+                f.write(f"{pattern_file}\n")
+        
+        return newly_added
+    
+    return existing_new
+
 def collect_patterns(patterns_dir):
     """
     Walk through patterns_dir, find all .md files, parse front-matter,
@@ -110,14 +184,14 @@ def group_by_category(patterns):
         category_map.setdefault(p['category'], []).append(p)
     return category_map
 
-def generate_patterns_md(category_map):
+def generate_patterns_md(category_map, new_patterns=None):
     """
     Create a Markdown snippet (string) that groups patterns by category.
     For each category (sorted alphabetically), emits:
 
     ### <a name="category-slug"></a>Category Name
 
-    - [Pattern Title](patterns/slug.md)
+    - [Pattern Title](patterns/slug.md) 🆕
     - …
 
     Returns a single concatenated string.
@@ -125,11 +199,17 @@ def generate_patterns_md(category_map):
     lines = []
     if not category_map:
         return ""
+    new_patterns = new_patterns or set()
+    
     for category_name in sorted(category_map.keys(), key=lambda c: c.lower()):
         category_slug = slugify(category_name)
         lines.append(f"### <a name=\"{category_slug}\"></a>{category_name}\n\n")
         for p in sorted(category_map[category_name], key=lambda x: x['title'].lower()):
-            lines.append(f"- [{p['title']}]({p['path']})\n")
+            pattern_filename = os.path.basename(p['path'])
+            if pattern_filename in new_patterns:
+                lines.append(f"- [{p['title']}]({p['path']}) 🆕\n")
+            else:
+                lines.append(f"- [{p['title']}]({p['path']})\n")
         lines.append("\n")
     return ''.join(lines)
 
@@ -167,7 +247,7 @@ def update_readme_readandreplace(readme_path, new_section_md):
     with open(readme_path, 'w', encoding='utf-8') as f:
         f.write(updated)
 
-def generate_mkdocs_nav(patterns):
+def generate_mkdocs_nav(patterns, new_patterns=None):
     """
     Build a fresh 'nav:' block for mkdocs.yaml. Keeps any top-level settings
     before 'nav:'. Replaces the old nav entirely.
@@ -180,11 +260,16 @@ def generate_mkdocs_nav(patterns):
     category_map = group_by_category(patterns)
     # Sort categories for consistent nav order
     sorted_categories = sorted(category_map.keys(), key=lambda c: c.lower())
+    new_patterns = new_patterns or set()
 
     for category_name in sorted_categories:
         nav_lines.append(f"      - \"{category_name}\":\n")
         for p in sorted(category_map[category_name], key=lambda x: x['title'].lower()):
-            nav_lines.append(f"          - \"{p['title']}\": \"{p['path']}\"\n")
+            pattern_filename = os.path.basename(p['path'])
+            if pattern_filename in new_patterns:
+                nav_lines.append(f"          - \"{p['title']} <span class='new-badge'>NEW</span>\": \"{p['path']}\"\n")
+            else:
+                nav_lines.append(f"          - \"{p['title']}\": \"{p['path']}\"\n")
     return ''.join(nav_lines)
 
 def update_mkdocs_yaml(mkdocs_path, new_nav_md):
@@ -237,18 +322,25 @@ def main():
         sys.exit(1)
 
     patterns = collect_patterns(patterns_dir)
+    
+    # Update the new patterns tracker and get current "new" patterns
+    new_patterns = update_new_patterns_tracker(repo_root, patterns)
+    
     # Group by category now for README generation
     category_map = group_by_category(patterns)
-    new_section_md = generate_patterns_md(category_map)
+    new_section_md = generate_patterns_md(category_map, new_patterns)
 
     # 1) Update README.md
     update_readme_readandreplace(readme_path, new_section_md)
     print("✅ README.md auto-generated section updated.")
 
     # 2) Update mkdocs.yaml (nav will also be grouped by category)
-    new_nav_md = generate_mkdocs_nav(patterns) # Pass original patterns list
+    new_nav_md = generate_mkdocs_nav(patterns, new_patterns) # Pass original patterns list and new patterns
     update_mkdocs_yaml(mkdocs_path, new_nav_md)
     print("✅ mkdocs.yaml nav block updated.")
+    
+    if new_patterns:
+        print(f"🆕 {len(new_patterns)} patterns marked as NEW: {', '.join(sorted(new_patterns))}")
 
 if __name__ == "__main__":
     main()

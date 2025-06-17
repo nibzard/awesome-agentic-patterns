@@ -1,0 +1,22 @@
+# New Patterns Tracker
+# This file tracks which patterns should show "NEW" badges
+# Format: one filename per line (just the .md filename, no path)
+# When new patterns are added, previous ones are moved to the bottom section
+
+# Current NEW patterns (will show badges):
+abstracted-code-representation-for-review.md
+agent-assisted-scaffolding.md
+agent-powered-codebase-qa-onboarding.md
+ai-accelerated-learning-and-skill-development.md
+ai-assisted-code-review-verification.md
+cli-native-agent-orchestration.md
+democratization-of-tooling-via-agents.md
+dogfooding-with-rapid-iteration-for-agent-improvement.md
+llm-friendly-api-design.md
+multi-model-orchestration-for-complex-edits.md
+seamless-background-to-foreground-handoff.md
+spec-as-test-feedback-loop.md
+specification-driven-agent-development.md
+spectrum-of-control-blended-initiative.md
+
+# Previous patterns (no longer new):
