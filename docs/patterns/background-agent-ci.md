@@ -27,6 +27,6 @@ sequenceDiagram
 
 ## References
 
-* Episode 6: Background agents use existing CI as the feedback loop.
+* Raising An Agent - Episode 6: Background agents use existing CI as the feedback loop.
 
 [Source](https://ampcode.com/manual#background)

@@ -24,6 +24,6 @@ sequenceDiagram
 
 ## References
 
-* *Raising an Agent* — Episode 1, "It's a big bird, it can catch its own food."
+* Raising An Agent - Episode 1, "It's a big bird, it can catch its own food."
 
 [Source](https://www.nibzard.com/ampcode)
