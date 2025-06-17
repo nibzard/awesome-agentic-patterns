@@ -78,14 +78,19 @@ def load_new_patterns_tracker(repo_root):
     new_patterns = set()
     
     if os.path.exists(tracker_path):
+        in_new_section = False
         with open(tracker_path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
-                # Skip comments and empty lines
-                if line and not line.startswith('#'):
-                    # Stop reading when we hit "Previous patterns" section
-                    if "Previous patterns" in line:
-                        break
+                # Check if we're entering the NEW patterns section
+                if line.startswith("# Current NEW patterns"):
+                    in_new_section = True
+                    continue
+                # Check if we're entering the Previous patterns section
+                elif line.startswith("# Previous patterns"):
+                    break
+                # Add non-comment, non-empty lines when in NEW section
+                elif in_new_section and line and not line.startswith('#'):
                     new_patterns.add(line)
     
     return new_patterns
@@ -94,19 +99,15 @@ def update_new_patterns_tracker(repo_root, current_patterns):
     """
     Update the tracker file when new patterns are detected.
     Moves previous "new" patterns to the bottom section and adds new ones to top.
+    Also cleans up deleted patterns from the tracker.
     """
     tracker_path = os.path.join(repo_root, ".new-patterns-tracker.txt")
     
-    # Get currently tracked new patterns
-    existing_new = load_new_patterns_tracker(repo_root)
-    
-    # If there are patterns in the current new section, just return them
-    # (don't check for actual new files unless the current section is empty)
-    if existing_new:
-        return existing_new
-    
     # Get all current pattern filenames
     current_filenames = {os.path.basename(p['path']) for p in current_patterns}
+    
+    # Get currently tracked new patterns
+    existing_new = load_new_patterns_tracker(repo_root)
     
     # Load all patterns (both new and previous) from tracker
     all_tracked = set()
@@ -117,11 +118,22 @@ def update_new_patterns_tracker(repo_root, current_patterns):
                 if line and not line.startswith('#'):
                     all_tracked.add(line)
     
+    # Find deleted patterns (in tracker but not in current files)
+    deleted_patterns = all_tracked - current_filenames
+    
     # Find truly new patterns (not in tracker at all)
     newly_added = current_filenames - all_tracked
     
-    if newly_added:
-        # We have new patterns, so move existing "new" to "previous"
+    # Clean up existing_new by removing deleted patterns
+    existing_new_cleaned = existing_new - deleted_patterns
+    
+    # Update tracker if we have deletions or truly new additions
+    needs_update = bool(deleted_patterns or newly_added)
+    
+    if needs_update:
+        # Filter out deleted patterns from all_tracked
+        all_tracked_cleaned = all_tracked - deleted_patterns
+        
         with open(tracker_path, 'w', encoding='utf-8') as f:
             f.write("# New Patterns Tracker\n")
             f.write("# This file tracks which patterns should show \"NEW\" badges\n")
@@ -129,18 +141,34 @@ def update_new_patterns_tracker(repo_root, current_patterns):
             f.write("# When new patterns are added, previous ones are moved to the bottom section\n\n")
             f.write("# Current NEW patterns (will show badges):\n")
             
-            # Write newly added patterns
-            for pattern_file in sorted(newly_added):
-                f.write(f"{pattern_file}\n")
-            
-            f.write("\n# Previous patterns (no longer new):\n")
-            
-            # Write all previously tracked patterns
-            for pattern_file in sorted(all_tracked):
-                f.write(f"{pattern_file}\n")
+            if newly_added:
+                # We have new patterns, so move existing "new" to "previous"
+                for pattern_file in sorted(newly_added):
+                    f.write(f"{pattern_file}\n")
+                
+                f.write("\n# Previous patterns (no longer new):\n")
+                # Write all previously tracked patterns (cleaned of deletions)
+                for pattern_file in sorted(all_tracked_cleaned):
+                    f.write(f"{pattern_file}\n")
+                
+                return newly_added
+            else:
+                # No new patterns, but we had deletions, so keep existing new patterns (cleaned)
+                for pattern_file in sorted(existing_new_cleaned):
+                    f.write(f"{pattern_file}\n")
+                
+                f.write("\n# Previous patterns (no longer new):\n")
+                # Write remaining previous patterns (cleaned of deletions)
+                remaining_previous = all_tracked_cleaned - existing_new_cleaned
+                for pattern_file in sorted(remaining_previous):
+                    f.write(f"{pattern_file}\n")
         
-        return newly_added
+        if deleted_patterns:
+            print(f"🗑️  Removed {len(deleted_patterns)} deleted patterns from tracker: {', '.join(sorted(deleted_patterns))}")
+        
+        return existing_new_cleaned
     
+    # No changes needed, return existing new patterns
     return existing_new
 
 def collect_patterns(patterns_dir):
@@ -191,7 +219,7 @@ def generate_patterns_md(category_map, new_patterns=None):
 
     ### <a name="category-slug"></a>Category Name
 
-    - [Pattern Title](patterns/slug.md) 🆕
+    - [Pattern Title](patterns/slug.md) <span class='new-badge'>NEW</span>
     - …
 
     Returns a single concatenated string.
@@ -207,7 +235,7 @@ def generate_patterns_md(category_map, new_patterns=None):
         for p in sorted(category_map[category_name], key=lambda x: x['title'].lower()):
             pattern_filename = os.path.basename(p['path'])
             if pattern_filename in new_patterns:
-                lines.append(f"- [{p['title']}]({p['path']}) 🆕\n")
+                lines.append(f"- [{p['title']}]({p['path']}) <span class='new-badge'>NEW</span>\n")
             else:
                 lines.append(f"- [{p['title']}]({p['path']})\n")
         lines.append("\n")

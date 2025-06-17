@@ -3,6 +3,7 @@ title: Tool Use Steering via Prompting
 status: best-practice
 authors: ["Boris Cherny (via Claude Code examples)"]
 category: Tool Use & Environment
+source_link: "https://www.nibzard.com/claude-code"
 tags: [tool use, prompting, agent guidance, custom tools, cli, natural language control]
 ---
 
@@ -11,6 +12,7 @@ AI agents equipped with multiple tools (e.g., shell access, file system operatio
 
 ## Solution
 Guide the agent's tool selection and execution through explicit natural language instructions within the prompt. This includes:
+
 -   **Direct Tool Invocation:** Telling the agent which tool to use for a specific part of a task (e.g., "Use the file search tool to find...", "Run a bash command to...").
 -   **Teaching Tool Usage:** Instructing the agent on how to learn about or use a new or custom tool, including how to discover its options (e.g., "Use our `barley` CLI to check logs. You can use `-h` to see how to use it.").
 -   **Implicit Tool Suggestion:** Using phrases or shorthands that the agent learns to associate with specific tool sequences (e.g., "commit, push, pr" for a Git workflow).

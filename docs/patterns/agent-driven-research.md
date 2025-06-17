@@ -3,7 +3,7 @@ title: Agent-Driven Research
 status: established
 authors: ["Danny Tarlow", "Connie Fan"]
 category: Orchestration & Control
-source: "https://www.youtube.com/watch?v=u85G2aV_5rQ"
+source_link: "https://www.youtube.com/watch?v=u85G2aV_5rQ"
 tags: [research, information retrieval, tool use, iterative process, autonomous search]
 ---
 
@@ -12,6 +12,7 @@ Traditional research methods often lack the ability to adapt search strategies b
 
 ## Solution
 Allow AI agents to independently conduct the entire research process. Given a research question, the agent:
+
 - Creates its own search queries.
 - Executes the searches.
 - Examines the data.

@@ -1,8 +1,9 @@
 ---
-title: Verbose Reasoning Transparency (Ctrl+R Style)
+title: Verbose Reasoning Transparency
 status: best-practice
 authors: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
+source_link: "https://www.nibzard.com/claude-code"
 tags: [explainability, debugging, transparency, agent reasoning, verbose mode, introspection]
 ---
 

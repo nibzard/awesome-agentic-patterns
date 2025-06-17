@@ -3,6 +3,7 @@ title: Sub-Agent Spawning
 status: validated-in-production
 authors: ["Quinn Slack", "Thorsten Ball"]
 category: Orchestration & Control
+source_link: "https://www.nibzard.com/ampcode"
 tags: [orchestration, context, scalability]
 ---
 

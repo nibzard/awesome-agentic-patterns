@@ -12,6 +12,7 @@ Developing strong software engineering skills, including "taste" for clean and e
 
 ## Solution
 Utilize AI agents as interactive learning tools that accelerate a developer's skill acquisition and "taste" development. By using AI coding assistants, developers can:
+
 1.  **Iterate Faster:** Quickly try out different approaches and see immediate results or feedback (e.g., compiler errors, test failures, AI-generated alternatives).
 2.  **Learn from Mistakes Efficiently:** The AI can help identify and explain errors, allowing developers to understand why something failed more quickly.
 3.  **Observe Best Practices:** By examining AI-generated code (which ideally reflects good practices), developers can learn new patterns and techniques.

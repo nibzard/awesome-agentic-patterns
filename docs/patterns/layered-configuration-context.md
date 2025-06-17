@@ -1,8 +1,9 @@
 ---
-title: Layered Configuration Context (CLAUDE.md Style)
+title: Layered Configuration Context
 status: established
 authors: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
+source_link: "https://www.nibzard.com/claude-code"
 tags: [context management, configuration, scoped context, automatic loading, CLAUDE.md]
 ---
 

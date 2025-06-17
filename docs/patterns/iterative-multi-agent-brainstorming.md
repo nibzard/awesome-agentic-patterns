@@ -3,6 +3,7 @@ title: Iterative Multi-Agent Brainstorming
 status: experimental-but-awesome
 authors: ["Boris Cherny (via Claude Code capability)"]
 category: Orchestration & Control
+source_link: "https://www.nibzard.com/claude-code"
 tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-agents, collaborative ideation]
 ---
 

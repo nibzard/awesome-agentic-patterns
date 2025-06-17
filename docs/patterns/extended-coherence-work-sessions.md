@@ -1,8 +1,9 @@
 ---
 title: Extended Coherence Work Sessions
 status: rapidly-improving
-authors: ["Amjad Masad (observation)"] # Based on his commentary on the trend
+authors: ["Amjad Masad (observation)"]
 category: Reliability & Eval
+source_link: "https://www.nibzard.com/silent-revolution"
 tags: [coherence, long-running tasks, agent capability, llm, complex projects]
 ---
 

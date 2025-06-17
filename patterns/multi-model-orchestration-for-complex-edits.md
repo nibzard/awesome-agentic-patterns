@@ -3,7 +3,7 @@ title: Multi-Model Orchestration for Complex Edits
 status: validated-in-production
 authors: ["Aman Sanger (Cursor)"]
 category: Orchestration & Control
-source: "Video Transcript (Time: 0:01:34-0:01:45)"
+source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-tasks]
 ---
 
@@ -12,6 +12,7 @@ A single large language model, even if powerful, may not be optimally suited for
 
 ## Solution
 Employ a pipeline or orchestration of multiple AI models, each specialized for different parts of a complex task. For code editing, this could involve:
+
 1.  A **retrieval model** to gather relevant context from the codebase.
 2.  A **large, intelligent generation model** (e.g., Claude 3.5 Sonnet) to understand the user's intent and generate the primary code modifications based on the retrieved context.
 3.  Potentially other **custom or smaller models** to assist in applying these generated edits accurately across multiple files or performing fine-grained adjustments.
@@ -21,9 +22,9 @@ This approach leverages the strengths of different models in a coordinated fashi
 ## Example
 ```mermaid
 flowchart TD
-    A[User Request: Multi-File Edit] --> B{Retrieval Model: Gather Context}
-    B --> C{Main Generation Model: Generate Edits}
-    C --> D{Edit Application Model(s): Apply Edits Across Files}
+    A[User Request: Multi-File Edit] --> B[Retrieval Model: Gather Context]
+    B --> C[Main Generation Model: Generate Edits]
+    C --> D[Edit Application Model: Apply Edits Across Files]
     D --> E[Edited Codebase]
 ```
 

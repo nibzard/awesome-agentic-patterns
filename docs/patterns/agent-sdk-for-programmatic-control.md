@@ -3,6 +3,7 @@ title: Agent SDK for Programmatic Control
 status: emerging
 authors: ["Anthropic (Claude Code SDK example)"]
 category: Tool Use & Environment
+source_link: "https://www.nibzard.com/claude-code"
 tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
 ---
 
@@ -11,6 +12,7 @@ Interactive terminal or chat interfaces are suitable for many agent tasks, but n
 
 ## Solution
 Provide a Software Development Kit (SDK) that exposes the agent's core functionalities for programmatic access. This SDK allows developers to:
+
 -   Invoke agent actions (e.g., process a prompt, use a tool, access memory) from code (e.g., Python, TypeScript).
 -   Configure agent behavior and tool access in a non-interactive manner.
 -   Integrate agent logic into larger software systems.

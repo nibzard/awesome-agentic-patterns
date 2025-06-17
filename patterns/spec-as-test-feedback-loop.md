@@ -3,7 +3,7 @@ title: Spec-As-Test Feedback Loop
 status: proposed
 authors: ["Jory Pestorious"]
 category: Feedback Loops
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
+source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [validation, drift-detection, continuous-testing]
 ---
 

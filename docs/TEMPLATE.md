@@ -3,7 +3,7 @@ title: "Pattern Title: Clearly and Concisely"
 status: "Proposed | Established | Best Practice | Deprecated"
 authors: ["Author Name (Affiliation/Source)", "Another Author (If any)"]
 category: "Orchestration & Control | Context & Memory | Feedback Loops | Tool Use & Environment | UX & Collaboration | Reliability & Eval"
-source: "URL to the primary blog post, talk, repo, or paper"
+source_link: "URL to the primary blog post, talk, repo, or paper"
 tags: [tag1, tag2, keyword3, relevant-concept]
 ---
 

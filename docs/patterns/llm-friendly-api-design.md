@@ -3,7 +3,7 @@ title: LLM-Friendly API Design
 status: emerging
 authors: ["Lukas Möller (Cursor)"]
 category: Tool Use & Environment
-source: "Video Transcript (Time: 0:16:00-0:16:32)"
+source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [api-design, llm-interaction, tool-use, system-design, code-structure, agent-compatibility]
 ---
 
@@ -12,6 +12,7 @@ For AI agents to reliably and effectively use tools, especially APIs or internal
 
 ## Solution
 Design or adapt software APIs (including internal libraries and modules) with explicit consideration for LLM consumption. This involves:
+
 -   **Explicit Versioning:** Making API version information clearly visible and understandable to the LLM, so it can request or adapt to specific versions.
 -   **Self-Descriptive Functionality:** Ensuring function names, parameter names, and documentation (if accessible to the LLM) clearly describe what the API does and how to use it.
 -   **Simplified Interaction Patterns:** Favoring simpler, more direct API calls over highly nested or complex interaction sequences where possible, to reduce the chances of the LLM making errors.

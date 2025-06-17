@@ -6,11 +6,7 @@
 # Current NEW patterns (will show badges):
 abstracted-code-representation-for-review.md
 agent-assisted-scaffolding.md
-agent-powered-codebase-qa-onboarding.md
-ai-accelerated-learning-and-skill-development.md
-ai-assisted-code-review-verification.md
 cli-native-agent-orchestration.md
-democratization-of-tooling-via-agents.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md
 llm-friendly-api-design.md
 multi-model-orchestration-for-complex-edits.md
@@ -20,3 +16,21 @@ specification-driven-agent-development.md
 spectrum-of-control-blended-initiative.md
 
 # Previous patterns (no longer new):
+agent-driven-research.md
+agent-friendly-workflow-design.md
+agent-sdk-for-programmatic-control.md
+background-agent-ci.md
+curated-context-window.md
+dynamic-context-injection.md
+extended-coherence-work-sessions.md
+inversion-of-control.md
+iterative-multi-agent-brainstorming.md
+layered-configuration-context.md
+no-token-limit-magic.md
+parallel-tool-execution.md
+rich-feedback-loops.md
+shell-command-contextualization.md
+sub-agent-spawning.md
+tool-use-steering-via-prompting.md
+verbose-reasoning-transparency.md
+virtual-machine-operator-agent.md

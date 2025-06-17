@@ -3,7 +3,7 @@ title: Specification-Driven Agent Development
 status: proposed
 authors: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
+source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [spec-first, scaffolding, contract, requirements]
 ---
 
@@ -29,8 +29,9 @@ Give the agent a well-structured spec file, then run `claude spec run`.
 Pitfalls: coarse or under-specified requirements still propagate errors.
 
 ## Trade-offs
-**Pros:** repeatable, audit-friendly, easy diffing.
-**Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.
+
+- **Pros:** repeatable, audit-friendly, easy diffing.
+- **Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.
 
 ## References
 - Talk teaser in the World's Fair meta-description about "shift to specification-driven development."

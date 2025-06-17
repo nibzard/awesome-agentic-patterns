@@ -3,6 +3,7 @@ title: No-Token-Limit Magic
 status: experimental-but-awesome
 authors: ["Thorsten Ball", "Quinn Slack"]
 category: Reliability & Eval
+source_link: "https://www.nibzard.com/ampcode"
 tags: [performance, cost, experimentation]
 ---
 

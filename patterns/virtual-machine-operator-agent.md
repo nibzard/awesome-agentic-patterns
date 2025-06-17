@@ -3,6 +3,7 @@ title: Virtual Machine Operator Agent
 status: established
 authors: ["Amjad Masad"]
 category: Tool Use & Environment
+source_link: "https://www.nibzard.com/silent-revolution"
 tags: [computer operation, virtual machine, execution environment, agent capability]
 ---
 

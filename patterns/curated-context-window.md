@@ -3,6 +3,7 @@ title: Curated Context Window
 status: validated-in-production
 authors: ["Thorsten Ball"]
 category: Context & Memory
+source_link: "https://www.nibzard.com/ampcode"
 tags: [context, memory, accuracy]
 ---
 

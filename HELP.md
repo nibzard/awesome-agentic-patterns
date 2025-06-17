@@ -346,7 +346,62 @@ Use the following to-do list to get **awesome-agentic-patterns** up and running 
 
 ---
 
-## 11. Housekeeping & Maintenance
+## 11. NEW Badge System
+
+The repository automatically tracks which patterns should display "NEW" badges using a tracker file system.
+
+### How It Works
+
+* **Tracker File**: `.new-patterns-tracker.txt` maintains two sections:
+  ```
+  # Current NEW patterns (will show badges):
+  abstracted-code-representation-for-review.md
+  agent-assisted-scaffolding.md
+  ...
+
+  # Previous patterns (no longer new):
+  agent-driven-research.md
+  agent-friendly-workflow-design.md
+  ...
+  ```
+
+* **Automatic Management**: When running `python scripts/build_readme.py`:
+  1. **Loading NEW patterns**: Only reads patterns from "Current NEW patterns" section
+  2. **Detecting changes**: Compares current files vs tracked files to find:
+     - **Newly added**: Files that exist but aren't in tracker at all
+     - **Deleted**: Files in tracker but no longer exist
+  3. **Updating tracker**: When changes are detected:
+     - Removes deleted patterns from both sections
+     - If new patterns found: moves current NEW → Previous, adds new ones → NEW
+
+### Adding New Patterns (Future)
+
+When you add new pattern files:
+
+1. **First run**: Script detects new files not in tracker
+2. **Automatic promotion**: 
+   - Current NEW patterns move to "Previous" section
+   - New files become the NEW patterns
+3. **Badge display**: Only the newly added files get NEW badges
+
+**Example scenario:**
+- Today: 10 patterns have NEW badges
+- You add 3 new patterns next week
+- After running script: Only those 3 new patterns get NEW badges
+- The previous 10 lose their NEW badges and move to "Previous" section
+
+### Manual Control
+
+You can manually edit `.new-patterns-tracker.txt` to:
+- Remove patterns from NEW section (they lose badges immediately)
+- Move patterns between NEW/Previous sections
+- Control which patterns show badges
+
+The system ensures only genuinely new additions get highlighted, while maintaining a historical record of all patterns.
+
+---
+
+## 12. Housekeeping & Maintenance
 
 * **Clean up untracked files.**
 

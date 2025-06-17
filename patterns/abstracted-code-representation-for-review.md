@@ -3,7 +3,7 @@ title: Abstracted Code Representation for Review
 status: proposed
 authors: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
 category: UX & Collaboration
-source: "Video Transcript (Time: 0:09:48-0:10:12)"
+source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, abstraction, pseudocode, intent-based-review, explainability, software-quality, human-ai-interface]
 ---
 
@@ -12,6 +12,7 @@ Reviewing large volumes of AI-generated code line-by-line can be tedious, error-
 
 ## Solution
 Provide a higher-level, abstracted representation of code changes for human review, rather than (or in addition to) the raw code diff. This could include:
+
 -   **Pseudocode:** Representing the logic of the changes in a more human-readable, concise format.
 -   **Intent Summaries:** Describing what the changes aim to achieve at a functional level.
 -   **Logical Diffs:** Highlighting changes in program behavior or structure rather than just textual differences.

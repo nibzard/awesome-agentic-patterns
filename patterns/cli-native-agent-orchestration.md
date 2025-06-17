@@ -1,9 +1,9 @@
 ---
-title: CLI-Native Agent Orchestration (Claude CLI Mode)
+title: CLI-Native Agent Orchestration
 status: proposed
 authors: ["Jory Pestorious"]
 category: Tool Use & Environment
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
+source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [cli, automation, local-dev, headless]
 ---
 

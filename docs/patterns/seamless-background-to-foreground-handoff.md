@@ -3,7 +3,7 @@ title: Seamless Background-to-Foreground Handoff
 status: emerging
 authors: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
-source: "Video Transcript (Time: 0:06:52-0:07:19)"
+source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [background-agent, human-in-the-loop, task-handoff, interactive-refinement, agent-collaboration, developer-workflow]
 ---
 
@@ -12,6 +12,7 @@ While background agents can handle long-running, complex tasks autonomously, the
 
 ## Solution
 Design the agent system to allow for a seamless transition from background (autonomous) agent work to foreground (human-in-the-loop or direct human control) work. This means:
+
 1.  The background agent performs its task (e.g., generating a PR).
 2.  The user reviews the agent's work.
 3.  If the work is not entirely satisfactory (e.g., 90% correct), the user can easily "take control" or bring the task into their active foreground environment.
@@ -23,13 +24,13 @@ This pattern ensures that developers can leverage the power of autonomous backgr
 ## Example
 ```mermaid
 flowchart TD
-    A[User: "Refactor X in background"] --> B(Background Agent: Works on X)
-    B --> C{Agent Proposes PR for X}
+    A[User: Refactor X in background] --> B[Background Agent: Works on X]
+    B --> C[Agent Proposes PR for X]
     C --> D{User Reviews PR}
-    D -- 90% Correct --> E[User: "Take over & refine"]
-    E --> F(User uses Foreground Agent Tools & IDE to complete X)
+    D -->|90% Correct| E[User: Take over & refine]
+    E --> F[User uses Foreground Agent Tools & IDE to complete X]
     F --> G[Finalized PR]
-    D -- 100% Correct --> G
+    D -->|100% Correct| G
 ```
 
 ## References

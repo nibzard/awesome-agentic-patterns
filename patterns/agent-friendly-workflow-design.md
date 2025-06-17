@@ -1,8 +1,9 @@
 ---
 title: Agent-Friendly Workflow Design
 status: best-practice
-authors: ["Amjad Masad (principle via Replit)"]
+authors: ["Amjad Masad"]
 category: UX & Collaboration
+source_link: "https://www.nibzard.com/silent-revolution"
 tags: [human-agent collaboration, workflow design, agent autonomy, task decomposition, HCI]
 ---
 
@@ -11,6 +12,7 @@ Simply providing an AI agent with a task is often not enough for optimal perform
 
 ## Solution
 Consciously design and adapt workflows, task structures, and human-agent interaction points to be "agent-friendly." This involves:
+
 - **Clear Goal Definition:** Provide clear, high-level goals rather than overly prescriptive, step-by-step instructions for every detail.
 - **Appropriate Autonomy:** Grant the agent sufficient freedom to make its own implementation choices and explore solutions, especially if it has been programmed for such freedom.
 - **Structured Input/Output:** Define clear interfaces for how the agent receives information and delivers results.

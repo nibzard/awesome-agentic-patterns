@@ -3,6 +3,7 @@ title: Background Agent with CI Feedback
 status: validated-in-production
 authors: ["Quinn Slack"]
 category: Feedback Loops
+source_link: "https://ampcode.com/manual#background"
 tags: [asynchronous, ci, feedback]
 ---
 

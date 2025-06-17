@@ -39,18 +39,16 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Context & Memory
 
-- [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md) 🆕
 - [Curated Context Window](patterns/curated-context-window.md)
-- [Dynamic Context Injection (@mention & /commands)](patterns/dynamic-context-injection.md)
-- [Layered Configuration Context (CLAUDE.md Style)](patterns/layered-configuration-context.md)
+- [Dynamic Context Injection](patterns/dynamic-context-injection.md)
+- [Layered Configuration Context](patterns/layered-configuration-context.md)
 
 ### <a name="-"></a>Feedback Loops
 
-- [AI-Assisted Code Review / Verification](patterns/ai-assisted-code-review-verification.md) 🆕
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
-- [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md) 🆕
+- [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md) <span class='new-badge'>NEW</span>
 - [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md)
-- [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md) 🆕
+- [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md) <span class='new-badge'>NEW</span>
 
 ### <a name="-"></a>Orchestration & Control
 
@@ -58,8 +56,8 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Inversion of Control](patterns/inversion-of-control.md)
 - [Iterative Multi-Agent Brainstorming](patterns/iterative-multi-agent-brainstorming.md)
-- [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md) 🆕
-- [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md) 🆕
+- [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md) <span class='new-badge'>NEW</span>
+- [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md) <span class='new-badge'>NEW</span>
 - [Sub-Agent Spawning](patterns/sub-agent-spawning.md)
 
 ### <a name=""></a>Reliability & Eval
@@ -70,22 +68,20 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="-"></a>Tool Use & Environment
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
-- [CLI-Native Agent Orchestration (Claude CLI Mode)](patterns/cli-native-agent-orchestration.md) 🆕
-- [LLM-Friendly API Design](patterns/llm-friendly-api-design.md) 🆕
-- [Shell Command Contextualization (!)](patterns/shell-command-contextualization.md)
+- [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md) <span class='new-badge'>NEW</span>
+- [LLM-Friendly API Design](patterns/llm-friendly-api-design.md) <span class='new-badge'>NEW</span>
+- [Shell Command Contextualization](patterns/shell-command-contextualization.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 
 ### <a name=""></a>UX & Collaboration
 
-- [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md) 🆕
-- [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md) 🆕
+- [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md) <span class='new-badge'>NEW</span>
+- [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md) <span class='new-badge'>NEW</span>
 - [Agent-Friendly Workflow Design](patterns/agent-friendly-workflow-design.md)
-- [AI-Accelerated Learning and Skill Development](patterns/ai-accelerated-learning-and-skill-development.md) 🆕
-- [Democratization of Tooling via Agents](patterns/democratization-of-tooling-via-agents.md) 🆕
-- [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md) 🆕
-- [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md) 🆕
-- [Verbose Reasoning Transparency (Ctrl+R Style)](patterns/verbose-reasoning-transparency.md)
+- [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md) <span class='new-badge'>NEW</span>
+- [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md) <span class='new-badge'>NEW</span>
+- [Verbose Reasoning Transparency](patterns/verbose-reasoning-transparency.md)
 
 <!-- AUTO-GENERATED PATTERNS END -->
 

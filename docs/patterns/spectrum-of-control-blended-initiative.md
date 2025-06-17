@@ -3,7 +3,7 @@ title: Spectrum of Control / Blended Initiative
 status: validated-in-production
 authors: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
-source: "Video Transcript (Time: 0:05:16-0:06:44)"
+source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-delegation, code-editing, ide-integration]
 ---
 
@@ -12,6 +12,7 @@ AI agents for tasks like coding can offer various levels of assistance, from sim
 
 ## Solution
 Design the human-agent interaction to support a spectrum of control, allowing users to choose the level of agent autonomy appropriate for the current task or their familiarity with the codebase. This involves providing multiple modes or features for interaction:
+
 -   **Low Autonomy (High Human Control):** Simple, inline assistance like tab-completion for code, where the human is primarily driving and the AI augments their input.
 -   **Medium Autonomy:** Agent assistance for more contained tasks, like editing a selected region of code or an entire file based on a specific instruction (e.g., "Command K" functionality). The human defines the scope and the high-level goal.
 -   **High Autonomy:** Agent takes on larger, multi-file tasks or complex refactorings, potentially involving multiple steps, with less direct human guidance on each step (e.g., an "Agent" feature).
@@ -22,22 +23,23 @@ Users can seamlessly switch between these modes depending on their needs, allowi
 ## Example
 ```mermaid
 flowchart LR
-    subgraph Human Control
+    subgraph "Human Control"
         A[Tab Completion]
     end
-    subgraph Shared Control
-        B[Command K (Edit Region/File)]
+    subgraph "Shared Control"
+        B[Command K - Edit Region/File]
     end
-    subgraph Agent Control
-        C[Agent Feature (Multi-File Edits)]
+    subgraph "Agent Control"
+        C[Agent Feature - Multi-File Edits]
     end
-    subgraph Autonomous Agent
-        D[Background Agent (Entire PRs)]
+    subgraph "Autonomous Agent"
+        D[Background Agent - Entire PRs]
     end
 
-    A <--> B
-    B <--> C
-    C <--> D
+    A --> B
+    B --> C
+    C --> D
+    D --> A
 ```
 
 ## References

@@ -26,12 +26,10 @@ nav:
   - "Context is short, you need patterns.": "index.md"
   - Patterns:
       - "Context & Memory":
-          - "Agent-Powered Codebase Q&A / Onboarding <span class='new-badge'>NEW</span>": "patterns/agent-powered-codebase-qa-onboarding.md"
           - "Curated Context Window": "patterns/curated-context-window.md"
-          - "Dynamic Context Injection (@mention & /commands)": "patterns/dynamic-context-injection.md"
-          - "Layered Configuration Context (CLAUDE.md Style)": "patterns/layered-configuration-context.md"
+          - "Dynamic Context Injection": "patterns/dynamic-context-injection.md"
+          - "Layered Configuration Context": "patterns/layered-configuration-context.md"
       - "Feedback Loops":
-          - "AI-Assisted Code Review / Verification <span class='new-badge'>NEW</span>": "patterns/ai-assisted-code-review-verification.md"
           - "Background Agent with CI Feedback": "patterns/background-agent-ci.md"
           - "Dogfooding with Rapid Iteration for Agent Improvement <span class='new-badge'>NEW</span>": "patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md"
           - "Rich Feedback Loops > Perfect Prompts": "patterns/rich-feedback-loops.md"
@@ -49,17 +47,15 @@ nav:
           - "No-Token-Limit Magic": "patterns/no-token-limit-magic.md"
       - "Tool Use & Environment":
           - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
-          - "CLI-Native Agent Orchestration (Claude CLI Mode) <span class='new-badge'>NEW</span>": "patterns/cli-native-agent-orchestration.md"
+          - "CLI-Native Agent Orchestration <span class='new-badge'>NEW</span>": "patterns/cli-native-agent-orchestration.md"
           - "LLM-Friendly API Design <span class='new-badge'>NEW</span>": "patterns/llm-friendly-api-design.md"
-          - "Shell Command Contextualization (!)": "patterns/shell-command-contextualization.md"
+          - "Shell Command Contextualization": "patterns/shell-command-contextualization.md"
           - "Tool Use Steering via Prompting": "patterns/tool-use-steering-via-prompting.md"
           - "Virtual Machine Operator Agent": "patterns/virtual-machine-operator-agent.md"
       - "UX & Collaboration":
           - "Abstracted Code Representation for Review <span class='new-badge'>NEW</span>": "patterns/abstracted-code-representation-for-review.md"
           - "Agent-Assisted Scaffolding <span class='new-badge'>NEW</span>": "patterns/agent-assisted-scaffolding.md"
           - "Agent-Friendly Workflow Design": "patterns/agent-friendly-workflow-design.md"
-          - "AI-Accelerated Learning and Skill Development <span class='new-badge'>NEW</span>": "patterns/ai-accelerated-learning-and-skill-development.md"
-          - "Democratization of Tooling via Agents <span class='new-badge'>NEW</span>": "patterns/democratization-of-tooling-via-agents.md"
           - "Seamless Background-to-Foreground Handoff <span class='new-badge'>NEW</span>": "patterns/seamless-background-to-foreground-handoff.md"
           - "Spectrum of Control / Blended Initiative <span class='new-badge'>NEW</span>": "patterns/spectrum-of-control-blended-initiative.md"
-          - "Verbose Reasoning Transparency (Ctrl+R Style)": "patterns/verbose-reasoning-transparency.md"
+          - "Verbose Reasoning Transparency": "patterns/verbose-reasoning-transparency.md"
