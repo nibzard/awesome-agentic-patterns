@@ -4,16 +4,30 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
+action-selector-pattern.md
+code-then-execute-pattern.md
+context-minimization-pattern.md
+dual-llm-pattern.md
+llm-map-reduce-pattern.md
+plan-then-execute-pattern.md
+seamless-background-to-foreground-handoff.md
+self-critique-evaluator-loop.md
+self-rewriting-meta-prompt-loop.md
 abstracted-code-representation-for-review.md
 agent-assisted-scaffolding.md
 cli-native-agent-orchestration.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md
+egress-lockdown-no-exfiltration-channel.md
+episodic-memory-retrieval-injection.md
+explicit-posterior-sampling-planner.md
+lethal-trifecta-threat-model.md
 llm-friendly-api-design.md
 multi-model-orchestration-for-complex-edits.md
-seamless-background-to-foreground-handoff.md
 spec-as-test-feedback-loop.md
 specification-driven-agent-development.md
 spectrum-of-control-blended-initiative.md
+tool-capability-compartmentalization.md
+versioned-constitution-governance.md
 
 # Previous patterns (no longer new):
 agent-driven-research.md
