@@ -39,62 +39,64 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Context & Memory
 
-- [Context-Minimization Pattern](patterns/context-minimization-pattern.md) <span class='new-badge'>NEW</span>
+- [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
 - [Curated Context Window](patterns/curated-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
-- [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md) <span class='new-badge'>NEW</span>
+- [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
 
 ### <a name="-"></a>Feedback Loops
 
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
-- [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md) <span class='new-badge'>NEW</span>
+- [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md)
+- [Reflection Loop](patterns/reflection.md) <span class='new-badge'>NEW</span>
 - [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md)
-- [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md) <span class='new-badge'>NEW</span>
-- [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md) <span class='new-badge'>NEW</span>
+- [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md)
+- [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md)
 
 ### <a name="-"></a>Orchestration & Control
 
-- [Action-Selector Pattern](patterns/action-selector-pattern.md) <span class='new-badge'>NEW</span>
+- [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
-- [Dual LLM Pattern](patterns/dual-llm-pattern.md) <span class='new-badge'>NEW</span>
-- [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md) <span class='new-badge'>NEW</span>
+- [Dual LLM Pattern](patterns/dual-llm-pattern.md)
+- [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
 - [Inversion of Control](patterns/inversion-of-control.md)
 - [Iterative Multi-Agent Brainstorming](patterns/iterative-multi-agent-brainstorming.md)
-- [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md) <span class='new-badge'>NEW</span>
-- [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md) <span class='new-badge'>NEW</span>
-- [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md) <span class='new-badge'>NEW</span>
-- [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md) <span class='new-badge'>NEW</span>
-- [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md) <span class='new-badge'>NEW</span>
+- [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
+- [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
+- [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
+- [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
+- [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Sub-Agent Spawning](patterns/sub-agent-spawning.md)
-- [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md) <span class='new-badge'>NEW</span>
+- [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md)
+- [Tree-of-Thought Reasoning](patterns/tree-of-thought-reasoning.md) <span class='new-badge'>NEW</span>
 
 ### <a name=""></a>Reliability & Eval
 
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
-- [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md) <span class='new-badge'>NEW</span>
+- [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
-- [Versioned Constitution Governance](patterns/versioned-constitution-governance.md) <span class='new-badge'>NEW</span>
+- [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 
 ### <a name="-"></a>Tool Use & Environment
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
-- [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md) <span class='new-badge'>NEW</span>
-- [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md) <span class='new-badge'>NEW</span>
-- [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md) <span class='new-badge'>NEW</span>
-- [LLM-Friendly API Design](patterns/llm-friendly-api-design.md) <span class='new-badge'>NEW</span>
+- [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
+- [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
+- [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
+- [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 
 ### <a name=""></a>UX & Collaboration
 
-- [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md) <span class='new-badge'>NEW</span>
-- [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md) <span class='new-badge'>NEW</span>
+- [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md)
+- [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md)
 - [Agent-Friendly Workflow Design](patterns/agent-friendly-workflow-design.md)
-- [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md) <span class='new-badge'>NEW</span>
-- [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md) <span class='new-badge'>NEW</span>
+- [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md)
+- [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md)
 - [Verbose Reasoning Transparency](patterns/verbose-reasoning-transparency.md)
 
 <!-- AUTO-GENERATED PATTERNS END -->
