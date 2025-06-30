@@ -40,7 +40,9 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name=""></a>Context & Memory
 
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
+- [Curated Code Context Window](patterns/curated-code-context-window.md)
 - [Curated Context Window](patterns/curated-context-window.md)
+- [Curated File Context Window](patterns/curated-file-context-window.md) <span class='new-badge'>NEW</span>
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
@@ -48,11 +50,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="-"></a>Feedback Loops
 
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
+- [Coding Agent CI Feedback Loop](patterns/coding-agent-ci-feedback-loop.md)
 - [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md)
+- [Inference-Healed Code Review Reward](patterns/inference-healed-code-review-reward.md)
 - [Reflection Loop](patterns/reflection.md) <span class='new-badge'>NEW</span>
 - [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md)
 - [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md)
 - [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md)
+- [Tool Use Incentivization via Reward Shaping](patterns/tool-use-incentivization-via-reward-shaping.md)
 
 ### <a name="-"></a>Orchestration & Control
 
@@ -74,8 +79,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Reliability & Eval
 
+- [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
 - [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md)
+- [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 
@@ -84,9 +91,12 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
+- [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md) <span class='new-badge'>NEW</span>
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
+- [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md)
+- [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 

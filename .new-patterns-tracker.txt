@@ -4,8 +4,10 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-tree-of-thought-reasoning.md
+curated-file-context-window.md
+dynamic-code-injection-on-demand-file-fetch.md
 reflection.md
+tree-of-thought-reasoning.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -14,10 +16,13 @@ agent-assisted-scaffolding.md
 agent-driven-research.md
 agent-friendly-workflow-design.md
 agent-sdk-for-programmatic-control.md
+asynchronous-coding-agent-pipeline.md
 background-agent-ci.md
 cli-native-agent-orchestration.md
 code-then-execute-pattern.md
+coding-agent-ci-feedback-loop.md
 context-minimization-pattern.md
+curated-code-context-window.md
 curated-context-window.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md
 dual-llm-pattern.md
@@ -26,15 +31,18 @@ egress-lockdown-no-exfiltration-channel.md
 episodic-memory-retrieval-injection.md
 explicit-posterior-sampling-planner.md
 extended-coherence-work-sessions.md
+inference-healed-code-review-reward.md
 inversion-of-control.md
 iterative-multi-agent-brainstorming.md
 layered-configuration-context.md
 lethal-trifecta-threat-model.md
 llm-friendly-api-design.md
 llm-map-reduce-pattern.md
+merged-code-language-skill-model.md
 multi-model-orchestration-for-complex-edits.md
 no-token-limit-magic.md
 parallel-tool-execution.md
+patch-steering-via-prompted-tool-selection.md
 plan-then-execute-pattern.md
 rich-feedback-loops.md
 seamless-background-to-foreground-handoff.md
@@ -45,7 +53,9 @@ spec-as-test-feedback-loop.md
 specification-driven-agent-development.md
 spectrum-of-control-blended-initiative.md
 sub-agent-spawning.md
+subagent-compilation-checker.md
 tool-capability-compartmentalization.md
+tool-use-incentivization-via-reward-shaping.md
 tool-use-steering-via-prompting.md
 verbose-reasoning-transparency.md
 versioned-constitution-governance.md
