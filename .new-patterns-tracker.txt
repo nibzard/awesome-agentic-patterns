@@ -4,10 +4,14 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-curated-file-context-window.md
-dynamic-code-injection-on-demand-file-fetch.md
-reflection.md
-tree-of-thought-reasoning.md
+criticgpt-style-evaluation.md
+graph-of-thoughts.md
+inference-time-scaling.md
+language-agent-tree-search-lats.md
+rlaif-reinforcement-learning-from-ai-feedback.md
+self-discover-reasoning-structures.md
+three-stage-perception-architecture.md
+visual-ai-multimodal-integration.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -24,8 +28,10 @@ coding-agent-ci-feedback-loop.md
 context-minimization-pattern.md
 curated-code-context-window.md
 curated-context-window.md
+curated-file-context-window.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md
 dual-llm-pattern.md
+dynamic-code-injection-on-demand-file-fetch.md
 dynamic-context-injection.md
 egress-lockdown-no-exfiltration-channel.md
 episodic-memory-retrieval-injection.md
@@ -44,6 +50,7 @@ no-token-limit-magic.md
 parallel-tool-execution.md
 patch-steering-via-prompted-tool-selection.md
 plan-then-execute-pattern.md
+reflection.md
 rich-feedback-loops.md
 seamless-background-to-foreground-handoff.md
 self-critique-evaluator-loop.md
@@ -57,6 +64,7 @@ subagent-compilation-checker.md
 tool-capability-compartmentalization.md
 tool-use-incentivization-via-reward-shaping.md
 tool-use-steering-via-prompting.md
+tree-of-thought-reasoning.md
 verbose-reasoning-transparency.md
 versioned-constitution-governance.md
 virtual-machine-operator-agent.md
