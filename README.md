@@ -54,12 +54,12 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
 - [Coding Agent CI Feedback Loop](patterns/coding-agent-ci-feedback-loop.md)
 - [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md)
-- [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md) <span class='new-badge'>NEW</span>
+- [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md)
 - [Inference-Healed Code Review Reward](patterns/inference-healed-code-review-reward.md)
 - [Reflection Loop](patterns/reflection.md)
 - [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md)
 - [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md)
-- [Self-Discover: LLM Self-Composed Reasoning Structures](patterns/self-discover-reasoning-structures.md) <span class='new-badge'>NEW</span>
+- [Self-Discover: LLM Self-Composed Reasoning Structures](patterns/self-discover-reasoning-structures.md)
 - [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md)
 - [Tool Use Incentivization via Reward Shaping](patterns/tool-use-incentivization-via-reward-shaping.md)
 
@@ -70,29 +70,30 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
-- [Inference-Time Scaling](patterns/inference-time-scaling.md) <span class='new-badge'>NEW</span>
+- [Inference-Time Scaling](patterns/inference-time-scaling.md)
 - [Inversion of Control](patterns/inversion-of-control.md)
 - [Iterative Multi-Agent Brainstorming](patterns/iterative-multi-agent-brainstorming.md)
-- [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md) <span class='new-badge'>NEW</span>
+- [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
+- [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md) <span class='new-badge'>NEW</span>
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Sub-Agent Spawning](patterns/sub-agent-spawning.md)
-- [Three-Stage Perception Architecture](patterns/three-stage-perception-architecture.md) <span class='new-badge'>NEW</span>
+- [Three-Stage Perception Architecture](patterns/three-stage-perception-architecture.md)
 - [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md)
 - [Tree-of-Thought Reasoning](patterns/tree-of-thought-reasoning.md)
 
 ### <a name=""></a>Reliability & Eval
 
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
-- [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md) <span class='new-badge'>NEW</span>
+- [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
 - [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md)
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
-- [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md) <span class='new-badge'>NEW</span>
+- [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 
 ### <a name="-"></a>Tool Use & Environment
@@ -108,7 +109,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
-- [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md) <span class='new-badge'>NEW</span>
+- [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md)
 
 ### <a name=""></a>UX & Collaboration
 

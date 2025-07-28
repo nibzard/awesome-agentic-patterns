@@ -186,7 +186,7 @@ def collect_patterns(patterns_dir):
     patterns = []
     default_category = "Uncategorized"
     for fname in sorted(os.listdir(patterns_dir)):
-        if not fname.lower().endswith('.md'):
+        if not fname.lower().endswith('.md') or fname == 'TEMPLATE.md':
             continue
         full = os.path.join(patterns_dir, fname)
         meta = parse_front_matter(full)

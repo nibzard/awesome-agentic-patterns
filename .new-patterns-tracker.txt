@@ -4,14 +4,7 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-criticgpt-style-evaluation.md
-graph-of-thoughts.md
-inference-time-scaling.md
-language-agent-tree-search-lats.md
-rlaif-reinforcement-learning-from-ai-feedback.md
-self-discover-reasoning-structures.md
-three-stage-perception-architecture.md
-visual-ai-multimodal-integration.md
+oracle-and-worker-multi-model.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -26,6 +19,7 @@ cli-native-agent-orchestration.md
 code-then-execute-pattern.md
 coding-agent-ci-feedback-loop.md
 context-minimization-pattern.md
+criticgpt-style-evaluation.md
 curated-code-context-window.md
 curated-context-window.md
 curated-file-context-window.md
@@ -37,9 +31,12 @@ egress-lockdown-no-exfiltration-channel.md
 episodic-memory-retrieval-injection.md
 explicit-posterior-sampling-planner.md
 extended-coherence-work-sessions.md
+graph-of-thoughts.md
 inference-healed-code-review-reward.md
+inference-time-scaling.md
 inversion-of-control.md
 iterative-multi-agent-brainstorming.md
+language-agent-tree-search-lats.md
 layered-configuration-context.md
 lethal-trifecta-threat-model.md
 llm-friendly-api-design.md
@@ -52,8 +49,10 @@ patch-steering-via-prompted-tool-selection.md
 plan-then-execute-pattern.md
 reflection.md
 rich-feedback-loops.md
+rlaif-reinforcement-learning-from-ai-feedback.md
 seamless-background-to-foreground-handoff.md
 self-critique-evaluator-loop.md
+self-discover-reasoning-structures.md
 self-rewriting-meta-prompt-loop.md
 shell-command-contextualization.md
 spec-as-test-feedback-loop.md
@@ -61,6 +60,7 @@ specification-driven-agent-development.md
 spectrum-of-control-blended-initiative.md
 sub-agent-spawning.md
 subagent-compilation-checker.md
+three-stage-perception-architecture.md
 tool-capability-compartmentalization.md
 tool-use-incentivization-via-reward-shaping.md
 tool-use-steering-via-prompting.md
@@ -68,3 +68,4 @@ tree-of-thought-reasoning.md
 verbose-reasoning-transparency.md
 versioned-constitution-governance.md
 virtual-machine-operator-agent.md
+visual-ai-multimodal-integration.md
