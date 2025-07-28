@@ -41,3 +41,28 @@
         margin-left: 4px;
     }
 }
+
+/* Footer styling for copyright and maintainer info */
+.md-footer-copyright {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.md-footer-copyright__highlight {
+    margin-right: auto;
+}
+
+/* Responsive footer adjustments */
+@media (max-width: 768px) {
+    .md-footer-copyright {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .md-footer-copyright__highlight {
+        margin-right: 0;
+    }
+}
