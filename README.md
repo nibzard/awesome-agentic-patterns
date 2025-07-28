@@ -1,5 +1,7 @@
 # Awesome Agentic Patterns [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
+![Awesome Agentic Patterns](agentic-patterns.jpeg)
+
 A curated catalogue of **agentic AI patterns** — real‑world tricks, workflows, and mini‑architectures that help autonomous or semi‑autonomous AI agents get useful work done in production.
 
 > **Why?**
