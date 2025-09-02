@@ -76,7 +76,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
-- [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md) <span class='new-badge'>NEW</span>
+- [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
@@ -95,6 +95,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
+
+### <a name=""></a>Security & Safety
+
+- [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md) <span class='new-badge'>NEW</span>
 
 ### <a name="-"></a>Tool Use & Environment
 

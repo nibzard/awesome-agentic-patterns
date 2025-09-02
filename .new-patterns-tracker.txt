@@ -4,7 +4,7 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-oracle-and-worker-multi-model.md
+deterministic-security-scanning-build-loop.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -44,6 +44,7 @@ llm-map-reduce-pattern.md
 merged-code-language-skill-model.md
 multi-model-orchestration-for-complex-edits.md
 no-token-limit-magic.md
+oracle-and-worker-multi-model.md
 parallel-tool-execution.md
 patch-steering-via-prompted-tool-selection.md
 plan-then-execute-pattern.md
