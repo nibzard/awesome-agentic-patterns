@@ -65,6 +65,7 @@ graph TD
 ## How to use it
 
 **Ideal Use Cases:**
+
 - Model training and evaluation pipelines
 - Infrastructure provisioning and configuration
 - Multi-stage deployment workflows  
@@ -72,6 +73,7 @@ graph TD
 - Data processing and ETL pipelines
 
 **Prerequisites:**
+
 - Containerization platform (Docker/Podman)
 - Agent framework with tool use capabilities (OpenHands, Claude Code)
 - Workflow definition and documentation system
@@ -116,6 +118,7 @@ class WorkflowAgent:
 ## Trade-offs
 
 **Pros:**
+
 - **Significant Speedup**: 1.22x-1.37x improvement in token processing and workflow execution
 - **Reduced Human Intervention**: Agents can handle most routine workflow steps autonomously
 - **Consistent Execution**: Eliminates human error in repetitive tasks
@@ -124,6 +127,7 @@ class WorkflowAgent:
 - **Recovery Capability**: Intelligent error handling reduces workflow failures
 
 **Cons:**
+
 - **Limited Novel Failure Handling**: Agents may struggle with completely unprecedented error scenarios
 - **Context Window Constraints**: Long-running workflows may exceed agent context limits
 - **Setup Complexity**: Initial configuration of containers and monitoring requires significant investment
