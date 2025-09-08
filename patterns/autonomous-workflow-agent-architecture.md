@@ -24,6 +24,7 @@ Engineers spend significant time on operational overhead rather than core develo
 Autonomous Workflow Agent Architecture creates AI agents with sophisticated workflow management capabilities that can handle multi-step engineering processes with minimal human intervention. The architecture combines:
 
 **Core Components:**
+
 - **Containerized Execution Environments**: Isolated, reproducible environments for safe workflow execution
 - **Session Management**: tmux-based parallel process coordination
 - **Intelligent Monitoring**: Adaptive wait/sleep mechanisms and progress tracking  
