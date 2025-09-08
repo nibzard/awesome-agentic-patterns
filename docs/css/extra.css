@@ -66,3 +66,42 @@
         margin-right: 0;
     }
 }
+
+/* Pattern source link styling */
+.pattern-source {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 0.9em;
+}
+
+.pattern-source strong {
+    color: #495057;
+    margin-right: 8px;
+}
+
+.pattern-source a {
+    color: #007bff;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.pattern-source a:hover {
+    text-decoration: underline;
+}
+
+/* Dark mode support for pattern source */
+[data-md-color-scheme="slate"] .pattern-source {
+    background: #2d3748;
+    border-color: #4a5568;
+}
+
+[data-md-color-scheme="slate"] .pattern-source strong {
+    color: #e2e8f0;
+}
+
+[data-md-color-scheme="slate"] .pattern-source a {
+    color: #63b3ed;
+}

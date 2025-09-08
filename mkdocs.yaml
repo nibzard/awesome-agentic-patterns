@@ -50,6 +50,7 @@ nav:
       - "Orchestration & Control":
           - "Action-Selector Pattern": "patterns/action-selector-pattern.md"
           - "Agent-Driven Research": "patterns/agent-driven-research.md"
+          - "Autonomous Workflow Agent Architecture <span class='new-badge'>NEW</span>": "patterns/autonomous-workflow-agent-architecture.md"
           - "Conditional Parallel Tool Execution": "patterns/parallel-tool-execution.md"
           - "Dual LLM Pattern": "patterns/dual-llm-pattern.md"
           - "Explicit Posterior-Sampling Planner": "patterns/explicit-posterior-sampling-planner.md"
@@ -77,7 +78,7 @@ nav:
           - "RLAIF (Reinforcement Learning from AI Feedback)": "patterns/rlaif-reinforcement-learning-from-ai-feedback.md"
           - "Versioned Constitution Governance": "patterns/versioned-constitution-governance.md"
       - "Security & Safety":
-          - "Deterministic Security Scanning Build Loop <span class='new-badge'>NEW</span>": "patterns/deterministic-security-scanning-build-loop.md"
+          - "Deterministic Security Scanning Build Loop": "patterns/deterministic-security-scanning-build-loop.md"
       - "Tool Use & Environment":
           - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
           - "CLI-Native Agent Orchestration": "patterns/cli-native-agent-orchestration.md"

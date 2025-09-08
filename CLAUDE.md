@@ -56,3 +56,7 @@ The project has a unique architecture where pattern documentation drives the ent
 - Always run `python scripts/build_readme.py` after adding/modifying patterns
 - The README.md patterns section is auto-generated - do not edit manually between the HTML comment markers
 - Pattern files support Mermaid diagrams for visualizing architectural concepts
+
+## Deployment
+
+- For deployment instructions first read DEPLOYMENT.md

@@ -4,7 +4,7 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-deterministic-security-scanning-build-loop.md
+autonomous-workflow-agent-architecture.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -23,6 +23,7 @@ criticgpt-style-evaluation.md
 curated-code-context-window.md
 curated-context-window.md
 curated-file-context-window.md
+deterministic-security-scanning-build-loop.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md
 dual-llm-pattern.md
 dynamic-code-injection-on-demand-file-fetch.md

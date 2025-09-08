@@ -67,6 +67,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
+- [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md) <span class='new-badge'>NEW</span>
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
@@ -98,7 +99,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Security & Safety
 
-- [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md) <span class='new-badge'>NEW</span>
+- [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
 
 ### <a name="-"></a>Tool Use & Environment
 
