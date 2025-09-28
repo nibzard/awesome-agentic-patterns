@@ -1,33 +1,68 @@
 ---
-title: "Code-First Tool Interface Pattern"
+title: "Code Mode MCP Tool Interface Improvement Pattern"
 status: "Established"
 authors: ["Cloudflare Team"]
 category: "Tool Use & Environment"
 source_link: "https://blog.cloudflare.com/code-mode/"
-tags: [tool-interface, code-generation, sandboxing, mcp, typescript, v8-isolates]
+tags: [tool-interface, code-generation, sandboxing, mcp, mcp-improvement, typescript, v8-isolates, token-optimization]
 ---
 
 ## Problem
 
-Traditional Model Context Protocol (MCP) approaches of directly exposing tools to Large Language Models have significant limitations:
+Traditional Model Context Protocol (MCP) approaches of directly exposing tools to Large Language Models create significant token waste and complexity issues:
 
+### Token Waste in Multi-Step Operations
+Classic MCP forces this inefficient pattern:
+```
+LLM → tool #1 → large JSON response → LLM context
+LLM → tool #2 → large JSON response → LLM context
+LLM → tool #3 → large JSON response → LLM context
+→ final answer
+```
+
+Every intermediate result must ride back through the model's context, burning tokens and adding latency at each step. For complex workflows requiring 5-10 tool calls, this becomes extremely expensive.
+
+### Core Interface Limitations
 - LLMs struggle to effectively use complex tool interfaces
 - Limited training data on "tool calls" compared to abundant code training
 - Multi-step tool interactions become cumbersome with direct API calls
 - Complex tool compositions require multiple back-and-forth exchanges
 
-The fundamental issue: **LLMs are better at writing code to call MCP, than at calling MCP directly.**
+The fundamental insight: **LLMs are better at writing code to orchestrate MCP tools than calling MCP tools directly.**
 
 ## Solution
 
-Transform tool interfaces into programmable APIs that LLMs can code against, rather than requiring direct tool invocation:
+Code Mode complements (not replaces) MCP servers by adding an ephemeral execution layer that eliminates token-heavy round-trips:
 
-1. **API Transformation**: Convert MCP tools into TypeScript API interfaces
-2. **Code Generation**: Allow the LLM to generate code that calls these APIs to solve tasks
-3. **Sandboxed Execution**: Use V8 isolates as lightweight, secure execution environments
-4. **Controlled Bindings**: Provide predefined bindings that give access to specific resources without general network access
+### The Division of Responsibilities
 
-This approach leverages LLMs' strength in code generation while maintaining security and control.
+**MCP Servers Handle (Persistent Layer):**
+
+- Credential management and authentication
+- Rate limiting and quota enforcement
+- Webhook subscriptions and real-time events
+- Connection pooling and persistent state
+- API secrets and security policies
+
+**Code Mode Handles (Ephemeral Layer):**
+
+- Multi-step tool orchestration in a single execution
+- Complex data transformations and business logic
+- Eliminating intermediate JSON bloat from LLM context
+- "Write once, vaporize immediately" execution model
+
+### Core Architecture
+
+1. **Schema Discovery**: Agents SDK fetches MCP server schemas dynamically at runtime
+2. **API Transformation**: Convert MCP tool schemas into TypeScript API interfaces with doc comments
+3. **LLM Tool Awareness**: LLM receives complete TypeScript API documentation for available tools
+4. **Ephemeral Code Generation**: LLM generates code that orchestrates multiple tool calls in one script
+5. **V8 Isolate Execution**: Lightweight, secure sandbox that dies after execution (no persistent state)
+6. **Controlled Bindings**: Secure bridges to MCP servers that own the real credentials and logic
+
+**Key Insight**: The LLM knows what code to write because it receives the complete TypeScript API generated from MCP server schemas, not because it guesses - it's provided with strongly-typed interfaces and documentation.
+
+This creates a "best of both worlds" approach: MCP servers handle the operational complexity while Code Mode eliminates the chatty, token-expensive parts of multi-step workflows.
 
 ## Example
 
@@ -35,21 +70,43 @@ This approach leverages LLMs' strength in code generation while maintaining secu
 sequenceDiagram
     participant User
     participant LLM
-    participant V8Sandbox as V8 Isolate
-    participant Bindings
-    participant Tools as External Tools
+    participant AgentsSDK as Agents SDK
+    participant V8Isolate as V8 Isolate<br/>(Ephemeral)
+    participant Bindings as Secure Bindings
+    participant MCPServer as MCP Server<br/>(Persistent)
+    participant ExternalAPIs as External APIs
 
     User->>LLM: "Analyze website traffic and send summary"
-    LLM->>V8Sandbox: Generate TypeScript code
-    Note over V8Sandbox: const analytics = await getAnalytics()<br/>const summary = analyzeTraffic(analytics)<br/>await sendEmail(summary)
-    V8Sandbox->>Bindings: Execute getAnalytics()
-    Bindings->>Tools: Fetch analytics data
-    Tools-->>Bindings: Return data
-    Bindings-->>V8Sandbox: Controlled data access
-    V8Sandbox->>Bindings: Execute sendEmail()
-    Bindings->>Tools: Send via email API
-    V8Sandbox-->>LLM: Execution results
+
+    Note over AgentsSDK,MCPServer: Tool Discovery Phase
+    AgentsSDK->>MCPServer: Fetch MCP schema
+    MCPServer-->>AgentsSDK: Return tool schemas
+    AgentsSDK->>AgentsSDK: Convert schemas to TypeScript APIs<br/>with doc comments
+    AgentsSDK-->>LLM: Provide TypeScript API interfaces:<br/>getAnalytics(), sendEmail(), etc.
+
+    Note over LLM,V8Isolate: Code Generation & Execution Phase
+    LLM->>V8Isolate: Generate & execute TypeScript code
+    Note over V8Isolate: const analytics = await getAnalytics()<br/>const summary = analyzeTraffic(analytics)<br/>await sendEmail(summary)
+
+    V8Isolate->>Bindings: Execute getAnalytics()
+    Bindings->>MCPServer: Authenticated request
+    MCPServer->>ExternalAPIs: Fetch analytics (with creds)
+    ExternalAPIs-->>MCPServer: Analytics data
+    MCPServer-->>Bindings: Processed data
+    Bindings-->>V8Isolate: Return analytics
+
+    V8Isolate->>Bindings: Execute sendEmail()
+    Bindings->>MCPServer: Send email request
+    MCPServer->>ExternalAPIs: Send via email API (with creds)
+    ExternalAPIs-->>MCPServer: Success confirmation
+    MCPServer-->>Bindings: Email sent
+    Bindings-->>V8Isolate: Success
+
+    V8Isolate-->>LLM: Final execution results (condensed)
+    Note over V8Isolate: 💀 Isolate destroyed<br/>Memory cleared
     LLM-->>User: Task completed with summary
+
+    Note over LLM: 🎯 Single prompt, single response<br/>No intermediate JSON bloat
 ```
 
 ## How to use it
@@ -63,21 +120,52 @@ sequenceDiagram
    - Bindings provide controlled access to tools
    - Results return to the agent for further processing
 
+## Traditional MCP vs Code Mode Comparison
+
+### Traditional MCP Flow
+```
+User Request → LLM
+↓
+Tool Call #1 → JSON Response (1000+ tokens) → LLM Context
+↓
+Tool Call #2 → JSON Response (1000+ tokens) → LLM Context
+↓
+Tool Call #3 → JSON Response (1000+ tokens) → LLM Context
+↓
+Final Answer (Context bloated with intermediate data)
+```
+
+**Cost:** High token usage, multiple round-trips, latency accumulation
+
+### Code Mode Flow
+```
+User Request → LLM → Generated Code → V8 Isolate
+                                    ↓
+                                    All tool calls internally
+                                    ↓
+                                    Condensed results → LLM
+                                    ↓
+                                    Final Answer
+```
+
+**Cost:** Single round-trip, minimal token usage, faster execution
+
 ## Trade-offs
 
 **Pros:**
-- LLMs can handle significantly more complex tool interactions
-- More efficient multi-step operations in single code blocks
-- Better security through controlled execution environments
-- No API keys or secrets exposed to the LLM
-- Leverages LLMs' strong code generation capabilities
+
+- **Dramatic token savings** on multi-step workflows (10x+ reduction)
+- **Faster execution** through elimination of round-trips
+- **Enhanced security** - credentials stay in MCP servers, never in LLM
+- **Complex orchestration** - LLMs excel at writing orchestration code
+- **Maintained MCP benefits** - existing servers work without modification
 
 **Cons/Considerations:**
-- Requires more sophisticated infrastructure than direct tool calling
-- Adds complexity to agent architecture and deployment
-- Depends on LLM's code generation quality and debugging capabilities
-- Need to design intuitive APIs for code generation
-- Additional overhead of code compilation and execution
+
+- **Infrastructure complexity** - requires V8 isolate runtime infrastructure
+- **Code quality dependency** - execution success depends on LLM's code generation
+- **Debugging challenges** - runtime errors in generated code need handling
+- **API design overhead** - need intuitive TypeScript interfaces for code generation
 
 ## References
 

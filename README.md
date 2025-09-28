@@ -107,7 +107,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md) <span class='new-badge'>NEW</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
-- [Code-First Tool Interface Pattern](patterns/code-first-tool-interface-pattern.md) <span class='new-badge'>NEW</span>
+- [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md) <span class='new-badge'>NEW</span>
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)

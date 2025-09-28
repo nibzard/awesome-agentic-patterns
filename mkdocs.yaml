@@ -15,6 +15,8 @@ theme:
   palette:
     primary: blue
     accent: green
+  features:
+    - navigation.expand
 copyright: 'Maintained by <a href="https://nibzard.com/" target="_blank">@nibzard</a>'
 extra:
   social:
@@ -84,7 +86,7 @@ nav:
           - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
           - "Agent-First Tooling and Logging <span class='new-badge'>NEW</span>": "patterns/agent-first-tooling-and-logging.md"
           - "CLI-Native Agent Orchestration": "patterns/cli-native-agent-orchestration.md"
-          - "Code-First Tool Interface Pattern <span class='new-badge'>NEW</span>": "patterns/code-first-tool-interface-pattern.md"
+          - "Code Mode MCP Tool Interface Improvement Pattern <span class='new-badge'>NEW</span>": "patterns/code-first-tool-interface-pattern.md"
           - "Code-Then-Execute Pattern": "patterns/code-then-execute-pattern.md"
           - "Dynamic Code Injection (On-Demand File Fetch)": "patterns/dynamic-code-injection-on-demand-file-fetch.md"
           - "Egress Lockdown (No-Exfiltration Channel)": "patterns/egress-lockdown-no-exfiltration-channel.md"
