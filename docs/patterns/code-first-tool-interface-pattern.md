@@ -65,19 +65,19 @@ sequenceDiagram
 
 ## Trade-offs
 
-- **Pros:**
-  - LLMs can handle significantly more complex tool interactions
-  - More efficient multi-step operations in single code blocks
-  - Better security through controlled execution environments
-  - No API keys or secrets exposed to the LLM
-  - Leverages LLMs' strong code generation capabilities
+**Pros:**
+- LLMs can handle significantly more complex tool interactions
+- More efficient multi-step operations in single code blocks
+- Better security through controlled execution environments
+- No API keys or secrets exposed to the LLM
+- Leverages LLMs' strong code generation capabilities
 
-- **Cons/Considerations:**
-  - Requires more sophisticated infrastructure than direct tool calling
-  - Adds complexity to agent architecture and deployment
-  - Depends on LLM's code generation quality and debugging capabilities
-  - Need to design intuitive APIs for code generation
-  - Additional overhead of code compilation and execution
+**Cons/Considerations:**
+- Requires more sophisticated infrastructure than direct tool calling
+- Adds complexity to agent architecture and deployment
+- Depends on LLM's code generation quality and debugging capabilities
+- Need to design intuitive APIs for code generation
+- Additional overhead of code compilation and execution
 
 ## References
 

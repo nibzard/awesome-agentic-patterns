@@ -7,6 +7,7 @@ site_link:
 	cp $(CURDIR)/CONTRIBUTING.md $(CURDIR)/docs/CONTRIBUTING.md
 	cp $(CURDIR)/LICENSE $(CURDIR)/docs/LICENSE
 	cp $(CURDIR)/TEMPLATE.md $(CURDIR)/docs/TEMPLATE.md
+	cp $(CURDIR)/agentic-patterns.jpeg $(CURDIR)/docs/agentic-patterns.jpeg
 	mkdir -p $(CURDIR)/docs/patterns
 	cp -R $(CURDIR)/patterns/* $(CURDIR)/docs/patterns/
 

@@ -4,7 +4,10 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
+agent-first-tooling-and-logging.md
+code-first-tool-interface-pattern.md
 continuous-autonomous-task-loop-pattern.md
+disposable-scaffolding-over-durable-features.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -17,7 +20,6 @@ asynchronous-coding-agent-pipeline.md
 autonomous-workflow-agent-architecture.md
 background-agent-ci.md
 cli-native-agent-orchestration.md
-code-first-tool-interface-pattern.md
 code-then-execute-pattern.md
 coding-agent-ci-feedback-loop.md
 context-minimization-pattern.md

@@ -52,6 +52,7 @@ nav:
           - "Autonomous Workflow Agent Architecture": "patterns/autonomous-workflow-agent-architecture.md"
           - "Conditional Parallel Tool Execution": "patterns/parallel-tool-execution.md"
           - "Continuous Autonomous Task Loop Pattern <span class='new-badge'>NEW</span>": "patterns/continuous-autonomous-task-loop-pattern.md"
+          - "Disposable Scaffolding Over Durable Features <span class='new-badge'>NEW</span>": "patterns/disposable-scaffolding-over-durable-features.md"
           - "Dual LLM Pattern": "patterns/dual-llm-pattern.md"
           - "Explicit Posterior-Sampling Planner": "patterns/explicit-posterior-sampling-planner.md"
           - "Inference-Time Scaling": "patterns/inference-time-scaling.md"
@@ -81,8 +82,9 @@ nav:
           - "Deterministic Security Scanning Build Loop": "patterns/deterministic-security-scanning-build-loop.md"
       - "Tool Use & Environment":
           - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
+          - "Agent-First Tooling and Logging <span class='new-badge'>NEW</span>": "patterns/agent-first-tooling-and-logging.md"
           - "CLI-Native Agent Orchestration": "patterns/cli-native-agent-orchestration.md"
-          - "Code-First Tool Interface Pattern": "patterns/code-first-tool-interface-pattern.md"
+          - "Code-First Tool Interface Pattern <span class='new-badge'>NEW</span>": "patterns/code-first-tool-interface-pattern.md"
           - "Code-Then-Execute Pattern": "patterns/code-then-execute-pattern.md"
           - "Dynamic Code Injection (On-Demand File Fetch)": "patterns/dynamic-code-injection-on-demand-file-fetch.md"
           - "Egress Lockdown (No-Exfiltration Channel)": "patterns/egress-lockdown-no-exfiltration-channel.md"

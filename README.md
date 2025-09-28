@@ -69,6 +69,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md) <span class='new-badge'>NEW</span>
+- [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md) <span class='new-badge'>NEW</span>
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
 - [Inference-Time Scaling](patterns/inference-time-scaling.md)
@@ -104,8 +105,9 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="-"></a>Tool Use & Environment
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
+- [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md) <span class='new-badge'>NEW</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
-- [Code-First Tool Interface Pattern](patterns/code-first-tool-interface-pattern.md)
+- [Code-First Tool Interface Pattern](patterns/code-first-tool-interface-pattern.md) <span class='new-badge'>NEW</span>
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
