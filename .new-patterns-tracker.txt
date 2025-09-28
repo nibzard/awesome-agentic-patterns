@@ -4,7 +4,7 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-autonomous-workflow-agent-architecture.md
+continuous-autonomous-task-loop-pattern.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
@@ -14,14 +14,15 @@ agent-driven-research.md
 agent-friendly-workflow-design.md
 agent-sdk-for-programmatic-control.md
 asynchronous-coding-agent-pipeline.md
+autonomous-workflow-agent-architecture.md
 background-agent-ci.md
 cli-native-agent-orchestration.md
+code-first-tool-interface-pattern.md
 code-then-execute-pattern.md
 coding-agent-ci-feedback-loop.md
 context-minimization-pattern.md
 criticgpt-style-evaluation.md
 curated-code-context-window.md
-curated-context-window.md
 curated-file-context-window.md
 deterministic-security-scanning-build-loop.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md

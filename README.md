@@ -1,6 +1,6 @@
 # Awesome Agentic Patterns [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-![Awesome Agentic Patterns](agentic-patterns.jpeg)
+![Awesome Agentic Patterns](/agentic-patterns.jpeg)
 
 A curated catalogue of **agentic AI patterns** — real‑world tricks, workflows, and mini‑architectures that help autonomous or semi‑autonomous AI agents get useful work done in production.
 
@@ -43,7 +43,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
 - [Curated Code Context Window](patterns/curated-code-context-window.md)
-- [Curated Context Window](patterns/curated-context-window.md)
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
@@ -67,8 +66,9 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
-- [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md) <span class='new-badge'>NEW</span>
+- [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
+- [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md) <span class='new-badge'>NEW</span>
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
 - [Inference-Time Scaling](patterns/inference-time-scaling.md)
@@ -105,6 +105,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
+- [Code-First Tool Interface Pattern](patterns/code-first-tool-interface-pattern.md)
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)

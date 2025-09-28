@@ -1,7 +1,7 @@
 ---
 title: "Curated Code Context Window"
-status: "Established"
-authors: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
+status: "Established | Validated-in-Production"
+authors: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)", "Thorsten Ball"]
 category: "Context & Memory"
 source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [context-management, code-agent, file-selection, noise-reduction]
@@ -16,7 +16,7 @@ Loading **all source files** or dumping entire repositories into the agent's con
 
 ## Solution
 
-Maintain a **minimal, high-signal code context** for the main coding agent by:
+Maintain a **minimal, high-signal code context** (keeping the context "sterile") for the main coding agent by:
 
 **1. Context Sterilization**
 - Exclude unrelated modules (e.g., test utilities when working on a UI component).
@@ -60,3 +60,4 @@ sequenceDiagram
 
 - "Context is sacred" principle from the Open Source Agent RL talk (May 2025).
 - Will Brown's commentary on "avoiding blowing up your context length" for long-horizon tasks.
+- [Thorsten Ball's "Raising An Agent - Episode 3"](https://www.nibzard.com/ampcode) - Production-validated implementation of dedicated search agent pattern.

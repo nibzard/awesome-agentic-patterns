@@ -23,14 +23,13 @@ extra:
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/nibzard
 extra_css:
-    - css/extra.css
+    - /css/extra.css
 nav:
   - "Context is short, you need patterns.": "index.md"
   - Patterns:
       - "Context & Memory":
           - "Context-Minimization Pattern": "patterns/context-minimization-pattern.md"
           - "Curated Code Context Window": "patterns/curated-code-context-window.md"
-          - "Curated Context Window": "patterns/curated-context-window.md"
           - "Curated File Context Window": "patterns/curated-file-context-window.md"
           - "Dynamic Context Injection": "patterns/dynamic-context-injection.md"
           - "Episodic Memory Retrieval & Injection": "patterns/episodic-memory-retrieval-injection.md"
@@ -50,8 +49,9 @@ nav:
       - "Orchestration & Control":
           - "Action-Selector Pattern": "patterns/action-selector-pattern.md"
           - "Agent-Driven Research": "patterns/agent-driven-research.md"
-          - "Autonomous Workflow Agent Architecture <span class='new-badge'>NEW</span>": "patterns/autonomous-workflow-agent-architecture.md"
+          - "Autonomous Workflow Agent Architecture": "patterns/autonomous-workflow-agent-architecture.md"
           - "Conditional Parallel Tool Execution": "patterns/parallel-tool-execution.md"
+          - "Continuous Autonomous Task Loop Pattern <span class='new-badge'>NEW</span>": "patterns/continuous-autonomous-task-loop-pattern.md"
           - "Dual LLM Pattern": "patterns/dual-llm-pattern.md"
           - "Explicit Posterior-Sampling Planner": "patterns/explicit-posterior-sampling-planner.md"
           - "Inference-Time Scaling": "patterns/inference-time-scaling.md"
@@ -82,6 +82,7 @@ nav:
       - "Tool Use & Environment":
           - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
           - "CLI-Native Agent Orchestration": "patterns/cli-native-agent-orchestration.md"
+          - "Code-First Tool Interface Pattern": "patterns/code-first-tool-interface-pattern.md"
           - "Code-Then-Execute Pattern": "patterns/code-then-execute-pattern.md"
           - "Dynamic Code Injection (On-Demand File Fetch)": "patterns/dynamic-code-injection-on-demand-file-fetch.md"
           - "Egress Lockdown (No-Exfiltration Channel)": "patterns/egress-lockdown-no-exfiltration-channel.md"
