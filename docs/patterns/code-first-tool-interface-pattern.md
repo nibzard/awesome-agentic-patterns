@@ -119,10 +119,6 @@ Code Mode struggles with problems where you decide at each step what to even do 
 
 Right now, Code Mode especially fails at cases where intelligence needs to be _inserted in the middle of code_. Example: A spreadsheet with 100 emails where you want to write a *personalized* email for each entry. The `body` argument for that `send_email` call must be computed using LLM for personalization.
 
-**Sub-Agent Patterns:**
-
-You can shim intelligence mid-execution with sub-agents ("call llm() inside the loop"), but then you're back to traditional agenting, just wrapped in TypeScript—defeating the core benefits.
-
 **Highly Dynamic Workflows:**
 
 When the sequence of operations depends heavily on intermediate results in unpredictable ways, traditional MCP's step-by-step approach may be more appropriate.
@@ -280,75 +276,6 @@ User Request → LLM → Generated Code → V8 Isolate
 - ❌ **Intelligence mid-flow** - Need LLM reasoning between each tool call
 - ❌ **Simple single calls** - One-off tool usage doesn't need orchestration
 - ❌ **Rapid prototyping** - Quick testing without infrastructure setup
-
-### Patterns for Robust Implementation
-
-**Idempotency with State Stores:**
-
-```typescript
-// Checkpoint pattern using KV store
-const workflowId = generateId();
-const checkpoint = await kv.get(`workflow:${workflowId}`);
-
-if (checkpoint) {
-  // Resume from last successful step
-  return resumeFrom(checkpoint.lastStep);
-}
-
-try {
-  const step1 = await createVPC();
-  await kv.set(`workflow:${workflowId}`, {lastStep: 'vpc', data: step1});
-
-  const step2 = await createSecurityGroup(step1.vpcId);
-  await kv.set(`workflow:${workflowId}`, {lastStep: 'sg', data: {step1, step2}});
-
-  // Continue workflow...
-} catch (error) {
-  // Workflow can be resumed from last checkpoint
-  throw new RecoverableError(workflowId, error);
-}
-```
-
-**Typed API Design for LLM Consumption:**
-
-```typescript
-/**
- * Creates an EC2 instance with specified configuration
- * @param config Instance configuration
- * @returns Instance details including connection info
- */
-async function launchInstance(config: {
-  type: 'm4.large' | 'm5.large' | 't3.medium';  // Constrained choices
-  vpcId: string;                                 // Clear dependencies
-  tags: Record<string, string>;                  // Structured metadata
-}): Promise<{
-  instanceId: string;
-  publicIP: string;
-  sshCommand: string;  // Ready-to-use connection string
-}> {
-  // Implementation handles AWS API complexity
-}
-```
-
-**Error Handling and Recovery:**
-
-```typescript
-// Built-in retry with exponential backoff
-async function robustWorkflow() {
-  const retryableSteps = [
-    () => createVPC(),
-    () => createSecurityGroup(),
-    () => launchInstance()
-  ];
-
-  for (const [index, step] of retryableSteps.entries()) {
-    await retryWithBackoff(step, {
-      maxAttempts: 3,
-      onFailure: (error) => logCheckpoint(index, error)
-    });
-  }
-}
-```
 
 ## References
 
