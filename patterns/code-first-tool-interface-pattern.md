@@ -140,50 +140,75 @@ You can shim intelligence mid-execution with sub-agents ("call llm() inside the 
 
 When the sequence of operations depends heavily on intermediate results in unpredictable ways, traditional MCP's step-by-step approach may be more appropriate.
 
-## Example
+## Example: EC2 Infrastructure Provisioning
+
+**User Request:** "Please provision an EC2 instance of m4 class that I can SSH to, place that in public SG and attach an IPGW, make sure it's tagged nicely"
+
+This demonstrates Code Mode's strength with workflow-like problems:
 
 ```mermaid
 sequenceDiagram
     participant User
     participant LLM
-    participant AgentsSDK as Agents SDK
     participant V8Isolate as V8 Isolate<br/>(Ephemeral)
     participant Bindings as Secure Bindings
-    participant MCPServer as MCP Server<br/>(Persistent)
-    participant ExternalAPIs as External APIs
+    participant MCPServer as MCP Server<br/>(AWS Tools)
+    participant AWS as AWS APIs
 
-    User->>LLM: "Analyze website traffic and send summary"
-
-    Note over AgentsSDK,MCPServer: Tool Discovery Phase
-    AgentsSDK->>MCPServer: Fetch MCP schema
-    MCPServer-->>AgentsSDK: Return tool schemas
-    AgentsSDK->>AgentsSDK: Convert schemas to TypeScript APIs<br/>with doc comments
-    AgentsSDK-->>LLM: Provide TypeScript API interfaces:<br/>getAnalytics(), sendEmail(), etc.
+    User->>LLM: "Provision EC2 m4 instance with SSH access"
 
     Note over LLM,V8Isolate: Code Generation & Execution Phase
-    LLM->>V8Isolate: Generate & execute TypeScript code
-    Note over V8Isolate: const analytics = await getAnalytics()<br/>const summary = analyzeTraffic(analytics)<br/>await sendEmail(summary)
+    LLM->>V8Isolate: Generate TypeScript workflow:<br/>createVPC() → createIGW() → createSG() → launchEC2()
 
-    V8Isolate->>Bindings: Execute getAnalytics()
-    Bindings->>MCPServer: Authenticated request
-    MCPServer->>ExternalAPIs: Fetch analytics (with creds)
-    ExternalAPIs-->>MCPServer: Analytics data
-    MCPServer-->>Bindings: Processed data
-    Bindings-->>V8Isolate: Return analytics
+    Note over V8Isolate: // Generated code orchestrates full workflow<br/>const vpc = await createVPC({name: "demo-vpc"})<br/>const igw = await createInternetGateway(vpc.id)<br/>const sg = await createSecurityGroup(vpc.id, sshRules)<br/>const instance = await launchEC2Instance({<br/>  type: "m4.large", vpcId: vpc.id, sgId: sg.id<br/>})<br/>await tagResources([vpc, igw, sg, instance])
 
-    V8Isolate->>Bindings: Execute sendEmail()
-    Bindings->>MCPServer: Send email request
-    MCPServer->>ExternalAPIs: Send via email API (with creds)
-    ExternalAPIs-->>MCPServer: Success confirmation
-    MCPServer-->>Bindings: Email sent
-    Bindings-->>V8Isolate: Success
+    V8Isolate->>Bindings: Execute createVPC()
+    Bindings->>MCPServer: Create VPC request
+    MCPServer->>AWS: vpc_create API call (with creds)
+    AWS-->>MCPServer: VPC created
+    MCPServer-->>Bindings: VPC details
+    Bindings-->>V8Isolate: Return vpc object
 
-    V8Isolate-->>LLM: Final execution results (condensed)
-    Note over V8Isolate: 💀 Isolate destroyed<br/>Memory cleared
-    LLM-->>User: Task completed with summary
+    V8Isolate->>Bindings: Execute createInternetGateway()
+    Bindings->>MCPServer: Create IGW + attach
+    MCPServer->>AWS: igw_create + attach API calls
+    AWS-->>MCPServer: IGW attached
+    MCPServer-->>Bindings: IGW details
+    Bindings-->>V8Isolate: Return igw object
 
-    Note over LLM: 🎯 Single prompt, single response<br/>No intermediate JSON bloat
+    V8Isolate->>Bindings: Execute remaining workflow
+    Note over Bindings,AWS: Security Group creation<br/>EC2 instance launch<br/>Resource tagging
+    AWS-->>V8Isolate: All resources provisioned
+
+    V8Isolate-->>LLM: {vpcId, instanceId, publicIP, sshCommand}
+    Note over V8Isolate: 💀 Isolate destroyed<br/>Workflow state cleared
+    LLM-->>User: "Infrastructure ready! SSH: ssh -i key.pem ec2-user@54.x.x.x"
+
+    Note over LLM: 🎯 Single workflow execution<br/>6 AWS API calls → 1 condensed result
 ```
+
+## Counter-Example: Personalized Email Campaign
+
+This shows where Code Mode struggles—when intelligence is needed mid-execution:
+
+**Problem:** Generate personalized emails for 100 contacts based on their profiles.
+
+```typescript
+// This approach defeats Code Mode benefits:
+for (const contact of contacts) {
+  // ❌ Requires LLM call inside loop
+  const personalizedBody = await callLLM(`Write personalized email for ${contact.name}
+    who works at ${contact.company} in ${contact.industry}`);
+
+  await sendEmail({
+    to: contact.email,
+    subject: "Partnership Opportunity",
+    body: personalizedBody  // Intelligence needed here
+  });
+}
+```
+
+**Why it fails:** You're back to traditional agenting, just wrapped in TypeScript. Each `callLLM()` requires context round-trips, eliminating Code Mode's token efficiency benefits.
 
 ## How to use it
 
@@ -231,17 +256,112 @@ User Request → LLM → Generated Code → V8 Isolate
 **Pros:**
 
 - **Dramatic token savings** on multi-step workflows (10x+ reduction)
+- **Dramatic fan-out efficiency** - for loops over 100+ entries vs 100+ tool calls (speed + reliability at scale)
 - **Faster execution** through elimination of round-trips
 - **Enhanced security** - credentials stay in MCP servers, never in LLM
 - **Complex orchestration** - LLMs excel at writing orchestration code
+- **CaMeL-style self-debugging** - agents can debug their own homework with error handling and retry logic
+- **Typed verification and semantic caching** - compile-time validation and workflow reuse opportunities
 - **Maintained MCP benefits** - existing servers work without modification
+- **Natural idempotency patterns** - checkpoint/resume capabilities with state stores
 
 **Cons/Considerations:**
 
 - **Infrastructure complexity** - requires V8 isolate runtime infrastructure
 - **Code quality dependency** - execution success depends on LLM's code generation
+- **Poor fit for dynamic research loops** - struggles when next steps are decided dynamically at each stage
+- **Intelligence-in-the-middle challenge** - cases requiring LLM calls mid-execution defeat the purpose
 - **Debugging challenges** - runtime errors in generated code need handling
 - **API design overhead** - need intuitive TypeScript interfaces for code generation
+- **Partial failure complexity** - requires careful design of state management and recovery patterns
+
+## Implementation Guidance
+
+### Decision Tree: Code Mode vs Traditional MCP
+
+**Use Code Mode when:**
+
+- ✅ **Clear workflow sequence** - You can map out the steps upfront
+- ✅ **Fan-out operations** - Processing 10+ items in bulk
+- ✅ **Known API interactions** - Well-defined tool chains
+- ✅ **Performance critical** - Token costs or latency matter
+- ✅ **Error handling needs** - Benefit from retry/checkpoint patterns
+
+**Use Traditional MCP when:**
+
+- ❌ **Dynamic exploration** - Next steps depend on unpredictable intermediate results
+- ❌ **Intelligence mid-flow** - Need LLM reasoning between each tool call
+- ❌ **Simple single calls** - One-off tool usage doesn't need orchestration
+- ❌ **Rapid prototyping** - Quick testing without infrastructure setup
+
+### Patterns for Robust Implementation
+
+**Idempotency with State Stores:**
+
+```typescript
+// Checkpoint pattern using KV store
+const workflowId = generateId();
+const checkpoint = await kv.get(`workflow:${workflowId}`);
+
+if (checkpoint) {
+  // Resume from last successful step
+  return resumeFrom(checkpoint.lastStep);
+}
+
+try {
+  const step1 = await createVPC();
+  await kv.set(`workflow:${workflowId}`, {lastStep: 'vpc', data: step1});
+
+  const step2 = await createSecurityGroup(step1.vpcId);
+  await kv.set(`workflow:${workflowId}`, {lastStep: 'sg', data: {step1, step2}});
+
+  // Continue workflow...
+} catch (error) {
+  // Workflow can be resumed from last checkpoint
+  throw new RecoverableError(workflowId, error);
+}
+```
+
+**Typed API Design for LLM Consumption:**
+
+```typescript
+/**
+ * Creates an EC2 instance with specified configuration
+ * @param config Instance configuration
+ * @returns Instance details including connection info
+ */
+async function launchInstance(config: {
+  type: 'm4.large' | 'm5.large' | 't3.medium';  // Constrained choices
+  vpcId: string;                                 // Clear dependencies
+  tags: Record<string, string>;                  // Structured metadata
+}): Promise<{
+  instanceId: string;
+  publicIP: string;
+  sshCommand: string;  // Ready-to-use connection string
+}> {
+  // Implementation handles AWS API complexity
+}
+```
+
+**Error Handling and Recovery:**
+
+```typescript
+// Built-in retry with exponential backoff
+async function robustWorkflow() {
+  const retryableSteps = [
+    () => createVPC(),
+    () => createSecurityGroup(),
+    () => launchInstance()
+  ];
+
+  for (const [index, step] of retryableSteps.entries()) {
+    await retryWithBackoff(step, {
+      maxAttempts: 3,
+      onFailure: (error) => logCheckpoint(index, error)
+    });
+  }
+}
+```
 
 ## References
 
