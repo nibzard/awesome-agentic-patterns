@@ -41,14 +41,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Context & Memory
 
-- [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
-- [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
+- [Context Window Anxiety Management](patterns/context-window-anxiety-management.md) <span class='new-badge'>NEW</span>
+- [Context-Minimization Pattern](patterns/context-minimization-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Curated Code Context Window](patterns/curated-code-context-window.md) <span class='updated-badge'>UPDATED</span>
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
-- [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
+- [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md) <span class='new-badge'>NEW</span>
 
 ### <a name="-"></a>Feedback Loops
 
@@ -58,7 +58,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md)
 - [Inference-Healed Code Review Reward](patterns/inference-healed-code-review-reward.md)
 - [Reflection Loop](patterns/reflection.md)
-- [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md)
+- [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md) <span class='updated-badge'>UPDATED</span>
 - [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md)
 - [Self-Discover: LLM Self-Composed Reasoning Structures](patterns/self-discover-reasoning-structures.md)
 - [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md)
@@ -69,7 +69,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
-- [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
+- [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md) <span class='updated-badge'>UPDATED</span>
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md) <span class='new-badge'>NEW</span>
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md) <span class='new-badge'>NEW</span>
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
@@ -84,7 +84,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
-- [Sub-Agent Spawning](patterns/sub-agent-spawning.md)
+- [Sub-Agent Spawning](patterns/sub-agent-spawning.md) <span class='updated-badge'>UPDATED</span>
 - [Three-Stage Perception Architecture](patterns/three-stage-perception-architecture.md)
 - [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md)
 - [Tree-of-Thought Reasoning](patterns/tree-of-thought-reasoning.md)
