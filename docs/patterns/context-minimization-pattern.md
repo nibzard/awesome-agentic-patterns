@@ -29,8 +29,8 @@ Customer-service chat, medical Q&A, any multi-turn flow where initial text shoul
 
 ## Trade-offs
 
-* **Pros:** Simple; no extra models needed.
-* **Cons:** Later turns lose conversational nuance; may hurt UX.
+* **Pros:** Simple; no extra models needed; helps prevent [context window anxiety](context-window-anxiety-management.md) by reducing overall context usage.
+* **Cons:** Later turns lose conversational nuance; may hurt UX; overly aggressive minimization can remove useful context.
 
 ## References
 

@@ -41,12 +41,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Context & Memory
 
+- [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
-- [Curated Code Context Window](patterns/curated-code-context-window.md)
+- [Curated Code Context Window](patterns/curated-code-context-window.md) <span class='updated-badge'>UPDATED</span>
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
+- [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 
 ### <a name="-"></a>Feedback Loops
 
