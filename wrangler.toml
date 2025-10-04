@@ -1,7 +1,11 @@
 name = "awesome-agentic-patterns"
-main = "index.js"
-compatibility_date = "2024-05-01"
+main = "index.js" # Or index.ts if you used TypeScript
+compatibility_date = "2024-05-01" # Use a recent date
+
+# Configure for static asset serving from the 'site' directory (output of mkdocs build)
+# [site]
+# bucket = "./site" # <-- OLD CONFIGURATION
 
 [assets]
-directory = "./site"
-binding = "__STATIC_CONTENT__"
+directory = "./site" # Tells Wrangler where your static files are
+binding = "__STATIC_CONTENT__" # Explicitly name the binding (double underscore)
