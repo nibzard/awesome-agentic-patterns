@@ -1,10 +1,7 @@
 name = "awesome-agentic-patterns"
-main = "index.js" # Or index.ts if you used TypeScript
-compatibility_date = "2024-05-01" # Use a recent date
+main = "index.js"
+compatibility_date = "2024-05-01"
 
-# Configure for static asset serving from the 'site' directory (output of mkdocs build)
-# [site]
-# bucket = "./site" # <-- OLD CONFIGURATION
-
-[site]
-bucket = "./site"
+[assets]
+directory = "./site"
+binding = "__STATIC_CONTENT__"
