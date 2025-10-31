@@ -1,3 +1,4 @@
+/* Force asset re-upload after deployment manifest corruption */
 @media (min-width: 960px) {
     html {
         scroll-behavior: smooth;

@@ -138,25 +138,17 @@ gh run list --limit 5
 gh run watch  # Watch latest run in real-time
 ```
 
-### Option 2: Manual Local Deployment
+### Option 2: Manual Local Deployment (Advanced)
 
-For testing deployment locally before pushing:
+For testing wrangler.toml changes or emergency hotfixes:
 
 ```bash
-# Activate virtual environment
 source venv/bin/activate
-
-# Build site with git-based labels
 make build_with_labels
-
-# Deploy to Cloudflare Workers manually
 npx wrangler deploy
 ```
 
-**When to use manual deployment:**
-- Testing Cloudflare Workers configuration changes
-- Emergency hotfixes that bypass CI
-- Local verification before pushing to main
+> ⚠️ **Note**: Manual deployment may encounter npm cache permission issues. GitHub Actions deployment is more reliable for routine updates.
 
 ### Option 3: GitHub Pages (Alternative)
 
