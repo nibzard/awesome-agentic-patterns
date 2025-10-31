@@ -24,8 +24,6 @@ extra:
       link: https://github.com/nibzard
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/nibzard
-extra_css:
-    - css/extra.css
 nav:
   - "Context is short, you need patterns.": "index.md"
   - Patterns:
