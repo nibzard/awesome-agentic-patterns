@@ -52,12 +52,15 @@ flowchart TD
     -   Significantly improves performance for sequences of read-only tool calls.
     -   Maintains safety and prevents race conditions by serializing operations that modify state.
     -   Simpler to implement than full dependency graph analysis for tool execution, while still offering substantial benefits.
+    -   **Model Behavior Alignment:** Some models (e.g., Claude Sonnet 4.5) naturally exhibit parallel tool execution behavior, making this pattern feel more natural and efficient.
 -   **Cons/Considerations:**
     -   If a batch of tools contains mostly read-only operations but includes a single state-modifying operation early in the sequence, the entire batch might still be executed sequentially, limiting potential parallelism.
     -   The effectiveness relies on the accurate classification of tools as read-only or state-modifying. An incorrectly classified tool could lead to safety issues or missed optimization opportunities.
+    -   **Context Consumption:** Parallel execution burns through context windows faster as multiple results return simultaneously, which may contribute to [context anxiety](context-window-anxiety-management.md) in context-aware models.
 
 ## References
 
 -   This pattern is detailed in the book ["Building an Agentic System"](https://gerred.github.io/building-an-agentic-system/) by Gerred Dillon, particularly in the "Parallel Tool Execution" section and the "Tool Execution Strategy" part of the "Core Architecture" section.
 -   The book describes this pattern in the context of the `anon-kode` / `Claude Code` agentic system: *"The system solves this by classifying operations as read-only or stateful, applying different execution strategies to each."* (from `src/parallel-tool-execution.md`) and *"Read vs. Write Classification... Smart Concurrency Control: Parallel for read operations... Sequential for write operations"* (from `src/core-architecture.md`).
 -   The concept is based on the idea that read operations are generally idempotent and free of side-effects when run concurrently, while write operations require careful sequencing.
+-   [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) observes that Sonnet 4.5 naturally maximizes actions per context window through parallel tool execution.

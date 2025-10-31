@@ -19,3 +19,19 @@ site_build: site_link
 
 site_deploy: site_link
 	mkdocs gh-deploy --clean
+
+# Git-based deployment with automatic pattern labeling
+deploy_auto: 
+	python3 scripts/deploy_git_based.py --commit --deploy
+
+# View current pattern labels (git-based)
+show_labels:
+	python3 scripts/git_pattern_dates.py
+
+# Debug specific pattern dates
+debug_pattern:
+	@read -p "Enter pattern name (without .md): " pattern; python3 scripts/git_pattern_dates.py $$pattern
+
+# Build with git-based labels (without deployment)
+build_with_labels:
+	python3 scripts/deploy_git_based.py

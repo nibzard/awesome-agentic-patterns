@@ -21,10 +21,26 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: 0 1px 3px rgba(0, 230, 118, 0.3);
-    animation: pulse-glow 2s ease-in-out infinite alternate;
+    animation: pulse-glow-green 2s ease-in-out infinite alternate;
 }
 
-@keyframes pulse-glow {
+/* UPDATED badge styling for patterns */
+.updated-badge {
+    background: linear-gradient(45deg, #ff9800, #f57c00);
+    color: white;
+    font-size: 0.65em;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: 8px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 3px rgba(255, 152, 0, 0.3);
+    animation: pulse-glow-orange 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow-green {
     0% {
         box-shadow: 0 1px 3px rgba(0, 230, 118, 0.3);
     }
@@ -33,9 +49,18 @@
     }
 }
 
+@keyframes pulse-glow-orange {
+    0% {
+        box-shadow: 0 1px 3px rgba(255, 152, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 1px 8px rgba(255, 152, 0, 0.6), 0 0 12px rgba(255, 152, 0, 0.2);
+    }
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 959px) {
-    .new-badge {
+    .new-badge, .updated-badge {
         font-size: 0.6em;
         padding: 1px 4px;
         margin-left: 4px;

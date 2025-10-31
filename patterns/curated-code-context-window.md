@@ -52,9 +52,11 @@ sequenceDiagram
 - **Pros:**
   - **Noise Reduction:** Keeps the context focused on pertinent code, improving reasoning clarity.
   - **Token Efficiency:** Dramatically reduces tokens consumed per step, boosting RL throughput.
+  - **Context Anxiety Mitigation:** Helps prevent [context window anxiety](context-window-anxiety-management.md) by keeping usage well below limits.
 - **Cons/Considerations:**
   - **Index Freshness:** If code changes frequently, the index must be updated to avoid stale results.
   - **Complexity:** Adds an extra component (SearchSubagent + index) to the training and inference pipeline.
+  - **Model Adaptation Required:** Different models may have varying tolerance for curated vs. full context approaches.
 
 ## References
 

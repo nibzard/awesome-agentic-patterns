@@ -13,6 +13,8 @@ Large multi-file tasks blow out the main agent's context window and reasoning bu
 ## Solution
 Let the main agent **spawn focused sub-agents**, each with its own fresh context, to work in parallel on shardable subtasks. Aggregate their results when done.
 
+Recent developments show that improved agent [state externalization capabilities](proactive-agent-state-externalization.md) may make subagent delegation more practical by helping agents better identify which tasks are suitable for delegation and how to communicate necessary context to subagents.
+
 ## Example (YAML front-matter refactor)
 ```mermaid
 sequenceDiagram
@@ -48,5 +50,6 @@ Users spending $1000+/month on Claude Code are typically running swarm migration
 * Raising An Agent - Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
 * Boris Cherny (Anthropic) on swarm migrations for framework changes and lint rules
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - discusses how improved model judgment about state externalization may make subagent delegation more practical
 
 [Source](https://www.nibzard.com/ampcode)

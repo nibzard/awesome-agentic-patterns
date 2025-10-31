@@ -41,6 +41,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Context & Memory
 
+- [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
 - [Curated Code Context Window](patterns/curated-code-context-window.md)
 - [Curated File Context Window](patterns/curated-file-context-window.md)
@@ -48,12 +49,13 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='new-badge'>NEW</span>
+- [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 
 ### <a name="-"></a>Feedback Loops
 
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
 - [Coding Agent CI Feedback Loop](patterns/coding-agent-ci-feedback-loop.md)
-- [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md)
+- [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md) <span class='updated-badge'>UPDATED</span>
 - [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md)
 - [Inference-Healed Code Review Reward](patterns/inference-healed-code-review-reward.md)
 - [Reflection Loop](patterns/reflection.md)
@@ -85,12 +87,12 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
 - [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md) <span class='new-badge'>NEW</span>
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
-- [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
+- [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md) <span class='new-badge'>NEW</span>
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md) <span class='new-badge'>NEW</span>
-- [Sub-Agent Spawning](patterns/sub-agent-spawning.md)
+- [Sub-Agent Spawning](patterns/sub-agent-spawning.md) <span class='updated-badge'>UPDATED</span>
 - [Swarm Migration Pattern](patterns/swarm-migration-pattern.md) <span class='new-badge'>NEW</span>
 - [Three-Stage Perception Architecture](patterns/three-stage-perception-architecture.md)
 - [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md)

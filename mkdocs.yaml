@@ -25,11 +25,12 @@ extra:
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/nibzard
 extra_css:
-    - /css/extra.css
+    - css/extra.css
 nav:
   - "Context is short, you need patterns.": "index.md"
   - Patterns:
       - "Context & Memory":
+          - "Context Window Anxiety Management": "patterns/context-window-anxiety-management.md"
           - "Context-Minimization Pattern": "patterns/context-minimization-pattern.md"
           - "Curated Code Context Window": "patterns/curated-code-context-window.md"
           - "Curated File Context Window": "patterns/curated-file-context-window.md"
@@ -37,10 +38,11 @@ nav:
           - "Episodic Memory Retrieval & Injection": "patterns/episodic-memory-retrieval-injection.md"
           - "Layered Configuration Context": "patterns/layered-configuration-context.md"
           - "Memory Synthesis from Execution Logs <span class='new-badge'>NEW</span>": "patterns/memory-synthesis-from-execution-logs.md"
+          - "Proactive Agent State Externalization": "patterns/proactive-agent-state-externalization.md"
       - "Feedback Loops":
           - "Background Agent with CI Feedback": "patterns/background-agent-ci.md"
           - "Coding Agent CI Feedback Loop": "patterns/coding-agent-ci-feedback-loop.md"
-          - "Dogfooding with Rapid Iteration for Agent Improvement": "patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md"
+          - "Dogfooding with Rapid Iteration for Agent Improvement <span class='updated-badge'>UPDATED</span>": "patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md"
           - "Graph of Thoughts (GoT)": "patterns/graph-of-thoughts.md"
           - "Inference-Healed Code Review Reward": "patterns/inference-healed-code-review-reward.md"
           - "Reflection Loop": "patterns/reflection.md"
@@ -68,12 +70,12 @@ nav:
           - "Multi-Model Orchestration for Complex Edits": "patterns/multi-model-orchestration-for-complex-edits.md"
           - "Opponent Processor / Multi-Agent Debate Pattern <span class='new-badge'>NEW</span>": "patterns/opponent-processor-multi-agent-debate.md"
           - "Oracle and Worker Multi-Model Approach": "patterns/oracle-and-worker-multi-model.md"
-          - "Plan-Then-Execute Pattern": "patterns/plan-then-execute-pattern.md"
+          - "Plan-Then-Execute Pattern <span class='updated-badge'>UPDATED</span>": "patterns/plan-then-execute-pattern.md"
           - "Progressive Autonomy with Model Evolution <span class='new-badge'>NEW</span>": "patterns/progressive-autonomy-with-model-evolution.md"
           - "Self-Rewriting Meta-Prompt Loop": "patterns/self-rewriting-meta-prompt-loop.md"
           - "Specification-Driven Agent Development": "patterns/specification-driven-agent-development.md"
           - "Stop Hook Auto-Continue Pattern <span class='new-badge'>NEW</span>": "patterns/stop-hook-auto-continue-pattern.md"
-          - "Sub-Agent Spawning": "patterns/sub-agent-spawning.md"
+          - "Sub-Agent Spawning <span class='updated-badge'>UPDATED</span>": "patterns/sub-agent-spawning.md"
           - "Swarm Migration Pattern <span class='new-badge'>NEW</span>": "patterns/swarm-migration-pattern.md"
           - "Three-Stage Perception Architecture": "patterns/three-stage-perception-architecture.md"
           - "Tool Capability Compartmentalization": "patterns/tool-capability-compartmentalization.md"
