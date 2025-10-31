@@ -4,29 +4,39 @@
 # When new patterns are added, previous ones are moved to the bottom section
 
 # Current NEW patterns (will show badges):
-agent-first-tooling-and-logging.md
-code-first-tool-interface-pattern.md
-continuous-autonomous-task-loop-pattern.md
-disposable-scaffolding-over-durable-features.md
+agentic-search-over-vector-embeddings.md
+compounding-engineering-pattern.md
+dual-use-tool-design.md
+latent-demand-product-discovery.md
+memory-synthesis-from-execution-logs.md
+opponent-processor-multi-agent-debate.md
+progressive-autonomy-with-model-evolution.md
+stop-hook-auto-continue-pattern.md
+swarm-migration-pattern.md
+team-shared-agent-configuration.md
 
 # Previous patterns (no longer new):
 abstracted-code-representation-for-review.md
 action-selector-pattern.md
 agent-assisted-scaffolding.md
 agent-driven-research.md
+agent-first-tooling-and-logging.md
 agent-friendly-workflow-design.md
 agent-sdk-for-programmatic-control.md
 asynchronous-coding-agent-pipeline.md
 autonomous-workflow-agent-architecture.md
 background-agent-ci.md
 cli-native-agent-orchestration.md
+code-first-tool-interface-pattern.md
 code-then-execute-pattern.md
 coding-agent-ci-feedback-loop.md
 context-minimization-pattern.md
+continuous-autonomous-task-loop-pattern.md
 criticgpt-style-evaluation.md
 curated-code-context-window.md
 curated-file-context-window.md
 deterministic-security-scanning-build-loop.md
+disposable-scaffolding-over-durable-features.md
 dogfooding-with-rapid-iteration-for-agent-improvement.md
 dual-llm-pattern.md
 dynamic-code-injection-on-demand-file-fetch.md

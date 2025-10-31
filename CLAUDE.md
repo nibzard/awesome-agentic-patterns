@@ -80,6 +80,10 @@ The project has a unique architecture where pattern documentation drives the ent
 - **Do not edit** the auto-generated sections in README.md manually
 - Use Mermaid diagrams in patterns for architectural visualization
 - Pattern files support full Markdown with front-matter
+- **CRITICAL**: Always add blank lines after headers before starting bullet point lists
+  - Incorrect: `**Header:**\n- Item 1` (renders inline)
+  - Correct: `**Header:**\n\n- Item 1` (renders as proper list)
+  - This is required for MkDocs to properly convert Markdown lists to HTML `<ul><li>` elements
 
 ### Asset Path Handling
 
