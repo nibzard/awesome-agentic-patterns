@@ -2,11 +2,32 @@
 
 This document provides instructions for deploying the Awesome Agentic Patterns documentation site with automated git-based pattern labeling.
 
+## Recommended Workflow: Automatic Deployment
+
+**The simplest way to deploy is to push to main:**
+
+```bash
+git add .
+git commit -m "Your changes"
+git push
+```
+
+GitHub Actions will automatically:
+- Detect NEW/UPDATED patterns from git history
+- Regenerate README.md and mkdocs.yaml with badges
+- Build the site with MkDocs
+- Deploy to Cloudflare Workers
+
+**That's it!** No manual build or deployment commands needed.
+
+---
+
 ## Prerequisites
 
-- Python 3.x installed
-- Node.js and npm installed (for Cloudflare Workers deployment)
+- Python 3.x installed (for local development)
+- Node.js 20+ and npm installed (for local Wrangler testing)
 - Git repository access
+- **For automatic deployment**: `CLOUDFLARE_API_TOKEN` secret configured in GitHub repository settings
 
 ## Initial Setup
 
@@ -87,70 +108,102 @@ This command:
 
 ## Deployment Options
 
-You have two deployment options available:
+### Option 1: GitHub Actions (Recommended)
 
-### Option 1: Automated Deployment (Recommended)
-
-Use the fully automated git-based deployment:
+**Default workflow**: Just push to main branch:
 
 ```bash
-# Complete automation with git-based labeling
-make deploy_auto
+git add .
+git commit -m "Add new patterns"
+git push
 ```
 
-This handles everything:
-- Git-based pattern label detection
-- Documentation regeneration  
-- Site building
-- Committing changes
-- Deployment to production
+**What happens automatically:**
+1. GitHub Actions workflow triggers on push to main
+2. Sets up Python 3.12 and Node.js 20
+3. Installs dependencies (MkDocs, Material theme, Wrangler)
+4. Runs `python3 scripts/build_readme.py` for git-based pattern labeling
+5. Builds site with `mkdocs build`
+6. Deploys to Cloudflare Workers using `wrangler deploy`
+7. Site live at: https://awesome-agentic-patterns.nikola-balic.workers.dev
 
-### Option 2: Cloudflare Workers (Manual)
+**Setup requirements:**
+- GitHub repository secret `CLOUDFLARE_API_TOKEN` must be configured
+- Get token from: https://dash.cloudflare.com/profile/api-tokens
+- Add at: https://github.com/nibzard/awesome-agentic-patterns/settings/secrets/actions
 
-For manual Cloudflare Workers deployment:
-
+**View workflow status:**
 ```bash
-# First, build with git-based labels
-source venv/bin/activate
-make build_with_labels
-
-# Deploy to Cloudflare Workers
-npx wrangler deploy
+gh run list --limit 5
+gh run watch  # Watch latest run in real-time
 ```
 
-This command:
-- Uses the pre-built `site/` directory with git-based labels
-- Deploys to Cloudflare Workers using the configuration in `wrangler.toml`
-- Serves static files through the Worker script in `index.js`
-- Site available at: https://awesome-agentic-patterns.nikola-balic.workers.dev
+### Option 2: Manual Local Deployment
 
-### Option 3: GitHub Pages
-
-GitHub Pages alternative with git-based labeling:
+For testing deployment locally before pushing:
 
 ```bash
 # Activate virtual environment
 source venv/bin/activate
 
-# Build with git-based labels first
+# Build site with git-based labels
+make build_with_labels
+
+# Deploy to Cloudflare Workers manually
+npx wrangler deploy
+```
+
+**When to use manual deployment:**
+- Testing Cloudflare Workers configuration changes
+- Emergency hotfixes that bypass CI
+- Local verification before pushing to main
+
+### Option 3: GitHub Pages (Alternative)
+
+Deploy to GitHub Pages instead of Cloudflare Workers:
+
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Build with git-based labels
 python3 scripts/build_readme.py
 
 # Deploy to GitHub Pages
 make site_deploy
 ```
 
-This command:
-- Uses git history to determine pattern labels
-- Builds the site automatically with proper badges
-- Pushes the built site to the `gh-pages` branch
-- GitHub automatically serves the site at your configured domain
+This pushes the built site to the `gh-pages` branch.
 
 ## Troubleshooting
+
+### GitHub Actions Deployment Failures
+
+**Error: Missing CLOUDFLARE_API_TOKEN**
+If the workflow fails with "it's necessary to set a CLOUDFLARE_API_TOKEN environment variable":
+1. Get API token from: https://dash.cloudflare.com/profile/api-tokens
+2. Add secret at: https://github.com/nibzard/awesome-agentic-patterns/settings/secrets/actions
+3. Re-run the failed workflow: `gh run rerun <run-id>`
+
+**Error: Wrangler requires Node.js v20.0.0**
+If you see "Wrangler requires at least Node.js v20.0.0":
+- The workflow should already specify Node.js 20 in `.github/workflows/deploy.yml`
+- If not, update: `node-version: '20'`
+
+**Error: upload-artifact v3 deprecated**
+If you see deprecation warning for `actions/upload-artifact@v3`:
+- Update to v4: `uses: actions/upload-artifact@v4`
 
 ### Virtual Environment Issues
 If you encounter "mkdocs: No such file or directory":
 1. Make sure the virtual environment is activated
 2. Reinstall dependencies: `pip install -r requirements.txt`
+
+### CSS Not Loading (404 errors)
+If `extra.css` returns 404 errors on deployed site:
+1. Check `mkdocs.yaml` uses relative path: `css/extra.css` (not `/css/extra.css`)
+2. MkDocs processes `extra_css` relative to `docs_dir`, not as absolute URL paths
+3. Rebuild and redeploy after fixing
 
 ### Cloudflare Workers Timeout
 If Cloudflare deployment times out during initialization:
@@ -182,17 +235,15 @@ python3 scripts/git_pattern_dates.py pattern-name
 python3 scripts/git_pattern_dates.py
 ```
 
-## Automated Deployments
+## Local Development
 
-### GitHub Actions (Future Enhancement)
-Consider setting up GitHub Actions for automatic deployments on push to main branch.
-
-### Local Development
 For local development and testing:
 ```bash
 source venv/bin/activate
 make site_preview  # Serves at http://localhost:8000
 ```
+
+Changes are automatically reloaded. Press `Ctrl+C` to stop the server.
 
 ## Domain Configuration
 
