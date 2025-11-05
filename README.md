@@ -47,6 +47,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
+- [Filesystem-Based Agent State](patterns/filesystem-based-agent-state.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='new-badge'>NEW</span>
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
@@ -68,6 +69,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name=""></a>Learning & Adaptation
 
 - [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md) <span class='new-badge'>NEW</span>
+- [Skill Library Evolution](patterns/skill-library-evolution.md)
 
 ### <a name="-"></a>Orchestration & Control
 
@@ -112,6 +114,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name=""></a>Security & Safety
 
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
+- [PII Tokenization](patterns/pii-tokenization.md)
 
 ### <a name="-"></a>Tool Use & Environment
 
@@ -120,12 +123,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md) <span class='new-badge'>NEW</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md)
+- [Code-Over-API Pattern](patterns/code-over-api-pattern.md)
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
 - [Dual-Use Tool Design](patterns/dual-use-tool-design.md) <span class='new-badge'>NEW</span>
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)
+- [Progressive Tool Discovery](patterns/progressive-tool-discovery.md)
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md)
 - [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
