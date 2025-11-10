@@ -349,6 +349,6 @@ graph TD
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT - Cognition Case Study](https://youtu.be/1s_7RMG4O4U)
+- [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Parallel Tool Execution Pattern](./parallel-tool-execution.md)
 - Related patterns: Agent Reinforcement Fine-Tuning, Tool Use Incentivization via Reward Shaping

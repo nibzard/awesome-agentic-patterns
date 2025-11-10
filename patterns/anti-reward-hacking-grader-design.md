@@ -269,6 +269,6 @@ graph TD
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT - Rogo Case Study](https://youtu.be/1s_7RMG4O4U)
+- [OpenAI Build Hour: Agent RFT - Rogo Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Specification Gaming in AI (DeepMind)](https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/)
 - Related patterns: Inference-Healed Code Review Reward, Agent Reinforcement Fine-Tuning, RLAIF

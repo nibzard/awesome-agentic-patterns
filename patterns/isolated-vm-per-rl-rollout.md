@@ -362,7 +362,7 @@ def execute_tool(self, rollout_id: str, tool: str, params: dict):
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT - Cognition Case Study](https://youtu.be/1s_7RMG4O4U)
+- [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Modal Documentation](https://modal.com/docs)
 - [Docker Isolation Best Practices](https://docs.docker.com/engine/security/)
 - Related patterns: Agent Reinforcement Fine-Tuning, Virtual Machine Operator Agent

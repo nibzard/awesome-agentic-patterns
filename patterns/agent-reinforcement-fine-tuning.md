@@ -200,7 +200,7 @@ graph TD
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT (November 2024)](https://youtu.be/1s_7RMG4O4U)
+- [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [OpenAI Fine-tuning Guide](https://platform.openai.com/docs/guides/fine-tuning)
 - [Cognition Devon Case Study](https://www.cognition-labs.com/)
 - Related patterns: RLAIF, Tool Use Incentivization via Reward Shaping, Inference-Healed Code Review Reward

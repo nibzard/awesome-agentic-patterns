@@ -326,6 +326,6 @@ The model improved toward the best-of-3 ceiling while also becoming more efficie
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT - Variance Analysis Demo](https://youtu.be/1s_7RMG4O4U)
+- [OpenAI Build Hour: Agent RFT - Variance Analysis Demo (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Prior RFT Build Hour with Prashant](https://www.youtube.com/openai-build-hours)
 - Related patterns: Agent Reinforcement Fine-Tuning, Inference-Time Scaling
