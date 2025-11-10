@@ -47,9 +47,9 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
-- [Filesystem-Based Agent State](patterns/filesystem-based-agent-state.md)
+- [Filesystem-Based Agent State](patterns/filesystem-based-agent-state.md) <span class='new-badge'>NEW</span>
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
-- [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='new-badge'>NEW</span>
+- [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='updated-badge'>UPDATED</span>
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 
 ### <a name="-"></a>Feedback Loops
@@ -68,8 +68,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Learning & Adaptation
 
-- [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md) <span class='new-badge'>NEW</span>
-- [Skill Library Evolution](patterns/skill-library-evolution.md)
+- [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md)
+- [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md) <span class='updated-badge'>UPDATED</span>
+- [Skill Library Evolution](patterns/skill-library-evolution.md) <span class='new-badge'>NEW</span>
+- [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md)
 
 ### <a name="-"></a>Orchestration & Control
 
@@ -87,21 +89,23 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
-- [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md) <span class='new-badge'>NEW</span>
+- [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md) <span class='updated-badge'>UPDATED</span>
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
+- [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md)
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md) <span class='updated-badge'>UPDATED</span>
-- [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md) <span class='new-badge'>NEW</span>
+- [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md) <span class='updated-badge'>UPDATED</span>
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
-- [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md) <span class='new-badge'>NEW</span>
+- [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Sub-Agent Spawning](patterns/sub-agent-spawning.md) <span class='updated-badge'>UPDATED</span>
-- [Swarm Migration Pattern](patterns/swarm-migration-pattern.md) <span class='new-badge'>NEW</span>
+- [Swarm Migration Pattern](patterns/swarm-migration-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Three-Stage Perception Architecture](patterns/three-stage-perception-architecture.md)
 - [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md)
 - [Tree-of-Thought Reasoning](patterns/tree-of-thought-reasoning.md)
 
 ### <a name=""></a>Reliability & Eval
 
+- [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md)
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
@@ -114,23 +118,24 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name=""></a>Security & Safety
 
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
-- [PII Tokenization](patterns/pii-tokenization.md)
+- [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
+- [PII Tokenization](patterns/pii-tokenization.md) <span class='new-badge'>NEW</span>
 
 ### <a name="-"></a>Tool Use & Environment
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md)
-- [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md) <span class='new-badge'>NEW</span>
+- [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md) <span class='updated-badge'>UPDATED</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md)
-- [Code-Over-API Pattern](patterns/code-over-api-pattern.md)
+- [Code-Over-API Pattern](patterns/code-over-api-pattern.md) <span class='new-badge'>NEW</span>
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
-- [Dual-Use Tool Design](patterns/dual-use-tool-design.md) <span class='new-badge'>NEW</span>
+- [Dual-Use Tool Design](patterns/dual-use-tool-design.md) <span class='updated-badge'>UPDATED</span>
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)
-- [Progressive Tool Discovery](patterns/progressive-tool-discovery.md)
+- [Progressive Tool Discovery](patterns/progressive-tool-discovery.md) <span class='new-badge'>NEW</span>
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md)
 - [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
@@ -142,10 +147,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md)
 - [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md)
 - [Agent-Friendly Workflow Design](patterns/agent-friendly-workflow-design.md)
-- [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md) <span class='new-badge'>NEW</span>
+- [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md) <span class='updated-badge'>UPDATED</span>
 - [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md)
 - [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md)
-- [Team-Shared Agent Configuration as Code](patterns/team-shared-agent-configuration.md) <span class='new-badge'>NEW</span>
+- [Team-Shared Agent Configuration as Code](patterns/team-shared-agent-configuration.md) <span class='updated-badge'>UPDATED</span>
 - [Verbose Reasoning Transparency](patterns/verbose-reasoning-transparency.md)
 
 <!-- AUTO-GENERATED PATTERNS END -->
