@@ -1,9 +1,27 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(source:*)",
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(npx wrangler:*)",
+      "Bash(gh secret list:*)",
+      "WebSearch",
+      "WebFetch(domain:developers.cloudflare.com)",
+      "Bash(gh run view:*)",
+      "Bash(gh run download:*)",
+      "Bash(sed:*)",
+      "Bash(while read f)",
+      "Bash(done)",
+      "WebFetch(domain:claude.com)",
+      "Bash(for file in /Users/nikola/dev/awesome-agentic-patterns/patterns/*.md)",
+      "Bash(do if [ \"$file\" != \"/Users/nikola/dev/awesome-agentic-patterns/patterns/TEMPLATE.md\" ])",
+      "Bash(head:*)",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "outputStyle": "default"
 }
