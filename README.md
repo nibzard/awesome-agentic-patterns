@@ -47,7 +47,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
-- [Filesystem-Based Agent State](patterns/filesystem-based-agent-state.md) <span class='updated-badge'>UPDATED</span>
+- [Filesystem-Based Agent State](patterns/filesystem-based-agent-state.md)
 - [Layered Configuration Context](patterns/layered-configuration-context.md)
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md)
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
@@ -68,10 +68,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Learning & Adaptation
 
-- [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md)
+- [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md) <span class='updated-badge'>UPDATED</span>
 - [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md)
-- [Skill Library Evolution](patterns/skill-library-evolution.md) <span class='updated-badge'>UPDATED</span>
-- [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md)
+- [Skill Library Evolution](patterns/skill-library-evolution.md)
+- [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md) <span class='updated-badge'>UPDATED</span>
 
 ### <a name="-"></a>Orchestration & Control
 
@@ -93,9 +93,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md) <span class='updated-badge'>UPDATED</span>
 - [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md)
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
-- [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md)
+- [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md) <span class='updated-badge'>UPDATED</span>
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
 - [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md)
+- [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md)
@@ -107,7 +108,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Reliability & Eval
 
-- [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md)
+- [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md) <span class='updated-badge'>UPDATED</span>
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
@@ -115,13 +116,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
+- [Structured Output Specification](patterns/structured-output-specification.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 
 ### <a name=""></a>Security & Safety
 
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
-- [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
-- [PII Tokenization](patterns/pii-tokenization.md) <span class='updated-badge'>UPDATED</span>
+- [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md) <span class='updated-badge'>UPDATED</span>
+- [PII Tokenization](patterns/pii-tokenization.md)
 
 ### <a name="-"></a>Tool Use & Environment
 
@@ -130,14 +132,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md)
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md)
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md)
-- [Code-Over-API Pattern](patterns/code-over-api-pattern.md) <span class='updated-badge'>UPDATED</span>
+- [Code-Over-API Pattern](patterns/code-over-api-pattern.md)
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
 - [Dual-Use Tool Design](patterns/dual-use-tool-design.md)
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)
-- [Progressive Tool Discovery](patterns/progressive-tool-discovery.md) <span class='updated-badge'>UPDATED</span>
+- [Progressive Tool Discovery](patterns/progressive-tool-discovery.md)
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md)
 - [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
