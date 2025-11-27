@@ -68,10 +68,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Learning & Adaptation
 
-- [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md) <span class='updated-badge'>UPDATED</span>
+- [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md)
 - [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md)
 - [Skill Library Evolution](patterns/skill-library-evolution.md)
-- [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md) <span class='updated-badge'>UPDATED</span>
+- [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md)
 
 ### <a name="-"></a>Orchestration & Control
 
@@ -80,12 +80,14 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
-- [Discrete Phase Separation](patterns/discrete-phase-separation.md) <span class='new-badge'>NEW</span>
+- [Discrete Phase Separation](patterns/discrete-phase-separation.md) <span class='updated-badge'>UPDATED</span>
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md)
-- [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md) <span class='new-badge'>NEW</span>
+- [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md) <span class='updated-badge'>UPDATED</span>
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
+- [Feature List as Immutable Contract](patterns/feature-list-as-immutable-contract.md)
 - [Inference-Time Scaling](patterns/inference-time-scaling.md)
+- [Initializer-Maintainer Dual Agent Architecture](patterns/initializer-maintainer-dual-agent.md)
 - [Inversion of Control](patterns/inversion-of-control.md)
 - [Iterative Multi-Agent Brainstorming](patterns/iterative-multi-agent-brainstorming.md)
 - [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
@@ -93,10 +95,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md) <span class='updated-badge'>UPDATED</span>
 - [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md)
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
-- [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md) <span class='updated-badge'>UPDATED</span>
+- [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md)
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
 - [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md)
-- [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md)
+- [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md) <span class='updated-badge'>UPDATED</span>
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md)
@@ -108,7 +110,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name=""></a>Reliability & Eval
 
-- [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md) <span class='updated-badge'>UPDATED</span>
+- [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md)
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
@@ -116,13 +118,13 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
-- [Structured Output Specification](patterns/structured-output-specification.md)
+- [Structured Output Specification](patterns/structured-output-specification.md) <span class='updated-badge'>UPDATED</span>
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 
 ### <a name=""></a>Security & Safety
 
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
-- [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md) <span class='updated-badge'>UPDATED</span>
+- [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
 
 ### <a name="-"></a>Tool Use & Environment
@@ -151,8 +153,8 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md)
 - [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md)
 - [Agent-Friendly Workflow Design](patterns/agent-friendly-workflow-design.md)
-- [Chain-of-Thought Monitoring & Interruption](patterns/chain-of-thought-monitoring-interruption.md) <span class='new-badge'>NEW</span>
-- [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md) <span class='new-badge'>NEW</span>
+- [Chain-of-Thought Monitoring & Interruption](patterns/chain-of-thought-monitoring-interruption.md) <span class='updated-badge'>UPDATED</span>
+- [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md) <span class='updated-badge'>UPDATED</span>
 - [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md)
 - [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md)
 - [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md)
