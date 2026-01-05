@@ -199,7 +199,8 @@ for (const contact of contacts) {
 2. **Implement Bindings**: Develop secure bindings that control access to external resources
 3. **Sandbox Setup**: Configure V8 isolates with appropriate security constraints
 4. **Code Execution Flow**:
-   - LLM generates TypeScript code using the provided APIs
+   
+- LLM generates TypeScript code using the provided APIs
    - Code runs in isolated V8 environment
    - Bindings provide controlled access to tools
    - Results return to the agent for further processing

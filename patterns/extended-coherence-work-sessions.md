@@ -12,6 +12,7 @@ Early AI agents and models often suffered from a short "coherence window," meani
 
 ## Solution
 Utilize AI models and agent architectures that are specifically designed or have demonstrably improved capabilities to maintain coherence over extended periods (e.g., several hours). This involves:
+
 - Leveraging newer foundation models with larger context windows and better long-term memory.
 - Implementing agentic architectures that can manage state and context effectively over time.
 - Prioritizing this capability allows agents to undertake substantial projects, engage in prolonged problem-solving, and complete tasks that were previously infeasible due to coherence limitations.

@@ -71,7 +71,8 @@ The agent sees the log output and return value, but the full dataset never enter
 
 1. Agent analyzes task and determines data processing needs
 2. Agent writes code that:
-   - Calls tools/APIs within the execution environment
+   
+- Calls tools/APIs within the execution environment
    - Performs filtering, transformation, aggregation in code
    - Logs only summaries or samples for visibility
    - Returns final results

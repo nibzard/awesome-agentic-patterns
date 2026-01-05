@@ -10,6 +10,7 @@ tags: [cli, skills, shell, dual-use, composability, unix-philosophy]
 ## Problem
 
 When building agent skills (reusable capabilities), there's tension between:
+
 - **API-first design**: Skills as functions/classes—great for programmatic use, but hard to debug and test manually
 - **GUI-first design**: Skills as visual tools—easy for humans, but agents can't invoke them
 

@@ -36,18 +36,21 @@ Design agent systems to start with low-complexity, high-reliability tasks and pr
 
 ```
 Tier 1 (Deploy immediately):
+
 - Data entry and research
 - Content categorization
 - Information extraction
 - Template-based generation
 
 Tier 2 (Unlock with validation):
+
 - Multi-step workflows with human gates
 - Conditional logic with structured outputs
 - Integration with multiple tools
 - Personalization and adaptation
 
 Tier 3 (Future unlock):
+
 - Autonomous decision-making
 - Complex reasoning chains
 - Creative problem-solving
@@ -136,13 +139,15 @@ class TaskComplexity:
 ```yaml
 capability_gates:
   tier1_to_tier2:
-    - accuracy_threshold: 0.95
+    
+- accuracy_threshold: 0.95
     - human_approval_rate: 0.90
     - volume_processed: 1000
     - time_in_production: 30_days
 
   tier2_to_tier3:
-    - accuracy_threshold: 0.98
+    
+- accuracy_threshold: 0.98
     - human_override_rate: 0.05
     - volume_processed: 10000
     - stakeholder_confidence: high

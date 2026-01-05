@@ -14,6 +14,7 @@ AI agents, especially those using complex models or multiple tools, can sometime
 Implement a feature that allows users to inspect the agent's internal "thought process" or reasoning steps on demand. This could be triggered by a keybinding (e.g., `Ctrl+R` in Claude Code) or a command.
 
 When activated, the verbose output might reveal:
+
 -   The agent's interpretation of the user's prompt.
 -   Alternative actions or tools it considered.
 -   The specific tool(s) it selected and why (if available).

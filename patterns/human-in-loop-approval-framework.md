@@ -105,12 +105,15 @@ delete_user_data("user_123")
 ```yaml
 approval_channels:
   high_risk:
-    - slack: "#agent-approvals"
+    
+- slack: "#agent-approvals"
     - sms: "+1234567890"  # For urgent
   medium_risk:
-    - slack: "#agent-review"
+    
+- slack: "#agent-review"
   low_risk:
-    - email: "team@company.com"
+    
+- email: "team@company.com"
 ```
 
 **3. Set context requirements:**

@@ -149,7 +149,8 @@ graph TD
 - Task: File planning agent to identify which files to edit
 - Tools: `read_file`, `shell` (grep, find)
 - Results:
-  - Reduced planning time by 50% (8-10 tool calls → 4 tool calls)
+  
+- Reduced planning time by 50% (8-10 tool calls → 4 tool calls)
   - Learned to parallelize tool calls automatically
   - Improved F1 score on file identification
 
@@ -158,7 +159,8 @@ graph TD
 - Task: ICD-10 medical coding from transcripts
 - Tools: Semantic search over 70K medical codes
 - Results:
-  - F1 score: 0.52 → 0.57 (significant given 0.75 human ceiling)
+  
+- F1 score: 0.52 → 0.57 (significant given 0.75 human ceiling)
   - 18% latency reduction
   - 50% reduction in samples exceeding latency threshold
 
@@ -167,7 +169,8 @@ graph TD
 - Task: Financial reasoning and summarization from filings
 - Tools: Document retrieval, analysis tools
 - Results:
-  - 21% ML performance improvement
+  
+- 21% ML performance improvement
   - Reduced hallucinations and missing citations
   - Required hardening grader against reward hacking
 
@@ -176,7 +179,8 @@ graph TD
 - Task: Write performant GPU kernels for new hardware
 - Tools: Compiler, kernel execution environment
 - Results:
-  - 72% improvement in correct + performant kernels
+  
+- 72% improvement in correct + performant kernels
   - Only 100 PyTorch prompts needed (sample efficient)
   - No code examples required in training data
 

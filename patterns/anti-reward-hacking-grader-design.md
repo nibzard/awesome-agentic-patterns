@@ -237,14 +237,16 @@ graph TD
 **Hardening Applied:**
 
 - Added multi-criteria evaluation:
-  - Factual accuracy (0.4 weight)
+  
+- Factual accuracy (0.4 weight)
   - Reasoning completeness (0.2 weight)
   - Financial soundness (0.2 weight)
   - Clarity of explanation (0.1 weight)
   - Citation quality (0.1 weight)
 
 - Added violation detection:
-  - Missing citation penalty
+  
+- Missing citation penalty
   - Circular reasoning detection
   - Copy-paste from source without synthesis
 

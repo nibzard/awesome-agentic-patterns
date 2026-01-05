@@ -48,14 +48,17 @@ graph TD
 3. Session tokens with Redis - chosen solution
 
 ### What worked:
+
 - Redis session store with 24hr expiry
 - CORS whitelist in production config
 
 ### Mistakes made:
+
 - Forgot to handle token refresh initially
 - Missed error handling for expired sessions
 
 ### Patterns discovered:
+
 - Auth changes always need CORS update
 - Need both client and server-side expiry checks
 ```
@@ -83,6 +86,7 @@ synthesis_agent.prompt = """
 Review these 50 task diaries.
 Identify patterns that appear in 3+ tasks.
 For each pattern, suggest:
+
 - A general rule to add to CLAUDE.md
 - A potential slash command
 - A test case to prevent regression

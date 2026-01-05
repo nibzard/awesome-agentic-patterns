@@ -57,14 +57,16 @@ Unlike explicit programming, the parallelization emerges from:
 ```
 Parallel (fast):
 Batch 1 (parallel):
-  - search("Intel financial data")
+  
+- search("Intel financial data")
   - read_file("2023_report.pdf")
   - search("return metrics")
   - list("/financial_reports")
 → All complete in ~2s (dominated by slowest)
 
 Batch 2 (parallel, based on Batch 1 results):
-  - read_file("returns_table.csv")
+  
+- read_file("returns_table.csv")
   - read_file("competitor_data.csv")
 → Complete in ~1.5s
 
@@ -230,17 +232,20 @@ Learned parallel pattern:
 
 ```
 Round 1 (parallel):
-  - shell("find . -name '*.py'")
+  
+- shell("find . -name '*.py'")
   - shell("grep 'UserAuth' .")
   - shell("grep 'DatabaseConnection' .")
   - shell("ls tests/")
 
 Round 2 (parallel, based on Round 1):
-  - read_file("main.py")
+  
+- read_file("main.py")
   - read_file("auth.py")
 
 Round 3 (if needed):
-  - read_file("db.py")
+  
+- read_file("db.py")
 
 Total: 3-4 rounds (50% reduction in back-and-forth)
 ```

@@ -18,9 +18,11 @@ LLMs cannot reliably distinguish "good" instructions from malicious ones once th
 
 ## Solution
 Adopt a **Trifecta Threat Model**:  
+
 - **Audit every tool** an agent can call and classify it against the three capabilities.  
 - **Guarantee that at least one circle is missing** in any execution path. Options include:  
-  - Remove external network access (no exfiltration).  
+  
+- Remove external network access (no exfiltration).  
   - Deny direct file/database reads (no private data).  
   - Sanitize or segregate untrusted inputs (no hostile instructions).  
 - Enforce this at orchestration time, not with brittle prompt guardrails.

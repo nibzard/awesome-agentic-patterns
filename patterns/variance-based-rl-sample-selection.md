@@ -27,7 +27,8 @@ When Theo ran baseline evaluations on the FinQA benchmark, he discovered that ~8
 1. **Baseline Evaluation**: Run your base model 3-5 times on each sample
 2. **Visualize Variance**: Plot results to identify which samples have variance
 3. **Categorize Samples**:
-   - **Always correct** (variance = 0): Model already knows this
+   
+- **Always correct** (variance = 0): Model already knows this
    - **Always incorrect** (variance = 0): Model can't learn this (too hard or needs different approach)
    - **Sometimes correct** (variance > 0): **Prime candidates for RL**
 4. **Focus Training**: Prioritize or exclusively use high-variance samples
@@ -244,11 +245,13 @@ Visualize to understand your data:
 **Step 3: Interpret Results**
 
 Good indicators for RL:
+
 - **15-30% high variance samples**: Enough learning opportunities
 - **Best-of-N >> Mean**: Model has potential to improve with RL
 - **Variance distributed across dataset**: Not concentrated in few samples
 
 Warning signs:
+
 - **<10% high variance**: Dataset may be too easy or too hard
 - **Best-of-N ≈ Mean**: Model is very consistent (low improvement potential)
 - **All variance in tail**: Most samples don't offer learning signal
@@ -264,6 +267,7 @@ The compute multiplier controls exploration during training:
 **Step 5: Monitor During Training**
 
 Track how variance evolves:
+
 - Early training: Variance should decrease as model learns
 - Plateau: Variance may increase as model explores new strategies
 - Convergence: Variance should stabilize at lower level
@@ -302,6 +306,7 @@ Improvement Potential:
 **Training Results:**
 
 After 10 steps of agent RFT:
+
 - Validation reward: 0.59 → 0.63 (+7%)
 - Tool calls per rollout: 6.9 → 4.2 (-39%)
 - Latency: ~10% reduction

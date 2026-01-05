@@ -54,6 +54,7 @@ graph TD
 ## Priority Report
 
 Use the `priority-report` skill when user asks about:
+
 - What they need to work on next
 - Priority tasks or action items
 - Outstanding reviews, PRs, or issues

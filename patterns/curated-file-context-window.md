@@ -54,7 +54,8 @@ This ensures that the agent has precisely the files it needs (no more, no less),
     (full contents here)
 
     ### CONTEXT SNIPPETS:
-    - UserService.java: validateUser(...)
+    
+- UserService.java: validateUser(...)
     - SignupDTO.java: fields + annotations
     - ...
     ```

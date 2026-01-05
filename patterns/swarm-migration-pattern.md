@@ -59,7 +59,8 @@ main_agent.prompt = """
 2. Create todo list with file paths
 3. Divide into batches of 10 files each
 4. For each batch, spawn subagent with instructions:
-   - Migrate these specific files
+   
+- Migrate these specific files
    - Follow migration guide at docs/migration.md
    - Run tests after each change
    - Commit if tests pass

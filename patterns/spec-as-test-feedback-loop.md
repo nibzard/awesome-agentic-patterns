@@ -16,7 +16,8 @@ Generate **executable assertions** directly from the spec (e.g., unit or integra
 - Watch for any spec or code commit.  
 - Auto-regenerate test suite from latest spec snapshot.  
 - Run tests; if failures appear, open an *agent-authored* PR that either:
-    - updates code to match spec, or
+    
+- updates code to match spec, or
     - flags unclear spec segments for human review.
 
 This creates a continuous feedback loop ensuring specification and implementation remain synchronized.

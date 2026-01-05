@@ -100,7 +100,8 @@ class InferenceTimeScalingAgent:
         Proposed solution: {initial_solution}
         
         Critically evaluate this solution:
-        - Are there any errors?
+        
+- Are there any errors?
         - What assumptions were made?
         - Could the approach be improved?
         """

@@ -12,6 +12,7 @@ Clearly state the problem this pattern solves. What challenge or limitation does
 
 ## Solution
 Describe the core approach or technique this pattern uses. Include:
+
 - Key components or roles
 - How they interact
 - The mechanism that solves the problem
@@ -34,6 +35,7 @@ graph TD
 
 ## How to use it
 Provide practical guidance on when and how to implement this pattern. Include:
+
 - Specific use cases or scenarios
 - Prerequisites or requirements
 - Implementation considerations

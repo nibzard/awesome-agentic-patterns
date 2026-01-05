@@ -57,18 +57,21 @@ graph LR
 **Implementation approach:**
 
 1. **Research phase** - Start fresh conversation with Opus 4.1:
-   - "Research the authentication system and document all OAuth flows"
+   
+- "Research the authentication system and document all OAuth flows"
    - Compile findings into a structured document
    - Close conversation
 
 2. **Planning phase** - New conversation with Opus 4.1:
-   - Provide distilled research findings (not full transcript)
+   
+- Provide distilled research findings (not full transcript)
    - "Create implementation plan for adding Google OAuth support"
    - Generate step-by-step roadmap
    - Close conversation
 
 3. **Execution phase** - New conversation with Sonnet 4.5:
-   - Provide the implementation plan
+   
+- Provide the implementation plan
    - "Implement step 1: Create OAuth configuration module"
    - Execute systematically through each step
 

@@ -79,6 +79,7 @@ search_all() {
 **Proactive triggers:** "search everywhere", "find across all", "where did someone say"
 
 Searches in parallel:
+
 - Apple Messages
 - Slack
 - Fastmail
