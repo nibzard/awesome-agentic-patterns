@@ -160,6 +160,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Chain-of-Thought Monitoring & Interruption](patterns/chain-of-thought-monitoring-interruption.md) <span class='updated-badge'>UPDATED</span>
 - [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md) <span class='updated-badge'>UPDATED</span>
 - [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md)
+- [Proactive Trigger Vocabulary](patterns/proactive-trigger-vocabulary.md)
 - [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md)
 - [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md)
 - [Team-Shared Agent Configuration as Code](patterns/team-shared-agent-configuration.md)
