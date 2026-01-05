@@ -17,7 +17,7 @@ Create a unified search interface that queries all communication platforms in pa
 
 ```mermaid
 graph TD
-    A[User Query: "find messages about project deadline"] --> B[Aggregator Agent]
+    A["User Query: find messages about project deadline"] --> B[Aggregator Agent]
     B --> C[iMessage Search]
     B --> D[Slack Search]
     B --> E[Email Search]
