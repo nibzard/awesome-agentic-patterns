@@ -107,6 +107,7 @@ nav:
           - "Agent SDK for Programmatic Control": "patterns/agent-sdk-for-programmatic-control.md"
           - "Agent-First Tooling and Logging": "patterns/agent-first-tooling-and-logging.md"
           - "Agentic Search Over Vector Embeddings": "patterns/agentic-search-over-vector-embeddings.md"
+          - "CLI-First Skill Design": "patterns/cli-first-skill-design.md"
           - "CLI-Native Agent Orchestration": "patterns/cli-native-agent-orchestration.md"
           - "Code Mode MCP Tool Interface Improvement Pattern": "patterns/code-first-tool-interface-pattern.md"
           - "Code-Over-API Pattern": "patterns/code-over-api-pattern.md"
