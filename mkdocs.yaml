@@ -115,6 +115,7 @@ nav:
           - "Dynamic Code Injection (On-Demand File Fetch)": "patterns/dynamic-code-injection-on-demand-file-fetch.md"
           - "Egress Lockdown (No-Exfiltration Channel)": "patterns/egress-lockdown-no-exfiltration-channel.md"
           - "LLM-Friendly API Design": "patterns/llm-friendly-api-design.md"
+          - "Multi-Platform Communication Aggregation": "patterns/multi-platform-communication-aggregation.md"
           - "Patch Steering via Prompted Tool Selection": "patterns/patch-steering-via-prompted-tool-selection.md"
           - "Progressive Tool Discovery": "patterns/progressive-tool-discovery.md"
           - "Shell Command Contextualization": "patterns/shell-command-contextualization.md"
