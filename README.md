@@ -21,14 +21,16 @@ If your link ticks those boxes, it belongs here.
 
 ## Quick Tour of Categories
 
-|  Category                  |  What you'll find                                        |
-| --------------------------- | --------------------------------------------------------- |
-| [**Orchestration & Control**](#orchestration-control) | Task decomposition, sub‑agent spawning, tool routing      |
-| [**Context & Memory**](#context-memory)        | Sliding‑window curation, vector cache, episodic memory    |
-| [**Feedback Loops**](#feedback-loops)          | Compilers, CI, human review, self‑healing retries         |
-| [**Tool Use & Environment**](#tool-use-environment)  | Shell, browser, DB, Playwright, sandbox tricks            |
-| [**UX & Collaboration**](#ux-collaboration)      | Prompt hand‑offs, staged commits, async background agents |
-| [**Reliability & Eval**](#reliability-eval)      | Guardrails, eval harnesses, logging, reproducibility      |
+|  Category                                              |  What you'll find                                         |
+| ------------------------------------------------------ | --------------------------------------------------------- |
+| [**Context & Memory**](#context--memory)               | Sliding‑window curation, vector cache, episodic memory    |
+| [**Feedback Loops**](#feedback-loops)                  | Compilers, CI, human review, self‑healing retries         |
+| [**Learning & Adaptation**](#learning--adaptation)     | Agent RFT, skill libraries, variance‑based RL             |
+| [**Orchestration & Control**](#orchestration--control) | Task decomposition, sub‑agent spawning, tool routing      |
+| [**Reliability & Eval**](#reliability--eval)           | Guardrails, eval harnesses, logging, reproducibility      |
+| [**Security & Safety**](#security--safety)             | Isolated VMs, PII tokenization, security scanning         |
+| [**Tool Use & Environment**](#tool-use--environment)   | Shell, browser, DB, Playwright, sandbox tricks            |
+| [**UX & Collaboration**](#ux--collaboration)           | Prompt hand‑offs, staged commits, async background agents |
 
 *Categories are fluid — open a PR if you see a better slice!*
 The tables below are auto‑generated from the `patterns/` folder.
