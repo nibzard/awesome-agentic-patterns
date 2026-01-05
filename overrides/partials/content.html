@@ -1,0 +1,13 @@
+{% if "\x3ch1" not in page.content %}
+  <h1>{{ page.title | d(config.site_name, true)}}</h1>
+{% endif %}
+
+{% if page.meta.authors %}
+  <div class="pattern-authors">
+    {% for author in page.meta.authors %}
+      <span>{{ author }}</span>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{{ page.content }}
