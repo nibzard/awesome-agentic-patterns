@@ -1,6 +1,11 @@
-{% if page.meta.source %}
+{% set pattern_source = page.meta.source or page.meta.source_link %}
+{% if pattern_source %}
   <div class="pattern-source">
     <strong>Source:</strong>
-    <a href="{{ page.meta.source }}" target="_blank" rel="noopener">{{ page.meta.source }}</a>
+    {% if pattern_source.startswith('http://') or pattern_source.startswith('https://') %}
+      <a href="{{ pattern_source }}" target="_blank" rel="noopener">{{ pattern_source }}</a>
+    {% else %}
+      <span>{{ pattern_source }}</span>
+    {% endif %}
   </div>
 {% endif %}

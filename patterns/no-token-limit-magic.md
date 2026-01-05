@@ -4,7 +4,7 @@ status: experimental-but-awesome
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Thorsten Ball", "Quinn Slack"]
 category: Reliability & Eval
-source_link: "https://www.nibzard.com/ampcode"
+source: "https://www.nibzard.com/ampcode"
 tags: [performance, cost, experimentation]
 ---
 

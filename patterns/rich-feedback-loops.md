@@ -4,7 +4,7 @@ status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Thorsten Ball", "Quinn Slack"]
 category: Feedback Loops
-source_link: "https://www.nibzard.com/ampcode"
+source: "https://www.nibzard.com/ampcode"
 tags: [feedback, testing, reliability]
 ---
 

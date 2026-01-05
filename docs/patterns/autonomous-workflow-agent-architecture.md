@@ -34,7 +34,7 @@ Autonomous Workflow Agent Architecture creates AI agents with sophisticated work
 
 **Architecture Pattern:**
 
-![Autonomous Workflow Agent Architecture](autonomous-workflow-agent-architecture.png)
+![Autonomous Workflow Agent Architecture](/patterns/autonomous-workflow-agent-architecture.png)
 
 The system operates through several key phases:
 

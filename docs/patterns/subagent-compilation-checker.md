@@ -1,10 +1,10 @@
 ---
 title: "Subagent Compilation Checker"
-status: "Emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
 category: "Tool Use & Environment"
-source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
+source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [subagent, compilation, modularity, error-isolation]
 ---
 

@@ -4,7 +4,7 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anthropic (Claude Code SDK example)"]
 category: Tool Use & Environment
-source_link: "https://www.nibzard.com/claude-code"
+source: "https://www.nibzard.com/claude-code"
 tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
 ---
 

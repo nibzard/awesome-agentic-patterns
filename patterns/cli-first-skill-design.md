@@ -2,6 +2,7 @@
 title: CLI-First Skill Design
 status: emerging
 authors: ["Lucas Carlson"]
+based_on: ["Anthropic (Claude Code)", "Unix Philosophy"]
 category: "Tool Use & Environment"
 source: "https://github.com/anthropics/claude-code"
 tags: [cli, skills, shell, dual-use, composability, unix-philosophy]

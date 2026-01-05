@@ -27,7 +27,7 @@ This repository has migrated from manual tracking files to a fully automated git
 
 ### Files Modified
 - `scripts/build_readme.py` - Updated to use git-based detection
-- `docs/css/extra.css` - Enhanced with UPDATED badge styling
+- `overrides/main.html` - Inline badge styling for NEW/UPDATED labels
 - `Makefile` - Updated targets for git-based system
 - `PATTERN-LABELING.md` - Complete rewrite for git-based system
 

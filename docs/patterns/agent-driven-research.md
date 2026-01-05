@@ -4,7 +4,7 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Danny Tarlow", "Connie Fan"]
 category: Orchestration & Control
-source_link: "https://www.youtube.com/watch?v=u85G2aV_5rQ"
+source: "https://www.youtube.com/watch?v=u85G2aV_5rQ"
 tags: [research, information retrieval, tool use, iterative process, autonomous search]
 ---
 

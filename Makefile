@@ -8,6 +8,7 @@ site_link:
 	cp $(CURDIR)/LICENSE $(CURDIR)/docs/LICENSE
 	cp $(CURDIR)/TEMPLATE.md $(CURDIR)/docs/TEMPLATE.md
 	cp $(CURDIR)/agentic-patterns.jpeg $(CURDIR)/docs/agentic-patterns.jpeg
+	rm -rf $(CURDIR)/docs/patterns
 	mkdir -p $(CURDIR)/docs/patterns
 	cp -R $(CURDIR)/patterns/* $(CURDIR)/docs/patterns/
 
@@ -35,3 +36,7 @@ debug_pattern:
 # Build with git-based labels (without deployment)
 build_with_labels:
 	python3 scripts/deploy_git_based.py
+
+# Lint pattern front-matter for schema drift
+lint_front_matter:
+	python3 scripts/lint_front_matter.py

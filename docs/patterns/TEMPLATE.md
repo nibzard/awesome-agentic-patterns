@@ -1,9 +1,9 @@
 ---
 title: Pattern Title Here
-status: emerging
+status: emerging # Choose from: proposed, emerging, established, validated-in-production, best-practice, experimental-but-awesome, rapidly-improving
 authors: ["Contributor Name (@username)"]  # Only repo contributors
 based_on: ["Original Creator (Source)"]    # Pattern originators/inspiration
-category: "Choose from: Orchestration & Control, Context & Memory, Learning & Adaptation, Security & Safety, Integration & Tooling, Code Generation, Uncategorized"
+category: "Choose from: Orchestration & Control, Context & Memory, Feedback Loops, Learning & Adaptation, Reliability & Eval, Security & Safety, Tool Use & Environment, UX & Collaboration, Uncategorized"
 source: "https://example.com/source-url"
 tags: [tag1, tag2, tag3]
 ---

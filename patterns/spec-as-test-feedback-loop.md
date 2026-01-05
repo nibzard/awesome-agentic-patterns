@@ -4,7 +4,7 @@ status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Jory Pestorious"]
 category: Feedback Loops
-source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
+source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [validation, drift-detection, continuous-testing]
 ---
 

@@ -100,14 +100,14 @@ Use the following to-do list to get **awesome-agentic-patterns** up and running 
   * `Makefile` – Common targets for building/deploying the site.
   * `mkdocs.yaml` – MkDocs configuration.
   * `requirements.txt` – Python libraries required.
-  * `sort.py` – Utility script (not strictly necessary for initial setup).
+  * `scripts/build_readme.py` – Regenerates README tables and MkDocs nav.
 
 * **Inspect the main folders:**
 
   * `patterns/` (create if missing) – where individual pattern `.md` files will live.
   * `scripts/` – helper scripts (e.g., `build_readme.py` to regenerate the README and nav).
   * `docs/` – MkDocs site content (note: `docs/index.md` is auto-symlinked to the README).
-  * `docs/css/` – custom CSS for MkDocs.
+  * `overrides/` – MkDocs theme overrides (includes inline badge styling).
 
 ---
 
@@ -248,32 +248,33 @@ Use the following to-do list to get **awesome-agentic-patterns** up and running 
 
 ---
 
-## 8. (Optional) Run the Sorting Utility
+## 8. (Optional) Regenerate README & MkDocs Nav
 
-> The repository includes a lightweight `sort.py` script that alphabetically orders pattern links within each category. It’s not strictly required, but helps keep the README tidy.
+> The README tables and MkDocs nav are auto-generated from `patterns/` via `scripts/build_readme.py`.
 
-* **Execute the sort script.**
+* **Regenerate the docs.**
 
   ```bash
-  python sort.py
+  python scripts/build_readme.py
   ```
 
   * This will:
+    * Update the auto-generated sections in `README.md`
+    * Refresh the `mkdocs.yaml` nav block
+    * Apply NEW/UPDATED badges based on git history
 
-    * Read `README.md`
-    * Sort all bullet-point lists at the deepest indentation level
-    * Optionally re-sort the top-level category blocks (depending on `sort.py` logic)
-  * **Review the changes**:
+* **Review the changes**:
 
-    ```bash
-    git diff README.md
-    ```
-  * If everything looks correct, commit the updated `README.md`:
+  ```bash
+  git diff README.md mkdocs.yaml
+  ```
 
-    ```bash
-    git add README.md
-    git commit -m "chore: sort pattern entries in README"
-    ```
+* If everything looks correct, commit the updates:
+
+  ```bash
+  git add README.md mkdocs.yaml
+  git commit -m "chore: regenerate README + mkdocs nav"
+  ```
 
 ---
 
@@ -286,6 +287,12 @@ Use the following to-do list to get **awesome-agentic-patterns** up and running 
   ```
 
   * Fix any Markdown warnings or broken links that MkDocs reports.
+
+* **Lint pattern front-matter (recommended).**
+
+  ```bash
+  make lint_front_matter
+  ```
 
 * **(If you have write access) Trigger the GitHub Action.**
 
@@ -346,58 +353,40 @@ Use the following to-do list to get **awesome-agentic-patterns** up and running 
 
 ---
 
-## 11. NEW Badge System
+## 11. Pattern Badge System (Git-Based)
 
-The repository automatically tracks which patterns should display "NEW" badges using a tracker file system.
+The repository labels patterns as **NEW** or **UPDATED** based on git history.
 
 ### How It Works
 
-* **Tracker File**: `.new-patterns-tracker.txt` maintains two sections:
+* **NEW**: Pattern created within the last 7 days
+* **UPDATED**: Pattern created >7 days ago but modified within the last 14 days
+* **Source of truth**: Git commit history (no tracker files)
+
+### Commands
+
+* **View current labels**:
+
+  ```bash
+  make show_labels
   ```
-  # Current NEW patterns (will show badges):
-  abstracted-code-representation-for-review.md
-  agent-assisted-scaffolding.md
-  ...
 
-  # Previous patterns (no longer new):
-  agent-driven-research.md
-  agent-friendly-workflow-design.md
-  ...
+* **Debug a specific pattern**:
+
+  ```bash
+  make debug_pattern
   ```
 
-* **Automatic Management**: When running `python scripts/build_readme.py`:
-  1. **Loading NEW patterns**: Only reads patterns from "Current NEW patterns" section
-  2. **Detecting changes**: Compares current files vs tracked files to find:
-     - **Newly added**: Files that exist but aren't in tracker at all
-     - **Deleted**: Files in tracker but no longer exist
-  3. **Updating tracker**: When changes are detected:
-     - Removes deleted patterns from both sections
-     - If new patterns found: moves current NEW → Previous, adds new ones → NEW
+* **Regenerate docs with badges**:
 
-### Adding New Patterns (Future)
+  ```bash
+  python scripts/build_readme.py
+  ```
 
-When you add new pattern files:
+### Notes
 
-1. **First run**: Script detects new files not in tracker
-2. **Automatic promotion**: 
-   - Current NEW patterns move to "Previous" section
-   - New files become the NEW patterns
-3. **Badge display**: Only the newly added files get NEW badges
-
-**Example scenario:**
-- Today: 10 patterns have NEW badges
-- You add 3 new patterns next week
-- After running script: Only those 3 new patterns get NEW badges
-- The previous 10 lose their NEW badges and move to "Previous" section
-
-### Manual Control
-
-You can manually edit `.new-patterns-tracker.txt` to:
-- Remove patterns from NEW section (they lose badges immediately)
-- Move patterns between NEW/Previous sections
-- Control which patterns show badges
-
-The system ensures only genuinely new additions get highlighted, while maintaining a historical record of all patterns.
+* Patterns must be committed for labels to appear.
+* Labels expire automatically based on commit dates.
 
 ---
 

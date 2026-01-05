@@ -1,6 +1,6 @@
 ---
 title: "Isolated VM per RL Rollout"
-status: "emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Sam Pretty (Cognition)", "Devon Engineering Team"]
 category: "Security & Safety"

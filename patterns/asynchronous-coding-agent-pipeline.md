@@ -1,10 +1,10 @@
 ---
 title: "Asynchronous Coding Agent Pipeline"
-status: "Proposed"
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Reliability & Eval"
-source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
+source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [asynchronous, pipeline, code-agent, parallelism]
 ---
 

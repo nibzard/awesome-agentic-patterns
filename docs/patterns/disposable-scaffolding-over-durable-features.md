@@ -1,10 +1,10 @@
 ---
 title: "Disposable Scaffolding Over Durable Features"
-status: "Best Practice"
+status: best-practice
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Thorsten Ball (Sourcegraph)"]
 category: "Orchestration & Control"
-source_link: "https://www.sourcegraph.com"
+source: "https://www.sourcegraph.com"
 tags: [bitter-lesson, temporary-tooling, model-centric, adaptability, future-proofing]
 ---
 

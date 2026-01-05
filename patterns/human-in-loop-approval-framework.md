@@ -4,7 +4,7 @@ status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Dexter Horthy (HumanLayer)"]
 category: UX & Collaboration
-source_link: "https://claude.com/blog/building-companies-with-claude-code"
+source: "https://claude.com/blog/building-companies-with-claude-code"
 tags: [human-oversight, safety, approvals, risk-management, collaboration, slack-integration]
 ---
 

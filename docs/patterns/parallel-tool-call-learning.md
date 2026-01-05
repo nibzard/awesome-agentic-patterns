@@ -1,6 +1,6 @@
 ---
 title: "Parallel Tool Call Learning"
-status: "emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Sam Pretty (Cognition)", "Will Brown (OpenAI)"]
 category: "Orchestration & Control"

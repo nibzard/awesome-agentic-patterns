@@ -191,10 +191,10 @@ If you encounter "mkdocs: No such file or directory":
 1. Make sure the virtual environment is activated
 2. Reinstall dependencies: `pip install -r requirements.txt`
 
-### CSS Not Loading (404 errors)
-If `extra.css` returns 404 errors on deployed site:
-1. Check `mkdocs.yaml` uses relative path: `css/extra.css` (not `/css/extra.css`)
-2. MkDocs processes `extra_css` relative to `docs_dir`, not as absolute URL paths
+### Badge Styling Not Applied
+If NEW/UPDATED badges are unstyled:
+1. Check the inline CSS in `overrides/main.html`
+2. Confirm `mkdocs.yaml` points to `overrides` via `custom_dir`
 3. Rebuild and redeploy after fixing
 
 ### Cloudflare Workers Timeout

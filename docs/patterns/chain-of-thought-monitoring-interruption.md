@@ -4,7 +4,7 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Tanner Jones (Vulcan)"]
 category: UX & Collaboration
-source_link: "https://claude.com/blog/building-companies-with-claude-code"
+source: "https://claude.com/blog/building-companies-with-claude-code"
 tags: [monitoring, intervention, debugging, reasoning, ux]
 ---
 
