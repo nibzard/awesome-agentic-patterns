@@ -1,7 +1,8 @@
 ---
 title: "Self-Discover: LLM Self-Composed Reasoning Structures"
 status: "emerging"
-authors: ["Google DeepMind", "USC"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Google DeepMind", "USC"]
 category: "Feedback Loops"
 tags: [reasoning, self-improvement, meta-learning, problem-solving, task-specific, optimization]
 ---

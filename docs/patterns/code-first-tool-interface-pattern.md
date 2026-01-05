@@ -1,7 +1,8 @@
 ---
 title: "Code Mode MCP Tool Interface Improvement Pattern"
 status: "Established"
-authors: ["Cloudflare Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Cloudflare Team"]
 category: "Tool Use & Environment"
 source_link: "https://blog.cloudflare.com/code-mode/"
 tags: [tool-interface, code-generation, sandboxing, mcp, mcp-improvement, typescript, v8-isolates, token-optimization]
@@ -199,7 +200,8 @@ for (const contact of contacts) {
 2. **Implement Bindings**: Develop secure bindings that control access to external resources
 3. **Sandbox Setup**: Configure V8 isolates with appropriate security constraints
 4. **Code Execution Flow**:
-   - LLM generates TypeScript code using the provided APIs
+   
+- LLM generates TypeScript code using the provided APIs
    - Code runs in isolated V8 environment
    - Bindings provide controlled access to tools
    - Results return to the agent for further processing

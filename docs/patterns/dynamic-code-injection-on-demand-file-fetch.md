@@ -1,7 +1,8 @@
 ---
 title: "Dynamic Code Injection (On-Demand File Fetch)"
 status: "Established"
-authors: ["Internal AI Dev Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Internal AI Dev Team"]
 category: "Tool Use & Environment"
 source_link: "Internal Practice"
 tags: [file-injection, at-mention, slash-commands, IDE-integration]
@@ -24,6 +25,7 @@ Allow **on-demand file injection** via special syntax (e.g., `@filename` or `/lo
 **3. Injects** that snippet into the agent's current context, seamlessly extending its "memory" for the ongoing task.
 
 Concretely:
+
 - A user types `/load src/components/Button.js:lines 10–50` or `@src/setup/db.js`.
 - The agent's preprocessor intercepts this command, reads the specified file (or line range), and replaces the command with the file content (or trimmed snippet).
 - The rest of the prompt remains unchanged, so the agent can continue reasoning without restarting the conversation.

@@ -1,7 +1,8 @@
 ---
 title: Skill Library Evolution
 status: established
-authors: ["Anthropic Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic Engineering Team"]
 category: Learning & Adaptation
 source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
 tags: [code-reuse, skills, learning, capabilities, evolution]

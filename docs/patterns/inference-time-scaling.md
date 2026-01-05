@@ -1,7 +1,8 @@
 ---
 title: "Inference-Time Scaling"
 status: "emerging"
-authors: ["Google DeepMind", "OpenAI"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Google DeepMind", "OpenAI"]
 category: "Orchestration & Control"
 tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute]
 ---
@@ -100,7 +101,8 @@ class InferenceTimeScalingAgent:
         Proposed solution: {initial_solution}
         
         Critically evaluate this solution:
-        - Are there any errors?
+        
+- Are there any errors?
         - What assumptions were made?
         - Could the approach be improved?
         """

@@ -1,7 +1,8 @@
 ---
 title: Memory Synthesis from Execution Logs
 status: emerging
-authors: ["Anthropic Internal Users", "Claude Code Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic Internal Users", "Claude Code Team"]
 category: "Context & Memory"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [memory, logs, diary, synthesis, pattern-detection, knowledge-extraction, learning]

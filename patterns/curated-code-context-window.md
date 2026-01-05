@@ -1,7 +1,8 @@
 ---
 title: "Curated Code Context Window"
 status: "Established | Validated-in-Production"
-authors: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)", "Thorsten Ball"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)", "Thorsten Ball"]
 category: "Context & Memory"
 source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [context-management, code-agent, file-selection, noise-reduction]

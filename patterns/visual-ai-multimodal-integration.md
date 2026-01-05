@@ -1,7 +1,8 @@
 ---
 title: "Visual AI Multimodal Integration"
 status: "emerging"
-authors: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
 category: "Tool Use & Environment"
 tags: [multimodal, vision, video, image-processing, visual-understanding, agent-capabilities]
 ---

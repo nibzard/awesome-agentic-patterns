@@ -1,7 +1,8 @@
 ---
 title: Action-Selector Pattern
 status: emerging
-authors: ["Luca Beurer-Kellner et al. (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [prompt-injection, control-flow, safety, tool-use]

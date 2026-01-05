@@ -1,7 +1,8 @@
 ---
 title: Tool Use Steering via Prompting
 status: best-practice
-authors: ["Boris Cherny (via Claude Code examples)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (via Claude Code examples)"]
 category: Tool Use & Environment
 source_link: "https://www.nibzard.com/claude-code"
 tags: [tool use, prompting, agent guidance, custom tools, cli, natural language control]

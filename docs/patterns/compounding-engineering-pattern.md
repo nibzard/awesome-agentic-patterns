@@ -1,7 +1,8 @@
 ---
 title: Compounding Engineering Pattern
 status: emerging
-authors: ["Dan Shipper (Every)", "Every Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Dan Shipper (Every)", "Every Engineering Team"]
 category: "Learning & Adaptation"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [learning, feedback-loops, codification, prompts, slash-commands, onboarding, knowledge-sharing]

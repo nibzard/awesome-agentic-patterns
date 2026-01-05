@@ -1,7 +1,8 @@
 ---
 title: Dogfooding with Rapid Iteration for Agent Improvement
 status: best-practice
-authors: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
 category: Feedback Loops
 source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [dogfooding, iterative-development, feedback-loop, agent-improvement, internal-testing, product-development]

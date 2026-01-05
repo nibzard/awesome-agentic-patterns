@@ -1,7 +1,8 @@
 ---
 title: Dual-Use Tool Design
 status: best-practice
-authors: ["Boris Cherny (Anthropic)", "Claude Code Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Claude Code Team"]
 category: "Tool Use & Environment"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [tools, ux, slash-commands, hooks, human-ai-collaboration, consistency]

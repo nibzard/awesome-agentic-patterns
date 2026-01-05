@@ -1,7 +1,8 @@
 ---
 title: Spectrum of Control / Blended Initiative
 status: validated-in-production
-authors: ["Aman Sanger (Cursor)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-delegation, code-editing, ide-integration]

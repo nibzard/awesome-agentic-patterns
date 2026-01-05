@@ -1,7 +1,8 @@
 ---
 title: PII Tokenization
 status: established
-authors: ["Anthropic Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic Engineering Team"]
 category: Security & Safety
 source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
 tags: [privacy, pii, security, mcp, data-protection]

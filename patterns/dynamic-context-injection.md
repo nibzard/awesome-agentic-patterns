@@ -1,7 +1,8 @@
 ---
 title: Dynamic Context Injection
 status: established
-authors: ["Boris Cherny (via Claude Code)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
 source_link: "https://www.nibzard.com/claude-code"
 tags: [context management, dynamic context, lazy loading, slash commands, at-mention, interactive context]

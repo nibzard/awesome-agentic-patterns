@@ -1,7 +1,8 @@
 ---
 title: "Tool Use Incentivization via Reward Shaping"
 status: "Emerging"
-authors: ["Will Brown (Prime Intellect Talk)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [tool-use, reward-shaping, coding-agent, RL]

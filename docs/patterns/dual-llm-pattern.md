@@ -1,7 +1,8 @@
 ---
 title: Dual LLM Pattern
 status: emerging
-authors: ["Simon Willison (orig.)", "Luca Beurer-Kellner et al. (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Simon Willison (orig.)", "Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [privilege-separation, quarantined-llm, symbolic-variables]

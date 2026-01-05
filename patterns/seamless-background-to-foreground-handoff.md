@@ -1,7 +1,8 @@
 ---
 title: Seamless Background-to-Foreground Handoff
 status: emerging
-authors: ["Aman Sanger (Cursor)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
 source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [background-agent, human-in-the-loop, task-handoff, interactive-refinement, agent-collaboration, developer-workflow]

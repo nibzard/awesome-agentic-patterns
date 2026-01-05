@@ -1,7 +1,8 @@
 ---
 title: Virtual Machine Operator Agent
 status: established
-authors: ["Amjad Masad"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Amjad Masad"]
 category: Tool Use & Environment
 source_link: "https://www.nibzard.com/silent-revolution"
 tags: [computer operation, virtual machine, execution environment, agent capability]
@@ -12,6 +13,7 @@ AI agents need to perform complex tasks beyond simple code generation or text ma
 
 ## Solution
 Equip the AI agent with access to a dedicated virtual machine (VM) environment. The agent is trained or designed to understand how to operate within this VM, treating it as its direct workspace. This allows the agent to:
+
 - Execute arbitrary code and scripts.
 - Install and manage software packages.
 - Read from and write to the file system.

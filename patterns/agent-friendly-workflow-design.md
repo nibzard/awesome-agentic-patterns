@@ -1,7 +1,8 @@
 ---
 title: Agent-Friendly Workflow Design
 status: best-practice
-authors: ["Amjad Masad"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Amjad Masad"]
 category: UX & Collaboration
 source_link: "https://www.nibzard.com/silent-revolution"
 tags: [human-agent collaboration, workflow design, agent autonomy, task decomposition, HCI]

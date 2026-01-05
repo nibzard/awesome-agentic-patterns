@@ -1,7 +1,8 @@
 ---
 title: Proactive Agent State Externalization
 status: emerging
-authors: ["Cognition AI (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Cognition AI (2025)"]
 category: Context & Memory
 source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges"
 tags: [state-externalization, memory-management, self-documentation, note-taking]

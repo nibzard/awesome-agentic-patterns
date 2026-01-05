@@ -1,7 +1,8 @@
 ---
 title: Autonomous Workflow Agent Architecture
 status: established
-authors: ["Together AI Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Together AI Team"]
 category: "Orchestration & Control"
 source: "https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks"
 tags: [workflow-automation, containerization, multi-agent, engineering-tasks, tmux, error-recovery]

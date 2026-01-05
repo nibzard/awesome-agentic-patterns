@@ -1,7 +1,8 @@
 ---
 title: "Inference-Time Scaling"
 status: "emerging"
-authors: ["Google DeepMind", "OpenAI"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Google DeepMind", "OpenAI"]
 category: "Orchestration & Control"
 tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute]
 ---

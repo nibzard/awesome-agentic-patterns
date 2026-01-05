@@ -1,7 +1,8 @@
 ---
 title: Progressive Tool Discovery
 status: established
-authors: ["Anthropic Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic Engineering Team"]
 category: Tool Use & Environment
 source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
 tags: [mcp, tool-discovery, context-optimization, lazy-loading]

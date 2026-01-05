@@ -1,7 +1,8 @@
 ---
 title: "Graph of Thoughts (GoT)"
 status: "emerging"
-authors: ["Besta et al.", "ETH Zurich"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Besta et al.", "ETH Zurich"]
 category: "Feedback Loops"
 tags: [reasoning, graph-based, problem-solving, thought-exploration, backtracking, aggregation]
 ---

@@ -1,7 +1,8 @@
 ---
 title: Team-Shared Agent Configuration as Code
 status: best-practice
-authors: ["Boris Cherny (Anthropic)", "Enterprise Claude Code Users"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Enterprise Claude Code Users"]
 category: "UX & Collaboration"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [configuration, version-control, team-collaboration, permissions, consistency, onboarding]

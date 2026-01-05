@@ -1,7 +1,8 @@
 ---
 title: Reflection Loop
 status: established
-authors: ["Shinn et al. (2023)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Shinn et al. (2023)"]
 category: Feedback Loops
 source: "https://arxiv.org/abs/2303.11366"
 tags: [self-feedback, iterative-improvement, evaluation]

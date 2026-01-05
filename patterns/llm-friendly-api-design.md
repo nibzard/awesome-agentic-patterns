@@ -1,7 +1,8 @@
 ---
 title: LLM-Friendly API Design
 status: emerging
-authors: ["Lukas Möller (Cursor)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Lukas Möller (Cursor)"]
 category: Tool Use & Environment
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [api-design, llm-interaction, tool-use, system-design, code-structure, agent-compatibility]

@@ -1,7 +1,8 @@
 ---
 title: Multi-Model Orchestration for Complex Edits
 status: validated-in-production
-authors: ["Aman Sanger (Cursor)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Aman Sanger (Cursor)"]
 category: Orchestration & Control
 source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-tasks]

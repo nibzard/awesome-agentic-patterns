@@ -1,7 +1,8 @@
 ---
 title: Plan-Then-Execute Pattern
 status: emerging
-authors: ["Luca Beurer-Kellner et al. (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [planning, control-flow-integrity, prompt-injection]

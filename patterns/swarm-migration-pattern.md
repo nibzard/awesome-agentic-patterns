@@ -1,7 +1,8 @@
 ---
 title: Swarm Migration Pattern
 status: validated-in-production
-authors: ["Boris Cherny (Anthropic)", "Anthropic Internal Users"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Anthropic Internal Users"]
 category: "Orchestration & Control"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [swarm, map-reduce, migration, parallelization, sub-agents, scalability, framework-migration]

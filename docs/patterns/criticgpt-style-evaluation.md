@@ -1,7 +1,8 @@
 ---
 title: "CriticGPT-Style Code Review"
 status: "validated-in-production"
-authors: ["OpenAI"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["OpenAI"]
 category: "Reliability & Eval"
 tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
 ---
@@ -9,6 +10,7 @@ tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-
 ## Problem
 
 As AI-generated code becomes more sophisticated, it becomes increasingly difficult for human reviewers to catch subtle bugs, security issues, or quality problems. Traditional code review processes may miss issues in AI-generated code because:
+
 - The volume of generated code can overwhelm human reviewers
 - Subtle bugs may appear correct at first glance
 - Security vulnerabilities may be non-obvious
@@ -73,7 +75,8 @@ class CriticGPTReviewer:
         ```
         
         Identify any bugs including:
-        - Logic errors
+        
+- Logic errors
         - Off-by-one errors  
         - Null/undefined reference errors
         - Type mismatches
@@ -100,7 +103,8 @@ class CriticGPTReviewer:
         ```
         
         Check for vulnerabilities including:
-        - SQL injection
+        
+- SQL injection
         - XSS vulnerabilities
         - Command injection
         - Path traversal
@@ -124,7 +128,8 @@ class CriticGPTReviewer:
         ```
         
         Evaluate:
-        - Code clarity and readability
+        
+- Code clarity and readability
         - Function/variable naming
         - Code organization
         - Documentation completeness

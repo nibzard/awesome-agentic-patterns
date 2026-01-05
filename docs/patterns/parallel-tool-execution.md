@@ -1,7 +1,8 @@
 ---
 title: Conditional Parallel Tool Execution
 status: validated-in-production
-authors: ["Gerred Dillon ('Building an Agentic System')"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Gerred Dillon ('Building an Agentic System')"]
 category: "Orchestration & Control"
 source_link: "https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html" # Assumes this page details the pattern
 tags: [parallel execution, tool orchestration, read-only tools, stateful tools, agent efficiency, agent safety, concurrency control, task scheduling]

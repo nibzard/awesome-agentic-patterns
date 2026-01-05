@@ -1,7 +1,8 @@
 ---
 title: Progressive Autonomy with Model Evolution
 status: best-practice
-authors: ["Boris Cherny (Anthropic)", "Claude Code Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Claude Code Team"]
 category: "Orchestration & Control"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [model-evolution, scaffolding, autonomy, system-prompts, capabilities, model-intelligence]
