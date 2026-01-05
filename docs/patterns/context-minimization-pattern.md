@@ -35,3 +35,4 @@ Customer-service chat, medical Q&A, any multi-turn flow where initial text shoul
 ## References
 
 * Beurer-Kellner et al., §3.1 (6) Context-Minimization.
+* [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Emphasizes importance of eliminating context contradictions: "if there's any contradictions in your prompt, you're going to receive lower quality output"
