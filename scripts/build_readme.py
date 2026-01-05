@@ -26,8 +26,8 @@ def slugify(value):
     and converts spaces to hyphens.
     """
     value = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode('ascii')
-    value = re.sub(r'[^\\w\\s-]', '', value).strip().lower()
-    value = re.sub(r'[-\\s]+', '-', value)
+    value = re.sub(r'[^\w\s-]', '', value).strip().lower()
+    value = re.sub(r'[-\s]+', '-', value)
     return value
 
 def parse_front_matter(filepath):
@@ -128,6 +128,40 @@ def group_by_category(patterns):
         category_map.setdefault(p['category'], []).append(p)
     return category_map
 
+# Category descriptions for the "Quick Tour of Categories" table
+CATEGORY_DESCRIPTIONS = {
+    "Context & Memory": "Sliding‑window curation, vector cache, episodic memory",
+    "Feedback Loops": "Compilers, CI, human review, self‑healing retries",
+    "Learning & Adaptation": "Agent RFT, skill libraries, variance‑based RL",
+    "Orchestration & Control": "Task decomposition, sub‑agent spawning, tool routing",
+    "Reliability & Eval": "Guardrails, eval harnesses, logging, reproducibility",
+    "Security & Safety": "Isolated VMs, PII tokenization, security scanning",
+    "Tool Use & Environment": "Shell, browser, DB, Playwright, sandbox tricks",
+    "UX & Collaboration": "Prompt hand‑offs, staged commits, async background agents",
+}
+
+def generate_toc_md(category_map):
+    """
+    Create a Markdown "Quick Tour of Categories" table from category_map.
+    Returns a single concatenated string with the table.
+    """
+    lines = []
+    if not category_map:
+        return ""
+
+    lines.append("|  Category                                              |  What you'll find                                         |\n")
+    lines.append("| ------------------------------------------------------ | --------------------------------------------------------- |\n")
+
+    for category_name in sorted(category_map.keys(), key=lambda c: c.lower()):
+        category_slug = slugify(category_name)
+        # Get description from mapping, or use a generic one if not found
+        description = CATEGORY_DESCRIPTIONS.get(category_name, "Various patterns")
+        # Create markdown link with slugified anchor
+        link = f"[**{category_name}**](#{category_slug})"
+        lines.append(f"| {link:<54} | {description:<57} |\n")
+
+    return ''.join(lines)
+
 def generate_patterns_md(category_map, new_patterns=None, updated_patterns=None):
     """
     Create a Markdown snippet (string) that groups patterns by category.
@@ -182,6 +216,40 @@ def update_readme_readandreplace(readme_path, new_section_md):
     replacement = (
         f"{start_marker}\n\n"
         f"{new_section_md}"
+        f"{end_marker}"
+    )
+
+    # Use regex to replace everything between markers (inclusive) with replacement
+    pattern = re.compile(
+        re.escape(start_marker) + r".*?" + re.escape(end_marker),
+        re.DOTALL
+    )
+    updated = pattern.sub(replacement, content)
+
+    with open(readme_path, 'w', encoding='utf-8') as f:
+        f.write(updated)
+
+def update_readme_toc(readme_path, toc_md):
+    """
+    Replace everything between the markers:
+      <!-- AUTO-GENERATED TOC START -->
+      <!-- AUTO-GENERATED TOC END -->
+
+    If markers not found, exit with error.
+    """
+    start_marker = "<!-- AUTO-GENERATED TOC START -->"
+    end_marker   = "<!-- AUTO-GENERATED TOC END -->"
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    if start_marker not in content or end_marker not in content:
+        print("Error: Could not find AUTO-GENERATED TOC markers in README.md", file=sys.stderr)
+        sys.exit(1)
+
+    # Build the replacement block (keep newlines for table formatting)
+    replacement = (
+        f"{start_marker}\n"
+        f"{toc_md}"
         f"{end_marker}"
     )
 
@@ -281,7 +349,12 @@ def main():
     category_map = group_by_category(patterns)
     new_section_md = generate_patterns_md(category_map, new_patterns, updated_patterns)
 
-    # 1) Update README.md
+    # 0) Update README.md TOC first (Quick Tour of Categories table)
+    toc_md = generate_toc_md(category_map)
+    update_readme_toc(readme_path, toc_md)
+    print("✅ README.md TOC updated.")
+
+    # 1) Update README.md patterns section
     update_readme_readandreplace(readme_path, new_section_md)
     print("✅ README.md auto-generated section updated.")
 

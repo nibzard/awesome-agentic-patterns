@@ -21,16 +21,18 @@ If your link ticks those boxes, it belongs here.
 
 ## Quick Tour of Categories
 
+<!-- AUTO-GENERATED TOC START -->
 |  Category                                              |  What you'll find                                         |
 | ------------------------------------------------------ | --------------------------------------------------------- |
-| [**Context & Memory**](#context--memory)               | Sliding‑window curation, vector cache, episodic memory    |
+| [**Context & Memory**](#context-memory)                | Sliding‑window curation, vector cache, episodic memory    |
 | [**Feedback Loops**](#feedback-loops)                  | Compilers, CI, human review, self‑healing retries         |
-| [**Learning & Adaptation**](#learning--adaptation)     | Agent RFT, skill libraries, variance‑based RL             |
-| [**Orchestration & Control**](#orchestration--control) | Task decomposition, sub‑agent spawning, tool routing      |
-| [**Reliability & Eval**](#reliability--eval)           | Guardrails, eval harnesses, logging, reproducibility      |
-| [**Security & Safety**](#security--safety)             | Isolated VMs, PII tokenization, security scanning         |
-| [**Tool Use & Environment**](#tool-use--environment)   | Shell, browser, DB, Playwright, sandbox tricks            |
-| [**UX & Collaboration**](#ux--collaboration)           | Prompt hand‑offs, staged commits, async background agents |
+| [**Learning & Adaptation**](#learning-adaptation)      | Agent RFT, skill libraries, variance‑based RL             |
+| [**Orchestration & Control**](#orchestration-control)  | Task decomposition, sub‑agent spawning, tool routing      |
+| [**Reliability & Eval**](#reliability-eval)            | Guardrails, eval harnesses, logging, reproducibility      |
+| [**Security & Safety**](#security-safety)              | Isolated VMs, PII tokenization, security scanning         |
+| [**Tool Use & Environment**](#tool-use-environment)    | Shell, browser, DB, Playwright, sandbox tricks            |
+| [**UX & Collaboration**](#ux-collaboration)            | Prompt hand‑offs, staged commits, async background agents |
+<!-- AUTO-GENERATED TOC END -->
 
 *Categories are fluid — open a PR if you see a better slice!*
 The tables below are auto‑generated from the `patterns/` folder.
@@ -41,10 +43,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 <!-- AUTO-GENERATED PATTERNS START -->
 
-### <a name=""></a>Context & Memory
+### <a name="context-memory"></a>Context & Memory
 
 - [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
-- [Context-Minimization Pattern](patterns/context-minimization-pattern.md) <span class='updated-badge'>UPDATED</span>
+- [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
 - [Curated Code Context Window](patterns/curated-code-context-window.md)
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
@@ -54,7 +56,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md)
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 
-### <a name="-"></a>Feedback Loops
+### <a name="feedback-loops"></a>Feedback Loops
 
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
 - [Coding Agent CI Feedback Loop](patterns/coding-agent-ci-feedback-loop.md)
@@ -68,23 +70,23 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md)
 - [Tool Use Incentivization via Reward Shaping](patterns/tool-use-incentivization-via-reward-shaping.md)
 
-### <a name=""></a>Learning & Adaptation
+### <a name="learning-adaptation"></a>Learning & Adaptation
 
 - [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md)
 - [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md)
 - [Skill Library Evolution](patterns/skill-library-evolution.md)
 - [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md)
 
-### <a name="-"></a>Orchestration & Control
+### <a name="orchestration-control"></a>Orchestration & Control
 
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
-- [Discrete Phase Separation](patterns/discrete-phase-separation.md) <span class='updated-badge'>UPDATED</span>
+- [Discrete Phase Separation](patterns/discrete-phase-separation.md)
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md)
-- [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md) <span class='updated-badge'>UPDATED</span>
+- [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md)
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
 - [Feature List as Immutable Contract](patterns/feature-list-as-immutable-contract.md)
@@ -94,23 +96,23 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Iterative Multi-Agent Brainstorming](patterns/iterative-multi-agent-brainstorming.md)
 - [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
-- [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md) <span class='updated-badge'>UPDATED</span>
+- [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
 - [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md)
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
 - [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md)
 - [Plan-Then-Execute Pattern](patterns/plan-then-execute-pattern.md)
 - [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md)
-- [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md) <span class='updated-badge'>UPDATED</span>
+- [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md)
-- [Sub-Agent Spawning](patterns/sub-agent-spawning.md) <span class='updated-badge'>UPDATED</span>
+- [Sub-Agent Spawning](patterns/sub-agent-spawning.md)
 - [Swarm Migration Pattern](patterns/swarm-migration-pattern.md)
 - [Three-Stage Perception Architecture](patterns/three-stage-perception-architecture.md)
 - [Tool Capability Compartmentalization](patterns/tool-capability-compartmentalization.md)
 - [Tree-of-Thought Reasoning](patterns/tree-of-thought-reasoning.md)
 
-### <a name=""></a>Reliability & Eval
+### <a name="reliability-eval"></a>Reliability & Eval
 
 - [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md)
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
@@ -120,16 +122,16 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
-- [Structured Output Specification](patterns/structured-output-specification.md) <span class='updated-badge'>UPDATED</span>
+- [Structured Output Specification](patterns/structured-output-specification.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 
-### <a name=""></a>Security & Safety
+### <a name="security-safety"></a>Security & Safety
 
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
 
-### <a name="-"></a>Tool Use & Environment
+### <a name="tool-use-environment"></a>Tool Use & Environment
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md)
@@ -152,13 +154,13 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 - [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md)
 
-### <a name=""></a>UX & Collaboration
+### <a name="ux-collaboration"></a>UX & Collaboration
 
 - [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md)
 - [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md)
 - [Agent-Friendly Workflow Design](patterns/agent-friendly-workflow-design.md)
-- [Chain-of-Thought Monitoring & Interruption](patterns/chain-of-thought-monitoring-interruption.md) <span class='updated-badge'>UPDATED</span>
-- [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md) <span class='updated-badge'>UPDATED</span>
+- [Chain-of-Thought Monitoring & Interruption](patterns/chain-of-thought-monitoring-interruption.md)
+- [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md)
 - [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md)
 - [Proactive Trigger Vocabulary](patterns/proactive-trigger-vocabulary.md)
 - [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md)
