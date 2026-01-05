@@ -29,4 +29,7 @@ flowchart TD
 ```
 
 ## References
+
 - Aman Sanger (Cursor) discusses this at 0:01:34: "...when you kind of mix the intelligence of a model like 3.5 Sonnet with a few other kind of custom models we use for retrieval and then applying the edits made by this larger model, you now have the ability to do kind of multi-file edits."
+- [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Model-specific task delegation: Opus 4.1 for research and complex planning, Sonnet 4.5 for implementation execution
+- Related pattern: [Discrete Phase Separation](discrete-phase-separation.md) - Extends multi-model orchestration to separate conversation phases
