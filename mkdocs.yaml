@@ -129,6 +129,7 @@ nav:
           - "Chain-of-Thought Monitoring & Interruption <span class='updated-badge'>UPDATED</span>": "patterns/chain-of-thought-monitoring-interruption.md"
           - "Human-in-the-Loop Approval Framework <span class='updated-badge'>UPDATED</span>": "patterns/human-in-loop-approval-framework.md"
           - "Latent Demand Product Discovery": "patterns/latent-demand-product-discovery.md"
+          - "Proactive Trigger Vocabulary": "patterns/proactive-trigger-vocabulary.md"
           - "Seamless Background-to-Foreground Handoff": "patterns/seamless-background-to-foreground-handoff.md"
           - "Spectrum of Control / Blended Initiative": "patterns/spectrum-of-control-blended-initiative.md"
           - "Team-Shared Agent Configuration as Code": "patterns/team-shared-agent-configuration.md"
