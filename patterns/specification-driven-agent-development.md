@@ -4,7 +4,7 @@ status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
-source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
+source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [spec-first, scaffolding, contract, requirements]
 ---
 

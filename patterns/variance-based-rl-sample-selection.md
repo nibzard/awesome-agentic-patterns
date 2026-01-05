@@ -1,6 +1,6 @@
 ---
 title: "Variance-Based RL Sample Selection"
-status: "emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Theo (OpenAI Solutions Architect)", "Prashant (OpenAI RFT Team)"]
 category: "Learning & Adaptation"

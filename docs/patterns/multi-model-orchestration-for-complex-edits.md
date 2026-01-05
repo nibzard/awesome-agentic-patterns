@@ -4,7 +4,7 @@ status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Aman Sanger (Cursor)"]
 category: Orchestration & Control
-source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
+source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-tasks]
 ---
 

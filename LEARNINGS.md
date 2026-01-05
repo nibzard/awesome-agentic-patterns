@@ -27,7 +27,7 @@ Persistent CSS 404 errors on Cloudflare Workers deployment despite file existing
 
 ### Wrong Approaches We Tried
 
-1. ❌ Changing CSS paths (`css/extra.css` → `/css/extra.css` → back)
+1. ❌ Tweaking CSS paths and `extra_css` settings repeatedly
 2. ❌ Switching between `[site]` and `[assets]` configs (made it worse)
 3. ❌ Force re-uploading by modifying CSS file (Wrangler still skipped upload)
 4. ❌ Multiple commits trying path variations
@@ -124,9 +124,9 @@ bucket = "./site"  # Causes HTTP 500 errors
 
 ### 5. MkDocs + Cloudflare Workers Gotchas
 
-- MkDocs `extra_css` expects relative paths: `css/extra.css` (not `/css/extra.css`)
-- Absolute paths with `/` don't work for `extra_css` config
-- CSS lives in `docs/css/` and gets copied to `site/css/` during build
+- Custom styles are inlined in `overrides/main.html` (no `extra_css` dependency)
+- Ensure `mkdocs.yaml` points to `overrides` via `custom_dir`
+- Use absolute paths in markdown for assets that must work on Workers
 - Custom domain CDN caching can hide deployment issues
 
 ## Architecture Decision: Inline CSS
@@ -149,10 +149,10 @@ bucket = "./site"  # Causes HTTP 500 errors
    gh run view <run-id> --log | grep -E "(Uploaded|Skipped)"
    ```
 
-2. **Verify assets after deployment:**
+2. **Verify pages after deployment:**
    ```bash
-   curl -I https://your-site.com/css/extra.css
-   curl -I https://your-worker.workers.dev/css/extra.css
+   curl -I https://your-site.com/
+   curl -I https://your-worker.workers.dev/
    ```
 
 3. **Keep custom assets minimal:**

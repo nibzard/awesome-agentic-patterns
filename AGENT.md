@@ -6,13 +6,14 @@
 - `make site_build` - Build static site to site/ directory
 - `make site_deploy` - Deploy to GitHub Pages
 - `python scripts/build_readme.py` - Regenerate README.md and mkdocs.yaml from pattern files
+- `make lint_front_matter` - Validate pattern front-matter schema
 - `npx wrangler deploy` - Deploy to Cloudflare Workers
 
 ## Code Style & Patterns
-- Use YAML front-matter for all pattern files with: title, status, authors, category, tags
+- Use YAML front-matter for all pattern files with: title, status, authors, based_on, category, source, tags
 - Follow TEMPLATE.md structure: Problem → Solution → How to use it → Trade-offs → References  
 - Use absolute paths for assets: `/image.jpeg` not `image.jpeg` (critical for deployment)
-- Pattern categories: "Orchestration & Control", "Context & Memory", "Feedback Loops", "Tool Use & Environment", "UX & Collaboration", "Reliability & Eval"
+- Pattern categories: "Orchestration & Control", "Context & Memory", "Feedback Loops", "Learning & Adaptation", "Reliability & Eval", "Security & Safety", "Tool Use & Environment", "UX & Collaboration"
 - Python: Snake_case functions, proper YAML parsing, UTF-8 encoding
 - Always run `python scripts/build_readme.py` after adding/modifying patterns
 - Support Mermaid diagrams in pattern markdown files

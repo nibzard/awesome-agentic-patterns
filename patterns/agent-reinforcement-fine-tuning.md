@@ -1,6 +1,6 @@
 ---
 title: "Agent Reinforcement Fine-Tuning (Agent RFT)"
-status: "emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Will Brown (OpenAI)", "Theo (OpenAI Solutions Architect)"]
 category: "Learning & Adaptation"

@@ -1,6 +1,6 @@
 ---
 title: "Anti-Reward-Hacking Grader Design"
-status: "emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Rogo Engineering Team", "Will Brown (OpenAI)"]
 category: "Reliability & Eval"

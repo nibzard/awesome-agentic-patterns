@@ -62,10 +62,11 @@ The project has a unique architecture where pattern documentation drives the ent
    ```yaml
    ---
    title: "Clear, Descriptive Title"
-   status: "Proposed | Established | Best Practice | Deprecated"
-   authors: ["Author Name (Affiliation)"]
-   category: "Orchestration & Control | Context & Memory | Feedback Loops | Tool Use & Environment | UX & Collaboration | Reliability & Eval | Security & Safety"
-   source_link: "URL to primary source"
+   status: "proposed | emerging | established | validated-in-production | best-practice | experimental-but-awesome | rapidly-improving"
+   authors: ["Contributor Name (@username)"]
+   based_on: ["Original Creator (Source)"]
+   category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
+   source: "URL to primary source"
    tags: [relevant, keywords, here]
    ---
    ```
@@ -74,7 +75,7 @@ The project has a unique architecture where pattern documentation drives the ent
    - Updates README.md between `<!-- AUTO-GENERATED PATTERNS START/END -->` markers
    - Updates mkdocs.yaml navigation structure
    - Groups patterns by category automatically
-   - Manages "NEW" badges for recently added patterns
+   - Applies NEW/UPDATED badges based on git history
 
 ### Content Guidelines
 - **Do not edit** the auto-generated sections in README.md manually
@@ -87,12 +88,12 @@ The project has a unique architecture where pattern documentation drives the ent
 
 ### Asset Path Handling
 
-**CRITICAL**: When adding images, CSS, or other assets that need to work on both localhost and deployed sites:
+**CRITICAL**: When adding images or other assets that need to work on both localhost and deployed sites:
 
 - **Use absolute paths starting with `/`** in all asset references
 - **Image references**: Use `/image.jpeg` instead of `image.jpeg` in markdown files
-- **CSS references**: Use `/css/extra.css` instead of `css/extra.css` in mkdocs.yaml
-- **Rationale**: MkDocs generates relative paths by default, which work locally but fail on Cloudflare Workers due to different path resolution behavior
+- **CSS**: Custom styles are inlined in `overrides/main.html` for reliability
+- **Rationale**: MkDocs relative paths can work locally but fail on Cloudflare Workers due to different path resolution behavior
 - **Example fix**: Change `![Image](image.jpeg)` to `![Image](/image.jpeg)`
 
 This ensures assets load correctly on both local development (`localhost:8000`) and production deployment (`agentic-patterns.com`).
@@ -105,7 +106,7 @@ This ensures assets load correctly on both local development (`localhost:8000`) 
   - Extracts metadata (title, category, tags, status)
   - Regenerates README.md auto-generated sections
   - Updates mkdocs.yaml navigation structure
-  - Manages "NEW" pattern badges via `.new-patterns-tracker.txt`
+  - Applies NEW/UPDATED pattern badges via git history
 - **`Makefile`**: Provides build targets that handle file linking and MkDocs operations
 - **`mkdocs.yaml`**: Site configuration with Material theme and Mermaid support
 - **`requirements.txt`**: Python dependencies (MkDocs, Material theme, Mermaid plugin)

@@ -1,9 +1,10 @@
 ---
 title: "Visual AI Multimodal Integration"
-status: "emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
 category: "Tool Use & Environment"
+source: "https://openai.com/research/gpt-4v-system-card"
 tags: [multimodal, vision, video, image-processing, visual-understanding, agent-capabilities]
 ---
 

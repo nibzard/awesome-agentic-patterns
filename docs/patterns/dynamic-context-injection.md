@@ -4,7 +4,7 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
-source_link: "https://www.nibzard.com/claude-code"
+source: "https://www.nibzard.com/claude-code"
 tags: [context management, dynamic context, lazy loading, slash commands, at-mention, interactive context]
 ---
 

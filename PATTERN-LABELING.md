@@ -14,7 +14,7 @@ The git-based labeling system features:
 
 ## Components
 
-### 1. Badge Styling (`docs/css/extra.css`)
+### 1. Badge Styling (`overrides/main.html`)
 
 - `.new-badge`: Green gradient with animated glow for new patterns
 - `.updated-badge`: Orange gradient with animated glow for updated patterns
@@ -201,8 +201,8 @@ Labels automatically expire based on git dates:
    ```
 
 ### Badge styling issues
-1. Check CSS file: `docs/css/extra.css`
-2. Ensure MkDocs is using the CSS file
+1. Check the inline CSS in `overrides/main.html`
+2. Ensure the overrides directory is in use by MkDocs (`mkdocs.yaml`)
 3. Clear browser cache
 
 ## Contributing

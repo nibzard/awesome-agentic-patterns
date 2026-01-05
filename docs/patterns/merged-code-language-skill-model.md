@@ -1,10 +1,10 @@
 ---
 title: "Merged Code + Language Skill Model"
-status: "Emerging"
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
 category: "Reliability & Eval"
-source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
+source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [model-merging, transfer-learning, coding-agent, multilingual]
 ---
 

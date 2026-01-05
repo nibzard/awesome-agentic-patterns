@@ -4,7 +4,7 @@ status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Lukas Möller (Cursor)"]
 category: UX & Collaboration
-source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
+source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-generation, bootstrapping, scaffolding, feature-development, ide, initial-setup]
 ---
 

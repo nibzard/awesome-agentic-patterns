@@ -1,9 +1,10 @@
 ---
 title: "Continuous Autonomous Task Loop Pattern"
-status: "Established"
+status: established
 authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Internal Practice"]
 category: "Orchestration & Control"
-source_link: "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78"
+source: "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78"
 tags: [autonomous-execution, task-loop, rate-limiting, git-automation, cli-driven, stream-processing]
 ---
 

@@ -1,9 +1,10 @@
 ---
 title: "Three-Stage Perception Architecture"
-status: "proposed"
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["AI Architecture Community"]
 category: "Orchestration & Control"
+source: "https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/"
 tags: [architecture, perception, processing, action, pipeline, modular-design]
 ---
 

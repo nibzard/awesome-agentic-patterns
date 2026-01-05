@@ -4,7 +4,7 @@ status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
 category: UX & Collaboration
-source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
+source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, abstraction, pseudocode, intent-based-review, explainability, software-quality, human-ai-interface]
 ---
 

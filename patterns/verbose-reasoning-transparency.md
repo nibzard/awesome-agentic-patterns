@@ -4,7 +4,7 @@ status: best-practice
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
-source_link: "https://www.nibzard.com/claude-code"
+source: "https://www.nibzard.com/claude-code"
 tags: [explainability, debugging, transparency, agent reasoning, verbose mode, introspection]
 ---
 

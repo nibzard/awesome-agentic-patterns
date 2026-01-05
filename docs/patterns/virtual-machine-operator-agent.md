@@ -4,7 +4,7 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Amjad Masad"]
 category: Tool Use & Environment
-source_link: "https://www.nibzard.com/silent-revolution"
+source: "https://www.nibzard.com/silent-revolution"
 tags: [computer operation, virtual machine, execution environment, agent capability]
 ---
 

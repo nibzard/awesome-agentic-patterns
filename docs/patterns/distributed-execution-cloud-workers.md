@@ -4,7 +4,7 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Dexter Horthy (HumanLayer)"]
 category: Orchestration & Control
-source_link: "https://claude.com/blog/building-companies-with-claude-code"
+source: "https://claude.com/blog/building-companies-with-claude-code"
 tags: [distributed-systems, parallelization, cloud, worktrees, scalability, team-coordination]
 ---
 

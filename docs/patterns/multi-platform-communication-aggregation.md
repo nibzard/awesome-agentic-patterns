@@ -2,6 +2,7 @@
 title: Multi-Platform Communication Aggregation
 status: emerging
 authors: ["Lucas Carlson"]
+based_on: ["Anthropic (Claude Code)"]
 category: "Tool Use & Environment"
 source: "https://github.com/anthropics/claude-code"
 tags: [search, aggregation, parallel, communication, unified-interface]
