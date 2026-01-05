@@ -1,7 +1,8 @@
 ---
 title: "RLAIF (Reinforcement Learning from AI Feedback)"
 status: "emerging"
-authors: ["Anthropic", "Google DeepMind"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic", "Google DeepMind"]
 category: "Reliability & Eval"
 tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, evaluation]
 ---

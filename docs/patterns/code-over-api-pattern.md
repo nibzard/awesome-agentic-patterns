@@ -1,7 +1,8 @@
 ---
 title: Code-Over-API Pattern
 status: established
-authors: ["Anthropic Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic Engineering Team"]
 category: Tool Use & Environment
 source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
 tags: [token-optimization, code-execution, data-processing, mcp]
@@ -71,7 +72,8 @@ The agent sees the log output and return value, but the full dataset never enter
 
 1. Agent analyzes task and determines data processing needs
 2. Agent writes code that:
-   - Calls tools/APIs within the execution environment
+   
+- Calls tools/APIs within the execution environment
    - Performs filtering, transformation, aggregation in code
    - Logs only summaries or samples for visibility
    - Returns final results

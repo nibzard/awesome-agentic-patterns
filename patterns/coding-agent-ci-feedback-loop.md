@@ -1,7 +1,8 @@
 ---
 title: "Coding Agent CI Feedback Loop"
 status: "Best Practice"
-authors: ["Quinn Slack (Concept)", "Will Brown (Prime Intellect Talk)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Quinn Slack (Concept)", "Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [CI, coding-agent, asynchronous, test-driven, feedback]

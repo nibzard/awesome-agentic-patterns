@@ -1,7 +1,8 @@
 ---
 title: "Agent-First Tooling and Logging"
 status: "Emerging"
-authors: ["Thorsten Ball (Sourcegraph)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Thorsten Ball (Sourcegraph)"]
 category: "Tool Use & Environment"
 source_link: "https://www.sourcegraph.com"
 tags: [tool-design, logging, machine-readable, observability, agent-environment]

@@ -1,7 +1,8 @@
 ---
 title: Lethal Trifecta Threat Model
 status: best-practice
-authors: ["Simon Willison"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Simon Willison"]
 category: Reliability & Eval
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [security, prompt-injection, threat-model, data-exfiltration]
@@ -18,9 +19,11 @@ LLMs cannot reliably distinguish "good" instructions from malicious ones once th
 
 ## Solution
 Adopt a **Trifecta Threat Model**:  
+
 - **Audit every tool** an agent can call and classify it against the three capabilities.  
 - **Guarantee that at least one circle is missing** in any execution path. Options include:  
-  - Remove external network access (no exfiltration).  
+  
+- Remove external network access (no exfiltration).  
   - Deny direct file/database reads (no private data).  
   - Sanitize or segregate untrusted inputs (no hostile instructions).  
 - Enforce this at orchestration time, not with brittle prompt guardrails.

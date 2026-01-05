@@ -1,7 +1,8 @@
 ---
 title: LLM Map-Reduce Pattern
 status: emerging
-authors: ["Luca Beurer-Kellner et al. (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [map-reduce, sub-agents, isolation, untrusted-data]

@@ -1,7 +1,8 @@
 ---
 title: Pattern Title Here
 status: emerging
-authors: ["Author Name"]
+authors: ["Contributor Name (@username)"]  # Only repo contributors
+based_on: ["Original Creator (Source)"]    # Pattern originators/inspiration
 category: "Choose from: Orchestration & Control, Context & Memory, Learning & Adaptation, Security & Safety, Integration & Tooling, Code Generation, Uncategorized"
 source: "https://example.com/source-url"
 tags: [tag1, tag2, tag3]

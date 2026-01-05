@@ -1,7 +1,8 @@
 ---
 title: Context-Minimization Pattern
 status: emerging
-authors: ["Luca Beurer-Kellner et al. (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Context & Memory
 source: "https://arxiv.org/abs/2506.08837"
 tags: [context-hygiene, taint-removal, prompt-injection]

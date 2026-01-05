@@ -1,7 +1,8 @@
 ---
 title: Filesystem-Based Agent State
 status: established
-authors: ["Anthropic Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic Engineering Team"]
 category: Context & Memory
 source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
 tags: [state-management, persistence, resumption, long-running-tasks]

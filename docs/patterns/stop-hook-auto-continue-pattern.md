@@ -1,7 +1,8 @@
 ---
 title: Stop Hook Auto-Continue Pattern
 status: emerging
-authors: ["Boris Cherny (Anthropic)", "Claude Code Users"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Claude Code Users"]
 category: "Orchestration & Control"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [hooks, automation, testing, determinism, success-criteria, continuous-execution]

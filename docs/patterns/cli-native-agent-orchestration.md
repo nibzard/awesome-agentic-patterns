@@ -1,7 +1,8 @@
 ---
 title: CLI-Native Agent Orchestration
 status: proposed
-authors: ["Jory Pestorious"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Jory Pestorious"]
 category: Tool Use & Environment
 source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [cli, automation, local-dev, headless]

@@ -1,7 +1,8 @@
 ---
 title: Tree-of-Thought Reasoning
 status: established
-authors: ["Yao et al. (2023)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Yao et al. (2023)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2305.10601"
 tags: [branching, deliberate-reasoning, search]

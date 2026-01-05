@@ -1,7 +1,8 @@
 ---
 title: Tool Capability Compartmentalization
 status: emerging
-authors: ["Simon Willison (MCP critique)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Simon Willison (MCP critique)"]
 category: Orchestration & Control
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [capability-segregation, least-privilege, tool-permissions]

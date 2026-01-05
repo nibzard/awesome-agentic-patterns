@@ -1,7 +1,8 @@
 ---
 title: "Inference-Healed Code Review Reward"
 status: "Proposed"
-authors: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [reward-modeling, code-review, inference-healing, quality-assessment]

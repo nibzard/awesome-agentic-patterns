@@ -1,7 +1,8 @@
 ---
 title: Episodic Memory Retrieval & Injection
 status: validated-in-production
-authors: ["Cursor AI (MCP)", "Windsurf Flows"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Cursor AI (MCP)", "Windsurf Flows"]
 category: Context & Memory
 source: "https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021"
 tags: [episodic-memory, vector-db, retrieval-augmented, context-hint]

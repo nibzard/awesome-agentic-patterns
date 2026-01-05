@@ -1,7 +1,8 @@
 ---
 title: Deterministic Security Scanning Build Loop
 status: proposed
-authors: ["Geoffrey Huntley"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Geoffrey Huntley"]
 category: "Security & Safety"
 source: "https://ghuntley.com/secure-codegen/"
 tags: [security, deterministic, build-loop, backpressure, static-analysis]
@@ -66,16 +67,19 @@ graph TD
 ## How to use it
 
 1. **Inner Loop (Development)**:
-   - Integrate existing security scanning tools into your build target
+   
+- Integrate existing security scanning tools into your build target
    - Configure agent instructions to run build after every change
    - Let the agent see security tool output and iterate
 
 2. **Outer Loop (CI/CD)**:
-   - Use the same security tools in your pull request checks
+   
+- Use the same security tools in your pull request checks
    - Maintain one unified rules database across both loops
 
 3. **Implementation Steps**:
-   - Add security scanning tools to Makefile/package.json/build script
+   
+- Add security scanning tools to Makefile/package.json/build script
    - Update agent configuration (AGENTS.md/Cursor rules) to mandate build execution
    - Ensure security tools exit with non-zero codes on violations
 

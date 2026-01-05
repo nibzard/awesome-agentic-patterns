@@ -1,7 +1,8 @@
 ---
 title: Verbose Reasoning Transparency
 status: best-practice
-authors: ["Boris Cherny (via Claude Code)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
 source_link: "https://www.nibzard.com/claude-code"
 tags: [explainability, debugging, transparency, agent reasoning, verbose mode, introspection]

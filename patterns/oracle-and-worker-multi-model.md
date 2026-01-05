@@ -1,7 +1,8 @@
 ---
 title: Oracle and Worker Multi-Model Approach
 status: emerging
-authors: ["Sourcegraph Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Sourcegraph Team"]
 category: Orchestration & Control
 source: "https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ"
 tags: [multi-model, cost-optimization, strategic-reasoning, architecture]

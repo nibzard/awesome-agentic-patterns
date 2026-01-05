@@ -1,7 +1,8 @@
 ---
 title: Egress Lockdown (No-Exfiltration Channel)
 status: established
-authors: ["Simon Willison (observation)", "Multiple vendor incident reports"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Simon Willison (observation)", "Multiple vendor incident reports"]
 category: Tool Use & Environment
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [network-sandbox, exfiltration, outbound-controls, security]

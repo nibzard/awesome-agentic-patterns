@@ -1,7 +1,8 @@
 ---
 title: "Code Mode MCP Tool Interface Improvement Pattern"
 status: "Established"
-authors: ["Cloudflare Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Cloudflare Team"]
 category: "Tool Use & Environment"
 source_link: "https://blog.cloudflare.com/code-mode/"
 tags: [tool-interface, code-generation, sandboxing, mcp, mcp-improvement, typescript, v8-isolates, token-optimization]

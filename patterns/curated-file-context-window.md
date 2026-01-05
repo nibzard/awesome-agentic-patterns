@@ -1,7 +1,8 @@
 ---
 title: "Curated File Context Window"
 status: "Best Practice"
-authors: ["Internal AI Dev Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Internal AI Dev Team"]
 category: "Context & Memory"
 source_link: "Internal Practice"
 tags: [code-context, file-scope, relevance, memory-management]

@@ -1,7 +1,8 @@
 ---
 title: Shell Command Contextualization
 status: established
-authors: ["Boris Cherny (via Claude Code)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (via Claude Code)"]
 category: Tool Use & Environment
 source_link: "https://www.nibzard.com/claude-code"
 tags: [shell integration, context management, local execution, bash, cli, interactive tools]

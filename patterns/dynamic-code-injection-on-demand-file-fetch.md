@@ -1,7 +1,8 @@
 ---
 title: "Dynamic Code Injection (On-Demand File Fetch)"
 status: "Established"
-authors: ["Internal AI Dev Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Internal AI Dev Team"]
 category: "Tool Use & Environment"
 source_link: "Internal Practice"
 tags: [file-injection, at-mention, slash-commands, IDE-integration]

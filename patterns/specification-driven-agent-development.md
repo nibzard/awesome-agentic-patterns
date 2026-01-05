@@ -1,7 +1,8 @@
 ---
 title: Specification-Driven Agent Development
 status: proposed
-authors: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
 source_link: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [spec-first, scaffolding, contract, requirements]

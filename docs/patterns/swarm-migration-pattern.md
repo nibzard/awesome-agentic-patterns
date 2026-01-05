@@ -1,7 +1,8 @@
 ---
 title: Swarm Migration Pattern
 status: validated-in-production
-authors: ["Boris Cherny (Anthropic)", "Anthropic Internal Users"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Anthropic Internal Users"]
 category: "Orchestration & Control"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [swarm, map-reduce, migration, parallelization, sub-agents, scalability, framework-migration]
@@ -59,7 +60,8 @@ main_agent.prompt = """
 2. Create todo list with file paths
 3. Divide into batches of 10 files each
 4. For each batch, spawn subagent with instructions:
-   - Migrate these specific files
+   
+- Migrate these specific files
    - Follow migration guide at docs/migration.md
    - Run tests after each change
    - Commit if tests pass

@@ -1,7 +1,8 @@
 ---
 title: "Language Agent Tree Search (LATS)"
 status: "emerging"
-authors: ["Zhou et al.", "University of Illinois"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Zhou et al.", "University of Illinois"]
 category: "Orchestration & Control"
 tags: [search, monte-carlo, tree-search, reasoning, planning, reflection, evaluation]
 ---

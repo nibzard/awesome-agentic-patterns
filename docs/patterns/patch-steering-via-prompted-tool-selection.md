@@ -1,7 +1,8 @@
 ---
 title: "Patch Steering via Prompted Tool Selection"
 status: "Best Practice"
-authors: ["Boris Cherny (Claude Code Concepts)", "Will Brown (Prime Intellect Talk)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Claude Code Concepts)", "Will Brown (Prime Intellect Talk)"]
 category: "Tool Use & Environment"
 source_link: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [patching, prompt-steering, tool-selection, coding-agent]

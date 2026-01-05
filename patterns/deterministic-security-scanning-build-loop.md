@@ -1,7 +1,8 @@
 ---
 title: Deterministic Security Scanning Build Loop
 status: proposed
-authors: ["Geoffrey Huntley"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Geoffrey Huntley"]
 category: "Security & Safety"
 source: "https://ghuntley.com/secure-codegen/"
 tags: [security, deterministic, build-loop, backpressure, static-analysis]

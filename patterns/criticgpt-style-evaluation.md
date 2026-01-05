@@ -1,7 +1,8 @@
 ---
 title: "CriticGPT-Style Code Review"
 status: "validated-in-production"
-authors: ["OpenAI"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["OpenAI"]
 category: "Reliability & Eval"
 tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
 ---

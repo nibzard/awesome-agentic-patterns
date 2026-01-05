@@ -1,7 +1,8 @@
 ---
 title: Self-Critique Evaluator Loop
 status: emerging
-authors: ["Meta AI (Self-Taught Evaluators)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Meta AI (Self-Taught Evaluators)"]
 category: Feedback Loops
 source: "https://arxiv.org/abs/2408.02666"
 tags: [self-critique, evaluator, reward-model, synthetic-data]

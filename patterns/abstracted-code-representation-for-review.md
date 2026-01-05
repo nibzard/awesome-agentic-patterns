@@ -1,7 +1,8 @@
 ---
 title: Abstracted Code Representation for Review
 status: proposed
-authors: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
 category: UX & Collaboration
 source_link: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, abstraction, pseudocode, intent-based-review, explainability, software-quality, human-ai-interface]

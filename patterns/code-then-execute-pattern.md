@@ -1,7 +1,8 @@
 ---
 title: Code-Then-Execute Pattern
 status: emerging
-authors: ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"]
 category: Tool Use & Environment
 source: "https://arxiv.org/abs/2506.08837"
 tags: [dsl, sandbox, program-synthesis, auditability]

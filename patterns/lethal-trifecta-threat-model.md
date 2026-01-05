@@ -1,7 +1,8 @@
 ---
 title: Lethal Trifecta Threat Model
 status: best-practice
-authors: ["Simon Willison"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Simon Willison"]
 category: Reliability & Eval
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [security, prompt-injection, threat-model, data-exfiltration]
