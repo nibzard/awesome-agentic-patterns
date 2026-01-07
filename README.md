@@ -45,7 +45,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="context-memory"></a>Context & Memory
 
-- [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md)
+- [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md) <span class='updated-badge'>UPDATED</span>
 - [Context Window Anxiety Management](patterns/context-window-anxiety-management.md) <span class='updated-badge'>UPDATED</span>
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Curated Code Context Window](patterns/curated-code-context-window.md) <span class='updated-badge'>UPDATED</span>
@@ -59,7 +59,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="feedback-loops"></a>Feedback Loops
 
-- [AI-Assisted Code Review / Verification](patterns/ai-assisted-code-review-verification.md)
+- [AI-Assisted Code Review / Verification](patterns/ai-assisted-code-review-verification.md) <span class='updated-badge'>UPDATED</span>
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md) <span class='updated-badge'>UPDATED</span>
 - [Coding Agent CI Feedback Loop](patterns/coding-agent-ci-feedback-loop.md) <span class='updated-badge'>UPDATED</span>
 - [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md) <span class='updated-badge'>UPDATED</span>
@@ -85,7 +85,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent-Driven Research](patterns/agent-driven-research.md) <span class='updated-badge'>UPDATED</span>
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md) <span class='updated-badge'>UPDATED</span>
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md) <span class='updated-badge'>UPDATED</span>
-- [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
+- [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Discrete Phase Separation](patterns/discrete-phase-separation.md) <span class='updated-badge'>UPDATED</span>
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md) <span class='updated-badge'>UPDATED</span>
 - [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md) <span class='updated-badge'>UPDATED</span>
@@ -161,9 +161,9 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md) <span class='updated-badge'>UPDATED</span>
 - [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md) <span class='updated-badge'>UPDATED</span>
 - [Agent-Friendly Workflow Design](patterns/agent-friendly-workflow-design.md) <span class='updated-badge'>UPDATED</span>
-- [AI-Accelerated Learning and Skill Development](patterns/ai-accelerated-learning-and-skill-development.md)
+- [AI-Accelerated Learning and Skill Development](patterns/ai-accelerated-learning-and-skill-development.md) <span class='updated-badge'>UPDATED</span>
 - [Chain-of-Thought Monitoring & Interruption](patterns/chain-of-thought-monitoring-interruption.md) <span class='updated-badge'>UPDATED</span>
-- [Democratization of Tooling via Agents](patterns/democratization-of-tooling-via-agents.md)
+- [Democratization of Tooling via Agents](patterns/democratization-of-tooling-via-agents.md) <span class='updated-badge'>UPDATED</span>
 - [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md) <span class='updated-badge'>UPDATED</span>
 - [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md) <span class='updated-badge'>UPDATED</span>
 - [Proactive Trigger Vocabulary](patterns/proactive-trigger-vocabulary.md) <span class='new-badge'>NEW</span>

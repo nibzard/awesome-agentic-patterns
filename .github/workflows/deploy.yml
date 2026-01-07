@@ -44,6 +44,10 @@ jobs:
         make site_link
         mkdocs build
     
+    - name: Ensure generated docs are committed
+      run: |
+        git diff --exit-code
+    
     - name: Deploy to Cloudflare Workers (main branch only)
       if: github.ref == 'refs/heads/main'
       run: |
