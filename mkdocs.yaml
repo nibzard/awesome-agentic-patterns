@@ -28,7 +28,7 @@ nav:
   - "Context is short, you need patterns.": "index.md"
   - Patterns:
       - "Context & Memory":
-          - "Agent-Powered Codebase Q&A / Onboarding": "patterns/agent-powered-codebase-qa-onboarding.md"
+          - "Agent-Powered Codebase Q&A / Onboarding <span class='updated-badge'>UPDATED</span>": "patterns/agent-powered-codebase-qa-onboarding.md"
           - "Context Window Anxiety Management <span class='updated-badge'>UPDATED</span>": "patterns/context-window-anxiety-management.md"
           - "Context-Minimization Pattern <span class='updated-badge'>UPDATED</span>": "patterns/context-minimization-pattern.md"
           - "Curated Code Context Window <span class='updated-badge'>UPDATED</span>": "patterns/curated-code-context-window.md"
@@ -40,7 +40,7 @@ nav:
           - "Memory Synthesis from Execution Logs <span class='updated-badge'>UPDATED</span>": "patterns/memory-synthesis-from-execution-logs.md"
           - "Proactive Agent State Externalization <span class='updated-badge'>UPDATED</span>": "patterns/proactive-agent-state-externalization.md"
       - "Feedback Loops":
-          - "AI-Assisted Code Review / Verification": "patterns/ai-assisted-code-review-verification.md"
+          - "AI-Assisted Code Review / Verification <span class='updated-badge'>UPDATED</span>": "patterns/ai-assisted-code-review-verification.md"
           - "Background Agent with CI Feedback <span class='updated-badge'>UPDATED</span>": "patterns/background-agent-ci.md"
           - "Coding Agent CI Feedback Loop <span class='updated-badge'>UPDATED</span>": "patterns/coding-agent-ci-feedback-loop.md"
           - "Dogfooding with Rapid Iteration for Agent Improvement <span class='updated-badge'>UPDATED</span>": "patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md"
@@ -62,7 +62,7 @@ nav:
           - "Agent-Driven Research <span class='updated-badge'>UPDATED</span>": "patterns/agent-driven-research.md"
           - "Autonomous Workflow Agent Architecture <span class='updated-badge'>UPDATED</span>": "patterns/autonomous-workflow-agent-architecture.md"
           - "Conditional Parallel Tool Execution <span class='updated-badge'>UPDATED</span>": "patterns/parallel-tool-execution.md"
-          - "Continuous Autonomous Task Loop Pattern": "patterns/continuous-autonomous-task-loop-pattern.md"
+          - "Continuous Autonomous Task Loop Pattern <span class='updated-badge'>UPDATED</span>": "patterns/continuous-autonomous-task-loop-pattern.md"
           - "Discrete Phase Separation <span class='updated-badge'>UPDATED</span>": "patterns/discrete-phase-separation.md"
           - "Disposable Scaffolding Over Durable Features <span class='updated-badge'>UPDATED</span>": "patterns/disposable-scaffolding-over-durable-features.md"
           - "Distributed Execution with Cloud Workers <span class='updated-badge'>UPDATED</span>": "patterns/distributed-execution-cloud-workers.md"
@@ -130,9 +130,9 @@ nav:
           - "Abstracted Code Representation for Review <span class='updated-badge'>UPDATED</span>": "patterns/abstracted-code-representation-for-review.md"
           - "Agent-Assisted Scaffolding <span class='updated-badge'>UPDATED</span>": "patterns/agent-assisted-scaffolding.md"
           - "Agent-Friendly Workflow Design <span class='updated-badge'>UPDATED</span>": "patterns/agent-friendly-workflow-design.md"
-          - "AI-Accelerated Learning and Skill Development": "patterns/ai-accelerated-learning-and-skill-development.md"
+          - "AI-Accelerated Learning and Skill Development <span class='updated-badge'>UPDATED</span>": "patterns/ai-accelerated-learning-and-skill-development.md"
           - "Chain-of-Thought Monitoring & Interruption <span class='updated-badge'>UPDATED</span>": "patterns/chain-of-thought-monitoring-interruption.md"
-          - "Democratization of Tooling via Agents": "patterns/democratization-of-tooling-via-agents.md"
+          - "Democratization of Tooling via Agents <span class='updated-badge'>UPDATED</span>": "patterns/democratization-of-tooling-via-agents.md"
           - "Human-in-the-Loop Approval Framework <span class='updated-badge'>UPDATED</span>": "patterns/human-in-loop-approval-framework.md"
           - "Latent Demand Product Discovery <span class='updated-badge'>UPDATED</span>": "patterns/latent-demand-product-discovery.md"
           - "Proactive Trigger Vocabulary <span class='new-badge'>NEW</span>": "patterns/proactive-trigger-vocabulary.md"
