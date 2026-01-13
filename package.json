@@ -4,5 +4,8 @@
   "private": true,
   "devDependencies": {
     "wrangler": "^4.18.0"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
   }
 }
