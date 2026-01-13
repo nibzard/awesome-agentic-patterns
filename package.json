@@ -5,7 +5,9 @@
   "scripts": {
     "validate:patterns": "bun scripts/validate-patterns.ts patterns",
     "validate:patterns:content": "bun scripts/validate-patterns.ts patterns --check-content",
-    "build:data": "bun scripts/build-data.ts"
+    "build:data": "bun scripts/build-data.ts",
+    "migrate:patterns": "bun scripts/migrate-patterns.ts",
+    "migrate:patterns:dry": "bun scripts/migrate-patterns.ts --dry-run"
   },
   "devDependencies": {
     "wrangler": "^4.18.0"
