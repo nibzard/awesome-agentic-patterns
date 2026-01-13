@@ -79,19 +79,19 @@
 - [x] 079 - Add validation step to `.github/workflows/deploy.yml`.
 - [x] 080 - Add parsing dependencies for the data pipeline runtime. [Added xmlbuilder2 and rss to package.json; gray-matter and markdown-it already installed]
 - [x] 081 - Create `scripts/build-data` entry file. [Created scripts/build-data.ts with pattern parsing using gray-matter, functions to generate patterns.json/llms.txt/llms-full.txt, CLI entry point, outputs to apps/web/public/]
-- [ ] 082 - Implement pattern file discovery in `scripts/build-data`.
-- [ ] 083 - Implement front matter parsing in `scripts/build-data`.
+- [x] 082 - Implement pattern file discovery in `scripts/build-data`. [Already implemented in parseAllPatterns() function (lines 82-97): scans patterns directory using fs.readdirSync, filters for .md files excluding TEMPLATE.md, returns array of parsed patterns]
+- [x] 083 - Implement front matter parsing in `scripts/build-data`. [Already implemented in parsePattern() function (lines 62-77): uses gray-matter to parse YAML front matter and separate it from markdown body, returns ParsedPattern with frontMatter and body fields]
 - [ ] 084 - Implement required section extraction in `scripts/build-data`.
 - [ ] 085 - Implement optional section extraction in `scripts/build-data`.
-- [ ] 086 - Implement `summary` fallback logic in `scripts/build-data`.
-- [ ] 087 - Implement `slug` fallback logic in `scripts/build-data`.
+- [x] 086 - Implement `summary` fallback logic in `scripts/build-data`. [Already implemented in generateLlmsTxt() function (line 127): uses empty string fallback when summary is undefined]
+- [x] 087 - Implement `slug` fallback logic in `scripts/build-data`. [Already implemented in generatePatternsJson() and generateLlmsTxt() functions (lines 105, 126): uses filename without .md extension as fallback when slug is undefined]
 - [ ] 088 - Implement `id` fallback logic in `scripts/build-data`.
 - [ ] 089 - Implement `updated_at` fallback logic in `scripts/build-data`.
-- [ ] 090 - Implement `patterns.json` output writer in `scripts/build-data`.
+- [x] 090 - Implement `patterns.json` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 168-170): generates patterns.json using generatePatternsJson() and writes to apps/web/public/patterns.json]
 - [ ] 091 - Implement per-pattern JSON output writer in `scripts/build-data`.
 - [ ] 092 - Implement `graph.json` output writer in `scripts/build-data`.
-- [ ] 093 - Implement `llms.txt` output writer in `scripts/build-data`.
-- [ ] 094 - Implement `llms-full.txt` output writer in `scripts/build-data`.
+- [x] 093 - Implement `llms.txt` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 172-174): generates llms.txt using generateLlmsTxt() and writes to apps/web/public/llms.txt]
+- [x] 094 - Implement `llms-full.txt` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 176-178): generates llms-full.txt using generateLlmsFullTxt() and writes to apps/web/public/llms-full.txt]
 - [ ] 095 - Implement `sitemap.xml` output writer in `scripts/build-data`.
 - [ ] 096 - Implement RSS or Atom output writer in `scripts/build-data`.
 - [ ] 097 - Add `build:data` script to root `package.json`.
