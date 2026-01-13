@@ -18,6 +18,7 @@ This specification defines a modern, LLM-first redesign of the Awesome Agentic P
 - Dark mode is in v1 scope.
 - Guides will include: `HELP.md`, `LEARNINGS.md`, `PATTERN-LABELING.md`, `MIGRATION-TO-GIT-LABELS.md`.
 - Decision Explorer: rules-based for v1 (ML-assisted deferred to v2).
+- Backup deployment: No. Vercel-only for simplicity. Git history + local build = sufficient recovery.
 
 ## Goals
 - Replace the current MkDocs UX with a modern, fast, discovery-driven site.
@@ -348,6 +349,33 @@ apps/web/
 40. Deploy preview build and collect feedback.
 41. Switch production deployment to the new site.
 
+## Decisions Record
+
+### Decision 001: No Backup Deployment Infrastructure
+
+**Date**: 2026-01-13
+
+**Context**: Project migrating from MkDocs + Cloudflare Workers to Astro + Vercel. Question: whether to maintain Cloudflare/GitHub Pages as backup deployment.
+
+**Decision**: No. Use Vercel as sole deployment target.
+
+**Rationale**:
+1. **Operational simplicity**: Single deployment pipeline reduces complexity and error surface
+2. **Vercel reliability**: 99.99% uptime SLA; edge failures are exceptionally rare
+3. **Migration velocity**: Removes "maintain MkDocs fallback" option, forces completion
+4. **DNS switching is slow**: Real failover requires DNS propagation (minutes to hours)
+5. **Git = backup**: Repository history + `bun run build` provides sufficient emergency recovery
+6. **Preview deployments**: Vercel PR previews provide staging for testing
+7. **Cost**: No savings; both platforms have generous free tiers
+
+**Consequences**:
+- Remove `wrangler.toml`, `wrangler` from package.json
+- Update `.github/workflows/deploy.yml` for Vercel deployment
+- Archive DEPLOYMENT.md (MkDocs-specific instructions) after migration
+- Domain DNS points to Vercel only
+
+**Revisit if**: Vercel has sustained outage >1 hour (has never occurred).
+
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.
 - `llms.txt` and `llms-full.txt` exist and are up to date.
@@ -356,4 +384,4 @@ apps/web/
 - New site passes accessibility and performance targets.
 
 ## Open Questions
-- Do we keep the existing Cloudflare/GitHub Pages deployment as a backup?
+- None.
