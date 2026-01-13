@@ -210,7 +210,7 @@ export async function validatePattern(
 
     // Validate markdown structure if requested
     if (options.checkContent) {
-      validateMarkdownStructure(body, filePath, warnings, info);
+      validateMarkdownStructure(body, filePath, errors, warnings, info);
     }
 
   } catch (err) {
@@ -512,22 +512,74 @@ function validateFieldValues(
 }
 
 /**
- * Validate markdown structure (placeholder for task 072)
+ * Extract headings from markdown body (task 072)
+ */
+function extractHeadings(body: string): Set<string> {
+  const headings = new Set<string>();
+  const lines = body.split("\n");
+
+  for (const line of lines) {
+    const headingMatch = line.match(/^#{2,3}\s+(.+)$/);
+    if (headingMatch) {
+      const heading = headingMatch[1].trim().toLowerCase();
+      headings.add(heading);
+    }
+  }
+
+  return headings;
+}
+
+/**
+ * Validate markdown structure (task 072)
  */
 function validateMarkdownStructure(
   body: string,
   filePath: string,
+  errors: ValidationError[],
   warnings: ValidationError[],
   info: ValidationError[]
 ): void {
-  // Task 072 will implement full content validation
-  // For now, basic check that content exists
   if (!body || body.trim().length === 0) {
     warnings.push({
       level: "warning",
       file: filePath,
       field: "content",
       message: "Pattern has no body content",
+    });
+    return;
+  }
+
+  const headings = extractHeadings(body);
+
+  // Required headings per SCHEMA.md
+  const requiredHeadings = ["problem", "solution", "references"];
+  const missingRequired: string[] = [];
+
+  for (const required of requiredHeadings) {
+    if (!headings.has(required)) {
+      missingRequired.push(required);
+    }
+  }
+
+  if (missingRequired.length > 0) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "headings",
+      message: `Missing required headings: ${missingRequired.join(", ")}`,
+    });
+  }
+
+  // Check for recommended optional headings
+  const optionalHeadings = ["how to use it", "trade-offs", "example", "see also"];
+  const foundOptional = optionalHeadings.filter((h) => headings.has(h));
+
+  if (foundOptional.length > 0) {
+    info.push({
+      level: "info",
+      file: filePath,
+      field: "headings",
+      message: `Found optional headings: ${foundOptional.join(", ")}`,
     });
   }
 }
