@@ -22,6 +22,7 @@ This specification defines a modern, LLM-first redesign of the Awesome Agentic P
 - Graph library: D3.js (d3-force) for framework independence and smaller bundle.
 - Content loader: Astro glob() with custom base path (no symlinks).
 - Validation runtime: TypeScript with bun (not Python). Zod for schema validation.
+- Data pipeline runtime: TypeScript with bun (consistent with validation).
 
 ## Goals
 - Replace the current MkDocs UX with a modern, fast, discovery-driven site.
@@ -525,6 +526,48 @@ function validatePattern(filePath: string) {
 - Zod schemas become source of truth for validation
 
 **Revisit if**: TypeScript validation proves insufficient or Python offers unique capabilities needed.
+
+### Decision 005: Data Pipeline Runtime - TypeScript/Bun
+
+**Date**: 2026-01-13
+
+**Context**: Data pipeline generates patterns.json, llms.txt, llms-full.txt, graph.json. Validation runtime already decided as TypeScript/Bun (Decision 004). Question: whether data pipeline should match or use different runtime.
+
+**Decision**: Use TypeScript with bun (consistent with validation).
+
+**Rationale**:
+1. **Consistency**: Single runtime across validation + data pipeline + Astro build
+2. **Schema sharing**: Data pipeline uses same Zod schemas as validation and Astro
+3. **No cross-language boundary**: Validation output → data pipeline generation in same process
+4. **Performance**: Bun speed benefits apply to data generation (100+ patterns → sub-second processing)
+5. **Deployment**: Vercel build only needs bun (no Python runtime)
+6. **Maintainability**: One language for entire build pipeline
+7. **Type safety**: TypeScript ensures JSON outputs match expected schema
+
+**Consequences**:
+- Single `bun run build` command runs validation + data generation + Astro build
+- Data pipeline scripts share types/validation logic with rest of codebase
+- No Python dependency for data generation
+
+**Implementation**:
+```typescript
+// scripts/build-data.ts
+import { getCollection } from 'astro:content';
+import { writeFileSync } from 'fs';
+
+export async function buildData() {
+  // Load validated patterns from Astro
+  const patterns = await getCollection('patterns');
+
+  // Generate outputs
+  writeFileSync('./public/data/patterns.json', JSON.stringify(patterns, null, 2));
+  writeFileSync('./public/llms.txt', generateLlmsTxt(patterns));
+  writeFileSync('./public/llms-full.txt', generateLlmsFullTxt(patterns));
+  writeFileSync('./public/data/graph.json', generateGraphJson(patterns));
+}
+```
+
+**Revisit if**: Data pipeline requirements outgrow TypeScript capabilities (unlikely).
 
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.

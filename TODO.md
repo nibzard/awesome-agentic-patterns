@@ -15,8 +15,8 @@
 - [x] 015 - Record the content source approach in `SPECIFICATION.md`.
 - [x] 016 - Decide the validation runtime (Node/TS with bun vs Python).
 - [x] 017 - Record the validation runtime decision in `SPECIFICATION.md`.
-- [ ] 018 - Decide the data pipeline runtime (Node/TS with bun vs Python).
-- [ ] 019 - Record the data pipeline runtime decision in `SPECIFICATION.md`.
+- [x] 018 - Decide the data pipeline runtime (Node/TS with bun vs Python).
+- [x] 019 - Record the data pipeline runtime decision in `SPECIFICATION.md`.
 - [ ] 020 - Decide the data output root (`apps/web/public` vs root `public`).
 - [ ] 021 - Record the data output root decision in `SPECIFICATION.md`.
 - [ ] 022 - Create `SCHEMA.md`.
