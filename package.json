@@ -10,7 +10,10 @@
     "validate:patterns:content": "bun scripts/validate-patterns.ts patterns --check-content",
     "build:data": "bun scripts/build-data.ts",
     "migrate:patterns": "bun scripts/migrate-patterns.ts",
-    "migrate:patterns:dry": "bun scripts/migrate-patterns.ts --dry-run"
+    "migrate:patterns:dry": "bun scripts/migrate-patterns.ts --dry-run",
+    "dev": "bun --cwd apps/web dev",
+    "build": "bun --cwd apps/web build",
+    "preview": "bun --cwd apps/web preview"
   },
   "devDependencies": {
     "wrangler": "^4.18.0"
