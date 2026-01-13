@@ -23,6 +23,7 @@ This specification defines a modern, LLM-first redesign of the Awesome Agentic P
 - Content loader: Astro glob() with custom base path (no symlinks).
 - Validation runtime: TypeScript with bun (not Python). Zod for schema validation.
 - Data pipeline runtime: TypeScript with bun (consistent with validation).
+- Data outputs: `apps/web/public/` (Astro serves from here, build artifacts not committed).
 
 ## Goals
 - Replace the current MkDocs UX with a modern, fast, discovery-driven site.
@@ -568,6 +569,48 @@ export async function buildData() {
 ```
 
 **Revisit if**: Data pipeline requirements outgrow TypeScript capabilities (unlikely).
+
+### Decision 006: Data Output Location - apps/web/public/
+
+**Date**: 2026-01-13
+
+**Context**: Data pipeline generates patterns.json, llms.txt, llms-full.txt, graph.json. Monorepo structure has `apps/web/` for Astro app. Question: Should outputs live in `apps/web/public/` or repo root `public/`?
+
+**Decision**: Use `apps/web/public/` for all data pipeline outputs.
+
+**Rationale**:
+1. **Astro native**: Framework serves static files from its `public/` directory at root URL
+2. **Spec alignment**: Repo layout (lines 234-258) already defines `apps/web/public/data/` structure
+3. **Single-app monorepo**: No shared location needed; only one app exists
+4. **Build artifacts**: Data files generated during `bun run build`, not committed to Git
+5. **Canonical URLs**: `/llms.txt` and `/data/patterns.json` map correctly from `apps/web/public/`
+6. **No symlinks**: Decision 003 already rejected symlinks; copy steps add complexity
+7. **Vercel compatible**: Build output includes everything needed for deployment
+
+**Repo-root public/ disadvantages**:
+- Requires copy/symlink step from apps/web/public to repo root
+- No clear purpose in single-app monorepo
+- Adds build complexity without benefit
+- Would need symlinks (already rejected)
+
+**Consequences**:
+- Data files are build artifacts (not in source control)
+- Clean repository root (no public/ directory)
+- `bun run build` generates outputs to `apps/web/public/data/`
+- Canonical URLs work: `/llms.txt` → `apps/web/public/llms.txt`
+
+**Implementation**:
+```typescript
+// scripts/build-data.ts
+const publicDir = new URL('../apps/web/public/', import.meta.url);
+
+writeFileSync(new URL('data/patterns.json', publicDir), JSON.stringify(patterns));
+writeFileSync(new URL('llms.txt', publicDir), generateLlmsTxt(patterns));
+writeFileSync(new URL('llms-full.txt', publicDir), generateLlmsFullTxt(patterns));
+writeFileSync(new URL('data/graph.json', publicDir), generateGraphJson(patterns));
+```
+
+**Revisit if**: Second app added to monorepo that needs same data files.
 
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.
