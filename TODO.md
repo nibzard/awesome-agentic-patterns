@@ -47,23 +47,23 @@
 - [x] 047 - Add required section order to `CONTRIBUTING.md`.
 - [x] 048 - Add `summary` guidance to `CONTRIBUTING.md`.
 - [x] 049 - Add `updated_at` guidance to `CONTRIBUTING.md`.
-- [ ] 050 - Add `id` field to `patterns/TEMPLATE.md`.
-- [ ] 051 - Add `slug` field to `patterns/TEMPLATE.md`.
-- [ ] 052 - Add `summary` field to `patterns/TEMPLATE.md`.
-- [ ] 053 - Add `maturity` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 054 - Add `complexity` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 055 - Add `effort` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 056 - Add `impact` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 057 - Add `signals` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 058 - Add `anti_signals` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 059 - Add `prerequisites` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 060 - Add `related` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 061 - Add `anti_patterns` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 062 - Add `tools` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 063 - Add `domains` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 064 - Add `updated_at` field placeholder to `patterns/TEMPLATE.md`.
-- [ ] 065 - Add optional sections list to `patterns/TEMPLATE.md`.
-- [ ] 066 - Add a `summary` example to `patterns/TEMPLATE.md`.
+- [x] 050 - Add `id` field to `patterns/TEMPLATE.md`.
+- [x] 051 - Add `slug` field to `patterns/TEMPLATE.md`.
+- [x] 052 - Add `summary` field to `patterns/TEMPLATE.md`.
+- [x] 053 - Add `maturity` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 054 - Add `complexity` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 055 - Add `effort` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 056 - Add `impact` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 057 - Add `signals` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 058 - Add `anti_signals` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 059 - Add `prerequisites` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 060 - Add `related` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 061 - Add `anti_patterns` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 062 - Add `tools` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 063 - Add `domains` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 064 - Add `updated_at` field placeholder to `patterns/TEMPLATE.md`.
+- [x] 065 - Add optional sections list to `patterns/TEMPLATE.md`.
+- [x] 066 - Add a `summary` example to `patterns/TEMPLATE.md`.
 - [ ] 067 - Add a front matter parsing dependency for validation.
 - [ ] 068 - Add a markdown heading parsing dependency for validation.
 - [ ] 069 - Create `scripts/validate-patterns` entry file.
