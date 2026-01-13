@@ -1,4 +1,4 @@
-# Awesome Agentic Patterns [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+# Awesome Agentic Patterns
 
 ![Awesome Agentic Patterns](/agentic-patterns.jpeg)
 
@@ -204,3 +204,9 @@ This project started after the write‑up [**"What Sourcegraph learned building 
 ## License
 
 Apache‑2.0. See [`LICENSE`](https://github.com/nibzard/awesome-agentic-patterns/blob/main/LICENSE).
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=nibzard/awesome-agentic-patterns&type=date&legend=top-left)](https://www.star-history.com/#nibzard/awesome-agentic-patterns&type=date&legend=top-left)
