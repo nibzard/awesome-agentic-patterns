@@ -93,7 +93,7 @@
 - [x] 093 - Implement `llms.txt` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 172-174): generates llms.txt using generateLlmsTxt() and writes to apps/web/public/llms.txt]
 - [x] 094 - Implement `llms-full.txt` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 176-178): generates llms-full.txt using generateLlmsFullTxt() and writes to apps/web/public/llms-full.txt]
 - [x] 095 - Implement `sitemap.xml` output writer in `scripts/build-data`. [Added generateSitemapXml() function with xmlbuilder2, includes static pages (home, compare, graph) and all pattern pages with slug-based URLs, uses updated_at or file mtime for lastmod, proper XML namespace and formatting]
-- [ ] 096 - Implement RSS or Atom output writer in `scripts/build-data`.
+- [x] 096 - Implement RSS feed output writer in `scripts/build-data`. [Added generateRssFeed() function using RSS npm package, sorts patterns by updated_at newest first, includes last 20 patterns in feed, categories include pattern category + tags, integrated into writeOutputs()]
 - [ ] 097 - Add `build:data` script to root `package.json`.
 - [ ] 098 - Add data pipeline step to `.github/workflows/deploy.yml`.
 - [ ] 099 - Create `scripts/migrate-patterns` entry file.

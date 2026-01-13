@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Awesome Agentic Patterns]]></title>
+        <description><![CDATA[A curated catalogue of AI agent design patterns]]></description>
+        <link>https://agentic-patterns.com</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Tue, 13 Jan 2026 23:45:57 GMT</lastBuildDate>
+        <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Tue, 13 Jan 2026 23:45:57 GMT</pubDate>
+        <language><![CDATA[en]]></language>
+        <ttl>60</ttl>
+        <item>
+            <title><![CDATA[Skill Library Evolution]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/skill-library-evolution</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/skill-library-evolution</guid>
+            <category><![CDATA[Learning & Adaptation]]></category>
+            <category><![CDATA[code-reuse]]></category>
+            <category><![CDATA[skills]]></category>
+            <category><![CDATA[learning]]></category>
+            <category><![CDATA[capabilities]]></category>
+            <category><![CDATA[evolution]]></category>
+            <category><![CDATA[progressive-disclosure]]></category>
+            <category><![CDATA[on-demand-loading]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[lazy-loading]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Multi-Platform Webhook Triggers]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[webhooks]]></category>
+            <category><![CDATA[triggers]]></category>
+            <category><![CDATA[integrations]]></category>
+            <category><![CDATA[slack]]></category>
+            <category><![CDATA[notion]]></category>
+            <category><![CDATA[jira]]></category>
+            <category><![CDATA[scheduled-events]]></category>
+            <category><![CDATA[event-driven]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[LLM Observability]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/llm-observability</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/llm-observability</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[observability]]></category>
+            <category><![CDATA[logging]]></category>
+            <category><![CDATA[debugging]]></category>
+            <category><![CDATA[tracing]]></category>
+            <category><![CDATA[datadog]]></category>
+            <category><![CDATA[langsmith]]></category>
+            <category><![CDATA[spans]]></category>
+            <category><![CDATA[monitoring]]></category>
+            <category><![CDATA[llmops]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Hybrid LLM/Code Workflow Coordinator]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[hybrid]]></category>
+            <category><![CDATA[llm-driven]]></category>
+            <category><![CDATA[code-driven]]></category>
+            <category><![CDATA[coordinator]]></category>
+            <category><![CDATA[determinism]]></category>
+            <category><![CDATA[workflow-orchestration]]></category>
+            <category><![CDATA[progressive-enhancement]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Workflow Evals with Mocked Tools]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[evals]]></category>
+            <category><![CDATA[testing]]></category>
+            <category><![CDATA[ci-cd]]></category>
+            <category><![CDATA[mocked-tools]]></category>
+            <category><![CDATA[simulations]]></category>
+            <category><![CDATA[workflow-validation]]></category>
+            <category><![CDATA[end-to-end-testing]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Memory Reinforcement Learning (MemRL)]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</guid>
+            <category><![CDATA[Learning & Adaptation]]></category>
+            <category><![CDATA[reinforcement-learning]]></category>
+            <category><![CDATA[episodic-memory]]></category>
+            <category><![CDATA[self-evolution]]></category>
+            <category><![CDATA[value-aware-retrieval]]></category>
+            <category><![CDATA[runtime-learning]]></category>
+            <category><![CDATA[stability-plasticity]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Progressive Disclosure for Large Files]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/progressive-disclosure-large-files</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/progressive-disclosure-large-files</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[progressive-disclosure]]></category>
+            <category><![CDATA[large-files]]></category>
+            <category><![CDATA[context-optimization]]></category>
+            <category><![CDATA[file-management]]></category>
+            <category><![CDATA[lazy-loading]]></category>
+            <category><![CDATA[file-handling]]></category>
+            <category><![CDATA[metadata]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Iterative Prompt & Skill Refinement]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</guid>
+            <category><![CDATA[Feedback Loops]]></category>
+            <category><![CDATA[refinement]]></category>
+            <category><![CDATA[iteration]]></category>
+            <category><![CDATA[prompts]]></category>
+            <category><![CDATA[skills]]></category>
+            <category><![CDATA[feedback]]></category>
+            <category><![CDATA[multi-mechanism]]></category>
+            <category><![CDATA[continuous-improvement]]></category>
+            <category><![CDATA[dashboards]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Sub-Agent Spawning]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/sub-agent-spawning</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/sub-agent-spawning</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[context]]></category>
+            <category><![CDATA[scalability]]></category>
+            <category><![CDATA[subagents]]></category>
+            <category><![CDATA[yaml-configuration]]></category>
+            <category><![CDATA[virtual-files]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Reflection Loop]]></title>
+            <description><![CDATA[
+## Problem
+Generative models may produce subpar output if they never review or critique their own work.]]></description>
+            <link>https://agentic-patterns.com/patterns/reflection</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/reflection</guid>
+            <category><![CDATA[Feedback Loops]]></category>
+            <category><![CDATA[self-feedback]]></category>
+            <category><![CDATA[iterative-improvement]]></category>
+            <category><![CDATA[evaluation]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Continuous Autonomous Task Loop Pattern]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[autonomous-execution]]></category>
+            <category><![CDATA[task-loop]]></category>
+            <category><![CDATA[rate-limiting]]></category>
+            <category><![CDATA[git-automation]]></category>
+            <category><![CDATA[cli-driven]]></category>
+            <category><![CDATA[stream-processing]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Tool Use Incentivization via Reward Shaping]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</guid>
+            <category><![CDATA[Feedback Loops]]></category>
+            <category><![CDATA[tool-use]]></category>
+            <category><![CDATA[reward-shaping]]></category>
+            <category><![CDATA[coding-agent]]></category>
+            <category><![CDATA[RL]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Asynchronous Coding Agent Pipeline]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[asynchronous]]></category>
+            <category><![CDATA[pipeline]]></category>
+            <category><![CDATA[code-agent]]></category>
+            <category><![CDATA[parallelism]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent-Friendly Workflow Design]]></title>
+            <description><![CDATA[
+## Problem
+Simply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may st]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-friendly-workflow-design</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[human-agent collaboration]]></category>
+            <category><![CDATA[workflow design]]></category>
+            <category><![CDATA[agent autonomy]]></category>
+            <category><![CDATA[task decomposition]]></category>
+            <category><![CDATA[HCI]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Isolated VM per RL Rollout]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[isolation]]></category>
+            <category><![CDATA[security]]></category>
+            <category><![CDATA[reinforcement-learning]]></category>
+            <category><![CDATA[infrastructure]]></category>
+            <category><![CDATA[state-management]]></category>
+            <category><![CDATA[agent-rft]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[No-Token-Limit Magic]]></title>
+            <description><![CDATA[
+## Problem
+Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.]]></description>
+            <link>https://agentic-patterns.com/patterns/no-token-limit-magic</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/no-token-limit-magic</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[performance]]></category>
+            <category><![CDATA[cost]]></category>
+            <category><![CDATA[experimentation]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Human-in-the-Loop Approval Framework]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/human-in-loop-approval-framework</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/human-in-loop-approval-framework</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[human-oversight]]></category>
+            <category><![CDATA[safety]]></category>
+            <category><![CDATA[approvals]]></category>
+            <category><![CDATA[risk-management]]></category>
+            <category><![CDATA[collaboration]]></category>
+            <category><![CDATA[slack-integration]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Stop Hook Auto-Continue Pattern]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[hooks]]></category>
+            <category><![CDATA[automation]]></category>
+            <category><![CDATA[testing]]></category>
+            <category><![CDATA[determinism]]></category>
+            <category><![CDATA[success-criteria]]></category>
+            <category><![CDATA[continuous-execution]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Structured Output Specification]]></title>
+            <description><![CDATA[
+## Problem]]></description>
+            <link>https://agentic-patterns.com/patterns/structured-output-specification</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/structured-output-specification</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[structured-output]]></category>
+            <category><![CDATA[schema]]></category>
+            <category><![CDATA[validation]]></category>
+            <category><![CDATA[reliability]]></category>
+            <category><![CDATA[type-safety]]></category>
+            <category><![CDATA[integration]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Shell Command Contextualization]]></title>
+            <description><![CDATA[
+## Problem
+When an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these]]></description>
+            <link>https://agentic-patterns.com/patterns/shell-command-contextualization</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/shell-command-contextualization</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[shell integration]]></category>
+            <category><![CDATA[context management]]></category>
+            <category><![CDATA[local execution]]></category>
+            <category><![CDATA[bash]]></category>
+            <category><![CDATA[cli]]></category>
+            <category><![CDATA[interactive tools]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>

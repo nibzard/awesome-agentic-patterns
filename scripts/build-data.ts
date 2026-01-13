@@ -336,6 +336,46 @@ function generateSitemapXml(patterns: ParsedPattern[]): string {
 }
 
 /**
+ * Generate RSS feed (task 096)
+ */
+function generateRssFeed(patterns: ParsedPattern[]): string {
+  const RSS = require("rss");
+  const feed = new RSS({
+    title: "Awesome Agentic Patterns",
+    description: "A curated catalogue of AI agent design patterns",
+    feed_url: "https://agentic-patterns.com/rss.xml",
+    site_url: "https://agentic-patterns.com",
+    language: "en",
+    pubDate: new Date(),
+    ttl: 60,
+  });
+
+  // Sort patterns by updated_at date, newest first
+  const sortedPatterns = [...patterns].sort((a, b) => {
+    const aDate = a.frontMatter.updated_at || getFileModDate(a.filePath);
+    const bDate = b.frontMatter.updated_at || getFileModDate(b.filePath);
+    return bDate.localeCompare(aDate);
+  });
+
+  // Add last 20 patterns to feed
+  for (const pattern of sortedPatterns.slice(0, 20)) {
+    const slug = pattern.frontMatter.slug || pattern.fileName.replace(".md", "");
+    const summary = pattern.frontMatter.summary || pattern.body.split("\n\n")[0].substring(0, 200);
+    const updated = pattern.frontMatter.updated_at || getFileModDate(pattern.filePath);
+
+    feed.item({
+      title: pattern.frontMatter.title,
+      description: summary,
+      url: `https://agentic-patterns.com/patterns/${slug}`,
+      date: updated,
+      categories: [pattern.frontMatter.category, ...pattern.frontMatter.tags],
+    });
+  }
+
+  return feed.xml({ indent: true });
+}
+
+/**
  * Write output files
  */
 function writeOutputs(patterns: ParsedPattern[]): void {
@@ -383,7 +423,10 @@ function writeOutputs(patterns: ParsedPattern[]): void {
   writeFileSync(join(OUTPUT_DIR, "sitemap.xml"), sitemapXml);
   console.log(`Generated ${OUTPUT_DIR}/sitemap.xml`);
 
-  // TODO: Task 096 will add rss.xml
+  // Write RSS feed (task 096)
+  const rssFeed = generateRssFeed(patterns);
+  writeFileSync(join(OUTPUT_DIR, "rss.xml"), rssFeed);
+  console.log(`Generated ${OUTPUT_DIR}/rss.xml`);
 }
 
 /**
@@ -412,6 +455,7 @@ export default {
   generatePatternsJson,
   generateGraphJson,
   generateSitemapXml,
+  generateRssFeed,
   generateLlmsTxt,
   generateLlmsFullTxt,
 };
