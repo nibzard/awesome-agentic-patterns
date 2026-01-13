@@ -72,9 +72,9 @@
 - [x] 072 - Implement required heading presence checks in `scripts/validate-patterns`. [Just implemented with extractHeadings() and validateMarkdownStructure() functions]
 - [x] 073 - Implement heading order checks in `scripts/validate-patterns`. [Just implemented with validateHeadingOrder() function that extracts headings in order from the markdown body, validates they follow the expected order: problem -> solution -> [how to use it] -> [trade-offs] -> [example] -> [see also] -> references, and reports warnings for out-of-order headings]
 - [x] 074 - Implement duplicate heading detection in `scripts/validate-patterns`. [Just implemented with validateDuplicateHeadings() function that tracks heading counts and positions using Maps, reports warnings for duplicate headings with line numbers, and is integrated into validateMarkdownStructure()]
-- [ ] 075 - Implement file-path context in validation errors.
-- [ ] 076 - Implement nonzero exit codes for validation failures.
-- [ ] 077 - Add `validate:patterns` script to root `package.json`.
+- [x] 075 - Implement file-path context in validation errors. [Already implemented: ValidationError includes `file` field, all validation functions pass `filePath`, formatResults() outputs `ERROR ${file}:${field}: ${message}`]
+- [x] 076 - Implement nonzero exit codes for validation failures. [Already implemented: `process.exit(result.valid ? 0 : 1)` on line 795 and `process.exit(1)` for fatal errors on line 802]
+- [x] 077 - Add `validate:patterns` script to root `package.json`. [Added two npm scripts: validate:patterns (basic front-matter validation) and validate:patterns:content (full validation including heading checks)]
 - [ ] 078 - Add `lint_patterns` target to `Makefile` if keeping Makefile.
 - [ ] 079 - Add validation step to `.github/workflows/deploy.yml`.
 - [ ] 080 - Add parsing dependencies for the data pipeline runtime.

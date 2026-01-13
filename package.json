@@ -2,6 +2,10 @@
   "name": "awesome-agentic-patterns-worker",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "validate:patterns": "bun scripts/validate-patterns.ts patterns",
+    "validate:patterns:content": "bun scripts/validate-patterns.ts patterns --check-content"
+  },
   "devDependencies": {
     "wrangler": "^4.18.0"
   },
