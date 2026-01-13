@@ -43,6 +43,9 @@ jobs:
     - name: Validate patterns (task 079)
       run: bun scripts/validate-patterns.ts patterns
 
+    - name: Build pattern data (task 098)
+      run: bun scripts/build-data.ts
+
     - name: Generate git-based pattern labels
       run: |
         python3 scripts/build_readme.py

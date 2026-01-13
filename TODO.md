@@ -95,7 +95,7 @@
 - [x] 095 - Implement `sitemap.xml` output writer in `scripts/build-data`. [Added generateSitemapXml() function with xmlbuilder2, includes static pages (home, compare, graph) and all pattern pages with slug-based URLs, uses updated_at or file mtime for lastmod, proper XML namespace and formatting]
 - [x] 096 - Implement RSS feed output writer in `scripts/build-data`. [Added generateRssFeed() function using RSS npm package, sorts patterns by updated_at newest first, includes last 20 patterns in feed, categories include pattern category + tags, integrated into writeOutputs()]
 - [x] 097 - Add `build:data` script to root `package.json`. [Added build:data script to package.json scripts section, runs `bun scripts/build-data.ts`, tested and working correctly]
-- [ ] 098 - Add data pipeline step to `.github/workflows/deploy.yml`.
+- [x] 098 - Add data pipeline step to `.github/workflows/deploy.yml`. [Added build pattern data step after validation, runs bun scripts/build-data.ts, YAML validated successfully]
 - [ ] 099 - Create `scripts/migrate-patterns` entry file.
 - [ ] 100 - Implement slug derivation in `scripts/migrate-patterns`.
 - [ ] 101 - Implement id derivation in `scripts/migrate-patterns`.
