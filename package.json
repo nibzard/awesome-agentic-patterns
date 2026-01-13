@@ -2,6 +2,9 @@
   "name": "awesome-agentic-patterns-worker",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
   "scripts": {
     "validate:patterns": "bun scripts/validate-patterns.ts patterns",
     "validate:patterns:content": "bun scripts/validate-patterns.ts patterns --check-content",
