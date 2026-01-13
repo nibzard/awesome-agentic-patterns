@@ -42,11 +42,11 @@
 - [x] 042 - Add slug rules to `CONTRIBUTING.md`.
 - [x] 043 - Add id rules to `CONTRIBUTING.md`.
 - [x] 044 - Add required front matter list to `CONTRIBUTING.md`.
-- [ ] 045 - Add optional front matter list to `CONTRIBUTING.md`.
-- [ ] 046 - Add required section headings list to `CONTRIBUTING.md`.
-- [ ] 047 - Add required section order to `CONTRIBUTING.md`.
-- [ ] 048 - Add `summary` guidance to `CONTRIBUTING.md`.
-- [ ] 049 - Add `updated_at` guidance to `CONTRIBUTING.md`.
+- [x] 045 - Add optional front matter list to `CONTRIBUTING.md`.
+- [x] 046 - Add required section headings list to `CONTRIBUTING.md`.
+- [x] 047 - Add required section order to `CONTRIBUTING.md`.
+- [x] 048 - Add `summary` guidance to `CONTRIBUTING.md`.
+- [x] 049 - Add `updated_at` guidance to `CONTRIBUTING.md`.
 - [ ] 050 - Add `id` field to `patterns/TEMPLATE.md`.
 - [ ] 051 - Add `slug` field to `patterns/TEMPLATE.md`.
 - [ ] 052 - Add `summary` field to `patterns/TEMPLATE.md`.
