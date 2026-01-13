@@ -97,6 +97,48 @@ function parseAllPatterns(): ParsedPattern[] {
 }
 
 /**
+ * Extract sections from markdown body (task 084)
+ */
+interface PatternSections {
+  problem?: string;
+  solution?: string;
+  howToUseIt?: string;
+  tradeoffs?: string;
+  example?: string;
+  references?: string;
+  [key: string]: string | undefined;
+}
+
+function extractSections(body: string): PatternSections {
+  const sections: PatternSections = {};
+  const lines = body.split("\n");
+  let currentSection = "";
+  let currentContent: string[] = [];
+
+  for (const line of lines) {
+    const headingMatch = line.match(/^##\s+(.+)$/);
+    if (headingMatch) {
+      // Save previous section
+      if (currentSection && currentContent.length > 0) {
+        sections[currentSection] = currentContent.join("\n").trim();
+      }
+      // Start new section
+      currentSection = headingMatch[1].trim().toLowerCase().replace(/\s+/g, "");
+      currentContent = [];
+    } else if (currentSection) {
+      currentContent.push(line);
+    }
+  }
+
+  // Save last section
+  if (currentSection && currentContent.length > 0) {
+    sections[currentSection] = currentContent.join("\n").trim();
+  }
+
+  return sections;
+}
+
+/**
  * Generate patterns.json with all pattern metadata
  */
 function generatePatternsJson(patterns: ParsedPattern[]): string {
@@ -200,6 +242,7 @@ main();
 export default {
   parsePattern,
   parseAllPatterns,
+  extractSections,
   generatePatternsJson,
   generateLlmsTxt,
   generateLlmsFullTxt,

@@ -81,8 +81,8 @@
 - [x] 081 - Create `scripts/build-data` entry file. [Created scripts/build-data.ts with pattern parsing using gray-matter, functions to generate patterns.json/llms.txt/llms-full.txt, CLI entry point, outputs to apps/web/public/]
 - [x] 082 - Implement pattern file discovery in `scripts/build-data`. [Already implemented in parseAllPatterns() function (lines 82-97): scans patterns directory using fs.readdirSync, filters for .md files excluding TEMPLATE.md, returns array of parsed patterns]
 - [x] 083 - Implement front matter parsing in `scripts/build-data`. [Already implemented in parsePattern() function (lines 62-77): uses gray-matter to parse YAML front matter and separate it from markdown body, returns ParsedPattern with frontMatter and body fields]
-- [ ] 084 - Implement required section extraction in `scripts/build-data`.
-- [ ] 085 - Implement optional section extraction in `scripts/build-data`.
+- [x] 084 - Implement required section extraction in `scripts/build-data`. [Implemented PatternSections interface, extractSections() function with markdown parsing for Problem/Solution/HowToUseIt/Tradeoffs/Example/References, added to default exports]
+- [x] 085 - Implement optional section extraction in `scripts/build-data`. [Already handled by extractSections() using dynamic key indexing [key: string]: string | undefined in PatternSections interface]
 - [x] 086 - Implement `summary` fallback logic in `scripts/build-data`. [Already implemented in generateLlmsTxt() function (line 127): uses empty string fallback when summary is undefined]
 - [x] 087 - Implement `slug` fallback logic in `scripts/build-data`. [Already implemented in generatePatternsJson() and generateLlmsTxt() functions (lines 105, 126): uses filename without .md extension as fallback when slug is undefined]
 - [ ] 088 - Implement `id` fallback logic in `scripts/build-data`.
