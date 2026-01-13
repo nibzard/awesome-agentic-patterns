@@ -13,6 +13,68 @@ import MarkdownIt from "markdown-it";
 // Types for validation results
 export type ValidationErrorLevel = "error" | "warning" | "info";
 
+// Front matter schema types
+export type Status =
+  | "proposed"
+  | "emerging"
+  | "established"
+  | "validated-in-production"
+  | "best-practice"
+  | "experimental-but-awesome"
+  | "rapidly-improving";
+
+export type Category =
+  | "Orchestration & Control"
+  | "Context & Memory"
+  | "Feedback Loops"
+  | "Learning & Adaptation"
+  | "Reliability & Eval"
+  | "Security & Safety"
+  | "Tool Use & Environment"
+  | "UX & Collaboration"
+  | "Uncategorized";
+
+export type Maturity = "early" | "maturing" | "mature";
+export type Complexity = "low" | "medium" | "high";
+export type Effort = "hours" | "days" | "weeks";
+export type Impact = "low" | "medium" | "high";
+
+export interface PatternFrontMatter {
+  // Required fields
+  title: string;
+  id: string;
+  slug: string;
+  status: Status;
+  authors: string[];
+  category: Category;
+  source: string;
+  tags: string[];
+
+  // Optional fields
+  based_on?: string[];
+  summary?: string;
+  maturity?: Maturity;
+  complexity?: Complexity;
+  effort?: Effort;
+  impact?: Impact;
+  signals?: string[];
+  anti_signals?: string[];
+  prerequisites?: string[];
+  related?: string[];
+  anti_patterns?: string[];
+  tools?: string[];
+  domains?: string[];
+  updated_at?: string;
+}
+
+export interface ParsedPattern {
+  filePath: string;
+  fileName: string;
+  frontMatter: PatternFrontMatter;
+  body: string;
+  rawFrontMatter: Record<string, unknown>;
+}
+
 export interface ValidationError {
   level: ValidationErrorLevel;
   file: string;
@@ -56,11 +118,71 @@ export const ALLOWED_STATUSES = [
   "rapidly-improving",
 ] as const;
 
-export const REQUIRED_FIELDS = ["title", "status", "authors", "category", "source", "tags"] as const;
-export const RECOMMENDED_FIELDS = ["based_on", "summary"] as const;
+export const REQUIRED_FIELDS = ["title", "id", "slug", "status", "authors", "category", "source", "tags"] as const;
+export const OPTIONAL_FIELDS = [
+  "based_on",
+  "summary",
+  "maturity",
+  "complexity",
+  "effort",
+  "impact",
+  "signals",
+  "anti_signals",
+  "prerequisites",
+  "related",
+  "anti_patterns",
+  "tools",
+  "domains",
+  "updated_at",
+] as const;
 
 // Markdown parser instance
 const md = new MarkdownIt();
+
+// Enum validators
+const ALLOWED_MATURITY = ["early", "maturing", "mature"] as const;
+const ALLOWED_COMPLEXITY = ["low", "medium", "high"] as const;
+const ALLOWED_EFFORT = ["hours", "days", "weeks"] as const;
+const ALLOWED_IMPACT = ["low", "medium", "high"] as const;
+
+/**
+ * Parse front matter from a pattern file
+ * Extracts YAML front-matter and returns structured data
+ */
+export function parseFrontMatter(content: string, filePath: string): {
+  data: Record<string, unknown>;
+  body: string;
+  errors: ValidationError[];
+} {
+  const errors: ValidationError[] = [];
+
+  try {
+    const { data, content: body } = matter(content);
+    return { data, body, errors };
+  } catch (err) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "front-matter",
+      message: err instanceof Error ? err.message : String(err),
+    });
+    return { data: {}, body: "", errors };
+  }
+}
+
+/**
+ * Type guard to check if value is a string array
+ */
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+/**
+ * Type guard to check if value is a string
+ */
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
 
 /**
  * Parse and validate a single pattern file
@@ -108,7 +230,7 @@ export async function validatePattern(
 }
 
 /**
- * Validate required front-matter fields (task 070 placeholder)
+ * Validate required front-matter fields (task 070)
  */
 function validateRequiredFields(
   data: Record<string, unknown>,
@@ -119,7 +241,8 @@ function validateRequiredFields(
   const missing: string[] = [];
 
   for (const field of REQUIRED_FIELDS) {
-    if (!data[field]) {
+    const value = data[field];
+    if (value === undefined || value === null || value === "") {
       missing.push(field);
     }
   }
@@ -133,21 +256,30 @@ function validateRequiredFields(
     });
   }
 
-  // Check for recommended fields
-  for (const field of RECOMMENDED_FIELDS) {
-    if (!data[field]) {
-      warnings.push({
-        level: "warning",
-        file: filePath,
-        field,
-        message: `Missing recommended field: ${field}`,
-      });
-    }
+  // Check for empty arrays that should have content
+  const authors = data.authors;
+  if (authors !== undefined && Array.isArray(authors) && authors.length === 0) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "authors",
+      message: "Authors array must not be empty",
+    });
+  }
+
+  const tags = data.tags;
+  if (tags !== undefined && Array.isArray(tags) && tags.length === 0) {
+    warnings.push({
+      level: "warning",
+      file: filePath,
+      field: "tags",
+      message: "Tags array is empty - consider adding relevant tags",
+    });
   }
 }
 
 /**
- * Validate field values (task 071 placeholder)
+ * Validate field values (task 071)
  */
 function validateFieldValues(
   data: Record<string, unknown>,
@@ -177,25 +309,204 @@ function validateFieldValues(
     });
   }
 
+  // Validate maturity
+  const maturity = data.maturity as string;
+  if (maturity && !ALLOWED_MATURITY.includes(maturity as any)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "maturity",
+      message: `Invalid maturity: "${maturity}". Must be one of: ${ALLOWED_MATURITY.join(", ")}`,
+    });
+  }
+
+  // Validate complexity
+  const complexity = data.complexity as string;
+  if (complexity && !ALLOWED_COMPLEXITY.includes(complexity as any)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "complexity",
+      message: `Invalid complexity: "${complexity}". Must be one of: ${ALLOWED_COMPLEXITY.join(", ")}`,
+    });
+  }
+
+  // Validate effort
+  const effort = data.effort as string;
+  if (effort && !ALLOWED_EFFORT.includes(effort as any)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "effort",
+      message: `Invalid effort: "${effort}". Must be one of: ${ALLOWED_EFFORT.join(", ")}`,
+    });
+  }
+
+  // Validate impact
+  const impact = data.impact as string;
+  if (impact && !ALLOWED_IMPACT.includes(impact as any)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "impact",
+      message: `Invalid impact: "${impact}". Must be one of: ${ALLOWED_IMPACT.join(", ")}`,
+    });
+  }
+
   // Validate authors format
-  const authors = data.authors as string[] | string;
-  if (authors && !Array.isArray(authors)) {
+  const authors = data.authors;
+  if (authors !== undefined && !isStringArray(authors)) {
     errors.push({
       level: "error",
       file: filePath,
       field: "authors",
-      message: `Authors must be an array, got: ${typeof authors}`,
+      message: `Authors must be a string array, got: ${typeof authors}`,
     });
   }
 
   // Validate tags format
-  const tags = data.tags as string[] | string;
-  if (tags && !Array.isArray(tags)) {
+  const tags = data.tags;
+  if (tags !== undefined && !isStringArray(tags)) {
     errors.push({
       level: "error",
       file: filePath,
       field: "tags",
-      message: `Tags must be an array, got: ${typeof tags}`,
+      message: `Tags must be a string array, got: ${typeof tags}`,
+    });
+  }
+
+  // Validate based_on format
+  const basedOn = data.based_on;
+  if (basedOn !== undefined && !isStringArray(basedOn)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "based_on",
+      message: `based_on must be a string array, got: ${typeof basedOn}`,
+    });
+  }
+
+  // Validate summary format
+  const summary = data.summary;
+  if (summary !== undefined && !isString(summary)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "summary",
+      message: `summary must be a string, got: ${typeof summary}`,
+    });
+  } else if (isString(summary) && summary.length > 200) {
+    warnings.push({
+      level: "warning",
+      file: filePath,
+      field: "summary",
+      message: `summary is ${summary.length} chars - recommended to keep under 200 chars`,
+    });
+  }
+
+  // Validate source URL format
+  const source = data.source;
+  if (source !== undefined && isString(source)) {
+    try {
+      new URL(source);
+    } catch {
+      errors.push({
+        level: "error",
+        file: filePath,
+        field: "source",
+        message: `source must be a valid URL, got: ${source}`,
+      });
+    }
+  }
+
+  // Validate updated_at format (YYYY-MM-DD)
+  const updatedAt = data.updated_at;
+  if (updatedAt !== undefined && isString(updatedAt)) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(updatedAt)) {
+      errors.push({
+        level: "error",
+        file: filePath,
+        field: "updated_at",
+        message: `updated_at must be in YYYY-MM-DD format, got: ${updatedAt}`,
+      });
+    }
+  }
+
+  // Validate related patterns format
+  const related = data.related;
+  if (related !== undefined && !isStringArray(related)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "related",
+      message: `related must be a string array of pattern IDs, got: ${typeof related}`,
+    });
+  }
+
+  // Validate anti_patterns format
+  const antiPatterns = data.anti_patterns;
+  if (antiPatterns !== undefined && !isStringArray(antiPatterns)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "anti_patterns",
+      message: `anti_patterns must be a string array of pattern IDs, got: ${typeof antiPatterns}`,
+    });
+  }
+
+  // Validate signals format
+  const signals = data.signals;
+  if (signals !== undefined && !isStringArray(signals)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "signals",
+      message: `signals must be a string array, got: ${typeof signals}`,
+    });
+  }
+
+  // Validate anti_signals format
+  const antiSignals = data.anti_signals;
+  if (antiSignals !== undefined && !isStringArray(antiSignals)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "anti_signals",
+      message: `anti_signals must be a string array, got: ${typeof antiSignals}`,
+    });
+  }
+
+  // Validate prerequisites format
+  const prerequisites = data.prerequisites;
+  if (prerequisites !== undefined && !isStringArray(prerequisites)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "prerequisites",
+      message: `prerequisites must be a string array, got: ${typeof prerequisites}`,
+    });
+  }
+
+  // Validate tools format
+  const tools = data.tools;
+  if (tools !== undefined && !isStringArray(tools)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "tools",
+      message: `tools must be a string array, got: ${typeof tools}`,
+    });
+  }
+
+  // Validate domains format
+  const domains = data.domains;
+  if (domains !== undefined && !isStringArray(domains)) {
+    errors.push({
+      level: "error",
+      file: filePath,
+      field: "domains",
+      message: `domains must be a string array, got: ${typeof domains}`,
     });
   }
 }
@@ -299,7 +610,7 @@ async function main() {
   const args = process.argv.slice(2);
 
   // Default to patterns directory
-  let targetDir = "patterns";
+  let target = "patterns";
   const options: ValidatorOptions = {
     strict: false,
     checkContent: false,
@@ -313,11 +624,23 @@ async function main() {
     } else if (arg === "--check-content") {
       options.checkContent = true;
     } else if (!arg.startsWith("-")) {
-      targetDir = arg;
+      target = arg;
     }
   }
 
-  const result = await validatePatterns(targetDir, options);
+  // Check if target is a file or directory
+  const fs = await import("node:fs");
+  const path = await import("node:path");
+  const stat = fs.statSync(target);
+
+  let result: ValidationResult;
+  if (stat.isFile()) {
+    // Validate single file
+    result = await validatePattern(target, options);
+  } else {
+    // Validate directory
+    result = await validatePatterns(target, options);
+  }
 
   console.log(formatResults(result));
 
@@ -338,7 +661,13 @@ export default {
   validatePattern,
   validatePatterns,
   formatResults,
+  parseFrontMatter,
   ALLOWED_CATEGORIES,
   ALLOWED_STATUSES,
   REQUIRED_FIELDS,
+  OPTIONAL_FIELDS,
+  ALLOWED_MATURITY,
+  ALLOWED_COMPLEXITY,
+  ALLOWED_EFFORT,
+  ALLOWED_IMPACT,
 };
