@@ -7,10 +7,10 @@
 - [x] 007 - Record the Guides list in `SPECIFICATION.md`.
 - [x] 008 - Decide whether the Decision Explorer is rules-based or ML-assisted.
 - [x] 009 - Record the Decision Explorer approach decision in `SPECIFICATION.md`.
-- [ ] 010 - Decide whether to keep Cloudflare/GitHub Pages as a backup deployment.
-- [ ] 011 - Record the backup deployment decision in `SPECIFICATION.md`.
-- [ ] 012 - Decide between D3 and Visx for the graph implementation.
-- [ ] 013 - Record the graph library decision in `SPECIFICATION.md`.
+- [x] 010 - Decide whether to keep Cloudflare/GitHub Pages as a backup deployment. (Decision: No - Vercel-only for simplicity, commit 77e5913)
+- [x] 011 - Record the backup deployment decision in `SPECIFICATION.md`.
+- [x] 012 - Decide between D3 and Visx for the graph implementation. (Decision: D3.js for framework independence and smaller bundle)
+- [x] 013 - Record the graph library decision in `SPECIFICATION.md`.
 - [ ] 014 - Decide the content source approach for Astro (symlink vs loader).
 - [ ] 015 - Record the content source approach in `SPECIFICATION.md`.
 - [ ] 016 - Decide the validation runtime (Node/TS with bun vs Python).

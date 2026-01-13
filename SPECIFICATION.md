@@ -19,6 +19,7 @@ This specification defines a modern, LLM-first redesign of the Awesome Agentic P
 - Guides will include: `HELP.md`, `LEARNINGS.md`, `PATTERN-LABELING.md`, `MIGRATION-TO-GIT-LABELS.md`.
 - Decision Explorer: rules-based for v1 (ML-assisted deferred to v2).
 - Backup deployment: No. Vercel-only for simplicity. Git history + local build = sufficient recovery.
+- Graph library: D3.js (d3-force) for framework independence and smaller bundle.
 
 ## Goals
 - Replace the current MkDocs UX with a modern, fast, discovery-driven site.
@@ -375,6 +376,39 @@ apps/web/
 - Domain DNS points to Vercel only
 
 **Revisit if**: Vercel has sustained outage >1 hour (has never occurred).
+
+### Decision 002: D3.js for Graph Visualization
+
+**Date**: 2026-01-13
+
+**Context**: Graph Explorer feature requires interactive network visualization. Options evaluated: D3.js vs Visx vs Sigma.js vs Cytoscape.js.
+
+**Decision**: Use D3.js (d3-force module).
+
+**Rationale**:
+1. **Framework independence**: Native Astro compatibility, no React runtime overhead
+2. **Bundle size**: ~15-20KB vs ~60KB+ for Visx + React
+3. **Native force simulation**: d3-force designed specifically for force-directed graphs
+4. **Performance**: Smaller JS = easier LCP < 2.0s target, higher Lighthouse scores
+5. **Accessibility patterns**: Documented keyboard nav and ARIA implementation guides
+6. **Astro integration**: Works with `client:load` directive, no framework shim
+
+**Alternatives considered**:
+- **Visx**: React-specific, no force component (issue #429), adds React runtime
+- **Sigma.js**: WebGL-based, handles 10K-100K nodes, overkill for ~50-100 patterns
+- **Cytoscape.js**: ~200KB bundle, more complexity than needed
+
+**Implementation**:
+```bash
+bun add d3-force d3-selection d3-zoom d3-drag
+```
+
+**Consequences**:
+- Manual accessibility implementation required (keyboard nav, ARIA, focus management)
+- Learning curve for D3's imperative API
+- Full control over interactions (hover, click, drag, zoom)
+
+**Revisit if**: Graph scales to >500 nodes or requires WebGL performance.
 
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.
