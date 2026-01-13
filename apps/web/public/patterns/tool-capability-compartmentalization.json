@@ -1,0 +1,21 @@
+{
+  "title": "Tool Capability Compartmentalization",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Simon Willison (MCP critique)"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
+  "tags": [
+    "capability-segregation",
+    "least-privilege",
+    "tool-permissions"
+  ],
+  "id": "tool-capability-compartmentalization",
+  "slug": "tool-capability-compartmentalization",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nModel Context Protocol (MCP) encourages \"mix-and-match\" tools—often combining private-data readers, web fetchers, and writers in a single callable unit. This amplifies the lethality of prompt-injection chains.\n\n## Solution\nAdopt **capability compartmentalization** at the tool layer:\n\n- Split monolithic tools into *reader*, *processor*, and *writer* micro-tools.  \n- Require explicit, per-call user consent when composing tools across capability classes.  \n- Run each class in an isolated subprocess with scoped API keys and file permissions.\n\n```yaml\n# tool-manifest.yml\nemail_reader:\n  capabilities: [private_data, untrusted_input]\n  permissions:\n    fs: read-only:/mail\n    net: none\n\nissue_creator:\n  capabilities: [external_comm]\n  permissions:\n    net: allowlist:github.com\n```\n\n## How to use it\n\n* Generate the manifest automatically from CI.\n* Your agent runner consults the manifest before constructing action plans.\n* Flag any attempt to chain tools that would recreate the lethal trifecta.\n\n## Trade-offs\n\n**Pros:** Fine-grained; plays well with modular architectures.\n**Cons:** More tooling overhead; risk of permission creep over time.\n\n## References\n\n* Willison's warning that \"one MCP mixed all three patterns in a single tool.\""
+}

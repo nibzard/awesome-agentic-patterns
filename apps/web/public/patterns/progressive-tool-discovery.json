@@ -1,0 +1,22 @@
+{
+  "title": "Progressive Tool Discovery",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
+  "tags": [
+    "mcp",
+    "tool-discovery",
+    "context-optimization",
+    "lazy-loading"
+  ],
+  "id": "progressive-tool-discovery",
+  "slug": "progressive-tool-discovery",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nWhen agents have access to large tool catalogs (dozens or hundreds of available tools), loading all tool definitions upfront consumes excessive context window space. Most tools won't be used in a given workflow, making this preloading wasteful and limiting the context available for actual task execution.\n\n## Solution\n\nPresent tools through a filesystem-like hierarchy where agents discover capabilities on-demand by exploring the structure. Implement a `search_tools` capability that allows agents to request different levels of detail:\n\n1. **Name only**: Minimal context for initial browsing\n2. **Name + description**: Enough to understand tool purpose\n3. **Full definition with schemas**: Complete API details only when needed\n\nTools are organized hierarchically (e.g., `servers/google-drive/getDocument.ts`, `servers/slack/sendMessage.ts`) so agents can:\n\n- List the `./servers/` directory to see available integrations\n- Navigate into specific server directories to find relevant tools\n- Load full definitions only for tools they intend to use\n\n```pseudo\n# Agent workflow\n1. list_directory(\"./servers/\")\n   → Returns: [\"google-drive/\", \"slack/\", \"github/\", ...]\n\n2. search_tools(pattern=\"google-drive/*\", detail_level=\"name+description\")\n   → Returns: Brief descriptions of Google Drive tools\n\n3. get_tool_definition(\"servers/google-drive/getDocument\")\n   → Returns: Full JSON schema with parameters, types, examples\n```\n\n## How to use it\n\n**Best for:**\n\n- Systems with 20+ available tools or integrations\n- Model Context Protocol (MCP) server implementations\n- Plugin architectures where agents select from many capabilities\n\n**Implementation considerations:**\n\n- Organize tools in a clear hierarchy (by integration, by domain, by function)\n- Provide meaningful names and descriptions at each level\n- Support pattern matching (glob or regex) for tool searches\n- Cache tool definitions that are frequently requested together\n\n**Example directory structure:**\n\n```\nservers/\n├── google-drive/\n│   ├── getDocument.ts\n│   ├── listFiles.ts\n│   └── shareFile.ts\n├── slack/\n│   ├── sendMessage.ts\n│   └── getChannels.ts\n└── github/\n    ├── createIssue.ts\n    └── listRepos.ts\n```\n\n## Trade-offs\n\n**Pros:**\n\n- Dramatically reduces initial context consumption\n- Scales to hundreds or thousands of tools\n- Agents learn about tool ecosystem through exploration\n- Natural mapping to code-based tool interfaces\n\n**Cons:**\n\n- Adds discovery overhead (extra tool calls before execution)\n- Requires thoughtful organization and naming schemes\n- Less effective if agents need most tools anyway\n- May require multiple round-trips to find the right tool\n\n## References\n\n* Anthropic Engineering: Code Execution with MCP (2024)\n* Model Context Protocol specification\n"
+}

@@ -1,0 +1,453 @@
+# Awesome Agentic Patterns
+
+A curated catalogue of AI agent design patterns.
+
+## Patterns
+
+### reflection
+Reflection Loop: 
+URL: https://agentic-patterns.com/patterns/reflection
+
+### continuous-autonomous-task-loop-pattern
+Continuous Autonomous Task Loop Pattern: 
+URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern
+
+### tool-use-incentivization-via-reward-shaping
+Tool Use Incentivization via Reward Shaping: 
+URL: https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping
+
+### asynchronous-coding-agent-pipeline
+Asynchronous Coding Agent Pipeline: 
+URL: https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline
+
+### agent-friendly-workflow-design
+Agent-Friendly Workflow Design: 
+URL: https://agentic-patterns.com/patterns/agent-friendly-workflow-design
+
+### isolated-vm-per-rl-rollout
+Isolated VM per RL Rollout: 
+URL: https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout
+
+### no-token-limit-magic
+No-Token-Limit Magic: 
+URL: https://agentic-patterns.com/patterns/no-token-limit-magic
+
+### human-in-loop-approval-framework
+Human-in-the-Loop Approval Framework: 
+URL: https://agentic-patterns.com/patterns/human-in-loop-approval-framework
+
+### stop-hook-auto-continue-pattern
+Stop Hook Auto-Continue Pattern: 
+URL: https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern
+
+### structured-output-specification
+Structured Output Specification: 
+URL: https://agentic-patterns.com/patterns/structured-output-specification
+
+### shell-command-contextualization
+Shell Command Contextualization: 
+URL: https://agentic-patterns.com/patterns/shell-command-contextualization
+
+### context-minimization-pattern
+Context-Minimization Pattern: 
+URL: https://agentic-patterns.com/patterns/context-minimization-pattern
+
+### code-first-tool-interface-pattern
+Code Mode MCP Tool Interface Improvement Pattern: 
+URL: https://agentic-patterns.com/patterns/code-first-tool-interface-pattern
+
+### filesystem-based-agent-state
+Filesystem-Based Agent State: 
+URL: https://agentic-patterns.com/patterns/filesystem-based-agent-state
+
+### anti-reward-hacking-grader-design
+Anti-Reward-Hacking Grader Design: 
+URL: https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design
+
+### team-shared-agent-configuration
+Team-Shared Agent Configuration as Code: 
+URL: https://agentic-patterns.com/patterns/team-shared-agent-configuration
+
+### self-critique-evaluator-loop
+Self-Critique Evaluator Loop: 
+URL: https://agentic-patterns.com/patterns/self-critique-evaluator-loop
+
+### cli-native-agent-orchestration
+CLI-Native Agent Orchestration: 
+URL: https://agentic-patterns.com/patterns/cli-native-agent-orchestration
+
+### democratization-of-tooling-via-agents
+Democratization of Tooling via Agents: 
+URL: https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents
+
+### chain-of-thought-monitoring-interruption
+Chain-of-Thought Monitoring & Interruption: 
+URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
+
+### swarm-migration-pattern
+Swarm Migration Pattern: 
+URL: https://agentic-patterns.com/patterns/swarm-migration-pattern
+
+### code-then-execute-pattern
+Code-Then-Execute Pattern: 
+URL: https://agentic-patterns.com/patterns/code-then-execute-pattern
+
+### skill-library-evolution
+Skill Library Evolution: 
+URL: https://agentic-patterns.com/patterns/skill-library-evolution
+
+### llm-map-reduce-pattern
+LLM Map-Reduce Pattern: 
+URL: https://agentic-patterns.com/patterns/llm-map-reduce-pattern
+
+### graph-of-thoughts
+Graph of Thoughts (GoT): 
+URL: https://agentic-patterns.com/patterns/graph-of-thoughts
+
+### context-window-anxiety-management
+Context Window Anxiety Management: 
+URL: https://agentic-patterns.com/patterns/context-window-anxiety-management
+
+### multi-platform-webhook-triggers
+Multi-Platform Webhook Triggers: 
+URL: https://agentic-patterns.com/patterns/multi-platform-webhook-triggers
+
+### tree-of-thought-reasoning
+Tree-of-Thought Reasoning: 
+URL: https://agentic-patterns.com/patterns/tree-of-thought-reasoning
+
+### specification-driven-agent-development
+Specification-Driven Agent Development: 
+URL: https://agentic-patterns.com/patterns/specification-driven-agent-development
+
+### proactive-agent-state-externalization
+Proactive Agent State Externalization: 
+URL: https://agentic-patterns.com/patterns/proactive-agent-state-externalization
+
+### initializer-maintainer-dual-agent
+Initializer-Maintainer Dual Agent Architecture: 
+URL: https://agentic-patterns.com/patterns/initializer-maintainer-dual-agent
+
+### spec-as-test-feedback-loop
+Spec-As-Test Feedback Loop: 
+URL: https://agentic-patterns.com/patterns/spec-as-test-feedback-loop
+
+### pii-tokenization
+PII Tokenization: 
+URL: https://agentic-patterns.com/patterns/pii-tokenization
+
+### oracle-and-worker-multi-model
+Oracle and Worker Multi-Model Approach: 
+URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
+
+### curated-code-context-window
+Curated Code Context Window: 
+URL: https://agentic-patterns.com/patterns/curated-code-context-window
+
+### cli-first-skill-design
+CLI-First Skill Design: 
+URL: https://agentic-patterns.com/patterns/cli-first-skill-design
+
+### progressive-complexity-escalation
+Progressive Complexity Escalation: 
+URL: https://agentic-patterns.com/patterns/progressive-complexity-escalation
+
+### parallel-tool-execution
+Conditional Parallel Tool Execution: 
+URL: https://agentic-patterns.com/patterns/parallel-tool-execution
+
+### llm-observability
+LLM Observability: 
+URL: https://agentic-patterns.com/patterns/llm-observability
+
+### multi-platform-communication-aggregation
+Multi-Platform Communication Aggregation: 
+URL: https://agentic-patterns.com/patterns/multi-platform-communication-aggregation
+
+### code-over-api-pattern
+Code-Over-API Pattern: 
+URL: https://agentic-patterns.com/patterns/code-over-api-pattern
+
+### agent-reinforcement-fine-tuning
+Agent Reinforcement Fine-Tuning (Agent RFT): 
+URL: https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning
+
+### merged-code-language-skill-model
+Merged Code + Language Skill Model: 
+URL: https://agentic-patterns.com/patterns/merged-code-language-skill-model
+
+### hybrid-llm-code-workflow-coordinator
+Hybrid LLM/Code Workflow Coordinator: 
+URL: https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator
+
+### agent-driven-research
+Agent-Driven Research: 
+URL: https://agentic-patterns.com/patterns/agent-driven-research
+
+### disposable-scaffolding-over-durable-features
+Disposable Scaffolding Over Durable Features: 
+URL: https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features
+
+### egress-lockdown-no-exfiltration-channel
+Egress Lockdown (No-Exfiltration Channel): 
+URL: https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel
+
+### compounding-engineering-pattern
+Compounding Engineering Pattern: 
+URL: https://agentic-patterns.com/patterns/compounding-engineering-pattern
+
+### visual-ai-multimodal-integration
+Visual AI Multimodal Integration: 
+URL: https://agentic-patterns.com/patterns/visual-ai-multimodal-integration
+
+### deterministic-security-scanning-build-loop
+Deterministic Security Scanning Build Loop: 
+URL: https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop
+
+### action-selector-pattern
+Action-Selector Pattern: 
+URL: https://agentic-patterns.com/patterns/action-selector-pattern
+
+### workflow-evals-with-mocked-tools
+Workflow Evals with Mocked Tools: 
+URL: https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools
+
+### memory-synthesis-from-execution-logs
+Memory Synthesis from Execution Logs: 
+URL: https://agentic-patterns.com/patterns/memory-synthesis-from-execution-logs
+
+### lethal-trifecta-threat-model
+Lethal Trifecta Threat Model: 
+URL: https://agentic-patterns.com/patterns/lethal-trifecta-threat-model
+
+### multi-model-orchestration-for-complex-edits
+Multi-Model Orchestration for Complex Edits: 
+URL: https://agentic-patterns.com/patterns/multi-model-orchestration-for-complex-edits
+
+### inference-healed-code-review-reward
+Inference-Healed Code Review Reward: 
+URL: https://agentic-patterns.com/patterns/inference-healed-code-review-reward
+
+### iterative-multi-agent-brainstorming
+Iterative Multi-Agent Brainstorming: 
+URL: https://agentic-patterns.com/patterns/iterative-multi-agent-brainstorming
+
+### variance-based-rl-sample-selection
+Variance-Based RL Sample Selection: 
+URL: https://agentic-patterns.com/patterns/variance-based-rl-sample-selection
+
+### tool-use-steering-via-prompting
+Tool Use Steering via Prompting: 
+URL: https://agentic-patterns.com/patterns/tool-use-steering-via-prompting
+
+### dogfooding-with-rapid-iteration-for-agent-improvement
+Dogfooding with Rapid Iteration for Agent Improvement: 
+URL: https://agentic-patterns.com/patterns/dogfooding-with-rapid-iteration-for-agent-improvement
+
+### autonomous-workflow-agent-architecture
+Autonomous Workflow Agent Architecture: 
+URL: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture
+
+### memory-reinforcement-learning-memrl
+Memory Reinforcement Learning (MemRL): 
+URL: https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl
+
+### spectrum-of-control-blended-initiative
+Spectrum of Control / Blended Initiative: 
+URL: https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative
+
+### ai-assisted-code-review-verification
+AI-Assisted Code Review / Verification: 
+URL: https://agentic-patterns.com/patterns/ai-assisted-code-review-verification
+
+### criticgpt-style-evaluation
+CriticGPT-Style Code Review: 
+URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
+
+### coding-agent-ci-feedback-loop
+Coding Agent CI Feedback Loop: 
+URL: https://agentic-patterns.com/patterns/coding-agent-ci-feedback-loop
+
+### rlaif-reinforcement-learning-from-ai-feedback
+RLAIF (Reinforcement Learning from AI Feedback): 
+URL: https://agentic-patterns.com/patterns/rlaif-reinforcement-learning-from-ai-feedback
+
+### self-rewriting-meta-prompt-loop
+Self-Rewriting Meta-Prompt Loop: 
+URL: https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop
+
+### proactive-trigger-vocabulary
+Proactive Trigger Vocabulary: 
+URL: https://agentic-patterns.com/patterns/proactive-trigger-vocabulary
+
+### progressive-autonomy-with-model-evolution
+Progressive Autonomy with Model Evolution: 
+URL: https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution
+
+### agent-first-tooling-and-logging
+Agent-First Tooling and Logging: 
+URL: https://agentic-patterns.com/patterns/agent-first-tooling-and-logging
+
+### progressive-disclosure-large-files
+Progressive Disclosure for Large Files: 
+URL: https://agentic-patterns.com/patterns/progressive-disclosure-large-files
+
+### language-agent-tree-search-lats
+Language Agent Tree Search (LATS): 
+URL: https://agentic-patterns.com/patterns/language-agent-tree-search-lats
+
+### agent-assisted-scaffolding
+Agent-Assisted Scaffolding: 
+URL: https://agentic-patterns.com/patterns/agent-assisted-scaffolding
+
+### layered-configuration-context
+Layered Configuration Context: 
+URL: https://agentic-patterns.com/patterns/layered-configuration-context
+
+### virtual-machine-operator-agent
+Virtual Machine Operator Agent: 
+URL: https://agentic-patterns.com/patterns/virtual-machine-operator-agent
+
+### seamless-background-to-foreground-handoff
+Seamless Background-to-Foreground Handoff: 
+URL: https://agentic-patterns.com/patterns/seamless-background-to-foreground-handoff
+
+### opponent-processor-multi-agent-debate
+Opponent Processor / Multi-Agent Debate Pattern: 
+URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
+
+### iterative-prompt-skill-refinement
+Iterative Prompt & Skill Refinement: 
+URL: https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement
+
+### dynamic-context-injection
+Dynamic Context Injection: 
+URL: https://agentic-patterns.com/patterns/dynamic-context-injection
+
+### tool-capability-compartmentalization
+Tool Capability Compartmentalization: 
+URL: https://agentic-patterns.com/patterns/tool-capability-compartmentalization
+
+### agentic-search-over-vector-embeddings
+Agentic Search Over Vector Embeddings: 
+URL: https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings
+
+### subagent-compilation-checker
+Subagent Compilation Checker: 
+URL: https://agentic-patterns.com/patterns/subagent-compilation-checker
+
+### rich-feedback-loops
+Rich Feedback Loops > Perfect Prompts: 
+URL: https://agentic-patterns.com/patterns/rich-feedback-loops
+
+### ai-accelerated-learning-and-skill-development
+AI-Accelerated Learning and Skill Development: 
+URL: https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development
+
+### latent-demand-product-discovery
+Latent Demand Product Discovery: 
+URL: https://agentic-patterns.com/patterns/latent-demand-product-discovery
+
+### agent-sdk-for-programmatic-control
+Agent SDK for Programmatic Control: 
+URL: https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control
+
+### dual-llm-pattern
+Dual LLM Pattern: 
+URL: https://agentic-patterns.com/patterns/dual-llm-pattern
+
+### plan-then-execute-pattern
+Plan-Then-Execute Pattern: 
+URL: https://agentic-patterns.com/patterns/plan-then-execute-pattern
+
+### parallel-tool-call-learning
+Parallel Tool Call Learning: 
+URL: https://agentic-patterns.com/patterns/parallel-tool-call-learning
+
+### dynamic-code-injection-on-demand-file-fetch
+Dynamic Code Injection (On-Demand File Fetch): 
+URL: https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand-file-fetch
+
+### inference-time-scaling
+Inference-Time Scaling: 
+URL: https://agentic-patterns.com/patterns/inference-time-scaling
+
+### verbose-reasoning-transparency
+Verbose Reasoning Transparency: 
+URL: https://agentic-patterns.com/patterns/verbose-reasoning-transparency
+
+### distributed-execution-cloud-workers
+Distributed Execution with Cloud Workers: 
+URL: https://agentic-patterns.com/patterns/distributed-execution-cloud-workers
+
+### background-agent-ci
+Background Agent with CI Feedback: 
+URL: https://agentic-patterns.com/patterns/background-agent-ci
+
+### feature-list-as-immutable-contract
+Feature List as Immutable Contract: 
+URL: https://agentic-patterns.com/patterns/feature-list-as-immutable-contract
+
+### abstracted-code-representation-for-review
+Abstracted Code Representation for Review: 
+URL: https://agentic-patterns.com/patterns/abstracted-code-representation-for-review
+
+### dual-use-tool-design
+Dual-Use Tool Design: 
+URL: https://agentic-patterns.com/patterns/dual-use-tool-design
+
+### patch-steering-via-prompted-tool-selection
+Patch Steering via Prompted Tool Selection: 
+URL: https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection
+
+### sub-agent-spawning
+Sub-Agent Spawning: 
+URL: https://agentic-patterns.com/patterns/sub-agent-spawning
+
+### llm-friendly-api-design
+LLM-Friendly API Design: 
+URL: https://agentic-patterns.com/patterns/llm-friendly-api-design
+
+### curated-file-context-window
+Curated File Context Window: 
+URL: https://agentic-patterns.com/patterns/curated-file-context-window
+
+### progressive-tool-discovery
+Progressive Tool Discovery: 
+URL: https://agentic-patterns.com/patterns/progressive-tool-discovery
+
+### three-stage-perception-architecture
+Three-Stage Perception Architecture: 
+URL: https://agentic-patterns.com/patterns/three-stage-perception-architecture
+
+### extended-coherence-work-sessions
+Extended Coherence Work Sessions: 
+URL: https://agentic-patterns.com/patterns/extended-coherence-work-sessions
+
+### episodic-memory-retrieval-injection
+Episodic Memory Retrieval & Injection: 
+URL: https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection
+
+### self-discover-reasoning-structures
+Self-Discover: LLM Self-Composed Reasoning Structures: 
+URL: https://agentic-patterns.com/patterns/self-discover-reasoning-structures
+
+### discrete-phase-separation
+Discrete Phase Separation: 
+URL: https://agentic-patterns.com/patterns/discrete-phase-separation
+
+### explicit-posterior-sampling-planner
+Explicit Posterior-Sampling Planner: 
+URL: https://agentic-patterns.com/patterns/explicit-posterior-sampling-planner
+
+### inversion-of-control
+Inversion of Control: 
+URL: https://agentic-patterns.com/patterns/inversion-of-control
+
+### versioned-constitution-governance
+Versioned Constitution Governance: 
+URL: https://agentic-patterns.com/patterns/versioned-constitution-governance
+
+### agent-powered-codebase-qa-onboarding
+Agent-Powered Codebase Q&A / Onboarding: 
+URL: https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding

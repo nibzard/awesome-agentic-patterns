@@ -1,0 +1,24 @@
+{
+  "title": "Shell Command Contextualization",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (via Claude Code)"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://www.nibzard.com/claude-code",
+  "tags": [
+    "shell integration",
+    "context management",
+    "local execution",
+    "bash",
+    "cli",
+    "interactive tools"
+  ],
+  "id": "shell-command-contextualization",
+  "slug": "shell-command-contextualization",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nWhen an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these commands as context for its subsequent reasoning or actions. Manually copying and pasting command output into the prompt is tedious and error-prone.\n\n## Solution\nProvide a dedicated mechanism within the agent's interface (e.g., a special prefix like `!` or a specific command mode) that allows the user to directly issue a shell command to be executed in the local environment. Crucially, both the command itself and its full output (stdout and stderr) are automatically captured and injected into the agent's current conversational or working context.\n\nThis ensures that the agent is immediately aware of the command that was run and its results, allowing it to seamlessly incorporate this information into its ongoing tasks without requiring manual data transfer by the user.\n\n## Example (shell integration flow)\n```mermaid\nsequenceDiagram\n    participant User\n    participant Interface\n    participant Shell\n    participant Agent\n\n    User->>Interface: !ls -la\n    Interface->>Shell: Execute: ls -la\n    Shell-->>Interface: Command output\n    Interface->>Agent: Inject command + output\n    Agent->>Agent: Process context\n    Agent-->>User: Response with shell context\n```\n\n## Example\n-   In Claude Code, typing `!ls -la` would execute `ls -la` locally, and both the command `!ls -la` and its output would be added to Claude's context.\n\n## References\n-   Based on the `!` (Exclamation mark) keybinding for Bash mode in \"Mastering Claude Code: Boris Cherny's Guide & Cheatsheet,\" section V.\n\n[Source](https://www.nibzard.com/claude-code)"
+}

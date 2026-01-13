@@ -1,0 +1,23 @@
+{
+  "title": "PII Tokenization",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team"
+  ],
+  "category": "Security & Safety",
+  "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
+  "tags": [
+    "privacy",
+    "pii",
+    "security",
+    "mcp",
+    "data-protection"
+  ],
+  "id": "pii-tokenization",
+  "slug": "pii-tokenization",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nAI agents often need to process workflows involving personally identifiable information (PII) such as emails, phone numbers, addresses, or financial data. However, sending raw PII through the model's context creates privacy risks and compliance concerns. Organizations need agents to orchestrate data workflows without exposing sensitive information to the LLM.\n\n## Solution\n\nImplement an interception layer in the Model Context Protocol (MCP) client that automatically tokenizes PII before it reaches the model, and untokenizes it when making subsequent tool calls.\n\n**Architecture:**\n\n```mermaid\ngraph LR\n    A[Tool Response] --> B[MCP Client]\n    B --> C{PII Detection}\n    C --> D[Tokenization]\n    D --> E[Model Context]\n    E --> F[Model Reasoning]\n    F --> G[Tool Call Request]\n    G --> H[Untokenization]\n    H --> I[Actual Tool Call]\n```\n\n**Flow:**\n\n1. **Interception**: When tools return data, MCP client intercepts responses\n2. **Detection**: Identify PII using pattern matching or classification models\n3. **Tokenization**: Replace real values with placeholders\n   - `john.doe@company.com` → `[EMAIL_1]`\n   - `(555) 123-4567` → `[PHONE_1]`\n   - `123-45-6789` → `[SSN_1]`\n4. **Model reasoning**: Agent works with tokenized placeholders\n5. **Untokenization**: When agent makes tool calls with placeholders, MCP client substitutes real values back\n\n**Example workflow:**\n\n```python\n# Tool returns customer data\ncustomer = get_customer(id=\"C123\")\n# Raw: {\"name\": \"John Doe\", \"email\": \"john@example.com\", \"phone\": \"555-1234\"}\n\n# MCP client tokenizes before sending to model\n# Context sees: {\"name\": \"[NAME_1]\", \"email\": \"[EMAIL_1]\", \"phone\": \"[PHONE_1]\"}\n\n# Agent reasons with tokens\n\"Send welcome email to [EMAIL_1] with link for [NAME_1]\"\n\n# MCP client untokenizes for tool execution\nsend_email(\n    to=\"john@example.com\",  # Real value substituted\n    body=\"Welcome John Doe, here's your link...\"  # Real value substituted\n)\n```\n\n## How to use it\n\n**Best for:**\n\n- Workflows processing customer data, HR records, medical information\n- Multi-step automation involving PII\n- Compliance-sensitive environments (GDPR, HIPAA, CCPA)\n- Agents that coordinate data flows without needing to \"see\" raw PII\n\n**Implementation requirements:**\n\n1. **PII detection layer:**\n   - Regex patterns for common PII (email, phone, SSN, credit cards)\n   - Named entity recognition models for names, addresses\n   - Custom rules for domain-specific sensitive data\n\n2. **Token mapping storage:**\n   - Secure mapping of tokens to real values\n   - Session-scoped or request-scoped lifetime\n   - Encryption at rest if persistent\n\n3. **Untokenization in tool calls:**\n   - Scan outgoing tool call parameters\n   - Replace placeholders with real values before execution\n   - Maintain referential integrity (same placeholder → same value)\n\n**Integration point:**\n\nMost effective when implemented in the MCP client layer, so it's transparent to both the agent (sees tokens) and tools (see real values).\n\n## Trade-offs\n\n**Pros:**\n\n- Prevents raw PII from entering model context\n- Agents can orchestrate sensitive workflows without seeing data\n- Enables audit trails that don't contain PII\n- Reduces compliance risk and regulatory burden\n- Transparent to agent reasoning (works with placeholders)\n\n**Cons:**\n\n- Adds complexity to MCP client implementation\n- PII detection must be accurate (false positives/negatives)\n- Doesn't protect against PII inference (model might deduce sensitive info)\n- Requires secure token mapping storage\n- May complicate debugging (need to map tokens back for troubleshooting)\n- Pattern matching can miss novel PII formats\n\n**Limitations:**\n\n- Doesn't prevent the model from learning patterns about PII structure\n- Won't catch domain-specific sensitive data without custom rules\n- Contextual PII (e.g., \"my address is...\") may leak before tokenization\n- Not a substitute for proper access controls and encryption\n\n## References\n\n* Anthropic Engineering: Code Execution with MCP (2024)\n* GDPR Guidelines on Pseudonymization\n* NIST Privacy Framework\n"
+}

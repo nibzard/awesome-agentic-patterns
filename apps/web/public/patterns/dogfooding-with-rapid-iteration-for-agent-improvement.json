@@ -1,0 +1,25 @@
+{
+  "title": "Dogfooding with Rapid Iteration for Agent Improvement",
+  "status": "best-practice",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Lukas Möller (Cursor)",
+    "Aman Sanger (Cursor)"
+  ],
+  "category": "Feedback Loops",
+  "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
+  "tags": [
+    "dogfooding",
+    "iterative-development",
+    "feedback-loop",
+    "agent-improvement",
+    "internal-testing",
+    "product-development"
+  ],
+  "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
+  "slug": "dogfooding-with-rapid-iteration-for-agent-improvement",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nDeveloping effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may not capture all nuances.\n\n## Solution\nThe development team extensively uses their own AI agent product (\"dogfooding\") for their daily software development tasks. This provides:\n\n1.  **Direct, Immediate Feedback:** Developers encounter the agent's strengths and weaknesses firsthand.\n2.  **Real-World Problem Solving:** The agent is tested on actual, complex development problems faced by the team.\n3.  **Internal Experimentation:** The team can quickly try out new agent features or modifications on themselves.\n4.  **Rapid Iteration:** Shortcomings identified through dogfooding can be rapidly addressed and new features prototyped and validated internally before wider release.\n5.  **Honest Assessment:** The team can be brutally honest about a feature's utility if they themselves don't find it useful, leading to quick pivots or discarding ineffective ideas.\n\nThis creates a tight, high-velocity feedback loop where the agent is continuously improved based on the practical needs and experiences of its own creators.\n\n## How to use it\n\n- Encourage all members of the agent development team to use the agent as their primary tool for relevant tasks.\n- Establish channels for easily reporting issues or suggesting improvements based on internal use.\n- Prioritize fixing pain points experienced by the internal team.\n\n## Real-world examples\n\n### Cursor\n\nCursor's development team uses their own AI coding assistant as the primary development tool, creating a tight feedback loop.\n\n### Anthropic Claude Code\n\nAnthropic practices intensive \"ant fooding\" (their internal term for dogfooding) with Claude Code:\n\n- **70-80% adoption**: Most technical Anthropic employees use Claude Code daily\n- **High-velocity feedback**: Internal feedback channel receives posts every 5 minutes\n- **Experimental features**: New features pushed to internal users first for rapid validation\n- **Quick pivots**: Team can be \"brutally honest\" about feature utility since they're the users\n- **Bottom-up innovation**: Major features (to-do lists, sub-agents, hooks, plugins) originated from internal team members solving their own problems\n\n**Quote from Cat Wu (Claude Code PM):**\n\n> \"Internally over 70 or 80 percent of ants—technical Anthropic employees—use Claude Code every day. Every time we are thinking about a new feature, we push it out to people internally and we get so much feedback. We have a feedback channel. I think we get a post every five minutes. And so you get a really quick signal on whether people like it, whether it's buggy, or whether it's not good and we should unship it.\"\n\nThis creates a development culture where features are validated through actual daily use before external release, dramatically reducing the risk of building unwanted functionality.\n\n## References\n\n- Lukas Möller (Cursor) at 0:04:25: \"I think Cursor is very much driven by kind of solving our own problems and kind of figuring out where we struggle solving problems and making Cursor better...experimenting a lot.\"\n- Aman Sanger (Cursor) at 0:04:55: \"...that's how we're able to move really quickly and building new features and then throwing away things that clearly don't work because we we can be really honest to ourselves of whether we find it useful. And then not have to ship it out to users... it just speeds up the iteration loop for for building features.\"\n- Cat Wu (Anthropic): \"Internally over 70 or 80 percent of ants use Claude Code every day... we get a post every five minutes.\"\n- [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)"
+}

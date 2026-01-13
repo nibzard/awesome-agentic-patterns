@@ -1,0 +1,26 @@
+{
+  "title": "RLAIF (Reinforcement Learning from AI Feedback)",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic",
+    "Google DeepMind"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://arxiv.org/abs/2212.08073",
+  "tags": [
+    "rlhf",
+    "rlaif",
+    "constitutional-ai",
+    "synthetic-data",
+    "feedback",
+    "alignment",
+    "evaluation"
+  ],
+  "id": "rlaif-reinforcement-learning-from-ai-feedback",
+  "slug": "rlaif-reinforcement-learning-from-ai-feedback",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nTraditional Reinforcement Learning from Human Feedback (RLHF) requires extensive human annotation for preference data, which is expensive (often $1+ per annotation), time-consuming, and difficult to scale. This creates a bottleneck in training aligned AI systems, especially when dealing with complex or specialized domains where human expertise is scarce or costly.\n\n## Solution\n\nRLAIF uses AI models themselves to generate preference feedback and evaluation data, dramatically reducing costs to less than $0.01 per annotation while maintaining or improving quality. The approach involves:\n\n1. **AI-Generated Critiques**: Use a language model to evaluate outputs based on a set of principles or constitution\n2. **Preference Data Generation**: Have the AI model compare pairs of responses and select the better one according to specified criteria\n3. **Synthetic Training Data**: Generate high-quality training examples using the AI's own capabilities\n4. **Constitutional Principles**: Guide the feedback process with explicit rules rather than implicit human preferences\n\nThis technique forms the foundation of Constitutional AI and has become a default method in post-training and RLHF literature.\n\n## Example\n\n```python\nclass RLAIFAgent:\n    def __init__(self, base_model, critic_model, constitution):\n        self.base_model = base_model\n        self.critic_model = critic_model\n        self.constitution = constitution  # List of principles\n    \n    def generate_critique(self, prompt, response):\n        critique_prompt = f\"\"\"\n        Evaluate the following response according to these principles:\n        {self.constitution}\n        \n        Prompt: {prompt}\n        Response: {response}\n        \n        Provide specific feedback on:\n        1. Adherence to principles\n        2. Quality of response\n        3. Suggested improvements\n        \"\"\"\n        return self.critic_model.generate(critique_prompt)\n    \n    def generate_preference_data(self, prompt, response_a, response_b):\n        comparison_prompt = f\"\"\"\n        Given these principles: {self.constitution}\n        \n        Which response is better for the prompt: \"{prompt}\"\n        \n        Response A: {response_a}\n        Response B: {response_b}\n        \n        Choose A or B and explain why according to the principles.\n        \"\"\"\n        preference = self.critic_model.generate(comparison_prompt)\n        return self.parse_preference(preference)\n    \n    def improve_response(self, prompt, initial_response, critique):\n        improvement_prompt = f\"\"\"\n        Original prompt: {prompt}\n        Initial response: {initial_response}\n        Critique: {critique}\n        \n        Generate an improved response addressing the critique.\n        \"\"\"\n        return self.base_model.generate(improvement_prompt)\n```\n\n## Trade-offs\n\n**Pros:**\n- **Cost Efficiency**: 100x cheaper than human feedback ($0.01 vs $1+)\n- **Scalability**: Can generate unlimited feedback data without human bottlenecks\n- **Consistency**: AI feedback is more consistent than varying human annotators\n- **Speed**: Near-instantaneous feedback generation\n\n**Cons:**\n- **Bias Amplification**: May reinforce existing model biases\n- **Limited Novelty**: Cannot provide truly novel insights beyond model's training\n- **Quality Variance**: Feedback quality depends on the critic model's capabilities\n- **Principle Design**: Requires careful crafting of constitutional principles\n\n## References\n\n- [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073)\n- [RLHF Book - Constitutional AI & AI Feedback](https://rlhfbook.com/c/13-cai.html)\n- [OpenAI's CriticGPT announcement (July 2024)](https://openai.com/research/criticgpt)"
+}

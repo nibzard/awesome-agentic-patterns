@@ -1,0 +1,23 @@
+{
+  "title": "Agent-Friendly Workflow Design",
+  "status": "best-practice",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Amjad Masad"
+  ],
+  "category": "UX & Collaboration",
+  "source": "https://www.nibzard.com/silent-revolution",
+  "tags": [
+    "human-agent collaboration",
+    "workflow design",
+    "agent autonomy",
+    "task decomposition",
+    "HCI"
+  ],
+  "id": "agent-friendly-workflow-design",
+  "slug": "agent-friendly-workflow-design",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nSimply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may struggle or produce suboptimal results. Agents perform best when given some degree of freedom and when the tasks are structured in a way that aligns with their strengths.\n\n## Solution\nConsciously design and adapt workflows, task structures, and human-agent interaction points to be \"agent-friendly.\" This involves:\n\n- **Clear Goal Definition:** Provide clear, high-level goals rather than overly prescriptive, step-by-step instructions for every detail.\n- **Appropriate Autonomy:** Grant the agent sufficient freedom to make its own implementation choices and explore solutions, especially if it has been programmed for such freedom.\n- **Structured Input/Output:** Define clear interfaces for how the agent receives information and delivers results.\n- **Iterative Feedback Loops:** Establish mechanisms for the agent to present intermediate work and for humans to provide corrective feedback without stifling the agent.\n- **Tool Provisioning:** Ensure the agent has access to the necessary tools and understanding of how to use them for the given workflow.\n\nThis approach aims to create a collaborative environment where the agent's capabilities are maximized by a thoughtfully designed process.\n\n## Example (workflow adaptation)\n```mermaid\nflowchart TD\n    A[Traditional Workflow] --> B{Agent-Friendly?}\n    B -->|No| C[Redesign Process]\n    C --> D[Clear Goal Definition]\n    C --> E[Appropriate Autonomy]\n    C --> F[Structured I/O]\n    C --> G[Feedback Loops]\n    C --> H[Tool Provisioning]\n    D --> I[Optimized Workflow]\n    E --> I\n    F --> I\n    G --> I\n    H --> I\n    B -->|Yes| I\n    I --> J[Enhanced Agent Performance]\n```\n\n## References\n- Derived from insights in \"How AI Agents Are Reshaping Creation,\" such as: \"If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom.\" And the concluding point: \"Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively.\"\n\n[Source](https://www.nibzard.com/silent-revolution)"
+}

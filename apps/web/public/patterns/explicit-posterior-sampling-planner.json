@@ -1,0 +1,24 @@
+{
+  "title": "Explicit Posterior-Sampling Planner",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Dilip Arumugam",
+    "Thomas L. Griffiths"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://arxiv.org/abs/2504.20997",
+  "tags": [
+    "RL",
+    "PSRL",
+    "exploration",
+    "planning",
+    "decision-making"
+  ],
+  "id": "explicit-posterior-sampling-planner",
+  "slug": "explicit-posterior-sampling-planner",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nAgents that rely on ad-hoc heuristics explore poorly, wasting tokens and API calls on dead ends.\n\n## Solution\nEmbed a *fully specified* RL algorithm—Posterior Sampling for Reinforcement Learning (PSRL)—inside the LLM's reasoning:\n\n- Maintain a Bayesian posterior over task models.  \n- Sample a model, compute an optimal plan/policy, execute, observe reward, update posterior.  \n- Express each step in natural language so the core LLM can carry it out with tool calls.\n\n## How to use it\nWrap the algorithm in a reusable prompt template or code skeleton the LLM can fill.\n\n## References\n- Arumugam & Griffiths, *Toward Efficient Exploration by LLM Agents*"
+}

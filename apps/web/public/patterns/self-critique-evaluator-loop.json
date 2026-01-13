@@ -1,0 +1,22 @@
+{
+  "title": "Self-Critique Evaluator Loop",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Meta AI (Self-Taught Evaluators)"
+  ],
+  "category": "Feedback Loops",
+  "source": "https://arxiv.org/abs/2408.02666",
+  "tags": [
+    "self-critique",
+    "evaluator",
+    "reward-model",
+    "synthetic-data"
+  ],
+  "id": "self-critique-evaluator-loop",
+  "slug": "self-critique-evaluator-loop",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nHuman preference labels are costly and quickly become outdated as base models improve.\n\n## Solution\nTrain a **self-taught evaluator** that bootstraps from synthetic data:\n\n1. Generate multiple candidate outputs for an instruction.  \n2. Ask the model to judge and explain which is better (reasoning trace).  \n3. Fine-tune that judge on its own traces; iterate.  \n4. Use the judge as a reward model or quality gate for the main agent.  \n5. Periodically refresh with new synthetic debates to stay ahead of model drift.\n\n## Pros & Cons\n- **Pros:** near-human eval accuracy without labels; scales with compute.  \n- **Cons:** risk of evaluator-model collusion; needs adversarial tests.\n\n## References\n- Wang et al., *Self-Taught Evaluators*"
+}

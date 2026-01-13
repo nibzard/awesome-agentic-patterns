@@ -1,0 +1,22 @@
+{
+  "title": "Inversion of Control",
+  "status": "validated-in-production",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Quinn Slack",
+    "Thorsten Ball"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://www.nibzard.com/ampcode",
+  "tags": [
+    "orchestration",
+    "autonomy",
+    "control"
+  ],
+  "id": "inversion-of-control",
+  "slug": "inversion-of-control",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nTraditional \"prompt-as-puppeteer\" workflows force humans to spell out every step, limiting scale and creativity.\n\n## Solution\nGive the agent **tools + a high-level goal** and let *it* decide the orchestration.\nHumans supply guard-rails (first 10 % + last 3 %) while the agent handles the middle 87 %.\n\n## Example (flow)\n```mermaid\nsequenceDiagram\n  Dev->>Agent: \"Refactor UploadService to async\"\n  Agent->>Repo: git grep \"UploadService\"\n  Agent->>Tools: edit_file, run_tests\n  Agent-->>Dev: PR with green CI\n```\n\n## References\n\n* Raising An Agent - Episode 1, \"It's a big bird, it can catch its own food.\"\n\n[Source](https://www.nibzard.com/ampcode)\n"
+}

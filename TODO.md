@@ -88,7 +88,7 @@
 - [x] 088 - Implement `id` fallback logic in `scripts/build-data`. [Implemented generateIdFromTitle() function that converts title to kebab-case, updated generatePatternsJson() to use id fallback, removes special chars and converts spaces to hyphens, tested and working correctly]
 - [x] 089 - Implement `updated_at` fallback logic in `scripts/build-data`. [Added getFileModDate() function that gets file mtime in YYYY-MM-DD format, updated generatePatternsJson() to use updated_at fallback, falls back to file modification time when frontmatter updated_at is missing, tested and working correctly]
 - [x] 090 - Implement `patterns.json` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 168-170): generates patterns.json using generatePatternsJson() and writes to apps/web/public/patterns.json]
-- [ ] 091 - Implement per-pattern JSON output writer in `scripts/build-data`.
+- [x] 091 - Implement per-pattern JSON output writer in `scripts/build-data`. [Created apps/web/public/patterns/ directory, generates individual JSON file for each pattern, includes all frontmatter + body content, uses slug-based filenames (e.g., reflection.json), tested and working (112 files generated)]
 - [ ] 092 - Implement `graph.json` output writer in `scripts/build-data`.
 - [x] 093 - Implement `llms.txt` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 172-174): generates llms.txt using generateLlmsTxt() and writes to apps/web/public/llms.txt]
 - [x] 094 - Implement `llms-full.txt` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 176-178): generates llms-full.txt using generateLlmsFullTxt() and writes to apps/web/public/llms-full.txt]

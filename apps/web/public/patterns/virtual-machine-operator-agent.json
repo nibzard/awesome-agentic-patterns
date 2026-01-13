@@ -1,0 +1,22 @@
+{
+  "title": "Virtual Machine Operator Agent",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Amjad Masad"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://www.nibzard.com/silent-revolution",
+  "tags": [
+    "computer operation",
+    "virtual machine",
+    "execution environment",
+    "agent capability"
+  ],
+  "id": "virtual-machine-operator-agent",
+  "slug": "virtual-machine-operator-agent",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nAI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage system resources, install software, and operate various applications.\n\n## Solution\nEquip the AI agent with access to a dedicated virtual machine (VM) environment. The agent is trained or designed to understand how to operate within this VM, treating it as its direct workspace. This allows the agent to:\n\n- Execute arbitrary code and scripts.\n- Install and manage software packages.\n- Read from and write to the file system.\n- Utilize other command-line tools and applications available within the VM.\n\nThis pattern transforms the agent from a specialized tool into a more general-purpose digital operator.\n\n## Example (flow)\n```mermaid\nsequenceDiagram\n    participant User\n    participant Agent\n    participant VM as Virtual Machine\n\n    User->>Agent: Complex Task Request\n    Agent->>VM: Execute Code/Scripts\n    Agent->>VM: Install Packages\n    Agent->>VM: File System Operations\n    Agent->>VM: Use CLI Tools/Apps\n    VM-->>Agent: Execution Results\n    Agent->>Agent: Process & Analyze Results\n    Agent-->>User: Task Completion Report\n```\n\n## References\n- Based on Amjad Masad's description of advanced computer use agents: \"People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer.\" (Quote from the \"How AI Agents Are Reshaping Creation\" blog post).\n\n[Source](https://www.nibzard.com/silent-revolution)"
+}

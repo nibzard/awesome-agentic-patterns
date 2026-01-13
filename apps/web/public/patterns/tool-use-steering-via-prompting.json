@@ -1,0 +1,24 @@
+{
+  "title": "Tool Use Steering via Prompting",
+  "status": "best-practice",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (via Claude Code examples)"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://www.nibzard.com/claude-code",
+  "tags": [
+    "tool use",
+    "prompting",
+    "agent guidance",
+    "custom tools",
+    "cli",
+    "natural language control"
+  ],
+  "id": "tool-use-steering-via-prompting",
+  "slug": "tool-use-steering-via-prompting",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nAI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simply having tools available doesn't guarantee they will be used appropriately for the task at hand, especially for tools unfamiliar to the base model or specific to a team's workflow.\n\n## Solution\nGuide the agent's tool selection and execution through explicit natural language instructions within the prompt. This includes:\n\n-   **Direct Tool Invocation:** Telling the agent which tool to use for a specific part of a task (e.g., \"Use the file search tool to find...\", \"Run a bash command to...\").\n-   **Teaching Tool Usage:** Instructing the agent on how to learn about or use a new or custom tool, including how to discover its options (e.g., \"Use our `barley` CLI to check logs. You can use `-h` to see how to use it.\").\n-   **Implicit Tool Suggestion:** Using phrases or shorthands that the agent learns to associate with specific tool sequences (e.g., \"commit, push, pr\" for a Git workflow).\n-   **Encouraging Deeper Reasoning for Tool Use:** Adding phrases like \"*think hard*\" to prompt more careful consideration before acting, potentially leading to better tool choices or sequences.\n\nThis pattern emphasizes the user's role in actively shaping the agent's behavior with respect to its available tools, rather than relying solely on autonomous tool selection.\n\n## Example (tool guidance flow)\n```mermaid\nflowchart TD\n    A[User Task] --> B[Available Tools]\n    A --> C[Explicit Guidance]\n    C --> D[Direct Tool Invocation]\n    C --> E[Teaching Tool Usage]\n    C --> F[Implicit Tool Suggestion]\n    C --> G[Deeper Reasoning Prompts]\n\n    B --> H[Agent Tool Selection]\n    D --> H\n    E --> H\n    F --> H\n    G --> H\n\n    H --> I[Tool Execution]\n    I --> J[Task Completion]\n```\n\n## References\n- Based on examples and tips in \"Mastering Claude Code: Boris Cherny's Guide & Cheatsheet,\" section III, particularly \"Steering Claude to Use Tools\" and \"Tip #3: Teach Claude to use *your* team's tools.\"\n\n[Source](https://www.nibzard.com/claude-code)"
+}

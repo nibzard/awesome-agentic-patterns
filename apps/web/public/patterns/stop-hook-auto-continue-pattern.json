@@ -1,0 +1,25 @@
+{
+  "title": "Stop Hook Auto-Continue Pattern",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (Anthropic)",
+    "Claude Code Users"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
+  "tags": [
+    "hooks",
+    "automation",
+    "testing",
+    "determinism",
+    "success-criteria",
+    "continuous-execution"
+  ],
+  "id": "stop-hook-auto-continue-pattern",
+  "slug": "stop-hook-auto-continue-pattern",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nAgents complete their turn and return control to the user even when the task isn't truly done. Common scenarios:\n\n- Code compiles but tests fail\n- Changes made but quality checks haven't passed\n- Feature implemented but integration tests broken\n- Migrations run but verification steps not completed\n\nWithout intervention, the user must manually check and re-prompt the agent, creating friction.\n\n## Solution\n\nUse **stop hooks** to programmatically check success criteria after each agent turn. If criteria aren't met, automatically continue the agent's execution until the task is genuinely complete.\n\n**Stop hook**: A script that runs when the agent finishes a turn. It can inspect state and decide whether to return control to the user or keep the agent running.\n\n```pseudo\ndefine_stop_hook() {\n    # Runs after every agent turn completion\n\n    test_result = run_tests()\n\n    if test_result.failed:\n        agent.continue_with_prompt(\n            \"Tests failed with: {test_result.errors}. Fix these issues.\"\n        )\n    else:\n        agent.stop()  # Return control to user\n}\n```\n\n**Combined with dangerous mode**: In containerized/sandboxed environments, this enables fully autonomous operation until success.\n\n## How to use it\n\n**Basic implementation:**\n\n1. Define success criteria (tests pass, build succeeds, linter clean, etc.)\n2. Create stop hook that checks these criteria\n3. If criteria fail, inject feedback and continue agent execution\n4. If criteria pass, return control to user\n\n**Claude Code SDK example:**\n\n```javascript\n// Stop hook configuration\n{\n  \"hooks\": {\n    \"on_stop\": {\n      \"command\": \"./scripts/check_success.sh\",\n      \"auto_continue_on_failure\": true\n    }\n  }\n}\n```\n\n**Power user pattern (from transcript):**\n\n> \"You can define a stop hook that's like, if the tests don't pass, keep going. Essentially make the model keep going until the thing is done.\"\n\n**Advanced usage with programmatic SDK:**\n\nCombine with dangerous mode in containers for autonomous operation:\n\n- Agent makes changes\n- Stop hook checks tests\n- If failing, agent continues autonomously\n- Loops until tests pass or timeout\n- Result: \"Deterministic outcomes from non-deterministic processes\"\n\n## Trade-offs\n\n**Pros:**\n\n- **True task completion**: Don't stop until actually done\n- **Reduced human intervention**: No manual re-prompting needed\n- **Systematic quality**: Encoded success criteria, not human judgment\n- **Autonomous operation**: Combined with SDK, enables fully hands-off tasks\n- **Prevents premature completion**: Agent can't declare victory too early\n\n**Cons:**\n\n- **Runaway costs**: Agent might loop indefinitely if criteria impossible\n- **Requires good criteria**: Bad success checks lead to infinite loops\n- **Container overhead**: Safest in sandboxed environments\n- **Debugging challenges**: Harder to inspect mid-execution state\n- **Timeout management**: Need sensible limits to prevent infinite execution\n\n**Safety considerations:**\n\n- Use timeouts to bound execution\n- Monitor token usage during loops\n- Test hooks in safe environments first\n- Start with simple criteria before complex checks\n- Log all auto-continue decisions for debugging\n\n## References\n\n* Boris Cherny: \"You can define a stop hook that's like, if the tests don't pass, keep going. Essentially you can just make the model keep going until the thing is done.\"\n* Boris Cherny: \"This is insane when you combine it with the SDK and this kind of programmatic usage. This is a stochastic thing, it's non-deterministic, but with scaffolding you can get these deterministic outcomes.\"\n* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)\n"
+}

@@ -228,11 +228,11 @@ function generateLlmsFullTxt(patterns: ParsedPattern[]): string {
 /**
  * Write output files
  */
-function writeOutputs(patterns: ParsedPattern): void {
+function writeOutputs(patterns: ParsedPattern[]): void {
   // Ensure output directory exists
   mkdirSync(OUTPUT_DIR, { recursive: true });
 
-  // Generate and write outputs
+  // Generate and write consolidated outputs
   const patternsJson = generatePatternsJson(patterns);
   writeFileSync(join(OUTPUT_DIR, "patterns.json"), patternsJson);
   console.log(`Generated ${OUTPUT_DIR}/patterns.json`);
@@ -244,6 +244,24 @@ function writeOutputs(patterns: ParsedPattern): void {
   const llmsFullTxt = generateLlmsFullTxt(patterns);
   writeFileSync(join(OUTPUT_DIR, "llms-full.txt"), llmsFullTxt);
   console.log(`Generated ${OUTPUT_DIR}/llms-full.txt`);
+
+  // Write per-pattern JSON files (task 091)
+  const patternsDir = join(OUTPUT_DIR, "patterns");
+  mkdirSync(patternsDir, { recursive: true });
+
+  for (const pattern of patterns) {
+    const slug = pattern.frontMatter.slug || pattern.fileName.replace(".md", "");
+    const patternJson = JSON.stringify({
+      ...pattern.frontMatter,
+      id: pattern.frontMatter.id || generateIdFromTitle(pattern.frontMatter.title),
+      slug,
+      updated_at: pattern.frontMatter.updated_at || getFileModDate(pattern.filePath),
+      body: pattern.body,
+    }, null, 2);
+
+    writeFileSync(join(patternsDir, `${slug}.json`), patternJson);
+  }
+  console.log(`Generated ${patterns.length} per-pattern JSON files`);
 
   // TODO: Task 084-087 will add sitemap.xml, rss.xml, graph.json
 }
@@ -257,7 +275,7 @@ function main(): void {
   const patterns = parseAllPatterns();
   console.log(`Parsed ${patterns.length} pattern files`);
 
-  writeOutputs(patterns as unknown as ParsedPattern);
+  writeOutputs(patterns);
 
   console.log("Data build complete.");
 }

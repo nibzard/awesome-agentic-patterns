@@ -1,0 +1,21 @@
+{
+  "title": "Reflection Loop",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Shinn et al. (2023)"
+  ],
+  "category": "Feedback Loops",
+  "source": "https://arxiv.org/abs/2303.11366",
+  "tags": [
+    "self-feedback",
+    "iterative-improvement",
+    "evaluation"
+  ],
+  "id": "reflection-loop",
+  "slug": "reflection",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nGenerative models may produce subpar output if they never review or critique their own work.\n\n## Solution\nAfter generating a draft, have the model grade it against a given metric and refine the response using that feedback.\n\n```pseudo\nfor attempt in range(max_iters):\n    draft = generate(prompt)\n    score, critique = evaluate(draft, metric)\n    if score >= threshold:\n        return draft\n    prompt = incorporate(critique, prompt)\n```\n\n## How to use it\nUse when you care about quality or adherence to explicit criteria—writing, reasoning, or code. Loop until the score meets your bar or max iterations are reached.\n\n## Trade-offs\n* **Pros:** Improves outputs with little supervision.\n* **Cons:** Extra compute; may stall if the metric is poorly defined.\n\n## References\n* [Self-Refine: Improving Reasoning in Language Models via Iterative Feedback](https://arxiv.org/abs/2303.11366)\n"
+}
