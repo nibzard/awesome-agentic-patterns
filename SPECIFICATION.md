@@ -20,6 +20,7 @@ This specification defines a modern, LLM-first redesign of the Awesome Agentic P
 - Decision Explorer: rules-based for v1 (ML-assisted deferred to v2).
 - Backup deployment: No. Vercel-only for simplicity. Git history + local build = sufficient recovery.
 - Graph library: D3.js (d3-force) for framework independence and smaller bundle.
+- Content loader: Astro glob() with custom base path (no symlinks).
 
 ## Goals
 - Replace the current MkDocs UX with a modern, fast, discovery-driven site.
@@ -409,6 +410,62 @@ bun add d3-force d3-selection d3-zoom d3-drag
 - Full control over interactions (hover, click, drag, zoom)
 
 **Revisit if**: Graph scales to >500 nodes or requires WebGL performance.
+
+### Decision 003: Content Loader Approach for Astro
+
+**Date**: 2026-01-13
+
+**Context**: Patterns live at repo root `patterns/`, Astro app in `apps/web/`. Need to load patterns into Astro content collections. Options: symlink `patterns/` into `apps/web/src/content/` vs custom loader reading from repo root.
+
+**Decision**: Use Astro's native `glob()` loader with custom `base` path.
+
+**Implementation**:
+```typescript
+// apps/web/src/content/config.ts
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const patterns = defineCollection({
+  loader: glob({
+    pattern: '**/*.md',
+    base: '../../patterns'  // Reads from repo root
+  }),
+  schema: z.object({
+    title: z.string(),
+    status: z.enum(['proposed', 'emerging', 'established', 'validated-in-production', 'best-practice', 'experimental-but-awesome', 'rapidly-improving']),
+    authors: z.array(z.string()),
+    category: z.string(),
+    tags: z.array(z.string()),
+    // ... other front matter fields
+  })
+});
+
+export const collections = { patterns };
+```
+
+**Rationale**:
+1. **Cross-platform reliability**: Symlinks break on Windows (GitHub #8312, #12866), require `preserveSymlinks: true` workaround
+2. **Git workflow**: Symlinks are Git-tracked files that can fail on Windows clone; custom loader works for all contributors
+3. **HMR support**: Symlinks have file watching issues in monorepos (GitHub #8369); glob() loader has native HMR
+4. **Astro v5 native**: Content Layer API with glob() is the documented solution for external content
+5. **Deployment**: Vercel Linux builds handle glob() correctly; symlinks may have edge cases
+6. **Developer experience**: No special setup, no OS permissions, self-documenting code
+7. **Future flexibility**: Can extend to inline loader for data transformations if needed
+
+**Symlink disadvantages**:
+- Windows compatibility issues (requires Developer Mode/admin)
+- Unknown Content Collection errors (GitHub #9088)
+- Requires Vite `preserveSymlinks: true` configuration
+- Pre-Astro-v5 workaround, not the intended pattern
+
+**Consequences**:
+- Patterns remain at repo root as source of truth
+- Contributors edit patterns in root `patterns/` folder
+- Astro app reads via glob() loader with relative path
+- No filesystem symlinks needed
+- Cross-platform development works immediately
+
+**Revisit if**: Astro content collection API changes significantly or glob() loader proves insufficient.
 
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.

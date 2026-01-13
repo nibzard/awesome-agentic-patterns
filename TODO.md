@@ -11,8 +11,8 @@
 - [x] 011 - Record the backup deployment decision in `SPECIFICATION.md`.
 - [x] 012 - Decide between D3 and Visx for the graph implementation. (Decision: D3.js for framework independence and smaller bundle)
 - [x] 013 - Record the graph library decision in `SPECIFICATION.md`.
-- [ ] 014 - Decide the content source approach for Astro (symlink vs loader).
-- [ ] 015 - Record the content source approach in `SPECIFICATION.md`.
+- [x] 014 - Decide the content source approach for Astro (symlink vs loader).
+- [x] 015 - Record the content source approach in `SPECIFICATION.md`.
 - [ ] 016 - Decide the validation runtime (Node/TS with bun vs Python).
 - [ ] 017 - Record the validation runtime decision in `SPECIFICATION.md`.
 - [ ] 018 - Decide the data pipeline runtime (Node/TS with bun vs Python).
