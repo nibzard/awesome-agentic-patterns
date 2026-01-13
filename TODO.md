@@ -13,8 +13,8 @@
 - [x] 013 - Record the graph library decision in `SPECIFICATION.md`.
 - [x] 014 - Decide the content source approach for Astro (symlink vs loader).
 - [x] 015 - Record the content source approach in `SPECIFICATION.md`.
-- [ ] 016 - Decide the validation runtime (Node/TS with bun vs Python).
-- [ ] 017 - Record the validation runtime decision in `SPECIFICATION.md`.
+- [x] 016 - Decide the validation runtime (Node/TS with bun vs Python).
+- [x] 017 - Record the validation runtime decision in `SPECIFICATION.md`.
 - [ ] 018 - Decide the data pipeline runtime (Node/TS with bun vs Python).
 - [ ] 019 - Record the data pipeline runtime decision in `SPECIFICATION.md`.
 - [ ] 020 - Decide the data output root (`apps/web/public` vs root `public`).

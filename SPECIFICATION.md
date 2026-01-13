@@ -21,6 +21,7 @@ This specification defines a modern, LLM-first redesign of the Awesome Agentic P
 - Backup deployment: No. Vercel-only for simplicity. Git history + local build = sufficient recovery.
 - Graph library: D3.js (d3-force) for framework independence and smaller bundle.
 - Content loader: Astro glob() with custom base path (no symlinks).
+- Validation runtime: TypeScript with bun (not Python). Zod for schema validation.
 
 ## Goals
 - Replace the current MkDocs UX with a modern, fast, discovery-driven site.
@@ -466,6 +467,64 @@ export const collections = { patterns };
 - Cross-platform development works immediately
 
 **Revisit if**: Astro content collection API changes significantly or glob() loader proves insufficient.
+
+### Decision 004: Validation Runtime - TypeScript/Bun
+
+**Date**: 2026-01-13
+
+**Context**: Current validation uses Python scripts (`scripts/build_readme.py`, ~600 lines). New stack is Astro + TypeScript + bun. Need validation for front matter schema, required headings, section order, and data pipeline (JSON/llms.txt generation).
+
+**Decision**: Use TypeScript with bun for all validation and data pipeline scripts.
+
+**Rationale**:
+1. **Ecosystem alignment**: Astro Content Collections use Zod natively; Zod already installed
+2. **Single runtime**: Build, validate, generate data all with TypeScript/bun (no Python on Vercel)
+3. **Schema reuse**: Zod schemas define once, use for validation + Astro types + runtime checks
+4. **Performance**: Bun is 20-40x faster than npm, 4× HTTP throughput vs Node, sub-second startup
+5. **Build integration**: Validation runs during Astro build (Content Collections auto-validate)
+6. **Developer experience**: One language, better IDE support, refactoring safety
+7. **Ecosystem**: gray-matter (5M+ downloads), remark, markdownlint vs python-frontmatter (stale)
+
+**Python disadvantages**:
+- Dual language maintenance (Python + TypeScript)
+- Schema synchronization burden (Python validation ≠ Astro Zod schema)
+- Custom YAML parser (only 30 lines) vs Zod's robust validation
+- CI/CD complexity (two runtimes to install/configure)
+
+**Migration strategy**:
+1. Port `build_readme.py` → `validate-patterns.ts` (~2-3 days)
+2. Port `git_pattern_dates.py` → `git-utils.ts` (~1 day)
+3. Create `build-data.ts` for JSON/llms.txt/graph.json generation (~2-3 days)
+4. Remove Python dependencies from CI/CD (~1 day)
+
+**Implementation**:
+```typescript
+// scripts/validate-patterns.ts
+import { z } from 'zod';
+import matter from 'gray-matter';
+
+const PatternSchema = z.object({
+  title: z.string().min(1),
+  status: z.enum(['proposed', 'emerging', 'established', 'validated-in-production', 'best-practice', 'experimental-but-awesome', 'rapidly-improving']),
+  authors: z.array(z.string()).min(1),
+  category: z.string(),
+  tags: z.array(z.string()),
+  // ... other fields
+});
+
+function validatePattern(filePath: string) {
+  const { data, content: body } = matter(readFileSync(filePath, 'utf-8'));
+  return PatternSchema.safeParse(data);
+}
+```
+
+**Consequences**:
+- Remove Python from CI/CD pipeline
+- Single `bun run build` command for validation + build
+- ~600 lines of Python to port to TypeScript
+- Zod schemas become source of truth for validation
+
+**Revisit if**: TypeScript validation proves insufficient or Python offers unique capabilities needed.
 
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.
