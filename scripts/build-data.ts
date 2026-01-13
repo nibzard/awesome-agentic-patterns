@@ -15,7 +15,7 @@
  */
 
 import matter from "gray-matter";
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 // Pattern directory and output directory
@@ -150,6 +150,19 @@ function generateIdFromTitle(title: string): string {
 }
 
 /**
+ * Get file modification time as YYYY-MM-DD - task 089
+ */
+function getFileModDate(filePath: string): string {
+  try {
+    const stats = statSync(filePath);
+    const date = new Date(stats.mtime);
+    return date.toISOString().split("T")[0]; // YYYY-MM-DD
+  } catch {
+    return "2024-01-01"; // Fallback default date
+  }
+}
+
+/**
  * Generate patterns.json with all pattern metadata
  */
 function generatePatternsJson(patterns: ParsedPattern[]): string {
@@ -157,6 +170,7 @@ function generatePatternsJson(patterns: ParsedPattern[]): string {
     ...p.frontMatter,
     id: p.frontMatter.id || generateIdFromTitle(p.frontMatter.title),
     slug: p.frontMatter.slug || p.fileName.replace(".md", ""),
+    updated_at: p.frontMatter.updated_at || getFileModDate(p.filePath),
     excerpt: p.body.split("\n\n")[0].substring(0, 200),
   }));
 
@@ -256,6 +270,7 @@ export default {
   parseAllPatterns,
   extractSections,
   generateIdFromTitle,
+  getFileModDate,
   generatePatternsJson,
   generateLlmsTxt,
   generateLlmsFullTxt,
