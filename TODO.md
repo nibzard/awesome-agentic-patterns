@@ -19,23 +19,23 @@
 - [x] 019 - Record the data pipeline runtime decision in `SPECIFICATION.md`.
 - [x] 020 - Decide the data output root (`apps/web/public` vs root `public`).
 - [x] 021 - Record the data output root decision in `SPECIFICATION.md`.
-- [ ] 022 - Create `SCHEMA.md`.
-- [ ] 023 - Add canonical slug rules to `SCHEMA.md`.
-- [ ] 024 - Add canonical id rules to `SCHEMA.md`.
-- [ ] 025 - Add required front matter fields list to `SCHEMA.md`.
-- [ ] 026 - Add optional front matter fields list to `SCHEMA.md`.
-- [ ] 027 - Add allowed `status` values to `SCHEMA.md`.
-- [ ] 028 - Add allowed `category` values to `SCHEMA.md`.
-- [ ] 029 - Add allowed `maturity` values to `SCHEMA.md`.
-- [ ] 030 - Add allowed `complexity` values to `SCHEMA.md`.
-- [ ] 031 - Add allowed `effort` values to `SCHEMA.md`.
-- [ ] 032 - Add allowed `impact` values to `SCHEMA.md`.
-- [ ] 033 - Add `summary` guidance to `SCHEMA.md`.
-- [ ] 034 - Add required section headings list to `SCHEMA.md`.
-- [ ] 035 - Add optional section headings list to `SCHEMA.md`.
-- [ ] 036 - Add required section order to `SCHEMA.md`.
-- [ ] 037 - Add `related` semantics to `SCHEMA.md`.
-- [ ] 038 - Add `anti_patterns` semantics to `SCHEMA.md`.
+- [x] 022 - Create `SCHEMA.md`.
+- [x] 023 - Add canonical slug rules to `SCHEMA.md`.
+- [x] 024 - Add canonical id rules to `SCHEMA.md`.
+- [x] 025 - Add required front matter fields list to `SCHEMA.md`.
+- [x] 026 - Add optional front matter fields list to `SCHEMA.md`.
+- [x] 027 - Add allowed `status` values to `SCHEMA.md`.
+- [x] 028 - Add allowed `category` values to `SCHEMA.md`.
+- [x] 029 - Add allowed `maturity` values to `SCHEMA.md`.
+- [x] 030 - Add allowed `complexity` values to `SCHEMA.md`.
+- [x] 031 - Add allowed `effort` values to `SCHEMA.md`.
+- [x] 032 - Add allowed `impact` values to `SCHEMA.md`.
+- [x] 033 - Add `summary` guidance to `SCHEMA.md`.
+- [x] 034 - Add required section headings list to `SCHEMA.md`.
+- [x] 035 - Add optional section headings list to `SCHEMA.md`.
+- [x] 036 - Add required section order to `SCHEMA.md`.
+- [x] 037 - Add `related` semantics to `SCHEMA.md`.
+- [x] 038 - Add `anti_patterns` semantics to `SCHEMA.md`.
 - [ ] 039 - Add `llms.txt` format to `SCHEMA.md`.
 - [ ] 040 - Add `llms-full.txt` format to `SCHEMA.md`.
 - [ ] 041 - Add a `SCHEMA.md` link to `CONTRIBUTING.md`.
