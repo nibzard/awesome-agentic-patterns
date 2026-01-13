@@ -56,7 +56,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Layered Configuration Context](patterns/layered-configuration-context.md) <span class='updated-badge'>UPDATED</span>
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='updated-badge'>UPDATED</span>
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md) <span class='updated-badge'>UPDATED</span>
-- [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md)
+- [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md) <span class='new-badge'>NEW</span>
 
 ### <a name="feedback-loops"></a>Feedback Loops
 
@@ -66,7 +66,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md) <span class='updated-badge'>UPDATED</span>
 - [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md) <span class='updated-badge'>UPDATED</span>
 - [Inference-Healed Code Review Reward](patterns/inference-healed-code-review-reward.md) <span class='updated-badge'>UPDATED</span>
-- [Iterative Prompt & Skill Refinement](patterns/iterative-prompt-skill-refinement.md)
+- [Iterative Prompt & Skill Refinement](patterns/iterative-prompt-skill-refinement.md) <span class='new-badge'>NEW</span>
 - [Reflection Loop](patterns/reflection.md) <span class='updated-badge'>UPDATED</span>
 - [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md) <span class='updated-badge'>UPDATED</span>
 - [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md) <span class='updated-badge'>UPDATED</span>
@@ -95,7 +95,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md) <span class='updated-badge'>UPDATED</span>
 - [Feature List as Immutable Contract](patterns/feature-list-as-immutable-contract.md) <span class='updated-badge'>UPDATED</span>
-- [Hybrid LLM/Code Workflow Coordinator](patterns/hybrid-llm-code-workflow-coordinator.md)
+- [Hybrid LLM/Code Workflow Coordinator](patterns/hybrid-llm-code-workflow-coordinator.md) <span class='new-badge'>NEW</span>
 - [Inference-Time Scaling](patterns/inference-time-scaling.md) <span class='updated-badge'>UPDATED</span>
 - [Initializer-Maintainer Dual Agent Architecture](patterns/initializer-maintainer-dual-agent.md) <span class='updated-badge'>UPDATED</span>
 - [Inversion of Control](patterns/inversion-of-control.md) <span class='updated-badge'>UPDATED</span>
@@ -125,13 +125,13 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md) <span class='updated-badge'>UPDATED</span>
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md) <span class='updated-badge'>UPDATED</span>
 - [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md) <span class='updated-badge'>UPDATED</span>
-- [LLM Observability](patterns/llm-observability.md)
+- [LLM Observability](patterns/llm-observability.md) <span class='new-badge'>NEW</span>
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md) <span class='updated-badge'>UPDATED</span>
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md) <span class='updated-badge'>UPDATED</span>
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md) <span class='updated-badge'>UPDATED</span>
 - [Structured Output Specification](patterns/structured-output-specification.md) <span class='updated-badge'>UPDATED</span>
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md) <span class='updated-badge'>UPDATED</span>
-- [Workflow Evals with Mocked Tools](patterns/workflow-evals-with-mocked-tools.md)
+- [Workflow Evals with Mocked Tools](patterns/workflow-evals-with-mocked-tools.md) <span class='new-badge'>NEW</span>
 
 ### <a name="security-safety"></a>Security & Safety
 
@@ -154,7 +154,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md) <span class='updated-badge'>UPDATED</span>
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md) <span class='updated-badge'>UPDATED</span>
 - [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md) <span class='updated-badge'>UPDATED</span>
-- [Multi-Platform Webhook Triggers](patterns/multi-platform-webhook-triggers.md)
+- [Multi-Platform Webhook Triggers](patterns/multi-platform-webhook-triggers.md) <span class='new-badge'>NEW</span>
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md) <span class='updated-badge'>UPDATED</span>
 - [Progressive Tool Discovery](patterns/progressive-tool-discovery.md) <span class='updated-badge'>UPDATED</span>
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md) <span class='updated-badge'>UPDATED</span>
