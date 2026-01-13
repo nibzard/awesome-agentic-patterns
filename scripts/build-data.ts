@@ -139,11 +139,23 @@ function extractSections(body: string): PatternSections {
 }
 
 /**
+ * Generate id from title (kebab-case) - task 088
+ */
+function generateIdFromTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special chars
+    .trim()
+    .replace(/\s+/g, "-"); // Convert spaces to hyphens
+}
+
+/**
  * Generate patterns.json with all pattern metadata
  */
 function generatePatternsJson(patterns: ParsedPattern[]): string {
   const data = patterns.map((p) => ({
     ...p.frontMatter,
+    id: p.frontMatter.id || generateIdFromTitle(p.frontMatter.title),
     slug: p.frontMatter.slug || p.fileName.replace(".md", ""),
     excerpt: p.body.split("\n\n")[0].substring(0, 200),
   }));
@@ -243,6 +255,7 @@ export default {
   parsePattern,
   parseAllPatterns,
   extractSections,
+  generateIdFromTitle,
   generatePatternsJson,
   generateLlmsTxt,
   generateLlmsFullTxt,

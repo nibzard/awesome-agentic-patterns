@@ -85,7 +85,7 @@
 - [x] 085 - Implement optional section extraction in `scripts/build-data`. [Already handled by extractSections() using dynamic key indexing [key: string]: string | undefined in PatternSections interface]
 - [x] 086 - Implement `summary` fallback logic in `scripts/build-data`. [Already implemented in generateLlmsTxt() function (line 127): uses empty string fallback when summary is undefined]
 - [x] 087 - Implement `slug` fallback logic in `scripts/build-data`. [Already implemented in generatePatternsJson() and generateLlmsTxt() functions (lines 105, 126): uses filename without .md extension as fallback when slug is undefined]
-- [ ] 088 - Implement `id` fallback logic in `scripts/build-data`.
+- [x] 088 - Implement `id` fallback logic in `scripts/build-data`. [Implemented generateIdFromTitle() function that converts title to kebab-case, updated generatePatternsJson() to use id fallback, removes special chars and converts spaces to hyphens, tested and working correctly]
 - [ ] 089 - Implement `updated_at` fallback logic in `scripts/build-data`.
 - [x] 090 - Implement `patterns.json` output writer in `scripts/build-data`. [Already implemented in writeOutputs() function (lines 168-170): generates patterns.json using generatePatternsJson() and writes to apps/web/public/patterns.json]
 - [ ] 091 - Implement per-pattern JSON output writer in `scripts/build-data`.
