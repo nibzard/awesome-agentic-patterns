@@ -71,7 +71,7 @@
 - [x] 071 - Implement front matter schema validation in `scripts/validate-patterns`. [Already implemented in validateFieldValues() function (lines 284-512): validates enum values (status, category, maturity, complexity, effort, impact), array field types, string types, URL format for source, and YYYY-MM-DD date format for updated_at]
 - [x] 072 - Implement required heading presence checks in `scripts/validate-patterns`. [Just implemented with extractHeadings() and validateMarkdownStructure() functions]
 - [x] 073 - Implement heading order checks in `scripts/validate-patterns`. [Just implemented with validateHeadingOrder() function that extracts headings in order from the markdown body, validates they follow the expected order: problem -> solution -> [how to use it] -> [trade-offs] -> [example] -> [see also] -> references, and reports warnings for out-of-order headings]
-- [ ] 074 - Implement duplicate heading detection in `scripts/validate-patterns`.
+- [x] 074 - Implement duplicate heading detection in `scripts/validate-patterns`. [Just implemented with validateDuplicateHeadings() function that tracks heading counts and positions using Maps, reports warnings for duplicate headings with line numbers, and is integrated into validateMarkdownStructure()]
 - [ ] 075 - Implement file-path context in validation errors.
 - [ ] 076 - Implement nonzero exit codes for validation failures.
 - [ ] 077 - Add `validate:patterns` script to root `package.json`.

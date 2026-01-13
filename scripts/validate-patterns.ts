@@ -585,6 +585,9 @@ function validateMarkdownStructure(
 
   // Validate heading order (task 073)
   validateHeadingOrder(body, filePath, warnings);
+
+  // Validate duplicate headings (task 074)
+  validateDuplicateHeadings(body, filePath, warnings);
 }
 
 /**
@@ -633,6 +636,45 @@ function validateHeadingOrder(
         message: `Heading "${relevantHeadings[i + 1]}" appears before "${relevantHeadings[i]}" - expected order: ${expectedOrder.filter((h) => relevantHeadings.includes(h)).join(" → ")}`,
       });
       break; // Only report first order violation
+    }
+  }
+}
+
+/**
+ * Validate duplicate headings (task 074)
+ * Checks for duplicate section headings in the pattern
+ */
+function validateDuplicateHeadings(
+  body: string,
+  filePath: string,
+  warnings: ValidationError[]
+): void {
+  const lines = body.split("\n");
+  const headingCounts = new Map<string, number>();
+  const headingPositions = new Map<string, number[]>();
+
+  for (let i = 0; i < lines.length; i++) {
+    const headingMatch = lines[i].match(/^#{2,3}\s+(.+)$/);
+    if (headingMatch) {
+      const heading = headingMatch[1].trim().toLowerCase();
+      headingCounts.set(heading, (headingCounts.get(heading) || 0) + 1);
+      if (!headingPositions.has(heading)) {
+        headingPositions.set(heading, []);
+      }
+      headingPositions.get(heading)!.push(i + 1);
+    }
+  }
+
+  // Report duplicates
+  for (const [heading, count] of headingCounts.entries()) {
+    if (count > 1) {
+      const positions = headingPositions.get(heading)!.join(", ");
+      warnings.push({
+        level: "warning",
+        file: filePath,
+        field: "duplicate-headings",
+        message: `Duplicate heading "${heading}" found ${count} times at lines: ${positions}`,
+      });
     }
   }
 }
