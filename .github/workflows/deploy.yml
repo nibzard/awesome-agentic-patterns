@@ -34,7 +34,15 @@ jobs:
     
     - name: Install Node dependencies
       run: npm ci
-    
+
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Validate patterns (task 079)
+      run: bun scripts/validate-patterns.ts patterns
+
     - name: Generate git-based pattern labels
       run: |
         python3 scripts/build_readme.py
