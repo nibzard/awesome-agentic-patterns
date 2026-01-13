@@ -17,6 +17,7 @@
 import matter from "gray-matter";
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { create } from "xmlbuilder2";
 
 // Pattern directory and output directory
 const PATTERNS_DIR = "patterns";
@@ -299,6 +300,42 @@ function generateGraphJson(patterns: ParsedPattern[]): string {
 }
 
 /**
+ * Generate sitemap.xml (task 095)
+ */
+function generateSitemapXml(patterns: ParsedPattern[]): string {
+  const root = create({ version: "1.0", encoding: "UTF-8" })
+    .ele("urlset", { xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9" });
+
+  // Add static pages
+  const staticPages = [
+    { loc: "https://agentic-patterns.com/", changefreq: "daily", priority: "1.0" },
+    { loc: "https://agentic-patterns.com/compare", changefreq: "weekly", priority: "0.8" },
+    { loc: "https://agentic-patterns.com/graph", changefreq: "weekly", priority: "0.8" },
+  ];
+
+  for (const page of staticPages) {
+    root.ele("url")
+      .ele("loc").txt(page.loc).up()
+      .ele("changefreq").txt(page.changefreq).up()
+      .ele("priority").txt(page.priority).up();
+  }
+
+  // Add pattern pages
+  for (const pattern of patterns) {
+    const slug = pattern.frontMatter.slug || pattern.fileName.replace(".md", "");
+    const lastmod = pattern.frontMatter.updated_at || getFileModDate(pattern.filePath);
+
+    root.ele("url")
+      .ele("loc").txt(`https://agentic-patterns.com/patterns/${slug}`).up()
+      .ele("lastmod").txt(lastmod).up()
+      .ele("changefreq").txt("weekly").up()
+      .ele("priority").txt("0.6").up();
+  }
+
+  return root.end({ prettyPrint: true });
+}
+
+/**
  * Write output files
  */
 function writeOutputs(patterns: ParsedPattern[]): void {
@@ -341,7 +378,12 @@ function writeOutputs(patterns: ParsedPattern[]): void {
   writeFileSync(join(OUTPUT_DIR, "graph.json"), graphJson);
   console.log(`Generated ${OUTPUT_DIR}/graph.json`);
 
-  // TODO: Task 084-087 will add sitemap.xml, rss.xml
+  // Write sitemap.xml (task 095)
+  const sitemapXml = generateSitemapXml(patterns);
+  writeFileSync(join(OUTPUT_DIR, "sitemap.xml"), sitemapXml);
+  console.log(`Generated ${OUTPUT_DIR}/sitemap.xml`);
+
+  // TODO: Task 096 will add rss.xml
 }
 
 /**
@@ -369,6 +411,7 @@ export default {
   getFileModDate,
   generatePatternsJson,
   generateGraphJson,
+  generateSitemapXml,
   generateLlmsTxt,
   generateLlmsFullTxt,
 };
