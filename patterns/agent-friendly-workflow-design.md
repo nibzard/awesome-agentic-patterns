@@ -1,11 +1,24 @@
 ---
 title: Agent-Friendly Workflow Design
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Amjad Masad"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Amjad Masad
 category: UX & Collaboration
-source: "https://www.nibzard.com/silent-revolution"
-tags: [human-agent collaboration, workflow design, agent autonomy, task decomposition, HCI]
+source: 'https://www.nibzard.com/silent-revolution'
+tags:
+  - human-agent collaboration
+  - workflow design
+  - agent autonomy
+  - task decomposition
+  - HCI
+slug: agent-friendly-workflow-design
+id: agent-friendly-workflow-design
+summary: >-
+  TODO: Add a concise summary for "Agent-Friendly Workflow Design" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

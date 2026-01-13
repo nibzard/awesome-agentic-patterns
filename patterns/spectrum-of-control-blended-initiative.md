@@ -1,11 +1,25 @@
 ---
 title: Spectrum of Control / Blended Initiative
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Aman Sanger (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Aman Sanger (Cursor)
 category: UX & Collaboration
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-delegation, code-editing, ide-integration]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - human-agent-collaboration
+  - autonomy-spectrum
+  - interactive-control
+  - task-delegation
+  - code-editing
+  - ide-integration
+slug: spectrum-of-control-blended-initiative
+id: spectrum-of-control-blended-initiative
+summary: >-
+  TODO: Add a concise summary for "Spectrum of Control / Blended Initiative"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

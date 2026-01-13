@@ -1,11 +1,25 @@
 ---
 title: CLI-Native Agent Orchestration
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Jory Pestorious"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Jory Pestorious
 category: Tool Use & Environment
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
-tags: [cli, automation, local-dev, headless]
+source: 'http://jorypestorious.com/blog/ai-engineer-spec/'
+tags:
+  - cli
+  - automation
+  - local-dev
+  - headless
+slug: cli-native-agent-orchestration
+id: cli-native-agent-orchestration
+summary: >-
+  ## Problem
+
+  Web chat UIs are awkward for repeat runs, local file edits, or scripting
+  inside CI pipelines.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

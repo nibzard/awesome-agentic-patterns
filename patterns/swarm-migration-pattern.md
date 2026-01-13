@@ -1,11 +1,28 @@
 ---
 title: Swarm Migration Pattern
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (Anthropic)", "Anthropic Internal Users"]
-category: "Orchestration & Control"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [swarm, map-reduce, migration, parallelization, sub-agents, scalability, framework-migration]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (Anthropic)
+  - Anthropic Internal Users
+category: Orchestration & Control
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - swarm
+  - map-reduce
+  - migration
+  - parallelization
+  - sub-agents
+  - scalability
+  - framework-migration
+slug: swarm-migration-pattern
+id: swarm-migration-pattern
+summary: >-
+  TODO: Add a concise summary for "Swarm Migration Pattern" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,27 @@
 ---
 title: Egress Lockdown (No-Exfiltration Channel)
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Simon Willison (observation)", "Multiple vendor incident reports"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Simon Willison (observation)
+  - Multiple vendor incident reports
 category: Tool Use & Environment
-source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
-tags: [network-sandbox, exfiltration, outbound-controls, security]
+source: 'https://simonwillison.net/2025/Jun/16/lethal-trifecta/'
+tags:
+  - network-sandbox
+  - exfiltration
+  - outbound-controls
+  - security
+slug: egress-lockdown-no-exfiltration-channel
+id: egress-lockdown-no-exfiltration-channel
+summary: >-
+  ## Problem
+
+  Even with private-data access and untrusted inputs, attacks fail if the agent
+  has **no way to transmit stolen data**. Many real-world fixes simply removed
+  or filtered outbound channels.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

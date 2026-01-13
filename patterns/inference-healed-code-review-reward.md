@@ -1,11 +1,24 @@
 ---
-title: "Inference-Healed Code Review Reward"
+title: Inference-Healed Code Review Reward
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
-category: "Feedback Loops"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
-tags: [reward-modeling, code-review, inference-healing, quality-assessment]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anonymous Speaker (Open Source Agent RL Talk)
+  - Will Brown (Prime Intellect Talk)
+category: Feedback Loops
+source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
+tags:
+  - reward-modeling
+  - code-review
+  - inference-healing
+  - quality-assessment
+slug: inference-healed-code-review-reward
+id: inference-healed-code-review-reward
+summary: >-
+  TODO: Add a concise summary for "Inference-Healed Code Review Reward"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,24 @@
 ---
 title: Multi-Platform Communication Aggregation
 status: emerging
-authors: ["Lucas Carlson"]
-based_on: ["Anthropic (Claude Code)"]
-category: "Tool Use & Environment"
-source: "https://github.com/anthropics/claude-code"
-tags: [search, aggregation, parallel, communication, unified-interface]
+authors:
+  - Lucas Carlson
+based_on:
+  - Anthropic (Claude Code)
+category: Tool Use & Environment
+source: 'https://github.com/anthropics/claude-code'
+tags:
+  - search
+  - aggregation
+  - parallel
+  - communication
+  - unified-interface
+slug: multi-platform-communication-aggregation
+id: multi-platform-communication-aggregation
+summary: >-
+  TODO: Add a concise summary for "Multi-Platform Communication Aggregation"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

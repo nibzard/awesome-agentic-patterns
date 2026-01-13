@@ -1,11 +1,28 @@
 ---
 title: Compounding Engineering Pattern
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Dan Shipper (Every)", "Every Engineering Team"]
-category: "Learning & Adaptation"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [learning, feedback-loops, codification, prompts, slash-commands, onboarding, knowledge-sharing]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Dan Shipper (Every)
+  - Every Engineering Team
+category: Learning & Adaptation
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - learning
+  - feedback-loops
+  - codification
+  - prompts
+  - slash-commands
+  - onboarding
+  - knowledge-sharing
+slug: compounding-engineering-pattern
+id: compounding-engineering-pattern
+summary: >-
+  TODO: Add a concise summary for "Compounding Engineering Pattern" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

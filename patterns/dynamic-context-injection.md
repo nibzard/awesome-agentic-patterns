@@ -1,11 +1,25 @@
 ---
 title: Dynamic Context Injection
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (via Claude Code)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (via Claude Code)
 category: Context & Memory
-source: "https://www.nibzard.com/claude-code"
-tags: [context management, dynamic context, lazy loading, slash commands, at-mention, interactive context]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - context management
+  - dynamic context
+  - lazy loading
+  - slash commands
+  - at-mention
+  - interactive context
+slug: dynamic-context-injection
+id: dynamic-context-injection
+summary: >-
+  TODO: Add a concise summary for "Dynamic Context Injection" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

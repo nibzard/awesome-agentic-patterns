@@ -1,11 +1,24 @@
 ---
 title: Chain-of-Thought Monitoring & Interruption
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Tanner Jones (Vulcan)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Tanner Jones (Vulcan)
 category: UX & Collaboration
-source: "https://claude.com/blog/building-companies-with-claude-code"
-tags: [monitoring, intervention, debugging, reasoning, ux]
+source: 'https://claude.com/blog/building-companies-with-claude-code'
+tags:
+  - monitoring
+  - intervention
+  - debugging
+  - reasoning
+  - ux
+slug: chain-of-thought-monitoring-interruption
+id: chain-of-thought-monitoring-interruption
+summary: >-
+  TODO: Add a concise summary for "Chain-of-Thought Monitoring & Interruption"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

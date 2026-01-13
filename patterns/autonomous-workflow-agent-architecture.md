@@ -1,11 +1,25 @@
 ---
 title: Autonomous Workflow Agent Architecture
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Together AI Team"]
-category: "Orchestration & Control"
-source: "https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks"
-tags: [workflow-automation, containerization, multi-agent, engineering-tasks, tmux, error-recovery]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Together AI Team
+category: Orchestration & Control
+source: 'https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks'
+tags:
+  - workflow-automation
+  - containerization
+  - multi-agent
+  - engineering-tasks
+  - tmux
+  - error-recovery
+slug: autonomous-workflow-agent-architecture
+id: autonomous-workflow-agent-architecture
+summary: >-
+  TODO: Add a concise summary for "Autonomous Workflow Agent Architecture"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

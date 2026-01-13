@@ -1,11 +1,29 @@
 ---
 title: Iterative Multi-Agent Brainstorming
 status: experimental-but-awesome
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (via Claude Code capability)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (via Claude Code capability)
 category: Orchestration & Control
-source: "https://www.nibzard.com/claude-code"
-tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-agents, collaborative ideation]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - multi-agent
+  - brainstorming
+  - parallel processing
+  - idea generation
+  - sub-agents
+  - collaborative ideation
+slug: iterative-multi-agent-brainstorming
+id: iterative-multi-agent-brainstorming
+summary: >-
+  ## Problem
+
+  For complex problems or creative ideation, a single AI agent instance might
+  get stuck in a local optimum or fail to explore a diverse range of solutions.
+  Generating a breadth of ideas can be challenging for a sequential, monolithic
+  process.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

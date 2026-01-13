@@ -1,11 +1,26 @@
 ---
-title: "Hybrid LLM/Code Workflow Coordinator"
+title: Hybrid LLM/Code Workflow Coordinator
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (Imprint)"]
-category: "Orchestration & Control"
-source: "https://lethain.com/agents-coordinators/"
-tags: [hybrid, llm-driven, code-driven, coordinator, determinism, workflow-orchestration, progressive-enhancement]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Larson (Imprint)
+category: Orchestration & Control
+source: 'https://lethain.com/agents-coordinators/'
+tags:
+  - hybrid
+  - llm-driven
+  - code-driven
+  - coordinator
+  - determinism
+  - workflow-orchestration
+  - progressive-enhancement
+slug: hybrid-llm-code-workflow-coordinator
+id: hybrid-llmcode-workflow-coordinator
+summary: >-
+  TODO: Add a concise summary for "Hybrid LLM/Code Workflow Coordinator"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

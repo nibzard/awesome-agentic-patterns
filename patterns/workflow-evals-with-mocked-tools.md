@@ -1,11 +1,27 @@
 ---
 title: Workflow Evals with Mocked Tools
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (lethain.com)", "Sierra (chat/voice platform)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Larson (lethain.com)
+  - Sierra (chat/voice platform)
 category: Reliability & Eval
-source: "https://lethain.com/agents-evals/"
-tags: [evals, testing, ci-cd, mocked-tools, simulations, workflow-validation, end-to-end-testing]
+source: 'https://lethain.com/agents-evals/'
+tags:
+  - evals
+  - testing
+  - ci-cd
+  - mocked-tools
+  - simulations
+  - workflow-validation
+  - end-to-end-testing
+slug: workflow-evals-with-mocked-tools
+id: workflow-evals-with-mocked-tools
+summary: >-
+  TODO: Add a concise summary for "Workflow Evals with Mocked Tools" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

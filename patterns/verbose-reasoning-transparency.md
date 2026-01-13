@@ -1,11 +1,25 @@
 ---
 title: Verbose Reasoning Transparency
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (via Claude Code)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (via Claude Code)
 category: UX & Collaboration
-source: "https://www.nibzard.com/claude-code"
-tags: [explainability, debugging, transparency, agent reasoning, verbose mode, introspection]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - explainability
+  - debugging
+  - transparency
+  - agent reasoning
+  - verbose mode
+  - introspection
+slug: verbose-reasoning-transparency
+id: verbose-reasoning-transparency
+summary: >-
+  TODO: Add a concise summary for "Verbose Reasoning Transparency" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

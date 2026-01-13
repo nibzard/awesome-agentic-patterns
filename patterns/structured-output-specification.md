@@ -1,11 +1,25 @@
 ---
 title: Structured Output Specification
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Vercel AI Team"]
-category: "Reliability & Eval"
-source: "https://vercel.com/blog/what-we-learned-building-agents-at-vercel"
-tags: [structured-output, schema, validation, reliability, type-safety, integration]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Vercel AI Team
+category: Reliability & Eval
+source: 'https://vercel.com/blog/what-we-learned-building-agents-at-vercel'
+tags:
+  - structured-output
+  - schema
+  - validation
+  - reliability
+  - type-safety
+  - integration
+slug: structured-output-specification
+id: structured-output-specification
+summary: >-
+  TODO: Add a concise summary for "Structured Output Specification" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

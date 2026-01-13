@@ -1,11 +1,28 @@
 ---
 title: Memory Synthesis from Execution Logs
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic Internal Users", "Claude Code Team"]
-category: "Context & Memory"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [memory, logs, diary, synthesis, pattern-detection, knowledge-extraction, learning]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic Internal Users
+  - Claude Code Team
+category: Context & Memory
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - memory
+  - logs
+  - diary
+  - synthesis
+  - pattern-detection
+  - knowledge-extraction
+  - learning
+slug: memory-synthesis-from-execution-logs
+id: memory-synthesis-from-execution-logs
+summary: >-
+  TODO: Add a concise summary for "Memory Synthesis from Execution Logs"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

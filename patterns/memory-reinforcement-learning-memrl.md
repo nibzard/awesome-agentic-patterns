@@ -1,11 +1,27 @@
 ---
-title: "Memory Reinforcement Learning (MemRL)"
+title: Memory Reinforcement Learning (MemRL)
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian University, MemTensor)"]
-category: "Learning & Adaptation"
-source: "https://arxiv.org/html/2601.03192v1"
-tags: [reinforcement-learning, episodic-memory, self-evolution, value-aware-retrieval, runtime-learning, stability-plasticity]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - >-
+    Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian
+    University, MemTensor)
+category: Learning & Adaptation
+source: 'https://arxiv.org/html/2601.03192v1'
+tags:
+  - reinforcement-learning
+  - episodic-memory
+  - self-evolution
+  - value-aware-retrieval
+  - runtime-learning
+  - stability-plasticity
+slug: memory-reinforcement-learning-memrl
+id: memory-reinforcement-learning-memrl
+summary: >-
+  TODO: Add a concise summary for "Memory Reinforcement Learning (MemRL)"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

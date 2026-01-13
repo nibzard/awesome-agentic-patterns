@@ -1,11 +1,25 @@
 ---
 title: Inversion of Control
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Quinn Slack", "Thorsten Ball"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Quinn Slack
+  - Thorsten Ball
 category: Orchestration & Control
-source: "https://www.nibzard.com/ampcode"
-tags: [orchestration, autonomy, control]
+source: 'https://www.nibzard.com/ampcode'
+tags:
+  - orchestration
+  - autonomy
+  - control
+slug: inversion-of-control
+id: inversion-of-control
+summary: >-
+  ## Problem
+
+  Traditional "prompt-as-puppeteer" workflows force humans to spell out every
+  step, limiting scale and creativity.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

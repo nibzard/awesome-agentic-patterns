@@ -1,11 +1,24 @@
 ---
-title: "Merged Code + Language Skill Model"
+title: Merged Code + Language Skill Model
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
-category: "Reliability & Eval"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
-tags: [model-merging, transfer-learning, coding-agent, multilingual]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anonymous Speaker (Open Source Agent RL Talk)
+  - Will Brown (Prime Intellect Talk)
+category: Reliability & Eval
+source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
+tags:
+  - model-merging
+  - transfer-learning
+  - coding-agent
+  - multilingual
+slug: merged-code-language-skill-model
+id: merged-code-language-skill-model
+summary: >-
+  TODO: Add a concise summary for "Merged Code + Language Skill Model"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

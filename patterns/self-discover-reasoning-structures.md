@@ -1,11 +1,26 @@
 ---
-title: "Self-Discover: LLM Self-Composed Reasoning Structures"
+title: 'Self-Discover: LLM Self-Composed Reasoning Structures'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Google DeepMind", "USC"]
-category: "Feedback Loops"
-source: "https://arxiv.org/abs/2402.03620"
-tags: [reasoning, self-improvement, meta-learning, problem-solving, task-specific, optimization]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Google DeepMind
+  - USC
+category: Feedback Loops
+source: 'https://arxiv.org/abs/2402.03620'
+tags:
+  - reasoning
+  - self-improvement
+  - meta-learning
+  - problem-solving
+  - task-specific
+  - optimization
+slug: self-discover-reasoning-structures
+id: self-discover-llm-self-composed-reasoning-structures
+summary: >-
+  TODO: Add a concise summary for "Self-Discover: LLM Self-Composed Reasoning
+  Structures" describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

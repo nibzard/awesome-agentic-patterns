@@ -1,11 +1,23 @@
 ---
 title: Progressive Tool Discovery
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic Engineering Team"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic Engineering Team
 category: Tool Use & Environment
-source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
-tags: [mcp, tool-discovery, context-optimization, lazy-loading]
+source: 'https://www.anthropic.com/engineering/code-execution-with-mcp'
+tags:
+  - mcp
+  - tool-discovery
+  - context-optimization
+  - lazy-loading
+slug: progressive-tool-discovery
+id: progressive-tool-discovery
+summary: >-
+  TODO: Add a concise summary for "Progressive Tool Discovery" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

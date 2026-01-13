@@ -1,11 +1,25 @@
 ---
 title: Seamless Background-to-Foreground Handoff
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Aman Sanger (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Aman Sanger (Cursor)
 category: UX & Collaboration
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [background-agent, human-in-the-loop, task-handoff, interactive-refinement, agent-collaboration, developer-workflow]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - background-agent
+  - human-in-the-loop
+  - task-handoff
+  - interactive-refinement
+  - agent-collaboration
+  - developer-workflow
+slug: seamless-background-to-foreground-handoff
+id: seamless-background-to-foreground-handoff
+summary: >-
+  TODO: Add a concise summary for "Seamless Background-to-Foreground Handoff"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

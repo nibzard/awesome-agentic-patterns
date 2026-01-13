@@ -1,11 +1,26 @@
 ---
 title: Progressive Disclosure for Large Files
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (lethain.com)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Larson (lethain.com)
 category: Context & Memory
-source: "https://lethain.com/agents-large-files/"
-tags: [progressive-disclosure, large-files, context-optimization, file-management, lazy-loading, file-handling, metadata]
+source: 'https://lethain.com/agents-large-files/'
+tags:
+  - progressive-disclosure
+  - large-files
+  - context-optimization
+  - file-management
+  - lazy-loading
+  - file-handling
+  - metadata
+slug: progressive-disclosure-large-files
+id: progressive-disclosure-for-large-files
+summary: >-
+  TODO: Add a concise summary for "Progressive Disclosure for Large Files"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

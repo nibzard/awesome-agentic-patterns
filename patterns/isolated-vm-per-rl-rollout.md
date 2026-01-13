@@ -1,11 +1,26 @@
 ---
-title: "Isolated VM per RL Rollout"
+title: Isolated VM per RL Rollout
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Sam Pretty (Cognition)", "Devon Engineering Team"]
-category: "Security & Safety"
-source: "https://youtu.be/1s_7RMG4O4U"
-tags: [isolation, security, reinforcement-learning, infrastructure, state-management, agent-rft]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Sam Pretty (Cognition)
+  - Devon Engineering Team
+category: Security & Safety
+source: 'https://youtu.be/1s_7RMG4O4U'
+tags:
+  - isolation
+  - security
+  - reinforcement-learning
+  - infrastructure
+  - state-management
+  - agent-rft
+slug: isolated-vm-per-rl-rollout
+id: isolated-vm-per-rl-rollout
+summary: >-
+  TODO: Add a concise summary for "Isolated VM per RL Rollout" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

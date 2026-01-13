@@ -1,11 +1,26 @@
 ---
-title: "Agent Reinforcement Fine-Tuning (Agent RFT)"
+title: Agent Reinforcement Fine-Tuning (Agent RFT)
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Brown (OpenAI)", "Theo (OpenAI Solutions Architect)"]
-category: "Learning & Adaptation"
-source: "https://youtu.be/1s_7RMG4O4U"
-tags: [reinforcement-learning, fine-tuning, tool-use, multi-step-rl, agent-training, exploration]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Brown (OpenAI)
+  - Theo (OpenAI Solutions Architect)
+category: Learning & Adaptation
+source: 'https://youtu.be/1s_7RMG4O4U'
+tags:
+  - reinforcement-learning
+  - fine-tuning
+  - tool-use
+  - multi-step-rl
+  - agent-training
+  - exploration
+slug: agent-reinforcement-fine-tuning
+id: agent-reinforcement-fine-tuning-agent-rft
+summary: >-
+  TODO: Add a concise summary for "Agent Reinforcement Fine-Tuning (Agent RFT)"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

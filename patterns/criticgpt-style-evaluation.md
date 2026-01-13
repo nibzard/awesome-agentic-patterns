@@ -1,11 +1,25 @@
 ---
-title: "CriticGPT-Style Code Review"
+title: CriticGPT-Style Code Review
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["OpenAI"]
-category: "Reliability & Eval"
-source: "https://openai.com/research/criticgpt"
-tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - OpenAI
+category: Reliability & Eval
+source: 'https://openai.com/research/criticgpt'
+tags:
+  - evaluation
+  - code-review
+  - critique
+  - quality-assurance
+  - bug-detection
+  - gpt-4
+slug: criticgpt-style-evaluation
+id: criticgpt-style-code-review
+summary: >-
+  TODO: Add a concise summary for "CriticGPT-Style Code Review" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

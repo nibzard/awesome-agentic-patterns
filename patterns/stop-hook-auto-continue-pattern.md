@@ -1,11 +1,27 @@
 ---
 title: Stop Hook Auto-Continue Pattern
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (Anthropic)", "Claude Code Users"]
-category: "Orchestration & Control"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [hooks, automation, testing, determinism, success-criteria, continuous-execution]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (Anthropic)
+  - Claude Code Users
+category: Orchestration & Control
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - hooks
+  - automation
+  - testing
+  - determinism
+  - success-criteria
+  - continuous-execution
+slug: stop-hook-auto-continue-pattern
+id: stop-hook-auto-continue-pattern
+summary: >-
+  TODO: Add a concise summary for "Stop Hook Auto-Continue Pattern" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

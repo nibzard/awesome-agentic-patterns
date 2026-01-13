@@ -1,11 +1,24 @@
 ---
-title: "Disposable Scaffolding Over Durable Features"
+title: Disposable Scaffolding Over Durable Features
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Thorsten Ball (Sourcegraph)"]
-category: "Orchestration & Control"
-source: "https://www.sourcegraph.com"
-tags: [bitter-lesson, temporary-tooling, model-centric, adaptability, future-proofing]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Thorsten Ball (Sourcegraph)
+category: Orchestration & Control
+source: 'https://www.sourcegraph.com'
+tags:
+  - bitter-lesson
+  - temporary-tooling
+  - model-centric
+  - adaptability
+  - future-proofing
+slug: disposable-scaffolding-over-durable-features
+id: disposable-scaffolding-over-durable-features
+summary: >-
+  TODO: Add a concise summary for "Disposable Scaffolding Over Durable Features"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

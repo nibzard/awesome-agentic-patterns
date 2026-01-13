@@ -1,11 +1,24 @@
 ---
 title: Proactive Trigger Vocabulary
 status: emerging
-authors: ["Lucas Carlson"]
-based_on: ["Anthropic (Claude Code)"]
-category: "UX & Collaboration"
-source: "https://github.com/anthropics/claude-code"
-tags: [ux, triggers, intent-detection, skill-routing, natural-language]
+authors:
+  - Lucas Carlson
+based_on:
+  - Anthropic (Claude Code)
+category: UX & Collaboration
+source: 'https://github.com/anthropics/claude-code'
+tags:
+  - ux
+  - triggers
+  - intent-detection
+  - skill-routing
+  - natural-language
+slug: proactive-trigger-vocabulary
+id: proactive-trigger-vocabulary
+summary: >-
+  TODO: Add a concise summary for "Proactive Trigger Vocabulary" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

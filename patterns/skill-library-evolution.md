@@ -1,11 +1,30 @@
 ---
 title: Skill Library Evolution
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic Engineering Team", "Will Larson (Imprint)", "Amp (Nicolay)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic Engineering Team
+  - Will Larson (Imprint)
+  - Amp (Nicolay)
 category: Learning & Adaptation
-source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
-tags: [code-reuse, skills, learning, capabilities, evolution, progressive-disclosure, on-demand-loading, mcp, lazy-loading]
+source: 'https://www.anthropic.com/engineering/code-execution-with-mcp'
+tags:
+  - code-reuse
+  - skills
+  - learning
+  - capabilities
+  - evolution
+  - progressive-disclosure
+  - on-demand-loading
+  - mcp
+  - lazy-loading
+slug: skill-library-evolution
+id: skill-library-evolution
+summary: >-
+  TODO: Add a concise summary for "Skill Library Evolution" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

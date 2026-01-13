@@ -1,11 +1,26 @@
 ---
-title: "Graph of Thoughts (GoT)"
+title: Graph of Thoughts (GoT)
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Besta et al.", "ETH Zurich"]
-category: "Feedback Loops"
-source: "https://arxiv.org/abs/2308.09687"
-tags: [reasoning, graph-based, problem-solving, thought-exploration, backtracking, aggregation]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Besta et al.
+  - ETH Zurich
+category: Feedback Loops
+source: 'https://arxiv.org/abs/2308.09687'
+tags:
+  - reasoning
+  - graph-based
+  - problem-solving
+  - thought-exploration
+  - backtracking
+  - aggregation
+slug: graph-of-thoughts
+id: graph-of-thoughts-got
+summary: >-
+  TODO: Add a concise summary for "Graph of Thoughts (GoT)" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,27 @@
 ---
 title: Versioned Constitution Governance
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Hiveism (self-alignment loop)", "Anthropic (Constitutional AI)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Hiveism (self-alignment loop)
+  - Anthropic (Constitutional AI)
 category: Reliability & Eval
-source: "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web"
-tags: [constitution, alignment, governance, signed-commits, policy]
+source: 'https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web'
+tags:
+  - constitution
+  - alignment
+  - governance
+  - signed-commits
+  - policy
+slug: versioned-constitution-governance
+id: versioned-constitution-governance
+summary: >-
+  ## Problem
+
+  When an agent rewrites its own "constitution," it may accidentally violate
+  safety or regress on alignment objectives if changes aren't reviewed.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

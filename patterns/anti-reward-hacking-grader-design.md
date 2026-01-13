@@ -1,11 +1,25 @@
 ---
-title: "Anti-Reward-Hacking Grader Design"
+title: Anti-Reward-Hacking Grader Design
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Rogo Engineering Team", "Will Brown (OpenAI)"]
-category: "Reliability & Eval"
-source: "https://youtu.be/1s_7RMG4O4U"
-tags: [reward-hacking, grading, reinforcement-learning, adversarial-robustness, agent-rft]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Rogo Engineering Team
+  - Will Brown (OpenAI)
+category: Reliability & Eval
+source: 'https://youtu.be/1s_7RMG4O4U'
+tags:
+  - reward-hacking
+  - grading
+  - reinforcement-learning
+  - adversarial-robustness
+  - agent-rft
+slug: anti-reward-hacking-grader-design
+id: anti-reward-hacking-grader-design
+summary: >-
+  TODO: Add a concise summary for "Anti-Reward-Hacking Grader Design" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

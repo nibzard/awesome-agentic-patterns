@@ -1,11 +1,32 @@
 ---
 title: AI-Accelerated Learning and Skill Development
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Lukas Möller (Cursor)", "Alex Albert (Anthropic)", "Jacob Jackson (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Lukas Möller (Cursor)
+  - Alex Albert (Anthropic)
+  - Jacob Jackson (Cursor)
 category: UX & Collaboration
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [developer-productivity, learning, skill-acquisition, iteration, feedback, taste-development, education, junior-developer]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - developer-productivity
+  - learning
+  - skill-acquisition
+  - iteration
+  - feedback
+  - taste-development
+  - education
+  - junior-developer
+slug: ai-accelerated-learning-and-skill-development
+id: ai-accelerated-learning-and-skill-development
+summary: >-
+  ## Problem
+
+  Developing strong software engineering skills, including "taste" for clean and
+  effective code, traditionally requires extensive experience, trial-and-error,
+  and mentorship, which can be a slow process, especially for junior developers.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

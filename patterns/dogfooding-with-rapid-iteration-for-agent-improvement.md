@@ -1,11 +1,29 @@
 ---
 title: Dogfooding with Rapid Iteration for Agent Improvement
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Lukas Möller (Cursor)
+  - Aman Sanger (Cursor)
 category: Feedback Loops
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [dogfooding, iterative-development, feedback-loop, agent-improvement, internal-testing, product-development]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - dogfooding
+  - iterative-development
+  - feedback-loop
+  - agent-improvement
+  - internal-testing
+  - product-development
+slug: dogfooding-with-rapid-iteration-for-agent-improvement
+id: dogfooding-with-rapid-iteration-for-agent-improvement
+summary: >-
+  ## Problem
+
+  Developing effective AI agents requires understanding real-world usage and
+  quickly identifying areas for improvement. External feedback loops can be
+  slow, and simulated environments may not capture all nuances.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

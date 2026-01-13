@@ -1,11 +1,26 @@
 ---
 title: Agent SDK for Programmatic Control
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic (Claude Code SDK example)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic (Claude Code SDK example)
 category: Tool Use & Environment
-source: "https://www.nibzard.com/claude-code"
-tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - sdk
+  - automation
+  - ci/cd
+  - programmatic access
+  - scripting
+  - api
+  - headless agent
+slug: agent-sdk-for-programmatic-control
+id: agent-sdk-for-programmatic-control
+summary: >-
+  TODO: Add a concise summary for "Agent SDK for Programmatic Control"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

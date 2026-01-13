@@ -1,11 +1,25 @@
 ---
-title: "Parallel Tool Call Learning"
+title: Parallel Tool Call Learning
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Sam Pretty (Cognition)", "Will Brown (OpenAI)"]
-category: "Orchestration & Control"
-source: "https://youtu.be/1s_7RMG4O4U"
-tags: [parallelization, latency-optimization, tool-use, reinforcement-learning, performance]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Sam Pretty (Cognition)
+  - Will Brown (OpenAI)
+category: Orchestration & Control
+source: 'https://youtu.be/1s_7RMG4O4U'
+tags:
+  - parallelization
+  - latency-optimization
+  - tool-use
+  - reinforcement-learning
+  - performance
+slug: parallel-tool-call-learning
+id: parallel-tool-call-learning
+summary: >-
+  TODO: Add a concise summary for "Parallel Tool Call Learning" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

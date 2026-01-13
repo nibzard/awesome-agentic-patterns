@@ -1,11 +1,27 @@
 ---
-title: "Inference-Time Scaling"
+title: Inference-Time Scaling
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Google DeepMind", "OpenAI"]
-category: "Orchestration & Control"
-source: "https://deepmind.google/research/"
-tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Google DeepMind
+  - OpenAI
+category: Orchestration & Control
+source: 'https://deepmind.google/research/'
+tags:
+  - scaling
+  - inference
+  - compute
+  - reasoning
+  - performance
+  - o1-model
+  - test-time-compute
+slug: inference-time-scaling
+id: inference-time-scaling
+summary: >-
+  TODO: Add a concise summary for "Inference-Time Scaling" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,23 @@
 ---
 title: Code-Over-API Pattern
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic Engineering Team"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic Engineering Team
 category: Tool Use & Environment
-source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
-tags: [token-optimization, code-execution, data-processing, mcp]
+source: 'https://www.anthropic.com/engineering/code-execution-with-mcp'
+tags:
+  - token-optimization
+  - code-execution
+  - data-processing
+  - mcp
+slug: code-over-api-pattern
+id: code-over-api-pattern
+summary: >-
+  TODO: Add a concise summary for "Code-Over-API Pattern" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,28 @@
 ---
 title: Agent-Assisted Scaffolding
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Lukas Möller (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Lukas Möller (Cursor)
 category: UX & Collaboration
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [code-generation, bootstrapping, scaffolding, feature-development, ide, initial-setup]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - code-generation
+  - bootstrapping
+  - scaffolding
+  - feature-development
+  - ide
+  - initial-setup
+slug: agent-assisted-scaffolding
+id: agent-assisted-scaffolding
+summary: >-
+  ## Problem
+
+  Starting a new feature, module, or codebase often involves writing a
+  significant amount of boilerplate or foundational code. This can be
+  time-consuming and repetitive for developers.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

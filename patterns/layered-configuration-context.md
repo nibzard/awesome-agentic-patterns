@@ -1,11 +1,24 @@
 ---
 title: Layered Configuration Context
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (via Claude Code)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (via Claude Code)
 category: Context & Memory
-source: "https://www.nibzard.com/claude-code"
-tags: [context management, configuration, scoped context, automatic loading, CLAUDE.md]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - context management
+  - configuration
+  - scoped context
+  - automatic loading
+  - CLAUDE.md
+slug: layered-configuration-context
+id: layered-configuration-context
+summary: >-
+  TODO: Add a concise summary for "Layered Configuration Context" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

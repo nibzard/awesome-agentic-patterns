@@ -1,11 +1,27 @@
 ---
-title: "Iterative Prompt & Skill Refinement"
+title: Iterative Prompt & Skill Refinement
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (Imprint)"]
-category: "Feedback Loops"
-source: "https://lethain.com/agents-iterative-refinement/"
-tags: [refinement, iteration, prompts, skills, feedback, multi-mechanism, continuous-improvement, dashboards]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Larson (Imprint)
+category: Feedback Loops
+source: 'https://lethain.com/agents-iterative-refinement/'
+tags:
+  - refinement
+  - iteration
+  - prompts
+  - skills
+  - feedback
+  - multi-mechanism
+  - continuous-improvement
+  - dashboards
+slug: iterative-prompt-skill-refinement
+id: iterative-prompt-skill-refinement
+summary: >-
+  TODO: Add a concise summary for "Iterative Prompt & Skill Refinement"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

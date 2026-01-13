@@ -1,11 +1,25 @@
 ---
-title: "Variance-Based RL Sample Selection"
+title: Variance-Based RL Sample Selection
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Theo (OpenAI Solutions Architect)", "Prashant (OpenAI RFT Team)"]
-category: "Learning & Adaptation"
-source: "https://youtu.be/1s_7RMG4O4U"
-tags: [reinforcement-learning, sample-efficiency, variance, data-quality, agent-rft]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Theo (OpenAI Solutions Architect)
+  - Prashant (OpenAI RFT Team)
+category: Learning & Adaptation
+source: 'https://youtu.be/1s_7RMG4O4U'
+tags:
+  - reinforcement-learning
+  - sample-efficiency
+  - variance
+  - data-quality
+  - agent-rft
+slug: variance-based-rl-sample-selection
+id: variance-based-rl-sample-selection
+summary: >-
+  TODO: Add a concise summary for "Variance-Based RL Sample Selection"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

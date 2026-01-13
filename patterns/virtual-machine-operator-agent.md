@@ -1,11 +1,27 @@
 ---
 title: Virtual Machine Operator Agent
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Amjad Masad"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Amjad Masad
 category: Tool Use & Environment
-source: "https://www.nibzard.com/silent-revolution"
-tags: [computer operation, virtual machine, execution environment, agent capability]
+source: 'https://www.nibzard.com/silent-revolution'
+tags:
+  - computer operation
+  - virtual machine
+  - execution environment
+  - agent capability
+slug: virtual-machine-operator-agent
+id: virtual-machine-operator-agent
+summary: >-
+  ## Problem
+
+  AI agents need to perform complex tasks beyond simple code generation or text
+  manipulation. They require the ability to interact with a full computer
+  environment to execute code, manage system resources, install software, and
+  operate various applications.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

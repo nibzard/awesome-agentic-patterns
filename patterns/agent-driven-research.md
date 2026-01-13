@@ -1,11 +1,27 @@
 ---
 title: Agent-Driven Research
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Danny Tarlow", "Connie Fan"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Danny Tarlow
+  - Connie Fan
 category: Orchestration & Control
-source: "https://www.youtube.com/watch?v=u85G2aV_5rQ"
-tags: [research, information retrieval, tool use, iterative process, autonomous search]
+source: 'https://www.youtube.com/watch?v=u85G2aV_5rQ'
+tags:
+  - research
+  - information retrieval
+  - tool use
+  - iterative process
+  - autonomous search
+slug: agent-driven-research
+id: agent-driven-research
+summary: >-
+  ## Problem
+
+  Traditional research methods often lack the ability to adapt search strategies
+  based on emerging results, limiting efficiency and potential discoveries.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,26 @@
 ---
 title: Proactive Agent State Externalization
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Cognition AI (2025)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Cognition AI (2025)
 category: Context & Memory
-source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges"
-tags: [state-externalization, memory-management, self-documentation, note-taking]
+source: 'https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges'
+tags:
+  - state-externalization
+  - memory-management
+  - self-documentation
+  - note-taking
+slug: proactive-agent-state-externalization
+id: proactive-agent-state-externalization
+summary: >-
+  ## Problem
+
+  Modern models like Claude Sonnet 4.5 proactively attempt to externalize their
+  state by writing summaries and notes (e.g., `CHANGELOG.md`, `SUMMARY.md`) to
+  the file system without explicit prompting. However:
+updated_at: '2026-01-05'
 ---
 
 ## Problem

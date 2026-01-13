@@ -1,11 +1,25 @@
 ---
-title: "Coding Agent CI Feedback Loop"
+title: Coding Agent CI Feedback Loop
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Quinn Slack (Concept)", "Will Brown (Prime Intellect Talk)"]
-category: "Feedback Loops"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
-tags: [CI, coding-agent, asynchronous, test-driven, feedback]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Quinn Slack (Concept)
+  - Will Brown (Prime Intellect Talk)
+category: Feedback Loops
+source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
+tags:
+  - CI
+  - coding-agent
+  - asynchronous
+  - test-driven
+  - feedback
+slug: coding-agent-ci-feedback-loop
+id: coding-agent-ci-feedback-loop
+summary: >-
+  TODO: Add a concise summary for "Coding Agent CI Feedback Loop" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

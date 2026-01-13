@@ -1,11 +1,25 @@
 ---
 title: Self-Critique Evaluator Loop
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Meta AI (Self-Taught Evaluators)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Meta AI (Self-Taught Evaluators)
 category: Feedback Loops
-source: "https://arxiv.org/abs/2408.02666"
-tags: [self-critique, evaluator, reward-model, synthetic-data]
+source: 'https://arxiv.org/abs/2408.02666'
+tags:
+  - self-critique
+  - evaluator
+  - reward-model
+  - synthetic-data
+slug: self-critique-evaluator-loop
+id: self-critique-evaluator-loop
+summary: >-
+  ## Problem
+
+  Human preference labels are costly and quickly become outdated as base models
+  improve.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

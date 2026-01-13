@@ -1,11 +1,23 @@
 ---
-title: "Curated File Context Window"
+title: Curated File Context Window
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Internal AI Dev Team"]
-category: "Context & Memory"
-source: "Internal Practice"
-tags: [code-context, file-scope, relevance, memory-management]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Internal AI Dev Team
+category: Context & Memory
+source: Internal Practice
+tags:
+  - code-context
+  - file-scope
+  - relevance
+  - memory-management
+slug: curated-file-context-window
+id: curated-file-context-window
+summary: >-
+  TODO: Add a concise summary for "Curated File Context Window" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

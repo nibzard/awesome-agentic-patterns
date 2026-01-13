@@ -1,11 +1,27 @@
 ---
 title: Progressive Autonomy with Model Evolution
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (Anthropic)", "Claude Code Team"]
-category: "Orchestration & Control"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [model-evolution, scaffolding, autonomy, system-prompts, capabilities, model-intelligence]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (Anthropic)
+  - Claude Code Team
+category: Orchestration & Control
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - model-evolution
+  - scaffolding
+  - autonomy
+  - system-prompts
+  - capabilities
+  - model-intelligence
+slug: progressive-autonomy-with-model-evolution
+id: progressive-autonomy-with-model-evolution
+summary: >-
+  TODO: Add a concise summary for "Progressive Autonomy with Model Evolution"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

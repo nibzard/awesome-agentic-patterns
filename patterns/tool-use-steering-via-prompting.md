@@ -1,11 +1,25 @@
 ---
 title: Tool Use Steering via Prompting
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (via Claude Code examples)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (via Claude Code examples)
 category: Tool Use & Environment
-source: "https://www.nibzard.com/claude-code"
-tags: [tool use, prompting, agent guidance, custom tools, cli, natural language control]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - tool use
+  - prompting
+  - agent guidance
+  - custom tools
+  - cli
+  - natural language control
+slug: tool-use-steering-via-prompting
+id: tool-use-steering-via-prompting
+summary: >-
+  TODO: Add a concise summary for "Tool Use Steering via Prompting" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

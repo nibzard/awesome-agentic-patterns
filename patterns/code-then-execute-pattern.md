@@ -1,11 +1,24 @@
 ---
 title: Code-Then-Execute Pattern
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - DeepMind CaMeL (orig.)
+  - Luca Beurer-Kellner et al. (2025)
 category: Tool Use & Environment
-source: "https://arxiv.org/abs/2506.08837"
-tags: [dsl, sandbox, program-synthesis, auditability]
+source: 'https://arxiv.org/abs/2506.08837'
+tags:
+  - dsl
+  - sandbox
+  - program-synthesis
+  - auditability
+slug: code-then-execute-pattern
+id: code-then-execute-pattern
+summary: |-
+  ## Problem
+  Plan lists are opaque; we want **full data-flow analysis** and taint tracking.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

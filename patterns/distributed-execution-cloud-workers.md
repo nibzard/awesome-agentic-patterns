@@ -1,11 +1,25 @@
 ---
 title: Distributed Execution with Cloud Workers
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Dexter Horthy (HumanLayer)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Dexter Horthy (HumanLayer)
 category: Orchestration & Control
-source: "https://claude.com/blog/building-companies-with-claude-code"
-tags: [distributed-systems, parallelization, cloud, worktrees, scalability, team-coordination]
+source: 'https://claude.com/blog/building-companies-with-claude-code'
+tags:
+  - distributed-systems
+  - parallelization
+  - cloud
+  - worktrees
+  - scalability
+  - team-coordination
+slug: distributed-execution-cloud-workers
+id: distributed-execution-with-cloud-workers
+summary: >-
+  TODO: Add a concise summary for "Distributed Execution with Cloud Workers"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

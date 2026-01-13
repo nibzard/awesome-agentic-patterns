@@ -1,11 +1,25 @@
 ---
 title: LLM-Friendly API Design
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Lukas Möller (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Lukas Möller (Cursor)
 category: Tool Use & Environment
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [api-design, llm-interaction, tool-use, system-design, code-structure, agent-compatibility]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - api-design
+  - llm-interaction
+  - tool-use
+  - system-design
+  - code-structure
+  - agent-compatibility
+slug: llm-friendly-api-design
+id: llm-friendly-api-design
+summary: >-
+  TODO: Add a concise summary for "LLM-Friendly API Design" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

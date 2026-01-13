@@ -1,11 +1,24 @@
 ---
 title: Discrete Phase Separation
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Sam Stettner (Ambral)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Sam Stettner (Ambral)
 category: Orchestration & Control
-source: "https://claude.com/blog/building-companies-with-claude-code"
-tags: [orchestration, planning, research, context-management, multi-model]
+source: 'https://claude.com/blog/building-companies-with-claude-code'
+tags:
+  - orchestration
+  - planning
+  - research
+  - context-management
+  - multi-model
+slug: discrete-phase-separation
+id: discrete-phase-separation
+summary: >-
+  TODO: Add a concise summary for "Discrete Phase Separation" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

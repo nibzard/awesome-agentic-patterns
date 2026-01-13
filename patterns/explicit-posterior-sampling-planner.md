@@ -1,11 +1,27 @@
 ---
 title: Explicit Posterior-Sampling Planner
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Dilip Arumugam", "Thomas L. Griffiths"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Dilip Arumugam
+  - Thomas L. Griffiths
 category: Orchestration & Control
-source: "https://arxiv.org/abs/2504.20997"
-tags: [RL, PSRL, exploration, planning, decision-making]
+source: 'https://arxiv.org/abs/2504.20997'
+tags:
+  - RL
+  - PSRL
+  - exploration
+  - planning
+  - decision-making
+slug: explicit-posterior-sampling-planner
+id: explicit-posterior-sampling-planner
+summary: >-
+  ## Problem
+
+  Agents that rely on ad-hoc heuristics explore poorly, wasting tokens and API
+  calls on dead ends.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,24 @@
 ---
-title: "Agent-First Tooling and Logging"
+title: Agent-First Tooling and Logging
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Thorsten Ball (Sourcegraph)"]
-category: "Tool Use & Environment"
-source: "https://www.sourcegraph.com"
-tags: [tool-design, logging, machine-readable, observability, agent-environment]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Thorsten Ball (Sourcegraph)
+category: Tool Use & Environment
+source: 'https://www.sourcegraph.com'
+tags:
+  - tool-design
+  - logging
+  - machine-readable
+  - observability
+  - agent-environment
+slug: agent-first-tooling-and-logging
+id: agent-first-tooling-and-logging
+summary: >-
+  TODO: Add a concise summary for "Agent-First Tooling and Logging" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

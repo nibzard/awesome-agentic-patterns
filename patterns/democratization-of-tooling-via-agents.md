@@ -1,11 +1,31 @@
 ---
 title: Democratization of Tooling via Agents
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Jacob Jackson (Cursor)", "Alex Albert (Anthropic)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Jacob Jackson (Cursor)
+  - Alex Albert (Anthropic)
 category: UX & Collaboration
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [no-code, low-code, citizen-developer, tool-creation, business-users, automation, custom-software]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - no-code
+  - low-code
+  - citizen-developer
+  - tool-creation
+  - business-users
+  - automation
+  - custom-software
+slug: democratization-of-tooling-via-agents
+id: democratization-of-tooling-via-agents
+summary: >-
+  ## Problem
+
+  Many individuals in non-software engineering roles (e.g., sales, marketing,
+  operations, communications) could benefit from custom software tools, scripts,
+  or dashboards tailored to their specific workflows, but lack the traditional
+  programming skills to build them.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

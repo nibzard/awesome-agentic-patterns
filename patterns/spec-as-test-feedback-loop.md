@@ -1,11 +1,24 @@
 ---
 title: Spec-As-Test Feedback Loop
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Jory Pestorious"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Jory Pestorious
 category: Feedback Loops
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
-tags: [validation, drift-detection, continuous-testing]
+source: 'http://jorypestorious.com/blog/ai-engineer-spec/'
+tags:
+  - validation
+  - drift-detection
+  - continuous-testing
+slug: spec-as-test-feedback-loop
+id: spec-as-test-feedback-loop
+summary: >-
+  ## Problem
+
+  Even in spec-first projects, implementations can drift as code evolves and the
+  spec changes (or vice-versa). Silent divergence erodes trust.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

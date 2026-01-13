@@ -1,11 +1,25 @@
 ---
 title: Rich Feedback Loops > Perfect Prompts
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Thorsten Ball", "Quinn Slack"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Thorsten Ball
+  - Quinn Slack
 category: Feedback Loops
-source: "https://www.nibzard.com/ampcode"
-tags: [feedback, testing, reliability]
+source: 'https://www.nibzard.com/ampcode'
+tags:
+  - feedback
+  - testing
+  - reliability
+slug: rich-feedback-loops
+id: rich-feedback-loops-perfect-prompts
+summary: >-
+  ## Problem
+
+  Polishing a single prompt can't cover every edge-case; agents need ground
+  truth to self-correct.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

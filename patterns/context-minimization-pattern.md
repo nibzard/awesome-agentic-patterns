@@ -1,11 +1,24 @@
 ---
 title: Context-Minimization Pattern
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Luca Beurer-Kellner et al. (2025)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Luca Beurer-Kellner et al. (2025)
 category: Context & Memory
-source: "https://arxiv.org/abs/2506.08837"
-tags: [context-hygiene, taint-removal, prompt-injection]
+source: 'https://arxiv.org/abs/2506.08837'
+tags:
+  - context-hygiene
+  - taint-removal
+  - prompt-injection
+slug: context-minimization-pattern
+id: context-minimization-pattern
+summary: >-
+  ## Problem
+
+  User-supplied or tainted text lingers in the conversation, enabling it to
+  influence later generations.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

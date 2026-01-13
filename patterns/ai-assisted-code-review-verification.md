@@ -1,11 +1,26 @@
 ---
 title: AI-Assisted Code Review / Verification
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Aman Sanger (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Aman Sanger (Cursor)
 category: Feedback Loops
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [code-review, verification, quality-assurance, human-ai-collaboration, trust, explainability, software-quality]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - code-review
+  - verification
+  - quality-assurance
+  - human-ai-collaboration
+  - trust
+  - explainability
+  - software-quality
+slug: ai-assisted-code-review-verification
+id: ai-assisted-code-review-verification
+summary: >-
+  TODO: Add a concise summary for "AI-Assisted Code Review / Verification"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,27 @@
 ---
 title: Multi-Platform Webhook Triggers
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (lethain.com)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Larson (lethain.com)
 category: Tool Use & Environment
-source: "https://lethain.com/agents-triggers/"
-tags: [webhooks, triggers, integrations, slack, notion, jira, scheduled-events, event-driven]
+source: 'https://lethain.com/agents-triggers/'
+tags:
+  - webhooks
+  - triggers
+  - integrations
+  - slack
+  - notion
+  - jira
+  - scheduled-events
+  - event-driven
+slug: multi-platform-webhook-triggers
+id: multi-platform-webhook-triggers
+summary: >-
+  TODO: Add a concise summary for "Multi-Platform Webhook Triggers" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

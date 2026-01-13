@@ -1,11 +1,25 @@
 ---
 title: Self-Rewriting Meta-Prompt Loop
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Noah D. Goodman (Meta-Prompt)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Noah D. Goodman (Meta-Prompt)
 category: Orchestration & Control
-source: "https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving"
-tags: [meta-prompting, self-improvement, system-prompt, reflection]
+source: 'https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving'
+tags:
+  - meta-prompting
+  - self-improvement
+  - system-prompt
+  - reflection
+slug: self-rewriting-meta-prompt-loop
+id: self-rewriting-meta-prompt-loop
+summary: >-
+  ## Problem
+
+  Static system prompts become stale or overly brittle as an agent encounters
+  new tasks and edge-cases. Manually editing them is slow and error-prone.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

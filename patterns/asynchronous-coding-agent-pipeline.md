@@ -1,11 +1,23 @@
 ---
-title: "Asynchronous Coding Agent Pipeline"
+title: Asynchronous Coding Agent Pipeline
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Brown (Prime Intellect Talk)"]
-category: "Reliability & Eval"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
-tags: [asynchronous, pipeline, code-agent, parallelism]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Brown (Prime Intellect Talk)
+category: Reliability & Eval
+source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
+tags:
+  - asynchronous
+  - pipeline
+  - code-agent
+  - parallelism
+slug: asynchronous-coding-agent-pipeline
+id: asynchronous-coding-agent-pipeline
+summary: >-
+  TODO: Add a concise summary for "Asynchronous Coding Agent Pipeline"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

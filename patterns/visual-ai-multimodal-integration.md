@@ -1,11 +1,28 @@
 ---
-title: "Visual AI Multimodal Integration"
+title: Visual AI Multimodal Integration
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
-category: "Tool Use & Environment"
-source: "https://openai.com/research/gpt-4v-system-card"
-tags: [multimodal, vision, video, image-processing, visual-understanding, agent-capabilities]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Andrew Ng
+  - OpenAI
+  - Anthropic
+  - Google
+category: Tool Use & Environment
+source: 'https://openai.com/research/gpt-4v-system-card'
+tags:
+  - multimodal
+  - vision
+  - video
+  - image-processing
+  - visual-understanding
+  - agent-capabilities
+slug: visual-ai-multimodal-integration
+id: visual-ai-multimodal-integration
+summary: >-
+  TODO: Add a concise summary for "Visual AI Multimodal Integration" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,25 @@
 ---
-title: "Curated Code Context Window"
+title: Curated Code Context Window
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)", "Thorsten Ball"]
-category: "Context & Memory"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
-tags: [context-management, code-agent, file-selection, noise-reduction]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anonymous Speaker (Open Source Agent RL Talk)
+  - Will Brown (Prime Intellect Talk)
+  - Thorsten Ball
+category: Context & Memory
+source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
+tags:
+  - context-management
+  - code-agent
+  - file-selection
+  - noise-reduction
+slug: curated-code-context-window
+id: curated-code-context-window
+summary: >-
+  TODO: Add a concise summary for "Curated Code Context Window" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

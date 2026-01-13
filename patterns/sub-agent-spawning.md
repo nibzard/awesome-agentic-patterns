@@ -1,11 +1,27 @@
 ---
 title: Sub-Agent Spawning
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Quinn Slack
+  - Thorsten Ball
+  - Will Larson (lethain.com)
 category: Orchestration & Control
-source: "https://www.nibzard.com/ampcode"
-tags: [orchestration, context, scalability, subagents, yaml-configuration, virtual-files]
+source: 'https://www.nibzard.com/ampcode'
+tags:
+  - orchestration
+  - context
+  - scalability
+  - subagents
+  - yaml-configuration
+  - virtual-files
+slug: sub-agent-spawning
+id: sub-agent-spawning
+summary: >-
+  TODO: Add a concise summary for "Sub-Agent Spawning" describing the pattern's
+  purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

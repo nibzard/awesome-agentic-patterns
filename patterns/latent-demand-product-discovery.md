@@ -1,11 +1,26 @@
 ---
 title: Latent Demand Product Discovery
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (Anthropic)", "Meta Product Teams"]
-category: "UX & Collaboration"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [product-discovery, extensibility, hackable-products, power-users, latent-demand]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (Anthropic)
+  - Meta Product Teams
+category: UX & Collaboration
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - product-discovery
+  - extensibility
+  - hackable-products
+  - power-users
+  - latent-demand
+slug: latent-demand-product-discovery
+id: latent-demand-product-discovery
+summary: >-
+  TODO: Add a concise summary for "Latent Demand Product Discovery" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

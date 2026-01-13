@@ -1,11 +1,23 @@
 ---
 title: Filesystem-Based Agent State
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic Engineering Team"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic Engineering Team
 category: Context & Memory
-source: "https://www.anthropic.com/engineering/code-execution-with-mcp"
-tags: [state-management, persistence, resumption, long-running-tasks]
+source: 'https://www.anthropic.com/engineering/code-execution-with-mcp'
+tags:
+  - state-management
+  - persistence
+  - resumption
+  - long-running-tasks
+slug: filesystem-based-agent-state
+id: filesystem-based-agent-state
+summary: >-
+  TODO: Add a concise summary for "Filesystem-Based Agent State" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

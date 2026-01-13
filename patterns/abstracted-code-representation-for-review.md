@@ -1,11 +1,27 @@
 ---
 title: Abstracted Code Representation for Review
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - 'Aman Sanger (Cursor, referencing Michael Grinich)'
 category: UX & Collaboration
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [code-review, verification, abstraction, pseudocode, intent-based-review, explainability, software-quality, human-ai-interface]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - code-review
+  - verification
+  - abstraction
+  - pseudocode
+  - intent-based-review
+  - explainability
+  - software-quality
+  - human-ai-interface
+slug: abstracted-code-representation-for-review
+id: abstracted-code-representation-for-review
+summary: >-
+  TODO: Add a concise summary for "Abstracted Code Representation for Review"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

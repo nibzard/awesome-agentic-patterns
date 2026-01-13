@@ -1,11 +1,25 @@
 ---
 title: Shell Command Contextualization
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (via Claude Code)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (via Claude Code)
 category: Tool Use & Environment
-source: "https://www.nibzard.com/claude-code"
-tags: [shell integration, context management, local execution, bash, cli, interactive tools]
+source: 'https://www.nibzard.com/claude-code'
+tags:
+  - shell integration
+  - context management
+  - local execution
+  - bash
+  - cli
+  - interactive tools
+slug: shell-command-contextualization
+id: shell-command-contextualization
+summary: >-
+  TODO: Add a concise summary for "Shell Command Contextualization" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

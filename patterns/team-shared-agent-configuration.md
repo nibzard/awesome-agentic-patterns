@@ -1,11 +1,27 @@
 ---
 title: Team-Shared Agent Configuration as Code
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (Anthropic)", "Enterprise Claude Code Users"]
-category: "UX & Collaboration"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [configuration, version-control, team-collaboration, permissions, consistency, onboarding]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Boris Cherny (Anthropic)
+  - Enterprise Claude Code Users
+category: UX & Collaboration
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - configuration
+  - version-control
+  - team-collaboration
+  - permissions
+  - consistency
+  - onboarding
+slug: team-shared-agent-configuration
+id: team-shared-agent-configuration-as-code
+summary: >-
+  TODO: Add a concise summary for "Team-Shared Agent Configuration as Code"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

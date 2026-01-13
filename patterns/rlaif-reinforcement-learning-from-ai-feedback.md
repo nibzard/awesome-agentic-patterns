@@ -1,11 +1,27 @@
 ---
-title: "RLAIF (Reinforcement Learning from AI Feedback)"
+title: RLAIF (Reinforcement Learning from AI Feedback)
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic", "Google DeepMind"]
-category: "Reliability & Eval"
-source: "https://arxiv.org/abs/2212.08073"
-tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, evaluation]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Anthropic
+  - Google DeepMind
+category: Reliability & Eval
+source: 'https://arxiv.org/abs/2212.08073'
+tags:
+  - rlhf
+  - rlaif
+  - constitutional-ai
+  - synthetic-data
+  - feedback
+  - alignment
+  - evaluation
+slug: rlaif-reinforcement-learning-from-ai-feedback
+id: rlaif-reinforcement-learning-from-ai-feedback
+summary: >-
+  TODO: Add a concise summary for "RLAIF (Reinforcement Learning from AI
+  Feedback)" describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

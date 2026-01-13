@@ -1,11 +1,25 @@
 ---
-title: "Continuous Autonomous Task Loop Pattern"
+title: Continuous Autonomous Task Loop Pattern
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Internal Practice"]
-category: "Orchestration & Control"
-source: "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78"
-tags: [autonomous-execution, task-loop, rate-limiting, git-automation, cli-driven, stream-processing]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Internal Practice
+category: Orchestration & Control
+source: 'https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78'
+tags:
+  - autonomous-execution
+  - task-loop
+  - rate-limiting
+  - git-automation
+  - cli-driven
+  - stream-processing
+slug: continuous-autonomous-task-loop-pattern
+id: continuous-autonomous-task-loop-pattern
+summary: >-
+  TODO: Add a concise summary for "Continuous Autonomous Task Loop Pattern"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

@@ -1,11 +1,28 @@
 ---
-title: "LLM Observability"
+title: LLM Observability
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (Imprint)"]
-category: "Reliability & Eval"
-source: "https://lethain.com/agents-logging/"
-tags: [observability, logging, debugging, tracing, datadog, langsmith, spans, monitoring, llmops]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Larson (Imprint)
+category: Reliability & Eval
+source: 'https://lethain.com/agents-logging/'
+tags:
+  - observability
+  - logging
+  - debugging
+  - tracing
+  - datadog
+  - langsmith
+  - spans
+  - monitoring
+  - llmops
+slug: llm-observability
+id: llm-observability
+summary: >-
+  TODO: Add a concise summary for "LLM Observability" describing the pattern's
+  purpose and key benefits.
+updated_at: '2026-01-13'
 ---
 
 ## Problem

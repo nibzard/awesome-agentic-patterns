@@ -1,11 +1,25 @@
 ---
 title: Human-in-the-Loop Approval Framework
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Dexter Horthy (HumanLayer)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Dexter Horthy (HumanLayer)
 category: UX & Collaboration
-source: "https://claude.com/blog/building-companies-with-claude-code"
-tags: [human-oversight, safety, approvals, risk-management, collaboration, slack-integration]
+source: 'https://claude.com/blog/building-companies-with-claude-code'
+tags:
+  - human-oversight
+  - safety
+  - approvals
+  - risk-management
+  - collaboration
+  - slack-integration
+slug: human-in-loop-approval-framework
+id: human-in-the-loop-approval-framework
+summary: >-
+  TODO: Add a concise summary for "Human-in-the-Loop Approval Framework"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

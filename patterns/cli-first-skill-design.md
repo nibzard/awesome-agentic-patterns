@@ -1,11 +1,26 @@
 ---
 title: CLI-First Skill Design
 status: emerging
-authors: ["Lucas Carlson"]
-based_on: ["Anthropic (Claude Code)", "Unix Philosophy"]
-category: "Tool Use & Environment"
-source: "https://github.com/anthropics/claude-code"
-tags: [cli, skills, shell, dual-use, composability, unix-philosophy]
+authors:
+  - Lucas Carlson
+based_on:
+  - Anthropic (Claude Code)
+  - Unix Philosophy
+category: Tool Use & Environment
+source: 'https://github.com/anthropics/claude-code'
+tags:
+  - cli
+  - skills
+  - shell
+  - dual-use
+  - composability
+  - unix-philosophy
+slug: cli-first-skill-design
+id: cli-first-skill-design
+summary: >-
+  TODO: Add a concise summary for "CLI-First Skill Design" describing the
+  pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

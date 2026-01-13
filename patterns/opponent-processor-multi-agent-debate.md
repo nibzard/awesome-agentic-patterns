@@ -1,11 +1,27 @@
 ---
 title: Opponent Processor / Multi-Agent Debate Pattern
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Dan Shipper (Every)", "Reddit Community"]
-category: "Orchestration & Control"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [multi-agent, debate, adversarial, bias-reduction, uncorrelated-context, validation]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Dan Shipper (Every)
+  - Reddit Community
+category: Orchestration & Control
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - multi-agent
+  - debate
+  - adversarial
+  - bias-reduction
+  - uncorrelated-context
+  - validation
+slug: opponent-processor-multi-agent-debate
+id: opponent-processor-multi-agent-debate-pattern
+summary: >-
+  TODO: Add a concise summary for "Opponent Processor / Multi-Agent Debate
+  Pattern" describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

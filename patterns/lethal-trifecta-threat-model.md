@@ -1,11 +1,26 @@
 ---
 title: Lethal Trifecta Threat Model
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Simon Willison"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Simon Willison
 category: Reliability & Eval
-source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
-tags: [security, prompt-injection, threat-model, data-exfiltration]
+source: 'https://simonwillison.net/2025/Jun/16/lethal-trifecta/'
+tags:
+  - security
+  - prompt-injection
+  - threat-model
+  - data-exfiltration
+slug: lethal-trifecta-threat-model
+id: lethal-trifecta-threat-model
+summary: |-
+  ## Problem
+  Combining three agent capabilities—
+  1. **Access to private data**
+  2. **Exposure to untrusted content**
+  3. **Ability to externally communicate**
+updated_at: '2026-01-05'
 ---
 
 ## Problem

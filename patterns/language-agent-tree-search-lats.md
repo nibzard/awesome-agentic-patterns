@@ -1,11 +1,27 @@
 ---
-title: "Language Agent Tree Search (LATS)"
+title: Language Agent Tree Search (LATS)
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Zhou et al.", "University of Illinois"]
-category: "Orchestration & Control"
-source: "https://arxiv.org/abs/2310.04406"
-tags: [search, monte-carlo, tree-search, reasoning, planning, reflection, evaluation]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Zhou et al.
+  - University of Illinois
+category: Orchestration & Control
+source: 'https://arxiv.org/abs/2310.04406'
+tags:
+  - search
+  - monte-carlo
+  - tree-search
+  - reasoning
+  - planning
+  - reflection
+  - evaluation
+slug: language-agent-tree-search-lats
+id: language-agent-tree-search-lats
+summary: >-
+  TODO: Add a concise summary for "Language Agent Tree Search (LATS)" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

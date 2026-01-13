@@ -1,11 +1,25 @@
 ---
 title: Progressive Complexity Escalation
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Vercel AI Team"]
-category: "Orchestration & Control"
-source: "https://vercel.com/blog/what-we-learned-building-agents-at-vercel"
-tags: [capabilities, gradual-rollout, risk-management, evolution, adaptive-systems, complexity-management]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Vercel AI Team
+category: Orchestration & Control
+source: 'https://vercel.com/blog/what-we-learned-building-agents-at-vercel'
+tags:
+  - capabilities
+  - gradual-rollout
+  - risk-management
+  - evolution
+  - adaptive-systems
+  - complexity-management
+slug: progressive-complexity-escalation
+id: progressive-complexity-escalation
+summary: >-
+  TODO: Add a concise summary for "Progressive Complexity Escalation" describing
+  the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

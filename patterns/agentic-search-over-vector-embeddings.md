@@ -1,11 +1,28 @@
 ---
 title: Agentic Search Over Vector Embeddings
 status: best-practice
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Cat Wu (Anthropic)", "Boris Cherny (Anthropic)"]
-category: "Tool Use & Environment"
-source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
-tags: [search, vector-embeddings, bash, grep, RAG, agentic-RAG, maintenance]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Cat Wu (Anthropic)
+  - Boris Cherny (Anthropic)
+category: Tool Use & Environment
+source: >-
+  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
+tags:
+  - search
+  - vector-embeddings
+  - bash
+  - grep
+  - RAG
+  - agentic-RAG
+  - maintenance
+slug: agentic-search-over-vector-embeddings
+id: agentic-search-over-vector-embeddings
+summary: >-
+  TODO: Add a concise summary for "Agentic Search Over Vector Embeddings"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

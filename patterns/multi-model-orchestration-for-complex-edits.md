@@ -1,11 +1,25 @@
 ---
 title: Multi-Model Orchestration for Complex Edits
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Aman Sanger (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Aman Sanger (Cursor)
 category: Orchestration & Control
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-tasks]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - multi-model
+  - code-generation
+  - code-editing
+  - retrieval
+  - pipeline
+  - complex-tasks
+slug: multi-model-orchestration-for-complex-edits
+id: multi-model-orchestration-for-complex-edits
+summary: >-
+  TODO: Add a concise summary for "Multi-Model Orchestration for Complex Edits"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

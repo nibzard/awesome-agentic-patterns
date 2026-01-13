@@ -1,11 +1,30 @@
 ---
 title: Agent-Powered Codebase Q&A / Onboarding
 status: validated-in-production
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Lukas Möller (Cursor)
+  - Aman Sanger (Cursor)
 category: Context & Memory
-source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
-tags: [code-understanding, onboarding, q&a, retrieval, search, context-awareness, knowledge-base]
+source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
+tags:
+  - code-understanding
+  - onboarding
+  - q&a
+  - retrieval
+  - search
+  - context-awareness
+  - knowledge-base
+slug: agent-powered-codebase-qa-onboarding
+id: agent-powered-codebase-qa-onboarding
+summary: >-
+  ## Problem
+
+  Understanding a large or unfamiliar codebase can be a significant challenge
+  for developers, especially when onboarding to a new project or trying to debug
+  a complex system. Manually searching and tracing code paths is time-consuming.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

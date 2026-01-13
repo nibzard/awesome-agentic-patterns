@@ -1,11 +1,26 @@
 ---
 title: Specification-Driven Agent Development
 status: proposed
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Jory Pestorious (AI Engineer World's Fair 2025)
 category: Orchestration & Control
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
-tags: [spec-first, scaffolding, contract, requirements]
+source: 'http://jorypestorious.com/blog/ai-engineer-spec/'
+tags:
+  - spec-first
+  - scaffolding
+  - contract
+  - requirements
+slug: specification-driven-agent-development
+id: specification-driven-agent-development
+summary: >-
+  ## Problem
+
+  Hand-crafted prompts or loose user stories leave room for ambiguity; agents
+  can wander, over-interpret, or produce code that conflicts with stakeholder
+  intent.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

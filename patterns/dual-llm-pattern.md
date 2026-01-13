@@ -1,11 +1,25 @@
 ---
 title: Dual LLM Pattern
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Simon Willison (orig.)", "Luca Beurer-Kellner et al. (2025)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Simon Willison (orig.)
+  - Luca Beurer-Kellner et al. (2025)
 category: Orchestration & Control
-source: "https://arxiv.org/abs/2506.08837"
-tags: [privilege-separation, quarantined-llm, symbolic-variables]
+source: 'https://arxiv.org/abs/2506.08837'
+tags:
+  - privilege-separation
+  - quarantined-llm
+  - symbolic-variables
+slug: dual-llm-pattern
+id: dual-llm-pattern
+summary: >-
+  ## Problem
+
+  A privileged agent that both sees untrusted text **and** wields tools can be
+  coerced into dangerous calls.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

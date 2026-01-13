@@ -1,11 +1,24 @@
 ---
 title: Tree-of-Thought Reasoning
 status: established
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Yao et al. (2023)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Yao et al. (2023)
 category: Orchestration & Control
-source: "https://arxiv.org/abs/2305.10601"
-tags: [branching, deliberate-reasoning, search]
+source: 'https://arxiv.org/abs/2305.10601'
+tags:
+  - branching
+  - deliberate-reasoning
+  - search
+slug: tree-of-thought-reasoning
+id: tree-of-thought-reasoning
+summary: >-
+  ## Problem
+
+  Linear chain-of-thought reasoning can get stuck on complex problems, missing
+  alternative approaches or failing to backtrack.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

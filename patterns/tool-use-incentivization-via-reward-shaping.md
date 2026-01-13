@@ -1,11 +1,23 @@
 ---
-title: "Tool Use Incentivization via Reward Shaping"
+title: Tool Use Incentivization via Reward Shaping
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Brown (Prime Intellect Talk)"]
-category: "Feedback Loops"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
-tags: [tool-use, reward-shaping, coding-agent, RL]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Will Brown (Prime Intellect Talk)
+category: Feedback Loops
+source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
+tags:
+  - tool-use
+  - reward-shaping
+  - coding-agent
+  - RL
+slug: tool-use-incentivization-via-reward-shaping
+id: tool-use-incentivization-via-reward-shaping
+summary: >-
+  TODO: Add a concise summary for "Tool Use Incentivization via Reward Shaping"
+  describing the pattern's purpose and key benefits.
+updated_at: '2026-01-05'
 ---
 
 ## Problem

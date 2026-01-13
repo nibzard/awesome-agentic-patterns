@@ -1,11 +1,27 @@
 ---
 title: Context Window Anxiety Management
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Cognition AI (2025)"]
+authors:
+  - Nikola Balic (@nibzard)
+based_on:
+  - Cognition AI (2025)
 category: Context & Memory
-source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges"
-tags: [context-anxiety, token-management, premature-completion, model-behavior]
+source: 'https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges'
+tags:
+  - context-anxiety
+  - token-management
+  - premature-completion
+  - model-behavior
+slug: context-window-anxiety-management
+id: context-window-anxiety-management
+summary: >-
+  ## Problem
+
+  Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of
+  approaching context window limits and proactively summarize progress or make
+  decisive moves to close tasks, even when sufficient context remains. This
+  leads to:
+updated_at: '2026-01-05'
 ---
 
 ## Problem
