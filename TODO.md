@@ -64,13 +64,13 @@
 - [x] 064 - Add `updated_at` field placeholder to `patterns/TEMPLATE.md`.
 - [x] 065 - Add optional sections list to `patterns/TEMPLATE.md`.
 - [x] 066 - Add a `summary` example to `patterns/TEMPLATE.md`.
-- [ ] 067 - Add a front matter parsing dependency for validation.
-- [ ] 068 - Add a markdown heading parsing dependency for validation.
-- [ ] 069 - Create `scripts/validate-patterns` entry file.
-- [ ] 070 - Implement front matter parsing in `scripts/validate-patterns`.
-- [ ] 071 - Implement front matter schema validation in `scripts/validate-patterns`.
-- [ ] 072 - Implement required heading presence checks in `scripts/validate-patterns`.
-- [ ] 073 - Implement heading order checks in `scripts/validate-patterns`.
+- [x] 067 - Add a front matter parsing dependency for validation. (Added gray-matter@^4.0.3 to package.json)
+- [x] 068 - Add a markdown heading parsing dependency for validation.
+- [x] 069 - Create `scripts/validate-patterns` entry file. (Created scripts/validate-patterns.ts with TypeScript skeleton and CLI argument parsing)
+- [x] 070 - Implement front matter parsing in `scripts/validate-patterns`. [Added TypeScript types for schema enums, PatternFrontMatter/ParsedPattern interfaces, parseFrontMatter() with gray-matter, enhanced validateRequiredFields() for id/slug/non-empty arrays, enhanced validateFieldValues() for optional fields, type guards, and fixed CLI for file/directory targets]
+- [x] 071 - Implement front matter schema validation in `scripts/validate-patterns`. [Already implemented in validateFieldValues() function (lines 284-512): validates enum values (status, category, maturity, complexity, effort, impact), array field types, string types, URL format for source, and YYYY-MM-DD date format for updated_at]
+- [x] 072 - Implement required heading presence checks in `scripts/validate-patterns`. [Just implemented with extractHeadings() and validateMarkdownStructure() functions]
+- [x] 073 - Implement heading order checks in `scripts/validate-patterns`. [Just implemented with validateHeadingOrder() function that extracts headings in order from the markdown body, validates they follow the expected order: problem -> solution -> [how to use it] -> [trade-offs] -> [example] -> [see also] -> references, and reports warnings for out-of-order headings]
 - [ ] 074 - Implement duplicate heading detection in `scripts/validate-patterns`.
 - [ ] 075 - Implement file-path context in validation errors.
 - [ ] 076 - Implement nonzero exit codes for validation failures.

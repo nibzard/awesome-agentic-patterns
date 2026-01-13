@@ -582,6 +582,59 @@ function validateMarkdownStructure(
       message: `Found optional headings: ${foundOptional.join(", ")}`,
     });
   }
+
+  // Validate heading order (task 073)
+  validateHeadingOrder(body, filePath, warnings);
+}
+
+/**
+ * Validate heading order (task 073)
+ * Headings should follow: Problem -> Solution -> [How to use it] -> [Trade-offs] -> [Example] -> References
+ */
+function validateHeadingOrder(
+  body: string,
+  filePath: string,
+  warnings: ValidationError[]
+): void {
+  const lines = body.split("\n");
+  const headings: string[] = [];
+
+  for (const line of lines) {
+    const headingMatch = line.match(/^#{2,3}\s+(.+)$/);
+    if (headingMatch) {
+      headings.push(headingMatch[1].trim().toLowerCase());
+    }
+  }
+
+  // Define expected order per SCHEMA.md
+  const expectedOrder = [
+    "problem",
+    "solution",
+    "how to use it",
+    "trade-offs",
+    "example",
+    "see also",
+    "references",
+  ];
+
+  // Filter to only headings that are in our expected list
+  const relevantHeadings = headings.filter((h) => expectedOrder.includes(h));
+
+  // Check if headings are in correct order
+  for (let i = 0; i < relevantHeadings.length - 1; i++) {
+    const currentIdx = expectedOrder.indexOf(relevantHeadings[i]);
+    const nextIdx = expectedOrder.indexOf(relevantHeadings[i + 1]);
+
+    if (currentIdx > nextIdx) {
+      warnings.push({
+        level: "warning",
+        file: filePath,
+        field: "heading-order",
+        message: `Heading "${relevantHeadings[i + 1]}" appears before "${relevantHeadings[i]}" - expected order: ${expectedOrder.filter((h) => relevantHeadings.includes(h)).join(" → ")}`,
+      });
+      break; // Only report first order violation
+    }
+  }
 }
 
 /**
