@@ -40,3 +40,11 @@ build_with_labels:
 # Lint pattern front-matter for schema drift
 lint_front_matter:
 	python3 scripts/lint_front_matter.py
+
+# Validate patterns using TypeScript validator (task 078)
+lint_patterns:
+	bun scripts/validate-patterns.ts patterns
+
+# Validate patterns including content structure
+lint_patterns_content:
+	bun scripts/validate-patterns.ts patterns --check-content
