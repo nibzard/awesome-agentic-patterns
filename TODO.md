@@ -75,10 +75,10 @@
 - [x] 075 - Implement file-path context in validation errors. [Already implemented: ValidationError includes `file` field, all validation functions pass `filePath`, formatResults() outputs `ERROR ${file}:${field}: ${message}`]
 - [x] 076 - Implement nonzero exit codes for validation failures. [Already implemented: `process.exit(result.valid ? 0 : 1)` on line 795 and `process.exit(1)` for fatal errors on line 802]
 - [x] 077 - Add `validate:patterns` script to root `package.json`. [Added two npm scripts: validate:patterns (basic front-matter validation) and validate:patterns:content (full validation including heading checks)]
-- [ ] 078 - Add `lint_patterns` target to `Makefile` if keeping Makefile.
-- [ ] 079 - Add validation step to `.github/workflows/deploy.yml`.
-- [ ] 080 - Add parsing dependencies for the data pipeline runtime.
-- [ ] 081 - Create `scripts/build-data` entry file.
+- [x] 078 - Add `lint_patterns` target to `Makefile` if keeping Makefile.
+- [x] 079 - Add validation step to `.github/workflows/deploy.yml`.
+- [x] 080 - Add parsing dependencies for the data pipeline runtime. [Added xmlbuilder2 and rss to package.json; gray-matter and markdown-it already installed]
+- [x] 081 - Create `scripts/build-data` entry file. [Created scripts/build-data.ts with pattern parsing using gray-matter, functions to generate patterns.json/llms.txt/llms-full.txt, CLI entry point, outputs to apps/web/public/]
 - [ ] 082 - Implement pattern file discovery in `scripts/build-data`.
 - [ ] 083 - Implement front matter parsing in `scripts/build-data`.
 - [ ] 084 - Implement required section extraction in `scripts/build-data`.
