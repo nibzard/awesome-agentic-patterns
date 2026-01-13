@@ -76,6 +76,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md) <span class='updated-badge'>UPDATED</span>
 - [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md) <span class='updated-badge'>UPDATED</span>
+- [Memory Reinforcement Learning (MemRL)](patterns/memory-reinforcement-learning-memrl.md)
 - [Skill Library Evolution](patterns/skill-library-evolution.md) <span class='updated-badge'>UPDATED</span>
 - [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md) <span class='updated-badge'>UPDATED</span>
 
@@ -138,7 +139,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md) <span class='updated-badge'>UPDATED</span>
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md) <span class='updated-badge'>UPDATED</span>
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md) <span class='updated-badge'>UPDATED</span>
-- [CLI-First Skill Design](patterns/cli-first-skill-design.md) <span class='new-badge'>NEW</span>
+- [CLI-First Skill Design](patterns/cli-first-skill-design.md) <span class='updated-badge'>UPDATED</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md) <span class='updated-badge'>UPDATED</span>
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md) <span class='updated-badge'>UPDATED</span>
 - [Code-Over-API Pattern](patterns/code-over-api-pattern.md) <span class='updated-badge'>UPDATED</span>
@@ -147,7 +148,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md) <span class='updated-badge'>UPDATED</span>
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md) <span class='updated-badge'>UPDATED</span>
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md) <span class='updated-badge'>UPDATED</span>
-- [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md) <span class='new-badge'>NEW</span>
+- [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md) <span class='updated-badge'>UPDATED</span>
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md) <span class='updated-badge'>UPDATED</span>
 - [Progressive Tool Discovery](patterns/progressive-tool-discovery.md) <span class='updated-badge'>UPDATED</span>
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md) <span class='updated-badge'>UPDATED</span>
@@ -166,7 +167,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Democratization of Tooling via Agents](patterns/democratization-of-tooling-via-agents.md) <span class='updated-badge'>UPDATED</span>
 - [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md) <span class='updated-badge'>UPDATED</span>
 - [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md) <span class='updated-badge'>UPDATED</span>
-- [Proactive Trigger Vocabulary](patterns/proactive-trigger-vocabulary.md) <span class='new-badge'>NEW</span>
+- [Proactive Trigger Vocabulary](patterns/proactive-trigger-vocabulary.md) <span class='updated-badge'>UPDATED</span>
 - [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md) <span class='updated-badge'>UPDATED</span>
 - [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md) <span class='updated-badge'>UPDATED</span>
 - [Team-Shared Agent Configuration as Code](patterns/team-shared-agent-configuration.md) <span class='updated-badge'>UPDATED</span>
