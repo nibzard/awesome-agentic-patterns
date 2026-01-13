@@ -36,12 +36,12 @@
 - [x] 036 - Add required section order to `SCHEMA.md`.
 - [x] 037 - Add `related` semantics to `SCHEMA.md`.
 - [x] 038 - Add `anti_patterns` semantics to `SCHEMA.md`.
-- [ ] 039 - Add `llms.txt` format to `SCHEMA.md`.
-- [ ] 040 - Add `llms-full.txt` format to `SCHEMA.md`.
-- [ ] 041 - Add a `SCHEMA.md` link to `CONTRIBUTING.md`.
-- [ ] 042 - Add slug rules to `CONTRIBUTING.md`.
-- [ ] 043 - Add id rules to `CONTRIBUTING.md`.
-- [ ] 044 - Add required front matter list to `CONTRIBUTING.md`.
+- [x] 039 - Add `llms.txt` format to `SCHEMA.md`.
+- [x] 040 - Add `llms-full.txt` format to `SCHEMA.md`.
+- [x] 041 - Add a `SCHEMA.md` link to `CONTRIBUTING.md`.
+- [x] 042 - Add slug rules to `CONTRIBUTING.md`.
+- [x] 043 - Add id rules to `CONTRIBUTING.md`.
+- [x] 044 - Add required front matter list to `CONTRIBUTING.md`.
 - [ ] 045 - Add optional front matter list to `CONTRIBUTING.md`.
 - [ ] 046 - Add required section headings list to `CONTRIBUTING.md`.
 - [ ] 047 - Add required section order to `CONTRIBUTING.md`.
