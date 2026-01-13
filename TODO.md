@@ -1,0 +1,314 @@
+- [x] 001 - Record the launch milestone date in `SPECIFICATION.md` (2026-01-27).
+- [x] 002 - Record the deployment target in `SPECIFICATION.md` (Vercel).
+- [x] 003 - Record the package manager in `SPECIFICATION.md` (bun).
+- [x] 004 - Record the workspace layout in `SPECIFICATION.md` (monorepo with `apps/web`).
+- [x] 005 - Record MkDocs removal in `SPECIFICATION.md`.
+- [x] 006 - Record dark mode inclusion in `SPECIFICATION.md`.
+- [x] 007 - Record the Guides list in `SPECIFICATION.md`.
+- [x] 008 - Decide whether the Decision Explorer is rules-based or ML-assisted.
+- [x] 009 - Record the Decision Explorer approach decision in `SPECIFICATION.md`.
+- [ ] 010 - Decide whether to keep Cloudflare/GitHub Pages as a backup deployment.
+- [ ] 011 - Record the backup deployment decision in `SPECIFICATION.md`.
+- [ ] 012 - Decide between D3 and Visx for the graph implementation.
+- [ ] 013 - Record the graph library decision in `SPECIFICATION.md`.
+- [ ] 014 - Decide the content source approach for Astro (symlink vs loader).
+- [ ] 015 - Record the content source approach in `SPECIFICATION.md`.
+- [ ] 016 - Decide the validation runtime (Node/TS with bun vs Python).
+- [ ] 017 - Record the validation runtime decision in `SPECIFICATION.md`.
+- [ ] 018 - Decide the data pipeline runtime (Node/TS with bun vs Python).
+- [ ] 019 - Record the data pipeline runtime decision in `SPECIFICATION.md`.
+- [ ] 020 - Decide the data output root (`apps/web/public` vs root `public`).
+- [ ] 021 - Record the data output root decision in `SPECIFICATION.md`.
+- [ ] 022 - Create `SCHEMA.md`.
+- [ ] 023 - Add canonical slug rules to `SCHEMA.md`.
+- [ ] 024 - Add canonical id rules to `SCHEMA.md`.
+- [ ] 025 - Add required front matter fields list to `SCHEMA.md`.
+- [ ] 026 - Add optional front matter fields list to `SCHEMA.md`.
+- [ ] 027 - Add allowed `status` values to `SCHEMA.md`.
+- [ ] 028 - Add allowed `category` values to `SCHEMA.md`.
+- [ ] 029 - Add allowed `maturity` values to `SCHEMA.md`.
+- [ ] 030 - Add allowed `complexity` values to `SCHEMA.md`.
+- [ ] 031 - Add allowed `effort` values to `SCHEMA.md`.
+- [ ] 032 - Add allowed `impact` values to `SCHEMA.md`.
+- [ ] 033 - Add `summary` guidance to `SCHEMA.md`.
+- [ ] 034 - Add required section headings list to `SCHEMA.md`.
+- [ ] 035 - Add optional section headings list to `SCHEMA.md`.
+- [ ] 036 - Add required section order to `SCHEMA.md`.
+- [ ] 037 - Add `related` semantics to `SCHEMA.md`.
+- [ ] 038 - Add `anti_patterns` semantics to `SCHEMA.md`.
+- [ ] 039 - Add `llms.txt` format to `SCHEMA.md`.
+- [ ] 040 - Add `llms-full.txt` format to `SCHEMA.md`.
+- [ ] 041 - Add a `SCHEMA.md` link to `CONTRIBUTING.md`.
+- [ ] 042 - Add slug rules to `CONTRIBUTING.md`.
+- [ ] 043 - Add id rules to `CONTRIBUTING.md`.
+- [ ] 044 - Add required front matter list to `CONTRIBUTING.md`.
+- [ ] 045 - Add optional front matter list to `CONTRIBUTING.md`.
+- [ ] 046 - Add required section headings list to `CONTRIBUTING.md`.
+- [ ] 047 - Add required section order to `CONTRIBUTING.md`.
+- [ ] 048 - Add `summary` guidance to `CONTRIBUTING.md`.
+- [ ] 049 - Add `updated_at` guidance to `CONTRIBUTING.md`.
+- [ ] 050 - Add `id` field to `patterns/TEMPLATE.md`.
+- [ ] 051 - Add `slug` field to `patterns/TEMPLATE.md`.
+- [ ] 052 - Add `summary` field to `patterns/TEMPLATE.md`.
+- [ ] 053 - Add `maturity` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 054 - Add `complexity` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 055 - Add `effort` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 056 - Add `impact` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 057 - Add `signals` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 058 - Add `anti_signals` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 059 - Add `prerequisites` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 060 - Add `related` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 061 - Add `anti_patterns` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 062 - Add `tools` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 063 - Add `domains` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 064 - Add `updated_at` field placeholder to `patterns/TEMPLATE.md`.
+- [ ] 065 - Add optional sections list to `patterns/TEMPLATE.md`.
+- [ ] 066 - Add a `summary` example to `patterns/TEMPLATE.md`.
+- [ ] 067 - Add a front matter parsing dependency for validation.
+- [ ] 068 - Add a markdown heading parsing dependency for validation.
+- [ ] 069 - Create `scripts/validate-patterns` entry file.
+- [ ] 070 - Implement front matter parsing in `scripts/validate-patterns`.
+- [ ] 071 - Implement front matter schema validation in `scripts/validate-patterns`.
+- [ ] 072 - Implement required heading presence checks in `scripts/validate-patterns`.
+- [ ] 073 - Implement heading order checks in `scripts/validate-patterns`.
+- [ ] 074 - Implement duplicate heading detection in `scripts/validate-patterns`.
+- [ ] 075 - Implement file-path context in validation errors.
+- [ ] 076 - Implement nonzero exit codes for validation failures.
+- [ ] 077 - Add `validate:patterns` script to root `package.json`.
+- [ ] 078 - Add `lint_patterns` target to `Makefile` if keeping Makefile.
+- [ ] 079 - Add validation step to `.github/workflows/deploy.yml`.
+- [ ] 080 - Add parsing dependencies for the data pipeline runtime.
+- [ ] 081 - Create `scripts/build-data` entry file.
+- [ ] 082 - Implement pattern file discovery in `scripts/build-data`.
+- [ ] 083 - Implement front matter parsing in `scripts/build-data`.
+- [ ] 084 - Implement required section extraction in `scripts/build-data`.
+- [ ] 085 - Implement optional section extraction in `scripts/build-data`.
+- [ ] 086 - Implement `summary` fallback logic in `scripts/build-data`.
+- [ ] 087 - Implement `slug` fallback logic in `scripts/build-data`.
+- [ ] 088 - Implement `id` fallback logic in `scripts/build-data`.
+- [ ] 089 - Implement `updated_at` fallback logic in `scripts/build-data`.
+- [ ] 090 - Implement `patterns.json` output writer in `scripts/build-data`.
+- [ ] 091 - Implement per-pattern JSON output writer in `scripts/build-data`.
+- [ ] 092 - Implement `graph.json` output writer in `scripts/build-data`.
+- [ ] 093 - Implement `llms.txt` output writer in `scripts/build-data`.
+- [ ] 094 - Implement `llms-full.txt` output writer in `scripts/build-data`.
+- [ ] 095 - Implement `sitemap.xml` output writer in `scripts/build-data`.
+- [ ] 096 - Implement RSS or Atom output writer in `scripts/build-data`.
+- [ ] 097 - Add `build:data` script to root `package.json`.
+- [ ] 098 - Add data pipeline step to `.github/workflows/deploy.yml`.
+- [ ] 099 - Create `scripts/migrate-patterns` entry file.
+- [ ] 100 - Implement slug derivation in `scripts/migrate-patterns`.
+- [ ] 101 - Implement id derivation in `scripts/migrate-patterns`.
+- [ ] 102 - Implement summary placeholder generation in `scripts/migrate-patterns`.
+- [ ] 103 - Implement `updated_at` insertion in `scripts/migrate-patterns`.
+- [ ] 104 - Implement dry-run option in `scripts/migrate-patterns`.
+- [ ] 105 - Run `scripts/migrate-patterns` in dry-run mode.
+- [ ] 106 - Run `scripts/migrate-patterns` in write mode.
+- [ ] 107 - Review generated summaries for accuracy.
+- [ ] 108 - Replace placeholder summaries with real summaries.
+- [ ] 109 - Commit front matter updates from migration.
+- [ ] 110 - Add `workspaces` to root `package.json` for `apps/web`.
+- [ ] 111 - Add root scripts to run `bun --cwd apps/web dev|build|preview`.
+- [ ] 112 - Create `apps/web` directory.
+- [ ] 113 - Initialize Astro project in `apps/web` with bun.
+- [ ] 114 - Add `astro.config.mjs` to `apps/web`.
+- [ ] 115 - Set `site` in `apps/web/astro.config.mjs`.
+- [ ] 116 - Set `base` in `apps/web/astro.config.mjs`.
+- [ ] 117 - Add MDX integration to `apps/web/astro.config.mjs`.
+- [ ] 118 - Add `apps/web/src/content/config.ts`.
+- [ ] 119 - Define the `patterns` collection schema in `apps/web/src/content/config.ts`.
+- [ ] 120 - Define the `guides` collection schema in `apps/web/src/content/config.ts`.
+- [ ] 121 - Define the `packs` collection schema in `apps/web/src/content/config.ts`.
+- [ ] 122 - Implement the chosen pattern content source approach.
+- [ ] 123 - Add `apps/web/src/styles/global.css`.
+- [ ] 124 - Define light-mode color tokens in `global.css`.
+- [ ] 125 - Define dark-mode color tokens in `global.css`.
+- [ ] 126 - Define spacing tokens in `global.css`.
+- [ ] 127 - Define type scale tokens in `global.css`.
+- [ ] 128 - Choose a heading font family.
+- [ ] 129 - Choose a body font family.
+- [ ] 130 - Choose a code font family.
+- [ ] 131 - Add `apps/web/src/layouts/BaseLayout.astro`.
+- [ ] 132 - Add `apps/web/src/components/Header.astro`.
+- [ ] 133 - Add `apps/web/src/components/Footer.astro`.
+- [ ] 134 - Add primary nav links to `Header.astro`.
+- [ ] 135 - Add a theme toggle slot to `Header.astro`.
+- [ ] 136 - Add social links to `Footer.astro`.
+- [ ] 137 - Add font loading to `BaseLayout.astro`.
+- [ ] 138 - Add default SEO tags to `BaseLayout.astro`.
+- [ ] 139 - Add Open Graph tags to `BaseLayout.astro`.
+- [ ] 140 - Add Twitter card tags to `BaseLayout.astro`.
+- [ ] 141 - Set a `data-theme` attribute on `html` in `BaseLayout.astro`.
+- [ ] 142 - Apply background and text colors via CSS variables in `global.css`.
+- [ ] 143 - Apply dark-mode background and text colors via CSS variables.
+- [ ] 144 - Add `favicon.ico` to `apps/web/public`.
+- [ ] 145 - Add `site.webmanifest` to `apps/web/public`.
+- [ ] 146 - Add social preview image to `apps/web/public`.
+- [ ] 147 - Add `robots.txt` to `apps/web/public`.
+- [ ] 148 - Add `CNAME` to `apps/web/public` if needed.
+- [ ] 149 - Add `apps/web/src/pages/404.astro`.
+- [ ] 150 - Add the chosen graph visualization dependency.
+- [ ] 151 - Add Pagefind dependency if required by the build.
+- [ ] 152 - Create `PatternCard.astro`.
+- [ ] 153 - Create `PatternMeta.astro`.
+- [ ] 154 - Create `TagPill.astro`.
+- [ ] 155 - Create `SectionNav.astro`.
+- [ ] 156 - Create `CopyButton.astro`.
+- [ ] 157 - Create `ThemeToggle.astro`.
+- [ ] 158 - Add toggle button markup to `ThemeToggle.astro`.
+- [ ] 159 - Add `aria-label` and focus styles to `ThemeToggle.astro`.
+- [ ] 160 - Add client script to toggle `data-theme` on `html`.
+- [ ] 161 - Read `prefers-color-scheme` on first load.
+- [ ] 162 - Persist theme preference in `localStorage`.
+- [ ] 163 - Create `CompareTable.astro`.
+- [ ] 164 - Create `FilterPanel.astro`.
+- [ ] 165 - Create `SearchBox.astro`.
+- [ ] 166 - Create `PatternList.astro`.
+- [ ] 167 - Create `Badge.astro`.
+- [ ] 168 - Create `MetaPill.astro`.
+- [ ] 169 - Create `apps/web/src/pages/index.astro`.
+- [ ] 170 - Add hero copy to the home page.
+- [ ] 171 - Add hero CTA buttons to the home page.
+- [ ] 172 - Add entry point cards to the home page.
+- [ ] 173 - Add featured patterns section to the home page.
+- [ ] 174 - Add featured packs section to the home page.
+- [ ] 175 - Add latest updates section to the home page.
+- [ ] 176 - Create `apps/web/src/pages/patterns/index.astro`.
+- [ ] 177 - Render pattern cards from `patterns.json`.
+- [ ] 178 - Add category filter UI to the patterns index.
+- [ ] 179 - Add tag filter UI to the patterns index.
+- [ ] 180 - Add maturity filter UI to the patterns index.
+- [ ] 181 - Add complexity filter UI to the patterns index.
+- [ ] 182 - Add domain filter UI to the patterns index.
+- [ ] 183 - Add status filter UI to the patterns index.
+- [ ] 184 - Sync filter state to URL parameters.
+- [ ] 185 - Add a clear-filters button.
+- [ ] 186 - Create `apps/web/src/pages/patterns/[slug].astro`.
+- [ ] 187 - Load pattern data by slug.
+- [ ] 188 - Render pattern title and summary.
+- [ ] 189 - Render authors list.
+- [ ] 190 - Render metadata pills.
+- [ ] 191 - Render section navigation.
+- [ ] 192 - Render Problem section body.
+- [ ] 193 - Render Solution section body.
+- [ ] 194 - Render How to use it section body.
+- [ ] 195 - Render Trade-offs section body.
+- [ ] 196 - Render References section body.
+- [ ] 197 - Render optional sections when present.
+- [ ] 198 - Add "Copy as Markdown" button.
+- [ ] 199 - Add "Copy as JSON" button.
+- [ ] 200 - Add related patterns list.
+- [ ] 201 - Add anti-patterns list.
+- [ ] 202 - Add pattern source block.
+- [ ] 203 - Add section anchor IDs to headings.
+- [ ] 204 - Create `apps/web/src/pages/compare.astro`.
+- [ ] 205 - Add pattern selection UI to compare page.
+- [ ] 206 - Parse selected IDs from query params.
+- [ ] 207 - Render compare table for selected patterns.
+- [ ] 208 - Add share-link button.
+- [ ] 209 - Create `apps/web/src/pages/decision.astro`.
+- [ ] 210 - Create `apps/web/src/data/decision-questions.json`.
+- [ ] 211 - Render the first question from the data file.
+- [ ] 212 - Implement answer state handling.
+- [ ] 213 - Implement rules-based recommendation mapping.
+- [ ] 214 - Render recommendations list.
+- [ ] 215 - Render recommendation rationale text.
+- [ ] 216 - Add restart button.
+- [ ] 217 - Create `apps/web/src/pages/graph.astro`.
+- [ ] 218 - Load `graph.json` data.
+- [ ] 219 - Render graph nodes and edges.
+- [ ] 220 - Add hover tooltip for nodes.
+- [ ] 221 - Add category filter UI to graph page.
+- [ ] 222 - Add tag filter UI to graph page.
+- [ ] 223 - Add maturity filter UI to graph page.
+- [ ] 224 - Add domain filter UI to graph page.
+- [ ] 225 - Add detail panel for selected node.
+- [ ] 226 - Add link to pattern page from graph detail panel.
+- [ ] 227 - Create `apps/web/src/pages/packs/index.astro`.
+- [ ] 228 - Create `apps/web/src/content/packs` directory.
+- [ ] 229 - Add pack entry `coding-agent-mvp.mdx`.
+- [ ] 230 - Add pack entry `safety-first-stack.mdx`.
+- [ ] 231 - Create `apps/web/src/pages/packs/[slug].astro`.
+- [ ] 232 - Render pack title and summary on pack detail pages.
+- [ ] 233 - Render pack pattern list on pack detail pages.
+- [ ] 234 - Create `apps/web/src/pages/guides/index.astro`.
+- [ ] 235 - Create `apps/web/src/content/guides` directory.
+- [ ] 236 - Add guide entry `pattern-selection.mdx`.
+- [ ] 237 - Add guide entry `help.mdx` from `HELP.md`.
+- [ ] 238 - Add guide entry `learnings.mdx` from `LEARNINGS.md`.
+- [ ] 239 - Add guide entry `pattern-labeling.mdx` from `PATTERN-LABELING.md`.
+- [ ] 240 - Add guide entry `migration-to-git-labels.mdx` from `MIGRATION-TO-GIT-LABELS.md`.
+- [ ] 241 - Create `apps/web/src/pages/guides/[slug].astro`.
+- [ ] 242 - Render guide content on guide detail pages.
+- [ ] 243 - Create `apps/web/src/pages/contribute.astro`.
+- [ ] 244 - Add `CONTRIBUTING.md` link to the Contribute page.
+- [ ] 245 - Add `patterns/TEMPLATE.md` link to the Contribute page.
+- [ ] 246 - Add Pagefind build integration.
+- [ ] 247 - Add Pagefind index output to `apps/web/public`.
+- [ ] 248 - Add search input to the header.
+- [ ] 249 - Render search results panel.
+- [ ] 250 - Wire search input to Pagefind queries.
+- [ ] 251 - Add recently updated section using `updated_at`.
+- [ ] 252 - Add "new" badge logic using `updated_at`.
+- [ ] 253 - Add "updated" badge logic using `updated_at`.
+- [ ] 254 - Add category counts to filter UI.
+- [ ] 255 - Add `llms.txt` documentation section to `README.md`.
+- [ ] 256 - Add "Copy prompt pack" button on the compare page.
+- [ ] 257 - Implement prompt pack generator for selected patterns.
+- [ ] 258 - Add citation format definition to `SPECIFICATION.md`.
+- [ ] 259 - Add citation copy UI to pattern pages.
+- [ ] 260 - Add stable section IDs for citations.
+- [ ] 261 - Add Mermaid support to Astro markdown rendering.
+- [ ] 262 - Add Mermaid styling to `global.css`.
+- [ ] 263 - Port the pattern source block into an Astro component.
+- [ ] 264 - Render the pattern source block on pattern pages.
+- [ ] 265 - Enforce absolute asset paths in markdown rendering.
+- [ ] 266 - Map existing MkDocs URLs to new routes.
+- [ ] 267 - Generate a redirects file for Vercel.
+- [ ] 268 - Configure Vercel to use the redirects file.
+- [ ] 269 - Decide the future of `scripts/build_readme.py`.
+- [ ] 270 - Remove `mkdocs.yaml` from the repo.
+- [ ] 271 - Remove `requirements.txt` from the repo.
+- [ ] 272 - Remove the `overrides/` directory from the repo.
+- [ ] 273 - Remove the `docs/` directory from the repo.
+- [ ] 274 - Remove the `site/` directory from the repo.
+- [ ] 275 - Update `AGENT.md` to remove MkDocs commands.
+- [ ] 276 - Add Astro + bun commands to `AGENT.md`.
+- [ ] 277 - Update `CLAUDE.md` to remove MkDocs commands.
+- [ ] 278 - Add Astro + bun commands to `CLAUDE.md`.
+- [ ] 279 - Update `Makefile` to remove MkDocs targets.
+- [ ] 280 - Add Astro build targets to `Makefile` if needed.
+- [ ] 281 - Remove `wrangler.toml` from the repo.
+- [ ] 282 - Remove `wrangler` from root `package.json`.
+- [ ] 283 - Update `DEPLOYMENT.md` to document Vercel deployment.
+- [ ] 284 - Update `README.md` to reference the new site.
+- [ ] 285 - Update `.github/workflows/deploy.yml` to run Astro build checks only.
+- [ ] 286 - Update workflow artifact path to Astro `dist/`.
+- [ ] 287 - Remove Python setup and MkDocs build steps from `.github/workflows/deploy.yml`.
+- [ ] 288 - Remove the Cloudflare deploy step from `.github/workflows/deploy.yml`.
+- [ ] 289 - Add `vercel.json` with `apps/web` root, `bun run build`, and `dist` output.
+- [ ] 290 - Add `vercel.json` redirects/rewrites for legacy routes.
+- [ ] 291 - Run `bun run build` in `apps/web`.
+- [ ] 292 - Run `bun run preview` in `apps/web`.
+- [ ] 293 - Smoke test the home page in preview.
+- [ ] 294 - Smoke test the patterns index in preview.
+- [ ] 295 - Smoke test a pattern detail page in preview.
+- [ ] 296 - Smoke test the compare page in preview.
+- [ ] 297 - Smoke test the decision explorer in preview.
+- [ ] 298 - Smoke test the graph explorer in preview.
+- [ ] 299 - Run Lighthouse on the home page.
+- [ ] 300 - Save the Lighthouse report artifact.
+- [ ] 301 - Fix LCP regressions from Lighthouse.
+- [ ] 302 - Fix CLS regressions from Lighthouse.
+- [ ] 303 - Run axe accessibility scan on the home page.
+- [ ] 304 - Fix issues from the axe report.
+- [ ] 305 - Validate `patterns.json` output content.
+- [ ] 306 - Validate `patterns/{slug}.json` output content.
+- [ ] 307 - Validate `llms.txt` output content.
+- [ ] 308 - Validate `llms-full.txt` output content.
+- [ ] 309 - Deploy a preview build to Vercel.
+- [ ] 310 - Collect feedback from stakeholders.
+- [ ] 311 - Create follow-up tasks from feedback.
+- [ ] 312 - Switch production to the new deployment.
+- [ ] 313 - Announce the redesign in `README.md`.
+- [ ] 314 - Add a release note entry for the redesign.
