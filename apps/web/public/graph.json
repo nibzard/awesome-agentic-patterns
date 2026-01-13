@@ -1,0 +1,789 @@
+{
+  "nodes": [
+    {
+      "id": "reflection-loop",
+      "title": "Reflection Loop",
+      "category": "Feedback Loops",
+      "status": "established",
+      "slug": "reflection"
+    },
+    {
+      "id": "continuous-autonomous-task-loop-pattern",
+      "title": "Continuous Autonomous Task Loop Pattern",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "continuous-autonomous-task-loop-pattern"
+    },
+    {
+      "id": "tool-use-incentivization-via-reward-shaping",
+      "title": "Tool Use Incentivization via Reward Shaping",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "tool-use-incentivization-via-reward-shaping"
+    },
+    {
+      "id": "asynchronous-coding-agent-pipeline",
+      "title": "Asynchronous Coding Agent Pipeline",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "asynchronous-coding-agent-pipeline"
+    },
+    {
+      "id": "agent-friendly-workflow-design",
+      "title": "Agent-Friendly Workflow Design",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "agent-friendly-workflow-design"
+    },
+    {
+      "id": "isolated-vm-per-rl-rollout",
+      "title": "Isolated VM per RL Rollout",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "isolated-vm-per-rl-rollout"
+    },
+    {
+      "id": "no-token-limit-magic",
+      "title": "No-Token-Limit Magic",
+      "category": "Reliability & Eval",
+      "status": "experimental-but-awesome",
+      "slug": "no-token-limit-magic"
+    },
+    {
+      "id": "human-in-the-loop-approval-framework",
+      "title": "Human-in-the-Loop Approval Framework",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "human-in-loop-approval-framework"
+    },
+    {
+      "id": "stop-hook-auto-continue-pattern",
+      "title": "Stop Hook Auto-Continue Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "stop-hook-auto-continue-pattern"
+    },
+    {
+      "id": "structured-output-specification",
+      "title": "Structured Output Specification",
+      "category": "Reliability & Eval",
+      "status": "established",
+      "slug": "structured-output-specification"
+    },
+    {
+      "id": "shell-command-contextualization",
+      "title": "Shell Command Contextualization",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "shell-command-contextualization"
+    },
+    {
+      "id": "context-minimization-pattern",
+      "title": "Context-Minimization Pattern",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "context-minimization-pattern"
+    },
+    {
+      "id": "code-mode-mcp-tool-interface-improvement-pattern",
+      "title": "Code Mode MCP Tool Interface Improvement Pattern",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "code-first-tool-interface-pattern"
+    },
+    {
+      "id": "filesystem-based-agent-state",
+      "title": "Filesystem-Based Agent State",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "filesystem-based-agent-state"
+    },
+    {
+      "id": "anti-reward-hacking-grader-design",
+      "title": "Anti-Reward-Hacking Grader Design",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "anti-reward-hacking-grader-design"
+    },
+    {
+      "id": "team-shared-agent-configuration-as-code",
+      "title": "Team-Shared Agent Configuration as Code",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "team-shared-agent-configuration"
+    },
+    {
+      "id": "self-critique-evaluator-loop",
+      "title": "Self-Critique Evaluator Loop",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "self-critique-evaluator-loop"
+    },
+    {
+      "id": "cli-native-agent-orchestration",
+      "title": "CLI-Native Agent Orchestration",
+      "category": "Tool Use & Environment",
+      "status": "proposed",
+      "slug": "cli-native-agent-orchestration"
+    },
+    {
+      "id": "democratization-of-tooling-via-agents",
+      "title": "Democratization of Tooling via Agents",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "democratization-of-tooling-via-agents"
+    },
+    {
+      "id": "chain-of-thought-monitoring-interruption",
+      "title": "Chain-of-Thought Monitoring & Interruption",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "chain-of-thought-monitoring-interruption"
+    },
+    {
+      "id": "swarm-migration-pattern",
+      "title": "Swarm Migration Pattern",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "swarm-migration-pattern"
+    },
+    {
+      "id": "code-then-execute-pattern",
+      "title": "Code-Then-Execute Pattern",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "code-then-execute-pattern"
+    },
+    {
+      "id": "skill-library-evolution",
+      "title": "Skill Library Evolution",
+      "category": "Learning & Adaptation",
+      "status": "established",
+      "slug": "skill-library-evolution"
+    },
+    {
+      "id": "llm-map-reduce-pattern",
+      "title": "LLM Map-Reduce Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "llm-map-reduce-pattern"
+    },
+    {
+      "id": "graph-of-thoughts-got",
+      "title": "Graph of Thoughts (GoT)",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "graph-of-thoughts"
+    },
+    {
+      "id": "context-window-anxiety-management",
+      "title": "Context Window Anxiety Management",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "context-window-anxiety-management"
+    },
+    {
+      "id": "multi-platform-webhook-triggers",
+      "title": "Multi-Platform Webhook Triggers",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "multi-platform-webhook-triggers"
+    },
+    {
+      "id": "tree-of-thought-reasoning",
+      "title": "Tree-of-Thought Reasoning",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "tree-of-thought-reasoning"
+    },
+    {
+      "id": "specification-driven-agent-development",
+      "title": "Specification-Driven Agent Development",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "specification-driven-agent-development"
+    },
+    {
+      "id": "proactive-agent-state-externalization",
+      "title": "Proactive Agent State Externalization",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "proactive-agent-state-externalization"
+    },
+    {
+      "id": "initializer-maintainer-dual-agent-architecture",
+      "title": "Initializer-Maintainer Dual Agent Architecture",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "initializer-maintainer-dual-agent"
+    },
+    {
+      "id": "spec-as-test-feedback-loop",
+      "title": "Spec-As-Test Feedback Loop",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "spec-as-test-feedback-loop"
+    },
+    {
+      "id": "pii-tokenization",
+      "title": "PII Tokenization",
+      "category": "Security & Safety",
+      "status": "established",
+      "slug": "pii-tokenization"
+    },
+    {
+      "id": "oracle-and-worker-multi-model-approach",
+      "title": "Oracle and Worker Multi-Model Approach",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "oracle-and-worker-multi-model"
+    },
+    {
+      "id": "curated-code-context-window",
+      "title": "Curated Code Context Window",
+      "category": "Context & Memory",
+      "status": "validated-in-production",
+      "slug": "curated-code-context-window"
+    },
+    {
+      "id": "cli-first-skill-design",
+      "title": "CLI-First Skill Design",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "cli-first-skill-design"
+    },
+    {
+      "id": "progressive-complexity-escalation",
+      "title": "Progressive Complexity Escalation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "progressive-complexity-escalation"
+    },
+    {
+      "id": "conditional-parallel-tool-execution",
+      "title": "Conditional Parallel Tool Execution",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "parallel-tool-execution"
+    },
+    {
+      "id": "llm-observability",
+      "title": "LLM Observability",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "llm-observability"
+    },
+    {
+      "id": "multi-platform-communication-aggregation",
+      "title": "Multi-Platform Communication Aggregation",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "multi-platform-communication-aggregation"
+    },
+    {
+      "id": "code-over-api-pattern",
+      "title": "Code-Over-API Pattern",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "code-over-api-pattern"
+    },
+    {
+      "id": "agent-reinforcement-fine-tuning-agent-rft",
+      "title": "Agent Reinforcement Fine-Tuning (Agent RFT)",
+      "category": "Learning & Adaptation",
+      "status": "emerging",
+      "slug": "agent-reinforcement-fine-tuning"
+    },
+    {
+      "id": "merged-code-language-skill-model",
+      "title": "Merged Code + Language Skill Model",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "merged-code-language-skill-model"
+    },
+    {
+      "id": "hybrid-llmcode-workflow-coordinator",
+      "title": "Hybrid LLM/Code Workflow Coordinator",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "hybrid-llm-code-workflow-coordinator"
+    },
+    {
+      "id": "agent-driven-research",
+      "title": "Agent-Driven Research",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "agent-driven-research"
+    },
+    {
+      "id": "disposable-scaffolding-over-durable-features",
+      "title": "Disposable Scaffolding Over Durable Features",
+      "category": "Orchestration & Control",
+      "status": "best-practice",
+      "slug": "disposable-scaffolding-over-durable-features"
+    },
+    {
+      "id": "egress-lockdown-no-exfiltration-channel",
+      "title": "Egress Lockdown (No-Exfiltration Channel)",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "egress-lockdown-no-exfiltration-channel"
+    },
+    {
+      "id": "compounding-engineering-pattern",
+      "title": "Compounding Engineering Pattern",
+      "category": "Learning & Adaptation",
+      "status": "emerging",
+      "slug": "compounding-engineering-pattern"
+    },
+    {
+      "id": "visual-ai-multimodal-integration",
+      "title": "Visual AI Multimodal Integration",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "visual-ai-multimodal-integration"
+    },
+    {
+      "id": "deterministic-security-scanning-build-loop",
+      "title": "Deterministic Security Scanning Build Loop",
+      "category": "Security & Safety",
+      "status": "proposed",
+      "slug": "deterministic-security-scanning-build-loop"
+    },
+    {
+      "id": "action-selector-pattern",
+      "title": "Action-Selector Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "action-selector-pattern"
+    },
+    {
+      "id": "workflow-evals-with-mocked-tools",
+      "title": "Workflow Evals with Mocked Tools",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "workflow-evals-with-mocked-tools"
+    },
+    {
+      "id": "memory-synthesis-from-execution-logs",
+      "title": "Memory Synthesis from Execution Logs",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "memory-synthesis-from-execution-logs"
+    },
+    {
+      "id": "lethal-trifecta-threat-model",
+      "title": "Lethal Trifecta Threat Model",
+      "category": "Reliability & Eval",
+      "status": "best-practice",
+      "slug": "lethal-trifecta-threat-model"
+    },
+    {
+      "id": "multi-model-orchestration-for-complex-edits",
+      "title": "Multi-Model Orchestration for Complex Edits",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "multi-model-orchestration-for-complex-edits"
+    },
+    {
+      "id": "inference-healed-code-review-reward",
+      "title": "Inference-Healed Code Review Reward",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "inference-healed-code-review-reward"
+    },
+    {
+      "id": "iterative-multi-agent-brainstorming",
+      "title": "Iterative Multi-Agent Brainstorming",
+      "category": "Orchestration & Control",
+      "status": "experimental-but-awesome",
+      "slug": "iterative-multi-agent-brainstorming"
+    },
+    {
+      "id": "variance-based-rl-sample-selection",
+      "title": "Variance-Based RL Sample Selection",
+      "category": "Learning & Adaptation",
+      "status": "emerging",
+      "slug": "variance-based-rl-sample-selection"
+    },
+    {
+      "id": "tool-use-steering-via-prompting",
+      "title": "Tool Use Steering via Prompting",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "tool-use-steering-via-prompting"
+    },
+    {
+      "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
+      "title": "Dogfooding with Rapid Iteration for Agent Improvement",
+      "category": "Feedback Loops",
+      "status": "best-practice",
+      "slug": "dogfooding-with-rapid-iteration-for-agent-improvement"
+    },
+    {
+      "id": "autonomous-workflow-agent-architecture",
+      "title": "Autonomous Workflow Agent Architecture",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "autonomous-workflow-agent-architecture"
+    },
+    {
+      "id": "memory-reinforcement-learning-memrl",
+      "title": "Memory Reinforcement Learning (MemRL)",
+      "category": "Learning & Adaptation",
+      "status": "proposed",
+      "slug": "memory-reinforcement-learning-memrl"
+    },
+    {
+      "id": "spectrum-of-control-blended-initiative",
+      "title": "Spectrum of Control / Blended Initiative",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "spectrum-of-control-blended-initiative"
+    },
+    {
+      "id": "ai-assisted-code-review-verification",
+      "title": "AI-Assisted Code Review / Verification",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "ai-assisted-code-review-verification"
+    },
+    {
+      "id": "criticgpt-style-code-review",
+      "title": "CriticGPT-Style Code Review",
+      "category": "Reliability & Eval",
+      "status": "validated-in-production",
+      "slug": "criticgpt-style-evaluation"
+    },
+    {
+      "id": "coding-agent-ci-feedback-loop",
+      "title": "Coding Agent CI Feedback Loop",
+      "category": "Feedback Loops",
+      "status": "best-practice",
+      "slug": "coding-agent-ci-feedback-loop"
+    },
+    {
+      "id": "rlaif-reinforcement-learning-from-ai-feedback",
+      "title": "RLAIF (Reinforcement Learning from AI Feedback)",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "rlaif-reinforcement-learning-from-ai-feedback"
+    },
+    {
+      "id": "self-rewriting-meta-prompt-loop",
+      "title": "Self-Rewriting Meta-Prompt Loop",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "self-rewriting-meta-prompt-loop"
+    },
+    {
+      "id": "proactive-trigger-vocabulary",
+      "title": "Proactive Trigger Vocabulary",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "proactive-trigger-vocabulary"
+    },
+    {
+      "id": "progressive-autonomy-with-model-evolution",
+      "title": "Progressive Autonomy with Model Evolution",
+      "category": "Orchestration & Control",
+      "status": "best-practice",
+      "slug": "progressive-autonomy-with-model-evolution"
+    },
+    {
+      "id": "agent-first-tooling-and-logging",
+      "title": "Agent-First Tooling and Logging",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "agent-first-tooling-and-logging"
+    },
+    {
+      "id": "progressive-disclosure-for-large-files",
+      "title": "Progressive Disclosure for Large Files",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "progressive-disclosure-large-files"
+    },
+    {
+      "id": "language-agent-tree-search-lats",
+      "title": "Language Agent Tree Search (LATS)",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "language-agent-tree-search-lats"
+    },
+    {
+      "id": "agent-assisted-scaffolding",
+      "title": "Agent-Assisted Scaffolding",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "agent-assisted-scaffolding"
+    },
+    {
+      "id": "layered-configuration-context",
+      "title": "Layered Configuration Context",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "layered-configuration-context"
+    },
+    {
+      "id": "virtual-machine-operator-agent",
+      "title": "Virtual Machine Operator Agent",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "virtual-machine-operator-agent"
+    },
+    {
+      "id": "seamless-background-to-foreground-handoff",
+      "title": "Seamless Background-to-Foreground Handoff",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "seamless-background-to-foreground-handoff"
+    },
+    {
+      "id": "opponent-processor-multi-agent-debate-pattern",
+      "title": "Opponent Processor / Multi-Agent Debate Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "opponent-processor-multi-agent-debate"
+    },
+    {
+      "id": "iterative-prompt-skill-refinement",
+      "title": "Iterative Prompt & Skill Refinement",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "iterative-prompt-skill-refinement"
+    },
+    {
+      "id": "dynamic-context-injection",
+      "title": "Dynamic Context Injection",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "dynamic-context-injection"
+    },
+    {
+      "id": "tool-capability-compartmentalization",
+      "title": "Tool Capability Compartmentalization",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "tool-capability-compartmentalization"
+    },
+    {
+      "id": "agentic-search-over-vector-embeddings",
+      "title": "Agentic Search Over Vector Embeddings",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "agentic-search-over-vector-embeddings"
+    },
+    {
+      "id": "subagent-compilation-checker",
+      "title": "Subagent Compilation Checker",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "subagent-compilation-checker"
+    },
+    {
+      "id": "rich-feedback-loops-perfect-prompts",
+      "title": "Rich Feedback Loops > Perfect Prompts",
+      "category": "Feedback Loops",
+      "status": "validated-in-production",
+      "slug": "rich-feedback-loops"
+    },
+    {
+      "id": "ai-accelerated-learning-and-skill-development",
+      "title": "AI-Accelerated Learning and Skill Development",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "ai-accelerated-learning-and-skill-development"
+    },
+    {
+      "id": "latent-demand-product-discovery",
+      "title": "Latent Demand Product Discovery",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "latent-demand-product-discovery"
+    },
+    {
+      "id": "agent-sdk-for-programmatic-control",
+      "title": "Agent SDK for Programmatic Control",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "agent-sdk-for-programmatic-control"
+    },
+    {
+      "id": "dual-llm-pattern",
+      "title": "Dual LLM Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "dual-llm-pattern"
+    },
+    {
+      "id": "plan-then-execute-pattern",
+      "title": "Plan-Then-Execute Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "plan-then-execute-pattern"
+    },
+    {
+      "id": "parallel-tool-call-learning",
+      "title": "Parallel Tool Call Learning",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "parallel-tool-call-learning"
+    },
+    {
+      "id": "dynamic-code-injection-on-demand-file-fetch",
+      "title": "Dynamic Code Injection (On-Demand File Fetch)",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "dynamic-code-injection-on-demand-file-fetch"
+    },
+    {
+      "id": "inference-time-scaling",
+      "title": "Inference-Time Scaling",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "inference-time-scaling"
+    },
+    {
+      "id": "verbose-reasoning-transparency",
+      "title": "Verbose Reasoning Transparency",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "verbose-reasoning-transparency"
+    },
+    {
+      "id": "distributed-execution-with-cloud-workers",
+      "title": "Distributed Execution with Cloud Workers",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "distributed-execution-cloud-workers"
+    },
+    {
+      "id": "background-agent-with-ci-feedback",
+      "title": "Background Agent with CI Feedback",
+      "category": "Feedback Loops",
+      "status": "validated-in-production",
+      "slug": "background-agent-ci"
+    },
+    {
+      "id": "feature-list-as-immutable-contract",
+      "title": "Feature List as Immutable Contract",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "feature-list-as-immutable-contract"
+    },
+    {
+      "id": "abstracted-code-representation-for-review",
+      "title": "Abstracted Code Representation for Review",
+      "category": "UX & Collaboration",
+      "status": "proposed",
+      "slug": "abstracted-code-representation-for-review"
+    },
+    {
+      "id": "dual-use-tool-design",
+      "title": "Dual-Use Tool Design",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "dual-use-tool-design"
+    },
+    {
+      "id": "patch-steering-via-prompted-tool-selection",
+      "title": "Patch Steering via Prompted Tool Selection",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "patch-steering-via-prompted-tool-selection"
+    },
+    {
+      "id": "sub-agent-spawning",
+      "title": "Sub-Agent Spawning",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "sub-agent-spawning"
+    },
+    {
+      "id": "llm-friendly-api-design",
+      "title": "LLM-Friendly API Design",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "llm-friendly-api-design"
+    },
+    {
+      "id": "curated-file-context-window",
+      "title": "Curated File Context Window",
+      "category": "Context & Memory",
+      "status": "best-practice",
+      "slug": "curated-file-context-window"
+    },
+    {
+      "id": "progressive-tool-discovery",
+      "title": "Progressive Tool Discovery",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "progressive-tool-discovery"
+    },
+    {
+      "id": "three-stage-perception-architecture",
+      "title": "Three-Stage Perception Architecture",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "three-stage-perception-architecture"
+    },
+    {
+      "id": "extended-coherence-work-sessions",
+      "title": "Extended Coherence Work Sessions",
+      "category": "Reliability & Eval",
+      "status": "rapidly-improving",
+      "slug": "extended-coherence-work-sessions"
+    },
+    {
+      "id": "episodic-memory-retrieval-injection",
+      "title": "Episodic Memory Retrieval & Injection",
+      "category": "Context & Memory",
+      "status": "validated-in-production",
+      "slug": "episodic-memory-retrieval-injection"
+    },
+    {
+      "id": "self-discover-llm-self-composed-reasoning-structures",
+      "title": "Self-Discover: LLM Self-Composed Reasoning Structures",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "self-discover-reasoning-structures"
+    },
+    {
+      "id": "discrete-phase-separation",
+      "title": "Discrete Phase Separation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "discrete-phase-separation"
+    },
+    {
+      "id": "explicit-posterior-sampling-planner",
+      "title": "Explicit Posterior-Sampling Planner",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "explicit-posterior-sampling-planner"
+    },
+    {
+      "id": "inversion-of-control",
+      "title": "Inversion of Control",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "inversion-of-control"
+    },
+    {
+      "id": "versioned-constitution-governance",
+      "title": "Versioned Constitution Governance",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "versioned-constitution-governance"
+    },
+    {
+      "id": "agent-powered-codebase-qa-onboarding",
+      "title": "Agent-Powered Codebase Q&A / Onboarding",
+      "category": "Context & Memory",
+      "status": "validated-in-production",
+      "slug": "agent-powered-codebase-qa-onboarding"
+    }
+  ],
+  "edges": []
+}

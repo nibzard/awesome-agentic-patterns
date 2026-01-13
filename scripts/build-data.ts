@@ -226,6 +226,79 @@ function generateLlmsFullTxt(patterns: ParsedPattern[]): string {
 }
 
 /**
+ * Generate graph.json with pattern relationships (task 092)
+ */
+interface GraphNode {
+  id: string;
+  title: string;
+  category: string;
+  status: string;
+  slug: string;
+}
+
+interface GraphEdge {
+  source: string;
+  target: string;
+  type: "related" | "anti_pattern";
+}
+
+interface PatternGraph {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+}
+
+function generateGraphJson(patterns: ParsedPattern[]): string {
+  const nodes: GraphNode[] = [];
+  const edges: GraphEdge[] = [];
+  const slugToId = new Map<string, string>();
+
+  // Build nodes and slug-to-id mapping
+  for (const pattern of patterns) {
+    const id = pattern.frontMatter.id || generateIdFromTitle(pattern.frontMatter.title);
+    const slug = pattern.frontMatter.slug || pattern.fileName.replace(".md", "");
+
+    nodes.push({
+      id,
+      title: pattern.frontMatter.title,
+      category: pattern.frontMatter.category,
+      status: pattern.frontMatter.status,
+      slug,
+    });
+
+    slugToId.set(slug, id);
+  }
+
+  // Build edges from related and anti_patterns
+  for (const pattern of patterns) {
+    const sourceId = pattern.frontMatter.id || generateIdFromTitle(pattern.frontMatter.title);
+    const slug = pattern.frontMatter.slug || pattern.fileName.replace(".md", "");
+
+    // Related patterns
+    if (pattern.frontMatter.related) {
+      for (const relatedSlug of pattern.frontMatter.related) {
+        const targetId = slugToId.get(relatedSlug);
+        if (targetId) {
+          edges.push({ source: sourceId, target: targetId, type: "related" });
+        }
+      }
+    }
+
+    // Anti-patterns
+    if (pattern.frontMatter.anti_patterns) {
+      for (const antiSlug of pattern.frontMatter.anti_patterns) {
+        const targetId = slugToId.get(antiSlug);
+        if (targetId) {
+          edges.push({ source: sourceId, target: targetId, type: "anti_pattern" });
+        }
+      }
+    }
+  }
+
+  const graph: PatternGraph = { nodes, edges };
+  return JSON.stringify(graph, null, 2);
+}
+
+/**
  * Write output files
  */
 function writeOutputs(patterns: ParsedPattern[]): void {
@@ -263,7 +336,12 @@ function writeOutputs(patterns: ParsedPattern[]): void {
   }
   console.log(`Generated ${patterns.length} per-pattern JSON files`);
 
-  // TODO: Task 084-087 will add sitemap.xml, rss.xml, graph.json
+  // Write graph.json (task 092)
+  const graphJson = generateGraphJson(patterns);
+  writeFileSync(join(OUTPUT_DIR, "graph.json"), graphJson);
+  console.log(`Generated ${OUTPUT_DIR}/graph.json`);
+
+  // TODO: Task 084-087 will add sitemap.xml, rss.xml
 }
 
 /**
@@ -290,6 +368,7 @@ export default {
   generateIdFromTitle,
   getFileModDate,
   generatePatternsJson,
+  generateGraphJson,
   generateLlmsTxt,
   generateLlmsFullTxt,
 };
