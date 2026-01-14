@@ -9,13 +9,46 @@ const patterns = await fetch('https://agentic-patterns.com/patterns.json')
   .then(res => res.json())
   .catch(() => []);
 
-// Get unique values for filters
-const categories = [...new Set(patterns.map((p: any) => p.category))];
-const tags = [...new Set(patterns.flatMap((p: any) => p.tags || []))];
-const statuses = [...new Set(patterns.map((p: any) => p.status))];
-const maturities = [...new Set(patterns.map((p: any) => p.maturity).filter(Boolean))];
-const complexities = [...new Set(patterns.map((p: any) => p.complexity).filter(Boolean))];
-const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
+// Get unique values for filters with counts
+const categoryMap = patterns.reduce((acc: any, p: any) => {
+  acc[p.category] = (acc[p.category] || 0) + 1;
+  return acc;
+}, {});
+
+const categories = Object.entries(categoryMap)
+  .map(([category, count]) => ({ category, count }))
+  .sort((a, b) => b.count - a.count);
+
+const statusMap = patterns.reduce((acc: any, p: any) => {
+  acc[p.status] = (acc[p.status] || 0) + 1;
+  return acc;
+}, {});
+
+const statuses = Object.entries(statusMap)
+  .map(([status, count]) => ({ status, count }))
+  .sort((a, b) => b.count - a.count);
+
+const maturityMap = patterns.reduce((acc: any, p: any) => {
+  if (p.maturity) {
+    acc[p.maturity] = (acc[p.maturity] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+const maturities = Object.entries(maturityMap)
+  .map(([maturity, count]) => ({ maturity, count }))
+  .sort((a, b) => b.count - a.count);
+
+const complexityMap = patterns.reduce((acc: any, p: any) => {
+  if (p.complexity) {
+    acc[p.complexity] = (acc[p.complexity] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+const complexities = Object.entries(complexityMap)
+  .map(([complexity, count]) => ({ complexity, count }))
+  .sort((a, b) => b.count - a.count);
 ---
 
 <BaseLayout title="Patterns - Awesome Agentic Patterns">
@@ -38,9 +71,10 @@ const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
         <div class="filter-group">
           <h3 class="filter-group-title">Category</h3>
           <div class="filter-options">
-            {categories.map(category => (
+            {categories.map(({ category, count }) => (
               <a href={`/patterns?category=${encodeURIComponent(category)}`} class="filter-option">
-                {category}
+                <span class="filter-option-label">{category}</span>
+                <span class="filter-option-count">{count}</span>
               </a>
             ))}
           </div>
@@ -49,9 +83,10 @@ const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
         <div class="filter-group">
           <h3 class="filter-group-title">Status</h3>
           <div class="filter-options">
-            {statuses.map(status => (
+            {statuses.map(({ status, count }) => (
               <a href={`/patterns?status=${status}`} class="filter-option">
-                {status}
+                <span class="filter-option-label">{status}</span>
+                <span class="filter-option-count">{count}</span>
               </a>
             ))}
           </div>
@@ -60,9 +95,10 @@ const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
         <div class="filter-group">
           <h3 class="filter-group-title">Maturity</h3>
           <div class="filter-options">
-            {maturities.map(maturity => (
+            {maturities.map(({ maturity, count }) => (
               <a href={`/patterns?maturity=${maturity}`} class="filter-option">
-                {maturity}
+                <span class="filter-option-label">{maturity}</span>
+                <span class="filter-option-count">{count}</span>
               </a>
             ))}
           </div>
@@ -71,9 +107,10 @@ const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
         <div class="filter-group">
           <h3 class="filter-group-title">Complexity</h3>
           <div class="filter-options">
-            {complexities.map(complexity => (
+            {complexities.map(({ complexity, count }) => (
               <a href={`/patterns?complexity=${complexity}`} class="filter-option">
-                {complexity}
+                <span class="filter-option-label">{complexity}</span>
+                <span class="filter-option-count">{count}</span>
               </a>
             ))}
           </div>
@@ -183,6 +220,10 @@ const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
   }
 
   .filter-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
     font-size: 0.875rem;
     color: var(--color-text-muted);
     text-decoration: none;
@@ -194,6 +235,20 @@ const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
   .filter-option:hover {
     color: var(--color-text);
     background-color: var(--color-border);
+  }
+
+  .filter-option-label {
+    flex: 1;
+  }
+
+  .filter-option-count {
+    flex-shrink: 0;
+    padding: 2px 6px;
+    background-color: var(--color-border);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
   }
 
   .clear-filters {

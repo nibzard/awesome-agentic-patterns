@@ -251,7 +251,7 @@
 - [x] 251 - Add recently updated section using `updated_at`. [Added to home page with 30-day filter]
 - [x] 252 - Add "new" badge logic using `updated_at`. [Added with 7-day filter and green badge]
 - [x] 253 - Add "updated" badge logic using `updated_at`. [Added with 30-day filter and blue badge]
-- [ ] 254 - Add category counts to filter UI.
+- [x] 254 - Add category counts to filter UI. [Added counts for category, status, maturity, and complexity filters; sorted by count descending]
 - [ ] 255 - Add `llms.txt` documentation section to `README.md`.
 - [ ] 256 - Add "Copy prompt pack" button on the compare page.
 - [ ] 257 - Implement prompt pack generator for selected patterns.
