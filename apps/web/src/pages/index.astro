@@ -1,8 +1,207 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchBox from '../components/SearchBox.astro';
+import PatternList from '../components/PatternList.astro';
 ---
 
 <BaseLayout title="Awesome Agentic Patterns">
-  <h1>Awesome Agentic Patterns</h1>
-  <p>A curated catalogue of AI agent design patterns.</p>
+  <div class="home-hero">
+    <h1 class="home-title">Awesome Agentic Patterns</h1>
+    <p class="home-subtitle">
+      A curated catalogue of AI agent design patterns to help you build better AI systems.
+    </p>
+    <div class="home-cta">
+      <a href="/patterns" class="button button--primary">Browse Patterns</a>
+      <a href="/compare" class="button button--secondary">Compare Patterns</a>
+    </div>
+  </div>
+
+  <div class="home-section">
+    <div class="home-search">
+      <SearchBox placeholder="Search patterns..." />
+    </div>
+  </div>
+
+  <div class="home-section">
+    <h2 class="home-section-title">Featured Patterns</h2>
+    <p class="home-section-description">
+      Explore our hand-picked selection of essential AI agent patterns.
+    </p>
+    <!-- Pattern list will be added here when pattern loading is implemented -->
+    <div class="home-patterns-placeholder">
+      <a href="/patterns" class="home-patterns-link">View All Patterns →</a>
+    </div>
+  </div>
+
+  <div class="home-section">
+    <h2 class="home-section-title">Quick Start</h2>
+    <div class="home-cards">
+      <a href="/patterns?category=Orchestration%20%26%20Control" class="home-card">
+        <h3>Orchestration & Control</h3>
+        <p>Patterns for managing agent workflows and decision-making processes.</p>
+      </a>
+      <a href="/patterns?category=Feedback%20Loops" class="home-card">
+        <h3>Feedback Loops</h3>
+        <p>Self-improvement and evaluation patterns for AI agents.</p>
+      </a>
+      <a href="/patterns?category=Security%20%26%20Safety" class="home-card">
+        <h3>Security & Safety</h3>
+        <p>Patterns for building secure and reliable AI systems.</p>
+      </a>
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+  .home-hero {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .home-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.1;
+  }
+
+  .home-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+  }
+
+  .home-cta {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .button--primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .button--primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .button--secondary {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-divider);
+  }
+
+  .home-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .home-search {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .home-section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+  }
+
+  .home-section-description {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .home-patterns-placeholder {
+    text-align: center;
+    padding: var(--spacing-xl);
+  }
+
+  .home-patterns-link {
+    color: var(--color-primary);
+    font-size: 1.125rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .home-patterns-link:hover {
+    text-decoration: underline;
+  }
+
+  .home-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .home-card {
+    padding: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .home-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .home-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .home-card p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .home-title {
+      font-size: 2rem;
+    }
+
+    .home-subtitle {
+      font-size: 1rem;
+    }
+
+    .home-cta {
+      flex-direction: column;
+    }
+
+    .button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
