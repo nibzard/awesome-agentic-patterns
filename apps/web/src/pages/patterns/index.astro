@@ -1,0 +1,261 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SearchBox from '../../components/SearchBox.astro';
+import PatternList from '../../components/PatternList.astro';
+import PatternCard from '../../components/PatternCard.astro';
+
+// Load patterns data
+const patterns = await fetch('https://agentic-patterns.com/patterns.json')
+  .then(res => res.json())
+  .catch(() => []);
+
+// Get unique values for filters
+const categories = [...new Set(patterns.map((p: any) => p.category))];
+const tags = [...new Set(patterns.flatMap((p: any) => p.tags || []))];
+const statuses = [...new Set(patterns.map((p: any) => p.status))];
+const maturities = [...new Set(patterns.map((p: any) => p.maturity).filter(Boolean))];
+const complexities = [...new Set(patterns.map((p: any) => p.complexity).filter(Boolean))];
+const domains = [...new Set(patterns.flatMap((p: any) => p.domains || []))];
+---
+
+<BaseLayout title="Patterns - Awesome Agentic Patterns">
+  <div class="patterns-page">
+    <div class="patterns-header">
+      <h1>Patterns</h1>
+      <p class="patterns-subtitle">
+        Browse our comprehensive collection of AI agent design patterns.
+      </p>
+      <div class="patterns-search">
+        <SearchBox placeholder="Search patterns..." action="/patterns" />
+      </div>
+    </div>
+
+    <div class="patterns-layout">
+      <!-- Filter Sidebar -->
+      <aside class="patterns-filters">
+        <h2 class="patterns-filters-title">Filters</h2>
+
+        <div class="filter-group">
+          <h3 class="filter-group-title">Category</h3>
+          <div class="filter-options">
+            {categories.map(category => (
+              <a href={`/patterns?category=${encodeURIComponent(category)}`} class="filter-option">
+                {category}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group-title">Status</h3>
+          <div class="filter-options">
+            {statuses.map(status => (
+              <a href={`/patterns?status=${status}`} class="filter-option">
+                {status}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group-title">Maturity</h3>
+          <div class="filter-options">
+            {maturities.map(maturity => (
+              <a href={`/patterns?maturity=${maturity}`} class="filter-option">
+                {maturity}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group-title">Complexity</h3>
+          <div class="filter-options">
+            {complexities.map(complexity => (
+              <a href={`/patterns?complexity=${complexity}`} class="filter-option">
+                {complexity}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <a href="/patterns" class="clear-filters">Clear Filters</a>
+      </aside>
+
+      <!-- Pattern Grid -->
+      <div class="patterns-content">
+        <div class="patterns-count">
+          Showing {patterns.length} patterns
+        </div>
+
+        {patterns.length > 0 ? (
+          <div class="patterns-grid">
+            {patterns.map((pattern: any) => (
+              <PatternCard
+                title={pattern.title}
+                slug={pattern.slug}
+                summary={pattern.summary}
+                status={pattern.status}
+                category={pattern.category}
+                tags={pattern.tags}
+              />
+            ))}
+          </div>
+        ) : (
+          <div class="patterns-empty">
+            <p>No patterns found.</p>
+            <a href="/patterns" class="button">Clear Filters</a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .patterns-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .patterns-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .patterns-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .patterns-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .patterns-search {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .patterns-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+  }
+
+  .patterns-filters {
+    position: sticky;
+    top: 100px;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+  }
+
+  .patterns-filters-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .filter-group {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .filter-group-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .filter-option {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .filter-option:hover {
+    color: var(--color-text);
+    background-color: var(--color-border);
+  }
+
+  .clear-filters {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: var(--spacing-md);
+  }
+
+  .clear-filters:hover {
+    text-decoration: underline;
+  }
+
+  .patterns-content {
+    min-width: 0;
+  }
+
+  .patterns-count {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .patterns-empty {
+    text-align: center;
+    padding: var(--spacing-2xl);
+  }
+
+  .patterns-empty p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    background-color: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+  }
+
+  .button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  @media (max-width: 1024px) {
+    .patterns-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .patterns-filters {
+      position: static;
+    }
+  }
+</style>
