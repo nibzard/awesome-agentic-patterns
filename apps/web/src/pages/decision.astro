@@ -20,32 +20,30 @@ const initialQuestion = questions[0];
         <div class="question-progress">Question 1 of {questions.length}</div>
         <h2 class="question-title">{initialQuestion.question}</h2>
         <div class="question-options">
-          {initialQuestion.options.map((option) => {
-            const answersParam = encodeURIComponent(
-              JSON.stringify([{ questionId: initialQuestion.id, value: option.value }])
-            );
+          {
+            initialQuestion.options.map((option) => {
+              const answersParam = encodeURIComponent(
+                JSON.stringify([{ questionId: initialQuestion.id, value: option.value }])
+              );
 
-            return (
-              <a href={`/decision?answers=${answersParam}`} class="option-card">
-                <div class="option-header">
-                  <input type="radio" readonly />
-                  <span class="option-label">{option.label}</span>
-                </div>
-                <p class="option-description">{option.description}</p>
-              </a>
-            );
-          })}
+              return (
+                <a href={`/decision?answers=${answersParam}`} class="option-card">
+                  <div class="option-header">
+                    <input type="radio" readonly />
+                    <span class="option-label">{option.label}</span>
+                  </div>
+                  <p class="option-description">{option.description}</p>
+                </a>
+              );
+            })
+          }
         </div>
       </div>
     </div>
   </div>
 </BaseLayout>
 
-<script
-  type="application/json"
-  id="decision-questions"
-  set:html={JSON.stringify(questions)}
-></script>
+<script type="application/json" id="decision-questions" set:html={JSON.stringify(questions)} />
 
 <script>
   const questionsEl = document.getElementById('decision-questions');
@@ -111,7 +109,9 @@ const initialQuestion = questions[0];
       );
     } else if (answersMap.complexity === 'moderate') {
       patterns.push('Chain-of-Thought Monitoring', 'Reflection');
-      rationales.push('Moderately complex tasks benefit from structured reasoning and self-reflection.');
+      rationales.push(
+        'Moderately complex tasks benefit from structured reasoning and self-reflection.'
+      );
     }
 
     if (answersMap.memory === 'persistent') {
@@ -139,7 +139,9 @@ const initialQuestion = questions[0];
       );
     } else if (answersMap.tools === 'few') {
       patterns.push('Code-First Tool Interface Pattern', 'Tool Use Steering via Prompting');
-      rationales.push('For a small set of tools, focus on clear interfaces and effective prompting.');
+      rationales.push(
+        'For a small set of tools, focus on clear interfaces and effective prompting.'
+      );
     }
 
     if (answersMap.safety === 'high') {
@@ -154,7 +156,9 @@ const initialQuestion = questions[0];
       );
     } else if (answersMap.safety === 'medium') {
       patterns.push('Workflow Evals with Mocked Tools', 'LLM Observability');
-      rationales.push('Medium-risk applications benefit from evaluation and observability patterns.');
+      rationales.push(
+        'Medium-risk applications benefit from evaluation and observability patterns.'
+      );
     }
 
     return {

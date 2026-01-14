@@ -35,7 +35,6 @@ const _compareData = patterns.map((pattern) => {
     domains: pattern.domains || [],
   };
 });
-
 ---
 
 <BaseLayout title="Compare Patterns - Awesome Agentic Patterns">
@@ -88,14 +87,12 @@ const _compareData = patterns.map((pattern) => {
                   stroke="currentColor"
                   stroke-width="1.5"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+                  stroke-linejoin="round"></path>
                 <path
                   d="M6 6H10M6 9H10"
                   stroke="currentColor"
                   stroke-width="1.5"
-                  stroke-linecap="round"
-                />
+                  stroke-linecap="round"></path>
               </svg>
               Copy Prompt Pack
             </button>
@@ -113,13 +110,12 @@ const _compareData = patterns.map((pattern) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <rect width="64" height="64" rx="32" fill="var(--color-border)" />
+            <rect width="64" height="64" rx="32" fill="var(--color-border)"></rect>
             <path
               d="M20 32H44M32 20V44"
               stroke="var(--color-text-muted)"
               stroke-width="2"
-              stroke-linecap="round"
-            />
+              stroke-linecap="round"></path>
           </svg>
           <h2>Select Patterns to Compare</h2>
           <p>Choose 2 or more patterns from the list to see a side-by-side comparison.</p>
@@ -129,16 +125,12 @@ const _compareData = patterns.map((pattern) => {
   </div>
 </BaseLayout>
 
-<script
-  type="application/json"
-  id="compare-data"
-  set:html={JSON.stringify(_compareData)}
-></script>
+<script type="application/json" id="compare-data" set:html={JSON.stringify(_compareData)} />
 
 <script>
   const compareDataEl = document.getElementById('compare-data');
   const compareData = compareDataEl ? JSON.parse(compareDataEl.textContent || '[]') : [];
-  const maxCompare = {maxCompare};
+  const maxCompare = { maxCompare };
 
   const compareTable = document.getElementById('compare-table');
   const compareEmpty = document.getElementById('compare-empty');
@@ -197,7 +189,8 @@ const _compareData = patterns.map((pattern) => {
 
     prompt += '## Usage\n\n';
     prompt += 'Use these patterns as reference when designing your AI agent architecture. ';
-    prompt += 'Each pattern represents a proven approach to solving specific challenges in agent development.\n\n';
+    prompt +=
+      'Each pattern represents a proven approach to solving specific challenges in agent development.\n\n';
     prompt += 'For more details on each pattern, visit the individual pattern pages linked above.';
 
     return prompt;
@@ -256,9 +249,7 @@ const _compareData = patterns.map((pattern) => {
 
   const updateSelection = () => {
     const searchParams = new URLSearchParams(window.location.search);
-    const rawIds = (searchParams.get('ids') || '')
-      .split(',')
-      .filter(Boolean)
+    const rawIds = (searchParams.get('ids') || '').split(',').filter(Boolean);
     const selectedIds = rawIds.slice(0, maxCompare);
     const limited = rawIds.length > maxCompare;
 
