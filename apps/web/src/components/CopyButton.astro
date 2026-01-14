@@ -1,0 +1,93 @@
+---
+interface Props {
+  content: string;
+  label?: string;
+}
+
+const { content, label = 'Copy to clipboard' } = Astro.props;
+---
+
+<button
+  class="copy-button"
+  data-copy-content={content}
+  aria-label={label}
+  type="button"
+>
+  <svg class="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M5 6H11M5 8H11M5 10H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13 5L5.5 12.5L2 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<style>
+  .copy-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .copy-button:hover {
+    color: var(--color-text);
+    background-color: var(--color-border);
+  }
+
+  .copy-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .copy-button.copied {
+    color: var(--color-success);
+    border-color: var(--color-success);
+  }
+
+  .copy-icon,
+  .check-icon {
+    display: block;
+  }
+
+  .copy-button.copied .copy-icon {
+    display: none;
+  }
+
+  .check-icon {
+    display: none;
+  }
+
+  .copy-button.copied .check-icon {
+    display: block;
+  }
+</style>
+
+<script>
+  // Copy to clipboard functionality
+  document.querySelectorAll('.copy-button').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const content = button.getAttribute('data-copy-content');
+      if (!content) return;
+
+      try {
+        await navigator.clipboard.writeText(content);
+        button.classList.add('copied');
+
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    });
+  });
+</script>
