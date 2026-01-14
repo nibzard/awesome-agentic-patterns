@@ -296,10 +296,10 @@
 - [x] 296 - Smoke test the compare page in preview. [Compare page loads with proper title and header]
 - [x] 297 - Smoke test the decision explorer in preview. [Decision explorer loads with title and question interface]
 - [x] 298 - Smoke test the graph explorer in preview. [Graph explorer loads with SVG elements rendered]
-- [ ] 299 - Run Lighthouse on the home page.
-- [ ] 300 - Save the Lighthouse report artifact.
-- [ ] 301 - Fix LCP regressions from Lighthouse.
-- [ ] 302 - Fix CLS regressions from Lighthouse.
+- [BLOCKED] 299 - Run Lighthouse on the home page. (Requires Chrome browser - not available in current CI environment)
+- [BLOCKED] 300 - Save the Lighthouse report artifact. (Blocked by task 299 - Chrome not available)
+- [BLOCKED] 301 - Fix LCP regressions from Lighthouse. (Blocked by task 299 - Chrome not available)
+- [BLOCKED] 302 - Fix CLS regressions from Lighthouse. (Blocked by task 299 - Chrome not available)
 - [ ] 303 - Run axe accessibility scan on the home page.
 - [ ] 304 - Fix issues from the axe report.
 - [ ] 305 - Validate `patterns.json` output content.
