@@ -33,6 +33,10 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Allow Astro app lib files (ignored by the generic "lib/" rule above)
+!apps/web/src/lib/
+!apps/web/src/lib/**
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
