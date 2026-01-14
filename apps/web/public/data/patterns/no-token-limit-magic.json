@@ -1,11 +1,20 @@
 {
   "title": "No-Token-Limit Magic",
   "status": "experimental-but-awesome",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Thorsten Ball", "Quinn Slack"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Thorsten Ball",
+    "Quinn Slack"
+  ],
   "category": "Reliability & Eval",
   "source": "https://www.nibzard.com/ampcode",
-  "tags": ["performance", "cost", "experimentation"],
+  "tags": [
+    "performance",
+    "cost",
+    "experimentation"
+  ],
   "slug": "no-token-limit-magic",
   "id": "no-token-limit-magic",
   "summary": "Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.",

@@ -1,8 +1,14 @@
 {
   "title": "Sub-Agent Spawning",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Quinn Slack",
+    "Thorsten Ball",
+    "Will Larson (lethain.com)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://www.nibzard.com/ampcode",
   "tags": [

@@ -1,8 +1,12 @@
 {
   "title": "Code Mode MCP Tool Interface Improvement Pattern",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Cloudflare Team"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Cloudflare Team"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://blog.cloudflare.com/code-mode/",
   "tags": [

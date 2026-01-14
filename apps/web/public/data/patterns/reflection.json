@@ -1,11 +1,19 @@
 {
   "title": "Reflection Loop",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Shinn et al. (2023)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Shinn et al. (2023)"
+  ],
   "category": "Feedback Loops",
   "source": "https://arxiv.org/abs/2303.11366",
-  "tags": ["self-feedback", "iterative-improvement", "evaluation"],
+  "tags": [
+    "self-feedback",
+    "iterative-improvement",
+    "evaluation"
+  ],
   "slug": "reflection",
   "id": "reflection-loop",
   "summary": "Generative models may produce subpar output if they never review or critique their own work.",

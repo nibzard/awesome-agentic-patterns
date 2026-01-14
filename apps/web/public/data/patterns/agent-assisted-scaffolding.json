@@ -1,8 +1,12 @@
 {
   "title": "Agent-Assisted Scaffolding",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Lukas Möller (Cursor)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Lukas Möller (Cursor)"
+  ],
   "category": "UX & Collaboration",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

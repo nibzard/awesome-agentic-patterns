@@ -1,14 +1,21 @@
 {
   "title": "Merged Code + Language Skill Model",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
   "based_on": [
     "Anonymous Speaker (Open Source Agent RL Talk)",
     "Will Brown (Prime Intellect Talk)"
   ],
   "category": "Reliability & Eval",
   "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-  "tags": ["model-merging", "transfer-learning", "coding-agent", "multilingual"],
+  "tags": [
+    "model-merging",
+    "transfer-learning",
+    "coding-agent",
+    "multilingual"
+  ],
   "slug": "merged-code-language-skill-model",
   "id": "merged-code-language-skill-model",
   "summary": "Decentralized training with model merging—train language and code specialists independently then combine via weight averaging—enabling parallel R&D without massive centralized compute while preserving both skill sets.",

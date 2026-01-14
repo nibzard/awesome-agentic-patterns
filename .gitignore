@@ -206,3 +206,6 @@ cython_debug/
 
 node_modules/
 .vercel
+
+# Pagefind search index (generated during build)
+apps/web/public/pagefind/

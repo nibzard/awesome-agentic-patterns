@@ -1,11 +1,23 @@
 {
   "title": "Dual-Use Tool Design",
   "status": "best-practice",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Boris Cherny (Anthropic)", "Claude Code Team"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (Anthropic)",
+    "Claude Code Team"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
-  "tags": ["tools", "ux", "slash-commands", "hooks", "human-ai-collaboration", "consistency"],
+  "tags": [
+    "tools",
+    "ux",
+    "slash-commands",
+    "hooks",
+    "human-ai-collaboration",
+    "consistency"
+  ],
   "slug": "dual-use-tool-design",
   "id": "dual-use-tool-design",
   "summary": "TODO: Add a concise summary for \"Dual-Use Tool Design\" describing the pattern's purpose and key benefits.",

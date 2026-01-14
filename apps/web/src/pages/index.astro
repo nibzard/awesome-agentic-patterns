@@ -7,23 +7,6 @@ import { getAllPatterns } from '../lib/patterns';
 // Load patterns data
 const patterns = (await getAllPatterns()) as PatternEntry[];
 
-// Get recently updated patterns (last 30 days)
-const thirtyDaysAgo = new Date();
-thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-const recentlyUpdated = patterns
-  .filter((p: PatternEntry) => {
-    if (!p.updated_at) return false;
-    const updatedDate = new Date(p.updated_at);
-    return updatedDate >= thirtyDaysAgo;
-  })
-  .sort((a: PatternEntry, b: PatternEntry) => {
-    const dateA = new Date(a.updated_at || 0);
-    const dateB = new Date(b.updated_at || 0);
-    return dateB.getTime() - dateA.getTime();
-  })
-  .slice(0, 5);
-
 // Get new patterns (last 7 days)
 const sevenDaysAgo = new Date();
 sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -41,33 +24,44 @@ const newPatterns = patterns
   })
   .slice(0, 5);
 
-// Get featured patterns (high impact or mature)
-let featuredPatterns = patterns.filter(
-  (p: PatternEntry) => p.impact === 'high' || p.maturity === 'mature'
-);
+// Get recently updated patterns (last 30 days, excluding patterns from last 7 days)
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-if (featuredPatterns.length === 0) {
-  featuredPatterns = [...patterns];
-}
-
-featuredPatterns = featuredPatterns
+const recentlyUpdated = patterns
+  .filter((p: PatternEntry) => {
+    if (!p.updated_at) return false;
+    const updatedDate = new Date(p.updated_at);
+    // Include patterns from 8-30 days ago (exclude last 7 days)
+    return updatedDate >= thirtyDaysAgo && updatedDate < sevenDaysAgo;
+  })
   .sort((a: PatternEntry, b: PatternEntry) => {
     const dateA = new Date(a.updated_at || 0);
     const dateB = new Date(b.updated_at || 0);
     return dateB.getTime() - dateA.getTime();
   })
-  .slice(0, 6);
+  .slice(0, 5);
+
+// Get featured patterns (randomly selected)
+let featuredPatterns = [...patterns];
+
+// Fisher-Yates shuffle for random selection
+for (let i = featuredPatterns.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [featuredPatterns[i], featuredPatterns[j]] = [featuredPatterns[j], featuredPatterns[i]];
+}
+
+featuredPatterns = featuredPatterns.slice(0, 6);
 ---
 
 <BaseLayout title="Awesome Agentic Patterns">
   <div class="home-hero">
-    <h1 class="home-title">Awesome Agentic Patterns</h1>
+    <h1 class="home-title">Agentic Patterns</h1>
     <p class="home-subtitle">
       A curated catalogue of AI agent design patterns to help you build better AI systems.
     </p>
     <div class="home-cta">
       <a href="/patterns" class="button button--primary">Browse Patterns</a>
-      <a href="/compare" class="button button--secondary">Compare Patterns</a>
     </div>
   </div>
 
@@ -119,67 +113,69 @@ featuredPatterns = featuredPatterns
   </div>
 
   {
-    newPatterns.length > 0 && (
-      <div class="home-section">
-        <h2 class="home-section-title">
-          <span class="section-badge section-badge--new">New</span>
-          New Patterns
-        </h2>
-        <p class="home-section-description">Freshly added patterns from the last 7 days.</p>
-        <div class="home-patterns-list">
-          {newPatterns.map((pattern: PatternEntry) => (
-            <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
-              <span class="pattern-badge pattern-badge--new">New</span>
-              <div class="pattern-info">
-                <div class="pattern-title">{pattern.title}</div>
-                <div class="pattern-meta">
-                  <span class="pattern-category">{pattern.category}</span>
-                  {pattern.updated_at && (
-                    <span class="pattern-date">
-                      {new Date(pattern.updated_at).toLocaleDateString()}
-                    </span>
-                  )}
-                </div>
+    (newPatterns.length > 0 || recentlyUpdated.length > 0) && (
+      <div class="home-two-column-grid">
+        {
+          newPatterns.length > 0 && (
+            <div class="home-section">
+              <h2 class="home-section-title">
+                <span class="section-badge section-badge--new">New</span>
+                New Patterns
+              </h2>
+              <p class="home-section-description">Freshly added patterns from the last 7 days.</p>
+              <div class="home-patterns-list">
+                {newPatterns.map((pattern: PatternEntry) => (
+                  <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
+                    <span class="pattern-badge pattern-badge--new">New</span>
+                    <div class="pattern-info">
+                      <div class="pattern-title">{pattern.title}</div>
+                      <div class="pattern-meta">
+                        <span class="pattern-category">{pattern.category}</span>
+                        {pattern.updated_at && (
+                          <span class="pattern-date">
+                            {new Date(pattern.updated_at).toLocaleDateString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                ))}
               </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    )
-  }
+            </div>
+          )
+        }
 
-  {
-    recentlyUpdated.length > 0 && (
-      <div class="home-section">
-        <h2 class="home-section-title">
-          <span class="section-badge section-badge--updated">Updated</span>
-          Recently Updated
-        </h2>
-        <p class="home-section-description">
-          Patterns that have been improved or expanded in the last 30 days.
-        </p>
-        <div class="home-patterns-list">
-          {recentlyUpdated.map((pattern: PatternEntry) => {
-            const isNew = pattern.updated_at && new Date(pattern.updated_at) >= sevenDaysAgo;
-            return (
-              <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
-                {isNew && <span class="pattern-badge pattern-badge--new">New</span>}
-                {!isNew && <span class="pattern-badge pattern-badge--updated">Updated</span>}
-                <div class="pattern-info">
-                  <div class="pattern-title">{pattern.title}</div>
-                  <div class="pattern-meta">
-                    <span class="pattern-category">{pattern.category}</span>
-                    {pattern.updated_at && (
-                      <span class="pattern-date">
-                        {new Date(pattern.updated_at).toLocaleDateString()}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
+        {
+          recentlyUpdated.length > 0 && (
+            <div class="home-section">
+              <h2 class="home-section-title">
+                <span class="section-badge section-badge--updated">Updated</span>
+                Recently Updated
+              </h2>
+              <p class="home-section-description">
+                Patterns that have been improved or expanded in the last 30 days.
+              </p>
+              <div class="home-patterns-list">
+                {recentlyUpdated.map((pattern: PatternEntry) => (
+                  <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
+                    <span class="pattern-badge pattern-badge--updated">Updated</span>
+                    <div class="pattern-info">
+                      <div class="pattern-title">{pattern.title}</div>
+                      <div class="pattern-meta">
+                        <span class="pattern-category">{pattern.category}</span>
+                        {pattern.updated_at && (
+                          <span class="pattern-date">
+                            {new Date(pattern.updated_at).toLocaleDateString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -234,15 +230,6 @@ featuredPatterns = featuredPatterns
     background-color: var(--color-primary-hover);
   }
 
-  .button--secondary {
-    background-color: var(--color-border);
-    color: var(--color-text);
-  }
-
-  .button--secondary:hover {
-    background-color: var(--color-divider);
-  }
-
   .home-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -290,6 +277,20 @@ featuredPatterns = featuredPatterns
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-lg);
+  }
+
+  .home-two-column-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    align-items: start;
+  }
+
+  .home-two-column-grid .home-section {
+    max-width: none;
+    margin: 0;
   }
 
   .home-card {
@@ -354,7 +355,9 @@ featuredPatterns = featuredPatterns
 
   .home-pattern-item {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
     background-color: var(--color-bg);
@@ -366,7 +369,7 @@ featuredPatterns = featuredPatterns
 
   .home-pattern-item:hover {
     border-color: var(--color-primary);
-    transform: translateX(4px);
+    transform: translateX(-4px);
   }
 
   .pattern-badge {
@@ -430,6 +433,10 @@ featuredPatterns = featuredPatterns
     .button {
       width: 100%;
       justify-content: center;
+    }
+
+    .home-two-column-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

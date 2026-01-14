@@ -1,11 +1,20 @@
 {
   "title": "Dynamic Code Injection (On-Demand File Fetch)",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Internal AI Dev Team"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Internal AI Dev Team"
+  ],
   "category": "Tool Use & Environment",
   "source": "Internal Practice",
-  "tags": ["file-injection", "at-mention", "slash-commands", "IDE-integration"],
+  "tags": [
+    "file-injection",
+    "at-mention",
+    "slash-commands",
+    "IDE-integration"
+  ],
   "slug": "dynamic-code-injection-on-demand-file-fetch",
   "id": "dynamic-code-injection-on-demand-file-fetch",
   "summary": "TODO: Add a concise summary for \"Dynamic Code Injection (On-Demand File Fetch)\" describing the pattern's purpose and key benefits.",

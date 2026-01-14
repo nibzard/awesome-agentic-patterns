@@ -1,11 +1,21 @@
 {
   "title": "PII Tokenization",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Anthropic Engineering Team"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team"
+  ],
   "category": "Security & Safety",
   "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
-  "tags": ["privacy", "pii", "security", "mcp", "data-protection"],
+  "tags": [
+    "privacy",
+    "pii",
+    "security",
+    "mcp",
+    "data-protection"
+  ],
   "slug": "pii-tokenization",
   "id": "pii-tokenization",
   "summary": "Implement interception layer in MCP client that automatically tokenizes PII before reaching model and untokenizes for tool calls, enabling agents to orchestrate sensitive workflows without exposing raw data to LLM.",

@@ -1,11 +1,20 @@
 {
   "title": "Asynchronous Coding Agent Pipeline",
   "status": "proposed",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Will Brown (Prime Intellect Talk)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Will Brown (Prime Intellect Talk)"
+  ],
   "category": "Reliability & Eval",
   "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-  "tags": ["asynchronous", "pipeline", "code-agent", "parallelism"],
+  "tags": [
+    "asynchronous",
+    "pipeline",
+    "code-agent",
+    "parallelism"
+  ],
   "slug": "asynchronous-coding-agent-pipeline",
   "id": "asynchronous-coding-agent-pipeline",
   "summary": "Decouple inference, tool execution, and learning into parallel asynchronous components communicating via message queues to maximize GPU utilization and eliminate compute bubbles from synchronous tool calls.",

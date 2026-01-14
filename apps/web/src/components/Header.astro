@@ -9,7 +9,7 @@ const { currentPath = '/' } = Astro.props;
 
 const navItems = [
   { href: '/', label: 'Home' },
-  { href: '/compare', label: 'Compare' },
+  { href: '/patterns', label: 'Patterns' },
   { href: '/graph', label: 'Graph' },
   { href: '/packs', label: 'Packs' },
   { href: '/guides', label: 'Guides' },
@@ -105,6 +105,21 @@ const navItems = [
       <ThemeToggle />
     </div>
 
+    <!-- Mobile Menu Toggle -->
+    <button
+      id="mobile-menu-toggle"
+      class="mobile-menu-toggle"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="hamburger">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </span>
+    </button>
+
     <!-- Search Modal -->
     <div id="search-modal" class="search-modal" hidden aria-hidden="true">
       <div class="search-backdrop"></div>
@@ -192,8 +207,30 @@ const navItems = [
       async function loadSearchIndex() {
         if (searchIndex) return searchIndex;
         try {
-          const pagefind = await import('/pagefind/pagefind.js');
-          searchIndex = pagefind;
+          // In production, pagefind is available as a global
+          if (window.pagefind) {
+            searchIndex = window.pagefind;
+            return searchIndex;
+          }
+          // In dev mode, load the script dynamically
+          const script = document.createElement('script');
+          script.src = '/pagefind/pagefind.js';
+          script.type = 'module';
+          document.head.appendChild(script);
+
+          // Wait for pagefind to be available
+          await new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => reject(new Error('Pagefind load timeout')), 5000);
+            const checkInterval = setInterval(() => {
+              if (window.pagefind) {
+                clearTimeout(timeout);
+                clearInterval(checkInterval);
+                resolve();
+              }
+            }, 50);
+          });
+
+          searchIndex = window.pagefind;
           return searchIndex;
         } catch (e) {
           // Show error message in search results
@@ -321,7 +358,100 @@ const navItems = [
           window.location.href = result.href;
         }
       });
+
+      // Mobile menu functionality
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      function openMobileMenu() {
+        mobileMenu.hidden = false;
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        mobileMenuToggle.setAttribute('aria-expanded', 'true');
+        mobileMenuToggle.setAttribute('aria-label', 'Close navigation menu');
+        document.body.style.overflow = 'hidden';
+        mobileMenu.querySelector('.mobile-menu-link')?.focus();
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.hidden = true;
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenuToggle.setAttribute('aria-label', 'Open navigation menu');
+        document.body.style.overflow = '';
+        mobileMenuToggle.focus();
+      }
+
+      function toggleMobileMenu() {
+        const isOpen = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+        isOpen ? closeMobileMenu() : openMobileMenu();
+      }
+
+      // Event listeners
+      mobileMenuToggle?.addEventListener('click', toggleMobileMenu);
+
+      mobileMenu?.querySelector('.mobile-menu-backdrop')?.addEventListener('click', closeMobileMenu);
+
+      mobileMenu?.querySelectorAll('.mobile-menu-link').forEach((link) => {
+        link.addEventListener('click', closeMobileMenu);
+      });
+
+      // Keyboard navigation
+      mobileMenu?.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeMobileMenu();
+        }
+      });
     </script>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="mobile-menu"
+    hidden
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Navigation menu"
+  >
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu-container">
+      <nav class="mobile-menu-nav" aria-label="Mobile navigation">
+        <ul class="mobile-menu-list">
+          {
+            navItems.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={['mobile-menu-link', { active: currentPath === item.href }]}
+                  aria-current={currentPath === item.href ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="mobile-menu-footer">
+        <a
+          class="github-badges"
+          href="https://github.com/nibzard/awesome-agentic-patterns"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="View GitHub stars and forks"
+        >
+          <img
+            src="https://img.shields.io/github/stars/nibzard/awesome-agentic-patterns?style=social"
+            alt="GitHub stars"
+          />
+          <img
+            src="https://img.shields.io/github/forks/nibzard/awesome-agentic-patterns?style=social"
+            alt="GitHub forks"
+          />
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -598,22 +728,173 @@ const navItems = [
     font-family: var(--font-mono);
   }
 
+  /* Mobile Menu Toggle */
+  .mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu-toggle:hover {
+    background-color: var(--color-border);
+  }
+
+  /* Hamburger Icon */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 20px;
+  }
+
+  .hamburger-line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  /* Hamburger to X animation */
+  .mobile-menu-toggle[aria-expanded='true'] .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-menu-toggle[aria-expanded='true'] .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle[aria-expanded='true'] .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .mobile-menu[hidden] {
+    display: none !important;
+  }
+
+  .mobile-menu-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu:not([hidden]) .mobile-menu-backdrop {
+    opacity: 1;
+  }
+
+  .mobile-menu-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--color-bg);
+    border-right: 1px solid var(--color-border);
+    height: 100%;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu:not([hidden]) .mobile-menu-container {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-nav {
+    padding: var(--spacing-lg);
+    flex: 1;
+  }
+
+  .mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .mobile-menu-link {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-size: 1.125rem;
+    min-height: 48px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu-link:hover,
+  .mobile-menu-link:focus {
+    background-color: var(--color-border);
+    outline: none;
+  }
+
+  .mobile-menu-link.active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+
+  .mobile-menu-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: center;
+  }
+
   @media (max-width: 768px) {
     .header-container {
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
     }
 
     .nav {
-      order: 3;
-      width: 100%;
+      display: none;
     }
 
     .nav-list {
       justify-content: center;
     }
 
-    .github-badges img {
-      height: 18px;
+    .mobile-menu-toggle {
+      display: flex;
+    }
+
+    .header-actions .github-badges {
+      display: none;
+    }
+
+    .search-toggle span {
+      display: none;
+    }
+
+    .header-actions {
+      gap: var(--spacing-xs);
     }
   }
 </style>

@@ -27,8 +27,12 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5C10.5144 2.5 11.0156 2.55296 11.4994 2.65434C8.08029 3.32192 5.5 6.27486 5.5 9.83333C5.5 13.7846 8.71536 17 12.6667 17C16.2251 17 19.1781 14.4197 19.8457 11.0006C19.947 11.4844 20 11.9856 20 12.5H17.5V10Z"
-      fill="currentColor"></path>
+      d="M17.293 13.293A8 8 0 1 1 6.707 2.707a8.001 8.001 0 0 0 10.586 10.586Z"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    ></path>
   </svg>
 </button>
 
@@ -59,33 +63,13 @@
   .moon-icon {
     display: none;
   }
-
-  /* Show sun icon in dark mode */
-  :global([data-theme='dark']) .theme-toggle .sun-icon {
-    display: block;
-  }
-
-  /* Show moon icon in light mode */
-  :global([data-theme='light']) .theme-toggle .moon-icon {
-    display: block;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:not([data-theme])) .theme-toggle .sun-icon {
-      display: block;
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    :global(:not([data-theme])) .theme-toggle .moon-icon {
-      display: block;
-    }
-  }
 </style>
 
 <script>
   // Theme toggle functionality
   const themeToggle = document.getElementById('theme-toggle');
+  const sunIcon = document.querySelector('.sun-icon');
+  const moonIcon = document.querySelector('.moon-icon');
 
   function getTheme(): string {
     if (typeof localStorage !== 'undefined') {
@@ -100,6 +84,17 @@
       localStorage.setItem('theme', theme);
     }
     document.documentElement.setAttribute('data-theme', theme);
+    updateIconVisibility(theme);
+  }
+
+  function updateIconVisibility(theme: string): void {
+    if (theme === 'dark') {
+      sunIcon?.style.setProperty('display', 'block');
+      moonIcon?.style.setProperty('display', 'none');
+    } else {
+      sunIcon?.style.setProperty('display', 'none');
+      moonIcon?.style.setProperty('display', 'block');
+    }
   }
 
   // Initialize theme

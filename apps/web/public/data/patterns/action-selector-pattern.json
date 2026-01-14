@@ -1,11 +1,20 @@
 {
   "title": "Action-Selector Pattern",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Luca Beurer-Kellner et al. (2025)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Luca Beurer-Kellner et al. (2025)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2506.08837",
-  "tags": ["prompt-injection", "control-flow", "safety", "tool-use"],
+  "tags": [
+    "prompt-injection",
+    "control-flow",
+    "safety",
+    "tool-use"
+  ],
   "slug": "action-selector-pattern",
   "id": "action-selector-pattern",
   "summary": "## Problem\nUntrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.",

@@ -59,8 +59,8 @@ const domains = Object.entries(domainMap)
 const positionedNodes = graphNodes.map((node: GraphNode, index: number) => {
   const angle = (index / Math.max(graphNodes.length, 1)) * 2 * Math.PI;
   const radius = 200 + (index % 3) * 50;
-  const x = 400 + Math.cos(angle) * radius;
-  const y = 300 + Math.sin(angle) * radius;
+  const x = 1000 + Math.cos(angle) * radius;
+  const y = 800 + Math.sin(angle) * radius;
 
   return {
     ...node,
@@ -216,8 +216,13 @@ function getCategoryColor(category: string): string {
           <span id="graph-mode-label">Shared tags</span>
         </div>
 
+        <div class="graph-search">
+          <input type="text" id="graph-search" placeholder="Search patterns..." />
+          <button id="clear-search" aria-label="Clear search" hidden>×</button>
+        </div>
+
         <div class="graph-canvas" id="graph-canvas">
-          <svg width="100%" height="600" viewBox="0 0 800 600" class="graph-svg">
+          <svg width="100%" height="800" viewBox="0 0 2000 1600" class="graph-svg">
             <defs>
               <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="3" result="coloredBlur"></feGaussianBlur>
@@ -288,6 +293,30 @@ function getCategoryColor(category: string): string {
               }
             </g>
           </svg>
+
+          <!-- Zoom Controls -->
+          <div class="graph-controls">
+            <button class="control-btn" id="zoom-in" aria-label="Zoom in">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"></path>
+              </svg>
+            </button>
+            <button class="control-btn" id="zoom-out" aria-label="Zoom out">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14"></path>
+              </svg>
+            </button>
+            <button class="control-btn" id="reset-view" aria-label="Reset view">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+              </svg>
+            </button>
+            <button class="control-btn" id="fit-view" aria-label="Fit to screen">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <!-- Detail Panel -->
@@ -322,6 +351,7 @@ function getCategoryColor(category: string): string {
     forceSimulation,
     select,
     zoom,
+    zoomIdentity,
   } from 'd3';
 
   const params = new URLSearchParams(window.location.search);
@@ -568,12 +598,43 @@ function getCategoryColor(category: string): string {
       .append('line')
       .attr('class', 'graph-edge')
       .attr('data-edge', '')
+      .attr('stroke', (d) => {
+        const colors = {
+          related: 'var(--color-primary)',
+          'anti-pattern': 'var(--color-error)',
+          category: '#94a3b8',
+          tag: '#94a3b8',
+          similarity: '#94a3b8'
+        };
+        return colors[d.type] || '#64748b';
+      })
+      .attr('stroke-width', '1.5')
       .merge(edgeSelection);
 
     edgeSelection
       .attr('data-source', (edge) => getNodeId(edge.source))
       .attr('data-target', (edge) => getNodeId(edge.target))
-      .attr('data-edge-type', (edge) => edge.type || '');
+      .attr('data-edge-type', (edge) => edge.type || '')
+      .attr('x1', (d) => {
+        const sourceId = getNodeId(d.source);
+        const source = nodeById.get(sourceId);
+        return source?.x || 0;
+      })
+      .attr('y1', (d) => {
+        const sourceId = getNodeId(d.source);
+        const source = nodeById.get(sourceId);
+        return source?.y || 0;
+      })
+      .attr('x2', (d) => {
+        const targetId = getNodeId(d.target);
+        const target = nodeById.get(targetId);
+        return target?.x || 0;
+      })
+      .attr('y2', (d) => {
+        const targetId = getNodeId(d.target);
+        const target = nodeById.get(targetId);
+        return target?.y || 0;
+      });
 
     edgeElements = edgesLayer.querySelectorAll('[data-edge]');
 
@@ -591,11 +652,12 @@ function getCategoryColor(category: string): string {
 
   let simulation;
   let linkForce;
+  let zoomBehavior;
 
   if (svgSelection && viewport && nodes.length > 0) {
     const viewBox = svg?.viewBox?.baseVal;
-    const width = viewBox?.width || 800;
-    const height = viewBox?.height || 600;
+    const width = viewBox?.width || 2000;
+    const height = viewBox?.height || 1600;
 
     linkForce = forceLink(currentEdges)
       .id((d) => d.id)
@@ -643,15 +705,110 @@ function getCategoryColor(category: string): string {
         event.stopPropagation();
         dragMoved = false;
       });
+
+      // Bring hovered node to front for tooltip visibility
+      nodeSelection.on('mouseenter', function (_event, _d) {
+        const viewport = document.getElementById('graph-viewport');
+        if (viewport && this.parentNode === viewport) {
+          viewport.appendChild(this);
+        }
+      });
     }
 
-    const zoomBehavior = zoom()
-      .scaleExtent([0.5, 2.5])
+    zoomBehavior = zoom()
+      .scaleExtent([0.1, 3])
       .on('zoom', (event) => {
         viewport.setAttribute('transform', event.transform.toString());
       });
 
     svgSelection.call(zoomBehavior);
+
+    // Zoom controls
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const resetBtn = document.getElementById('reset-view');
+    const fitBtn = document.getElementById('fit-view');
+
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => {
+        svgSelection.transition().duration(300).call(zoomBehavior.scaleBy, 1.3);
+      });
+    }
+
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => {
+        svgSelection.transition().duration(300).call(zoomBehavior.scaleBy, 0.7);
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        svgSelection.transition().duration(500).call(zoomBehavior.transform, zoomIdentity);
+      });
+    }
+
+    if (fitBtn) {
+      fitBtn.addEventListener('click', () => {
+        // Use live D3 simulation data, not DOM attributes
+        if (!nodes || nodes.length === 0) return;
+
+        // Get IDs of visible nodes (from filter state)
+        const visibleNodeIds = new Set();
+        nodeElements.forEach((node) => {
+          if (node.style.display !== 'none') {
+            const id = node.getAttribute('data-node-id');
+            if (id) visibleNodeIds.add(id);
+          }
+        });
+
+        if (visibleNodeIds.size === 0) return;
+
+        // Calculate bounds from live simulation data
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+        nodes.forEach((node) => {
+          if (visibleNodeIds.has(node.id)) {
+            minX = Math.min(minX, node.x);
+            minY = Math.min(minY, node.y);
+            maxX = Math.max(maxX, node.x);
+            maxY = Math.max(maxY, node.y);
+          }
+        });
+
+        // Add padding
+        const padding = 50;
+        minX -= padding;
+        minY -= padding;
+        maxX += padding;
+        maxY += padding;
+
+        const nodeWidth = maxX - minX;
+        const nodeHeight = maxY - minY;
+        const viewBox = svg?.viewBox?.baseVal;
+        const svgWidth = viewBox?.width || 2000;
+        const svgHeight = viewBox?.height || 1600;
+
+        // Calculate scale to fit
+        const scale = Math.min(
+          (svgWidth - padding * 2) / nodeWidth,
+          (svgHeight - padding * 2) / nodeHeight,
+          3 // Max scale
+        );
+
+        // Calculate center
+        const centerX = (minX + maxX) / 2;
+        const centerY = (minY + maxY) / 2;
+
+        // Translate to center and scale
+        const tx = svgWidth / 2 - centerX * scale;
+        const ty = svgHeight / 2 - centerY * scale;
+
+        svgSelection.transition().duration(500).call(
+          zoomBehavior.transform,
+          zoomIdentity.translate(tx, ty).scale(scale)
+        );
+      });
+    }
   }
 
   const applyFilters = () => {
@@ -862,6 +1019,115 @@ function getCategoryColor(category: string): string {
     });
   }
 
+  // Search functionality
+  const searchInput = document.getElementById('graph-search');
+  const clearSearchBtn = document.getElementById('clear-search');
+
+  if (searchInput && clearSearchBtn) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      clearSearchBtn.hidden = query.length === 0;
+
+      nodeElements.forEach((node) => {
+        const title = node.getAttribute('data-title')?.toLowerCase() || '';
+        const summary = node.getAttribute('data-summary')?.toLowerCase() || '';
+        const tags = (node.getAttribute('data-tags') || '').toLowerCase();
+
+        if (query === '') {
+          // Reset to show all (respecting filters)
+          node.style.opacity = '';
+        } else if (title.includes(query) || summary.includes(query) || tags.includes(query)) {
+          node.style.opacity = '1';
+        } else {
+          node.style.opacity = '0.15';
+        }
+      });
+
+      // Update edge visibility based on connected nodes
+      edgeElements.forEach((edge) => {
+        const source = edge.getAttribute('data-source');
+        const target = edge.getAttribute('data-target');
+        const sourceNode = source ? document.querySelector(`.graph-node[data-node-id="${source}"]`) : null;
+        const targetNode = target ? document.querySelector(`.graph-node[data-node-id="${target}"]`) : null;
+
+        const sourceOpacity = sourceNode ? parseFloat(sourceNode.style.opacity || '1') : 1;
+        const targetOpacity = targetNode ? parseFloat(targetNode.style.opacity || '1') : 1;
+
+        // Show edge only if both connected nodes are visible
+        edge.style.opacity = query === '' ? '' : (Math.min(sourceOpacity, targetOpacity) * 0.6).toString();
+      });
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+      searchInput.focus();
+    });
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    // Ignore if typing in search input
+    if (e.target.tagName === 'INPUT') return;
+
+    switch (e.key) {
+      case '+':
+      case '=':
+        e.preventDefault();
+        if (svgSelection && zoomBehavior) {
+          svgSelection.transition().duration(300).call(zoomBehavior.scaleBy, 1.3);
+        }
+        break;
+      case '-':
+      case '_':
+        e.preventDefault();
+        if (svgSelection && zoomBehavior) {
+          svgSelection.transition().duration(300).call(zoomBehavior.scaleBy, 0.7);
+        }
+        break;
+      case '0':
+      case 'Home':
+        e.preventDefault();
+        if (svgSelection && zoomBehavior) {
+          svgSelection.transition().duration(500).call(zoomBehavior.transform, zoomIdentity);
+        }
+        break;
+      case 'f':
+      case 'F':
+        if (!e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          const fitBtn = document.getElementById('fit-view');
+          if (fitBtn) fitBtn.click();
+        }
+        break;
+      case 'Escape': {
+        e.preventDefault();
+        // Close detail panel or fit view
+        const detailPanel = document.getElementById('graph-detail');
+        if (detailPanel && !detailPanel.hidden) {
+          window.location.href = '/graph';
+        } else {
+          const fitBtn = document.getElementById('fit-view');
+          if (fitBtn) fitBtn.click();
+        }
+        break;
+      }
+    }
+  });
+
+  // Click outside to close detail panel
+  if (svg) {
+    svg.addEventListener('click', (e) => {
+      // Only close if clicking on the svg background itself
+      if (e.target === svg || e.target.id === 'graph-viewport' || e.target.id === 'graph-canvas') {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('node')) {
+          window.location.href = '/graph';
+        }
+      }
+    });
+  }
+
   updateFilterInputs();
   applyFilters();
   updateDetailPanel();
@@ -1001,13 +1267,6 @@ function getCategoryColor(category: string): string {
     text-align: center;
   }
 
-  .graph-canvas {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-bg);
-    overflow: hidden;
-  }
-
   .graph-svg {
     display: block;
     width: 100%;
@@ -1020,34 +1279,120 @@ function getCategoryColor(category: string): string {
     cursor: grabbing;
   }
 
+  .graph-search {
+    margin-bottom: var(--spacing-md);
+    position: relative;
+  }
+
+  .graph-search input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    padding-right: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .graph-search input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .graph-search input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .graph-search button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .graph-search button:hover {
+    color: var(--color-text);
+  }
+
+  .graph-canvas {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .graph-controls {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    z-index: 50;
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .control-btn:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: scale(1.05);
+  }
+
+  .control-btn:active {
+    transform: scale(0.95);
+  }
+
   .graph-edge {
-    stroke: var(--color-border);
-    stroke-width: 2;
-    opacity: 0.35;
+    stroke-width: 1.5;
+    opacity: 0.6;
   }
 
   .graph-edge[data-edge-type='related'] {
-    stroke: var(--color-primary);
-    opacity: 0.45;
-  }
-
-  .graph-edge[data-edge-type='anti-pattern'] {
-    stroke: var(--color-error);
-    stroke-dasharray: 4 4;
     opacity: 0.5;
   }
 
+  .graph-edge[data-edge-type='anti-pattern'] {
+    stroke-dasharray: 4 4;
+    opacity: 0.6;
+  }
+
   .graph-edge[data-edge-type='category'] {
-    stroke: var(--color-divider);
+    opacity: 0.3;
   }
 
   .graph-edge[data-edge-type='tag'] {
-    stroke: var(--color-info);
+    opacity: 0.4;
   }
 
   .graph-edge[data-edge-type='similarity'] {
-    stroke: var(--color-success);
     stroke-dasharray: 3 5;
+    opacity: 0.4;
   }
 
   .graph-node {

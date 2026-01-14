@@ -1,11 +1,19 @@
 {
   "title": "Plan-Then-Execute Pattern",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Luca Beurer-Kellner et al. (2025)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Luca Beurer-Kellner et al. (2025)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2506.08837",
-  "tags": ["planning", "control-flow-integrity", "prompt-injection"],
+  "tags": [
+    "planning",
+    "control-flow-integrity",
+    "prompt-injection"
+  ],
   "slug": "plan-then-execute-pattern",
   "id": "plan-then-execute-pattern",
   "summary": "## Problem\nIf tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps.",

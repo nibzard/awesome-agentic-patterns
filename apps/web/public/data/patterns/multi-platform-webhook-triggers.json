@@ -1,8 +1,12 @@
 {
   "title": "Multi-Platform Webhook Triggers",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Will Larson (lethain.com)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Will Larson (lethain.com)"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://lethain.com/agents-triggers/",
   "tags": [

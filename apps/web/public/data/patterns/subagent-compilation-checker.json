@@ -1,14 +1,21 @@
 {
   "title": "Subagent Compilation Checker",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
   "based_on": [
     "Anonymous Speaker (Open Source Agent RL Talk)",
     "Will Brown (Prime Intellect Talk)"
   ],
   "category": "Tool Use & Environment",
   "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-  "tags": ["subagent", "compilation", "modularity", "error-isolation"],
+  "tags": [
+    "subagent",
+    "compilation",
+    "modularity",
+    "error-isolation"
+  ],
   "slug": "subagent-compilation-checker",
   "id": "subagent-compilation-checker",
   "summary": "TODO: Add a concise summary for \"Subagent Compilation Checker\" describing the pattern's purpose and key benefits.",

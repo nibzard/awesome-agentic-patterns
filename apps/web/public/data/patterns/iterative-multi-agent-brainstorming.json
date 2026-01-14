@@ -1,8 +1,12 @@
 {
   "title": "Iterative Multi-Agent Brainstorming",
   "status": "experimental-but-awesome",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Boris Cherny (via Claude Code capability)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (via Claude Code capability)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://www.nibzard.com/claude-code",
   "tags": [
