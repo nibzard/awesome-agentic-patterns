@@ -8,9 +8,9 @@ const searchParams = Astro.url.searchParams;
 const selectedIds = searchParams.get('ids')?.split(',').filter(Boolean) || [];
 
 // Load patterns data
-const patterns = await fetch('https://agentic-patterns.com/patterns.json')
+const patterns = (await fetch('https://agentic-patterns.com/patterns.json')
   .then((res) => res.json())
-  .catch(() => []) as PatternEntry[];
+  .catch(() => [])) as PatternEntry[];
 
 // Get selected patterns
 const selectedPatterns = patterns.filter((p: PatternEntry) => selectedIds.includes(p.id));

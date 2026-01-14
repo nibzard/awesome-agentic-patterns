@@ -4,9 +4,9 @@ import SearchBox from '../components/SearchBox.astro';
 import type { PatternEntry } from '../types';
 
 // Load patterns data
-const patterns = await fetch('https://agentic-patterns.com/patterns.json')
+const patterns = (await fetch('https://agentic-patterns.com/patterns.json')
   .then((res) => res.json())
-  .catch(() => []) as PatternEntry[];
+  .catch(() => [])) as PatternEntry[];
 
 // Get recently updated patterns (last 30 days)
 const thirtyDaysAgo = new Date();

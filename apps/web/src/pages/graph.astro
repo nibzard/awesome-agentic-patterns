@@ -3,9 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import type { PatternGraph, GraphNode } from '../types';
 
 // Load graph data
-const graphData = await fetch('/graph.json')
+const graphData = (await fetch('/graph.json')
   .then((res) => res.json())
-  .catch(() => ({ nodes: [], edges: [] })) as PatternGraph;
+  .catch(() => ({ nodes: [], edges: [] }))) as PatternGraph;
 
 // Get unique values for filters
 const categories = [...new Set(graphData.nodes.map((n: GraphNode) => n.category))].sort();

@@ -2,12 +2,18 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SearchBox from '../../components/SearchBox.astro';
 import PatternCard from '../../components/PatternCard.astro';
-import type { PatternEntry, CategoryCount, StatusCount, MaturityCount, ComplexityCount } from '../../types';
+import type {
+  PatternEntry,
+  CategoryCount,
+  StatusCount,
+  MaturityCount,
+  ComplexityCount,
+} from '../../types';
 
 // Load patterns data
-const patterns = await fetch('https://agentic-patterns.com/patterns.json')
+const patterns = (await fetch('https://agentic-patterns.com/patterns.json')
   .then((res) => res.json())
-  .catch(() => []) as PatternEntry[];
+  .catch(() => [])) as PatternEntry[];
 
 // Get unique values for filters with counts
 const categoryMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
