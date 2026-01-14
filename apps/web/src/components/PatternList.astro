@@ -1,0 +1,98 @@
+---
+import PatternCard from './PatternCard.astro';
+
+interface Pattern {
+  title: string;
+  slug: string;
+  summary?: string;
+  status?: string;
+  category?: string;
+  tags?: string[];
+}
+
+interface Props {
+  patterns: Pattern[];
+  layout?: 'grid' | 'list';
+  emptyMessage?: string;
+}
+
+const {
+  patterns,
+  layout = 'grid',
+  emptyMessage = 'No patterns found.'
+} = Astro.props;
+---
+
+{patterns.length > 0 ? (
+  <div class:list={['pattern-list', `pattern-list--${layout}`]}>
+    {patterns.map(pattern => (
+      <PatternCard
+        title={pattern.title}
+        slug={pattern.slug}
+        summary={pattern.summary}
+        status={pattern.status}
+        category={pattern.category}
+        tags={pattern.tags}
+      />
+    ))}
+  </div>
+) : (
+  <div class="pattern-list-empty">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="24" fill="var(--color-border)"/>
+      <path d="M24 16V24M24 32H24.02" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <p class="pattern-list-empty-text">{emptyMessage}</p>
+    <a href="/patterns" class="pattern-list-empty-link">Browse All Patterns</a>
+  </div>
+)}
+
+<style>
+  .pattern-list {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+
+  .pattern-list--grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .pattern-list--list {
+    grid-template-columns: 1fr;
+  }
+
+  .pattern-list-empty {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .pattern-list-empty svg {
+    color: var(--color-text-muted);
+  }
+
+  .pattern-list-empty-text {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .pattern-list-empty-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .pattern-list-empty-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .pattern-list--grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
