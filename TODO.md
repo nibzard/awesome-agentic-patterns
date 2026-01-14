@@ -288,8 +288,8 @@
 - [ ] 288 - Remove the Cloudflare deploy step from `.github/workflows/deploy.yml`.
 - [ ] 289 - Add `vercel.json` with `apps/web` root, `bun run build`, and `dist` output.
 - [ ] 290 - Add `vercel.json` redirects/rewrites for legacy routes.
-- [ ] 291 - Run `bun run build` in `apps/web`.
-- [ ] 292 - Run `bun run preview` in `apps/web`.
+- [x] 291 - Run `bun run build` in `apps/web`. [Build completed successfully: 125 pages generated, including all 112 pattern pages; fixed Pagefind import, added getStaticPaths to dynamic routes, corrected pattern loader path]
+- [x] 292 - Run `bun run preview` in `apps/web`. [Preview server started successfully on port 4321, home page verified working]
 - [ ] 293 - Smoke test the home page in preview.
 - [ ] 294 - Smoke test the patterns index in preview.
 - [ ] 295 - Smoke test a pattern detail page in preview.
