@@ -1,12 +1,8 @@
 {
   "title": "LLM Observability",
   "status": "proposed",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Will Larson (Imprint)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Will Larson (Imprint)"],
   "category": "Reliability & Eval",
   "source": "https://lethain.com/agents-logging/",
   "tags": [

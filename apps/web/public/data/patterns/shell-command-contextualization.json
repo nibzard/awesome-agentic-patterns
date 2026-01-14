@@ -1,12 +1,8 @@
 {
   "title": "Shell Command Contextualization",
   "status": "established",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Boris Cherny (via Claude Code)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Boris Cherny (via Claude Code)"],
   "category": "Tool Use & Environment",
   "source": "https://www.nibzard.com/claude-code",
   "tags": [

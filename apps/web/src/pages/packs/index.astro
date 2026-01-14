@@ -61,8 +61,7 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
             <textarea
               id="pack-notes"
               rows="3"
-              placeholder="Capture the goal, audience, or build phase."
-            ></textarea>
+              placeholder="Capture the goal, audience, or build phase."></textarea>
           </label>
           <button type="submit" class="button button--primary">Create pack</button>
         </form>
@@ -235,9 +234,7 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
     }
 
     packs.forEach((pack) => {
-      const patterns = pack.patterns
-        .map((slug) => patternMap.get(slug))
-        .filter(Boolean);
+      const patterns = pack.patterns.map((slug) => patternMap.get(slug)).filter(Boolean);
 
       const card = document.createElement('div');
       card.className = 'user-pack-card';

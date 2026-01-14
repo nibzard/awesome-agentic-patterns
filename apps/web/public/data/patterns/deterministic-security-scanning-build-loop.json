@@ -1,21 +1,11 @@
 {
   "title": "Deterministic Security Scanning Build Loop",
   "status": "proposed",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Geoffrey Huntley"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Geoffrey Huntley"],
   "category": "Security & Safety",
   "source": "https://ghuntley.com/secure-codegen/",
-  "tags": [
-    "security",
-    "deterministic",
-    "build-loop",
-    "backpressure",
-    "static-analysis"
-  ],
+  "tags": ["security", "deterministic", "build-loop", "backpressure", "static-analysis"],
   "slug": "deterministic-security-scanning-build-loop",
   "id": "deterministic-security-scanning-build-loop",
   "summary": "Implement deterministic security validation through build loop with two-phase approach: non-deterministic generation followed by deterministic backpressure from integrated SAST/DAST tools that must pass before code completion.",
