@@ -1,586 +1,109 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PatternMeta from '../../components/PatternMeta.astro';
-import SectionNav from '../../components/SectionNav.astro';
-import CopyButton from '../../components/CopyButton.astro';
+import PatternSource from '../../components/PatternSource.astro';
 
-export async function getStaticPaths() {
-  // Get all slugs from patterns.json
-  const patterns = await fetch('https://agentic-patterns.com/patterns.json')
-    .then(res => res.json())
-    .catch(() => []);
-
-  return patterns.map((pattern: any) => ({
-    params: { slug: pattern.slug },
-  }));
+interface Props {
+  slug: string;
 }
 
 const { slug } = Astro.params;
-const pattern = await fetch(`https://agentic-patterns.com/patterns/${slug}.json`)
-  .then(res => res.json())
-  .catch(() => null);
 
-if (!pattern) {
-  return Astro.redirect('/404');
-}
-
-// Define sections for navigation
-const sections = [
-  { id: 'problem', label: 'Problem' },
-  { id: 'solution', label: 'Solution' },
-  ...(pattern.howToUseIt ? [{ id: 'how-to-use-it', label: 'How to Use It' }] : []),
-  ...(pattern.tradeoffs ? [{ id: 'tradeoffs', label: 'Trade-offs' }] : []),
-  ...(pattern.example ? [{ id: 'example', label: 'Example' }] : []),
-  ...(pattern.references ? [{ id: 'references', label: 'References' }] : []),
-];
-
-// Generate citations
-function formatAuthors(authors: string[]): string {
-  if (authors.length === 1) return authors[0];
-  if (authors.length === 2) return `${authors[0]} & ${authors[1]}`;
-  return `${authors.slice(0, -1).join(', ')}, & ${authors[authors.length - 1]}`;
-}
-
-function generateCitationAPA(pattern: any): string {
-  const authors = pattern.authors && pattern.authors.length > 0
-    ? formatAuthors(pattern.authors.map((a: string) => a.replace(/\s*\(.*?\)/g, '').trim()))
-    : 'Anonymous';
-
-  const year = pattern.updated_at
-    ? new Date(pattern.updated_at).getFullYear()
-    : new Date().getFullYear();
-
-  const retrievalDate = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-
-  return `${authors} (${year}). ${pattern.title}. In *Awesome Agentic Patterns*. Retrieved ${retrievalDate}, from https://agentic-patterns.com/patterns/${pattern.slug}`;
-}
-
-function generateCitationBibTeX(pattern: any): string {
-  const authors = pattern.authors && pattern.authors.length > 0
-    ? pattern.authors.map((a: string) => a.replace(/\s*\(.*?\)/g, '').trim()).join(' and ')
-    : 'Anonymous';
-
-  const year = pattern.updated_at
-    ? new Date(pattern.updated_at).getFullYear()
-    : new Date().getFullYear();
-
-  return `@misc{agentic_patterns_${pattern.slug},
-  title = {${pattern.title}},
-  author = {${authors}},
-  year = {${year}},
-  howpublished = {\\url{https://agentic-patterns.com/patterns/${pattern.slug}}},
-  note = {Awesome Agentic Patterns}
-}`;
-}
-
-const citationAPA = generateCitationAPA(pattern);
-const citationBibTeX = generateCitationBibTeX(pattern);
+// For now, show a placeholder until data pipeline is implemented
 ---
 
-<BaseLayout
-  title={`${pattern.title} - Awesome Agentic Patterns`}
-  description={pattern.summary}
-  type="article"
->
+<BaseLayout title={`${slug} - Pattern`}>
   <div class="pattern-page">
-    <div class="pattern-layout">
-      <!-- Sidebar Navigation -->
-      <aside class="pattern-sidebar">
-        <SectionNav sections={sections} />
-      </aside>
+    <div class="pattern-placeholder">
+      <h1>Pattern: {slug}</h1>
+      <p>This pattern page will be populated once the data pipeline is implemented.</p>
 
-      <!-- Main Content -->
-      <main class="pattern-content">
-        <article class="pattern-article">
-          <!-- Header -->
-          <header class="pattern-header">
-            <div class="pattern-meta-header">
-              <span class="pattern-status">{pattern.status}</span>
-              <span class="pattern-category">{pattern.category}</span>
-            </div>
-            <h1 class="pattern-title">{pattern.title}</h1>
-            {pattern.summary && (
-              <p class="pattern-summary">{pattern.summary}</p>
-            )}
-            {pattern.authors && pattern.authors.length > 0 && (
-              <div class="pattern-authors">
-                <span class="pattern-authors-label">Authors:</span>
-                {pattern.authors.map((author: string) => (
-                  <span class="pattern-author">{author}</span>
-                ))}
-              </div>
-            )}
-            {pattern.source && (
-              <div class="pattern-source">
-                <span class="pattern-source-label">Source:</span>
-                <a href={pattern.source} target="_blank" rel="noopener noreferrer" class="pattern-source-link">
-                  View Original
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 6H11M6 1L11 6L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </a>
-              </div>
-            )}
-          </header>
+      <div class="pattern-placeholder-info">
+        <h2>What's Coming</h2>
+        <ul>
+          <li>Pattern title, summary, and description</li>
+          <li>Problem and solution sections</li>
+          <li>Example diagrams and code</li>
+          <li>Related patterns and references</li>
+          <li>Citation functionality</li>
+        </ul>
 
-          <!-- Metadata -->
-          <PatternMeta
-            maturity={pattern.maturity}
-            complexity={pattern.complexity}
-            effort={pattern.effort}
-            impact={pattern.impact}
-            prerequisites={pattern.prerequisites}
-            tools={pattern.tools}
-            domains={pattern.domains}
-          />
+        <a href="/patterns" class="back-link">← Back to Patterns</a>
+      </div>
 
-          <!-- Sections -->
-          <div class="pattern-body" set:html={pattern.body} />
-
-          <!-- References -->
-          {pattern.references && (
-            <section id="references" class="pattern-section">
-              <h2>References</h2>
-              <ul class="pattern-references">
-                {pattern.references.map((ref: string) => (
-                  <li>
-                    <a href={ref} target="_blank" rel="noopener noreferrer">
-                      {ref}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          <!-- Copy Button for Pattern ID -->
-          <div class="pattern-actions">
-            <CopyButton content={pattern.id} label={`Copy ${pattern.id} ID`} />
-            <button
-              class="citation-button"
-              data-citation-apa={citationAPA}
-              data-citation-bibtex={citationBibTeX}
-              onclick:preventDefault
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M6 6H10M6 9H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              Cite This Pattern
-            </button>
-          </div>
-
-          <!-- Citation Modal -->
-          <dialog id="citation-modal" class="citation-modal">
-            <div class="citation-modal-content">
-              <div class="citation-modal-header">
-                <h2>Cite This Pattern</h2>
-                <button class="citation-modal-close" onclick="document.getElementById('citation-modal').close()">×</button>
-              </div>
-
-              <div class="citation-modal-body">
-                <div class="citation-format">
-                  <div class="citation-format-header">
-                    <h3>APA Format</h3>
-                    <button
-                      class="copy-citation-button"
-                      data-format="apa"
-                      onclick={`navigator.clipboard.writeText(${JSON.stringify(citationAPA)}).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); });`}
-                    >
-                      Copy
-                    </button>
-                  </div>
-                  <code class="citation-text">{citationAPA}</code>
-                </div>
-
-                <div class="citation-format">
-                  <div class="citation-format-header">
-                    <h3>BibTeX Format</h3>
-                    <button
-                      class="copy-citation-button"
-                      data-format="bibtex"
-                      onclick={`navigator.clipboard.writeText(${JSON.stringify(citationBibTeX)}).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); });`}
-                    >
-                      Copy
-                    </button>
-                  </div>
-                  <pre class="citation-text citation-text--bibtex">{citationBibTeX}</pre>
-                </div>
-              </div>
-            </div>
-          </dialog>
-        </article>
-      </main>
+      <!-- Sample source block rendering -->
+      <PatternSource source="https://example.com/patterns/sample-pattern" />
     </div>
   </div>
 </BaseLayout>
 
-<script>
-  const citationButton = document.querySelector('.citation-button');
-  const citationModal = document.getElementById('citation-modal');
-
-  citationButton?.addEventListener('click', () => {
-    citationModal?.showModal();
-  });
-
-  citationModal?.addEventListener('click', (e) => {
-    if (e.target === citationModal) {
-      citationModal.close();
-    }
-  });
-</script>
-
 <style>
   .pattern-page {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-lg);
   }
 
-  .pattern-layout {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: var(--spacing-xl);
-    align-items: start;
+  .pattern-placeholder {
+    text-align: center;
   }
 
-  .pattern-sidebar {
-    position: sticky;
-    top: 100px;
-  }
-
-  .pattern-content {
-    min-width: 0;
-  }
-
-  .pattern-article {
-    background-color: var(--color-bg);
-  }
-
-  .pattern-header {
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .pattern-meta-header {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-  }
-
-  .pattern-status,
-  .pattern-category {
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .pattern-status {
-    background-color: var(--color-primary-light);
-    color: var(--color-primary);
-  }
-
-  .pattern-category {
-    background-color: var(--color-border);
-    color: var(--color-text-muted);
-  }
-
-  .pattern-title {
+  .pattern-placeholder h1 {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: var(--spacing-md);
-    line-height: 1.2;
   }
 
-  .pattern-summary {
+  .pattern-placeholder > p {
     font-size: 1.125rem;
     color: var(--color-text-muted);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .pattern-authors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    align-items: center;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .pattern-authors-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-  }
-
-  .pattern-author {
-    font-size: 0.875rem;
-    color: var(--color-primary);
-  }
-
-  .pattern-source {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-
-  .pattern-source-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-  }
-
-  .pattern-source-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    font-size: 0.875rem;
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .pattern-source-link:hover {
-    text-decoration: underline;
-  }
-
-  .pattern-source-link svg {
-    flex-shrink: 0;
-  }
-
-  .pattern-body {
     margin-bottom: var(--spacing-xl);
   }
 
-  .pattern-body :global(h2) {
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-top: var(--spacing-2xl);
-    margin-bottom: var(--spacing-md);
+  .pattern-placeholder-info {
+    padding: var(--spacing-xl);
+    background-color: var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: left;
+    margin-bottom: var(--spacing-xl);
   }
 
-  .pattern-body :global(h3) {
+  .pattern-placeholder-info h2 {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--color-text);
-    margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-sm);
-  }
-
-  .pattern-body :global(p) {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-text);
     margin-bottom: var(--spacing-md);
   }
 
-  .pattern-body :global(pre) {
-    background-color: var(--color-border);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-md);
-    overflow-x: auto;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .pattern-body :global(code) {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    background-color: var(--color-border);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
-  }
-
-  .pattern-section {
-    margin-top: var(--spacing-2xl);
-    padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--color-divider);
-  }
-
-  .pattern-section h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-  }
-
-  .pattern-references {
+  .pattern-placeholder-info ul {
     list-style: none;
     padding: 0;
-    margin: 0;
   }
 
-  .pattern-references li {
-    margin-bottom: var(--spacing-sm);
+  .pattern-placeholder-info li {
+    padding: var(--spacing-sm) 0;
+    color: var(--color-text-muted);
+    padding-left: var(--spacing-lg);
+    position: relative;
   }
 
-  .pattern-references a {
+  .pattern-placeholder-info li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: var(--spacing-lg);
     color: var(--color-primary);
     text-decoration: none;
+    font-weight: 500;
   }
 
-  .pattern-references a:hover {
+  .back-link:hover {
     text-decoration: underline;
-  }
-
-  .pattern-actions {
-    display: flex;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-divider);
-  }
-
-  .citation-button {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .citation-button:hover {
-    background-color: var(--color-primary-hover);
-  }
-
-  .citation-button svg {
-    flex-shrink: 0;
-  }
-
-  .citation-modal {
-    border: none;
-    border-radius: var(--radius-lg);
-    padding: 0;
-    max-width: 700px;
-    width: 100%;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  }
-
-  .citation-modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-  }
-
-  .citation-modal-content {
-    padding: var(--spacing-xl);
-  }
-
-  .citation-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .citation-modal-header h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0;
-  }
-
-  .citation-modal-close {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    font-size: 1.5rem;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    border-radius: var(--radius-sm);
-    transition: all 0.2s ease;
-  }
-
-  .citation-modal-close:hover {
-    background-color: var(--color-border);
-    color: var(--color-text);
-  }
-
-  .citation-modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-  }
-
-  .citation-format {
-    padding: var(--spacing-md);
-    background-color: var(--color-border);
-    border-radius: var(--radius-md);
-  }
-
-  .citation-format-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .citation-format-header h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0;
-  }
-
-  .copy-citation-button {
-    padding: var(--spacing-xs) var(--spacing-md);
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .copy-citation-button:hover {
-    background-color: var(--color-primary-hover);
-  }
-
-  .citation-text {
-    display: block;
-    padding: var(--spacing-md);
-    background-color: var(--color-bg);
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
-    color: var(--color-text);
-    line-height: 1.5;
-    overflow-x: auto;
-  }
-
-  .citation-text--bibtex {
-    font-family: var(--font-mono);
-    white-space: pre-wrap;
-  }
-
-  @media (max-width: 768px) {
-    .pattern-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .pattern-sidebar {
-      position: static;
-    }
-
-    .pattern-title {
-      font-size: 2rem;
-    }
   }
 </style>

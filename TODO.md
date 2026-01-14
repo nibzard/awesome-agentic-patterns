@@ -260,8 +260,8 @@
 - [x] 260 - Add stable section IDs for citations. [Already implemented - sections have stable IDs: problem, solution, how-to-use-it, tradeoffs, example, references]
 - [x] 261 - Add Mermaid support to Astro markdown rendering. [Installed rehype-mermaid and mermaid packages; added to markdown.rehypePlugins in astro.config.mjs]
 - [x] 262 - Add Mermaid styling to `global.css`. [Added .mermaid class styles with border, padding, border-radius, and dark mode support]
-- [ ] 263 - Port the pattern source block into an Astro component.
-- [ ] 264 - Render the pattern source block on pattern pages.
+- [x] 263 - Port the pattern source block into an Astro component. [Created PatternSource.astro with icon, label, and external link styling]
+- [x] 264 - Render the pattern source block on pattern pages. [Added to pattern detail page with sample source rendering]
 - [ ] 265 - Enforce absolute asset paths in markdown rendering.
 - [ ] 266 - Map existing MkDocs URLs to new routes.
 - [ ] 267 - Generate a redirects file for Vercel.
