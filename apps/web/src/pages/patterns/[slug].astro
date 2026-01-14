@@ -32,7 +32,7 @@ const references = extractSection(pattern.body, 'References');
 <BaseLayout title={`${pattern.title} - Pattern`}>
   <div class="pattern-page">
     <header class="pattern-header">
-      <PatternActions pattern={pattern} />
+      <PatternActions {pattern} />
       <div class="pattern-meta">
         <span class="badge badge--status">{pattern.status}</span>
         {pattern.complexity && <span class="badge badge--complexity">{pattern.complexity}</span>}
