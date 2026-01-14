@@ -18,6 +18,14 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Theme initialization script - runs before page render to prevent flash
+const themeScript = `
+  (function() {
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+`;
 ---
 
 <!DOCTYPE html>
@@ -54,6 +62,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Font Preload (for future custom fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Theme Initialization -->
+    <script set:html={themeScript} />
   </head>
   <body>
     <Header currentPath={Astro.url.pathname} />
