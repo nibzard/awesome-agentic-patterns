@@ -1,13 +1,12 @@
 ---
 interface Props {
   placeholder?: string;
-  action?: string;
 }
 
-const { placeholder = 'Search patterns...', action = '/search' } = Astro.props;
+const { placeholder = 'Search patterns...' } = Astro.props;
 ---
 
-<form class="search-box" {action} method="GET">
+<div class="search-box" role="search">
   <div class="search-box-input-wrapper">
     <svg
       class="search-box-icon"
@@ -16,17 +15,18 @@ const { placeholder = 'Search patterns...', action = '/search' } = Astro.props;
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="2"></circle>
       <path d="M12 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
     </svg>
     <input
       type="search"
-      name="q"
       class="search-box-input"
       {placeholder}
       aria-label="Search patterns"
       autocomplete="off"
+      readonly
     />
     <button type="button" class="search-box-clear" aria-label="Clear search" hidden>
       <svg
@@ -35,14 +35,15 @@ const { placeholder = 'Search patterns...', action = '/search' } = Astro.props;
         viewBox="0 0 16 16"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
         ></path>
       </svg>
     </button>
   </div>
-  <button type="submit" class="search-box-submit">Search</button>
-</form>
+  <button type="button" class="search-box-submit">Search</button>
+</div>
 
 <style>
   .search-box {
@@ -76,6 +77,11 @@ const { placeholder = 'Search patterns...', action = '/search' } = Astro.props;
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .search-box-input:hover {
+    border-color: var(--color-primary);
   }
 
   .search-box-input:focus {
@@ -135,24 +141,38 @@ const { placeholder = 'Search patterns...', action = '/search' } = Astro.props;
 </style>
 
 <script>
-  // Search box functionality
-  const searchForm = document.querySelector('.search-box');
-  const searchInput = searchForm?.querySelector('.search-box-input') as HTMLInputElement;
-  const clearButton = searchForm?.querySelector('.search-box-clear') as HTMLButtonElement;
+  // Search box functionality - triggers header search modal
+  const searchBoxes = document.querySelectorAll('.search-box');
 
-  // Show/hide clear button based on input
-  searchInput?.addEventListener('input', () => {
-    if (searchInput.value) {
-      clearButton?.removeAttribute('hidden');
-    } else {
-      clearButton?.setAttribute('hidden', '');
-    }
-  });
+  searchBoxes.forEach((searchBox) => {
+    const searchInput = searchBox.querySelector('.search-box-input') as HTMLInputElement;
+    const clearButton = searchBox.querySelector('.search-box-clear') as HTMLButtonElement;
+    const submitButton = searchBox.querySelector('.search-box-submit') as HTMLButtonElement;
 
-  // Clear button functionality
-  clearButton?.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.focus();
-    clearButton.setAttribute('hidden', '');
+    // Click on input or submit button opens the header search modal
+    const openSearchModal = () => {
+      const searchToggle = document.getElementById('search-toggle');
+      searchToggle?.click();
+    };
+
+    searchInput?.addEventListener('click', openSearchModal);
+    searchInput?.addEventListener('focus', openSearchModal);
+    submitButton?.addEventListener('click', openSearchModal);
+
+    // Prevent typing in the readonly input
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openSearchModal();
+      }
+    });
+
+    // Clear button functionality
+    clearButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      searchInput.value = '';
+      searchInput.focus();
+      clearButton.setAttribute('hidden', '');
+    });
   });
 </script>
