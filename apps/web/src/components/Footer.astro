@@ -108,7 +108,7 @@ const footerSections = [
     margin: 0 auto;
     padding: var(--spacing-2xl) var(--spacing-lg);
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 280px 1fr;
     gap: var(--spacing-2xl);
     align-items: start;
   }
@@ -117,6 +117,7 @@ const footerSections = [
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    min-width: 0;
   }
 
   .footer-brand {
@@ -149,6 +150,7 @@ const footerSections = [
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
+    min-width: 0;
   }
 
   .footer-section-title {
@@ -204,7 +206,14 @@ const footerSections = [
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    .footer-links {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+    }
+  }
+
+  @media (max-width: 480px) {
     .footer-links {
       grid-template-columns: 1fr;
       gap: var(--spacing-md);
