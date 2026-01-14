@@ -1,0 +1,67 @@
+---
+title: 'Git-Based Pattern Labeling'
+description: 'How the automated git-based pattern labeling system works.'
+order: 3
+---
+
+## Overview
+
+This repository uses a fully automated git-based pattern labeling system. Pattern labels (NEW and UPDATED) are determined directly from git commit history.
+
+## Labeling Logic
+
+### NEW Badges (🆕)
+
+Patterns **created** within the last **7 days** receive a NEW badge.
+
+- Based on first git commit that added the file
+- Automatically expires after 7 days
+
+### UPDATED Badges (🔄)
+
+Patterns **created > 7 days ago** but **modified** within last **14 days** receive an UPDATED badge.
+
+- Based on last git commit that modified the file
+- Automatically expires after 14 days
+- NEW takes precedence over UPDATED
+
+## Migration from Manual System
+
+### Before (Manual)
+
+- Used `.new-patterns-tracker.txt` and `.updated-patterns-tracker.txt` files
+- Required manual maintenance and updates
+- Prone to inconsistencies and errors
+
+### After (Git-Based)
+
+- Uses git commit history as the source of truth
+- Fully automated with zero manual maintenance
+- Consistent and accurate labeling
+
+## For Contributors
+
+Nothing changes for contributors! The system automatically:
+
+- Detects when you add new patterns (NEW label for 7 days)
+- Detects when you modify existing patterns (UPDATED label for 14 days)
+- Handles all labeling based on your git commits
+
+Just commit your work as usual - the labeling happens automatically.
+
+## Configuration
+
+To adjust timeframes, edit `scripts/git_pattern_dates.py`:
+
+```python
+NEW_PATTERN_DAYS = 7      # NEW badge duration
+UPDATED_PATTERN_DAYS = 14 # UPDATED badge duration
+```
+
+## Advantages
+
+1. **Zero Maintenance**: No manual tracking files
+2. **Accurate**: Git history is the source of truth
+3. **Automatic**: Labels appear and expire automatically
+4. **Consistent**: No human error in labeling
+5. **Intuitive**: Time-based logic is easy to understand
