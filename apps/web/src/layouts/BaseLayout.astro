@@ -67,8 +67,11 @@ const themeScript = `
     <script set:html={themeScript} />
   </head>
   <body>
+    <!-- Skip Navigation for Keyboard Users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <Header currentPath={Astro.url.pathname} />
-    <main>
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
     <Footer />

@@ -120,11 +120,16 @@ const navItems = [
             type="text"
             placeholder="Search patterns..."
             autocomplete="off"
+            aria-label="Search patterns"
+            aria-describedby="search-instructions"
+            role="searchbox"
+            aria-autocomplete="list"
+            aria-expanded="false"
           />
           <kbd id="search-shortcut">⌘K</kbd>
         </div>
-        <div id="search-results" class="search-results"></div>
-        <div class="search-footer">
+        <div id="search-results" class="search-results" role="region" aria-live="polite" aria-atomic="true"></div>
+        <div class="search-footer" id="search-instructions">
           <span>Use <kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
           <span><kbd>↵</kbd> to select</span>
           <span><kbd>esc</kbd> to close</span>
@@ -181,10 +186,11 @@ const navItems = [
       // Render search results
       function renderResults() {
         if (currentResults.length === 0) {
-          searchResults.innerHTML = '<div class="search-empty">No results found</div>';
+          searchResults.innerHTML = '<div class="search-empty" role="status">No results found</div>';
           return;
         }
 
+        const resultCount = currentResults.length;
         searchResults.innerHTML = currentResults
           .map(
             (result, index) => `
@@ -192,6 +198,8 @@ const navItems = [
             href="${result.url}"
             class="search-result ${index === selectedIndex ? 'search-result--selected' : ''}"
             data-index="${index}"
+            role="option"
+            aria-selected={index === selectedIndex ? 'true' : 'false'}
           >
             <div class="search-result-title">${result.meta?.title || 'Untitled'}</div>
             <div class="search-result-excerpt">${result.meta?.excerpt || ''}</div>
@@ -199,6 +207,9 @@ const navItems = [
         `
           )
           .join('');
+
+        // Announce results to screen readers
+        searchResults.setAttribute('aria-label', `${resultCount} result${resultCount !== 1 ? 's' : ''} found`);
       }
 
       // Open search modal
