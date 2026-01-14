@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SearchBox from '../../components/SearchBox.astro';
 import PatternCard from '../../components/PatternCard.astro';
+import { getAllPatterns } from '../../lib/patterns';
 import type {
   PatternEntry,
   CategoryCount,
@@ -11,9 +12,7 @@ import type {
 } from '../../types';
 
 // Load patterns data
-const patterns = (await fetch('https://agentic-patterns.com/patterns.json')
-  .then((res) => res.json())
-  .catch(() => [])) as PatternEntry[];
+const patterns = (await getAllPatterns()) as PatternEntry[];
 
 // Get unique values for filters with counts
 const categoryMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
@@ -55,6 +54,29 @@ const complexityMap = patterns.reduce((acc: Record<string, number>, p: PatternEn
 const complexities = Object.entries(complexityMap)
   .map(([complexity, count]) => ({ complexity, count }))
   .sort((a, b) => b.count - a.count) as ComplexityCount[];
+
+const tagMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
+  p.tags.forEach((tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+  });
+  return acc;
+}, {});
+
+const tags = Object.entries(tagMap)
+  .map(([tag, count]) => ({ tag, count }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 20);
+
+const domainMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
+  (p.domains || []).forEach((domain) => {
+    acc[domain] = (acc[domain] || 0) + 1;
+  });
+  return acc;
+}, {});
+
+const domains = Object.entries(domainMap)
+  .map(([domain, count]) => ({ domain, count }))
+  .sort((a, b) => b.count - a.count);
 ---
 
 <BaseLayout title="Patterns - Awesome Agentic Patterns">
@@ -166,19 +188,59 @@ const complexities = Object.entries(complexityMap)
           </div>
         </div>
 
+        <div class="filter-group">
+          <h3 class="filter-group-title">Tags</h3>
+          <div class="filter-options">
+            {
+              tags.map(({ tag, count }) => (
+                <a href={`/patterns?tag=${encodeURIComponent(tag)}`} class="filter-option">
+                  <span class="filter-option-label">{tag}</span>
+                  <span class="filter-option-count">{count}</span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        {
+          domains.length > 0 && (
+            <div class="filter-group">
+              <h3 class="filter-group-title">Domains</h3>
+              <div class="filter-options">
+                {domains.map(({ domain, count }) => (
+                  <a href={`/patterns?domain=${encodeURIComponent(domain)}`} class="filter-option">
+                    <span class="filter-option-label">{domain}</span>
+                    <span class="filter-option-count">{count}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
         <a href="/patterns" class="clear-filters">Clear Filters</a>
       </aside>
 
       <!-- Pattern Grid -->
       <div class="patterns-content">
-        <div class="patterns-count">
-          Showing {patterns.length} patterns
+        <div class="patterns-count" id="patterns-count">
+          Showing {patterns.length} pattern{patterns.length === 1 ? '' : 's'}
         </div>
 
-        {
-          patterns.length > 0 ? (
-            <div class="patterns-grid">
-              {patterns.map((pattern: PatternEntry) => (
+        <div class="patterns-grid" id="patterns-grid">
+          {
+            patterns.map((pattern: PatternEntry) => (
+              <div
+                class="pattern-card-wrapper"
+                data-pattern-card
+                data-category={pattern.category}
+                data-status={pattern.status}
+                data-maturity={pattern.maturity || ''}
+                data-complexity={pattern.complexity || ''}
+                data-tags={pattern.tags.join('|')}
+                data-domains={(pattern.domains || []).join('|')}
+                data-search={`${pattern.title} ${pattern.summary || ''} ${pattern.category} ${pattern.tags.join(' ')} ${(pattern.domains || []).join(' ')}`.toLowerCase()}
+              >
                 <PatternCard
                   title={pattern.title}
                   slug={pattern.slug}
@@ -187,17 +249,15 @@ const complexities = Object.entries(complexityMap)
                   category={pattern.category}
                   tags={pattern.tags}
                 />
-              ))}
-            </div>
-          ) : (
-            <div class="patterns-empty">
-              <p>No patterns found.</p>
-              <a href="/patterns" class="button">
-                Clear Filters
-              </a>
-            </div>
-          )
-        }
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="patterns-empty" id="patterns-empty" hidden>
+          <p>No patterns found.</p>
+          <a href="/patterns" class="button"> Clear Filters </a>
+        </div>
       </div>
     </div>
   </div>
@@ -465,6 +525,71 @@ const complexities = Object.entries(complexityMap)
 </style>
 
 <script>
+  const params = new URLSearchParams(window.location.search);
+  const selectedCategories = params.getAll('category');
+  const selectedStatuses = params.getAll('status');
+  const selectedMaturities = params.getAll('maturity');
+  const selectedComplexities = params.getAll('complexity');
+  const selectedTags = params.getAll('tag');
+  const selectedDomains = params.getAll('domain');
+  const searchQuery = params.get('q')?.trim().toLowerCase() || '';
+
+  const cards = document.querySelectorAll('[data-pattern-card]');
+  let visibleCount = 0;
+
+  cards.forEach((card) => {
+    const category = card.getAttribute('data-category') || '';
+    const status = card.getAttribute('data-status') || '';
+    const maturity = card.getAttribute('data-maturity') || '';
+    const complexity = card.getAttribute('data-complexity') || '';
+    const tags = (card.getAttribute('data-tags') || '').split('|').filter(Boolean);
+    const domains = (card.getAttribute('data-domains') || '').split('|').filter(Boolean);
+    const search = card.getAttribute('data-search') || '';
+
+    let matches = true;
+
+    if (selectedCategories.length > 0 && !selectedCategories.includes(category)) {
+      matches = false;
+    }
+
+    if (selectedStatuses.length > 0 && !selectedStatuses.includes(status)) {
+      matches = false;
+    }
+
+    if (selectedMaturities.length > 0 && !selectedMaturities.includes(maturity)) {
+      matches = false;
+    }
+
+    if (selectedComplexities.length > 0 && !selectedComplexities.includes(complexity)) {
+      matches = false;
+    }
+
+    if (selectedTags.length > 0 && !tags.some((tag) => selectedTags.includes(tag))) {
+      matches = false;
+    }
+
+    if (selectedDomains.length > 0 && !domains.some((domain) => selectedDomains.includes(domain))) {
+      matches = false;
+    }
+
+    if (searchQuery && !search.includes(searchQuery)) {
+      matches = false;
+    }
+
+    card.hidden = !matches;
+    if (matches) visibleCount += 1;
+  });
+
+  const countEl = document.getElementById('patterns-count');
+  if (countEl) {
+    countEl.textContent = `Showing ${visibleCount} pattern${visibleCount === 1 ? '' : 's'}`;
+  }
+
+  const emptyEl = document.getElementById('patterns-empty');
+  if (emptyEl) {
+    emptyEl.hidden = visibleCount > 0;
+  }
+
   // Mobile filter toggle functionality
   const filtersOpen = document.getElementById('filters-open');
   const filtersClose = document.getElementById('filters-close');

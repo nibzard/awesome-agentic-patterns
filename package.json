@@ -12,7 +12,7 @@
     "migrate:patterns": "bun scripts/migrate-patterns.ts",
     "migrate:patterns:dry": "bun scripts/migrate-patterns.ts --dry-run",
     "dev": "bun --cwd apps/web dev",
-    "build": "bun --cwd apps/web build",
+    "build": "bun scripts/build-data.ts && bun --cwd apps/web build",
     "preview": "bun --cwd apps/web preview",
     "prepare": "husky"
   },

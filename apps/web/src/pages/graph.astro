@@ -1,41 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { PatternGraph, GraphNode } from '../types';
+import { getAllPatterns } from '../lib/patterns';
+import type { PatternGraph, GraphEdge, GraphNode } from '../types';
 
-// Load graph data
-const graphData = (await fetch('/graph.json')
-  .then((res) => res.json())
-  .catch(() => ({ nodes: [], edges: [] }))) as PatternGraph;
+const patterns = await getAllPatterns();
+const nodeIds = new Set(patterns.map((pattern) => pattern.id));
+
+const graphData: PatternGraph = {
+  nodes: patterns.map((pattern) => ({
+    id: pattern.id,
+    title: pattern.title,
+    category: pattern.category,
+    status: pattern.status,
+    slug: pattern.slug,
+    tags: pattern.tags,
+  })),
+  edges: patterns.flatMap((pattern) => {
+    const relatedEdges =
+      pattern.related
+        ?.filter((id) => nodeIds.has(id))
+        .map((id) => ({ source: pattern.id, target: id, type: 'related' as const })) || [];
+    const antiEdges =
+      pattern.anti_patterns
+        ?.filter((id) => nodeIds.has(id))
+        .map((id) => ({ source: pattern.id, target: id, type: 'anti-pattern' as const })) || [];
+    return [...relatedEdges, ...antiEdges];
+  }),
+};
 
 // Get unique values for filters
 const categories = [...new Set(graphData.nodes.map((n: GraphNode) => n.category))].sort();
 const statuses = [...new Set(graphData.nodes.map((n: GraphNode) => n.status))].sort();
 
-// Get filter values from URL
-const searchParams = Astro.url.searchParams;
-const selectedCategories = searchParams.getAll('category') || [];
-const selectedStatuses = searchParams.getAll('status') || [];
-const selectedTags = searchParams.getAll('tag') || [];
-const _selectedDomains = searchParams.getAll('domain') || [];
+const positionedNodes = graphData.nodes.map((node: GraphNode, index: number) => {
+  const angle = (index / Math.max(graphData.nodes.length, 1)) * 2 * Math.PI;
+  const radius = 200 + (index % 3) * 50;
+  const x = 400 + Math.cos(angle) * radius;
+  const y = 300 + Math.sin(angle) * radius;
 
-// Filter nodes
-const filteredNodes = graphData.nodes.filter((node: GraphNode) => {
-  if (selectedCategories.length > 0 && !selectedCategories.includes(node.category)) return false;
-  if (selectedStatuses.length > 0 && !selectedStatuses.includes(node.status)) return false;
-  if (selectedTags.length > 0 && !node.tags?.some((t: string) => selectedTags.includes(t)))
-    return false;
-  // Domain filter - you can add domain field to nodes if needed
-  return true;
+  return {
+    ...node,
+    x,
+    y,
+  };
 });
 
-// Get selected node from URL
-const selectedNodeId = searchParams.get('node');
-const selectedNode = selectedNodeId
-  ? graphData.nodes.find((n: GraphNode) => n.id === selectedNodeId)
-  : null;
+const nodeById = new Map(positionedNodes.map((node) => [node.id, node]));
 
-// Get all unique tags
-const _allTags = [...new Set(graphData.nodes.flatMap((n: GraphNode) => n.tags || []))].sort();
+const positionedEdges = graphData.edges
+  .map((edge) => {
+    const source = nodeById.get(edge.source);
+    const target = nodeById.get(edge.target);
+    if (!source || !target) return null;
+    return {
+      ...edge,
+      x1: source.x,
+      y1: source.y,
+      x2: target.x,
+      y2: target.y,
+    } as GraphEdge;
+  })
+  .filter(Boolean) as GraphEdge[];
 
 // Helper functions for category/status colors
 function getCategoryColor(category: string): string {
@@ -50,19 +75,6 @@ function getCategoryColor(category: string): string {
     'UX & Collaboration': '#f97316',
   };
   return colors[category] || '#6b7280';
-}
-
-function _getStatusColor(status: string): string {
-  const colors: Record<string, string> = {
-    proposed: '#9ca3af',
-    emerging: '#60a5fa',
-    established: '#34d399',
-    'validated-in-production': '#10b981',
-    'best-practice': '#059669',
-    'experimental-but-awesome': '#f59e0b',
-    'rapidly-improving': '#8b5cf6',
-  };
-  return colors[status] || '#6b7280';
 }
 ---
 
@@ -80,79 +92,46 @@ function _getStatusColor(status: string): string {
           <h3 class="filter-title">Category</h3>
           <div class="filter-options">
             {
-              categories.map((category) => {
-                const isChecked = selectedCategories.includes(category);
-                const newCategories = isChecked
-                  ? selectedCategories.filter((c: string) => c !== category)
-                  : [...selectedCategories, category];
-                const newParams = new URLSearchParams(searchParams);
-                newParams.delete('category');
-                newCategories.forEach((c: string) => newParams.append('category', c));
-
-                return (
-                  <label class="filter-option">
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onchange={`window.location.href = '/graph?${newParams.toString()}'`}
-                    />
-                    <span>{category}</span>
-                    <span class="filter-count">
-                      {graphData.nodes.filter((n: GraphNode) => n.category === category).length}
-                    </span>
-                  </label>
-                );
-              })
+              categories.map((category) => (
+                <label class="filter-option">
+                  <input type="checkbox" value={category} data-filter="category" />
+                  <span>{category}</span>
+                  <span class="filter-count">
+                    {graphData.nodes.filter((n: GraphNode) => n.category === category).length}
+                  </span>
+                </label>
+              ))
             }
           </div>
         </div>
 
         <div class="filter-section">
-          <h3 class="filter-title">Maturity</h3>
+          <h3 class="filter-title">Status</h3>
           <div class="filter-options">
             {
-              statuses.map((status) => {
-                const isChecked = selectedStatuses.includes(status);
-                const newStatuses = isChecked
-                  ? selectedStatuses.filter((s: string) => s !== status)
-                  : [...selectedStatuses, status];
-                const newParams = new URLSearchParams(searchParams);
-                newParams.delete('status');
-                newStatuses.forEach((s: string) => newParams.append('status', s));
-
-                return (
-                  <label class="filter-option">
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onchange={`window.location.href = '/graph?${newParams.toString()}'`}
-                    />
-                    <span>{status}</span>
-                    <span class="filter-count">
-                      {graphData.nodes.filter((n: GraphNode) => n.status === status).length}
-                    </span>
-                  </label>
-                );
-              })
+              statuses.map((status) => (
+                <label class="filter-option">
+                  <input type="checkbox" value={status} data-filter="status" />
+                  <span>{status}</span>
+                  <span class="filter-count">
+                    {graphData.nodes.filter((n: GraphNode) => n.status === status).length}
+                  </span>
+                </label>
+              ))
             }
           </div>
         </div>
 
-        {
-          (selectedCategories.length > 0 ||
-            selectedStatuses.length > 0 ||
-            selectedTags.length > 0) && (
-            <a href="/graph" class="clear-filters">
-              Clear All Filters
-            </a>
-          )
-        }
+        <a href="/graph" class="clear-filters" id="graph-clear-filters" hidden>
+          Clear All Filters
+        </a>
       </aside>
 
       <!-- Graph Canvas -->
       <div class="graph-canvas-container">
         <div class="graph-info">
-          Showing {filteredNodes.length} of {graphData.nodes.length} patterns
+          Showing <span id="graph-count">{graphData.nodes.length}</span> of {graphData.nodes.length}
+          patterns
         </div>
 
         <div class="graph-canvas" id="graph-canvas">
@@ -169,7 +148,7 @@ function _getStatusColor(status: string): string {
 
             <!-- Edges -->
             {
-              graphData.edges.map((edge) => (
+              positionedEdges.map((edge) => (
                 <line
                   x1={edge.x1}
                   y1={edge.y1}
@@ -178,41 +157,43 @@ function _getStatusColor(status: string): string {
                   stroke="var(--color-border)"
                   stroke-width="2"
                   class="graph-edge"
+                  data-edge
+                  data-source={edge.source}
+                  data-target={edge.target}
                 />
               ))
             }
 
             <!-- Nodes -->
             {
-              filteredNodes.map((node: GraphNode, index: number) => {
-                // Simple force-directed layout simulation
-                const angle = (index / filteredNodes.length) * 2 * Math.PI;
-                const radius = 200 + (index % 3) * 50;
-                const x = 400 + Math.cos(angle) * radius;
-                const y = 300 + Math.sin(angle) * radius;
-
+              positionedNodes.map((node: GraphNode & { x: number; y: number }) => {
                 const categoryColor = getCategoryColor(node.category);
 
                 return (
                   <g
                     class="graph-node"
                     data-node-id={node.id}
+                    data-category={node.category}
+                    data-status={node.status}
+                    data-tags={(node.tags || []).join('|')}
+                    data-title={node.title}
+                    data-slug={node.slug}
                     style="--category-color: {categoryColor}"
                   >
                     <circle
-                      cx={x}
-                      cy={y}
+                      cx={node.x}
+                      cy={node.y}
                       r="24"
                       fill={categoryColor}
                       class="node-circle"
-                      filter={selectedNodeId === node.id ? 'url(#glow)' : ''}
+                      data-node-circle={node.id}
                     />
-                    <text x={x} y={y + 35} text-anchor="middle" class="node-label">
+                    <text x={node.x} y={node.y + 35} text-anchor="middle" class="node-label">
                       {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
                     </text>
                     <foreignObject
-                      x={x - 100}
-                      y={y - 100}
+                      x={node.x - 100}
+                      y={node.y - 100}
                       width="200"
                       height="80"
                       class="node-tooltip"
@@ -230,7 +211,7 @@ function _getStatusColor(status: string): string {
                       </div>
                     </foreignObject>
                     <a href={`/graph?node=${node.id}`} class="node-link" data-node-id={node.id}>
-                      <circle cx={x} cy={y} r="32" fill="transparent" />
+                      <circle cx={node.x} cy={node.y} r="32" fill="transparent" />
                     </a>
                   </g>
                 );
@@ -240,35 +221,192 @@ function _getStatusColor(status: string): string {
         </div>
 
         <!-- Detail Panel -->
-        {
-          selectedNode && (
-            <div class="graph-detail-panel">
-              <button class="detail-close" onclick="window.location.href = '/graph'">
-                ×
-              </button>
+        <div class="graph-detail-panel" id="graph-detail" hidden>
+          <button class="detail-close" id="detail-close">×</button>
 
-              <h2 class="detail-title">{selectedNode.title}</h2>
+          <h2 class="detail-title" id="detail-title"></h2>
 
-              <div class="detail-meta">
-                <span class="detail-category">{selectedNode.category}</span>
-                <span
-                  class="detail-status"
-                  style="--status-color: {_getStatusColor(selectedNode.status)}"
-                >
-                  {selectedNode.status}
-                </span>
-              </div>
+          <div class="detail-meta">
+            <span class="detail-category" id="detail-category"></span>
+            <span class="detail-status" id="detail-status"></span>
+          </div>
 
-              <a href={`/patterns/{selectedNode.slug}`} class="detail-link">
-                View Full Pattern →
-              </a>
-            </div>
-          )
-        }
+          <a href="/patterns" class="detail-link" id="detail-link"> View Full Pattern → </a>
+        </div>
       </div>
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const selectedCategories = params.getAll('category');
+  const selectedStatuses = params.getAll('status');
+  const selectedTags = params.getAll('tag');
+  const selectedNodeId = params.get('node');
+
+  const clearFiltersLink = document.getElementById('graph-clear-filters');
+  const countEl = document.getElementById('graph-count');
+  const nodeElements = document.querySelectorAll('.graph-node');
+  const edgeElements = document.querySelectorAll('[data-edge]');
+  const categoryFilters = document.querySelectorAll('input[data-filter="category"]');
+  const statusFilters = document.querySelectorAll('input[data-filter="status"]');
+
+  const detailPanel = document.getElementById('graph-detail');
+  const detailTitle = document.getElementById('detail-title');
+  const detailCategory = document.getElementById('detail-category');
+  const detailStatus = document.getElementById('detail-status');
+  const detailLink = document.getElementById('detail-link');
+  const detailClose = document.getElementById('detail-close');
+
+  const applyFilters = () => {
+    const visibleNodes = new Set();
+    nodeElements.forEach((node) => {
+      const category = node.getAttribute('data-category') || '';
+      const status = node.getAttribute('data-status') || '';
+      const tags = (node.getAttribute('data-tags') || '').split('|').filter(Boolean);
+
+      let matches = true;
+      if (selectedCategories.length > 0 && !selectedCategories.includes(category)) {
+        matches = false;
+      }
+      if (selectedStatuses.length > 0 && !selectedStatuses.includes(status)) {
+        matches = false;
+      }
+      if (selectedTags.length > 0 && !tags.some((tag) => selectedTags.includes(tag))) {
+        matches = false;
+      }
+
+      node.style.display = matches ? '' : 'none';
+      if (matches) {
+        const nodeId = node.getAttribute('data-node-id');
+        if (nodeId) visibleNodes.add(nodeId);
+      }
+    });
+
+    edgeElements.forEach((edge) => {
+      const source = edge.getAttribute('data-source');
+      const target = edge.getAttribute('data-target');
+      const show = source && target && visibleNodes.has(source) && visibleNodes.has(target);
+      edge.style.display = show ? '' : 'none';
+    });
+
+    if (countEl) {
+      countEl.textContent = String(visibleNodes.size);
+    }
+
+    if (clearFiltersLink) {
+      clearFiltersLink.hidden =
+        selectedCategories.length === 0 &&
+        selectedStatuses.length === 0 &&
+        selectedTags.length === 0;
+    }
+  };
+
+  const updateFilterInputs = () => {
+    categoryFilters.forEach((input) => {
+      input.checked = selectedCategories.includes(input.value);
+      input.addEventListener('change', () => {
+        const params = new URLSearchParams(window.location.search);
+        const values = params.getAll('category');
+        if (input.checked) {
+          values.push(input.value);
+        } else {
+          const index = values.indexOf(input.value);
+          if (index !== -1) values.splice(index, 1);
+        }
+        params.delete('category');
+        values.forEach((value) => params.append('category', value));
+        window.location.search = params.toString();
+      });
+    });
+
+    statusFilters.forEach((input) => {
+      input.checked = selectedStatuses.includes(input.value);
+      input.addEventListener('change', () => {
+        const params = new URLSearchParams(window.location.search);
+        const values = params.getAll('status');
+        if (input.checked) {
+          values.push(input.value);
+        } else {
+          const index = values.indexOf(input.value);
+          if (index !== -1) values.splice(index, 1);
+        }
+        params.delete('status');
+        values.forEach((value) => params.append('status', value));
+        window.location.search = params.toString();
+      });
+    });
+  };
+
+  const updateDetailPanel = () => {
+    if (!detailPanel) return;
+
+    document.querySelectorAll('[data-node-circle]').forEach((circle) => {
+      circle.removeAttribute('filter');
+    });
+
+    if (!selectedNodeId) {
+      detailPanel.hidden = true;
+      return;
+    }
+
+    const node = document.querySelector(`.graph-node[data-node-id="${selectedNodeId}"]`);
+    if (!node) {
+      detailPanel.hidden = true;
+      return;
+    }
+
+    if (node.style.display === 'none') {
+      detailPanel.hidden = true;
+      return;
+    }
+
+    const title = node.getAttribute('data-title') || '';
+    const category = node.getAttribute('data-category') || '';
+    const status = node.getAttribute('data-status') || '';
+    const slug = node.getAttribute('data-slug') || '';
+
+    if (detailTitle) detailTitle.textContent = title;
+    if (detailCategory) detailCategory.textContent = category;
+    if (detailStatus) detailStatus.textContent = status;
+    if (detailLink && slug) detailLink.setAttribute('href', `/patterns/${slug}`);
+
+    if (detailStatus) {
+      detailStatus.style.setProperty('--status-color', getStatusColor(status));
+    }
+
+    const nodeCircle = document.querySelector(`[data-node-circle="${selectedNodeId}"]`);
+    if (nodeCircle) {
+      nodeCircle.setAttribute('filter', 'url(#glow)');
+    }
+
+    detailPanel.hidden = false;
+  };
+
+  const getStatusColor = (status) => {
+    const colors = {
+      proposed: '#9ca3af',
+      emerging: '#60a5fa',
+      established: '#34d399',
+      'validated-in-production': '#10b981',
+      'best-practice': '#059669',
+      'experimental-but-awesome': '#f59e0b',
+      'rapidly-improving': '#8b5cf6',
+    };
+    return colors[status] || '#6b7280';
+  };
+
+  if (detailClose) {
+    detailClose.addEventListener('click', () => {
+      window.location.href = '/graph';
+    });
+  }
+
+  updateFilterInputs();
+  applyFilters();
+  updateDetailPanel();
+</script>
 
 <style>
   .graph-page {

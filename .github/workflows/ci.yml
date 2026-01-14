@@ -20,11 +20,9 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        working-directory: apps/web
         run: bun install
 
       - name: Build Astro site
-        working-directory: apps/web
         run: bun run build
 
       - name: Upload build artifacts

@@ -17,6 +17,7 @@
     "astro": "^5.16.9",
     "d3": "7",
     "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
     "mermaid": "^11.12.2",
     "pagefind": "^1.4.0",
     "rehype-mermaid": "^2.0.0"

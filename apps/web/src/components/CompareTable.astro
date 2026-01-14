@@ -1,13 +1,20 @@
 ---
+import { renderMarkdown } from '../lib/markdown';
+
 interface Pattern {
   id: string;
+  slug: string;
   title: string;
+  summary?: string;
   status: string;
   category: string;
   maturity?: string;
   complexity?: string;
   effort?: string;
   impact?: string;
+  signals?: string[];
+  anti_signals?: string[];
+  tradeoffs?: string | null;
   tags?: string[];
   domains?: string[];
 }
@@ -20,12 +27,16 @@ const { patterns } = Astro.props;
 
 // Fields to compare
 const compareFields = [
+  { key: 'summary', label: 'Summary' },
   { key: 'status', label: 'Status' },
   { key: 'category', label: 'Category' },
   { key: 'maturity', label: 'Maturity' },
   { key: 'complexity', label: 'Complexity' },
   { key: 'effort', label: 'Effort' },
   { key: 'impact', label: 'Impact' },
+  { key: 'signals', label: 'Signals' },
+  { key: 'anti_signals', label: 'Anti-signals' },
+  { key: 'tradeoffs', label: 'Trade-offs' },
   { key: 'tags', label: 'Tags' },
   { key: 'domains', label: 'Domains' },
 ];
@@ -35,6 +46,7 @@ const formatValue = (value: string | string[] | undefined): string => {
   if (Array.isArray(value)) {
     return value.slice(0, 3).join(', ') + (value.length > 3 ? '...' : '');
   }
+  if (value.trim().length === 0) return '—';
   return value
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -51,7 +63,7 @@ const formatValue = (value: string | string[] | undefined): string => {
             <th class="compare-table-row-label">Field</th>
             {patterns.map((pattern) => (
               <th class="compare-table-header">
-                <a href={`/patterns/${pattern.id}`} class="compare-table-title">
+                <a href={`/patterns/${pattern.slug}`} class="compare-table-title">
                   {pattern.title}
                 </a>
               </th>
@@ -69,19 +81,38 @@ const formatValue = (value: string | string[] | undefined): string => {
               <td class="compare-table-row-label">{field.label}</td>
               {patterns.map((pattern) => (
                 <td class="compare-table-cell">
-                  {field.key === 'tags' || field.key === 'domains' ? (
-                    <div class="compare-table-tags">
-                      {(pattern[field.key as keyof Pattern] as string[])
-                        ?.slice(0, 3)
-                        .map((item: string) => (
-                          <span class="compare-table-tag">{item}</span>
-                        ))}
-                      {(pattern[field.key as keyof Pattern] as string[])?.length > 3 && (
-                        <span class="compare-table-more">
-                          +{(pattern[field.key as keyof Pattern] as string[]).length - 3}
-                        </span>
-                      )}
-                    </div>
+                  {field.key === 'summary' ? (
+                    <span>{pattern.summary || '—'}</span>
+                  ) : field.key === 'tradeoffs' ? (
+                    pattern.tradeoffs ? (
+                      <div
+                        class="compare-table-tradeoffs"
+                        set:html={renderMarkdown(pattern.tradeoffs.trim())}
+                      />
+                    ) : (
+                      <span>—</span>
+                    )
+                  ) : field.key === 'tags' ||
+                    field.key === 'domains' ||
+                    field.key === 'signals' ||
+                    field.key === 'anti_signals' ? (
+                    ((pattern[field.key as keyof Pattern] as string[] | undefined) || []).length >
+                    0 ? (
+                      <div class="compare-table-tags">
+                        {(pattern[field.key as keyof Pattern] as string[])
+                          ?.slice(0, 3)
+                          .map((item: string) => (
+                            <span class="compare-table-tag">{item}</span>
+                          ))}
+                        {(pattern[field.key as keyof Pattern] as string[])?.length > 3 && (
+                          <span class="compare-table-more">
+                            +{(pattern[field.key as keyof Pattern] as string[]).length - 3}
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <span>—</span>
+                    )
                   ) : (
                     <span>
                       {formatValue(pattern[field.key as keyof Pattern] as string | string[])}
@@ -196,6 +227,21 @@ const formatValue = (value: string | string[] | undefined): string => {
   .compare-table-more {
     font-size: 0.75rem;
     color: var(--color-text-muted);
+  }
+
+  .compare-table-tradeoffs {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .compare-table-tradeoffs :global(ul) {
+    margin: 0;
+    padding-left: var(--spacing-md);
+  }
+
+  .compare-table-tradeoffs :global(li) {
+    margin-bottom: var(--spacing-xs);
   }
 
   .compare-table-empty {

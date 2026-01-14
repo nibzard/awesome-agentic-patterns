@@ -1,50 +1,41 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CompareTable from '../components/CompareTable.astro';
 import type { PatternEntry } from '../types';
+import { getAllPatterns } from '../lib/patterns';
+import { renderMarkdown } from '../lib/markdown';
 
-// Get selected pattern IDs from URL
-const searchParams = Astro.url.searchParams;
-const selectedIds = searchParams.get('ids')?.split(',').filter(Boolean) || [];
+const maxCompare = 4;
 
 // Load patterns data
-const patterns = (await fetch('https://agentic-patterns.com/patterns.json')
-  .then((res) => res.json())
-  .catch(() => [])) as PatternEntry[];
+const patterns = (await getAllPatterns()) as PatternEntry[];
 
-// Get selected patterns
-const selectedPatterns = patterns.filter((p: PatternEntry) => selectedIds.includes(p.id));
-
-// Generate prompt pack from selected patterns
-function generatePromptPack(patterns: PatternEntry[]): string {
-  if (patterns.length === 0) return '';
-
-  let prompt = `# AI Agent Design Patterns Prompt Pack\n\n`;
-  prompt += `This prompt pack contains ${patterns.length} pattern${patterns.length > 1 ? 's' : ''} for building AI agents.\n\n`;
-  prompt += `## Selected Patterns\n\n`;
-
-  patterns.forEach((pattern, index) => {
-    prompt += `### ${index + 1}. ${pattern.title}\n\n`;
-    if (pattern.summary) {
-      prompt += `**Summary:** ${pattern.summary}\n\n`;
-    }
-    prompt += `**Category:** ${pattern.category}\n`;
-    prompt += `**Status:** ${pattern.status}\n`;
-    if (pattern.tags && pattern.tags.length > 0) {
-      prompt += `**Tags:** ${pattern.tags.join(', ')}\n`;
-    }
-    prompt += `**Details:** https://agentic-patterns.com/patterns/${pattern.slug}\n\n`;
-  });
-
-  prompt += `## Usage\n\n`;
-  prompt += `Use these patterns as reference when designing your AI agent architecture. `;
-  prompt += `Each pattern represents a proven approach to solving specific challenges in agent development.\n\n`;
-  prompt += `For more details on each pattern, visit the individual pattern pages linked above.`;
-
-  return prompt;
+function extractSection(body: string, sectionName: string): string | null {
+  const regex = new RegExp(`## ${sectionName}\\n([\\s\\S]*?)(?=## |$)`, 'i');
+  const match = body.match(regex);
+  return match ? match[1].trim() : null;
 }
 
-const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatterns) : '';
+const _compareData = patterns.map((pattern) => {
+  const tradeoffs = extractSection(pattern.body, 'Trade-offs');
+  return {
+    id: pattern.id,
+    slug: pattern.slug,
+    title: pattern.title,
+    summary: pattern.summary,
+    status: pattern.status,
+    category: pattern.category,
+    maturity: pattern.maturity,
+    complexity: pattern.complexity,
+    effort: pattern.effort,
+    impact: pattern.impact,
+    signals: pattern.signals,
+    anti_signals: pattern.anti_signals,
+    tradeoffsHtml: tradeoffs ? renderMarkdown(tradeoffs) : '',
+    tags: pattern.tags,
+    domains: pattern.domains || [],
+  };
+});
+
 ---
 
 <BaseLayout title="Compare Patterns - Awesome Agentic Patterns">
@@ -58,6 +49,7 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
       <!-- Pattern Selection -->
       <aside class="compare-selection">
         <h2 class="compare-selection-title">Select Patterns</h2>
+        <p class="compare-selection-help">Select up to {maxCompare} patterns.</p>
         <div class="compare-selection-list">
           {
             patterns.map((pattern: PatternEntry) => (
@@ -66,8 +58,7 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
                   type="checkbox"
                   name="pattern"
                   value={pattern.id}
-                  checked={selectedIds.includes(pattern.id)}
-                  onchange={`const ids = Array.from(document.querySelectorAll('input[name="pattern"]:checked')).map(el => el.value); window.location.href = ids.length > 0 ? '/compare?ids=' + ids.join(',') : '/compare';`}
+                  data-pattern-id={pattern.id}
                 />
                 <span class="compare-selection-label">{pattern.title}</span>
               </label>
@@ -81,81 +72,264 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
 
       <!-- Comparison Table -->
       <div class="compare-content">
-        {
-          selectedPatterns.length > 0 ? (
-            <>
-              <div class="compare-actions">
-                <span class="compare-count">
-                  Comparing {selectedPatterns.length} pattern
-                  {selectedPatterns.length !== 1 ? 's' : ''}
-                </span>
-                <div class="compare-actions-buttons">
-                  <button
-                    class="copy-prompt-button"
-                    onclick={`const promptPack = ${JSON.stringify(promptPack)}; navigator.clipboard.writeText(promptPack).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy Prompt Pack', 2000); });`}
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M6 6H10M6 9H10"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                    </svg>
-                    Copy Prompt Pack
-                  </button>
-                  <a
-                    href={Astro.url.pathname + Astro.url.search}
-                    class="share-link"
-                    onclick={`navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Share', 2000); return false;`}
-                  >
-                    Share Link
-                  </a>
-                </div>
-              </div>
-              <CompareTable patterns={selectedPatterns} />
-            </>
-          ) : (
-            <div class="compare-empty">
+        <div class="compare-actions" id="compare-actions" hidden>
+          <span class="compare-count" id="compare-count"></span>
+          <div class="compare-actions-buttons">
+            <button class="copy-prompt-button" id="copy-prompt">
               <svg
-                width="64"
-                height="64"
-                viewBox="0 0 64 64"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <rect width="64" height="64" rx="32" fill="var(--color-border)" />
                 <path
-                  d="M20 32H44M32 20V44"
-                  stroke="var(--color-text-muted)"
-                  stroke-width="2"
+                  d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6 6H10M6 9H10"
+                  stroke="currentColor"
+                  stroke-width="1.5"
                   stroke-linecap="round"
                 />
               </svg>
-              <h2>Select Patterns to Compare</h2>
-              <p>Choose 2 or more patterns from the list to see a side-by-side comparison.</p>
-            </div>
-          )
-        }
+              Copy Prompt Pack
+            </button>
+            <a href="/compare" class="share-link" id="share-link">Share</a>
+          </div>
+        </div>
+
+        <div id="compare-table"></div>
+
+        <div class="compare-empty" id="compare-empty">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="64" height="64" rx="32" fill="var(--color-border)" />
+            <path
+              d="M20 32H44M32 20V44"
+              stroke="var(--color-text-muted)"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h2>Select Patterns to Compare</h2>
+          <p>Choose 2 or more patterns from the list to see a side-by-side comparison.</p>
+        </div>
       </div>
     </div>
   </div>
 </BaseLayout>
 
-<style>
+<script
+  type="application/json"
+  id="compare-data"
+  set:html={JSON.stringify(_compareData)}
+></script>
+
+<script>
+  const compareDataEl = document.getElementById('compare-data');
+  const compareData = compareDataEl ? JSON.parse(compareDataEl.textContent || '[]') : [];
+  const maxCompare = {maxCompare};
+
+  const compareTable = document.getElementById('compare-table');
+  const compareEmpty = document.getElementById('compare-empty');
+  const compareActions = document.getElementById('compare-actions');
+  const compareCount = document.getElementById('compare-count');
+  const copyPromptButton = document.getElementById('copy-prompt');
+  const shareLink = document.getElementById('share-link');
+  const checkboxes = document.querySelectorAll('input[name="pattern"]');
+
+  const compareFields = [
+    { key: 'summary', label: 'Summary' },
+    { key: 'status', label: 'Status' },
+    { key: 'category', label: 'Category' },
+    { key: 'maturity', label: 'Maturity' },
+    { key: 'complexity', label: 'Complexity' },
+    { key: 'effort', label: 'Effort' },
+    { key: 'impact', label: 'Impact' },
+    { key: 'signals', label: 'Signals' },
+    { key: 'anti_signals', label: 'Anti-signals' },
+    { key: 'tradeoffsHtml', label: 'Trade-offs' },
+    { key: 'tags', label: 'Tags' },
+    { key: 'domains', label: 'Domains' },
+  ];
+
+  const formatValue = (value) => {
+    if (!value) return '—';
+    if (Array.isArray(value)) {
+      return value.slice(0, 3).join(', ') + (value.length > 3 ? '...' : '');
+    }
+    const trimmed = String(value).trim();
+    if (!trimmed) return '—';
+    return trimmed
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
+  const buildPromptPack = (patterns) => {
+    if (patterns.length === 0) return '';
+    let prompt = '# AI Agent Design Patterns Prompt Pack\n\n';
+    prompt += `This prompt pack contains ${patterns.length} pattern${patterns.length > 1 ? 's' : ''} for building AI agents.\n\n`;
+    prompt += '## Selected Patterns\n\n';
+
+    patterns.forEach((pattern, index) => {
+      prompt += `### ${index + 1}. ${pattern.title}\n\n`;
+      if (pattern.summary) {
+        prompt += `**Summary:** ${pattern.summary}\n\n`;
+      }
+      prompt += `**Category:** ${pattern.category}\n`;
+      prompt += `**Status:** ${pattern.status}\n`;
+      if (pattern.tags && pattern.tags.length > 0) {
+        prompt += `**Tags:** ${pattern.tags.join(', ')}\n`;
+      }
+      prompt += `**Details:** https://agentic-patterns.com/patterns/${pattern.slug}\n\n`;
+    });
+
+    prompt += '## Usage\n\n';
+    prompt += 'Use these patterns as reference when designing your AI agent architecture. ';
+    prompt += 'Each pattern represents a proven approach to solving specific challenges in agent development.\n\n';
+    prompt += 'For more details on each pattern, visit the individual pattern pages linked above.';
+
+    return prompt;
+  };
+
+  const renderCompareTable = (patterns) => {
+    if (!compareTable) return;
+    if (patterns.length === 0) {
+      compareTable.innerHTML = '';
+      return;
+    }
+
+    let html = '<div class="compare-table-wrapper"><table class="compare-table">';
+    html += '<thead><tr><th class="compare-table-row-label">Field</th>';
+    patterns.forEach((pattern) => {
+      html += `<th class="compare-table-header"><a href="/patterns/${pattern.slug}" class="compare-table-title">${pattern.title}</a></th>`;
+    });
+    html += '</tr></thead><tbody>';
+
+    compareFields.forEach((field, index) => {
+      html += `<tr class="compare-table-row${index % 2 === 0 ? ' compare-table-row--alt' : ''}">`;
+      html += `<td class="compare-table-row-label">${field.label}</td>`;
+      patterns.forEach((pattern) => {
+        html += '<td class="compare-table-cell">';
+        if (field.key === 'tradeoffsHtml') {
+          html += pattern.tradeoffsHtml
+            ? `<div class="compare-table-tradeoffs">${pattern.tradeoffsHtml}</div>`
+            : '<span>—</span>';
+        } else if (field.key === 'summary') {
+          html += `<span>${pattern.summary || '—'}</span>`;
+        } else if (['tags', 'domains', 'signals', 'anti_signals'].includes(field.key)) {
+          const items = pattern[field.key] || [];
+          if (items.length === 0) {
+            html += '<span>—</span>';
+          } else {
+            html += '<div class="compare-table-tags">';
+            items.slice(0, 3).forEach((item) => {
+              html += `<span class="compare-table-tag">${item}</span>`;
+            });
+            if (items.length > 3) {
+              html += `<span class="compare-table-more">+${items.length - 3}</span>`;
+            }
+            html += '</div>';
+          }
+        } else {
+          html += `<span>${formatValue(pattern[field.key])}</span>`;
+        }
+        html += '</td>';
+      });
+      html += '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    compareTable.innerHTML = html;
+  };
+
+  const updateSelection = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const rawIds = (searchParams.get('ids') || '')
+      .split(',')
+      .filter(Boolean)
+    const selectedIds = rawIds.slice(0, maxCompare);
+    const limited = rawIds.length > maxCompare;
+
+    const selectedPatterns = selectedIds
+      .map((id) => compareData.find((pattern) => pattern.id === id))
+      .filter(Boolean);
+
+    checkboxes.forEach((checkbox) => {
+      const id = checkbox.getAttribute('data-pattern-id');
+      const isSelected = id && selectedIds.includes(id);
+      checkbox.checked = Boolean(isSelected);
+      checkbox.disabled = selectedIds.length >= maxCompare && !isSelected;
+    });
+
+    const count = selectedPatterns.length;
+    if (compareCount) {
+      compareCount.textContent = `Comparing ${count} pattern${count === 1 ? '' : 's'}${limited ? ` (limited to ${maxCompare})` : ''}`;
+    }
+
+    if (compareActions) {
+      compareActions.hidden = count === 0;
+    }
+
+    if (compareEmpty) {
+      compareEmpty.hidden = count > 0;
+    }
+
+    renderCompareTable(selectedPatterns);
+
+    if (shareLink) {
+      shareLink.textContent = 'Share';
+      shareLink.onclick = (event) => {
+        event.preventDefault();
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          shareLink.textContent = 'Copied!';
+          setTimeout(() => {
+            shareLink.textContent = 'Share';
+          }, 2000);
+        });
+      };
+    }
+
+    if (copyPromptButton) {
+      copyPromptButton.textContent = 'Copy Prompt Pack';
+      copyPromptButton.onclick = () => {
+        const promptPack = buildPromptPack(selectedPatterns);
+        if (!promptPack) return;
+        navigator.clipboard.writeText(promptPack).then(() => {
+          copyPromptButton.textContent = 'Copied!';
+          setTimeout(() => {
+            copyPromptButton.textContent = 'Copy Prompt Pack';
+          }, 2000);
+        });
+      };
+    }
+  };
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      const selected = Array.from(document.querySelectorAll('input[name="pattern"]:checked'))
+        .map((input) => input.value)
+        .slice(0, maxCompare);
+
+      const nextUrl = selected.length > 0 ? `/compare?ids=${selected.join(',')}` : '/compare';
+      window.location.href = nextUrl;
+    });
+  });
+
+  updateSelection();
+</script>
+<style is:global>
   .compare-page {
     max-width: 1400px;
     margin: 0 auto;
@@ -201,6 +375,12 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .compare-selection-help {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
     margin-bottom: var(--spacing-md);
   }
 
@@ -345,6 +525,114 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
 
   .button--secondary:hover {
     background-color: var(--color-divider);
+  }
+
+  .compare-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar-track {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--color-text-muted);
+    border-radius: 4px;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text);
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .compare-table-header {
+    background-color: var(--color-border);
+    font-weight: 600;
+    min-width: 200px;
+  }
+
+  .compare-table-title {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+  }
+
+  .compare-table-title:hover {
+    color: var(--color-primary);
+  }
+
+  .compare-table-row-label {
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    position: sticky;
+    left: 0;
+  }
+
+  .compare-table-row--alt .compare-table-row-label {
+    background-color: var(--color-bg);
+  }
+
+  .compare-table-cell {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    min-width: 150px;
+  }
+
+  .compare-table-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .compare-table-tag {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background-color: var(--color-border);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .compare-table-more {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .compare-table-tradeoffs {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .compare-table-tradeoffs :global(ul) {
+    margin: 0;
+    padding-left: var(--spacing-md);
+  }
+
+  .compare-table-tradeoffs :global(li) {
+    margin-bottom: var(--spacing-xs);
   }
 
   @media (max-width: 1024px) {

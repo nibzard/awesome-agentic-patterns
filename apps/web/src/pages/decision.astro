@@ -2,142 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import questions from '../data/decision-questions.json';
 
-interface Answer {
-  questionId: string;
-  value: string;
-}
-
-interface Recommendation {
-  patterns: string[];
-  rationale: string;
-}
-
-// Get answers from URL search params
-const searchParams = Astro.url.searchParams;
-const answersParam = searchParams.get('answers');
-
-// Parse answers or start fresh
-let currentStep = 0;
-let answers: Answer[] = [];
-
-if (answersParam) {
-  try {
-    answers = JSON.parse(decodeURIComponent(answersParam));
-    currentStep = Math.min(answers.length, questions.length);
-  } catch (e) {
-    console.error('Failed to parse answers:', e);
-  }
-}
-
-const currentQuestion = questions[currentStep];
-
-// Simple recommendation mapping based on answers
-function getRecommendations(answerList: Answer[]): Recommendation {
-  const answersMap = Object.fromEntries(answerList.map((a) => [a.questionId, a.value]));
-
-  const patterns: string[] = [];
-  const rationales: string[] = [];
-
-  // Agent type recommendations
-  if (answersMap.agentType === 'autonomous') {
-    patterns.push(
-      'Continuous Autonomous Task Loop',
-      'Specification-Driven Agent Development',
-      'Progressive Autonomy with Model Evolution'
-    );
-    rationales.push(
-      'For autonomous agents, consider patterns that enable self-directed operation and gradual capability increase.'
-    );
-  } else if (answersMap.agentType === 'assisted') {
-    patterns.push(
-      'Human-in-Loop Approval Framework',
-      'Spectrum of Control: Blended Initiative',
-      'Seamless Background-to-Foreground Handoff'
-    );
-    rationales.push(
-      'Human-assisted agents benefit from clear control handoff and approval mechanisms.'
-    );
-  } else if (answersMap.agentType === 'workflow') {
-    patterns.push(
-      'Code-Then-Execute Pattern',
-      'Asynchronous Coding Agent Pipeline',
-      'Plan-Then-Execute Pattern'
-    );
-    rationales.push(
-      'Workflow automation benefits from clear separation of planning and execution phases.'
-    );
-  }
-
-  // Complexity recommendations
-  if (answersMap.complexity === 'complex') {
-    patterns.push(
-      'Tree-of-Thought Reasoning',
-      'Graph-of-Thoughts',
-      'Language Agent Tree Search (LATS)'
-    );
-    rationales.push(
-      'Complex tasks require advanced reasoning patterns that explore multiple solution paths.'
-    );
-  } else if (answersMap.complexity === 'moderate') {
-    patterns.push('Chain-of-Thought Monitoring', 'Reflection');
-    rationales.push(
-      'Moderately complex tasks benefit from structured reasoning and self-reflection.'
-    );
-  }
-
-  // Memory recommendations
-  if (answersMap.memory === 'persistent') {
-    patterns.push(
-      'Episodic Memory Retrieval Injection',
-      'Filesystem-Based Agent State',
-      'Memory Synthesis from Execution Logs'
-    );
-    rationales.push(
-      'Long-term memory requires patterns for storing, retrieving, and synthesizing past experiences.'
-    );
-  } else if (answersMap.memory === 'session') {
-    patterns.push('Context Window Optimization', 'Progressive Disclosure for Large Files');
-    rationales.push('Session memory benefits from efficient context management techniques.');
-  }
-
-  // Tools recommendations
-  if (answersMap.tools === 'many') {
-    patterns.push(
-      'Progressive Tool Discovery',
-      'Tool Capability Compartmentalization',
-      'Parallel Tool Execution'
-    );
-    rationales.push(
-      'When using many tools, consider patterns for discovery, organization, and parallel execution.'
-    );
-  } else if (answersMap.tools === 'few') {
-    patterns.push('Code-First Tool Interface Pattern', 'Tool Use Steering via Prompting');
-    rationales.push('For a small set of tools, focus on clear interfaces and effective prompting.');
-  }
-
-  // Safety recommendations
-  if (answersMap.safety === 'high') {
-    patterns.push(
-      'Anti-Reward Hacking Grader Design',
-      'Egress Lockdown: No Exfiltration Channel',
-      'Lethal Trifecta Threat Model',
-      'Deterministic Security Scanning Build Loop'
-    );
-    rationales.push(
-      'High-risk applications require security-focused patterns to prevent exploitation and ensure safety.'
-    );
-  } else if (answersMap.safety === 'medium') {
-    patterns.push('Workflow Evals with Mocked Tools', 'LLM Observability');
-    rationales.push('Medium-risk applications benefit from evaluation and observability patterns.');
-  }
-
-  return {
-    patterns: [...new Set(patterns)], // Remove duplicates
-    rationale: rationales.join(' '),
-  };
-}
-
-const recommendation = currentStep === questions.length ? getRecommendations(answers) : null;
+const initialQuestion = questions[0];
 ---
 
 <BaseLayout title="Pattern Decision Tree - Awesome Agentic Patterns">
@@ -150,102 +15,239 @@ const recommendation = currentStep === questions.length ? getRecommendations(ans
       </p>
     </header>
 
-    {
-      currentStep < questions.length ? (
-        <div class="decision-question">
-          <div class="question-progress">
-            Question {currentStep + 1} of {questions.length}
-          </div>
+    <div id="decision-root">
+      <div class="decision-question">
+        <div class="question-progress">Question 1 of {questions.length}</div>
+        <h2 class="question-title">{initialQuestion.question}</h2>
+        <div class="question-options">
+          {initialQuestion.options.map((option) => {
+            const answersParam = encodeURIComponent(
+              JSON.stringify([{ questionId: initialQuestion.id, value: option.value }])
+            );
 
-          <h2 class="question-title">{currentQuestion.question}</h2>
-
-          <div class="question-options">
-            {currentQuestion.options.map((option) => {
-              const isSelected = answers.some(
-                (a) => a.questionId === currentQuestion.id && a.value === option.value
-              );
-
-              const newAnswers = [
-                ...answers,
-                { questionId: currentQuestion.id, value: option.value },
-              ];
-              const answersParam = encodeURIComponent(JSON.stringify(newAnswers));
-
-              return (
-                <a
-                  href={`/decision?answers=${answersParam}`}
-                  class:option-selected={isSelected}
-                  class="option-card"
-                >
-                  <div class="option-header">
-                    <input type="radio" checked={isSelected} readonly />
-                    <span class="option-label">{option.label}</span>
-                  </div>
-                  <p class="option-description">{option.description}</p>
-                </a>
-              );
-            })}
-          </div>
-
-          {answers.length > 0 && (
-            <div class="decision-nav">
-              {currentStep > 0 && (
-                <a
-                  href={`/decision?answers=${encodeURIComponent(
-                    JSON.stringify(answers.slice(0, -1))
-                  )}`}
-                  class="button button--secondary"
-                >
-                  ← Previous
-                </a>
-              )}
-              <span />
-            </div>
-          )}
+            return (
+              <a href={`/decision?answers=${answersParam}`} class="option-card">
+                <div class="option-header">
+                  <input type="radio" readonly />
+                  <span class="option-label">{option.label}</span>
+                </div>
+                <p class="option-description">{option.description}</p>
+              </a>
+            );
+          })}
         </div>
-      ) : (
-        <div class="decision-results">
-          <h2 class="results-title">Recommended Patterns</h2>
-
-          <div class="results-rationale">
-            <h3>Why These Patterns?</h3>
-            <p>{recommendation?.rationale}</p>
-          </div>
-
-          <div class="results-patterns">
-            {recommendation?.patterns.map((pattern) => (
-              <div class="result-pattern">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="result-icon"
-                >
-                  <path
-                    d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span>{pattern}</span>
-              </div>
-            ))}
-          </div>
-
-          <div class="decision-actions">
-            <a href="/decision" class="button button--primary">
-              Start Over
-            </a>
-            <a href="/patterns" class="button button--secondary">
-              Browse All Patterns
-            </a>
-          </div>
-        </div>
-      )
-    }
+      </div>
+    </div>
   </div>
 </BaseLayout>
+
+<script
+  type="application/json"
+  id="decision-questions"
+  set:html={JSON.stringify(questions)}
+></script>
+
+<script>
+  const questionsEl = document.getElementById('decision-questions');
+  const questions = questionsEl ? JSON.parse(questionsEl.textContent || '[]') : [];
+  const root = document.getElementById('decision-root');
+
+  const parseAnswers = () => {
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get('answers');
+    if (!raw) return [];
+    try {
+      const parsed = JSON.parse(decodeURIComponent(raw));
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      return [];
+    }
+  };
+
+  const getRecommendations = (answerList) => {
+    const answersMap = Object.fromEntries(answerList.map((a) => [a.questionId, a.value]));
+    const agentType = answersMap['agent-type'] ?? answersMap.agentType;
+
+    const patterns = [];
+    const rationales = [];
+
+    if (agentType === 'autonomous') {
+      patterns.push(
+        'Continuous Autonomous Task Loop',
+        'Specification-Driven Agent Development',
+        'Progressive Autonomy with Model Evolution'
+      );
+      rationales.push(
+        'For autonomous agents, consider patterns that enable self-directed operation and gradual capability increase.'
+      );
+    } else if (agentType === 'assisted') {
+      patterns.push(
+        'Human-in-Loop Approval Framework',
+        'Spectrum of Control: Blended Initiative',
+        'Seamless Background-to-Foreground Handoff'
+      );
+      rationales.push(
+        'Human-assisted agents benefit from clear control handoff and approval mechanisms.'
+      );
+    } else if (agentType === 'workflow') {
+      patterns.push(
+        'Code-Then-Execute Pattern',
+        'Asynchronous Coding Agent Pipeline',
+        'Plan-Then-Execute Pattern'
+      );
+      rationales.push(
+        'Workflow automation benefits from clear separation of planning and execution phases.'
+      );
+    }
+
+    if (answersMap.complexity === 'complex') {
+      patterns.push(
+        'Tree-of-Thought Reasoning',
+        'Graph-of-Thoughts',
+        'Language Agent Tree Search (LATS)'
+      );
+      rationales.push(
+        'Complex tasks require advanced reasoning patterns that explore multiple solution paths.'
+      );
+    } else if (answersMap.complexity === 'moderate') {
+      patterns.push('Chain-of-Thought Monitoring', 'Reflection');
+      rationales.push('Moderately complex tasks benefit from structured reasoning and self-reflection.');
+    }
+
+    if (answersMap.memory === 'persistent') {
+      patterns.push(
+        'Episodic Memory Retrieval Injection',
+        'Filesystem-Based Agent State',
+        'Memory Synthesis from Execution Logs'
+      );
+      rationales.push(
+        'Long-term memory requires patterns for storing, retrieving, and synthesizing past experiences.'
+      );
+    } else if (answersMap.memory === 'session') {
+      patterns.push('Context Window Optimization', 'Progressive Disclosure for Large Files');
+      rationales.push('Session memory benefits from efficient context management techniques.');
+    }
+
+    if (answersMap.tools === 'many') {
+      patterns.push(
+        'Progressive Tool Discovery',
+        'Tool Capability Compartmentalization',
+        'Parallel Tool Execution'
+      );
+      rationales.push(
+        'When using many tools, consider patterns for discovery, organization, and parallel execution.'
+      );
+    } else if (answersMap.tools === 'few') {
+      patterns.push('Code-First Tool Interface Pattern', 'Tool Use Steering via Prompting');
+      rationales.push('For a small set of tools, focus on clear interfaces and effective prompting.');
+    }
+
+    if (answersMap.safety === 'high') {
+      patterns.push(
+        'Anti-Reward Hacking Grader Design',
+        'Egress Lockdown: No Exfiltration Channel',
+        'Lethal Trifecta Threat Model',
+        'Deterministic Security Scanning Build Loop'
+      );
+      rationales.push(
+        'High-risk applications require security-focused patterns to prevent exploitation and ensure safety.'
+      );
+    } else if (answersMap.safety === 'medium') {
+      patterns.push('Workflow Evals with Mocked Tools', 'LLM Observability');
+      rationales.push('Medium-risk applications benefit from evaluation and observability patterns.');
+    }
+
+    return {
+      patterns: [...new Set(patterns)],
+      rationale: rationales.join(' '),
+    };
+  };
+
+  const renderQuestion = (question, answers, index) => {
+    const total = questions.length;
+    const optionsHtml = question.options
+      .map((option) => {
+        const newAnswers = [...answers, { questionId: question.id, value: option.value }];
+        const answersParam = encodeURIComponent(JSON.stringify(newAnswers));
+        return `
+          <a href="/decision?answers=${answersParam}" class="option-card">
+            <div class="option-header">
+              <input type="radio" readonly />
+              <span class="option-label">${option.label}</span>
+            </div>
+            <p class="option-description">${option.description}</p>
+          </a>
+        `;
+      })
+      .join('');
+
+    const previousLink =
+      answers.length > 0
+        ? `
+          <a href="/decision?answers=${encodeURIComponent(
+            JSON.stringify(answers.slice(0, -1))
+          )}" class="button button--secondary">
+            ← Previous
+          </a>
+        `
+        : '';
+
+    return `
+      <div class="decision-question">
+        <div class="question-progress">Question ${index + 1} of ${total}</div>
+        <h2 class="question-title">${question.question}</h2>
+        <div class="question-options">${optionsHtml}</div>
+        <div class="decision-nav">${previousLink}<span></span></div>
+      </div>
+    `;
+  };
+
+  const renderResults = (recommendation) => {
+    const patternsHtml = recommendation.patterns
+      .map(
+        (pattern) => `
+          <div class="result-pattern">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="result-icon">
+              <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="currentColor" />
+            </svg>
+            <span>${pattern}</span>
+          </div>
+        `
+      )
+      .join('');
+
+    return `
+      <div class="decision-results">
+        <h2 class="results-title">Recommended Patterns</h2>
+        <div class="results-rationale">
+          <h3>Why These Patterns?</h3>
+          <p>${recommendation.rationale}</p>
+        </div>
+        <div class="results-patterns">${patternsHtml}</div>
+        <div class="decision-actions">
+          <a href="/decision" class="button button--primary">Start Over</a>
+          <a href="/patterns" class="button button--secondary">Browse All Patterns</a>
+        </div>
+      </div>
+    `;
+  };
+
+  const renderDecision = () => {
+    if (!root || questions.length === 0) return;
+    const answers = parseAnswers();
+    const step = Math.min(answers.length, questions.length);
+
+    if (step < questions.length) {
+      root.innerHTML = renderQuestion(questions[step], answers, step);
+      return;
+    }
+
+    const recommendation = getRecommendations(answers);
+    root.innerHTML = renderResults(recommendation);
+  };
+
+  renderDecision();
+</script>
 
 <style>
   .decision-page {

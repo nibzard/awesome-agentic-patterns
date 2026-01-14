@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
 import PatternActions from '../../components/PatternActions.astro';
 import { getAllPatterns } from '../../lib/patterns';
+import { renderMarkdown } from '../../lib/markdown';
 
 export async function getStaticPaths() {
   const patterns = await getAllPatterns();
@@ -21,12 +22,17 @@ function extractSection(body: string, sectionName: string): string | null {
   return match ? match[1].trim() : null;
 }
 
-const problem = extractSection(pattern.body, 'Problem');
-const solution = extractSection(pattern.body, 'Solution');
-const howToUseIt = extractSection(pattern.body, 'How to use it');
-const tradeoffs = extractSection(pattern.body, 'Trade-offs');
-const example = extractSection(pattern.body, 'Example');
-const references = extractSection(pattern.body, 'References');
+function renderSection(body: string, sectionName: string): string | null {
+  const section = extractSection(body, sectionName);
+  return section ? renderMarkdown(section) : null;
+}
+
+const problem = renderSection(pattern.body, 'Problem');
+const solution = renderSection(pattern.body, 'Solution');
+const howToUseIt = renderSection(pattern.body, 'How to use it');
+const tradeoffs = renderSection(pattern.body, 'Trade-offs');
+const example = renderSection(pattern.body, 'Example');
+const references = renderSection(pattern.body, 'References');
 ---
 
 <BaseLayout title={`${pattern.title} - Pattern`}>
@@ -126,6 +132,16 @@ const references = extractSection(pattern.body, 'References');
     </footer>
   </div>
 </BaseLayout>
+
+<script>
+  import mermaid from 'mermaid';
+
+  const mermaidNodes = document.querySelectorAll('.mermaid');
+  if (mermaidNodes.length > 0) {
+    mermaid.initialize({ startOnLoad: false });
+    mermaid.run({ nodes: mermaidNodes });
+  }
+</script>
 
 <style>
   .pattern-page {

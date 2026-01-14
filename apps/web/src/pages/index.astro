@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SearchBox from '../components/SearchBox.astro';
+import PatternCard from '../components/PatternCard.astro';
 import type { PatternEntry } from '../types';
+import { getAllPatterns } from '../lib/patterns';
 
 // Load patterns data
-const patterns = (await fetch('https://agentic-patterns.com/patterns.json')
-  .then((res) => res.json())
-  .catch(() => [])) as PatternEntry[];
+const patterns = (await getAllPatterns()) as PatternEntry[];
 
 // Get recently updated patterns (last 30 days)
 const thirtyDaysAgo = new Date();
@@ -41,6 +41,23 @@ const newPatterns = patterns
     return dateB.getTime() - dateA.getTime();
   })
   .slice(0, 5);
+
+// Get featured patterns (high impact or mature)
+let featuredPatterns = patterns.filter(
+  (p: PatternEntry) => p.impact === 'high' || p.maturity === 'mature'
+);
+
+if (featuredPatterns.length === 0) {
+  featuredPatterns = [...patterns];
+}
+
+featuredPatterns = featuredPatterns
+  .sort((a: PatternEntry, b: PatternEntry) => {
+    const dateA = new Date(a.updated_at || 0);
+    const dateB = new Date(b.updated_at || 0);
+    return dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 6);
 ---
 
 <BaseLayout title="Awesome Agentic Patterns">
@@ -66,10 +83,28 @@ const newPatterns = patterns
     <p class="home-section-description">
       Explore our hand-picked selection of essential AI agent patterns.
     </p>
-    <!-- Pattern list will be added here when pattern loading is implemented -->
-    <div class="home-patterns-placeholder">
-      <a href="/patterns" class="home-patterns-link">View All Patterns →</a>
-    </div>
+    {
+      featuredPatterns.length > 0 ? (
+        <div class="home-patterns-grid">
+          {featuredPatterns.map((pattern: PatternEntry) => (
+            <PatternCard
+              title={pattern.title}
+              slug={pattern.slug}
+              summary={pattern.summary}
+              status={pattern.status}
+              category={pattern.category}
+              tags={pattern.tags}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="home-patterns-placeholder">
+          <a href="/patterns" class="home-patterns-link">
+            View All Patterns →
+          </a>
+        </div>
+      )
+    }
   </div>
 
   <div class="home-section">
@@ -239,6 +274,12 @@ const newPatterns = patterns
     color: var(--color-text-muted);
     text-align: center;
     margin-bottom: var(--spacing-xl);
+  }
+
+  .home-patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
   }
 
   .home-patterns-placeholder {
