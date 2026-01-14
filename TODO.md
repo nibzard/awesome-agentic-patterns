@@ -120,14 +120,14 @@
 - [x] 120 - Define the `guides` collection schema in `apps/web/src/content/config.ts`. [Completed as part of task 118]
 - [x] 121 - Define the `packs` collection schema in `apps/web/src/content/config.ts`. [Completed as part of task 118]
 - [x] 122 - Implement the chosen pattern content source approach. [Created src/lib/patterns.ts with fs-based loader, reads from root patterns/ dir (no symlinks), verified working (112 patterns loaded), committed]
-- [ ] 123 - Add `apps/web/src/styles/global.css`.
-- [ ] 124 - Define light-mode color tokens in `global.css`.
-- [ ] 125 - Define dark-mode color tokens in `global.css`.
-- [ ] 126 - Define spacing tokens in `global.css`.
-- [ ] 127 - Define type scale tokens in `global.css`.
-- [ ] 128 - Choose a heading font family.
-- [ ] 129 - Choose a body font family.
-- [ ] 130 - Choose a code font family.
+- [x] 123 - Add `apps/web/src/styles/global.css`. [Created global.css with CSS reset, base styles, typography, commit 22bf964]
+- [x] 124 - Define light-mode color tokens in `global.css`. [Completed in task 123]
+- [x] 125 - Define dark-mode color tokens in `global.css`. [Added CSS custom properties for light and dark modes, comprehensive design tokens, prefers-color-scheme media query, commit a80d4c1]
+- [x] 126 - Define spacing tokens in `global.css`. [Completed in task 125 - spacing scale from 0.25rem to 4rem, commit a80d4c1]
+- [x] 127 - Define type scale tokens in `global.css`. [Completed in task 125 - font sizes from xs to 7xl, line heights, commit a80d4c1]
+- [x] 128 - Choose a heading font family. [Completed in task 125 - system-ui font stack, commit a80d4c1]
+- [x] 129 - Choose a body font family. [Completed in task 125 - system-ui font stack, commit a80d4c1]
+- [x] 130 - Choose a code font family. [Completed in task 125 - ui-monospace font stack, commit a80d4c1]
 - [ ] 131 - Add `apps/web/src/layouts/BaseLayout.astro`.
 - [ ] 132 - Add `apps/web/src/components/Header.astro`.
 - [ ] 133 - Add `apps/web/src/components/Footer.astro`.
