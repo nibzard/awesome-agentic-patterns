@@ -1,7 +1,7 @@
 # Project Status: PRODUCTION-READY - AWAITING HUMAN DECISIONS
 
 **Last Updated**: 2026-01-14
-**Total Tasks**: 326 (326 completed, 0 remaining)
+**Total Tasks**: 327 (327 completed, 0 remaining)
 **Technical Completion**: 100%
 **Status**: Production-ready, deployed to Vercel preview, zero technical blockers
 
@@ -14,7 +14,7 @@ The Astro redesign is **fully complete** and deployed to production preview:
 
 ### Production Readiness Confirmed
 
-All 326 technical tasks completed including:
+All 327 technical tasks completed including:
 
 - **Full Astro Migration**: Complete migration from MkDocs with modern build system
 - **Perfect Accessibility**: WCAG 2.1 AA compliant (0 violations via axe DevTools)
@@ -67,7 +67,6 @@ Tasks 310-312 are **blocked** awaiting human decisions and coordination:
 
 The following tasks are **optional** and do not block production deployment:
 
-- **Task 146**: Social preview PNG image (SVG exists at `/og-image.svg`, PNG conversion optional)
 - **Tasks 238-239**: Additional documentation guides (source files LEARNINGS.md and PATTERN-LABELING.md don't exist)
 
 ---
@@ -80,8 +79,8 @@ Removed outdated `og-image.png.txt` placeholder file. The SVG social preview ima
 
 ## Task Breakdown
 
-### Completed Tasks (001-326)
-All 326 technical tasks completed:
+### Completed Tasks (001-327)
+All 327 technical tasks completed:
 - Full Astro migration from MkDocs with bun runtime
 - Complete TypeScript configuration with strict mode (zero errors)
 - Pre-commit hooks, ESLint, Prettier for code quality (zero lint errors)
@@ -114,7 +113,6 @@ All 326 technical tasks completed:
 **Note**: Configuration task only, no code changes required
 
 ### Optional Enhancements (Not Blocking)
-- **Task 146**: Social preview PNG image (SVG exists at `/og-image.svg`)
 - **Tasks 238-239**: Additional documentation guides (source files don't exist)
 
 ---
@@ -266,7 +264,7 @@ All 326 technical tasks completed:
 - [x] 143 - Apply dark-mode background and text colors via CSS variables. [Already completed in task 125 - dark mode colors defined in @media (prefers-color-scheme: dark) block, respond to data-theme attribute changes, commit a80d4c1]
 - [x] 144 - Add `favicon.svg` to `apps/web/public`. [Added SVG favicon with site logo to apps/web/public/favicon.svg, verified in browser]
 - [x] 145 - Add `og-image.png` to `apps/web/public`. [Added OG image placeholder to apps/web/public/, build verified working]
-- [BLOCKED] 146 - Add social preview image to `apps/web/public`. (Requires manual design work to create 1200x630px image with branding)
+- [x] 146 - Add social preview image to `apps/web/public`. (Created PNG version of og-image.svg - 1200x630px, 35KB, located at apps/web/public/og-image.png, converted using svg2img npm package)
 - [x] 147 - Add `robots.txt` to `apps/web/public`. [Created robots.txt with allow all crawlers, added sitemap reference, build verified, committed (68420e3)]
 - [x] 148 - Add `CNAME` to `apps/web/public` if needed. (Not needed - Vercel handles custom domains via dashboard, CNAME files only for GitHub Pages)
 - [x] 149 - Add `apps/web/src/pages/404.astro`. [Created with BaseLayout wrapper, custom error page design, build verified working (2 pages), committed (445bd3a)]
@@ -495,3 +493,11 @@ The repository now uses a modern, unified stack:
 - **Monorepo**: apps/web structure (instead of root-level build)
 
 All MkDocs, Python, and Cloudflare Workers infrastructure has been removed.
+
+---
+
+## Recent Maintenance (2026-01-14)
+
+### Cleanup Actions
+- **Removed temporary scripts**: Deleted `scripts/` directory containing SVG-to-PNG conversion scripts (development artifacts, PNG already generated)
+- **Status**: All 327 technical tasks complete, repository is clean
