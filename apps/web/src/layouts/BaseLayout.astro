@@ -50,6 +50,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Theme Color -->
     <meta name="theme-color" content="#0066cc" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#3399ff" media="(prefers-color-scheme: dark)" />
+
+    <!-- Font Preload (for future custom fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <Header currentPath={Astro.url.pathname} />
