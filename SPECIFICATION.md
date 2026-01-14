@@ -612,6 +612,54 @@ writeFileSync(new URL('data/graph.json', publicDir), generateGraphJson(patterns)
 
 **Revisit if**: Second app added to monorepo that needs same data files.
 
+### Decision 007: Citation Format for Patterns
+
+**Date**: 2026-01-14
+
+**Context**: Users need to cite patterns when using them in academic papers, blog posts, or documentation. Need a standard citation format.
+
+**Decision**: Use APA-style citation format with pattern metadata.
+
+**Citation Format**:
+```
+[Pattern Author(s)] ([Year]). [Pattern Title]. In *Awesome Agentic Patterns*. Retrieved [Date], from https://agentic-patterns.com/patterns/[slug]
+```
+
+**Example**:
+```
+Smith, J., & Doe, A. (2025). Reflection Loop. In *Awesome Agentic Patterns*. Retrieved January 14, 2026, from https://agentic-patterns.com/patterns/reflection
+```
+
+**BibTeX Format**:
+```bibtex
+@misc{agentic_patterns_[slug],
+  title = {[Pattern Title]},
+  author = {[Author(s)]},
+  year = {[Year]},
+  howpublished = {\\url{https://agentic-patterns.com/patterns/[slug]}},
+  note = {Awesome Agentic Patterns}
+}
+```
+
+**Implementation**:
+- Add "Cite this pattern" button on pattern pages
+- Copy citation to clipboard in both APA and BibTeX formats
+- Include retrieval date in citation
+- Use `updated_at` field for year if available, otherwise use current year
+
+**Rationale**:
+- APA is widely recognized in academic and technical writing
+- BibTeX support for LaTeX users
+- Stable URLs ensure citations remain valid
+- Author attribution maintained from pattern frontmatter
+
+**Consequences**:
+- Patterns are citable in academic work
+- Credit goes to original pattern authors
+- Standard format improves consistency
+
+**Revisit if**: Community requests additional citation formats (MLA, Chicago, etc.).
+
 ## Acceptance Criteria
 - Every pattern has a stable URL and renders with full metadata.
 - `llms.txt` and `llms-full.txt` exist and are up to date.

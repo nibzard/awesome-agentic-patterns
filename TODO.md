@@ -255,9 +255,9 @@
 - [x] 255 - Add `llms.txt` documentation section to `README.md`. [Created llms.txt with pattern catalog for AI assistants; added documentation section to README]
 - [x] 256 - Add "Copy prompt pack" button on the compare page. [Added with document icon and copy feedback]
 - [x] 257 - Implement prompt pack generator for selected patterns. [Implemented with formatted markdown output including summaries, categories, status, tags, and URLs]
-- [ ] 258 - Add citation format definition to `SPECIFICATION.md`.
-- [ ] 259 - Add citation copy UI to pattern pages.
-- [ ] 260 - Add stable section IDs for citations.
+- [x] 258 - Add citation format definition to `SPECIFICATION.md`. [Added Decision 007 with APA and BibTeX formats]
+- [x] 259 - Add citation copy UI to pattern pages. [Added "Cite This Pattern" button with modal showing APA and BibTeX formats]
+- [x] 260 - Add stable section IDs for citations. [Already implemented - sections have stable IDs: problem, solution, how-to-use-it, tradeoffs, example, references]
 - [ ] 261 - Add Mermaid support to Astro markdown rendering.
 - [ ] 262 - Add Mermaid styling to `global.css`.
 - [ ] 263 - Port the pattern source block into an Astro component.

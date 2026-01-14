@@ -33,6 +33,52 @@ const sections = [
   ...(pattern.example ? [{ id: 'example', label: 'Example' }] : []),
   ...(pattern.references ? [{ id: 'references', label: 'References' }] : []),
 ];
+
+// Generate citations
+function formatAuthors(authors: string[]): string {
+  if (authors.length === 1) return authors[0];
+  if (authors.length === 2) return `${authors[0]} & ${authors[1]}`;
+  return `${authors.slice(0, -1).join(', ')}, & ${authors[authors.length - 1]}`;
+}
+
+function generateCitationAPA(pattern: any): string {
+  const authors = pattern.authors && pattern.authors.length > 0
+    ? formatAuthors(pattern.authors.map((a: string) => a.replace(/\s*\(.*?\)/g, '').trim()))
+    : 'Anonymous';
+
+  const year = pattern.updated_at
+    ? new Date(pattern.updated_at).getFullYear()
+    : new Date().getFullYear();
+
+  const retrievalDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  return `${authors} (${year}). ${pattern.title}. In *Awesome Agentic Patterns*. Retrieved ${retrievalDate}, from https://agentic-patterns.com/patterns/${pattern.slug}`;
+}
+
+function generateCitationBibTeX(pattern: any): string {
+  const authors = pattern.authors && pattern.authors.length > 0
+    ? pattern.authors.map((a: string) => a.replace(/\s*\(.*?\)/g, '').trim()).join(' and ')
+    : 'Anonymous';
+
+  const year = pattern.updated_at
+    ? new Date(pattern.updated_at).getFullYear()
+    : new Date().getFullYear();
+
+  return `@misc{agentic_patterns_${pattern.slug},
+  title = {${pattern.title}},
+  author = {${authors}},
+  year = {${year}},
+  howpublished = {\\url{https://agentic-patterns.com/patterns/${pattern.slug}}},
+  note = {Awesome Agentic Patterns}
+}`;
+}
+
+const citationAPA = generateCitationAPA(pattern);
+const citationBibTeX = generateCitationBibTeX(pattern);
 ---
 
 <BaseLayout
@@ -114,12 +160,79 @@ const sections = [
           <!-- Copy Button for Pattern ID -->
           <div class="pattern-actions">
             <CopyButton content={pattern.id} label={`Copy ${pattern.id} ID`} />
+            <button
+              class="citation-button"
+              data-citation-apa={citationAPA}
+              data-citation-bibtex={citationBibTeX}
+              onclick:preventDefault
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 6H10M6 9H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Cite This Pattern
+            </button>
           </div>
+
+          <!-- Citation Modal -->
+          <dialog id="citation-modal" class="citation-modal">
+            <div class="citation-modal-content">
+              <div class="citation-modal-header">
+                <h2>Cite This Pattern</h2>
+                <button class="citation-modal-close" onclick="document.getElementById('citation-modal').close()">×</button>
+              </div>
+
+              <div class="citation-modal-body">
+                <div class="citation-format">
+                  <div class="citation-format-header">
+                    <h3>APA Format</h3>
+                    <button
+                      class="copy-citation-button"
+                      data-format="apa"
+                      onclick={`navigator.clipboard.writeText(${JSON.stringify(citationAPA)}).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); });`}
+                    >
+                      Copy
+                    </button>
+                  </div>
+                  <code class="citation-text">{citationAPA}</code>
+                </div>
+
+                <div class="citation-format">
+                  <div class="citation-format-header">
+                    <h3>BibTeX Format</h3>
+                    <button
+                      class="copy-citation-button"
+                      data-format="bibtex"
+                      onclick={`navigator.clipboard.writeText(${JSON.stringify(citationBibTeX)}).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); });`}
+                    >
+                      Copy
+                    </button>
+                  </div>
+                  <pre class="citation-text citation-text--bibtex">{citationBibTeX}</pre>
+                </div>
+              </div>
+            </div>
+          </dialog>
         </article>
       </main>
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const citationButton = document.querySelector('.citation-button');
+  const citationModal = document.getElementById('citation-modal');
+
+  citationButton?.addEventListener('click', () => {
+    citationModal?.showModal();
+  });
+
+  citationModal?.addEventListener('click', (e) => {
+    if (e.target === citationModal) {
+      citationModal.close();
+    }
+  });
+</script>
 
 <style>
   .pattern-page {
@@ -322,6 +435,139 @@ const sections = [
     margin-top: var(--spacing-xl);
     padding-top: var(--spacing-lg);
     border-top: 1px solid var(--color-divider);
+  }
+
+  .citation-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .citation-button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .citation-button svg {
+    flex-shrink: 0;
+  }
+
+  .citation-modal {
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 0;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .citation-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .citation-modal-content {
+    padding: var(--spacing-xl);
+  }
+
+  .citation-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .citation-modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .citation-modal-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+  }
+
+  .citation-modal-close:hover {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .citation-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .citation-format {
+    padding: var(--spacing-md);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .citation-format-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .citation-format-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .copy-citation-button {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .copy-citation-button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .citation-text {
+    display: block;
+    padding: var(--spacing-md);
+    background-color: var(--color-bg);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+
+  .citation-text--bibtex {
+    font-family: var(--font-mono);
+    white-space: pre-wrap;
   }
 
   @media (max-width: 768px) {
