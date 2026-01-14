@@ -1,0 +1,142 @@
+---
+interface Props {
+  placeholder?: string;
+  action?: string;
+}
+
+const { placeholder = 'Search patterns...', action = '/search' } = Astro.props;
+---
+
+<form class="search-box" action={action} method="GET">
+  <div class="search-box-input-wrapper">
+    <svg class="search-box-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <input
+      type="search"
+      name="q"
+      class="search-box-input"
+      placeholder={placeholder}
+      aria-label="Search patterns"
+      autocomplete="off"
+    />
+    <button type="button" class="search-box-clear" aria-label="Clear search" hidden>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <button type="submit" class="search-box-submit">Search</button>
+</form>
+
+<style>
+  .search-box {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  .search-box-input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-box-icon {
+    position: absolute;
+    left: var(--spacing-md);
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  .search-box-input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-xl) var(--spacing-sm) calc(var(--spacing-md) + 24px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .search-box-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  }
+
+  .search-box-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .search-box-clear {
+    position: absolute;
+    right: var(--spacing-sm);
+    padding: var(--spacing-xs);
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-box-clear:hover {
+    color: var(--color-text);
+    background-color: var(--color-border);
+  }
+
+  .search-box-submit {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .search-box-submit:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  @media (max-width: 640px) {
+    .search-box {
+      flex-wrap: wrap;
+    }
+
+    .search-box-submit {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Search box functionality
+  const searchForm = document.querySelector('.search-box');
+  const searchInput = searchForm?.querySelector('.search-box-input') as HTMLInputElement;
+  const clearButton = searchForm?.querySelector('.search-box-clear') as HTMLButtonElement;
+
+  // Show/hide clear button based on input
+  searchInput?.addEventListener('input', () => {
+    if (searchInput.value) {
+      clearButton?.removeAttribute('hidden');
+    } else {
+      clearButton?.setAttribute('hidden', '');
+    }
+  });
+
+  // Clear button functionality
+  clearButton?.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+    clearButton.setAttribute('hidden', '');
+  });
+</script>
