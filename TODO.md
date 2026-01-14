@@ -500,4 +500,5 @@ All MkDocs, Python, and Cloudflare Workers infrastructure has been removed.
 
 ### Cleanup Actions
 - **Removed temporary scripts**: Deleted `scripts/` directory containing SVG-to-PNG conversion scripts (development artifacts, PNG already generated)
+- **Fixed CSS syntax warnings**: Corrected invalid CSS in `ThemeToggle.astro` where `@media` queries were incorrectly combined with `:global` selectors using commas (esbuild css minify warnings eliminated)
 - **Status**: All 327 technical tasks complete, repository is clean
