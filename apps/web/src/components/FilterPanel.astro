@@ -1,0 +1,201 @@
+---
+interface FilterGroup {
+  label: string;
+  type: 'select' | 'multiselect';
+  options: { value: string; label: string; count?: number }[];
+}
+
+interface Props {
+  filters: FilterGroup[];
+  activeFilters: Record<string, string[]>;
+}
+
+const { filters, activeFilters } = Astro.props;
+
+const hasActiveFilters = Object.keys(activeFilters).some(key => activeFilters[key]?.length > 0);
+---
+
+<aside class="filter-panel">
+  <div class="filter-panel-header">
+    <h2 class="filter-panel-title">Filters</h2>
+    {hasActiveFilters && (
+      <a href="/patterns" class="filter-panel-clear">
+        Clear All
+      </a>
+    )}
+  </div>
+
+  <form class="filter-panel-form" method="GET" action="/patterns">
+    {filters.map((group, groupIndex) => (
+      <div class="filter-group">
+        <h3 class="filter-group-label">{group.label}</h3>
+
+        {group.type === 'select' ? (
+          <select
+            name={`filter-${groupIndex}`}
+            class="filter-select"
+            onchange="this.form.submit()"
+          >
+            <option value="">All</option>
+            {group.options.map(option => (
+              <option
+                value={option.value}
+                selected={activeFilters[groupIndex]?.includes(option.value)}
+              >
+                {option.label}
+                {option.count !== undefined && ` (${option.count})`}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <div class="filter-checkboxes">
+            {group.options.map(option => {
+              const isChecked = activeFilters[groupIndex]?.includes(option.value);
+              return (
+                <label class="filter-checkbox">
+                  <input
+                    type="checkbox"
+                    name={`filter-${groupIndex}`}
+                    value={option.value}
+                    checked={isChecked}
+                    onchange="this.form.submit()"
+                  />
+                  <span class="filter-checkbox-label">
+                    {option.label}
+                  </span>
+                  {option.count !== undefined && (
+                    <span class="filter-checkbox-count">({option.count})</span>
+                  )}
+                </label>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    ))}
+
+    <button type="submit" class="filter-panel-submit">Apply Filters</button>
+  </form>
+</aside>
+
+<style>
+  .filter-panel {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+  }
+
+  .filter-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .filter-panel-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .filter-panel-clear {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .filter-panel-clear:hover {
+    text-decoration: underline;
+  }
+
+  .filter-panel-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .filter-group-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .filter-select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  .filter-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+  }
+
+  .filter-checkbox:hover {
+    background-color: var(--color-border);
+  }
+
+  .filter-checkbox input[type="checkbox"] {
+    cursor: pointer;
+  }
+
+  .filter-checkbox-label {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+
+  .filter-checkbox-count {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .filter-panel-submit {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .filter-panel-submit:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  @media (max-width: 768px) {
+    .filter-panel {
+      position: static;
+      max-height: none;
+    }
+  }
+</style>
