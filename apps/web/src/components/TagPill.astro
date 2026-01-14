@@ -1,0 +1,93 @@
+---
+interface Props {
+  tag: string;
+  href?: string;
+  removable?: boolean;
+  onRemove?: () => void;
+}
+
+const { tag, href, removable = false } = Astro.props;
+
+const Tag = href ? 'a' : 'span';
+const tagProps = href
+  ? { href }
+  : {};
+---
+
+{removable ? (
+  <span class="tag-pill tag-pill--removable">
+    <span class="tag-pill-text">{tag}</span>
+    <button
+      class="tag-pill-remove"
+      aria-label={`Remove ${tag} filter`}
+      type="button"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </span>
+) : (
+  <Tag class="tag-pill" {...tagProps}>
+    {tag}
+  </Tag>
+)}
+
+<style>
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background-color: var(--color-border);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .tag-pill:hover {
+    color: var(--color-text);
+    background-color: var(--color-divider);
+  }
+
+  .tag-pill--removable {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background-color: var(--color-primary-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .tag-pill-text {
+    color: var(--color-text);
+  }
+
+  .tag-pill-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .tag-pill-remove:hover {
+    color: var(--color-error);
+    background-color: var(--color-border);
+  }
+
+  .tag-pill-remove:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+</style>
