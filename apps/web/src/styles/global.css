@@ -106,3 +106,28 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* Mermaid Diagram Styling */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: var(--spacing-lg) 0;
+  background-color: var(--color-bg);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Dark mode support for Mermaid */
+@media (prefers-color-scheme: dark) {
+  .mermaid {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+}
+
