@@ -290,12 +290,12 @@
 - [ ] 290 - Add `vercel.json` redirects/rewrites for legacy routes.
 - [x] 291 - Run `bun run build` in `apps/web`. [Build completed successfully: 125 pages generated, including all 112 pattern pages; fixed Pagefind import, added getStaticPaths to dynamic routes, corrected pattern loader path]
 - [x] 292 - Run `bun run preview` in `apps/web`. [Preview server started successfully on port 4321, home page verified working]
-- [ ] 293 - Smoke test the home page in preview.
-- [ ] 294 - Smoke test the patterns index in preview.
-- [ ] 295 - Smoke test a pattern detail page in preview.
-- [ ] 296 - Smoke test the compare page in preview.
-- [ ] 297 - Smoke test the decision explorer in preview.
-- [ ] 298 - Smoke test the graph explorer in preview.
+- [x] 293 - Smoke test the home page in preview. [Home page renders correctly with title, hero, CTA buttons, and section headers]
+- [x] 294 - Smoke test the patterns index in preview. [Patterns index page loads with proper title and header]
+- [x] 295 - Smoke test a pattern detail page in preview. [Pattern detail page loads with title, sections (Problem, Solution) rendering correctly]
+- [x] 296 - Smoke test the compare page in preview. [Compare page loads with proper title and header]
+- [x] 297 - Smoke test the decision explorer in preview. [Decision explorer loads with title and question interface]
+- [x] 298 - Smoke test the graph explorer in preview. [Graph explorer loads with SVG elements rendered]
 - [ ] 299 - Run Lighthouse on the home page.
 - [ ] 300 - Save the Lighthouse report artifact.
 - [ ] 301 - Fix LCP regressions from Lighthouse.
