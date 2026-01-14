@@ -8,6 +8,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
     "astro": "^5.16.9"
   }
 }
