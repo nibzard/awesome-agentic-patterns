@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/vercel": "^9.0.3",
     "astro": "^5.16.9",
     "d3": "7",
     "gray-matter": "^4.0.3",

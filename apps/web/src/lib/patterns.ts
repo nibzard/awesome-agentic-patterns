@@ -1,14 +1,35 @@
 import matter from 'gray-matter';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Root patterns directory (monorepo root)
-// From apps/web/src/lib/patterns.ts, go up 4 levels to reach repo root
-const patternsDir = join(__dirname, '../../../../patterns');
+// Handle multiple build contexts:
+// 1. Local dev (repo root): patterns at ./patterns
+// 2. SSR build (apps/web): patterns at ../../patterns
+// 3. SSR build (apps): patterns at ../patterns
+function findPatternsDir(): string {
+  const cwd = process.cwd();
+  const candidates = [
+    join(cwd, 'patterns'),           // repo root/patterns
+    join(cwd, '../patterns'),         // apps/patterns -> repo root/patterns
+    join(cwd, '../../patterns'),      // apps/web/patterns -> repo root/patterns
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+
+  // Fallback to resolve from source file location
+  return resolve(__dirname, '../../../../patterns');
+}
+
+const patternsDir = findPatternsDir();
 
 /**
  * Load all pattern files from the root patterns/ directory
