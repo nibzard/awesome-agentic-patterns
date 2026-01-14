@@ -16,8 +16,9 @@ tags:
 slug: disposable-scaffolding-over-durable-features
 id: disposable-scaffolding-over-durable-features
 summary: >-
-  TODO: Add a concise summary for "Disposable Scaffolding Over Durable Features"
-  describing the pattern's purpose and key benefits.
+  Treat most code around models as temporary, lightweight scaffolding rather than
+  durable features, prioritizing speed and adaptability to avoid over-engineering
+  solutions that next model generations may render obsolete.
 updated_at: '2026-01-05'
 ---
 

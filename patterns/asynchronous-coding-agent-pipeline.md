@@ -15,8 +15,9 @@ tags:
 slug: asynchronous-coding-agent-pipeline
 id: asynchronous-coding-agent-pipeline
 summary: >-
-  TODO: Add a concise summary for "Asynchronous Coding Agent Pipeline"
-  describing the pattern's purpose and key benefits.
+  Decouple inference, tool execution, and learning into parallel asynchronous
+  components communicating via message queues to maximize GPU utilization and
+  eliminate compute bubbles from synchronous tool calls.
 updated_at: '2026-01-05'
 ---
 

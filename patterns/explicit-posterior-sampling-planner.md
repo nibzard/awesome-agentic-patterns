@@ -17,8 +17,6 @@ tags:
 slug: explicit-posterior-sampling-planner
 id: explicit-posterior-sampling-planner
 summary: >-
-  ## Problem
-
   Agents that rely on ad-hoc heuristics explore poorly, wasting tokens and API
   calls on dead ends.
 updated_at: '2026-01-05'

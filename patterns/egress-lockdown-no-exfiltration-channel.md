@@ -16,11 +16,9 @@ tags:
 slug: egress-lockdown-no-exfiltration-channel
 id: egress-lockdown-no-exfiltration-channel
 summary: >-
-  ## Problem
-
   Even with private-data access and untrusted inputs, attacks fail if the agent
-  has **no way to transmit stolen data**. Many real-world fixes simply removed
-  or filtered outbound channels.
+  has no way to transmit stolen data—implement egress firewall allowing only
+  specific domains while filtering or stripping outbound content.
 updated_at: '2026-01-05'
 ---
 

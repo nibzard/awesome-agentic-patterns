@@ -15,9 +15,8 @@ tags:
   - auditability
 slug: code-then-execute-pattern
 id: code-then-execute-pattern
-summary: |-
-  ## Problem
-  Plan lists are opaque; we want **full data-flow analysis** and taint tracking.
+summary: >-
+  Plan lists are opaque; we want full data-flow analysis and taint tracking.
 updated_at: '2026-01-05'
 ---
 

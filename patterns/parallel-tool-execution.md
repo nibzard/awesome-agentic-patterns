@@ -20,8 +20,9 @@ tags:
 slug: parallel-tool-execution
 id: conditional-parallel-tool-execution
 summary: >-
-  TODO: Add a concise summary for "Conditional Parallel Tool Execution"
-  describing the pattern's purpose and key benefits.
+  Execute read-only tools concurrently for speed while serializing state-modifying
+  tools for safety, balancing performance optimization with race condition
+  prevention through intelligent tool classification and orchestration.
 updated_at: '2026-01-05'
 ---
 

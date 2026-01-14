@@ -19,8 +19,9 @@ tags:
 slug: team-shared-agent-configuration
 id: team-shared-agent-configuration-as-code
 summary: >-
-  TODO: Add a concise summary for "Team-Shared Agent Configuration as Code"
-  describing the pattern's purpose and key benefits.
+  Check agent configuration into version control as code, enabling consistent
+  behavior across teams, faster onboarding, and collaborative improvement through
+  PRs and code review.
 updated_at: '2026-01-05'
 ---
 

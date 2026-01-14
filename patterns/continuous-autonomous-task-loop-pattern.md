@@ -17,8 +17,9 @@ tags:
 slug: continuous-autonomous-task-loop-pattern
 id: continuous-autonomous-task-loop-pattern
 summary: >-
-  TODO: Add a concise summary for "Continuous Autonomous Task Loop Pattern"
-  describing the pattern's purpose and key benefits.
+  Continuous autonomous loop that handles task selection, execution, and completion
+  without human intervention, with intelligent rate limit handling and automated
+  git management.
 updated_at: '2026-01-05'
 ---
 

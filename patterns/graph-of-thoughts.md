@@ -18,8 +18,10 @@ tags:
 slug: graph-of-thoughts
 id: graph-of-thoughts-got
 summary: >-
-  TODO: Add a concise summary for "Graph of Thoughts (GoT)" describing the
-  pattern's purpose and key benefits.
+  Extend reasoning frameworks by representing thoughts as a directed graph with
+  nodes, edges, and arbitrary relationships, enabling complex operations like
+  branching, aggregation, refinement, and looping for problems with
+  interdependencies.
 updated_at: '2026-01-05'
 ---
 

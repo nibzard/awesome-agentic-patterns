@@ -20,8 +20,9 @@ tags:
 slug: llm-observability
 id: llm-observability
 summary: >-
-  TODO: Add a concise summary for "LLM Observability" describing the pattern's
-  purpose and key benefits.
+  Integrate LLM observability platforms for span-level tracing of agent workflows,
+  providing visual UI debugging, workflow linking, and aggregate metrics to enable
+  fast navigation of complex multi-step executions.
 updated_at: '2026-01-13'
 ---
 

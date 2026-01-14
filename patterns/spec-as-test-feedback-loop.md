@@ -14,8 +14,6 @@ tags:
 slug: spec-as-test-feedback-loop
 id: spec-as-test-feedback-loop
 summary: >-
-  ## Problem
-
   Even in spec-first projects, implementations can drift as code evolves and the
   spec changes (or vice-versa). Silent divergence erodes trust.
 updated_at: '2026-01-05'

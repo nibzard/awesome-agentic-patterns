@@ -15,8 +15,6 @@ tags:
 slug: self-critique-evaluator-loop
 id: self-critique-evaluator-loop
 summary: >-
-  ## Problem
-
   Human preference labels are costly and quickly become outdated as base models
   improve.
 updated_at: '2026-01-05'

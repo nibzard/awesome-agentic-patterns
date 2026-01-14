@@ -15,10 +15,8 @@ tags:
 slug: cli-native-agent-orchestration
 id: cli-native-agent-orchestration
 summary: >-
-  ## Problem
-
-  Web chat UIs are awkward for repeat runs, local file edits, or scripting
-  inside CI pipelines.
+  Web chat UIs are awkward for repeat runs, local file edits, or scripting inside
+  CI pipelines.
 updated_at: '2026-01-05'
 ---
 

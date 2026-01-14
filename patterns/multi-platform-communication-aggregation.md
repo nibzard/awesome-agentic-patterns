@@ -16,8 +16,9 @@ tags:
 slug: multi-platform-communication-aggregation
 id: multi-platform-communication-aggregation
 summary: >-
-  TODO: Add a concise summary for "Multi-Platform Communication Aggregation"
-  describing the pattern's purpose and key benefits.
+  Create unified search interface that queries all communication platforms in
+  parallel and aggregates results into consistent format, enabling single-query
+  cross-platform search with minimal latency through parallel execution.
 updated_at: '2026-01-05'
 ---
 

@@ -17,8 +17,9 @@ tags:
 slug: structured-output-specification
 id: structured-output-specification
 summary: >-
-  TODO: Add a concise summary for "Structured Output Specification" describing
-  the pattern's purpose and key benefits.
+  Constrain agent outputs using deterministic schemas that enforce structured,
+  machine-readable results, enabling reliable validation, parsing, and integration
+  with downstream systems.
 updated_at: '2026-01-05'
 ---
 

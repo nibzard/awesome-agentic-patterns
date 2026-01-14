@@ -19,8 +19,9 @@ tags:
 slug: stop-hook-auto-continue-pattern
 id: stop-hook-auto-continue-pattern
 summary: >-
-  TODO: Add a concise summary for "Stop Hook Auto-Continue Pattern" describing
-  the pattern's purpose and key benefits.
+  Use stop hooks to programmatically check success criteria after each agent turn,
+  automatically continuing execution until the task is genuinely complete, enabling
+  true task completion without manual intervention.
 updated_at: '2026-01-05'
 ---
 

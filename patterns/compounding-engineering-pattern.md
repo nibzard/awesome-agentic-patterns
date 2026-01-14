@@ -20,8 +20,9 @@ tags:
 slug: compounding-engineering-pattern
 id: compounding-engineering-pattern
 summary: >-
-  TODO: Add a concise summary for "Compounding Engineering Pattern" describing
-  the pattern's purpose and key benefits.
+  Codify all learnings from each feature into reusable prompts, slash commands,
+  subagents, and hooks—making each feature easier to build by creating
+  increasingly "self-teaching" codebase that accelerates productivity over time.
 updated_at: '2026-01-05'
 ---
 

@@ -15,8 +15,6 @@ tags:
 slug: oracle-and-worker-multi-model
 id: oracle-and-worker-multi-model-approach
 summary: >-
-  ## Problem
-
   Relying on a single AI model creates a trade-off between capability and cost.
   High-performance models are expensive for routine tasks, while cost-effective
   models may lack the reasoning power for complex problems.

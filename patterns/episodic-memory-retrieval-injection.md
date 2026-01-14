@@ -16,8 +16,6 @@ tags:
 slug: episodic-memory-retrieval-injection
 id: episodic-memory-retrieval-injection
 summary: >-
-  ## Problem
-
   Stateless calls make agents forget prior decisions, causing repetition and
   shallow reasoning.
 updated_at: '2026-01-05'

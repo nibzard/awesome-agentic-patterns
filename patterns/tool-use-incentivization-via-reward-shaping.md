@@ -15,8 +15,9 @@ tags:
 slug: tool-use-incentivization-via-reward-shaping
 id: tool-use-incentivization-via-reward-shaping
 summary: >-
-  TODO: Add a concise summary for "Tool Use Incentivization via Reward Shaping"
-  describing the pattern's purpose and key benefits.
+  Provide dense, shaped rewards for every intermediate tool invocation to encourage
+  coding agents to use compilers, linters, and test runners instead of relying
+  solely on internal reasoning tokens.
 updated_at: '2026-01-05'
 ---
 

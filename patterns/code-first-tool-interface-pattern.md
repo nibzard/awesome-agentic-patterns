@@ -19,8 +19,9 @@ tags:
 slug: code-first-tool-interface-pattern
 id: code-mode-mcp-tool-interface-improvement-pattern
 summary: >-
-  TODO: Add a concise summary for "Code Mode MCP Tool Interface Improvement
-  Pattern" describing the pattern's purpose and key benefits.
+  LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates,
+  eliminating token-heavy round-trips and enabling efficient multi-step workflows
+  with 10x+ token savings.
 updated_at: '2026-01-05'
 ---
 

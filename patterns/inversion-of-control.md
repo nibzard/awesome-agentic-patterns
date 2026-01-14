@@ -15,8 +15,6 @@ tags:
 slug: inversion-of-control
 id: inversion-of-control
 summary: >-
-  ## Problem
-
   Traditional "prompt-as-puppeteer" workflows force humans to spell out every
   step, limiting scale and creativity.
 updated_at: '2026-01-05'

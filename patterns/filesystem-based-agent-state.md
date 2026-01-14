@@ -15,8 +15,9 @@ tags:
 slug: filesystem-based-agent-state
 id: filesystem-based-agent-state
 summary: >-
-  TODO: Add a concise summary for "Filesystem-Based Agent State" describing the
-  pattern's purpose and key benefits.
+  Agents persist intermediate results and working state to files, creating durable
+  checkpoints that enable workflow resumption, recovery from failures, and support
+  for long-running tasks.
 updated_at: '2026-01-05'
 ---
 

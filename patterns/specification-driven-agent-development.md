@@ -15,8 +15,6 @@ tags:
 slug: specification-driven-agent-development
 id: specification-driven-agent-development
 summary: >-
-  ## Problem
-
   Hand-crafted prompts or loose user stories leave room for ambiguity; agents
   can wander, over-interpret, or produce code that conflicts with stakeholder
   intent.

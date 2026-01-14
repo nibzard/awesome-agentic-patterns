@@ -15,8 +15,6 @@ tags:
 slug: llm-map-reduce-pattern
 id: llm-map-reduce-pattern
 summary: >-
-  ## Problem
-
   Injecting a single poisoned document can manipulate global reasoning if all
   data is processed in one context.
 updated_at: '2026-01-05'

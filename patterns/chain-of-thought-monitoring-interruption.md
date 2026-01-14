@@ -16,8 +16,9 @@ tags:
 slug: chain-of-thought-monitoring-interruption
 id: chain-of-thought-monitoring-interruption
 summary: >-
-  TODO: Add a concise summary for "Chain-of-Thought Monitoring & Interruption"
-  describing the pattern's purpose and key benefits.
+  Implement active surveillance of agent reasoning with capability to interrupt and
+  redirect before completing flawed execution sequences, preventing wasted time on
+  fundamentally wrong approaches.
 updated_at: '2026-01-05'
 ---
 

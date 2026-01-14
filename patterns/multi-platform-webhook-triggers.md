@@ -19,8 +19,9 @@ tags:
 slug: multi-platform-webhook-triggers
 id: multi-platform-webhook-triggers
 summary: >-
-  TODO: Add a concise summary for "Multi-Platform Webhook Triggers" describing
-  the pattern's purpose and key benefits.
+  Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled
+  events) to allow external SaaS tools to automatically initiate agent workflows,
+  enabling low-friction, reactive automation from existing platforms.
 updated_at: '2026-01-13'
 ---
 

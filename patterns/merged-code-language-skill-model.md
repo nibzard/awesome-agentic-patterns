@@ -16,8 +16,9 @@ tags:
 slug: merged-code-language-skill-model
 id: merged-code-language-skill-model
 summary: >-
-  TODO: Add a concise summary for "Merged Code + Language Skill Model"
-  describing the pattern's purpose and key benefits.
+  Decentralized training with model merging—train language and code specialists
+  independently then combine via weight averaging—enabling parallel R&D without
+  massive centralized compute while preserving both skill sets.
 updated_at: '2026-01-05'
 ---
 

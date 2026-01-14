@@ -15,8 +15,6 @@ tags:
 slug: dual-llm-pattern
 id: dual-llm-pattern
 summary: >-
-  ## Problem
-
   A privileged agent that both sees untrusted text **and** wields tools can be
   coerced into dangerous calls.
 updated_at: '2026-01-05'

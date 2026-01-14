@@ -15,8 +15,9 @@ tags:
 slug: code-over-api-pattern
 id: code-over-api-pattern
 summary: >-
-  TODO: Add a concise summary for "Code-Over-API Pattern" describing the
-  pattern's purpose and key benefits.
+  Agents write and execute code that processes data in execution environment instead
+  of making direct API calls, dramatically reducing token consumption by keeping
+  intermediate data out of context window (150K → 2K tokens).
 updated_at: '2026-01-05'
 ---
 

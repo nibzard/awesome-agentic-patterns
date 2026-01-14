@@ -17,8 +17,9 @@ tags:
 slug: human-in-loop-approval-framework
 id: human-in-the-loop-approval-framework
 summary: >-
-  TODO: Add a concise summary for "Human-in-the-Loop Approval Framework"
-  describing the pattern's purpose and key benefits.
+  Systematically insert human approval gates for designated high-risk functions
+  while maintaining agent autonomy for safe operations, with multi-channel approval
+  interfaces and comprehensive audit trails.
 updated_at: '2026-01-05'
 ---
 

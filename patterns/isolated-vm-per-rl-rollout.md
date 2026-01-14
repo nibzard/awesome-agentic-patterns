@@ -18,8 +18,9 @@ tags:
 slug: isolated-vm-per-rl-rollout
 id: isolated-vm-per-rl-rollout
 summary: >-
-  TODO: Add a concise summary for "Isolated VM per RL Rollout" describing the
-  pattern's purpose and key benefits.
+  Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination
+  between parallel agent executions, ensuring safe training with destructive tool
+  access.
 updated_at: '2026-01-05'
 ---
 

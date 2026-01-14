@@ -20,8 +20,9 @@ tags:
 slug: visual-ai-multimodal-integration
 id: visual-ai-multimodal-integration
 summary: >-
-  TODO: Add a concise summary for "Visual AI Multimodal Integration" describing
-  the pattern's purpose and key benefits.
+  Integrate large multimodal models for visual understanding—enabling agents to
+  process images, videos, screenshots alongside text for tasks like UI debugging,
+  document processing, video analysis, and security monitoring.
 updated_at: '2026-01-05'
 ---
 

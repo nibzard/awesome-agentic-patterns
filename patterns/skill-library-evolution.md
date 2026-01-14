@@ -22,8 +22,9 @@ tags:
 slug: skill-library-evolution
 id: skill-library-evolution
 summary: >-
-  TODO: Add a concise summary for "Skill Library Evolution" describing the
-  pattern's purpose and key benefits.
+  Agents persist working code implementations as reusable skills that evolve into
+  well-documented capabilities over time, building organizational knowledge and
+  reducing redundant problem-solving across sessions.
 updated_at: '2026-01-13'
 ---
 

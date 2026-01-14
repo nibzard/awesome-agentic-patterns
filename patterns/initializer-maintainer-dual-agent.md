@@ -17,8 +17,9 @@ tags:
 slug: initializer-maintainer-dual-agent
 id: initializer-maintainer-dual-agent-architecture
 summary: >-
-  TODO: Add a concise summary for "Initializer-Maintainer Dual Agent
-  Architecture" describing the pattern's purpose and key benefits.
+  Two-agent architecture with lifecycle-specialized responsibilities: Initializer
+  creates comprehensive foundation once, Maintainer executes incremental
+  development with session bootstrapping rituals to prevent context loss.
 updated_at: '2026-01-05'
 ---
 

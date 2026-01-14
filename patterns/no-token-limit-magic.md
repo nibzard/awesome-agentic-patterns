@@ -15,8 +15,6 @@ tags:
 slug: no-token-limit-magic
 id: no-token-limit-magic
 summary: >-
-  ## Problem
-
   Aggressive prompt compression to save tokens stifles reasoning depth and
   self-correction.
 updated_at: '2026-01-05'

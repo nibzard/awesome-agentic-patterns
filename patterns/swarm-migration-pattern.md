@@ -20,8 +20,9 @@ tags:
 slug: swarm-migration-pattern
 id: swarm-migration-pattern
 summary: >-
-  TODO: Add a concise summary for "Swarm Migration Pattern" describing the
-  pattern's purpose and key benefits.
+  Main agent orchestrates 10+ parallel subagents working simultaneously on
+  independent migration chunks, achieving 10x+ speedup for large-scale framework
+  upgrades, lint rule rollouts, and API migrations.
 updated_at: '2026-01-05'
 ---
 

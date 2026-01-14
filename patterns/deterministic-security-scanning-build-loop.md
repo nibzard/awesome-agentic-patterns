@@ -16,8 +16,9 @@ tags:
 slug: deterministic-security-scanning-build-loop
 id: deterministic-security-scanning-build-loop
 summary: >-
-  TODO: Add a concise summary for "Deterministic Security Scanning Build Loop"
-  describing the pattern's purpose and key benefits.
+  Implement deterministic security validation through build loop with two-phase
+  approach: non-deterministic generation followed by deterministic backpressure
+  from integrated SAST/DAST tools that must pass before code completion.
 updated_at: '2026-01-05'
 ---
 

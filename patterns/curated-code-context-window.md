@@ -17,8 +17,9 @@ tags:
 slug: curated-code-context-window
 id: curated-code-context-window
 summary: >-
-  TODO: Add a concise summary for "Curated Code Context Window" describing the
-  pattern's purpose and key benefits.
+  Maintain minimal, high-signal code context using search subagents to identify
+  and inject only relevant modules, preventing model overwhelm, reducing token
+  usage, and improving reasoning clarity by excluding unrelated code.
 updated_at: '2026-01-05'
 ---
 

@@ -14,8 +14,6 @@ tags:
 slug: reflection
 id: reflection-loop
 summary: >-
-  ## Problem
-
   Generative models may produce subpar output if they never review or critique
   their own work.
 updated_at: '2026-01-05'

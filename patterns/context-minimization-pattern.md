@@ -14,8 +14,6 @@ tags:
 slug: context-minimization-pattern
 id: context-minimization-pattern
 summary: >-
-  ## Problem
-
   User-supplied or tainted text lingers in the conversation, enabling it to
   influence later generations.
 updated_at: '2026-01-05'

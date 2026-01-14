@@ -17,8 +17,9 @@ tags:
 slug: spectrum-of-control-blended-initiative
 id: spectrum-of-control-blended-initiative
 summary: >-
-  TODO: Add a concise summary for "Spectrum of Control / Blended Initiative"
-  describing the pattern's purpose and key benefits.
+  Design human-agent interaction supporting autonomy spectrum from tab completion
+  (low) to background agents creating entire PRs (high), enabling seamless switching
+  between direct control and task delegation based on complexity and user familiarity.
 updated_at: '2026-01-05'
 ---
 

@@ -16,8 +16,9 @@ tags:
 slug: agent-friendly-workflow-design
 id: agent-friendly-workflow-design
 summary: >-
-  TODO: Add a concise summary for "Agent-Friendly Workflow Design" describing
-  the pattern's purpose and key benefits.
+  Consciously design workflows with clear goals, appropriate autonomy, structured
+  I/O, and feedback loops to maximize agent performance by aligning tasks with
+  AI strengths.
 updated_at: '2026-01-05'
 ---
 

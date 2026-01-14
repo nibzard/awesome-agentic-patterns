@@ -16,8 +16,9 @@ tags:
 slug: pii-tokenization
 id: pii-tokenization
 summary: >-
-  TODO: Add a concise summary for "PII Tokenization" describing the pattern's
-  purpose and key benefits.
+  Implement interception layer in MCP client that automatically tokenizes PII
+  before reaching model and untokenizes for tool calls, enabling agents to
+  orchestrate sensitive workflows without exposing raw data to LLM.
 updated_at: '2026-01-05'
 ---
 

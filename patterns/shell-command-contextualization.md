@@ -17,8 +17,9 @@ tags:
 slug: shell-command-contextualization
 id: shell-command-contextualization
 summary: >-
-  TODO: Add a concise summary for "Shell Command Contextualization" describing
-  the pattern's purpose and key benefits.
+  Provide a mechanism (e.g., `!` prefix) to execute shell commands locally and
+  automatically inject both the command and output into the agent's context for
+  seamless integration.
 updated_at: '2026-01-05'
 ---
 

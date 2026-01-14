@@ -18,8 +18,9 @@ tags:
 slug: agent-reinforcement-fine-tuning
 id: agent-reinforcement-fine-tuning-agent-rft
 summary: >-
-  TODO: Add a concise summary for "Agent Reinforcement Fine-Tuning (Agent RFT)"
-  describing the pattern's purpose and key benefits.
+  Train model weights end-to-end on agentic tasks via reinforcement learning with
+  real tool calls and custom reward signals, optimizing for domain-specific
+  tool use efficiency and multi-step reasoning performance.
 updated_at: '2026-01-05'
 ---
 

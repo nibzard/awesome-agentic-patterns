@@ -14,8 +14,6 @@ tags:
 slug: tree-of-thought-reasoning
 id: tree-of-thought-reasoning
 summary: >-
-  ## Problem
-
   Linear chain-of-thought reasoning can get stuck on complex problems, missing
   alternative approaches or failing to backtrack.
 updated_at: '2026-01-05'

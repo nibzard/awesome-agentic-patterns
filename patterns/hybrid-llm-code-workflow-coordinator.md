@@ -18,8 +18,9 @@ tags:
 slug: hybrid-llm-code-workflow-coordinator
 id: hybrid-llmcode-workflow-coordinator
 summary: >-
-  TODO: Add a concise summary for "Hybrid LLM/Code Workflow Coordinator"
-  describing the pattern's purpose and key benefits.
+  Configurable coordinator supporting both LLM-driven (flexible, fast iteration)
+  and code-driven (deterministic, code review) workflows, enabling progressive
+  enhancement from prototype to production-ready systems.
 updated_at: '2026-01-13'
 ---
 

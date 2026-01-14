@@ -15,12 +15,10 @@ tags:
 slug: context-window-anxiety-management
 id: context-window-anxiety-management
 summary: >-
-  ## Problem
-
-  Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of
-  approaching context window limits and proactively summarize progress or make
-  decisive moves to close tasks, even when sufficient context remains. This
-  leads to:
+  Models like Claude Sonnet 4.5 exhibit "context anxiety"—becoming aware of
+  approaching context limits and proactively summarizing or closing tasks
+  prematurely—manageable through strategic context budgeting and aggressive
+  counter-prompting.
 updated_at: '2026-01-05'
 ---
 

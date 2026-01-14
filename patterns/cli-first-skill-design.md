@@ -18,8 +18,9 @@ tags:
 slug: cli-first-skill-design
 id: cli-first-skill-design
 summary: >-
-  TODO: Add a concise summary for "CLI-First Skill Design" describing the
-  pattern's purpose and key benefits.
+  Design all skills as CLI tools first for dual-use by humans and agents, enabling
+  manual debugging, programmatic invocation, composition with Unix tools, and
+  transparent shell-based execution without building separate interfaces.
 updated_at: '2026-01-05'
 ---
 

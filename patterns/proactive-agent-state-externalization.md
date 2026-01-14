@@ -15,11 +15,10 @@ tags:
 slug: proactive-agent-state-externalization
 id: proactive-agent-state-externalization
 summary: >-
-  ## Problem
-
-  Modern models like Claude Sonnet 4.5 proactively attempt to externalize their
-  state by writing summaries and notes (e.g., `CHANGELOG.md`, `SUMMARY.md`) to
-  the file system without explicit prompting. However:
+  Modern models like Claude Sonnet 4.5 proactively externalize state through
+  self-generated notes—enhanced through guided frameworks, hybrid memory
+  architecture, and progressive state building to capture decision rationale
+  and knowledge gaps.
 updated_at: '2026-01-05'
 ---
 

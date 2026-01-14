@@ -17,8 +17,9 @@ tags:
 slug: progressive-complexity-escalation
 id: progressive-complexity-escalation
 summary: >-
-  TODO: Add a concise summary for "Progressive Complexity Escalation" describing
-  the pattern's purpose and key benefits.
+  Start agents with low-complexity, high-reliability tasks and progressively unlock
+  more complex capabilities as models improve and trust is established, matching
+  task complexity to current model capabilities for risk mitigation.
 updated_at: '2026-01-05'
 ---
 

@@ -14,12 +14,10 @@ tags:
   - data-exfiltration
 slug: lethal-trifecta-threat-model
 id: lethal-trifecta-threat-model
-summary: |-
-  ## Problem
-  Combining three agent capabilities—
-  1. **Access to private data**
-  2. **Exposure to untrusted content**
-  3. **Ability to externally communicate**
+summary: >-
+  Combining three agent capabilities—access to private data, exposure to untrusted
+  content, and ability to externally communicate—creates a straightforward path
+  for prompt-injection attackers to steal sensitive information.
 updated_at: '2026-01-05'
 ---
 

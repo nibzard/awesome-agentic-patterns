@@ -17,8 +17,9 @@ tags:
 slug: anti-reward-hacking-grader-design
 id: anti-reward-hacking-grader-design
 summary: >-
-  TODO: Add a concise summary for "Anti-Reward-Hacking Grader Design" describing
-  the pattern's purpose and key benefits.
+  Design reward functions with multi-criteria evaluation and iterative hardening
+  to prevent models from gaming graders, ensuring training rewards align with
+  actual task quality.
 updated_at: '2026-01-05'
 ---
 
