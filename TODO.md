@@ -235,9 +235,9 @@
 - [x] 235 - Create `apps/web/src/content/guides` directory. [Created]
 - [x] 236 - Add guide entry `pattern-selection.mdx`. [Created comprehensive pattern selection guide]
 - [x] 237 - Add guide entry `help.mdx` from `HELP.md`. [Created condensed developer setup guide]
-- [ ] 238 - Add guide entry `learnings.mdx` from `LEARNINGS.md`. [Deferred - can be added later]
-- [ ] 239 - Add guide entry `pattern-labeling.mdx` from `PATTERN-LABELING.md`. [Deferred - can be added later]
-- [ ] 240 - Add guide entry `migration-to-git-labels.mdx` from `MIGRATION-TO-GIT-LABELS.md`. [Deferred - can be added later]
+- [BLOCKED] 238 - Add guide entry `learnings.mdx` from `LEARNINGS.md`. (Source file doesn't exist in repository)
+- [BLOCKED] 239 - Add guide entry `pattern-labeling.mdx` from `PATTERN-LABELING.md`. (Source file doesn't exist in repository)
+- [BLOCKED] 240 - Add guide entry `migration-to-git-labels.mdx` from `MIGRATION-TO-GIT-LABELS.md`. (Source file doesn't exist in repository)
 - [x] 241 - Create `apps/web/src/pages/guides/[slug].astro`. [Created with dynamic routing]
 - [x] 242 - Render guide content on guide detail pages. [Implemented with MDX rendering]
 - [x] 243 - Create `apps/web/src/pages/contribute.astro`. [Created with contribution workflow]
@@ -282,12 +282,12 @@
 - [x] 282 - Remove `wrangler` from root `package.json`. [Deleted - Cloudflare Workers deployment replaced by Vercel]
 - [x] 283 - Update `DEPLOYMENT.md` to document Vercel deployment. [Updated all npm references to bun to match current tech stack]
 - [x] 284 - Update `README.md` to reference the new site. [Added "Explore the Website" section documenting the Astro-based site at agentic-patterns.com with all key features; updated llms.txt section to reference live URL]
-- [ ] 285 - Update `.github/workflows/deploy.yml` to run Astro build checks only.
-- [ ] 286 - Update workflow artifact path to Astro `dist/`.
-- [ ] 287 - Remove Python setup and MkDocs build steps from `.github/workflows/deploy.yml`.
-- [ ] 288 - Remove the Cloudflare deploy step from `.github/workflows/deploy.yml`.
-- [ ] 289 - Add `vercel.json` with `apps/web` root, `bun run build`, and `dist` output.
-- [ ] 290 - Add `vercel.json` redirects/rewrites for legacy routes.
+- [x] 285 - Update `.github/workflows/deploy.yml` to run Astro build checks only. [Created `.github/workflows/ci.yml` with modern Astro + bun CI workflow, runs on push to main and spec-modern-redesign branches, replaces old MkDocs pipeline, commit 8a484f6]
+- [x] 286 - Update workflow artifact path to Astro `dist/`. [Already configured correctly in CI workflow: artifact path is `apps/web/dist`, artifact name is `dist`, verified Astro builds to this directory successfully]
+- [x] 287 - Remove Python setup and MkDocs build steps from `.github/workflows/deploy.yml`. [Already done - old deploy.yml was deleted in task 285]
+- [x] 288 - Remove the Cloudflare deploy step from `.github/workflows/deploy.yml`. [Already done - old deploy.yml was deleted]
+- [x] 289 - Add `vercel.json` with `apps/web` root, `bun run build`, and `dist` output. [Complete - committed in 51c1e58]
+- [x] 290 - Add `vercel.json` redirects/rewrites for legacy routes. [Already done per tasks 266-268 analysis - no redirects needed]
 - [x] 291 - Run `bun run build` in `apps/web`. [Build completed successfully: 125 pages generated, including all 112 pattern pages; fixed Pagefind import, added getStaticPaths to dynamic routes, corrected pattern loader path]
 - [x] 292 - Run `bun run preview` in `apps/web`. [Preview server started successfully on port 4321, home page verified working]
 - [x] 293 - Smoke test the home page in preview. [Home page renders correctly with title, hero, CTA buttons, and section headers]
@@ -308,10 +308,10 @@
 - [x] 308 - Validate `llms-full.txt` output content. [Valid: 11,313 lines, includes full pattern content for LLM ingestion]
 - [x] 309 - Deploy a preview build to Vercel. [Deployed to https://awesome-agentic-patterns.vercel.app - production build complete, 125 pages generated]
 - [BLOCKED] 310 - Collect feedback from stakeholders. (Requires human interaction - share production URL https://awesome-agentic-patterns.vercel.app with stakeholders and collect feedback on usability, design, performance, content accuracy, mobile responsiveness, search functionality, and any bugs)
-- [ ] 311 - Create follow-up tasks from feedback.
-- [ ] 312 - Switch production to the new deployment.
-- [ ] 313 - Announce the redesign in `README.md`.
-- [ ] 314 - Add a release note entry for the redesign.
+- [BLOCKED] 311 - Create follow-up tasks from feedback. (Requires task 310 - human feedback collection)
+- [BLOCKED] 312 - Switch production to the new deployment. (Requires human decision - DNS/domain configuration)
+- [x] 313 - Announce the redesign in `README.md`. [Added redesign announcement section to README with migration details, commit 9c99b9c]
+- [x] 314 - Add a release note entry for the redesign. [Added CHANGELOG.md documenting v1.0.0 Astro redesign release, commit 45f914c]
 
 ---
 
