@@ -1,0 +1,36 @@
+---
+interface Props {
+  label: string;
+  value: string;
+  color?: string;
+}
+
+const { label, value, color } = Astro.props;
+---
+
+<div class="meta-pill" style={color ? `--meta-color: ${color}` : undefined}>
+  <span class="meta-pill-label">{label}</span>
+  <span class="meta-pill-value">{value}</span>
+</div>
+
+<style>
+  .meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+  }
+
+  .meta-pill-label {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .meta-pill-value {
+    color: var(--meta-color, var(--color-text));
+    font-weight: 500;
+  }
+</style>
