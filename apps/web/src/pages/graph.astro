@@ -164,15 +164,13 @@ function getCategoryColor(category: string): string {
             <div class="filter-section">
               <h3 class="filter-title">Maturity</h3>
               <div class="filter-options">
-                {
-                  maturities.map(({ maturity, count }) => (
-                    <label class="filter-option">
-                      <input type="checkbox" value={maturity} data-filter="maturity" />
-                      <span>{maturity}</span>
-                      <span class="filter-count">{count}</span>
-                    </label>
-                  ))
-                }
+                {maturities.map(({ maturity, count }) => (
+                  <label class="filter-option">
+                    <input type="checkbox" value={maturity} data-filter="maturity" />
+                    <span>{maturity}</span>
+                    <span class="filter-count">{count}</span>
+                  </label>
+                ))}
               </div>
             </div>
           )
@@ -183,15 +181,13 @@ function getCategoryColor(category: string): string {
             <div class="filter-section">
               <h3 class="filter-title">Tags</h3>
               <div class="filter-options">
-                {
-                  tags.map(({ tag, count }) => (
-                    <label class="filter-option">
-                      <input type="checkbox" value={tag} data-filter="tag" />
-                      <span>{tag}</span>
-                      <span class="filter-count">{count}</span>
-                    </label>
-                  ))
-                }
+                {tags.map(({ tag, count }) => (
+                  <label class="filter-option">
+                    <input type="checkbox" value={tag} data-filter="tag" />
+                    <span>{tag}</span>
+                    <span class="filter-count">{count}</span>
+                  </label>
+                ))}
               </div>
             </div>
           )
@@ -202,15 +198,13 @@ function getCategoryColor(category: string): string {
             <div class="filter-section">
               <h3 class="filter-title">Domains</h3>
               <div class="filter-options">
-                {
-                  domains.map(({ domain, count }) => (
-                    <label class="filter-option">
-                      <input type="checkbox" value={domain} data-filter="domain" />
-                      <span>{domain}</span>
-                      <span class="filter-count">{count}</span>
-                    </label>
-                  ))
-                }
+                {domains.map(({ domain, count }) => (
+                  <label class="filter-option">
+                    <input type="checkbox" value={domain} data-filter="domain" />
+                    <span>{domain}</span>
+                    <span class="filter-count">{count}</span>
+                  </label>
+                ))}
               </div>
             </div>
           )
@@ -384,7 +378,10 @@ function getCategoryColor(category: string): string {
       if (selectedMaturities.length > 0 && !selectedMaturities.includes(maturity)) {
         matches = false;
       }
-      if (selectedDomains.length > 0 && !domains.some((domain) => selectedDomains.includes(domain))) {
+      if (
+        selectedDomains.length > 0 &&
+        !domains.some((domain) => selectedDomains.includes(domain))
+      ) {
         matches = false;
       }
 

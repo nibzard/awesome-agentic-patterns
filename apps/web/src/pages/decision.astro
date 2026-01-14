@@ -79,7 +79,10 @@ const initialQuestion = questions[0];
       rationales.push(
         'For autonomous agents, consider patterns that enable self-directed operation and gradual capability increase.'
       );
-      avoid.push('Unbounded tool access without guardrails.', 'Long-running loops without checkpoints.');
+      avoid.push(
+        'Unbounded tool access without guardrails.',
+        'Long-running loops without checkpoints.'
+      );
     } else if (agentType === 'assisted') {
       patterns.push(
         'Human-in-Loop Approval Framework',
@@ -239,9 +242,7 @@ const initialQuestion = questions[0];
       )
       .join('');
 
-    const avoidItems = recommendation.avoid
-      .map((item) => `<li>${item}</li>`)
-      .join('');
+    const avoidItems = recommendation.avoid.map((item) => `<li>${item}</li>`).join('');
     const avoidHtml =
       avoidItems.length > 0
         ? `<ul>${avoidItems}</ul>`
