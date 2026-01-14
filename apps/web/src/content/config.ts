@@ -82,7 +82,9 @@ const packs = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+    summary: z.string(),
+    description: z.string().optional(),
+    domain: z.string(),
     patterns: z.array(z.string()),
     order: z.number().optional(),
   }),

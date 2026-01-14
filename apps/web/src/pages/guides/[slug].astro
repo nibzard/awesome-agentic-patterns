@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Get the guide by slug
+const { slug } = Astro.params;
+const guides = await getCollection('guides');
+const guide = guides.find(g => g.slug === slug);
+
+// Handle 404
+if (!guide) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await guide.render();
+---
+
+<BaseLayout title={`${guide.data.title} - Guide`}>
+  <div class="guide-detail-page">
+    <header class="guide-detail-header">
+      <a href="/guides" class="breadcrumb">← All Guides</a>
+      <h1>{guide.data.title}</h1>
+      <p class="guide-detail-description">{guide.data.description}</p>
+    </header>
+
+    <div class="guide-detail-content">
+      <div class="guide-content-wrapper">
+        <Content />
+      </div>
+    </div>
+
+    <div class="guide-detail-footer">
+      <div class="guide-navigation">
+        <a href="/guides" class="button button--secondary">
+          ← Back to Guides
+        </a>
+        <a href="/patterns" class="button button--primary">
+          Browse Patterns
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .guide-detail-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .guide-detail-header {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: var(--spacing-md);
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb:hover {
+    color: var(--color-primary);
+  }
+
+  .guide-detail-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+  }
+
+  .guide-detail-description {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .guide-detail-content {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .guide-content-wrapper {
+    padding: var(--spacing-xl);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .guide-content-wrapper :global(h2) {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .guide-content-wrapper :global(h2:first-of-type) {
+    margin-top: 0;
+  }
+
+  .guide-content-wrapper :global(h3) {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .guide-content-wrapper :global(p) {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .guide-content-wrapper :global(ul),
+  .guide-content-wrapper :global(ol) {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+  }
+
+  .guide-content-wrapper :global(li) {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .guide-content-wrapper :global(code) {
+    background-color: var(--color-border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-family: var(--font-mono);
+  }
+
+  .guide-content-wrapper :global(pre) {
+    background-color: var(--color-border);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .guide-content-wrapper :global(pre code) {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .guide-content-wrapper :global(a) {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .guide-content-wrapper :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .guide-detail-footer {
+    padding: var(--spacing-xl);
+    background-color: var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .guide-navigation {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .button--primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .button--primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .button--secondary {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-divider);
+  }
+
+  @media (max-width: 640px) {
+    .guide-detail-header h1 {
+      font-size: 2rem;
+    }
+
+    .guide-navigation {
+      flex-direction: column;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+</style>

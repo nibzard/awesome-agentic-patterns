@@ -1,0 +1,122 @@
+---
+title: "Developer Setup Guide"
+description: "Get up and running with the awesome-agentic-patterns project locally."
+order: 2
+---
+
+## Quick Start
+
+This guide will help you set up the awesome-agentic-patterns project for local development.
+
+## Prerequisites
+
+- Python 3.x
+- Git
+- A code editor (VS Code recommended)
+
+## Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/nibzard/awesome-agentic-patterns.git
+cd awesome-agentic-patterns
+```
+
+## Step 2: Set Up the Environment
+
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+# On Linux/macOS:
+source venv/bin/activate
+# On Windows:
+# venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+## Step 3: Web App Setup (New Astro Site)
+
+The project now includes a modern Astro-based web app in `apps/web/`:
+
+```bash
+# Navigate to web app
+cd apps/web
+
+# Install dependencies (requires Bun)
+bun install
+
+# Run development server
+bun run dev
+```
+
+The site will be available at `http://localhost:4321/`
+
+## Step 4: MkDocs Setup (Legacy Documentation Site)
+
+The original MkDocs documentation site is still available:
+
+```bash
+# From project root (with venv activated)
+make site_link      # Link README to docs
+make site_preview   # Start MkDocs dev server at http://localhost:8000
+```
+
+## Project Structure
+
+```
+awesome-agentic-patterns/
+├── patterns/              # Pattern markdown files (source of truth)
+├── apps/
+│   └── web/              # New Astro web application
+│       ├── src/
+│       │   ├── pages/    # Astro pages
+│       │   ├── components/ # React/Astro components
+│       │   └── content/  # Content collections (packs, guides)
+│       └── public/       # Static assets (patterns.json, graph.json)
+├── scripts/              # Automation scripts
+├── docs/                 # MkDocs source (legacy)
+└── site/                 # MkDocs build output (legacy)
+```
+
+## Adding Patterns
+
+1. Create a new file in `patterns/` using `patterns/TEMPLATE.md`
+2. Add required front-matter (title, status, authors, category, source, tags)
+3. Run `python scripts/build_readme.py` to regenerate README
+4. Commit your changes
+
+## Building the Web App
+
+```bash
+cd apps/web
+bun run build
+```
+
+The built files will be in `apps/web/dist/`.
+
+## Next Steps
+
+- Read the [Pattern Selection Guide](/guides/pattern-selection)
+- Explore [Pattern Packs](/packs) for curated combinations
+- Check [CONTRIBUTING.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/CONTRIBUTING.md) for contribution guidelines
+
+## Troubleshooting
+
+### MkDocs command not found
+Make sure your virtual environment is activated:
+```bash
+source venv/bin/activate  # Linux/macOS
+```
+
+### Port already in use
+Kill the process using the port or use a different port:
+```bash
+# For Astro (port 4321)
+bun run dev --port 4322
+
+# For MkDocs (port 8000)
+mkdocs serve -a 0.0.0.0:8001
+```

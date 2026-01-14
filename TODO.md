@@ -224,25 +224,25 @@
 - [x] 224 - Add domain filter UI to graph page. [Framework added - domain field can be added to nodes]
 - [x] 225 - Add detail panel for selected node. [Implemented with slide-in panel]
 - [x] 226 - Add link to pattern page from graph detail panel. [Implemented]
-- [ ] 227 - Create `apps/web/src/pages/packs/index.astro`.
-- [ ] 228 - Create `apps/web/src/content/packs` directory.
-- [ ] 229 - Add pack entry `coding-agent-mvp.mdx`.
-- [ ] 230 - Add pack entry `safety-first-stack.mdx`.
-- [ ] 231 - Create `apps/web/src/pages/packs/[slug].astro`.
-- [ ] 232 - Render pack title and summary on pack detail pages.
-- [ ] 233 - Render pack pattern list on pack detail pages.
-- [ ] 234 - Create `apps/web/src/pages/guides/index.astro`.
-- [ ] 235 - Create `apps/web/src/content/guides` directory.
-- [ ] 236 - Add guide entry `pattern-selection.mdx`.
-- [ ] 237 - Add guide entry `help.mdx` from `HELP.md`.
-- [ ] 238 - Add guide entry `learnings.mdx` from `LEARNINGS.md`.
-- [ ] 239 - Add guide entry `pattern-labeling.mdx` from `PATTERN-LABELING.md`.
-- [ ] 240 - Add guide entry `migration-to-git-labels.mdx` from `MIGRATION-TO-GIT-LABELS.md`.
-- [ ] 241 - Create `apps/web/src/pages/guides/[slug].astro`.
-- [ ] 242 - Render guide content on guide detail pages.
-- [ ] 243 - Create `apps/web/src/pages/contribute.astro`.
-- [ ] 244 - Add `CONTRIBUTING.md` link to the Contribute page.
-- [ ] 245 - Add `patterns/TEMPLATE.md` link to the Contribute page.
+- [x] 227 - Create `apps/web/src/pages/packs/index.astro`. [Created with grid layout and empty state]
+- [x] 228 - Create `apps/web/src/content/packs` directory. [Created]
+- [x] 229 - Add pack entry `coding-agent-mvp.mdx`. [Created with 4 patterns for software development]
+- [x] 230 - Add pack entry `safety-first-stack.mdx`. [Created with 5 security patterns]
+- [x] 231 - Create `apps/web/src/pages/packs/[slug].astro`. [Created with dynamic routing]
+- [x] 232 - Render pack title and summary on pack detail pages. [Implemented]
+- [x] 233 - Render pack pattern list on pack detail pages. [Implemented with links to pattern pages]
+- [x] 234 - Create `apps/web/src/pages/guides/index.astro`. [Created with card layout]
+- [x] 235 - Create `apps/web/src/content/guides` directory. [Created]
+- [x] 236 - Add guide entry `pattern-selection.mdx`. [Created comprehensive pattern selection guide]
+- [x] 237 - Add guide entry `help.mdx` from `HELP.md`. [Created condensed developer setup guide]
+- [ ] 238 - Add guide entry `learnings.mdx` from `LEARNINGS.md`. [Deferred - can be added later]
+- [ ] 239 - Add guide entry `pattern-labeling.mdx` from `PATTERN-LABELING.md`. [Deferred - can be added later]
+- [ ] 240 - Add guide entry `migration-to-git-labels.mdx` from `MIGRATION-TO-GIT-LABELS.md`. [Deferred - can be added later]
+- [x] 241 - Create `apps/web/src/pages/guides/[slug].astro`. [Created with dynamic routing]
+- [x] 242 - Render guide content on guide detail pages. [Implemented with MDX rendering]
+- [x] 243 - Create `apps/web/src/pages/contribute.astro`. [Created with contribution workflow]
+- [x] 244 - Add `CONTRIBUTING.md` link to the Contribute page. [Added as quick link]
+- [x] 245 - Add `patterns/TEMPLATE.md` link to the Contribute page. [Added as quick link]
 - [ ] 246 - Add Pagefind build integration.
 - [ ] 247 - Add Pagefind index output to `apps/web/public`.
 - [ ] 248 - Add search input to the header.

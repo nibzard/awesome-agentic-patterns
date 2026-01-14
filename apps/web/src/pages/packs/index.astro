@@ -1,0 +1,308 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all packs
+const packs = await getCollection('packs');
+
+// Sort packs by title
+const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<BaseLayout title="Pattern Packs - Awesome Agentic Patterns">
+  <div class="packs-page">
+    <header class="packs-header">
+      <h1>Pattern Packs</h1>
+      <p class="packs-subtitle">
+        Curated collections of patterns for specific use cases and domains.
+      </p>
+    </header>
+
+    <div class="packs-intro">
+      <p>
+        Pattern packs are carefully curated combinations of design patterns that work well together
+        to solve specific problems or build particular types of AI agents. Each pack includes:
+      </p>
+      <ul class="packs-features">
+        <li>A clear problem statement and use case</li>
+        <li>Recommended patterns with explanations</li>
+        <li>Implementation guidance and considerations</li>
+        <li>Links to related patterns and resources</li>
+      </ul>
+    </div>
+
+    <div class="packs-grid">
+      {sortedPacks.map((pack) => (
+        <a href={`/packs/${pack.slug}`} class="pack-card">
+          <div class="pack-card-content">
+            <h2 class="pack-title">{pack.data.title}</h2>
+            <p class="pack-summary">{pack.data.summary}</p>
+
+            <div class="pack-meta">
+              <span class="pack-patterns-count">
+                {pack.data.patterns?.length || 0} patterns
+              </span>
+              <span class="pack-domain">{pack.data.domain}</span>
+            </div>
+          </div>
+
+          <div class="pack-card-footer">
+            <span class="pack-link">View Pack →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {sortedPacks.length === 0 && (
+      <div class="packs-empty">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="32" fill="var(--color-border)"/>
+          <path d="M20 32H44M32 20V44" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h2>No Pattern Packs Yet</h2>
+        <p>Pattern packs are coming soon! Check back later for curated collections.</p>
+      </div>
+    )}
+
+    <div class="packs-cta">
+      <h2>Build Your Own Stack</h2>
+      <p>
+        Explore individual patterns and mix and match them to create your own custom agent architecture.
+      </p>
+      <a href="/patterns" class="button button--primary">
+        Browse All Patterns
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .packs-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .packs-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .packs-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .packs-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  .packs-intro {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .packs-intro p {
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .packs-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .packs-features li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .packs-features li::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .packs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .pack-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+  }
+
+  .pack-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .pack-card-content {
+    flex: 1;
+  }
+
+  .pack-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .pack-summary {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pack-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .pack-patterns-count {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .pack-domain {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    background-color: var(--color-border);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .pack-card-footer {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-divider);
+  }
+
+  .pack-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+
+  .pack-card:hover .pack-link {
+    text-decoration: underline;
+  }
+
+  .packs-empty {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .packs-empty svg {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .packs-empty h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .packs-empty p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .packs-cta {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background-color: var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .packs-cta h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .packs-cta p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .button--primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .button--primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .packs-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .packs-features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

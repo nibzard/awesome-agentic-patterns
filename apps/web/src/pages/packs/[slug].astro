@@ -1,0 +1,307 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Get the pack by slug
+const { slug } = Astro.params;
+const packs = await getCollection('packs');
+const pack = packs.find(p => p.slug === slug);
+
+// Handle 404
+if (!pack) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await pack.render();
+
+// Get related patterns
+const patterns = pack.data.patterns || [];
+---
+
+<BaseLayout title={`${pack.data.title} - Pattern Pack`}>
+  <div class="pack-detail-page">
+    <header class="pack-detail-header">
+      <a href="/packs" class="breadcrumb">← All Pattern Packs</a>
+      <h1>{pack.data.title}</h1>
+      <p class="pack-detail-summary">{pack.data.summary}</p>
+
+      <div class="pack-detail-meta">
+        <span class="pack-detail-domain">{pack.data.domain}</span>
+        <span class="pack-detail-patterns-count">
+          {patterns.length} pattern{patterns.length !== 1 ? 's' : ''}
+        </span>
+      </div>
+    </header>
+
+    <div class="pack-detail-layout">
+      <div class="pack-detail-content">
+        <div class="pack-detail-description">
+          <Content />
+        </div>
+
+        {patterns.length > 0 && (
+          <div class="pack-patterns-section">
+            <h2>Patterns in This Pack</h2>
+            <div class="pack-patterns-list">
+              {patterns.map((patternSlug: string) => (
+                <a href={`/patterns/${patternSlug}`} class="pack-pattern-item">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="currentColor"/>
+                  </svg>
+                  <span>{patternSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                  <span class="pack-pattern-arrow">→</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <aside class="pack-detail-sidebar">
+        <div class="pack-detail-info">
+          <h3>About This Pack</h3>
+          <p>
+            This pack combines {patterns.length} complementary patterns to address
+            the {pack.data.domain?.toLowerCase() || 'specific'} domain.
+          </p>
+        </div>
+
+        <div class="pack-detail-actions">
+          <a href="/decision" class="button button--secondary">
+            Find More Patterns
+          </a>
+          <a href="/compare" class="button button--secondary">
+            Compare Patterns
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .pack-detail-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .pack-detail-header {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: var(--spacing-md);
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb:hover {
+    color: var(--color-primary);
+  }
+
+  .pack-detail-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pack-detail-summary {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .pack-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .pack-detail-domain {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  .pack-detail-patterns-count {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: var(--color-border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+  }
+
+  .pack-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-xl);
+  }
+
+  .pack-detail-content {
+    min-width: 0;
+  }
+
+  .pack-detail-description {
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .pack-detail-description :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pack-detail-description :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .pack-detail-description :global(p) {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pack-detail-description :global(ul) {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+  }
+
+  .pack-detail-description :global(li) {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .pack-patterns-section {
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .pack-patterns-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pack-patterns-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .pack-pattern-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+  }
+
+  .pack-pattern-item:hover {
+    background-color: var(--color-primary-bg);
+    transform: translateX(4px);
+  }
+
+  .pack-pattern-item svg {
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .pack-pattern-item span {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .pack-pattern-arrow {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .pack-detail-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .pack-detail-info {
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .pack-detail-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .pack-detail-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .pack-detail-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .button--secondary {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-divider);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .pack-detail-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .pack-detail-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

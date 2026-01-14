@@ -1,0 +1,482 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Get the repo URL for contribution links
+const repoUrl = 'https://github.com/nibzard/awesome-agentic-patterns';
+---
+
+<BaseLayout title="Contribute - Awesome Agentic Patterns">
+  <div class="contribute-page">
+    <header class="contribute-header">
+      <h1>Contribute</h1>
+      <p class="contribute-subtitle">
+        Help us grow the catalogue of AI agent design patterns.
+      </p>
+    </header>
+
+    <div class="contribute-intro">
+      <p>
+        We welcome contributions from everyone! Whether you're proposing a new pattern,
+        improving documentation, or fixing bugs, your help makes this resource better
+        for the entire community.
+      </p>
+    </div>
+
+    <div class="contribute-sections">
+      <!-- Ways to Contribute -->
+      <section class="contribute-section">
+        <h2>Ways to Contribute</h2>
+
+        <div class="contribute-cards">
+          <div class="contribute-card">
+            <div class="contribute-card-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Propose a New Pattern</h3>
+            <p>
+              Share a novel AI agent design pattern you've discovered or developed.
+              Document the problem, solution, and provide examples.
+            </p>
+            <a href={`${repoUrl}/blob/main/patterns/TEMPLATE.md`} class="contribute-card-link">
+              Use Pattern Template →
+            </a>
+          </div>
+
+          <div class="contribute-card">
+            <div class="contribute-card-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Improve Documentation</h3>
+            <p>
+              Enhance existing pattern descriptions, fix typos, clarify explanations,
+              or add better examples and diagrams.
+            </p>
+            <a href={`${repoUrl}/blob/main/CONTRIBUTING.md`} class="contribute-card-link">
+              Contribution Guidelines →
+            </a>
+          </div>
+
+          <div class="contribute-card">
+            <div class="contribute-card-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 20L14 4L18 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 14H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 20L17 4L13 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 14H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Build Tools & Features</h3>
+            <p>
+              Contribute code improvements to the website, add search functionality,
+              build visualizations, or create developer tools.
+            </p>
+            <a href={`${repoUrl}/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement`} class="contribute-card-link">
+              Open Issues →
+            </a>
+          </div>
+
+          <div class="contribute-card">
+            <div class="contribute-card-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Share Feedback</h3>
+            <p>
+              Report bugs, suggest improvements, or share your experience using
+              these patterns in real projects.
+            </p>
+            <a href={`${repoUrl}/issues`} class="contribute-card-link">
+              Open an Issue →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contribution Process -->
+      <section class="contribute-section">
+        <h2>Contribution Process</h2>
+
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Fork & Clone</h3>
+              <p>Fork the repository and clone it to your local machine.</p>
+              <code>git clone https://github.com/YOUR_USERNAME/awesome-agentic-patterns.git</code>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Create a Branch</h3>
+              <p>Create a feature branch for your work.</p>
+              <code>git checkout -b my-contribution</code>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Make Changes</h3>
+              <p>Add your pattern or make your improvements following our guidelines.</p>
+              <code>vim patterns/my-new-pattern.md</code>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h3>Test Locally</h3>
+              <p>Preview your changes with the local development server.</p>
+              <code>cd apps/web && bun run dev</code>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h3>Submit PR</h3>
+              <p>Push your branch and open a pull request.</p>
+              <code>git push origin my-contribution</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guidelines -->
+      <section class="contribute-section">
+        <h2>Pattern Guidelines</h2>
+
+        <div class="guidelines-list">
+          <div class="guideline-item">
+            <h3>✓ Be Specific</h3>
+            <p>Clearly define the problem the pattern solves and the context where it applies.</p>
+          </div>
+
+          <div class="guideline-item">
+            <h3>✓ Provide Examples</h3>
+            <p>Include concrete examples, code snippets, or diagrams to illustrate the pattern.</p>
+          </div>
+
+          <div class="guideline-item">
+            <h3>✓ Cite Sources</h3>
+            <p>Reference the original source or inspiration for the pattern when applicable.</p>
+          </div>
+
+          <div class="guideline-item">
+            <h3>✓ Use Standard Format</h3>
+            <p>Follow the pattern template structure for consistency.</p>
+          </div>
+
+          <div class="guideline-item">
+            <h3>✓ Check for Duplicates</h3>
+            <p>Search existing patterns before proposing something new to avoid duplicates.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Links -->
+      <section class="contribute-section">
+        <h2>Quick Links</h2>
+
+        <div class="quick-links">
+          <a href={`${repoUrl}/blob/main/patterns/TEMPLATE.md`} class="quick-link">
+            <span class="quick-link-icon">📄</span>
+            <div class="quick-link-content">
+              <strong>Pattern Template</strong>
+              <span>Use this template for new patterns</span>
+            </div>
+          </a>
+
+          <a href={`${repoUrl}/blob/main/CONTRIBUTING.md`} class="quick-link">
+            <span class="quick-link-icon">📋</span>
+            <div class="quick-link-content">
+              <strong>Contributing Guide</strong>
+              <span>Detailed contribution guidelines</span>
+            </div>
+          </a>
+
+          <a href={`${repoUrl}/issues`} class="quick-link">
+            <span class="quick-link-icon">🐛</span>
+            <div class="quick-link-content">
+              <strong>Issue Tracker</strong>
+              <span>Report bugs or request features</span>
+            </div>
+          </a>
+
+          <a href={`${repoUrl}/pulls`} class="quick-link">
+            <span class="quick-link-icon">💬</span>
+            <div class="quick-link-content">
+              <strong>Pull Requests</strong>
+              <span>Review and contribute to PRs</span>
+            </div>
+          </a>
+
+          <a href="/guides/help" class="quick-link">
+            <span class="quick-link-icon">🚀</span>
+            <div class="quick-link-content">
+              <strong>Developer Setup</strong>
+              <span>Get started with local development</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .contribute-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .contribute-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .contribute-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contribute-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  .contribute-intro {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .contribute-intro p {
+    color: var(--color-text);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .contribute-sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+  }
+
+  .contribute-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .contribute-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .contribute-card {
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s ease;
+  }
+
+  .contribute-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .contribute-card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-bg);
+    color: var(--color-primary);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contribute-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .contribute-card p {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contribute-card-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .contribute-card:hover .contribute-card-link {
+    text-decoration: underline;
+  }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .process-step {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-content h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .step-content p {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .step-content code {
+    display: block;
+    padding: var(--spacing-sm);
+    background-color: var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    overflow-x: auto;
+  }
+
+  .guidelines-list {
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  .guideline-item {
+    padding: var(--spacing-md);
+    background-color: var(--color-bg);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+  }
+
+  .guideline-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .guideline-item p {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .quick-links {
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .quick-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .quick-link:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-border);
+  }
+
+  .quick-link-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .quick-link-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .quick-link-content strong {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .quick-link-content span {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .contribute-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .contribute-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+title: "Safety-First Stack"
+summary: "Security-critical patterns for building AI agents that operate safely in production environments."
+domain: "Security & Safety"
+patterns:
+  - anti-reward-hacking-grader-design
+  - egress-lockdown-no-exfiltration-channel
+  - lethal-trifecta-threat-model
+  - deterministic-security-scanning-build-loop
+  - human-in-loop-approval-framework
+order: 2
+---
+
+## Overview
+
+This pack combines the most critical security patterns for building AI agents that can be safely deployed in production. It addresses the three major threat vectors: reward hacking, data exfiltration, and unintended actions.
+
+## When to Use This Pack
+
+- **Production deployments**: When your agent will operate in sensitive environments
+- **Handling sensitive data**: When working with PII, financial data, or confidential information
+- **High-stakes decisions**: When agent errors could cause significant damage
+- **Regulatory compliance**: When you need to meet security or compliance requirements
+
+## Patterns Included
+
+### 1. Anti-Reward Hacking Grader Design
+Prevents agents from gaming their reward systems by implementing robust evaluation mechanisms.
+
+**Why it's essential**: Reward hacking is one of the most common failure modes in RL-based agents.
+
+### 2. Egress Lockdown: No Exfiltration Channel
+Eliminates unauthorized data exfiltration by controlling all outbound communications.
+
+**Why it's essential**: Critical for preventing data leaks in environments with sensitive information.
+
+### 3. Lethal Trifecta Threat Model
+Addresses the three critical failure modes: reward hacking, goal misgeneralization, and scalable oversight.
+
+**Why it's essential**: Provides a comprehensive framework for thinking about AI safety.
+
+### 4. Deterministic Security Scanning Build Loop
+Integrates security checks into the agent's development and deployment pipeline.
+
+**Why it's essential**: Catches security issues before they reach production.
+
+### 5. Human-in-Loop Approval Framework
+Requires human approval for potentially dangerous operations.
+
+**Why it's essential**: The final safety net for preventing catastrophic errors.
+
+## Implementation Considerations
+
+### Defense in Depth
+Layer multiple security patterns so that if one fails, others provide protection.
+
+### Monitoring and Alerting
+Implement comprehensive logging and alerting for all security-relevant events.
+
+### Regular Audits
+Conduct regular security audits of your agent's behavior and the systems it interacts with.
+
+### Incident Response
+Have clear procedures for responding to security incidents, including agent shutdown mechanisms.
+
+## Threat Modeling
+
+Before deployment, consider:
+- **What could go wrong?** Brainstorm failure modes and attack vectors
+- **What's the blast radius?** Limit potential damage from agent errors
+- **How would we know?** Implement detection and monitoring
+- **How do we recover?** Plan rollback and recovery procedures
+
+## Next Steps
+
+After implementing these patterns:
+- Consider **Workflow Evals with Mocked Tools** for comprehensive testing
+- Explore **PII Tokenization** for data protection
+- Add **Proactive Agent State Externalization** for audit trails

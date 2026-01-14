@@ -1,0 +1,111 @@
+---
+title: "Choosing the Right Patterns"
+description: "Learn how to select and combine AI agent design patterns for your specific use case."
+order: 1
+---
+
+## Introduction
+
+Choosing the right AI agent design patterns is crucial for building effective, reliable, and maintainable systems. This guide will help you navigate the pattern catalogue and make informed decisions about which patterns to use.
+
+## Start with Your Use Case
+
+Before diving into patterns, clearly define your use case:
+
+1. **What type of agent are you building?**
+   - Fully autonomous agent
+   - Human-assisted agent
+   - Workflow automation
+   - Coding assistant
+   - Research assistant
+
+2. **What's the complexity level?**
+   - Simple, well-defined tasks
+   - Moderately complex with some decision points
+   - Highly complex requiring planning and reasoning
+
+3. **What are your constraints?**
+   - Safety requirements
+   - Performance needs
+   - Resource limitations
+   - Integration requirements
+
+## Use the Decision Tree
+
+Our interactive [Decision Tree](/decision) can help you find relevant patterns based on your answers to key questions. It's a great starting point for discovering patterns that match your use case.
+
+## Core Patterns to Consider
+
+### For Most Agents
+
+These patterns are foundational and apply to almost any AI agent:
+
+- **Reflection**: Enables self-correction and improvement
+- **LLM Observability**: Provides visibility into agent behavior
+- **Specification-Driven Development**: Ensures clear goals and requirements
+
+### For Coding Agents
+
+If you're building a coding assistant or developer tool:
+
+- **Code-Then-Execute Pattern**: Separates code generation from execution
+- **Human-in-Loop Approval**: Adds safety for code modifications
+- **Asynchronous Coding Agent Pipeline**: Enables parallel work
+
+### For Autonomous Agents
+
+For agents that operate independently:
+
+- **Continuous Autonomous Task Loop**: Manages ongoing operation
+- **Episodic Memory**: Enables learning from past experiences
+- **Progressive Autonomy**: Gradually increases agent independence
+
+### For Safety-Critical Applications
+
+When mistakes could cause serious damage:
+
+- **Anti-Reward Hacking Grader Design**: Prevents gaming of reward systems
+- **Egress Lockdown**: Controls data exfiltration
+- **Deterministic Security Scanning**: Catches security issues early
+
+## Combining Patterns
+
+Patterns work best in combination. Consider these synergies:
+
+### **Coding Agent Stack**
+- Specification-Driven Development
+- Code-Then-Execute
+- Human-in-Loop Approval
+- LLM Observability
+
+### **Autonomous Research Agent**
+- Continuous Autonomous Task Loop
+- Reflection
+- Episodic Memory
+- Tool Use Incentivization
+
+### **Safety-First System**
+- Anti-Reward Hacking
+- Egress Lockdown
+- Human-in-Loop Approval
+- Deterministic Security Scanning
+
+## Iterative Approach
+
+Don't try to implement everything at once:
+
+1. **Start Simple**: Begin with 2-3 core patterns
+2. **Test Thoroughly**: Validate that patterns work together
+3. **Add Gradually**: Introduce additional patterns as needed
+4. **Measure Impact**: Evaluate each pattern's contribution
+
+## Learn from Others
+
+Explore our [Pattern Packs](/packs) to see curated combinations of patterns for specific use cases. These packs provide battle-tested starting points.
+
+## Next Steps
+
+- Use the [Decision Tree](/decision) to find patterns
+- Browse [Pattern Packs](/packs) for curated combinations
+- Explore the [Pattern Graph](/graph) to see relationships
+- Read individual pattern documentation for details
