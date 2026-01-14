@@ -1,0 +1,60 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width = 800,
+  height = 600,
+  loading = 'lazy',
+  class: className = '',
+} = Astro.props;
+
+// Check if file is SVG
+const isSvg = src.endsWith('.svg');
+
+// Generate responsive image sizes
+const sizes = [320, 640, 960, 1280];
+const srcset = isSvg
+  ? undefined
+  : sizes
+      .map((size) => {
+        const aspectRatio = width / height;
+        const scaledWidth = size;
+        const scaledHeight = Math.round(size / aspectRatio);
+        return `${src}?w=${scaledWidth}&h=${scaledHeight}&format=webp ${scaledWidth}w`;
+      })
+      .join(', ');
+---
+
+{
+  isSvg ? (
+    <img src={src} alt={alt} width={width} height={height} loading={loading} class={className} />
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={loading}
+      srcset={srcset}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      class={className}
+    />
+  )
+}
+
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0f172a"/>
+
+  <!-- Decorative elements -->
+  <rect x="0" y="0" width="1200" height="4" fill="#0066cc"/>
+  <rect x="0" y="626" width="1200" height="4" fill="#0066cc"/>
+
+  <!-- Logo icon -->
+  <g transform="translate(100, 150)">
+    <rect width="80" height="80" rx="12" fill="#0066cc"/>
+    <path d="M25 40L35 30L45 40L55 30" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M25 55L35 45L45 55L55 45" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Title -->
+  <text x="100" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#ffffff">
+    Awesome Agentic Patterns
+  </text>
+
+  <!-- Subtitle -->
+  <text x="100" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">
+    A curated catalogue of AI agent design patterns
+  </text>
+
+  <!-- Stats -->
+  <g transform="translate(100, 420)">
+    <rect width="200" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="100" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#ffffff" text-anchor="middle">
+      112+ Patterns
+    </text>
+  </g>
+
+  <g transform="translate(320, 420)">
+    <rect width="200" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="100" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#ffffff" text-anchor="middle">
+      Open Source
+    </text>
+  </g>
+
+  <g transform="translate(540, 420)">
+    <rect width="200" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <text x="100" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#ffffff" text-anchor="middle">
+      Community Driven
+    </text>
+  </g>
+
+  <!-- URL -->
+  <text x="1100" y="580" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="400" fill="#64748b" text-anchor="end">
+    agentic-patterns.com
+  </text>
+</svg>
