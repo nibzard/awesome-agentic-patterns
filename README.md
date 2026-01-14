@@ -9,6 +9,21 @@ A curated catalogue of **agentic AI patterns** — real‑world tricks, workflow
 
 ---
 
+## 🎉 New! Astro-Powered Redesign (2025)
+
+The site has been completely rebuilt with modern tooling:
+- **Astro** static site generator for lightning-fast page loads
+- **Full-text search** powered by Pagefind for instant pattern discovery
+- **Interactive visualizations**: Graph explorer, pattern comparison, decision trees
+- **Dark mode support** with system preference detection
+- **Mobile-responsive** design for on-the-go pattern browsing
+- **bun** package manager for lightning-fast builds
+- **Vercel** deployment for global edge caching
+
+The pattern URLs remain identical—no broken bookmarks!
+
+---
+
 ## What counts as a pattern?
 
 * **Repeatable** – more than one team is using it.
