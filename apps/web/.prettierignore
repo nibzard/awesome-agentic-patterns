@@ -21,6 +21,3 @@ pnpm-lock.yaml
 # Generated files
 public/patterns/*.json
 public/pagefind/
-
-# WIP feature (causes astro compiler panic)
-src/components/NewsletterCTA.astro

@@ -38,5 +38,12 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['node_modules/', 'dist/', '.astro/', '*.config.js', '*.config.mjs', 'public/pagefind/', 'src/components/NewsletterCTA.astro'],
+  ignorePatterns: [
+    'node_modules/',
+    'dist/',
+    '.astro/',
+    '*.config.js',
+    '*.config.mjs',
+    'public/pagefind/',
+  ],
 };

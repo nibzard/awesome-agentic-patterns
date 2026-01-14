@@ -1,0 +1,286 @@
+---
+// ABOUTME: NewsletterCTA component - A reusable newsletter subscription form component
+
+interface Props {
+  variant?: 'default' | 'compact' | 'banner';
+  title?: string;
+  description?: string;
+  buttonText?: string;
+}
+
+const {
+  variant = 'default',
+  title = 'Stay Updated',
+  description = 'Get notified when we add new patterns or publish guides.',
+  buttonText = 'Subscribe',
+} = Astro.props;
+---
+
+<div class={`newsletter-cta newsletter-cta--${variant}`}>
+  <div class="newsletter-cta-content">
+    <h3 class="newsletter-cta-title">{title}</h3>
+    {variant !== 'compact' && <p class="newsletter-cta-description">{description}</p>}
+  </div>
+  <form
+    class="newsletter-cta-form"
+    id="newsletter-form"
+    data-nonce={Math.random().toString(36).substring(7)}
+  >
+    <div class="newsletter-cta-input-group">
+      <input
+        type="email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        class="newsletter-cta-input"
+        aria-label="Email address"
+      />
+      <button type="submit" class="newsletter-cta-button">
+        <span class="newsletter-cta-button-text">{buttonText}</span>
+        <svg
+          class="newsletter-cta-spinner"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="8"
+            cy="8"
+            r="6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-dasharray="16 10"
+            stroke-dashoffset="0"
+            class="spinner-circle"></circle>
+        </svg>
+      </button>
+    </div>
+    <div class="newsletter-cta-message" role="status" aria-live="polite"></div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('newsletter-form') as HTMLFormElement;
+  const input = form?.querySelector('input[type="email"]') as HTMLInputElement;
+  const button = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const buttonText = button?.querySelector('.newsletter-cta-button-text') as HTMLElement;
+  const spinner = button?.querySelector('.newsletter-cta-spinner') as SVGElement;
+  const messageContainer = form?.querySelector('.newsletter-cta-message') as HTMLElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = input?.value.trim();
+      if (!email || !button || !messageContainer) return;
+
+      // Reset states
+      messageContainer.textContent = '';
+      messageContainer.className = 'newsletter-cta-message';
+      button.disabled = true;
+      buttonText?.textContent === 'Subscribe' && (buttonText.textContent = 'Subscribing...');
+      spinner?.classList.add('spinner-spinning');
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          messageContainer.textContent = data.message || 'Thanks for subscribing!';
+          messageContainer.classList.add('newsletter-cta-message--success');
+          input.value = '';
+          buttonText.textContent = 'Subscribed';
+        } else {
+          messageContainer.textContent = data.error || 'Something went wrong. Please try again.';
+          messageContainer.classList.add('newsletter-cta-message--error');
+          button.disabled = false;
+          buttonText.textContent = 'Subscribe';
+        }
+      } catch (error) {
+        messageContainer.textContent = 'Network error. Please check your connection and try again.';
+        messageContainer.classList.add('newsletter-cta-message--error');
+        button.disabled = false;
+        buttonText.textContent = 'Subscribe';
+      } finally {
+        spinner?.classList.remove('spinner-spinning');
+      }
+    });
+  }
+</script>
+
+<style>
+  .newsletter-cta {
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg) 100%);
+    border: 1px solid var(--color-primary-light);
+  }
+
+  .newsletter-cta-content {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .newsletter-cta-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .newsletter-cta-description {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .newsletter-cta-form {
+    width: 100%;
+  }
+
+  .newsletter-cta-input-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .newsletter-cta-input {
+    flex: 1;
+    min-width: 200px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .newsletter-cta-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+  }
+
+  .newsletter-cta-input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .newsletter-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .newsletter-cta-button:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+
+  .newsletter-cta-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .newsletter-cta-spinner {
+    display: none;
+  }
+
+  .spinner-spinning {
+    display: block;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .newsletter-cta-message {
+    margin-top: var(--spacing-sm);
+    font-size: 0.875rem;
+    min-height: 1.25rem;
+  }
+
+  .newsletter-cta-message--success {
+    color: var(--color-success);
+  }
+
+  .newsletter-cta-message--error {
+    color: var(--color-error);
+  }
+
+  /* Compact variant */
+  .newsletter-cta--compact {
+    padding: var(--spacing-md);
+  }
+
+  .newsletter-cta--compact .newsletter-cta-content {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .newsletter-cta--compact .newsletter-cta-title {
+    font-size: 1rem;
+  }
+
+  .newsletter-cta--compact .newsletter-cta-description {
+    font-size: 0.875rem;
+  }
+
+  /* Banner variant */
+  .newsletter-cta--banner {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #0052a3 100%);
+    border: none;
+  }
+
+  .newsletter-cta--banner .newsletter-cta-title {
+    color: white;
+  }
+
+  .newsletter-cta--banner .newsletter-cta-description {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .newsletter-cta--banner .newsletter-cta-input {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .newsletter-cta-input-group {
+      flex-direction: column;
+    }
+
+    .newsletter-cta-input,
+    .newsletter-cta-button {
+      width: 100%;
+    }
+  }
+
+  /* Dark mode adjustments */
+  :root[data-theme='dark'] .newsletter-cta--banner {
+    background: linear-gradient(135deg, #1a5fb4 0%, #0047b3 100%);
+  }
+</style>
