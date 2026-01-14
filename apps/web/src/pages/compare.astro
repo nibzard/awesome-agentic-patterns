@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CompareTable from '../components/CompareTable.astro';
+import PatternCard from '../components/PatternCard.astro';
+
+// Get selected pattern IDs from URL
+const searchParams = Astro.url.searchParams;
+const selectedIds = searchParams.get('ids')?.split(',').filter(Boolean) || [];
+
+// Load patterns data
+const patterns = await fetch('https://agentic-patterns.com/patterns.json')
+  .then(res => res.json())
+  .catch(() => []);
+
+// Get selected patterns
+const selectedPatterns = patterns.filter((p: any) => selectedIds.includes(p.id));
+---
+
+<BaseLayout title="Compare Patterns - Awesome Agentic Patterns">
+  <div class="compare-page">
+    <header class="compare-header">
+      <h1>Compare Patterns</h1>
+      <p class="compare-subtitle">
+        Select and compare AI agent design patterns side by side.
+      </p>
+    </header>
+
+    <div class="compare-layout">
+      <!-- Pattern Selection -->
+      <aside class="compare-selection">
+        <h2 class="compare-selection-title">Select Patterns</h2>
+        <div class="compare-selection-list">
+          {patterns.map((pattern: any) => (
+            <label class="compare-selection-item">
+              <input
+                type="checkbox"
+                name="pattern"
+                value={pattern.id}
+                checked={selectedIds.includes(pattern.id)}
+                onchange={`const ids = Array.from(document.querySelectorAll('input[name="pattern"]:checked')).map(el => el.value); window.location.href = ids.length > 0 ? '/compare?ids=' + ids.join(',') : '/compare';`}
+              />
+              <span class="compare-selection-label">{pattern.title}</span>
+            </label>
+          ))}
+        </div>
+        <div class="compare-selection-actions">
+          <a href="/compare" class="button button--secondary">Clear Selection</a>
+        </div>
+      </aside>
+
+      <!-- Comparison Table -->
+      <div class="compare-content">
+        {selectedPatterns.length > 0 ? (
+          <>
+            <div class="compare-actions">
+              <span class="compare-count">
+                Comparing {selectedPatterns.length} pattern{selectedPatterns.length !== 1 ? 's' : ''}
+              </span>
+              <a
+                href={Astro.url.pathname + Astro.url.search}
+                class="share-link"
+                onclick={`navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Share', 2000); return false;`}
+              >
+                Share Link
+              </a>
+            </div>
+            <CompareTable patterns={selectedPatterns} />
+          </>
+        ) : (
+          <div class="compare-empty">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="64" height="64" rx="32" fill="var(--color-border)"/>
+              <path d="M20 32H44M32 20V44" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h2>Select Patterns to Compare</h2>
+            <p>Choose 2 or more patterns from the list to see a side-by-side comparison.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .compare-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .compare-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .compare-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .compare-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  .compare-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+  }
+
+  .compare-selection {
+    position: sticky;
+    top: 100px;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .compare-selection-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .compare-selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .compare-selection-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+  }
+
+  .compare-selection-item:hover {
+    background-color: var(--color-border);
+  }
+
+  .compare-selection-item input[type="checkbox"] {
+    margin-top: 2px;
+    cursor: pointer;
+  }
+
+  .compare-selection-label {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    flex: 1;
+  }
+
+  .compare-selection-actions {
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-divider);
+  }
+
+  .compare-content {
+    min-width: 0;
+  }
+
+  .compare-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .compare-count {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .share-link {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .share-link:hover {
+    text-decoration: underline;
+  }
+
+  .compare-empty {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .compare-empty svg {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .compare-empty h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .compare-empty p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .button {
+    display: inline-block;
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .button--secondary {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-divider);
+  }
+
+  @media (max-width: 1024px) {
+    .compare-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .compare-selection {
+      position: static;
+      max-height: none;
+    }
+  }
+</style>
