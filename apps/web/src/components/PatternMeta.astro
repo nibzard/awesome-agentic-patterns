@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 
 // Helper function to get display label for values
-const getLabel = (value: string | undefined, type: string): string => {
+const getLabel = (value: string | undefined, _type: string): string => {
   if (!value) return '';
   return value.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 };

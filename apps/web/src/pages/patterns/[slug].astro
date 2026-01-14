@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
 import { getAllPatterns } from '../../lib/patterns';
-import { getEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const patterns = await getAllPatterns();

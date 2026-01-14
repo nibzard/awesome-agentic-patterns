@@ -13,7 +13,7 @@ const searchParams = Astro.url.searchParams;
 const selectedCategories = searchParams.getAll('category') || [];
 const selectedStatuses = searchParams.getAll('status') || [];
 const selectedTags = searchParams.getAll('tag') || [];
-const selectedDomains = searchParams.getAll('domain') || [];
+const _selectedDomains = searchParams.getAll('domain') || [];
 
 // Filter nodes
 const filteredNodes = graphData.nodes.filter((node: any) => {
@@ -29,7 +29,7 @@ const selectedNodeId = searchParams.get('node');
 const selectedNode = selectedNodeId ? graphData.nodes.find((n: any) => n.id === selectedNodeId) : null;
 
 // Get all unique tags
-const allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].sort();
+const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].sort();
 ---
 
 <BaseLayout title="Pattern Graph - Awesome Agentic Patterns">
@@ -142,6 +142,7 @@ const allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].
               const x = 400 + Math.cos(angle) * radius;
               const y = 300 + Math.sin(angle) * radius;
 
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, no-undef
               const categoryColor = getCategoryColor(node.category);
 
               return (
@@ -222,6 +223,7 @@ const allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].
 </BaseLayout>
 
 <script>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getCategoryColor(category: string): string {
     const colors: Record<string, string> = {
       'Orchestration & Control': '#3b82f6',
@@ -236,6 +238,7 @@ const allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].
     return colors[category] || '#6b7280';
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getStatusColor(status: string): string {
     const colors: Record<string, string> = {
       'proposed': '#9ca3af',

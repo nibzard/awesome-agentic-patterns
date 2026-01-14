@@ -5,7 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -15,5 +20,16 @@
     "mermaid": "^11.12.2",
     "pagefind": "^1.4.0",
     "rehype-mermaid": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "astro-eslint-parser": "^1.0.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-astro": "^1.2.3",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.7.3"
   }
 }
