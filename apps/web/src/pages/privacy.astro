@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Privacy Policy';
+const description = 'Privacy policy for Awesome Agentic Patterns';
+---
+
+<BaseLayout {title} {description}>
+  <div class="container">
+    <div class="content">
+      <h1>Privacy Policy</h1>
+
+      <p>
+        Last updated: {
+          new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        }
+      </p>
+
+      <h2>Introduction</h2>
+      <p>
+        Welcome to Awesome Agentic Patterns ("we," "our," or "us"). We are committed to protecting
+        your personal information and your right to privacy. This Privacy Policy explains how we
+        collect, use, disclose, and safeguard your information when you visit our website
+        agentic-patterns.com.
+      </p>
+
+      <h2>Information We Collect</h2>
+
+      <h3>Information Automatically Collected</h3>
+      <p>We automatically collect certain information when you visit our website, including:</p>
+      <ul>
+        <li>IP address</li>
+        <li>Browser type and version</li>
+        <li>Operating system</li>
+        <li>Referring website</li>
+        <li>Pages viewed and time spent on pages</li>
+        <li>Device identifiers</li>
+      </ul>
+
+      <h2>How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Operate, maintain, and improve our website</li>
+        <li>Analyze usage patterns and trends</li>
+        <li>Diagnose technical issues</li>
+        <li>Personalize content and improve user experience</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+
+      <h2>Cookies and Tracking Technologies</h2>
+      <p>
+        We use cookies and similar tracking technologies to track activity on our website and hold
+        certain information. Cookies are files with a small amount of data which may include an
+        anonymous unique identifier.
+      </p>
+
+      <h2>Third-Party Services</h2>
+      <p>
+        Our website may use third-party services that collect, use, and share information
+        independently of our website's privacy policy. These services include:
+      </p>
+      <ul>
+        <li>Web analytics providers (e.g., Vercel Analytics)</li>
+        <li>Content delivery networks</li>
+        <li>Hosting services</li>
+      </ul>
+
+      <h2>Data Sharing and Disclosure</h2>
+      <p>
+        We do not sell, trade, or rent your personal information to third parties. We may share your
+        information only in the following circumstances:
+      </p>
+      <ul>
+        <li>With service providers who perform services on our behalf</li>
+        <li>To comply with legal obligations or respond to lawful requests</li>
+        <li>To protect our rights, privacy, safety, or property</li>
+        <li>In connection with a merger, acquisition, or sale of assets</li>
+      </ul>
+
+      <h2>Data Security</h2>
+      <p>
+        We implement appropriate technical and organizational security measures to protect your
+        personal information against unauthorized or unlawful processing, accidental loss,
+        destruction, or damage.
+      </p>
+
+      <h2>Your Rights and Choices</h2>
+      <p>
+        Depending on your location, you may have certain rights regarding your personal information,
+        including:
+      </p>
+      <ul>
+        <li>Access to your personal information</li>
+        <li>Correction of inaccurate information</li>
+        <li>Deletion of your information</li>
+        <li>Objection to processing of your information</li>
+        <li>Data portability</li>
+      </ul>
+
+      <h2>Children's Privacy</h2>
+      <p>
+        Our website is not intended for children under the age of 16. We do not knowingly collect
+        personal information from children under 16. If you are a parent or guardian and believe
+        your child has provided us with personal information, please contact us.
+      </p>
+
+      <h2>Changes to This Privacy Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. We will notify you of any changes by
+        posting the new Privacy Policy on this page and updating the "Last updated" date.
+      </p>
+
+      <h2>Contact Us</h2>
+      <p>
+        If you have questions or concerns about this Privacy Policy, please contact us through our
+        GitHub repository at:
+        <a href="https://github.com/nibz/awesome-agentic-patterns"
+          >github.com/nibz/awesome-agentic-patterns</a
+        >
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .content {
+    line-height: 1.7;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+
+  p {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  ul {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+  }
+
+  li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

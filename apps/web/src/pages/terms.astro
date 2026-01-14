@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Terms of Service';
+const description = 'Terms of service for Awesome Agentic Patterns';
+---
+
+<BaseLayout {title} {description}>
+  <div class="container">
+    <div class="content">
+      <h1>Terms of Service</h1>
+
+      <p>
+        Last updated: {
+          new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        }
+      </p>
+
+      <h2>Agreement to Terms</h2>
+      <p>
+        By accessing or using Awesome Agentic Patterns ("we," "our," or "us"), you agree to be bound
+        by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use
+        our website.
+      </p>
+
+      <h2>Changes to Terms</h2>
+      <p>
+        We reserve the right to modify these Terms at any time. We will notify you of any changes by
+        posting the new Terms on this page and updating the "Last updated" date. Your continued use
+        of the website after any changes constitutes acceptance of the new Terms.
+      </p>
+
+      <h2>Description of Service</h2>
+      <p>
+        Awesome Agentic Patterns is a documentation website that provides a curated catalogue of AI
+        agent design patterns. The service includes:
+      </p>
+      <ul>
+        <li>Access to pattern documentation and examples</li>
+        <li>Pattern comparison and exploration tools</li>
+        <li>Guides and educational resources</li>
+        <li>Community resources and references</li>
+      </ul>
+
+      <h2>User Responsibilities</h2>
+      <p>As a user of this website, you agree to:</p>
+      <ul>
+        <li>Use the website for lawful purposes only</li>
+        <li>Not attempt to gain unauthorized access to our systems</li>
+        <li>Not interfere with the proper functioning of the website</li>
+        <li>Not transmit any harmful or malicious code</li>
+        <li>Respect the intellectual property rights of others</li>
+      </ul>
+
+      <h2>Intellectual Property</h2>
+      <p>
+        All content on this website, including text, graphics, logos, images, and software, is the
+        property of Awesome Agentic Patterns or its content suppliers and is protected by
+        intellectual property laws.
+      </p>
+
+      <h3>License</h3>
+      <p>
+        Unless otherwise noted, all content is licensed under the Creative Commons
+        Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license. You are free to:
+      </p>
+      <ul>
+        <li>Share: Copy and redistribute the material in any medium or format</li>
+        <li>
+          Adapt: Remix, transform, and build upon the material for any purpose, even commercially
+        </li>
+      </ul>
+      <p>
+        Under the following terms:
+        <strong>Attribution</strong> — You must give appropriate credit and indicate if changes were made.
+        <strong>ShareAlike</strong> — If you remix, transform, or build upon the material, you must distribute
+        your contributions under the same license.
+      </p>
+
+      <h2>Disclaimer of Warranties</h2>
+      <p>
+        THE WEBSITE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER
+        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+      </p>
+
+      <h2>Limitation of Liability</h2>
+      <p>
+        To the fullest extent permitted by law, Awesome Agentic Patterns shall not be liable for any
+        indirect, incidental, special, consequential, or punitive damages, including but not limited
+        to loss of profits, data, use, or other intangible losses, resulting from:
+      </p>
+      <ul>
+        <li>Your access to or inability to access the website</li>
+        <li>Any conduct or content of any third party on the website</li>
+        <li>Any content obtained from the website</li>
+        <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+      </ul>
+
+      <h2>Indemnification</h2>
+      <p>
+        You agree to indemnify and hold harmless Awesome Agentic Patterns from any claims, damages,
+        losses, liabilities, and expenses arising from:
+      </p>
+      <ul>
+        <li>Your use of the website</li>
+        <li>Your violation of these Terms</li>
+        <li>Your violation of any third-party rights</li>
+      </ul>
+
+      <h2>Governing Law</h2>
+      <p>
+        These Terms shall be governed by and construed in accordance with the laws of the
+        jurisdiction in which Awesome Agentic Patterns is based, without regard to its conflict of
+        law provisions.
+      </p>
+
+      <h2>Termination</h2>
+      <p>
+        We reserve the right to terminate or suspend your access to the website immediately, without
+        prior notice, for any breach of these Terms.
+      </p>
+
+      <h2>Severability</h2>
+      <p>
+        If any provision of these Terms is found to be unlawful, void, or unenforceable, that
+        provision shall be deemed severable from these Terms and shall not affect the validity and
+        enforceability of any remaining provisions.
+      </p>
+
+      <h2>Contact Information</h2>
+      <p>
+        If you have questions about these Terms, please contact us through our GitHub repository at:
+        <a href="https://github.com/nibz/awesome-agentic-patterns"
+          >github.com/nibz/awesome-agentic-patterns</a
+        >
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .content {
+    line-height: 1.7;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+
+  p {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  ul {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+  }
+
+  li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
