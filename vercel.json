@@ -1,4 +1,6 @@
 {
+  "framework": null,
   "buildCommand": "cd apps/web && bun run build",
+  "outputDirectory": "apps/web/.vercel/output",
   "installCommand": "cd apps/web && bun install"
 }
