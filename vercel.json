@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd apps/web && bun run build",
+  "outputDirectory": "apps/web/dist",
+  "installCommand": "bun install",
+  "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false
+}
