@@ -1,23 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SearchBox from '../components/SearchBox.astro';
+import type { PatternEntry } from '../types';
 
 // Load patterns data
 const patterns = await fetch('https://agentic-patterns.com/patterns.json')
   .then((res) => res.json())
-  .catch(() => []);
+  .catch(() => []) as PatternEntry[];
 
 // Get recently updated patterns (last 30 days)
 const thirtyDaysAgo = new Date();
 thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
 const recentlyUpdated = patterns
-  .filter((p: any) => {
+  .filter((p: PatternEntry) => {
     if (!p.updated_at) return false;
     const updatedDate = new Date(p.updated_at);
     return updatedDate >= thirtyDaysAgo;
   })
-  .sort((a: any, b: any) => {
+  .sort((a: PatternEntry, b: PatternEntry) => {
     const dateA = new Date(a.updated_at || 0);
     const dateB = new Date(b.updated_at || 0);
     return dateB.getTime() - dateA.getTime();
@@ -29,12 +30,12 @@ const sevenDaysAgo = new Date();
 sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
 const newPatterns = patterns
-  .filter((p: any) => {
+  .filter((p: PatternEntry) => {
     if (!p.updated_at) return false;
     const updatedDate = new Date(p.updated_at);
     return updatedDate >= sevenDaysAgo;
   })
-  .sort((a: any, b: any) => {
+  .sort((a: PatternEntry, b: PatternEntry) => {
     const dateA = new Date(a.updated_at || 0);
     const dateB = new Date(b.updated_at || 0);
     return dateB.getTime() - dateA.getTime();
@@ -98,7 +99,7 @@ const newPatterns = patterns
         </h2>
         <p class="home-section-description">Freshly added patterns from the last 7 days.</p>
         <div class="home-patterns-list">
-          {newPatterns.map((pattern: any) => (
+          {newPatterns.map((pattern: PatternEntry) => (
             <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
               <span class="pattern-badge pattern-badge--new">New</span>
               <div class="pattern-info">
@@ -130,7 +131,7 @@ const newPatterns = patterns
           Patterns that have been improved or expanded in the last 30 days.
         </p>
         <div class="home-patterns-list">
-          {recentlyUpdated.map((pattern: any) => {
+          {recentlyUpdated.map((pattern: PatternEntry) => {
             const isNew = pattern.updated_at && new Date(pattern.updated_at) >= sevenDaysAgo;
             return (
               <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">

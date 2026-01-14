@@ -11,15 +11,20 @@ export interface GraphNode {
   category: string;
   status: string;
   slug: string;
+  tags?: string[];
 }
 
 /**
  * Graph edge representing relationships between patterns
  */
 export interface GraphEdge {
-  source: string;
-  target: string;
-  type: 'related' | 'anti-pattern';
+  source?: string;
+  target?: string;
+  type?: 'related' | 'anti-pattern';
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
 }
 
 /**

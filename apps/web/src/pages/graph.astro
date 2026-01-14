@@ -1,14 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import type { PatternGraph, GraphNode } from '../types';
 
 // Load graph data
 const graphData = await fetch('/graph.json')
   .then((res) => res.json())
-  .catch(() => ({ nodes: [], edges: [] }));
+  .catch(() => ({ nodes: [], edges: [] })) as PatternGraph;
 
 // Get unique values for filters
-const categories = [...new Set(graphData.nodes.map((n: any) => n.category))].sort();
-const statuses = [...new Set(graphData.nodes.map((n: any) => n.status))].sort();
+const categories = [...new Set(graphData.nodes.map((n: GraphNode) => n.category))].sort();
+const statuses = [...new Set(graphData.nodes.map((n: GraphNode) => n.status))].sort();
 
 // Get filter values from URL
 const searchParams = Astro.url.searchParams;
@@ -18,7 +19,7 @@ const selectedTags = searchParams.getAll('tag') || [];
 const _selectedDomains = searchParams.getAll('domain') || [];
 
 // Filter nodes
-const filteredNodes = graphData.nodes.filter((node: any) => {
+const filteredNodes = graphData.nodes.filter((node: GraphNode) => {
   if (selectedCategories.length > 0 && !selectedCategories.includes(node.category)) return false;
   if (selectedStatuses.length > 0 && !selectedStatuses.includes(node.status)) return false;
   if (selectedTags.length > 0 && !node.tags?.some((t: string) => selectedTags.includes(t)))
@@ -30,11 +31,39 @@ const filteredNodes = graphData.nodes.filter((node: any) => {
 // Get selected node from URL
 const selectedNodeId = searchParams.get('node');
 const selectedNode = selectedNodeId
-  ? graphData.nodes.find((n: any) => n.id === selectedNodeId)
+  ? graphData.nodes.find((n: GraphNode) => n.id === selectedNodeId)
   : null;
 
 // Get all unique tags
-const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].sort();
+const _allTags = [...new Set(graphData.nodes.flatMap((n: GraphNode) => n.tags || []))].sort();
+
+// Helper functions for category/status colors
+function getCategoryColor(category: string): string {
+  const colors: Record<string, string> = {
+    'Orchestration & Control': '#3b82f6',
+    'Context & Memory': '#8b5cf6',
+    'Feedback Loops': '#ec4899',
+    'Learning & Adaptation': '#f59e0b',
+    'Reliability & Eval': '#10b981',
+    'Security & Safety': '#ef4444',
+    'Tool Use & Environment': '#06b6d4',
+    'UX & Collaboration': '#f97316',
+  };
+  return colors[category] || '#6b7280';
+}
+
+function _getStatusColor(status: string): string {
+  const colors: Record<string, string> = {
+    proposed: '#9ca3af',
+    emerging: '#60a5fa',
+    established: '#34d399',
+    'validated-in-production': '#10b981',
+    'best-practice': '#059669',
+    'experimental-but-awesome': '#f59e0b',
+    'rapidly-improving': '#8b5cf6',
+  };
+  return colors[status] || '#6b7280';
+}
 ---
 
 <BaseLayout title="Pattern Graph - Awesome Agentic Patterns">
@@ -69,7 +98,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
                     />
                     <span>{category}</span>
                     <span class="filter-count">
-                      {graphData.nodes.filter((n: any) => n.category === category).length}
+                      {graphData.nodes.filter((n: GraphNode) => n.category === category).length}
                     </span>
                   </label>
                 );
@@ -100,7 +129,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
                     />
                     <span>{status}</span>
                     <span class="filter-count">
-                      {graphData.nodes.filter((n: any) => n.status === status).length}
+                      {graphData.nodes.filter((n: GraphNode) => n.status === status).length}
                     </span>
                   </label>
                 );
@@ -140,7 +169,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
 
             <!-- Edges -->
             {
-              graphData.edges.map((edge: any) => (
+              graphData.edges.map((edge) => (
                 <line
                   x1={edge.x1}
                   y1={edge.y1}
@@ -155,14 +184,13 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
 
             <!-- Nodes -->
             {
-              filteredNodes.map((node: any, index: number) => {
+              filteredNodes.map((node: GraphNode, index: number) => {
                 // Simple force-directed layout simulation
                 const angle = (index / filteredNodes.length) * 2 * Math.PI;
                 const radius = 200 + (index % 3) * 50;
                 const x = 400 + Math.cos(angle) * radius;
                 const y = 300 + Math.sin(angle) * radius;
 
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, no-undef
                 const categoryColor = getCategoryColor(node.category);
 
                 return (
@@ -225,7 +253,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
                 <span class="detail-category">{selectedNode.category}</span>
                 <span
                   class="detail-status"
-                  style="--status-color: {getStatusColor(selectedNode.status)}"
+                  style="--status-color: {_getStatusColor(selectedNode.status)}"
                 >
                   {selectedNode.status}
                 </span>
@@ -241,37 +269,6 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
     </div>
   </div>
 </BaseLayout>
-
-<script>
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function getCategoryColor(category: string): string {
-    const colors: Record<string, string> = {
-      'Orchestration & Control': '#3b82f6',
-      'Context & Memory': '#8b5cf6',
-      'Feedback Loops': '#ec4899',
-      'Learning & Adaptation': '#f59e0b',
-      'Reliability & Eval': '#10b981',
-      'Security & Safety': '#ef4444',
-      'Tool Use & Environment': '#06b6d4',
-      'UX & Collaboration': '#f97316',
-    };
-    return colors[category] || '#6b7280';
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function getStatusColor(status: string): string {
-    const colors: Record<string, string> = {
-      proposed: '#9ca3af',
-      emerging: '#60a5fa',
-      established: '#34d399',
-      'validated-in-production': '#10b981',
-      'best-practice': '#059669',
-      'experimental-but-awesome': '#f59e0b',
-      'rapidly-improving': '#8b5cf6',
-    };
-    return colors[status] || '#6b7280';
-  }
-</script>
 
 <style>
   .graph-page {

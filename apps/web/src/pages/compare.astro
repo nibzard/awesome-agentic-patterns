@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CompareTable from '../components/CompareTable.astro';
+import type { PatternEntry } from '../types';
 
 // Get selected pattern IDs from URL
 const searchParams = Astro.url.searchParams;
@@ -9,13 +10,13 @@ const selectedIds = searchParams.get('ids')?.split(',').filter(Boolean) || [];
 // Load patterns data
 const patterns = await fetch('https://agentic-patterns.com/patterns.json')
   .then((res) => res.json())
-  .catch(() => []);
+  .catch(() => []) as PatternEntry[];
 
 // Get selected patterns
-const selectedPatterns = patterns.filter((p: any) => selectedIds.includes(p.id));
+const selectedPatterns = patterns.filter((p: PatternEntry) => selectedIds.includes(p.id));
 
 // Generate prompt pack from selected patterns
-function generatePromptPack(patterns: any[]): string {
+function generatePromptPack(patterns: PatternEntry[]): string {
   if (patterns.length === 0) return '';
 
   let prompt = `# AI Agent Design Patterns Prompt Pack\n\n`;
@@ -59,7 +60,7 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
         <h2 class="compare-selection-title">Select Patterns</h2>
         <div class="compare-selection-list">
           {
-            patterns.map((pattern: any) => (
+            patterns.map((pattern: PatternEntry) => (
               <label class="compare-selection-item">
                 <input
                   type="checkbox"

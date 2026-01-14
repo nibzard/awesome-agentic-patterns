@@ -165,7 +165,9 @@ const navItems = [
           searchIndex = pagefind;
           return searchIndex;
         } catch (e) {
-          console.error('Failed to load Pagefind:', e);
+          // Show error message in search results
+          searchResults.innerHTML =
+            '<div class="search-error" role="alert">Search is currently unavailable. Please try again later or use the navigation to browse patterns.</div>';
           return null;
         }
       }
@@ -183,11 +185,16 @@ const navItems = [
           return;
         }
 
-        const results = await pagefind.search(query);
-        currentResults = results.results;
-        selectedIndex = 0;
+        try {
+          const results = await pagefind.search(query);
+          currentResults = results.results;
+          selectedIndex = 0;
 
-        renderResults();
+          renderResults();
+        } catch (e) {
+          searchResults.innerHTML =
+            '<div class="search-error" role="alert">Search failed. Please try again.</div>';
+        }
       }
 
       // Render search results
@@ -456,6 +463,15 @@ const navItems = [
     text-align: center;
     color: var(--color-text-muted);
     font-size: 0.9375rem;
+  }
+
+  .search-error {
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: #dc2626;
+    font-size: 0.9375rem;
+    background-color: #fef2f2;
+    border-radius: var(--radius-md);
   }
 
   .search-result {

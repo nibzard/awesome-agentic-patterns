@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../lib/date';
 
 const title = 'Privacy Policy';
 const description = 'Privacy policy for Awesome Agentic Patterns';
@@ -10,15 +11,7 @@ const description = 'Privacy policy for Awesome Agentic Patterns';
     <div class="content">
       <h1>Privacy Policy</h1>
 
-      <p>
-        Last updated: {
-          new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })
-        }
-      </p>
+      <p>Last updated: {formatDate()}</p>
 
       <h2>Introduction</h2>
       <p>
