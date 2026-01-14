@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
-    "astro": "^5.16.9"
+    "astro": "^5.16.9",
+    "gray-matter": "^4.0.3"
   }
 }

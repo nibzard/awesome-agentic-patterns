@@ -1,0 +1,19 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = 'Awesome Agentic Patterns' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

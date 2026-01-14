@@ -37,6 +37,8 @@ const patternEffort = z.enum(['low', 'medium', 'high', 'very-high']);
 const patternImpact = z.enum(['low', 'medium', 'high', 'transformative']);
 
 // Pattern collection schema
+// Note: Patterns are loaded from root patterns/ directory using glob() in pages
+// This avoids symlinks and allows monorepo structure
 const patterns = defineCollection({
   type: 'content',
   schema: z.object({

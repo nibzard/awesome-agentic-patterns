@@ -1,0 +1,166 @@
+{
+  "$ref": "#/definitions/patterns",
+  "definitions": {
+    "patterns": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "emerging",
+            "established",
+            "validated-in-production",
+            "best-practice",
+            "experimental-but-awesome",
+            "rapidly-improving"
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "based_on": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "Orchestration & Control",
+            "Context & Memory",
+            "Feedback Loops",
+            "Learning & Adaptation",
+            "Reliability & Eval",
+            "Security & Safety",
+            "Tool Use & Environment",
+            "UX & Collaboration",
+            "Uncategorized"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "format": "uri"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "summary": {
+          "type": "string"
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "early",
+            "maturing",
+            "mature"
+          ]
+        },
+        "complexity": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "very-high"
+          ]
+        },
+        "effort": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "very-high"
+          ]
+        },
+        "impact": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "transformative"
+          ]
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "anti_signals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "anti_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "updated_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "status",
+        "authors",
+        "category",
+        "source",
+        "tags"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
