@@ -2,16 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Get the guide by slug
-const { slug } = Astro.params;
-const guides = await getCollection('guides');
-const guide = guides.find(g => g.slug === slug);
-
-// Handle 404
-if (!guide) {
-  return Astro.redirect('/404');
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
 }
 
+const { guide } = Astro.props;
 const { Content } = await guide.render();
 ---
 

@@ -2,16 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Get the pack by slug
-const { slug } = Astro.params;
-const packs = await getCollection('packs');
-const pack = packs.find(p => p.slug === slug);
-
-// Handle 404
-if (!pack) {
-  return Astro.redirect('/404');
+export async function getStaticPaths() {
+  const packs = await getCollection('packs');
+  return packs.map((pack) => ({
+    params: { slug: pack.slug },
+    props: { pack },
+  }));
 }
 
+const { pack } = Astro.props;
 const { Content } = await pack.render();
 
 // Get related patterns

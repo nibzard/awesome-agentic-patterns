@@ -13,4 +13,11 @@ export default defineConfig({
     remarkPlugins: [[remarkAssetPaths, { basePath: '' }]],
     rehypePlugins: [rehypeMermaid],
   },
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ['/pagefind/pagefind.js'],
+      },
+    },
+  },
 });

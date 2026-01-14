@@ -1,109 +1,332 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
+import { getAllPatterns } from '../../lib/patterns';
+import { getEntry } from 'astro:content';
 
-interface Props {
-  slug: string;
+export async function getStaticPaths() {
+  const patterns = await getAllPatterns();
+  return patterns.map((pattern) => ({
+    params: { slug: pattern.slug },
+    props: { pattern },
+  }));
 }
 
-const { slug } = Astro.params;
+const { pattern } = Astro.props;
 
-// For now, show a placeholder until data pipeline is implemented
+// Extract sections from pattern body
+function extractSection(body: string, sectionName: string): string | null {
+  const regex = new RegExp(`## ${sectionName}\\n([\\s\\S]*?)(?=## |$)`, 'i');
+  const match = body.match(regex);
+  return match ? match[1].trim() : null;
+}
+
+const problem = extractSection(pattern.body, 'Problem');
+const solution = extractSection(pattern.body, 'Solution');
+const howToUseIt = extractSection(pattern.body, 'How to use it');
+const tradeoffs = extractSection(pattern.body, 'Trade-offs');
+const example = extractSection(pattern.body, 'Example');
+const references = extractSection(pattern.body, 'References');
 ---
 
-<BaseLayout title={`${slug} - Pattern`}>
+<BaseLayout title={`${pattern.title} - Pattern`}>
   <div class="pattern-page">
-    <div class="pattern-placeholder">
-      <h1>Pattern: {slug}</h1>
-      <p>This pattern page will be populated once the data pipeline is implemented.</p>
-
-      <div class="pattern-placeholder-info">
-        <h2>What's Coming</h2>
-        <ul>
-          <li>Pattern title, summary, and description</li>
-          <li>Problem and solution sections</li>
-          <li>Example diagrams and code</li>
-          <li>Related patterns and references</li>
-          <li>Citation functionality</li>
-        </ul>
-
-        <a href="/patterns" class="back-link">← Back to Patterns</a>
+    <header class="pattern-header">
+      <div class="pattern-meta">
+        <span class="badge badge--status">{pattern.status}</span>
+        {pattern.complexity && <span class="badge badge--complexity">{pattern.complexity}</span>}
+        {pattern.maturity && <span class="badge badge--maturity">{pattern.maturity}</span>}
       </div>
+      <h1>{pattern.title}</h1>
+      {pattern.summary && <p class="pattern-summary">{pattern.summary}</p>}
+      <div class="pattern-authors">
+        {pattern.authors.map((author) => (
+          <span class="author">{author}</span>
+        ))}
+      </div>
+    </header>
 
-      <!-- Sample source block rendering -->
-      <PatternSource source="https://example.com/patterns/sample-pattern" />
-    </div>
+    <nav class="pattern-nav">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      {howToUseIt && <a href="#how-to-use">How to use it</a>}
+      {tradeoffs && <a href="#tradeoffs">Trade-offs</a>}
+      {example && <a href="#example">Example</a>}
+      <a href="#references">References</a>
+    </nav>
+
+    <article class="pattern-content">
+      {problem && (
+        <section id="problem" class="pattern-section">
+          <h2>Problem</h2>
+          <div set:html={problem} />
+        </section>
+      )}
+
+      {solution && (
+        <section id="solution" class="pattern-section">
+          <h2>Solution</h2>
+          <div set:html={solution} />
+        </section>
+      )}
+
+      {howToUseIt && (
+        <section id="how-to-use" class="pattern-section">
+          <h2>How to use it</h2>
+          <div set:html={howToUseIt} />
+        </section>
+      )}
+
+      {tradeoffs && (
+        <section id="tradeoffs" class="pattern-section">
+          <h2>Trade-offs</h2>
+          <div set:html={tradeoffs} />
+        </section>
+      )}
+
+      {example && (
+        <section id="example" class="pattern-section">
+          <h2>Example</h2>
+          <div set:html={example} />
+        </section>
+      )}
+
+      {references && (
+        <section id="references" class="pattern-section">
+          <h2>References</h2>
+          <div set:html={references} />
+        </section>
+      )}
+
+      {pattern.source && (
+        <div class="pattern-source-section">
+          <PatternSource source={pattern.source} />
+        </div>
+      )}
+    </article>
+
+    <footer class="pattern-footer">
+      <div class="pattern-tags">
+        {pattern.tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+      <a href="/patterns" class="back-link">← Back to Patterns</a>
+    </footer>
   </div>
 </BaseLayout>
 
 <style>
   .pattern-page {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-lg);
   }
 
-  .pattern-placeholder {
-    text-align: center;
+  .pattern-header {
+    margin-bottom: var(--spacing-2xl);
   }
 
-  .pattern-placeholder h1 {
+  .pattern-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge--status {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .badge--complexity {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .badge--maturity {
+    background-color: var(--color-success);
+    color: white;
+  }
+
+  .pattern-header h1 {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: var(--spacing-md);
+    line-height: 1.2;
   }
 
-  .pattern-placeholder > p {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .pattern-placeholder-info {
-    padding: var(--spacing-xl);
-    background-color: var(--color-border);
-    border-radius: var(--radius-lg);
-    text-align: left;
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .pattern-placeholder-info h2 {
+  .pattern-summary {
     font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
+    color: var(--color-text-muted);
+    line-height: 1.6;
     margin-bottom: var(--spacing-md);
   }
 
-  .pattern-placeholder-info ul {
-    list-style: none;
+  .pattern-authors {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .author {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .pattern-nav {
+    position: sticky;
+    top: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    z-index: 10;
+  }
+
+  .pattern-nav a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .pattern-nav a:hover {
+    color: var(--color-primary);
+  }
+
+  .pattern-content {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .pattern-section {
+    margin-bottom: var(--spacing-2xl);
+    scroll-margin-top: var(--spacing-2xl);
+  }
+
+  .pattern-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .pattern-section :global(p) {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-section :global(h3) {
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .pattern-section :global(ul),
+  .pattern-section :global(ol) {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+  }
+
+  .pattern-section :global(li) {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .pattern-section :global(code) {
+    background-color: var(--color-border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-family: var(--font-mono);
+  }
+
+  .pattern-section :global(pre) {
+    background-color: var(--color-border);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-section :global(pre code) {
+    background-color: transparent;
     padding: 0;
   }
 
-  .pattern-placeholder-info li {
-    padding: var(--spacing-sm) 0;
-    color: var(--color-text-muted);
-    padding-left: var(--spacing-lg);
-    position: relative;
+  .pattern-source-section {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
   }
 
-  .pattern-placeholder-info li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--color-primary);
-    font-weight: 600;
+  .pattern-footer {
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .pattern-tags {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background-color: var(--color-border);
+    color: var(--color-text);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
   }
 
   .back-link {
-    display: inline-block;
-    margin-top: var(--spacing-lg);
     color: var(--color-primary);
     text-decoration: none;
     font-weight: 500;
+    display: inline-flex;
+    align-items: center;
   }
 
   .back-link:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .pattern-header h1 {
+      font-size: 2rem;
+    }
+
+    .pattern-summary {
+      font-size: 1.125rem;
+    }
+
+    .pattern-nav {
+      top: var(--spacing-md);
+    }
   }
 </style>
