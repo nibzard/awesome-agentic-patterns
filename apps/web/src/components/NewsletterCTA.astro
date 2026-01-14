@@ -2,7 +2,7 @@
 // ABOUTME: NewsletterCTA component - A reusable newsletter subscription form component
 
 interface Props {
-  variant?: 'default' | 'compact' | 'banner';
+  variant?: 'default' | 'compact' | 'banner' | 'minimal';
   title?: string;
   description?: string;
   buttonText?: string;
@@ -265,6 +265,43 @@ const {
 
   .newsletter-cta--banner .newsletter-cta-input {
     background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Minimal variant - for footer */
+  .newsletter-cta--minimal {
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+
+  .newsletter-cta--minimal .newsletter-cta-content {
+    display: none;
+  }
+
+  .newsletter-cta--minimal .newsletter-cta-form {
+    width: 100%;
+  }
+
+  .newsletter-cta--minimal .newsletter-cta-input {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.8125rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-alt, var(--color-bg));
+  }
+
+  .newsletter-cta--minimal .newsletter-cta-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+  }
+
+  .newsletter-cta--minimal .newsletter-cta-button {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.8125rem;
+  }
+
+  .newsletter-cta--minimal .newsletter-cta-message {
+    font-size: 0.75rem;
+    margin-top: var(--spacing-xs);
   }
 
   /* Responsive */

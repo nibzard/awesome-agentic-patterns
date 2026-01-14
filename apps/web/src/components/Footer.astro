@@ -1,4 +1,6 @@
 ---
+import NewsletterCTA from './NewsletterCTA.astro';
+
 const currentYear = new Date().getFullYear();
 
 const footerSections = [
@@ -24,6 +26,7 @@ const footerSections = [
     links: [
       { href: '/privacy', label: 'Privacy Policy' },
       { href: '/terms', label: 'Terms of Service' },
+      { href: '/contribute', label: 'Contribute' },
     ],
   },
 ];
@@ -31,35 +34,41 @@ const footerSections = [
 
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-brand">
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <rect width="32" height="32" rx="6" fill="currentColor"></rect>
-        <path
-          d="M10 16L14 12L18 16L22 12"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-        <path
-          d="M10 22L14 18L18 22L22 18"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-      <div>
-        <p class="footer-title">Agentic Patterns</p>
-        <p class="footer-tagline">A curated catalogue of AI agent design patterns.</p>
+    <!-- Left: Brand + Newsletter -->
+    <div class="footer-brand-section">
+      <div class="footer-brand">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <rect width="32" height="32" rx="6" fill="currentColor"></rect>
+          <path
+            d="M10 16L14 12L18 16L22 12"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M10 22L14 18L18 22L22 18"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+        <div>
+          <p class="footer-title">Agentic Patterns</p>
+          <p class="footer-tagline">A curated catalogue of AI agent design patterns.</p>
+        </div>
       </div>
+
+      <NewsletterCTA variant="minimal" title="" description="" buttonText="Subscribe" />
     </div>
 
+    <!-- Right: Three column menu -->
     <div class="footer-links">
       {
         footerSections.map((section) => (
@@ -84,47 +93,6 @@ const footerSections = [
     <p class="footer-copyright">
       &copy; {currentYear} Awesome Agentic Patterns. All rights reserved.
     </p>
-    <div class="footer-social">
-      <a
-        href="https://github.com/nibzard/awesome-agentic-patterns"
-        class="social-link"
-        aria-label="GitHub"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 012.5-.34c.85.01 1.7.11 2.5.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C17.14 18.16 20 14.42 20 10c0-5.523-4.477-10-10-10z"
-          ></path>
-        </svg>
-      </a>
-      <a
-        href="https://x.com/nibzard"
-        class="social-link"
-        aria-label="Twitter"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-          ></path>
-        </svg>
-      </a>
-      <a
-        href="https://discord.gg/agentic-patterns"
-        class="social-link"
-        aria-label="Discord"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M16.875 3.125H3.125A1.875 1.875 0 001.25 5v10a1.875 1.875 0 001.875 1.875h13.75A1.875 1.875 0 0018.75 15V5a1.875 1.875 0 00-1.875-1.875zM7.5 13.75v-5l3.75 2.5-3.75 2.5z"
-          ></path>
-        </svg>
-      </a>
-    </div>
   </div>
 </footer>
 
@@ -139,47 +107,55 @@ const footerSections = [
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-2xl) var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+
+  .footer-brand-section {
     display: flex;
-    justify-content: space-between;
-    gap: var(--spacing-xl);
+    flex-direction: column;
+    gap: var(--spacing-lg);
   }
 
   .footer-brand {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     align-items: flex-start;
   }
 
   .footer-brand svg {
     color: var(--color-primary);
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .footer-title {
     font-weight: 600;
     font-size: 1rem;
     color: var(--color-text);
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: 0.25rem;
   }
 
   .footer-tagline {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--color-text-muted);
     margin: 0;
+    line-height: 1.4;
   }
 
   .footer-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
   }
 
   .footer-section-title {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -190,13 +166,13 @@ const footerSections = [
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: 0.375rem;
   }
 
   .footer-link {
     color: var(--color-text-muted);
     text-decoration: none;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     transition: color 0.2s ease;
   }
 
@@ -209,45 +185,33 @@ const footerSections = [
     margin: 0 auto;
     padding: var(--spacing-md) var(--spacing-lg);
     border-top: 1px solid var(--color-divider);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   .footer-copyright {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: var(--color-text-muted);
     margin: 0;
   }
 
-  .footer-social {
-    display: flex;
-    gap: var(--spacing-md);
-  }
-
-  .social-link {
-    color: var(--color-text-muted);
-    transition: color 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .social-link:hover {
-    color: var(--color-primary);
-  }
-
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .footer-container {
-      flex-direction: column;
-    }
-
-    .footer-brand {
-      flex-direction: column;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
     }
 
     .footer-links {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-links {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .footer-section-links {
+      gap: var(--spacing-xs);
     }
   }
 </style>
