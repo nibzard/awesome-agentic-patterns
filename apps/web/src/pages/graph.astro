@@ -174,7 +174,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
                     <circle
                       cx={x}
                       cy={y}
-                      r="20"
+                      r="24"
                       fill={categoryColor}
                       class="node-circle"
                       filter={selectedNodeId === node.id ? 'url(#glow)' : ''}
@@ -202,7 +202,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
                       </div>
                     </foreignObject>
                     <a href={`/graph?node=${node.id}`} class="node-link" data-node-id={node.id}>
-                      <circle cx={x} cy={y} r="25" fill="transparent" />
+                      <circle cx={x} cy={y} r="32" fill="transparent" />
                     </a>
                   </g>
                 );
@@ -572,6 +572,36 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
       position: static;
       width: 100%;
       margin-top: var(--spacing-lg);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .graph-page {
+      padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    .graph-header h1 {
+      font-size: 1.75rem;
+    }
+
+    .graph-subtitle {
+      font-size: 1rem;
+    }
+
+    .graph-canvas {
+      min-height: 400px;
+    }
+
+    .node-circle {
+      r: 28 !important;
+    }
+
+    .node-link circle {
+      r: 36 !important;
+    }
+
+    .node-label {
+      font-size: 10px;
     }
   }
 </style>

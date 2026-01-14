@@ -109,6 +109,26 @@ const formatValue = (value: string | string[] | undefined): string => {
     overflow-x: auto;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar-track {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--color-text-muted);
+    border-radius: 4px;
+  }
+
+  .compare-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text);
   }
 
   .compare-table {

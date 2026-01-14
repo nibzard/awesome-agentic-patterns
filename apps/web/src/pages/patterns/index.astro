@@ -60,12 +60,25 @@ const complexities = Object.entries(complexityMap)
       <div class="patterns-search">
         <SearchBox placeholder="Search patterns..." />
       </div>
+      <button class="filters-toggle-mobile" id="filters-open" aria-label="Open filters">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Filters
+      </button>
     </div>
 
     <div class="patterns-layout">
       <!-- Filter Sidebar -->
-      <aside class="patterns-filters">
-        <h2 class="patterns-filters-title">Filters</h2>
+      <aside class="patterns-filters" id="filters">
+        <div class="patterns-filters-header">
+          <h2 class="patterns-filters-title">Filters</h2>
+          <button class="filters-toggle" id="filters-close" aria-label="Close filters">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4L16 16M4 16L16 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
 
         <div class="filter-group">
           <h3 class="filter-group-title">Category</h3>
@@ -193,6 +206,27 @@ const complexities = Object.entries(complexityMap)
     margin: 0 auto;
   }
 
+  .filters-toggle-mobile {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-md) auto 0;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .filters-toggle-mobile:hover {
+    background-color: var(--color-primary-hover);
+  }
+
   .patterns-layout {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -209,11 +243,34 @@ const complexities = Object.entries(complexityMap)
     background-color: var(--color-bg);
   }
 
+  .patterns-filters-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .filters-toggle {
+    display: none;
+    padding: var(--spacing-xs);
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+  }
+
+  .filters-toggle:hover {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
   .patterns-filters-title {
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
+    margin: 0;
   }
 
   .filter-group {
@@ -329,4 +386,82 @@ const complexities = Object.entries(complexityMap)
       position: static;
     }
   }
+
+  @media (max-width: 640px) {
+    .patterns-page {
+      padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    .patterns-header h1 {
+      font-size: 1.75rem;
+    }
+
+    .patterns-subtitle {
+      font-size: 1rem;
+    }
+
+    .filters-toggle-mobile {
+      display: flex;
+    }
+
+    .patterns-filters {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      overflow-y: auto;
+      border-radius: 0;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .patterns-filters.open {
+      transform: translateX(0);
+    }
+
+    .filters-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .patterns-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-option {
+      padding: var(--spacing-sm);
+    }
+  }
 </style>
+
+<script>
+  // Mobile filter toggle functionality
+  const filtersOpen = document.getElementById('filters-open');
+  const filtersClose = document.getElementById('filters-close');
+  const filtersPanel = document.getElementById('filters');
+
+  filtersOpen?.addEventListener('click', () => {
+    filtersPanel?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  filtersClose?.addEventListener('click', () => {
+    filtersPanel?.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+
+  // Close filters when clicking outside
+  document.addEventListener('click', (e) => {
+    if (
+      filtersPanel?.classList.contains('open') &&
+      !filtersPanel.contains(e.target as Node) &&
+      !filtersOpen?.contains(e.target as Node)
+    ) {
+      filtersPanel?.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
