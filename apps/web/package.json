@@ -11,6 +11,7 @@
     "@astrojs/mdx": "^4.3.13",
     "astro": "^5.16.9",
     "d3": "7",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "pagefind": "^1.4.0"
   }
 }

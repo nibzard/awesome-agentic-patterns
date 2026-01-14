@@ -146,8 +146,8 @@
 - [BLOCKED] 146 - Add social preview image to `apps/web/public`. (Requires manual design work to create 1200x630px image with branding)
 - [x] 147 - Add `robots.txt` to `apps/web/public`. [Created robots.txt with allow all crawlers, added sitemap reference, build verified, committed (68420e3)]
 - [x] 148 - Add `CNAME` to `apps/web/public` if needed. (Not needed - Vercel handles custom domains via dashboard, CNAME files only for GitHub Pages)
-- [ ] 149 - Add `apps/web/src/pages/404.astro`.
-- [ ] 150 - Add the chosen graph visualization dependency.
+- [x] 149 - Add `apps/web/src/pages/404.astro`. [Created with BaseLayout wrapper, custom error page design, build verified working (2 pages), committed (445bd3a)]
+150→- [x] 150 - Add the chosen graph visualization dependency. [Installed d3@7.9.0 to package.json, verified build works, committed (d5adc68)]
 - [ ] 151 - Add Pagefind dependency if required by the build.
 - [ ] 152 - Create `PatternCard.astro`.
 - [ ] 153 - Create `PatternMeta.astro`.
