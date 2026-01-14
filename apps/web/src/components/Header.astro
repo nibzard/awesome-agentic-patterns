@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 interface Props {
   currentPath?: string;
 }
@@ -42,7 +44,7 @@ const navItems = [
     </nav>
 
     <div class="header-actions">
-      <!-- Theme toggle will be added here -->
+      <ThemeToggle />
     </div>
   </div>
 </header>
