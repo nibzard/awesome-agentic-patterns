@@ -19,6 +19,24 @@ If your link ticks those boxes, it belongs here.
 
 ---
 
+## 🌐 Explore the Website
+
+**Visit:** [https://agentic-patterns.com](https://agentic-patterns.com)
+
+The website offers powerful discovery tools beyond this README:
+
+- **Pattern Explorer**: Browse, filter, and search all patterns by category, status, complexity, and more
+- **Compare Tool**: Side-by-side comparison of multiple patterns with shared attributes
+- **Decision Explorer**: Interactive guide to find the right pattern for your use case
+- **Graph Visualization**: Visual map of pattern relationships and connections
+- **Pattern Packs**: Curated collections of patterns for common agent architectures
+- **Developer Guides**: In-depth documentation on pattern selection and usage
+- **Dark Mode**: Full theme support for comfortable reading in any environment
+
+Built with [Astro](https://astro.build), deployed on [Vercel](https://vercel.com), source code in [`apps/web/`](./apps/web/).
+
+---
+
 ## Quick Tour of Categories
 
 <!-- AUTO-GENERATED TOC START -->
@@ -187,7 +205,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ## For AI Assistants (llms.txt)
 
-This project includes [`llms.txt`](./llms.txt), a machine-readable documentation file designed to help AI assistants and LLMs understand and recommend appropriate patterns.
+This project includes [`llms.txt`](https://agentic-patterns.com/llms.txt), a machine-readable documentation file designed to help AI assistants and LLMs understand and recommend appropriate patterns.
 
 **What's included:**
 - Pattern categories and their purposes
@@ -201,7 +219,7 @@ The `llms.txt` file can be provided to LLMs as context to improve pattern recomm
 - AI coding assistants suggesting patterns
 - LLM-powered tools that recommend agentic patterns
 
-**Access:** https://github.com/nibzard/awesome-agentic-patterns/blob/main/llms.txt
+**Access:** https://agentic-patterns.com/llms.txt (also available in [`apps/web/public/llms.txt`](./apps/web/public/llms.txt))
 
 ---
 
