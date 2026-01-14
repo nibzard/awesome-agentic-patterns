@@ -90,9 +90,25 @@ const navItems = [
     </div>
 
     <!-- Search Modal -->
-    <div id="search-modal" class="search-modal" hidden>
+    <div id="search-modal" class="search-modal" hidden aria-hidden="true">
       <div class="search-backdrop"></div>
       <div class="search-container">
+        <button type="button" class="search-close" aria-label="Close search">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 3L13 13M13 3L3 13"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
         <div class="search-input-wrapper">
           <svg
             width="20"
@@ -155,6 +171,7 @@ const navItems = [
       const searchInput = document.getElementById('search-input');
       const searchResults = document.getElementById('search-results');
       const searchToggle = document.getElementById('search-toggle');
+      const searchClose = document.querySelector('.search-close');
 
       // Load Pagefind index
       async function loadSearchIndex() {
@@ -232,6 +249,7 @@ const navItems = [
       // Open search modal
       function openSearch() {
         searchModal.hidden = false;
+        searchModal.setAttribute('aria-hidden', 'false');
         searchInput.focus();
         document.body.style.overflow = 'hidden';
       }
@@ -239,6 +257,7 @@ const navItems = [
       // Close search modal
       function closeSearch() {
         searchModal.hidden = true;
+        searchModal.setAttribute('aria-hidden', 'true');
         searchInput.value = '';
         searchResults.innerHTML = '';
         currentQuery = '';
@@ -250,6 +269,7 @@ const navItems = [
       searchToggle?.addEventListener('click', openSearch);
 
       searchModal?.querySelector('.search-backdrop')?.addEventListener('click', closeSearch);
+      searchClose?.addEventListener('click', closeSearch);
 
       searchInput?.addEventListener('input', (e) => {
         performSearch(e.target.value);
@@ -399,6 +419,10 @@ const navItems = [
     padding-top: 15vh;
   }
 
+  .search-modal[hidden] {
+    display: none !important;
+  }
+
   .search-backdrop {
     position: absolute;
     inset: 0;
@@ -415,6 +439,29 @@ const navItems = [
     border-radius: var(--radius-lg);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+  }
+
+  .search-close {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .search-close:hover {
+    background-color: var(--color-border);
+    color: var(--color-text);
   }
 
   .search-input-wrapper {
