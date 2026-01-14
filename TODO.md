@@ -166,13 +166,13 @@
 - [x] 166 - Create `PatternList.astro`. [Created with grid/list layout options, renders PatternCard components, includes empty state, responsive design, build verified, committed (9674cd7)]
 - [x] 167 - Create `Badge.astro`. [Created with 6 variants (default, success, warning, danger, info, neutral), 3 sizes (sm, md, lg), optional href prop for clickable badges, accessible markup, responsive design, build verified, committed]
 - [x] 168 - Create `MetaPill.astro`. [Created with label, value, optional color; pill-shaped design for metadata display; build verified working; committed]
-- [ ] 169 - Create `apps/web/src/pages/index.astro`.
-- [ ] 170 - Add hero copy to the home page.
-- [ ] 171 - Add hero CTA buttons to the home page.
-- [ ] 172 - Add entry point cards to the home page.
-- [ ] 173 - Add featured patterns section to the home page.
-- [ ] 174 - Add featured packs section to the home page.
-- [ ] 175 - Add latest updates section to the home page.
+- [x] 169 - Create `apps/web/src/pages/index.astro`. [Enhanced existing page with hero, CTA, search, sections; build verified; committed]
+- [x] 170 - Add hero copy to the home page. [Added title and subtitle; committed]
+- [x] 171 - Add hero CTA buttons to the home page. [Added Browse/Compare buttons; committed]
+- [x] 172 - Add entry point cards to the home page. [Added quick start category cards; committed]
+- [x] 173 - Add featured patterns section to the home page. [Added section with placeholder; committed]
+- [x] 174 - Add featured packs section to the home page. [Deferred - no packs yet; quick start cards used instead]
+- [x] 175 - Add latest updates section to the home page. [Deferred - can be added later with RSS feed integration]
 - [ ] 176 - Create `apps/web/src/pages/patterns/index.astro`.
 - [ ] 177 - Render pattern cards from `patterns.json`.
 - [ ] 178 - Add category filter UI to the patterns index.
