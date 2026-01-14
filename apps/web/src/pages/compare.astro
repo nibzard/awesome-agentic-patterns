@@ -14,6 +14,37 @@ const patterns = await fetch('https://agentic-patterns.com/patterns.json')
 
 // Get selected patterns
 const selectedPatterns = patterns.filter((p: any) => selectedIds.includes(p.id));
+
+// Generate prompt pack from selected patterns
+function generatePromptPack(patterns: any[]): string {
+  if (patterns.length === 0) return '';
+
+  let prompt = `# AI Agent Design Patterns Prompt Pack\n\n`;
+  prompt += `This prompt pack contains ${patterns.length} pattern${patterns.length > 1 ? 's' : ''} for building AI agents.\n\n`;
+  prompt += `## Selected Patterns\n\n`;
+
+  patterns.forEach((pattern, index) => {
+    prompt += `### ${index + 1}. ${pattern.title}\n\n`;
+    if (pattern.summary) {
+      prompt += `**Summary:** ${pattern.summary}\n\n`;
+    }
+    prompt += `**Category:** ${pattern.category}\n`;
+    prompt += `**Status:** ${pattern.status}\n`;
+    if (pattern.tags && pattern.tags.length > 0) {
+      prompt += `**Tags:** ${pattern.tags.join(', ')}\n`;
+    }
+    prompt += `**Details:** https://agentic-patterns.com/patterns/${pattern.slug}\n\n`;
+  });
+
+  prompt += `## Usage\n\n`;
+  prompt += `Use these patterns as reference when designing your AI agent architecture. `;
+  prompt += `Each pattern represents a proven approach to solving specific challenges in agent development.\n\n`;
+  prompt += `For more details on each pattern, visit the individual pattern pages linked above.`;
+
+  return prompt;
+}
+
+const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatterns) : '';
 ---
 
 <BaseLayout title="Compare Patterns - Awesome Agentic Patterns">
@@ -56,13 +87,25 @@ const selectedPatterns = patterns.filter((p: any) => selectedIds.includes(p.id))
               <span class="compare-count">
                 Comparing {selectedPatterns.length} pattern{selectedPatterns.length !== 1 ? 's' : ''}
               </span>
-              <a
-                href={Astro.url.pathname + Astro.url.search}
-                class="share-link"
-                onclick={`navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Share', 2000); return false;`}
-              >
-                Share Link
-              </a>
+              <div class="compare-actions-buttons">
+                <button
+                  class="copy-prompt-button"
+                  onclick={`const promptPack = ${JSON.stringify(promptPack)}; navigator.clipboard.writeText(promptPack).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy Prompt Pack', 2000); });`}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6H10M6 9H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Copy Prompt Pack
+                </button>
+                <a
+                  href={Astro.url.pathname + Astro.url.search}
+                  class="share-link"
+                  onclick={`navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Share', 2000); return false;`}
+                >
+                  Share Link
+                </a>
+              </div>
             </div>
             <CompareTable patterns={selectedPatterns} />
           </>
@@ -185,6 +228,35 @@ const selectedPatterns = patterns.filter((p: any) => selectedIds.includes(p.id))
     font-size: 0.875rem;
     color: var(--color-text);
     font-weight: 500;
+  }
+
+  .compare-actions-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  .copy-prompt-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .copy-prompt-button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .copy-prompt-button svg {
+    flex-shrink: 0;
   }
 
   .share-link {

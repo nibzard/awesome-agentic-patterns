@@ -253,8 +253,8 @@
 - [x] 253 - Add "updated" badge logic using `updated_at`. [Added with 30-day filter and blue badge]
 - [x] 254 - Add category counts to filter UI. [Added counts for category, status, maturity, and complexity filters; sorted by count descending]
 - [x] 255 - Add `llms.txt` documentation section to `README.md`. [Created llms.txt with pattern catalog for AI assistants; added documentation section to README]
-- [ ] 256 - Add "Copy prompt pack" button on the compare page.
-- [ ] 257 - Implement prompt pack generator for selected patterns.
+- [x] 256 - Add "Copy prompt pack" button on the compare page. [Added with document icon and copy feedback]
+- [x] 257 - Implement prompt pack generator for selected patterns. [Implemented with formatted markdown output including summaries, categories, status, tags, and URLs]
 - [ ] 258 - Add citation format definition to `SPECIFICATION.md`.
 - [ ] 259 - Add citation copy UI to pattern pages.
 - [ ] 260 - Add stable section IDs for citations.
