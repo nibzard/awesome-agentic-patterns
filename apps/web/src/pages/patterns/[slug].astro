@@ -1,0 +1,340 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PatternMeta from '../../components/PatternMeta.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import CopyButton from '../../components/CopyButton.astro';
+
+export async function getStaticPaths() {
+  // Get all slugs from patterns.json
+  const patterns = await fetch('https://agentic-patterns.com/patterns.json')
+    .then(res => res.json())
+    .catch(() => []);
+
+  return patterns.map((pattern: any) => ({
+    params: { slug: pattern.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const pattern = await fetch(`https://agentic-patterns.com/patterns/${slug}.json`)
+  .then(res => res.json())
+  .catch(() => null);
+
+if (!pattern) {
+  return Astro.redirect('/404');
+}
+
+// Define sections for navigation
+const sections = [
+  { id: 'problem', label: 'Problem' },
+  { id: 'solution', label: 'Solution' },
+  ...(pattern.howToUseIt ? [{ id: 'how-to-use-it', label: 'How to Use It' }] : []),
+  ...(pattern.tradeoffs ? [{ id: 'tradeoffs', label: 'Trade-offs' }] : []),
+  ...(pattern.example ? [{ id: 'example', label: 'Example' }] : []),
+  ...(pattern.references ? [{ id: 'references', label: 'References' }] : []),
+];
+---
+
+<BaseLayout
+  title={`${pattern.title} - Awesome Agentic Patterns`}
+  description={pattern.summary}
+  type="article"
+>
+  <div class="pattern-page">
+    <div class="pattern-layout">
+      <!-- Sidebar Navigation -->
+      <aside class="pattern-sidebar">
+        <SectionNav sections={sections} />
+      </aside>
+
+      <!-- Main Content -->
+      <main class="pattern-content">
+        <article class="pattern-article">
+          <!-- Header -->
+          <header class="pattern-header">
+            <div class="pattern-meta-header">
+              <span class="pattern-status">{pattern.status}</span>
+              <span class="pattern-category">{pattern.category}</span>
+            </div>
+            <h1 class="pattern-title">{pattern.title}</h1>
+            {pattern.summary && (
+              <p class="pattern-summary">{pattern.summary}</p>
+            )}
+            {pattern.authors && pattern.authors.length > 0 && (
+              <div class="pattern-authors">
+                <span class="pattern-authors-label">Authors:</span>
+                {pattern.authors.map((author: string) => (
+                  <span class="pattern-author">{author}</span>
+                ))}
+              </div>
+            )}
+            {pattern.source && (
+              <div class="pattern-source">
+                <span class="pattern-source-label">Source:</span>
+                <a href={pattern.source} target="_blank" rel="noopener noreferrer" class="pattern-source-link">
+                  View Original
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 6H11M6 1L11 6L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            )}
+          </header>
+
+          <!-- Metadata -->
+          <PatternMeta
+            maturity={pattern.maturity}
+            complexity={pattern.complexity}
+            effort={pattern.effort}
+            impact={pattern.impact}
+            prerequisites={pattern.prerequisites}
+            tools={pattern.tools}
+            domains={pattern.domains}
+          />
+
+          <!-- Sections -->
+          <div class="pattern-body" set:html={pattern.body} />
+
+          <!-- References -->
+          {pattern.references && (
+            <section id="references" class="pattern-section">
+              <h2>References</h2>
+              <ul class="pattern-references">
+                {pattern.references.map((ref: string) => (
+                  <li>
+                    <a href={ref} target="_blank" rel="noopener noreferrer">
+                      {ref}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <!-- Copy Button for Pattern ID -->
+          <div class="pattern-actions">
+            <CopyButton content={pattern.id} label={`Copy ${pattern.id} ID`} />
+          </div>
+        </article>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .pattern-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .pattern-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+  }
+
+  .pattern-sidebar {
+    position: sticky;
+    top: 100px;
+  }
+
+  .pattern-content {
+    min-width: 0;
+  }
+
+  .pattern-article {
+    background-color: var(--color-bg);
+  }
+
+  .pattern-header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .pattern-meta-header {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-status,
+  .pattern-category {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pattern-status {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  .pattern-category {
+    background-color: var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .pattern-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+  }
+
+  .pattern-summary {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .pattern-authors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-authors-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .pattern-author {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+  }
+
+  .pattern-source {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .pattern-source-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .pattern-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .pattern-source-link:hover {
+    text-decoration: underline;
+  }
+
+  .pattern-source-link svg {
+    flex-shrink: 0;
+  }
+
+  .pattern-body {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .pattern-body :global(h2) {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-body :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .pattern-body :global(p) {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-body :global(pre) {
+    background-color: var(--color-border);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    background-color: var(--color-border);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .pattern-section {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-divider);
+  }
+
+  .pattern-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-references {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .pattern-references li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .pattern-references a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .pattern-references a:hover {
+    text-decoration: underline;
+  }
+
+  .pattern-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-divider);
+  }
+
+  @media (max-width: 768px) {
+    .pattern-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .pattern-sidebar {
+      position: static;
+    }
+
+    .pattern-title {
+      font-size: 2rem;
+    }
+  }
+</style>

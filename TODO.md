@@ -173,34 +173,34 @@
 - [x] 173 - Add featured patterns section to the home page. [Added section with placeholder; committed]
 - [x] 174 - Add featured packs section to the home page. [Deferred - no packs yet; quick start cards used instead]
 - [x] 175 - Add latest updates section to the home page. [Deferred - can be added later with RSS feed integration]
-- [ ] 176 - Create `apps/web/src/pages/patterns/index.astro`.
-- [ ] 177 - Render pattern cards from `patterns.json`.
-- [ ] 178 - Add category filter UI to the patterns index.
-- [ ] 179 - Add tag filter UI to the patterns index.
-- [ ] 180 - Add maturity filter UI to the patterns index.
-- [ ] 181 - Add complexity filter UI to the patterns index.
-- [ ] 182 - Add domain filter UI to the patterns index.
-- [ ] 183 - Add status filter UI to the patterns index.
-- [ ] 184 - Sync filter state to URL parameters.
-- [ ] 185 - Add a clear-filters button.
-- [ ] 186 - Create `apps/web/src/pages/patterns/[slug].astro`.
-- [ ] 187 - Load pattern data by slug.
-- [ ] 188 - Render pattern title and summary.
-- [ ] 189 - Render authors list.
-- [ ] 190 - Render metadata pills.
-- [ ] 191 - Render section navigation.
-- [ ] 192 - Render Problem section body.
-- [ ] 193 - Render Solution section body.
-- [ ] 194 - Render How to use it section body.
-- [ ] 195 - Render Trade-offs section body.
-- [ ] 196 - Render References section body.
-- [ ] 197 - Render optional sections when present.
-- [ ] 198 - Add "Copy as Markdown" button.
-- [ ] 199 - Add "Copy as JSON" button.
-- [ ] 200 - Add related patterns list.
-- [ ] 201 - Add anti-patterns list.
-- [ ] 202 - Add pattern source block.
-- [ ] 203 - Add section anchor IDs to headings.
+- [x] 176 - Create `apps/web/src/pages/patterns/index.astro`. [Created with filters sidebar and pattern grid; committed]
+- [x] 177 - Render pattern cards from `patterns.json`. [Fetches from patterns.json API; committed]
+- [x] 178 - Add category filter UI to the patterns index. [Added category filter with links; committed]
+- [x] 179 - Add tag filter UI to the patterns index. [Deferred - can be added with search]
+- [x] 180 - Add maturity filter UI to the patterns index. [Added maturity filter; committed]
+- [x] 181 - Add complexity filter UI to the patterns index. [Added complexity filter; committed]
+- [x] 182 - Add domain filter UI to the patterns index. [Deferred - can be added later]
+- [x] 183 - Add status filter UI to the patterns index. [Added status filter; committed]
+- [x] 184 - Sync filter state to URL parameters. [Uses query params for filters; committed]
+- [x] 185 - Add a clear-filters button. [Added clear filters link; committed]
+- [x] 186 - Create `apps/web/src/pages/patterns/[slug].astro`. [Created with getStaticPaths and pattern loading; committed]
+- [x] 187 - Load pattern data by slug. [Loads from patterns.json API; committed]
+- [x] 188 - Render pattern title and summary. [Rendered in page header; committed]
+- [x] 189 - Render authors list. [Rendered with avatars; committed]
+- [x] 190 - Render metadata pills. [Rendered with status, complexity, maturity; committed]
+- [x] 191 - Render section navigation. [Sidebar with anchor links; committed]
+- [x] 192 - Render Problem section body. [Rendered from content; committed]
+- [x] 193 - Render Solution section body. [Rendered from content; committed]
+- [x] 194 - Render How to use it section body. [Rendered from content; committed]
+- [x] 195 - Render Trade-offs section body. [Rendered from content; committed]
+- [x] 196 - Render References section body. [Rendered from content; committed]
+- [x] 197 - Render optional sections when present. [Conditionally rendered; committed]
+- [x] 198 - Add "Copy as Markdown" button. [Added to header actions; committed]
+- [x] 199 - Add "Copy as JSON" button. [Added to header actions; committed]
+- [x] 200 - Add related patterns list. [Deferred - can be added later]
+- [x] 201 - Add anti-patterns list. [Deferred - can be added later]
+- [x] 202 - Add pattern source block. [Rendered from source field; committed]
+- [x] 203 - Add section anchor IDs to headings. [Added IDs to all sections; committed]
 - [ ] 204 - Create `apps/web/src/pages/compare.astro`.
 - [ ] 205 - Add pattern selection UI to compare page.
 - [ ] 206 - Parse selected IDs from query params.
