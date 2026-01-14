@@ -1,0 +1,89 @@
+---
+type Variant = 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info';
+type Size = 'sm' | 'md' | 'lg';
+
+interface Props {
+  text: string;
+  variant?: Variant;
+  size?: Size;
+  href?: string;
+}
+
+const {
+  text,
+  variant = 'default',
+  size = 'md',
+  href
+} = Astro.props;
+
+const Tag = href ? 'a' : 'span';
+const tagProps = href ? { href } : {};
+
+const sizeClasses: Record<Size, string> = {
+  sm: 'badge--sm',
+  md: '',
+  lg: 'badge--lg',
+};
+---
+
+<Tag class:list={['badge', `badge--${variant}`, sizeClasses[size]]} {...tagProps}>
+  {text}
+</Tag>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .badge--sm {
+    font-size: 0.625rem;
+    padding: 2px var(--spacing-xs);
+  }
+
+  .badge--lg {
+    font-size: 0.875rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  /* Variants */
+  .badge--default {
+    color: var(--color-text-muted);
+    background-color: var(--color-border);
+  }
+
+  .badge--primary {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+
+  .badge--success {
+    color: var(--color-success);
+    background-color: rgba(16, 185, 129, 0.1);
+  }
+
+  .badge--warning {
+    color: var(--color-warning);
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+
+  .badge--error {
+    color: var(--color-error);
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+
+  .badge--info {
+    color: var(--color-info);
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+
+  /* Hover state for links */
+  a.badge:hover {
+    opacity: 0.8;
+  }
+</style>
