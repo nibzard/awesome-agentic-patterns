@@ -130,10 +130,10 @@
 - [x] 130 - Choose a code font family. [Completed in task 125 - ui-monospace font stack, commit a80d4c1]
 - [x] 131 - Add `apps/web/src/layouts/BaseLayout.astro`. [Created with SEO tags, theme colors, canonical URLs, updated index.astro, removed old Layout.astro, commit 1b46183]
 - [x] 132 - Add `apps/web/src/components/Header.astro`. [Created Header.astro with logo and navigation, responsive design with mobile breakpoint, updated BaseLayout to include Header, build verified working, committed (62b72ee)]
-- [ ] 133 - Add `apps/web/src/components/Footer.astro`.
-- [ ] 134 - Add primary nav links to `Header.astro`.
-- [ ] 135 - Add a theme toggle slot to `Header.astro`.
-- [ ] 136 - Add social links to `Footer.astro`.
+- [x] 133 - Add `apps/web/src/components/Footer.astro`. [Created Footer.astro with branding, sections (Resources, Community, Legal), copyright; updated BaseLayout to include Footer; build verified; committed (7816a3b)]
+- [x] 134 - Add primary nav links to `Header.astro`. [Already completed in task 132 - Header.astro includes nav links for Home (/), Compare (/compare), Graph (/graph), Packs (/packs), Guides (/guides)]
+- [x] 135 - Add theme toggle to Header.astro. [Created ThemeToggle.astro with sun/moon icons, localStorage persistence, prefers-color-scheme support, integrated into Header.astro, build verified, commit 8db40bc]
+- [x] 136 - Add social links to `Footer.astro`. [Added GitHub, Twitter, Discord links with SVG icons and hover effects; build verified; commit 0d96cb2]
 - [ ] 137 - Add font loading to `BaseLayout.astro`.
 - [ ] 138 - Add default SEO tags to `BaseLayout.astro`.
 - [ ] 139 - Add Open Graph tags to `BaseLayout.astro`.
