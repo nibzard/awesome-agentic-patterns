@@ -1,6 +1,4 @@
 ---
-import NewsletterCTA from './NewsletterCTA.astro';
-
 const currentYear = new Date().getFullYear();
 
 const footerSections = [
@@ -33,43 +31,32 @@ const footerSections = [
 
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <rect width="32" height="32" rx="6" fill="currentColor"></rect>
-          <path
-            d="M10 16L14 12L18 16L22 12"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-          <path
-            d="M10 22L14 18L18 22L22 18"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-        <div>
-          <p class="footer-title">Agentic Patterns</p>
-          <p class="footer-tagline">A curated catalogue of AI agent design patterns.</p>
-        </div>
-      </div>
-
-      <div class="footer-newsletter">
-        <NewsletterCTA
-          variant="compact"
-          title="Subscribe"
-          description="Get updates on new patterns."
-          buttonText="Join"
-        />
+    <div class="footer-brand">
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <rect width="32" height="32" rx="6" fill="currentColor"></rect>
+        <path
+          d="M10 16L14 12L18 16L22 12"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M10 22L14 18L18 22L22 18"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <div>
+        <p class="footer-title">Agentic Patterns</p>
+        <p class="footer-tagline">A curated catalogue of AI agent design patterns.</p>
       </div>
     </div>
 
@@ -153,25 +140,14 @@ const footerSections = [
     margin: 0 auto;
     padding: var(--spacing-2xl) var(--spacing-lg);
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     gap: var(--spacing-xl);
-  }
-
-  .footer-main {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: var(--spacing-xl);
-    align-items: start;
   }
 
   .footer-brand {
     display: flex;
     gap: var(--spacing-md);
     align-items: flex-start;
-  }
-
-  .footer-newsletter {
-    min-width: 0;
   }
 
   .footer-brand svg {
@@ -262,8 +238,8 @@ const footerSections = [
   }
 
   @media (max-width: 768px) {
-    .footer-main {
-      grid-template-columns: 1fr;
+    .footer-container {
+      flex-direction: column;
     }
 
     .footer-brand {
