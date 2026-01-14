@@ -61,7 +61,10 @@
   }
 
   /* Show sun icon in dark mode */
-  :global([data-theme='dark']) .theme-toggle .sun-icon,
+  :global([data-theme='dark']) .theme-toggle .sun-icon {
+    display: block;
+  }
+
   @media (prefers-color-scheme: dark) {
     .theme-toggle .sun-icon {
       display: block;
@@ -69,7 +72,10 @@
   }
 
   /* Show moon icon in light mode */
-  :global([data-theme='light']) .theme-toggle .moon-icon,
+  :global([data-theme='light']) .theme-toggle .moon-icon {
+    display: block;
+  }
+
   @media (prefers-color-scheme: light) {
     .theme-toggle .moon-icon {
       display: block;
