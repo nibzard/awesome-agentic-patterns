@@ -7,14 +7,15 @@ import type { PatternEntry } from '../../types';
 import { getAllPatterns } from '../../lib/patterns';
 import { renderMarkdown } from '../../lib/markdown';
 
-const allPatterns = await getAllPatterns();
-
 export async function getStaticPaths() {
-  return allPatterns.map((pattern) => ({
+  const patterns = await getAllPatterns();
+  return patterns.map((pattern) => ({
     params: { slug: pattern.slug },
     props: { pattern },
   }));
 }
+
+const allPatterns = await getAllPatterns();
 
 const { pattern } = Astro.props as { pattern: PatternEntry };
 

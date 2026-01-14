@@ -234,75 +234,74 @@ function getCategoryColor(category: string): string {
               </filter>
             </defs>
 
-            <!-- Edges -->
-            {
-              positionedEdges.map((edge) => (
-                <line
-                  x1={edge.x1}
-                  y1={edge.y1}
-                  x2={edge.x2}
-                  y2={edge.y2}
-                  stroke="var(--color-border)"
-                  stroke-width="2"
-                  class="graph-edge"
-                  data-edge
-                  data-source={edge.source}
-                  data-target={edge.target}
-                />
-              ))
-            }
+            <g id="graph-viewport">
+              <!-- Edges -->
+              {
+                positionedEdges.map((edge) => (
+                  <line
+                    x1={edge.x1}
+                    y1={edge.y1}
+                    x2={edge.x2}
+                    y2={edge.y2}
+                    stroke="var(--color-border)"
+                    stroke-width="2"
+                    class="graph-edge"
+                    data-edge
+                    data-source={edge.source}
+                    data-target={edge.target}
+                  />
+                ))
+              }
 
-            <!-- Nodes -->
-            {
-              positionedNodes.map((node: GraphNode & { x: number; y: number }) => {
-                const categoryColor = getCategoryColor(node.category);
+              <!-- Nodes -->
+              {
+                positionedNodes.map((node: GraphNode & { x: number; y: number }) => {
+                  const categoryColor = getCategoryColor(node.category);
 
-                return (
-                  <g
-                    class="graph-node"
-                    data-node-id={node.id}
-                    data-category={node.category}
-                    data-status={node.status}
-                    data-tags={(node.tags || []).join('|')}
-                    data-maturity={node.maturity || ''}
-                    data-domains={(node.domains || []).join('|')}
-                    data-summary={node.summary || ''}
-                    data-title={node.title}
-                    data-slug={node.slug}
-                    style="--category-color: {categoryColor}"
-                  >
-                    <circle
-                      cx={node.x}
-                      cy={node.y}
-                      r="24"
-                      fill={categoryColor}
-                      class="node-circle"
-                      data-node-circle={node.id}
-                    />
-                    <text x={node.x} y={node.y + 35} text-anchor="middle" class="node-label">
-                      {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
-                    </text>
-                    <foreignObject
-                      x={node.x - 100}
-                      y={node.y - 120}
-                      width="200"
-                      height="120"
-                      class="node-tooltip"
+                  return (
+                    <g
+                      class="graph-node"
+                      data-node-id={node.id}
+                      data-category={node.category}
+                      data-status={node.status}
+                      data-tags={(node.tags || []).join('|')}
+                      data-maturity={node.maturity || ''}
+                      data-domains={(node.domains || []).join('|')}
+                      data-summary={node.summary || ''}
+                      data-title={node.title}
+                      data-slug={node.slug}
+                      data-x={node.x}
+                      data-y={node.y}
+                      transform={`translate(${node.x} ${node.y})`}
+                      style="--category-color: {categoryColor}"
                     >
-                      <div xmlns="http://www.w3.org/1999/xhtml">
-                        <strong>{node.title}</strong>
-                        <span class="tooltip-category">{node.category}</span>
-                        <span class="tooltip-status">{node.status}</span>
-                        {node.summary && <span class="tooltip-summary">{node.summary}</span>}
-                      </div>
-                    </foreignObject>
-                    <a href={`/graph?node=${node.id}`} class="node-link" data-node-id={node.id}>
-                      <circle cx={node.x} cy={node.y} r="32" fill="transparent" />
-                    </a>
-                  </g>
-                );
-              })
-            }
+                      <circle
+                        cx="0"
+                        cy="0"
+                        r="24"
+                        fill={categoryColor}
+                        class="node-circle"
+                        data-node-circle={node.id}
+                      />
+                      <text x="0" y="35" text-anchor="middle" class="node-label">
+                        {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
+                      </text>
+                      <foreignObject x="-100" y="-120" width="200" height="120" class="node-tooltip">
+                        <div xmlns="http://www.w3.org/1999/xhtml">
+                          <strong>{node.title}</strong>
+                          <span class="tooltip-category">{node.category}</span>
+                          <span class="tooltip-status">{node.status}</span>
+                          {node.summary && <span class="tooltip-summary">{node.summary}</span>}
+                        </div>
+                      </foreignObject>
+                      <a href={`/graph?node=${node.id}`} class="node-link" data-node-id={node.id}>
+                        <circle cx="0" cy="0" r="32" fill="transparent" />
+                      </a>
+                    </g>
+                  );
+                })
+              }
+            </g>
           </svg>
         </div>
 
@@ -329,6 +328,17 @@ function getCategoryColor(category: string): string {
 </BaseLayout>
 
 <script>
+  import {
+    drag,
+    forceCenter,
+    forceCollide,
+    forceLink,
+    forceManyBody,
+    forceSimulation,
+    select,
+    zoom,
+  } from 'd3';
+
   const params = new URLSearchParams(window.location.search);
   const selectedCategories = params.getAll('category');
   const selectedStatuses = params.getAll('status');
@@ -355,6 +365,85 @@ function getCategoryColor(category: string): string {
   const detailBadges = document.getElementById('detail-badges');
   const detailLink = document.getElementById('detail-link');
   const detailClose = document.getElementById('detail-close');
+
+  const svg = document.querySelector('.graph-svg');
+  const viewport = document.getElementById('graph-viewport');
+  const svgSelection = svg ? select(svg) : null;
+
+  const nodes = Array.from(nodeElements)
+    .map((node) => ({
+      id: node.getAttribute('data-node-id') || '',
+      x: Number(node.getAttribute('data-x')) || 400,
+      y: Number(node.getAttribute('data-y')) || 300,
+    }))
+    .filter((node) => node.id);
+
+  const edges = Array.from(edgeElements)
+    .map((edge) => ({
+      source: edge.getAttribute('data-source'),
+      target: edge.getAttribute('data-target'),
+    }))
+    .filter((edge) => edge.source && edge.target);
+
+  const nodeSelection = svgSelection ? svgSelection.selectAll('.graph-node').data(nodes) : null;
+  const edgeSelection = svgSelection ? svgSelection.selectAll('[data-edge]').data(edges) : null;
+
+  if (svgSelection && viewport && nodes.length > 0) {
+    const viewBox = svg?.viewBox?.baseVal;
+    const width = viewBox?.width || 800;
+    const height = viewBox?.height || 600;
+
+    const simulation = forceSimulation(nodes)
+      .force('link', forceLink(edges).id((d) => d.id).distance(140).strength(0.25))
+      .force('charge', forceManyBody().strength(-240))
+      .force('center', forceCenter(width / 2, height / 2))
+      .force('collision', forceCollide(42))
+      .on('tick', () => {
+        edgeSelection
+          ?.attr('x1', (d) => d.source.x)
+          ?.attr('y1', (d) => d.source.y)
+          ?.attr('x2', (d) => d.target.x)
+          ?.attr('y2', (d) => d.target.y);
+
+        nodeSelection?.attr('transform', (d) => `translate(${d.x} ${d.y})`);
+      });
+
+    let dragMoved = false;
+    const dragBehavior = drag()
+      .on('start', (event, d) => {
+        dragMoved = false;
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      })
+      .on('drag', (event, d) => {
+        dragMoved = true;
+        d.fx = event.x;
+        d.fy = event.y;
+      })
+      .on('end', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      });
+
+    if (nodeSelection) {
+      nodeSelection.call(dragBehavior).on('click', (event) => {
+        if (!dragMoved) return;
+        event.preventDefault();
+        event.stopPropagation();
+        dragMoved = false;
+      });
+    }
+
+    const zoomBehavior = zoom()
+      .scaleExtent([0.5, 2.5])
+      .on('zoom', (event) => {
+        viewport.setAttribute('transform', event.transform.toString());
+      });
+
+    svgSelection.call(zoomBehavior);
+  }
 
   const applyFilters = () => {
     const visibleNodes = new Set();
@@ -672,6 +761,14 @@ function getCategoryColor(category: string): string {
 
   .graph-svg {
     display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .graph-svg:active {
+    cursor: grabbing;
   }
 
   .graph-edge {
@@ -679,7 +776,7 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-node {
-    cursor: pointer;
+    cursor: grab;
   }
 
   .node-circle {
