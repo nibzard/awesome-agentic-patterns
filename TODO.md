@@ -128,8 +128,8 @@
 - [x] 128 - Choose a heading font family. [Completed in task 125 - system-ui font stack, commit a80d4c1]
 - [x] 129 - Choose a body font family. [Completed in task 125 - system-ui font stack, commit a80d4c1]
 - [x] 130 - Choose a code font family. [Completed in task 125 - ui-monospace font stack, commit a80d4c1]
-- [ ] 131 - Add `apps/web/src/layouts/BaseLayout.astro`.
-- [ ] 132 - Add `apps/web/src/components/Header.astro`.
+- [x] 131 - Add `apps/web/src/layouts/BaseLayout.astro`. [Created with SEO tags, theme colors, canonical URLs, updated index.astro, removed old Layout.astro, commit 1b46183]
+- [x] 132 - Add `apps/web/src/components/Header.astro`. [Created Header.astro with logo and navigation, responsive design with mobile breakpoint, updated BaseLayout to include Header, build verified working, committed (62b72ee)]
 - [ ] 133 - Add `apps/web/src/components/Footer.astro`.
 - [ ] 134 - Add primary nav links to `Header.astro`.
 - [ ] 135 - Add a theme toggle slot to `Header.astro`.
