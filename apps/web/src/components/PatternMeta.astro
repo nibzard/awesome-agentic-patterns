@@ -1,0 +1,196 @@
+---
+interface Props {
+  maturity?: string;
+  complexity?: string;
+  effort?: string;
+  impact?: string;
+  prerequisites?: string[];
+  tools?: string[];
+  domains?: string[];
+}
+
+const {
+  maturity,
+  complexity,
+  effort,
+  impact,
+  prerequisites = [],
+  tools = [],
+  domains = [],
+} = Astro.props;
+
+// Helper function to get display label for values
+const getLabel = (value: string | undefined, type: string): string => {
+  if (!value) return '';
+  return value.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
+
+const hasMeta = maturity || complexity || effort || impact || prerequisites.length > 0 || tools.length > 0 || domains.length > 0;
+---
+
+{hasMeta && (
+  <aside class="pattern-meta">
+    <h2 class="pattern-meta-title">Pattern Details</h2>
+
+    <div class="pattern-meta-grid">
+      {maturity && (
+        <div class="meta-item">
+          <span class="meta-label">Maturity</span>
+          <span class="meta-value">{getLabel(maturity, 'maturity')}</span>
+        </div>
+      )}
+
+      {complexity && (
+        <div class="meta-item">
+          <span class="meta-label">Complexity</span>
+          <span class="meta-value">{getLabel(complexity, 'complexity')}</span>
+        </div>
+      )}
+
+      {effort && (
+        <div class="meta-item">
+          <span class="meta-label">Effort</span>
+          <span class="meta-value">{getLabel(effort, 'effort')}</span>
+        </div>
+      )}
+
+      {impact && (
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">{getLabel(impact, 'impact')}</span>
+        </div>
+      )}
+    </div>
+
+    {prerequisites.length > 0 && (
+      <div class="meta-section">
+        <h3 class="meta-section-title">Prerequisites</h3>
+        <ul class="meta-list">
+          {prerequisites.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {tools.length > 0 && (
+      <div class="meta-section">
+        <h3 class="meta-section-title">Tools</h3>
+        <ul class="meta-list">
+          {tools.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {domains.length > 0 && (
+      <div class="meta-section">
+        <h3 class="meta-section-title">Domains</h3>
+        <div class="meta-tags">
+          {domains.map(item => (
+            <span class="meta-tag">{item}</span>
+          ))}
+        </div>
+      </div>
+    )}
+  </aside>
+)}
+
+<style>
+  .pattern-meta {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .pattern-meta-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-md) 0;
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .pattern-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .meta-section {
+    margin-top: var(--spacing-lg);
+  }
+
+  .meta-section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+
+  .meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .meta-list li {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    padding: var(--spacing-xs) 0;
+    padding-left: var(--spacing-md);
+    position: relative;
+  }
+
+  .meta-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .meta-tag {
+    font-size: 0.75rem;
+    color: var(--color-text);
+    background-color: var(--color-border);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 640px) {
+    .pattern-meta-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
