@@ -1,0 +1,125 @@
+---
+interface Section {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  sections: Section[];
+  currentSection?: string;
+}
+
+const { sections, currentSection } = Astro.props;
+---
+
+<nav class="section-nav" aria-label="Section navigation">
+  <ul class="section-nav-list" role="list">
+    {sections.map(section => (
+      <li class="section-nav-item">
+        <a
+          href={`#${section.id}`}
+          class:list={['section-nav-link', { active: currentSection === section.id }]}
+          aria-current={currentSection === section.id ? 'true' : undefined}
+        >
+          {section.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .section-nav {
+    position: sticky;
+    top: 80px;
+    align-self: flex-start;
+    max-width: 200px;
+  }
+
+  .section-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .section-nav-link {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-left: 2px solid var(--color-border);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .section-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-primary);
+  }
+
+  .section-nav-link.active {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .section-nav {
+      position: static;
+      max-width: none;
+      margin-bottom: var(--spacing-lg);
+      overflow-x: auto;
+    }
+
+    .section-nav-list {
+      flex-direction: row;
+      padding-bottom: var(--spacing-sm);
+    }
+
+    .section-nav-link {
+      border-left: none;
+      border-bottom: 2px solid var(--color-border);
+      white-space: nowrap;
+    }
+
+    .section-nav-link:hover {
+      border-bottom-color: var(--color-primary);
+    }
+
+    .section-nav-link.active {
+      border-bottom-color: var(--color-primary);
+    }
+  }
+</style>
+
+<script>
+  // Intersection observer for active section highlighting
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.section-nav-link');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach((link) => {
+            link.classList.remove('active');
+            link.removeAttribute('aria-current');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+              link.setAttribute('aria-current', 'true');
+            }
+          });
+        }
+      });
+    },
+    {
+      rootMargin: '-80px 0px -80% 0px',
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+</script>
