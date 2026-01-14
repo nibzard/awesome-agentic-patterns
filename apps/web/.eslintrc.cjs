@@ -38,11 +38,5 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: [
-    'node_modules/',
-    'dist/',
-    '.astro/',
-    '*.config.js',
-    '*.config.mjs',
-  ],
+  ignorePatterns: ['node_modules/', 'dist/', '.astro/', '*.config.js', '*.config.mjs'],
 };

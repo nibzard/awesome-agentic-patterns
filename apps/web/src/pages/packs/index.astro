@@ -32,46 +32,58 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
     </div>
 
     <div class="packs-grid">
-      {sortedPacks.map((pack) => (
-        <a href={`/packs/${pack.slug}`} class="pack-card">
-          <div class="pack-card-content">
-            <h2 class="pack-title">{pack.data.title}</h2>
-            <p class="pack-summary">{pack.data.summary}</p>
+      {
+        sortedPacks.map((pack) => (
+          <a href={`/packs/${pack.slug}`} class="pack-card">
+            <div class="pack-card-content">
+              <h2 class="pack-title">{pack.data.title}</h2>
+              <p class="pack-summary">{pack.data.summary}</p>
 
-            <div class="pack-meta">
-              <span class="pack-patterns-count">
-                {pack.data.patterns?.length || 0} patterns
-              </span>
-              <span class="pack-domain">{pack.data.domain}</span>
+              <div class="pack-meta">
+                <span class="pack-patterns-count">{pack.data.patterns?.length || 0} patterns</span>
+                <span class="pack-domain">{pack.data.domain}</span>
+              </div>
             </div>
-          </div>
 
-          <div class="pack-card-footer">
-            <span class="pack-link">View Pack →</span>
-          </div>
-        </a>
-      ))}
+            <div class="pack-card-footer">
+              <span class="pack-link">View Pack →</span>
+            </div>
+          </a>
+        ))
+      }
     </div>
 
-    {sortedPacks.length === 0 && (
-      <div class="packs-empty">
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="64" height="64" rx="32" fill="var(--color-border)"/>
-          <path d="M20 32H44M32 20V44" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <h2>No Pattern Packs Yet</h2>
-        <p>Pattern packs are coming soon! Check back later for curated collections.</p>
-      </div>
-    )}
+    {
+      sortedPacks.length === 0 && (
+        <div class="packs-empty">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="64" height="64" rx="32" fill="var(--color-border)" />
+            <path
+              d="M20 32H44M32 20V44"
+              stroke="var(--color-text-muted)"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h2>No Pattern Packs Yet</h2>
+          <p>Pattern packs are coming soon! Check back later for curated collections.</p>
+        </div>
+      )
+    }
 
     <div class="packs-cta">
       <h2>Build Your Own Stack</h2>
       <p>
-        Explore individual patterns and mix and match them to create your own custom agent architecture.
+        Explore individual patterns and mix and match them to create your own custom agent
+        architecture.
       </p>
-      <a href="/patterns" class="button button--primary">
-        Browse All Patterns
-      </a>
+      <a href="/patterns" class="button button--primary"> Browse All Patterns </a>
     </div>
   </div>
 </BaseLayout>

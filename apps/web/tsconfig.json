@@ -21,14 +21,6 @@
     "checkJs": false,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.astro",
-    "src/**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    ".astro"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.astro", "src/**/*.d.ts"],
+  "exclude": ["node_modules", "dist", ".astro"]
 }

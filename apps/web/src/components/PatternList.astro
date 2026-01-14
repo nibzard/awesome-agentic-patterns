@@ -16,36 +16,47 @@ interface Props {
   emptyMessage?: string;
 }
 
-const {
-  patterns,
-  layout = 'grid',
-  emptyMessage = 'No patterns found.'
-} = Astro.props;
+const { patterns, layout = 'grid', emptyMessage = 'No patterns found.' } = Astro.props;
 ---
 
-{patterns.length > 0 ? (
-  <div class:list={['pattern-list', `pattern-list--${layout}`]}>
-    {patterns.map(pattern => (
-      <PatternCard
-        title={pattern.title}
-        slug={pattern.slug}
-        summary={pattern.summary}
-        status={pattern.status}
-        category={pattern.category}
-        tags={pattern.tags}
-      />
-    ))}
-  </div>
-) : (
-  <div class="pattern-list-empty">
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="48" height="48" rx="24" fill="var(--color-border)"/>
-      <path d="M24 16V24M24 32H24.02" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-    <p class="pattern-list-empty-text">{emptyMessage}</p>
-    <a href="/patterns" class="pattern-list-empty-link">Browse All Patterns</a>
-  </div>
-)}
+{
+  patterns.length > 0 ? (
+    <div class:list={['pattern-list', `pattern-list--${layout}`]}>
+      {patterns.map((pattern) => (
+        <PatternCard
+          title={pattern.title}
+          slug={pattern.slug}
+          summary={pattern.summary}
+          status={pattern.status}
+          category={pattern.category}
+          tags={pattern.tags}
+        />
+      ))}
+    </div>
+  ) : (
+    <div class="pattern-list-empty">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="48" height="48" rx="24" fill="var(--color-border)" />
+        <path
+          d="M24 16V24M24 32H24.02"
+          stroke="var(--color-text-muted)"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+      <p class="pattern-list-empty-text">{emptyMessage}</p>
+      <a href="/patterns" class="pattern-list-empty-link">
+        Browse All Patterns
+      </a>
+    </div>
+  )
+}
 
 <style>
   .pattern-list {

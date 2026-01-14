@@ -19,9 +19,9 @@ const {
 
 // Status badge colors
 const statusColors: Record<string, string> = {
-  'proposed': 'var(--color-text-muted)',
-  'emerging': 'var(--color-info)',
-  'established': 'var(--color-primary)',
+  proposed: 'var(--color-text-muted)',
+  emerging: 'var(--color-info)',
+  established: 'var(--color-primary)',
   'validated-in-production': 'var(--color-success)',
   'best-practice': 'var(--color-success)',
   'experimental-but-awesome': 'var(--color-warning)',
@@ -33,24 +33,27 @@ const statusColors: Record<string, string> = {
   <a href={`/patterns/${slug}`} class="pattern-card-link">
     <div class="pattern-card-header">
       <h3 class="pattern-card-title">{title}</h3>
-      <span class="pattern-card-status" style={`--status-color: ${statusColors[status] || 'var(--color-text-muted)'}`}>
+      <span
+        class="pattern-card-status"
+        style={`--status-color: ${statusColors[status] || 'var(--color-text-muted)'}`}
+      >
         {status}
       </span>
     </div>
 
-    {summary && (
-      <p class="pattern-card-summary">{summary}</p>
-    )}
+    {summary && <p class="pattern-card-summary">{summary}</p>}
 
     <div class="pattern-card-footer">
       <span class="pattern-card-category">{category}</span>
-      {tags.length > 0 && (
-        <div class="pattern-card-tags">
-          {tags.slice(0, 3).map(tag => (
-            <span class="pattern-card-tag">{tag}</span>
-          ))}
-        </div>
-      )}
+      {
+        tags.length > 0 && (
+          <div class="pattern-card-tags">
+            {tags.slice(0, 3).map((tag) => (
+              <span class="pattern-card-tag">{tag}</span>
+            ))}
+          </div>
+        )
+      }
     </div>
   </a>
 </article>
@@ -60,7 +63,9 @@ const statusColors: Record<string, string> = {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background-color: var(--color-bg);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    transition:
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
     overflow: hidden;
   }
 

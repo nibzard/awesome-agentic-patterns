@@ -1,7 +1,7 @@
 ---
-title: "Coding Agent MVP"
-summary: "Essential patterns for building a minimum viable AI coding agent that can write, debug, and improve code."
-domain: "Software Development"
+title: 'Coding Agent MVP'
+summary: 'Essential patterns for building a minimum viable AI coding agent that can write, debug, and improve code.'
+domain: 'Software Development'
 patterns:
   - specification-driven-agent-development
   - code-then-execute-pattern
@@ -24,21 +24,25 @@ This pack provides the foundational patterns needed to build a functional AI cod
 ## Patterns Included
 
 ### 1. Specification-Driven Agent Development
+
 The foundation of reliable coding agents. By defining clear specifications upfront, the agent can work towards well-defined goals rather than improvising.
 
 **Why it's essential**: Prevents scope creep and ensures the agent understands what it's building.
 
 ### 2. Code-Then-Execute Pattern
+
 Separates code generation from execution, allowing for review and validation before running any code.
 
 **Why it's essential**: Provides a safety buffer and enables human-in-the-loop workflows.
 
 ### 3. Human-in-Loop Approval Framework
+
 Requires human approval for potentially risky operations like file modifications or external API calls.
 
 **Why it's essential**: Critical for building trust and preventing unintended consequences.
 
 ### 4. LLM Observability
+
 Gives visibility into the agent's reasoning, decisions, and operations.
 
 **Why it's essential**: Essential for debugging, understanding agent behavior, and building trust.
@@ -46,17 +50,21 @@ Gives visibility into the agent's reasoning, decisions, and operations.
 ## Implementation Considerations
 
 ### Start Simple
+
 Begin with read-only operations and gradually add write permissions as you build confidence in the agent.
 
 ### Clear Communication
+
 Ensure your agent clearly communicates what it's doing and why, especially when requesting human approval.
 
 ### Iterative Improvement
+
 Use observability data to identify common failure modes and refine your agent's behavior over time.
 
 ## Next Steps
 
 Once you've mastered these patterns, consider:
+
 - Adding **Reflection** for self-correction
 - Implementing **Asynchronous Coding Agent Pipeline** for parallel work
 - Exploring **Tool Use Incentivization via Reward Shaping** for complex tasks

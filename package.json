@@ -13,10 +13,12 @@
     "migrate:patterns:dry": "bun scripts/migrate-patterns.ts --dry-run",
     "dev": "bun --cwd apps/web dev",
     "build": "bun --cwd apps/web build",
-    "preview": "bun --cwd apps/web preview"
+    "preview": "bun --cwd apps/web preview",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/mdast": "^4.0.4",
+    "husky": "^9.1.7",
     "wrangler": "^4.18.0"
   },
   "dependencies": {

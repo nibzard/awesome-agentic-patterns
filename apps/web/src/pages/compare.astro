@@ -8,7 +8,7 @@ const selectedIds = searchParams.get('ids')?.split(',').filter(Boolean) || [];
 
 // Load patterns data
 const patterns = await fetch('https://agentic-patterns.com/patterns.json')
-  .then(res => res.json())
+  .then((res) => res.json())
   .catch(() => []);
 
 // Get selected patterns
@@ -50,9 +50,7 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
   <div class="compare-page">
     <header class="compare-header">
       <h1>Compare Patterns</h1>
-      <p class="compare-subtitle">
-        Select and compare AI agent design patterns side by side.
-      </p>
+      <p class="compare-subtitle">Select and compare AI agent design patterns side by side.</p>
     </header>
 
     <div class="compare-layout">
@@ -60,18 +58,20 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
       <aside class="compare-selection">
         <h2 class="compare-selection-title">Select Patterns</h2>
         <div class="compare-selection-list">
-          {patterns.map((pattern: any) => (
-            <label class="compare-selection-item">
-              <input
-                type="checkbox"
-                name="pattern"
-                value={pattern.id}
-                checked={selectedIds.includes(pattern.id)}
-                onchange={`const ids = Array.from(document.querySelectorAll('input[name="pattern"]:checked')).map(el => el.value); window.location.href = ids.length > 0 ? '/compare?ids=' + ids.join(',') : '/compare';`}
-              />
-              <span class="compare-selection-label">{pattern.title}</span>
-            </label>
-          ))}
+          {
+            patterns.map((pattern: any) => (
+              <label class="compare-selection-item">
+                <input
+                  type="checkbox"
+                  name="pattern"
+                  value={pattern.id}
+                  checked={selectedIds.includes(pattern.id)}
+                  onchange={`const ids = Array.from(document.querySelectorAll('input[name="pattern"]:checked')).map(el => el.value); window.location.href = ids.length > 0 ? '/compare?ids=' + ids.join(',') : '/compare';`}
+                />
+                <span class="compare-selection-label">{pattern.title}</span>
+              </label>
+            ))
+          }
         </div>
         <div class="compare-selection-actions">
           <a href="/compare" class="button button--secondary">Clear Selection</a>
@@ -80,44 +80,75 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
 
       <!-- Comparison Table -->
       <div class="compare-content">
-        {selectedPatterns.length > 0 ? (
-          <>
-            <div class="compare-actions">
-              <span class="compare-count">
-                Comparing {selectedPatterns.length} pattern{selectedPatterns.length !== 1 ? 's' : ''}
-              </span>
-              <div class="compare-actions-buttons">
-                <button
-                  class="copy-prompt-button"
-                  onclick={`const promptPack = ${JSON.stringify(promptPack)}; navigator.clipboard.writeText(promptPack).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy Prompt Pack', 2000); });`}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M6 6H10M6 9H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  </svg>
-                  Copy Prompt Pack
-                </button>
-                <a
-                  href={Astro.url.pathname + Astro.url.search}
-                  class="share-link"
-                  onclick={`navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Share', 2000); return false;`}
-                >
-                  Share Link
-                </a>
+        {
+          selectedPatterns.length > 0 ? (
+            <>
+              <div class="compare-actions">
+                <span class="compare-count">
+                  Comparing {selectedPatterns.length} pattern
+                  {selectedPatterns.length !== 1 ? 's' : ''}
+                </span>
+                <div class="compare-actions-buttons">
+                  <button
+                    class="copy-prompt-button"
+                    onclick={`const promptPack = ${JSON.stringify(promptPack)}; navigator.clipboard.writeText(promptPack).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy Prompt Pack', 2000); });`}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4 2H12C12.5523 2 13 2.44772 13 3V13C13 13.5523 12.5523 14 12 14H4C3.44772 14 3 13.5523 3 13V3C3 2.44772 3.44772 2 4 2Z"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6 6H10M6 9H10"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                    Copy Prompt Pack
+                  </button>
+                  <a
+                    href={Astro.url.pathname + Astro.url.search}
+                    class="share-link"
+                    onclick={`navigator.clipboard.writeText(window.location.href); this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Share', 2000); return false;`}
+                  >
+                    Share Link
+                  </a>
+                </div>
               </div>
+              <CompareTable patterns={selectedPatterns} />
+            </>
+          ) : (
+            <div class="compare-empty">
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="64" height="64" rx="32" fill="var(--color-border)" />
+                <path
+                  d="M20 32H44M32 20V44"
+                  stroke="var(--color-text-muted)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h2>Select Patterns to Compare</h2>
+              <p>Choose 2 or more patterns from the list to see a side-by-side comparison.</p>
             </div>
-            <CompareTable patterns={selectedPatterns} />
-          </>
-        ) : (
-          <div class="compare-empty">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="64" height="64" rx="32" fill="var(--color-border)"/>
-              <path d="M20 32H44M32 20V44" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <h2>Select Patterns to Compare</h2>
-            <p>Choose 2 or more patterns from the list to see a side-by-side comparison.</p>
-          </div>
-        )}
+          )
+        }
       </div>
     </div>
   </div>
@@ -193,7 +224,7 @@ const promptPack = selectedPatterns.length > 0 ? generatePromptPack(selectedPatt
     background-color: var(--color-border);
   }
 
-  .compare-selection-item input[type="checkbox"] {
+  .compare-selection-item input[type='checkbox'] {
     margin-top: 2px;
     cursor: pointer;
   }

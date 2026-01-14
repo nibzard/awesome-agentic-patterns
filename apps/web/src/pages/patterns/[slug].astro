@@ -39,9 +39,7 @@ const references = extractSection(pattern.body, 'References');
       <h1>{pattern.title}</h1>
       {pattern.summary && <p class="pattern-summary">{pattern.summary}</p>}
       <div class="pattern-authors">
-        {pattern.authors.map((author) => (
-          <span class="author">{author}</span>
-        ))}
+        {pattern.authors.map((author) => <span class="author">{author}</span>)}
       </div>
     </header>
 
@@ -55,60 +53,72 @@ const references = extractSection(pattern.body, 'References');
     </nav>
 
     <article class="pattern-content">
-      {problem && (
-        <section id="problem" class="pattern-section">
-          <h2>Problem</h2>
-          <div set:html={problem} />
-        </section>
-      )}
+      {
+        problem && (
+          <section id="problem" class="pattern-section">
+            <h2>Problem</h2>
+            <div set:html={problem} />
+          </section>
+        )
+      }
 
-      {solution && (
-        <section id="solution" class="pattern-section">
-          <h2>Solution</h2>
-          <div set:html={solution} />
-        </section>
-      )}
+      {
+        solution && (
+          <section id="solution" class="pattern-section">
+            <h2>Solution</h2>
+            <div set:html={solution} />
+          </section>
+        )
+      }
 
-      {howToUseIt && (
-        <section id="how-to-use" class="pattern-section">
-          <h2>How to use it</h2>
-          <div set:html={howToUseIt} />
-        </section>
-      )}
+      {
+        howToUseIt && (
+          <section id="how-to-use" class="pattern-section">
+            <h2>How to use it</h2>
+            <div set:html={howToUseIt} />
+          </section>
+        )
+      }
 
-      {tradeoffs && (
-        <section id="tradeoffs" class="pattern-section">
-          <h2>Trade-offs</h2>
-          <div set:html={tradeoffs} />
-        </section>
-      )}
+      {
+        tradeoffs && (
+          <section id="tradeoffs" class="pattern-section">
+            <h2>Trade-offs</h2>
+            <div set:html={tradeoffs} />
+          </section>
+        )
+      }
 
-      {example && (
-        <section id="example" class="pattern-section">
-          <h2>Example</h2>
-          <div set:html={example} />
-        </section>
-      )}
+      {
+        example && (
+          <section id="example" class="pattern-section">
+            <h2>Example</h2>
+            <div set:html={example} />
+          </section>
+        )
+      }
 
-      {references && (
-        <section id="references" class="pattern-section">
-          <h2>References</h2>
-          <div set:html={references} />
-        </section>
-      )}
+      {
+        references && (
+          <section id="references" class="pattern-section">
+            <h2>References</h2>
+            <div set:html={references} />
+          </section>
+        )
+      }
 
-      {pattern.source && (
-        <div class="pattern-source-section">
-          <PatternSource source={pattern.source} />
-        </div>
-      )}
+      {
+        pattern.source && (
+          <div class="pattern-source-section">
+            <PatternSource source={pattern.source} />
+          </div>
+        )
+      }
     </article>
 
     <footer class="pattern-footer">
       <div class="pattern-tags">
-        {pattern.tags.map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
+        {pattern.tags.map((tag) => <span class="tag">{tag}</span>)}
       </div>
       <a href="/patterns" class="back-link">← Back to Patterns</a>
     </footer>

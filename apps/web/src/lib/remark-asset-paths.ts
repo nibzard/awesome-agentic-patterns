@@ -15,8 +15,8 @@
  * Also handles src attributes in HTML <img> tags.
  */
 
-import { visit } from "unist-util-visit";
-import type { Root, Html, Image } from "mdast";
+import { visit } from 'unist-util-visit';
+import type { Root, Html, Image } from 'mdast';
 
 type RootNode = Root;
 
@@ -32,12 +32,12 @@ interface Options {
  * Remark plugin to transform relative image paths to absolute paths
  */
 export function remarkAssetPaths(options: Options = {}) {
-  const { basePath = "" } = options;
+  const { basePath = '' } = options;
 
   return (tree: RootNode) => {
     visit(tree, (node) => {
       // Handle markdown images: ![alt](path)
-      if (node.type === "image") {
+      if (node.type === 'image') {
         const img = node as Image;
         if (img.url && !isAbsoluteUrl(img.url)) {
           img.url = normalizePath(img.url, basePath);
@@ -45,7 +45,7 @@ export function remarkAssetPaths(options: Options = {}) {
       }
 
       // Handle HTML <img> tags in markdown
-      if (node.type === "html") {
+      if (node.type === 'html') {
         const html = node as Html;
         html.value = transformHtmlImages(html.value, basePath);
       }
@@ -58,11 +58,11 @@ export function remarkAssetPaths(options: Options = {}) {
  */
 function isAbsoluteUrl(url: string): boolean {
   return (
-    url.startsWith("/") ||
-    url.startsWith("http://") ||
-    url.startsWith("https://") ||
-    url.startsWith("data:") ||
-    url.startsWith("#")
+    url.startsWith('/') ||
+    url.startsWith('http://') ||
+    url.startsWith('https://') ||
+    url.startsWith('data:') ||
+    url.startsWith('#')
   );
 }
 
@@ -72,15 +72,15 @@ function isAbsoluteUrl(url: string): boolean {
  */
 function normalizePath(path: string, basePath: string): string {
   // Remove leading ./ or ../
-  let normalized = path.replace(/^(\.\.?\/)+/, "");
+  let normalized = path.replace(/^(\.\.?\/)+/, '');
 
   // If path doesn't start with /, prepend base path
-  if (!normalized.startsWith("/")) {
+  if (!normalized.startsWith('/')) {
     normalized = `${basePath}/${normalized}`;
   }
 
   // Remove duplicate slashes
-  normalized = normalized.replace(/\/+/g, "/");
+  normalized = normalized.replace(/\/+/g, '/');
 
   return normalized;
 }

@@ -38,40 +38,50 @@ const patterns = pack.data.patterns || [];
           <Content />
         </div>
 
-        {patterns.length > 0 && (
-          <div class="pack-patterns-section">
-            <h2>Patterns in This Pack</h2>
-            <div class="pack-patterns-list">
-              {patterns.map((patternSlug: string) => (
-                <a href={`/patterns/${patternSlug}`} class="pack-pattern-item">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="currentColor"/>
-                  </svg>
-                  <span>{patternSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
-                  <span class="pack-pattern-arrow">→</span>
-                </a>
-              ))}
+        {
+          patterns.length > 0 && (
+            <div class="pack-patterns-section">
+              <h2>Patterns in This Pack</h2>
+              <div class="pack-patterns-list">
+                {patterns.map((patternSlug: string) => (
+                  <a href={`/patterns/${patternSlug}`} class="pack-pattern-item">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                    <span>
+                      {patternSlug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
+                    </span>
+                    <span class="pack-pattern-arrow">→</span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
       </div>
 
       <aside class="pack-detail-sidebar">
         <div class="pack-detail-info">
           <h3>About This Pack</h3>
           <p>
-            This pack combines {patterns.length} complementary patterns to address
-            the {pack.data.domain?.toLowerCase() || 'specific'} domain.
+            This pack combines {patterns.length} complementary patterns to address the {
+              pack.data.domain?.toLowerCase() || 'specific'
+            } domain.
           </p>
         </div>
 
         <div class="pack-detail-actions">
-          <a href="/decision" class="button button--secondary">
-            Find More Patterns
-          </a>
-          <a href="/compare" class="button button--secondary">
-            Compare Patterns
-          </a>
+          <a href="/decision" class="button button--secondary"> Find More Patterns </a>
+          <a href="/compare" class="button button--secondary"> Compare Patterns </a>
         </div>
       </aside>
     </div>

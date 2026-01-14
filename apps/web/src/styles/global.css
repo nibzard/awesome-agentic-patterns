@@ -67,7 +67,9 @@
 }
 
 /* Global CSS Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -88,7 +90,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
   font-weight: 600;
 }
@@ -130,4 +137,3 @@ img {
     border-color: var(--color-border);
   }
 }
-

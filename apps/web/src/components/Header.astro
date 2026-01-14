@@ -19,35 +19,70 @@ const navItems = [
 <header class="header">
   <div class="header-container">
     <a href="/" class="logo">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="32" height="32" rx="6" fill="currentColor"/>
-        <path d="M10 16L14 12L18 16L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10 22L14 18L18 22L22 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <rect width="32" height="32" rx="6" fill="currentColor"></rect>
+        <path
+          d="M10 16L14 12L18 16L22 12"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M10 22L14 18L18 22L22 18"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
       </svg>
       <span>Agentic Patterns</span>
     </a>
 
     <nav class="nav" aria-label="Main navigation">
       <ul class="nav-list">
-        {navItems.map(item => (
-          <li class="nav-item">
-            <a
-              href={item.href}
-              class:list={['nav-link', { active: currentPath === item.href }]}
-              aria-current={currentPath === item.href ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
+        {
+          navItems.map((item) => (
+            <li class="nav-item">
+              <a
+                href={item.href}
+                class:list={['nav-link', { active: currentPath === item.href }]}
+                aria-current={currentPath === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
     <div class="header-actions">
       <button id="search-toggle" class="search-toggle" aria-label="Search">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 17A8 8 0 1 0 9 1A8 8 0 0 0 9 17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M19 19L13.5 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 17A8 8 0 1 0 9 1A8 8 0 0 0 9 17Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M19 19L13.5 13.5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
         <span>Search</span>
       </button>
@@ -59,9 +94,26 @@ const navItems = [
       <div class="search-backdrop"></div>
       <div class="search-container">
         <div class="search-input-wrapper">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
-            <path d="M9 17A8 8 0 1 0 9 1A8 8 0 0 0 9 17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M19 19L13.5 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="search-icon"
+          >
+            <path
+              d="M9 17A8 8 0 1 0 9 1A8 8 0 0 0 9 17Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <path
+              d="M19 19L13.5 13.5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
           </svg>
           <input
             id="search-input"
@@ -114,7 +166,8 @@ const navItems = [
         currentQuery = query;
 
         if (query.trim().length < 2) {
-          searchResults.innerHTML = '<div class="search-empty">Enter at least 2 characters to search</div>';
+          searchResults.innerHTML =
+            '<div class="search-empty">Enter at least 2 characters to search</div>';
           return;
         }
 
@@ -132,7 +185,9 @@ const navItems = [
           return;
         }
 
-        searchResults.innerHTML = currentResults.map((result, index) => `
+        searchResults.innerHTML = currentResults
+          .map(
+            (result, index) => `
           <a
             href="${result.url}"
             class="search-result ${index === selectedIndex ? 'search-result--selected' : ''}"
@@ -141,7 +196,9 @@ const navItems = [
             <div class="search-result-title">${result.meta?.title || 'Untitled'}</div>
             <div class="search-result-excerpt">${result.meta?.excerpt || ''}</div>
           </a>
-        `).join('');
+        `
+          )
+          .join('');
       }
 
       // Open search modal
@@ -257,7 +314,9 @@ const navItems = [
     text-decoration: none;
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-md);
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
   }
 
   .nav-link:hover {

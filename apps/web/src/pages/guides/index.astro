@@ -25,47 +25,60 @@ const sortedGuides = guides.sort((a, b) => {
 
     <div class="guides-intro">
       <p>
-        These guides provide detailed explanations, practical examples, and implementation
-        advice for working with AI agent design patterns. Whether you're just getting started
-        or looking to deepen your understanding, you'll find valuable resources here.
+        These guides provide detailed explanations, practical examples, and implementation advice
+        for working with AI agent design patterns. Whether you're just getting started or looking to
+        deepen your understanding, you'll find valuable resources here.
       </p>
     </div>
 
     <div class="guides-list">
-      {sortedGuides.map((guide) => (
-        <a href={`/guides/${guide.slug}`} class="guide-card">
-          <div class="guide-card-content">
-            <h2 class="guide-title">{guide.data.title}</h2>
-            <p class="guide-description">{guide.data.description}</p>
-          </div>
+      {
+        sortedGuides.map((guide) => (
+          <a href={`/guides/${guide.slug}`} class="guide-card">
+            <div class="guide-card-content">
+              <h2 class="guide-title">{guide.data.title}</h2>
+              <p class="guide-description">{guide.data.description}</p>
+            </div>
 
-          <div class="guide-card-footer">
-            <span class="guide-link">Read Guide →</span>
-          </div>
-        </a>
-      ))}
+            <div class="guide-card-footer">
+              <span class="guide-link">Read Guide →</span>
+            </div>
+          </a>
+        ))
+      }
     </div>
 
-    {sortedGuides.length === 0 && (
-      <div class="guides-empty">
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="64" height="64" rx="32" fill="var(--color-border)"/>
-          <path d="M20 32H44M32 20V44" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <h2>No Guides Yet</h2>
-        <p>Guides are coming soon! Check back later for in-depth resources.</p>
-      </div>
-    )}
+    {
+      sortedGuides.length === 0 && (
+        <div class="guides-empty">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="64" height="64" rx="32" fill="var(--color-border)" />
+            <path
+              d="M20 32H44M32 20V44"
+              stroke="var(--color-text-muted)"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h2>No Guides Yet</h2>
+          <p>Guides are coming soon! Check back later for in-depth resources.</p>
+        </div>
+      )
+    }
 
     <div class="guides-cta">
       <h2>Ready to Explore Patterns?</h2>
       <p>
-        Browse our comprehensive catalogue of AI agent design patterns to find the right
-        patterns for your use case.
+        Browse our comprehensive catalogue of AI agent design patterns to find the right patterns
+        for your use case.
       </p>
-      <a href="/patterns" class="button button--primary">
-        Browse All Patterns
-      </a>
+      <a href="/patterns" class="button button--primary"> Browse All Patterns </a>
     </div>
   </div>
 </BaseLayout>

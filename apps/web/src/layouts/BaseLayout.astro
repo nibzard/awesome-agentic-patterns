@@ -14,7 +14,7 @@ const {
   title = 'Awesome Agentic Patterns',
   description = 'A curated catalogue of AI agent design patterns.',
   image = '/og-image.png',
-  type = 'website'
+  type = 'website',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -28,7 +28,7 @@ const themeScript = `
 `;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />

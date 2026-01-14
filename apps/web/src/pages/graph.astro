@@ -2,7 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Load graph data
-const graphData = await fetch('/graph.json').then(res => res.json()).catch(() => ({ nodes: [], edges: [] }));
+const graphData = await fetch('/graph.json')
+  .then((res) => res.json())
+  .catch(() => ({ nodes: [], edges: [] }));
 
 // Get unique values for filters
 const categories = [...new Set(graphData.nodes.map((n: any) => n.category))].sort();
@@ -19,14 +21,17 @@ const _selectedDomains = searchParams.getAll('domain') || [];
 const filteredNodes = graphData.nodes.filter((node: any) => {
   if (selectedCategories.length > 0 && !selectedCategories.includes(node.category)) return false;
   if (selectedStatuses.length > 0 && !selectedStatuses.includes(node.status)) return false;
-  if (selectedTags.length > 0 && !node.tags?.some((t: string) => selectedTags.includes(t))) return false;
+  if (selectedTags.length > 0 && !node.tags?.some((t: string) => selectedTags.includes(t)))
+    return false;
   // Domain filter - you can add domain field to nodes if needed
   return true;
 });
 
 // Get selected node from URL
 const selectedNodeId = searchParams.get('node');
-const selectedNode = selectedNodeId ? graphData.nodes.find((n: any) => n.id === selectedNodeId) : null;
+const selectedNode = selectedNodeId
+  ? graphData.nodes.find((n: any) => n.id === selectedNodeId)
+  : null;
 
 // Get all unique tags
 const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].sort();
@@ -36,9 +41,7 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
   <div class="graph-page">
     <header class="graph-header">
       <h1>Pattern Graph</h1>
-      <p class="graph-subtitle">
-        Explore relationships between AI agent design patterns.
-      </p>
+      <p class="graph-subtitle">Explore relationships between AI agent design patterns.</p>
     </header>
 
     <div class="graph-layout">
@@ -47,60 +50,74 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
         <div class="filter-section">
           <h3 class="filter-title">Category</h3>
           <div class="filter-options">
-            {categories.map(category => {
-              const isChecked = selectedCategories.includes(category);
-              const newCategories = isChecked
-                ? selectedCategories.filter((c: string) => c !== category)
-                : [...selectedCategories, category];
-              const newParams = new URLSearchParams(searchParams);
-              newParams.delete('category');
-              newCategories.forEach((c: string) => newParams.append('category', c));
+            {
+              categories.map((category) => {
+                const isChecked = selectedCategories.includes(category);
+                const newCategories = isChecked
+                  ? selectedCategories.filter((c: string) => c !== category)
+                  : [...selectedCategories, category];
+                const newParams = new URLSearchParams(searchParams);
+                newParams.delete('category');
+                newCategories.forEach((c: string) => newParams.append('category', c));
 
-              return (
-                <label class="filter-option">
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onchange={`window.location.href = '/graph?${newParams.toString()}'`}
-                  />
-                  <span>{category}</span>
-                  <span class="filter-count">{graphData.nodes.filter((n: any) => n.category === category).length}</span>
-                </label>
-              );
-            })}
+                return (
+                  <label class="filter-option">
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onchange={`window.location.href = '/graph?${newParams.toString()}'`}
+                    />
+                    <span>{category}</span>
+                    <span class="filter-count">
+                      {graphData.nodes.filter((n: any) => n.category === category).length}
+                    </span>
+                  </label>
+                );
+              })
+            }
           </div>
         </div>
 
         <div class="filter-section">
           <h3 class="filter-title">Maturity</h3>
           <div class="filter-options">
-            {statuses.map(status => {
-              const isChecked = selectedStatuses.includes(status);
-              const newStatuses = isChecked
-                ? selectedStatuses.filter((s: string) => s !== status)
-                : [...selectedStatuses, status];
-              const newParams = new URLSearchParams(searchParams);
-              newParams.delete('status');
-              newStatuses.forEach((s: string) => newParams.append('status', s));
+            {
+              statuses.map((status) => {
+                const isChecked = selectedStatuses.includes(status);
+                const newStatuses = isChecked
+                  ? selectedStatuses.filter((s: string) => s !== status)
+                  : [...selectedStatuses, status];
+                const newParams = new URLSearchParams(searchParams);
+                newParams.delete('status');
+                newStatuses.forEach((s: string) => newParams.append('status', s));
 
-              return (
-                <label class="filter-option">
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onchange={`window.location.href = '/graph?${newParams.toString()}'`}
-                  />
-                  <span>{status}</span>
-                  <span class="filter-count">{graphData.nodes.filter((n: any) => n.status === status).length}</span>
-                </label>
-              );
-            })}
+                return (
+                  <label class="filter-option">
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onchange={`window.location.href = '/graph?${newParams.toString()}'`}
+                    />
+                    <span>{status}</span>
+                    <span class="filter-count">
+                      {graphData.nodes.filter((n: any) => n.status === status).length}
+                    </span>
+                  </label>
+                );
+              })
+            }
           </div>
         </div>
 
-        {(selectedCategories.length > 0 || selectedStatuses.length > 0 || selectedTags.length > 0) && (
-          <a href="/graph" class="clear-filters">Clear All Filters</a>
-        )}
+        {
+          (selectedCategories.length > 0 ||
+            selectedStatuses.length > 0 ||
+            selectedTags.length > 0) && (
+            <a href="/graph" class="clear-filters">
+              Clear All Filters
+            </a>
+          )
+        }
       </aside>
 
       <!-- Graph Canvas -->
@@ -113,110 +130,113 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
           <svg width="100%" height="600" viewBox="0 0 800 600" class="graph-svg">
             <defs>
               <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"></feGaussianBlur>
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
+                  <feMergeNode in="coloredBlur"></feMergeNode>
+                  <feMergeNode in="SourceGraphic"></feMergeNode>
                 </feMerge>
               </filter>
             </defs>
 
             <!-- Edges -->
-            {graphData.edges.map((edge: any) => (
-              <line
-                x1={edge.x1}
-                y1={edge.y1}
-                x2={edge.x2}
-                y2={edge.y2}
-                stroke="var(--color-border)"
-                stroke-width="2"
-                class="graph-edge"
-              />
-            ))}
+            {
+              graphData.edges.map((edge: any) => (
+                <line
+                  x1={edge.x1}
+                  y1={edge.y1}
+                  x2={edge.x2}
+                  y2={edge.y2}
+                  stroke="var(--color-border)"
+                  stroke-width="2"
+                  class="graph-edge"
+                />
+              ))
+            }
 
             <!-- Nodes -->
-            {filteredNodes.map((node: any, index: number) => {
-              // Simple force-directed layout simulation
-              const angle = (index / filteredNodes.length) * 2 * Math.PI;
-              const radius = 200 + (index % 3) * 50;
-              const x = 400 + Math.cos(angle) * radius;
-              const y = 300 + Math.sin(angle) * radius;
+            {
+              filteredNodes.map((node: any, index: number) => {
+                // Simple force-directed layout simulation
+                const angle = (index / filteredNodes.length) * 2 * Math.PI;
+                const radius = 200 + (index % 3) * 50;
+                const x = 400 + Math.cos(angle) * radius;
+                const y = 300 + Math.sin(angle) * radius;
 
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, no-undef
-              const categoryColor = getCategoryColor(node.category);
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, no-undef
+                const categoryColor = getCategoryColor(node.category);
 
-              return (
-                <g
-                  class="graph-node"
-                  data-node-id={node.id}
-                  style="--category-color: {categoryColor}"
-                >
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r="20"
-                    fill={categoryColor}
-                    class="node-circle"
-                    filter={selectedNodeId === node.id ? 'url(#glow)' : ''}
-                  />
-                  <text
-                    x={x}
-                    y={y + 35}
-                    text-anchor="middle"
-                    class="node-label"
-                  >
-                    {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
-                  </text>
-                  <foreignObject
-                    x={x - 100}
-                    y={y - 100}
-                    width="200"
-                    height="80"
-                    class="node-tooltip"
-                  >
-                    <div xmlns="http://www.w3.org/1999/xhtml">
-                      <strong>{node.title}</strong><br/>
-                      <span class="tooltip-category">{node.category}</span><br/>
-                      <span class="tooltip-status">{node.status}</span>
-                    </div>
-                  </foreignObject>
-                  <a
-                    href={`/graph?node=${node.id}`}
-                    class="node-link"
+                return (
+                  <g
+                    class="graph-node"
                     data-node-id={node.id}
+                    style="--category-color: {categoryColor}"
                   >
-                    <circle cx={x} cy={y} r="25" fill="transparent" />
-                  </a>
-                </g>
-              );
-            })}
+                    <circle
+                      cx={x}
+                      cy={y}
+                      r="20"
+                      fill={categoryColor}
+                      class="node-circle"
+                      filter={selectedNodeId === node.id ? 'url(#glow)' : ''}
+                    />
+                    <text x={x} y={y + 35} text-anchor="middle" class="node-label">
+                      {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
+                    </text>
+                    <foreignObject
+                      x={x - 100}
+                      y={y - 100}
+                      width="200"
+                      height="80"
+                      class="node-tooltip"
+                    >
+                      <div xmlns="http://www.w3.org/1999/xhtml">
+                        <>
+                          <strong>{node.title}</strong>
+                          <br />
+                        </>
+                        <>
+                          <span class="tooltip-category">{node.category}</span>
+                          <br />
+                        </>
+                        <span class="tooltip-status">{node.status}</span>
+                      </div>
+                    </foreignObject>
+                    <a href={`/graph?node=${node.id}`} class="node-link" data-node-id={node.id}>
+                      <circle cx={x} cy={y} r="25" fill="transparent" />
+                    </a>
+                  </g>
+                );
+              })
+            }
           </svg>
         </div>
 
         <!-- Detail Panel -->
-        {selectedNode && (
-          <div class="graph-detail-panel">
-            <button
-              class="detail-close"
-              onclick="window.location.href = '/graph'"
-            >
-              ×
-            </button>
+        {
+          selectedNode && (
+            <div class="graph-detail-panel">
+              <button class="detail-close" onclick="window.location.href = '/graph'">
+                ×
+              </button>
 
-            <h2 class="detail-title">{selectedNode.title}</h2>
+              <h2 class="detail-title">{selectedNode.title}</h2>
 
-            <div class="detail-meta">
-              <span class="detail-category">{selectedNode.category}</span>
-              <span class="detail-status" style="--status-color: {getStatusColor(selectedNode.status)}">
-                {selectedNode.status}
-              </span>
+              <div class="detail-meta">
+                <span class="detail-category">{selectedNode.category}</span>
+                <span
+                  class="detail-status"
+                  style="--status-color: {getStatusColor(selectedNode.status)}"
+                >
+                  {selectedNode.status}
+                </span>
+              </div>
+
+              <a href={`/patterns/{selectedNode.slug}`} class="detail-link">
+                View Full Pattern →
+              </a>
             </div>
-
-            <a href={`/patterns/{selectedNode.slug}`} class="detail-link">
-              View Full Pattern →
-            </a>
-          </div>
-        )}
+          )
+        }
       </div>
     </div>
   </div>
@@ -241,9 +261,9 @@ const _allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))]
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getStatusColor(status: string): string {
     const colors: Record<string, string> = {
-      'proposed': '#9ca3af',
-      'emerging': '#60a5fa',
-      'established': '#34d399',
+      proposed: '#9ca3af',
+      emerging: '#60a5fa',
+      established: '#34d399',
       'validated-in-production': '#10b981',
       'best-practice': '#059669',
       'experimental-but-awesome': '#f59e0b',

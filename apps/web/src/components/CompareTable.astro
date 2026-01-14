@@ -35,58 +35,74 @@ const formatValue = (value: string | string[] | undefined): string => {
   if (Array.isArray(value)) {
     return value.slice(0, 3).join(', ') + (value.length > 3 ? '...' : '');
   }
-  return value.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  return value
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 ---
 
-{patterns.length > 0 ? (
-  <div class="compare-table-wrapper">
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th class="compare-table-row-label">Field</th>
-          {patterns.map(pattern => (
-            <th class="compare-table-header">
-              <a href={`/patterns/${pattern.id}`} class="compare-table-title">
-                {pattern.title}
-              </a>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {compareFields.map(field => (
-          <tr class:list={['compare-table-row', { 'compare-table-row--alt': compareFields.indexOf(field) % 2 === 0 }]}>
-            <td class="compare-table-row-label">{field.label}</td>
-            {patterns.map(pattern => (
-              <td class="compare-table-cell">
-                {field.key === 'tags' || field.key === 'domains' ? (
-                  <div class="compare-table-tags">
-                    {(pattern[field.key as keyof Pattern] as string[])?.slice(0, 3).map((item: string) => (
-                      <span class="compare-table-tag">{item}</span>
-                    ))}
-                    {(pattern[field.key as keyof Pattern] as string[])?.length > 3 && (
-                      <span class="compare-table-more">
-                        +{(pattern[field.key as keyof Pattern] as string[]).length - 3}
-                      </span>
-                    )}
-                  </div>
-                ) : (
-                  <span>{formatValue(pattern[field.key as keyof Pattern] as string | string[])}</span>
-                )}
-              </td>
+{
+  patterns.length > 0 ? (
+    <div class="compare-table-wrapper">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="compare-table-row-label">Field</th>
+            {patterns.map((pattern) => (
+              <th class="compare-table-header">
+                <a href={`/patterns/${pattern.id}`} class="compare-table-title">
+                  {pattern.title}
+                </a>
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-) : (
-  <div class="compare-table-empty">
-    <p>No patterns selected for comparison.</p>
-    <a href="/patterns" class="button">Browse Patterns</a>
-  </div>
-)}
+        </thead>
+        <tbody>
+          {compareFields.map((field) => (
+            <tr
+              class:list={[
+                'compare-table-row',
+                { 'compare-table-row--alt': compareFields.indexOf(field) % 2 === 0 },
+              ]}
+            >
+              <td class="compare-table-row-label">{field.label}</td>
+              {patterns.map((pattern) => (
+                <td class="compare-table-cell">
+                  {field.key === 'tags' || field.key === 'domains' ? (
+                    <div class="compare-table-tags">
+                      {(pattern[field.key as keyof Pattern] as string[])
+                        ?.slice(0, 3)
+                        .map((item: string) => (
+                          <span class="compare-table-tag">{item}</span>
+                        ))}
+                      {(pattern[field.key as keyof Pattern] as string[])?.length > 3 && (
+                        <span class="compare-table-more">
+                          +{(pattern[field.key as keyof Pattern] as string[]).length - 3}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <span>
+                      {formatValue(pattern[field.key as keyof Pattern] as string | string[])}
+                    </span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <div class="compare-table-empty">
+      <p>No patterns selected for comparison.</p>
+      <a href="/patterns" class="button">
+        Browse Patterns
+      </a>
+    </div>
+  )
+}
 
 <style>
   .compare-table-wrapper {

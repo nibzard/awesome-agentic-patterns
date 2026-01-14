@@ -63,7 +63,10 @@ const patterns = defineCollection({
     anti_patterns: z.array(z.string()).optional(),
     tools: z.array(z.string()).optional(),
     domains: z.array(z.string()).optional(),
-    updated_at: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    updated_at: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .optional(),
   }),
 });
 

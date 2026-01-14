@@ -6,29 +6,52 @@ interface Props {
 const { source } = Astro.props;
 ---
 
-{source && (
-  <div class="pattern-source-block">
-    <div class="pattern-source-header">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="pattern-source-icon">
-        <path d="M8 0L3 5V11C3 11.5523 3.44772 12 4 12H12C12.5523 12 13 11.5523 13 11V5L8 0Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M6 16H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M8 12V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span class="pattern-source-label">Source</span>
+{
+  source && (
+    <div class="pattern-source-block">
+      <div class="pattern-source-header">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="pattern-source-icon"
+        >
+          <path
+            d="M8 0L3 5V11C3 11.5523 3.44772 12 4 12H12C12.5523 12 13 11.5523 13 11V5L8 0Z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M6 16H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <path d="M8 12V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+        <span class="pattern-source-label">Source</span>
+      </div>
+      <a href={source} target="_blank" rel="noopener noreferrer" class="pattern-source-link">
+        {source}
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="external-link-icon"
+        >
+          <path
+            d="M1 6H11M6 1L11 6L6 11"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
     </div>
-    <a
-      href={source}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="pattern-source-link"
-    >
-      {source}
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="external-link-icon">
-        <path d="M1 6H11M6 1L11 6L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
-)}
+  )
+}
 
 <style>
   .pattern-source-block {

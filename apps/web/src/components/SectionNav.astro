@@ -14,17 +14,19 @@ const { sections, currentSection } = Astro.props;
 
 <nav class="section-nav" aria-label="Section navigation">
   <ul class="section-nav-list" role="list">
-    {sections.map(section => (
-      <li class="section-nav-item">
-        <a
-          href={`#${section.id}`}
-          class:list={['section-nav-link', { active: currentSection === section.id }]}
-          aria-current={currentSection === section.id ? 'true' : undefined}
-        >
-          {section.label}
-        </a>
-      </li>
-    ))}
+    {
+      sections.map((section) => (
+        <li class="section-nav-item">
+          <a
+            href={`#${section.id}`}
+            class:list={['section-nav-link', { active: currentSection === section.id }]}
+            aria-current={currentSection === section.id ? 'true' : undefined}
+          >
+            {section.label}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </nav>
 
@@ -52,7 +54,9 @@ const { sections, currentSection } = Astro.props;
     text-decoration: none;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-left: 2px solid var(--color-border);
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   .section-nav-link:hover {

@@ -9,12 +9,7 @@ interface Props {
   href?: string;
 }
 
-const {
-  text,
-  variant = 'default',
-  size = 'md',
-  href
-} = Astro.props;
+const { text, variant = 'default', size = 'md', href } = Astro.props;
 
 const Tag = href ? 'a' : 'span';
 const tagProps = href ? { href } : {};
@@ -38,7 +33,9 @@ const sizeClasses: Record<Size, string> = {
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     font-size: 0.75rem;
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
   }
 
   .badge--sm {

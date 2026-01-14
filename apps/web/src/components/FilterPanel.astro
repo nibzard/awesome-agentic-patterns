@@ -12,67 +12,69 @@ interface Props {
 
 const { filters, activeFilters } = Astro.props;
 
-const hasActiveFilters = Object.keys(activeFilters).some(key => activeFilters[key]?.length > 0);
+const hasActiveFilters = Object.keys(activeFilters).some((key) => activeFilters[key]?.length > 0);
 ---
 
 <aside class="filter-panel">
   <div class="filter-panel-header">
     <h2 class="filter-panel-title">Filters</h2>
-    {hasActiveFilters && (
-      <a href="/patterns" class="filter-panel-clear">
-        Clear All
-      </a>
-    )}
+    {
+      hasActiveFilters && (
+        <a href="/patterns" class="filter-panel-clear">
+          Clear All
+        </a>
+      )
+    }
   </div>
 
   <form class="filter-panel-form" method="GET" action="/patterns">
-    {filters.map((group, groupIndex) => (
-      <div class="filter-group">
-        <h3 class="filter-group-label">{group.label}</h3>
+    {
+      filters.map((group, groupIndex) => (
+        <div class="filter-group">
+          <h3 class="filter-group-label">{group.label}</h3>
 
-        {group.type === 'select' ? (
-          <select
-            name={`filter-${groupIndex}`}
-            class="filter-select"
-            onchange="this.form.submit()"
-          >
-            <option value="">All</option>
-            {group.options.map(option => (
-              <option
-                value={option.value}
-                selected={activeFilters[groupIndex]?.includes(option.value)}
-              >
-                {option.label}
-                {option.count !== undefined && ` (${option.count})`}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <div class="filter-checkboxes">
-            {group.options.map(option => {
-              const isChecked = activeFilters[groupIndex]?.includes(option.value);
-              return (
-                <label class="filter-checkbox">
-                  <input
-                    type="checkbox"
-                    name={`filter-${groupIndex}`}
-                    value={option.value}
-                    checked={isChecked}
-                    onchange="this.form.submit()"
-                  />
-                  <span class="filter-checkbox-label">
-                    {option.label}
-                  </span>
-                  {option.count !== undefined && (
-                    <span class="filter-checkbox-count">({option.count})</span>
-                  )}
-                </label>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    ))}
+          {group.type === 'select' ? (
+            <select
+              name={`filter-${groupIndex}`}
+              class="filter-select"
+              onchange="this.form.submit()"
+            >
+              <option value="">All</option>
+              {group.options.map((option) => (
+                <option
+                  value={option.value}
+                  selected={activeFilters[groupIndex]?.includes(option.value)}
+                >
+                  {option.label}
+                  {option.count !== undefined && ` (${option.count})`}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div class="filter-checkboxes">
+              {group.options.map((option) => {
+                const isChecked = activeFilters[groupIndex]?.includes(option.value);
+                return (
+                  <label class="filter-checkbox">
+                    <input
+                      type="checkbox"
+                      name={`filter-${groupIndex}`}
+                      value={option.value}
+                      checked={isChecked}
+                      onchange="this.form.submit()"
+                    />
+                    <span class="filter-checkbox-label">{option.label}</span>
+                    {option.count !== undefined && (
+                      <span class="filter-checkbox-count">({option.count})</span>
+                    )}
+                  </label>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      ))
+    }
 
     <button type="submit" class="filter-panel-submit">Apply Filters</button>
   </form>
@@ -162,7 +164,7 @@ const hasActiveFilters = Object.keys(activeFilters).some(key => activeFilters[ke
     background-color: var(--color-border);
   }
 
-  .filter-checkbox input[type="checkbox"] {
+  .filter-checkbox input[type='checkbox'] {
     cursor: pointer;
   }
 

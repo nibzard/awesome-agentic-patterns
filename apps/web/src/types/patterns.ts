@@ -163,13 +163,7 @@ export interface ComplexityCount {
 /**
  * Badge variant for UI
  */
-export type BadgeVariant =
-  | 'default'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  | 'neutral';
+export type BadgeVariant = 'default' | 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 
 /**
  * Badge size for UI

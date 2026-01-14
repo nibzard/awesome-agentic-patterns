@@ -5,7 +5,7 @@ import PatternCard from '../../components/PatternCard.astro';
 
 // Load patterns data
 const patterns = await fetch('https://agentic-patterns.com/patterns.json')
-  .then(res => res.json())
+  .then((res) => res.json())
   .catch(() => []);
 
 // Get unique values for filters with counts
@@ -70,48 +70,59 @@ const complexities = Object.entries(complexityMap)
         <div class="filter-group">
           <h3 class="filter-group-title">Category</h3>
           <div class="filter-options">
-            {categories.map(({ category, count }) => (
-              <a href={`/patterns?category=${encodeURIComponent(category)}`} class="filter-option">
-                <span class="filter-option-label">{category}</span>
-                <span class="filter-option-count">{count}</span>
-              </a>
-            ))}
+            {
+              categories.map(({ category, count }) => (
+                <a
+                  href={`/patterns?category=${encodeURIComponent(category)}`}
+                  class="filter-option"
+                >
+                  <span class="filter-option-label">{category}</span>
+                  <span class="filter-option-count">{count}</span>
+                </a>
+              ))
+            }
           </div>
         </div>
 
         <div class="filter-group">
           <h3 class="filter-group-title">Status</h3>
           <div class="filter-options">
-            {statuses.map(({ status, count }) => (
-              <a href={`/patterns?status=${status}`} class="filter-option">
-                <span class="filter-option-label">{status}</span>
-                <span class="filter-option-count">{count}</span>
-              </a>
-            ))}
+            {
+              statuses.map(({ status, count }) => (
+                <a href={`/patterns?status=${status}`} class="filter-option">
+                  <span class="filter-option-label">{status}</span>
+                  <span class="filter-option-count">{count}</span>
+                </a>
+              ))
+            }
           </div>
         </div>
 
         <div class="filter-group">
           <h3 class="filter-group-title">Maturity</h3>
           <div class="filter-options">
-            {maturities.map(({ maturity, count }) => (
-              <a href={`/patterns?maturity=${maturity}`} class="filter-option">
-                <span class="filter-option-label">{maturity}</span>
-                <span class="filter-option-count">{count}</span>
-              </a>
-            ))}
+            {
+              maturities.map(({ maturity, count }) => (
+                <a href={`/patterns?maturity=${maturity}`} class="filter-option">
+                  <span class="filter-option-label">{maturity}</span>
+                  <span class="filter-option-count">{count}</span>
+                </a>
+              ))
+            }
           </div>
         </div>
 
         <div class="filter-group">
           <h3 class="filter-group-title">Complexity</h3>
           <div class="filter-options">
-            {complexities.map(({ complexity, count }) => (
-              <a href={`/patterns?complexity=${complexity}`} class="filter-option">
-                <span class="filter-option-label">{complexity}</span>
-                <span class="filter-option-count">{count}</span>
-              </a>
-            ))}
+            {
+              complexities.map(({ complexity, count }) => (
+                <a href={`/patterns?complexity=${complexity}`} class="filter-option">
+                  <span class="filter-option-label">{complexity}</span>
+                  <span class="filter-option-count">{count}</span>
+                </a>
+              ))
+            }
           </div>
         </div>
 
@@ -124,25 +135,29 @@ const complexities = Object.entries(complexityMap)
           Showing {patterns.length} patterns
         </div>
 
-        {patterns.length > 0 ? (
-          <div class="patterns-grid">
-            {patterns.map((pattern: any) => (
-              <PatternCard
-                title={pattern.title}
-                slug={pattern.slug}
-                summary={pattern.summary}
-                status={pattern.status}
-                category={pattern.category}
-                tags={pattern.tags}
-              />
-            ))}
-          </div>
-        ) : (
-          <div class="patterns-empty">
-            <p>No patterns found.</p>
-            <a href="/patterns" class="button">Clear Filters</a>
-          </div>
-        )}
+        {
+          patterns.length > 0 ? (
+            <div class="patterns-grid">
+              {patterns.map((pattern: any) => (
+                <PatternCard
+                  title={pattern.title}
+                  slug={pattern.slug}
+                  summary={pattern.summary}
+                  status={pattern.status}
+                  category={pattern.category}
+                  tags={pattern.tags}
+                />
+              ))}
+            </div>
+          ) : (
+            <div class="patterns-empty">
+              <p>No patterns found.</p>
+              <a href="/patterns" class="button">
+                Clear Filters
+              </a>
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
@@ -228,7 +243,9 @@ const complexities = Object.entries(complexityMap)
     text-decoration: none;
     padding: var(--spacing-xs);
     border-radius: var(--radius-sm);
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
   }
 
   .filter-option:hover {

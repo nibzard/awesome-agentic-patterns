@@ -7,18 +7,33 @@ interface Props {
 const { content, label = 'Copy to clipboard' } = Astro.props;
 ---
 
-<button
-  class="copy-button"
-  data-copy-content={content}
-  aria-label={label}
-  type="button"
->
-  <svg class="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
-    <path d="M5 6H11M5 8H11M5 10H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+<button class="copy-button" data-copy-content={content} aria-label={label} type="button">
+  <svg
+    class="copy-icon"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"></rect>
+    <path d="M5 6H11M5 8H11M5 10H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+    ></path>
   </svg>
-  <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13 5L5.5 12.5L2 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <svg
+    class="check-icon"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M13 5L5.5 12.5L2 9"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
   </svg>
 </button>
 
@@ -34,7 +49,10 @@ const { content, label = 'Copy to clipboard' } = Astro.props;
     border-radius: var(--radius-md);
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   .copy-button:hover {
