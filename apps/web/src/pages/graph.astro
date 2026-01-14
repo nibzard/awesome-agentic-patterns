@@ -286,7 +286,13 @@ function getCategoryColor(category: string): string {
                       <text x="0" y="35" text-anchor="middle" class="node-label">
                         {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
                       </text>
-                      <foreignObject x="-100" y="-120" width="200" height="120" class="node-tooltip">
+                      <foreignObject
+                        x="-100"
+                        y="-120"
+                        width="200"
+                        height="120"
+                        class="node-tooltip"
+                      >
                         <div xmlns="http://www.w3.org/1999/xhtml">
                           <strong>{node.title}</strong>
                           <span class="tooltip-category">{node.category}</span>
@@ -394,7 +400,13 @@ function getCategoryColor(category: string): string {
     const height = viewBox?.height || 600;
 
     const simulation = forceSimulation(nodes)
-      .force('link', forceLink(edges).id((d) => d.id).distance(140).strength(0.25))
+      .force(
+        'link',
+        forceLink(edges)
+          .id((d) => d.id)
+          .distance(140)
+          .strength(0.25)
+      )
       .force('charge', forceManyBody().strength(-240))
       .force('center', forceCenter(width / 2, height / 2))
       .force('collision', forceCollide(42))
