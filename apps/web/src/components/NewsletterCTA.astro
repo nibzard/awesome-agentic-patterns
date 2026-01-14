@@ -26,6 +26,9 @@ const {
     id="newsletter-form"
     data-nonce={Math.random().toString(36).substring(7)}
   >
+    {variant === 'minimal' && (
+      <p class="newsletter-cta-invite">Get new patterns in your inbox</p>
+    )}
     <div class="newsletter-cta-input-group">
       <input
         type="email"
@@ -280,6 +283,13 @@ const {
 
   .newsletter-cta--minimal .newsletter-cta-form {
     width: 100%;
+  }
+
+  .newsletter-cta-invite {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--spacing-xs) 0;
+    font-weight: 500;
   }
 
   .newsletter-cta--minimal .newsletter-cta-input {
