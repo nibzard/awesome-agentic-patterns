@@ -152,15 +152,15 @@
 - [x] 152 - Create `PatternCard.astro`. [Created with title, summary, status badge, category, tags; hover effects and responsive design; build verified; commit 1625267]
 - [x] 153 - Create `PatternMeta.astro`. [Created with metadata fields display, formatted labels, grid layout, responsive design, commit e93dfc6]
 - [x] 154 - Create `TagPill.astro`. [Created with link and removable variants, hover effects, accessible remove button, build verified, committed]
-- [ ] 155 - Create `SectionNav.astro`.
-- [ ] 156 - Create `CopyButton.astro`.
-- [ ] 157 - Create `ThemeToggle.astro`.
-- [ ] 158 - Add toggle button markup to `ThemeToggle.astro`.
-- [ ] 159 - Add `aria-label` and focus styles to `ThemeToggle.astro`.
-- [ ] 160 - Add client script to toggle `data-theme` on `html`.
-- [ ] 161 - Read `prefers-color-scheme` on first load.
-- [ ] 162 - Persist theme preference in `localStorage`.
-- [ ] 163 - Create `CompareTable.astro`.
+- [x] 155 - Create `SectionNav.astro`. [Created with section list, active state highlighting, intersection observer for scroll tracking, responsive layout, build verified, committed (7d94f95)]
+- [x] 156 - Create `CopyButton.astro`. [Created with clipboard copy functionality, success state with checkmark, 2-second timeout reset, build verified, committed]
+- [x] 157 - Create `ThemeToggle.astro`. [Completed in task 135 - component created with sun/moon icons]
+- [x] 158 - Add toggle button markup to `ThemeToggle.astro`. [Completed in task 135 - button with toggle functionality]
+- [x] 159 - Add `aria-label` and focus styles to `ThemeToggle.astro`. [Completed in task 135 - accessible label and focus states]
+- [x] 160 - Add client script to toggle `data-theme` on `html`. [Completed in task 135 - theme state management]
+- [x] 161 - Read `prefers-color-scheme` on first load. [Completed in task 135 - prefers-color-scheme support]
+- [x] 162 - Persist theme preference in `localStorage`. [Completed in task 135 - localStorage persistence]
+- [x] 163 - Create `CompareTable.astro`. [Created with 8-field comparison table, responsive scroll, empty state, tag rendering; build verified; committed (89d0baf)]
 - [ ] 164 - Create `FilterPanel.astro`.
 - [ ] 165 - Create `SearchBox.astro`.
 - [ ] 166 - Create `PatternList.astro`.
