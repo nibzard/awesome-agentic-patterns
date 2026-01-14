@@ -243,14 +243,14 @@
 - [x] 243 - Create `apps/web/src/pages/contribute.astro`. [Created with contribution workflow]
 - [x] 244 - Add `CONTRIBUTING.md` link to the Contribute page. [Added as quick link]
 - [x] 245 - Add `patterns/TEMPLATE.md` link to the Contribute page. [Added as quick link]
-- [ ] 246 - Add Pagefind build integration.
-- [ ] 247 - Add Pagefind index output to `apps/web/public`.
-- [ ] 248 - Add search input to the header.
-- [ ] 249 - Render search results panel.
-- [ ] 250 - Wire search input to Pagefind queries.
-- [ ] 251 - Add recently updated section using `updated_at`.
-- [ ] 252 - Add "new" badge logic using `updated_at`.
-- [ ] 253 - Add "updated" badge logic using `updated_at`.
+- [x] 246 - Add Pagefind build integration. [Added to package.json build script]
+- [x] 247 - Add Pagefind index output to `apps/web/public`. [Pagefind automatically outputs to dist/pagefind]
+- [x] 248 - Add search input to the header. [Added search toggle button and modal]
+- [x] 249 - Render search results panel. [Implemented with keyboard navigation]
+- [x] 250 - Wire search input to Pagefind queries. [Implemented with async Pagefind loading]
+- [x] 251 - Add recently updated section using `updated_at`. [Added to home page with 30-day filter]
+- [x] 252 - Add "new" badge logic using `updated_at`. [Added with 7-day filter and green badge]
+- [x] 253 - Add "updated" badge logic using `updated_at`. [Added with 30-day filter and blue badge]
 - [ ] 254 - Add category counts to filter UI.
 - [ ] 255 - Add `llms.txt` documentation section to `README.md`.
 - [ ] 256 - Add "Copy prompt pack" button on the compare page.
