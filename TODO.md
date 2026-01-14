@@ -302,10 +302,10 @@
 - [BLOCKED] 302 - Fix CLS regressions from Lighthouse. (Blocked by task 299 - Chrome not available)
 - [x] 303 - Run axe accessibility scan on the home page. [0 violations found - site passes WCAG 2.0 AA and WCAG 2.1 AA standards]
 - [x] 304 - Fix issues from the axe report. [No issues to fix - accessibility scan passed with 0 violations]
-- [ ] 305 - Validate `patterns.json` output content.
-- [ ] 306 - Validate `patterns/{slug}.json` output content.
-- [ ] 307 - Validate `llms.txt` output content.
-- [ ] 308 - Validate `llms-full.txt` output content.
+- [x] 305 - Validate `patterns.json` output content. [Valid: 112 patterns, all required fields present, 0 empty summaries]
+- [x] 306 - Validate `patterns/{slug}.json` output content. [Valid: 113 individual JSON files (112 patterns + TEMPLATE), all required fields present including body content]
+- [x] 307 - Validate `llms.txt` output content. [Valid: 466 lines, includes all pattern summaries and metadata]
+- [x] 308 - Validate `llms-full.txt` output content. [Valid: 11,313 lines, includes full pattern content for LLM ingestion]
 - [ ] 309 - Deploy a preview build to Vercel.
 - [ ] 310 - Collect feedback from stakeholders.
 - [ ] 311 - Create follow-up tasks from feedback.
