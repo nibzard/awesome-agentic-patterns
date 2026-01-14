@@ -119,7 +119,7 @@
 - [x] 119 - Define the `patterns` collection schema in `apps/web/src/content/config.ts`. [Completed as part of task 118]
 - [x] 120 - Define the `guides` collection schema in `apps/web/src/content/config.ts`. [Completed as part of task 118]
 - [x] 121 - Define the `packs` collection schema in `apps/web/src/content/config.ts`. [Completed as part of task 118]
-- [ ] 122 - Implement the chosen pattern content source approach.
+- [x] 122 - Implement the chosen pattern content source approach. [Created src/lib/patterns.ts with fs-based loader, reads from root patterns/ dir (no symlinks), verified working (112 patterns loaded), committed]
 - [ ] 123 - Add `apps/web/src/styles/global.css`.
 - [ ] 124 - Define light-mode color tokens in `global.css`.
 - [ ] 125 - Define dark-mode color tokens in `global.css`.
