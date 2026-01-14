@@ -1,0 +1,107 @@
+[
+  {
+    "id": "agent-type",
+    "question": "What type of agent are you building?",
+    "options": [
+      {
+        "value": "autonomous",
+        "label": "Fully autonomous agent",
+        "description": "An agent that operates independently without human intervention"
+      },
+      {
+        "value": "assisted",
+        "label": "Human-assisted agent",
+        "description": "An agent that collaborates with humans and requires human input"
+      },
+      {
+        "value": "workflow",
+        "label": "Workflow automation",
+        "description": "An agent that automates specific tasks or workflows"
+      }
+    ]
+  },
+  {
+    "id": "complexity",
+    "question": "How complex is the task your agent needs to accomplish?",
+    "options": [
+      {
+        "value": "simple",
+        "label": "Simple, well-defined",
+        "description": "Clear inputs, outputs, and success criteria"
+      },
+      {
+        "value": "moderate",
+        "label": "Moderately complex",
+        "description": "Multiple steps, some decision points required"
+      },
+      {
+        "value": "complex",
+        "label": "Highly complex",
+        "description": "Many interdependent steps, requires planning and reasoning"
+      }
+    ]
+  },
+  {
+    "id": "memory",
+    "question": "Does your agent need to remember information across sessions?",
+    "options": [
+      {
+        "value": "none",
+        "label": "No memory needed",
+        "description": "Each interaction is independent"
+      },
+      {
+        "value": "session",
+        "label": "Session memory only",
+        "description": "Remember within a single session/conversation"
+      },
+      {
+        "value": "persistent",
+        "label": "Long-term memory",
+        "description": "Need to store and retrieve information across sessions"
+      }
+    ]
+  },
+  {
+    "id": "tools",
+    "question": "Will your agent need to use external tools or APIs?",
+    "options": [
+      {
+        "value": "none",
+        "label": "No tools needed",
+        "description": "Agent operates on provided information only"
+      },
+      {
+        "value": "few",
+        "label": "Few specific tools",
+        "description": "Agent uses a small set of known tools"
+      },
+      {
+        "value": "many",
+        "label": "Many tools or dynamic discovery",
+        "description": "Agent needs access to many tools or discovers tools dynamically"
+      }
+    ]
+  },
+  {
+    "id": "safety",
+    "question": "What level of safety and reliability is required?",
+    "options": [
+      {
+        "value": "low",
+        "label": "Low risk",
+        "description": "Mistakes are easily reversible"
+      },
+      {
+        "value": "medium",
+        "label": "Medium risk",
+        "description": "Mistakes could cause problems but not critical failures"
+      },
+      {
+        "value": "high",
+        "label": "High risk / Critical",
+        "description": "Mistakes could cause serious damage or security issues"
+      }
+    ]
+  }
+]

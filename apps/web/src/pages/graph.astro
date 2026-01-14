@@ -1,0 +1,554 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Load graph data
+const graphData = await fetch('/graph.json').then(res => res.json()).catch(() => ({ nodes: [], edges: [] }));
+
+// Get unique values for filters
+const categories = [...new Set(graphData.nodes.map((n: any) => n.category))].sort();
+const statuses = [...new Set(graphData.nodes.map((n: any) => n.status))].sort();
+
+// Get filter values from URL
+const searchParams = Astro.url.searchParams;
+const selectedCategories = searchParams.getAll('category') || [];
+const selectedStatuses = searchParams.getAll('status') || [];
+const selectedTags = searchParams.getAll('tag') || [];
+const selectedDomains = searchParams.getAll('domain') || [];
+
+// Filter nodes
+const filteredNodes = graphData.nodes.filter((node: any) => {
+  if (selectedCategories.length > 0 && !selectedCategories.includes(node.category)) return false;
+  if (selectedStatuses.length > 0 && !selectedStatuses.includes(node.status)) return false;
+  if (selectedTags.length > 0 && !node.tags?.some((t: string) => selectedTags.includes(t))) return false;
+  // Domain filter - you can add domain field to nodes if needed
+  return true;
+});
+
+// Get selected node from URL
+const selectedNodeId = searchParams.get('node');
+const selectedNode = selectedNodeId ? graphData.nodes.find((n: any) => n.id === selectedNodeId) : null;
+
+// Get all unique tags
+const allTags = [...new Set(graphData.nodes.flatMap((n: any) => n.tags || []))].sort();
+---
+
+<BaseLayout title="Pattern Graph - Awesome Agentic Patterns">
+  <div class="graph-page">
+    <header class="graph-header">
+      <h1>Pattern Graph</h1>
+      <p class="graph-subtitle">
+        Explore relationships between AI agent design patterns.
+      </p>
+    </header>
+
+    <div class="graph-layout">
+      <!-- Filters Sidebar -->
+      <aside class="graph-filters">
+        <div class="filter-section">
+          <h3 class="filter-title">Category</h3>
+          <div class="filter-options">
+            {categories.map(category => {
+              const isChecked = selectedCategories.includes(category);
+              const newCategories = isChecked
+                ? selectedCategories.filter((c: string) => c !== category)
+                : [...selectedCategories, category];
+              const newParams = new URLSearchParams(searchParams);
+              newParams.delete('category');
+              newCategories.forEach((c: string) => newParams.append('category', c));
+
+              return (
+                <label class="filter-option">
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onchange={`window.location.href = '/graph?${newParams.toString()}'`}
+                  />
+                  <span>{category}</span>
+                  <span class="filter-count">{graphData.nodes.filter((n: any) => n.category === category).length}</span>
+                </label>
+              );
+            })}
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3 class="filter-title">Maturity</h3>
+          <div class="filter-options">
+            {statuses.map(status => {
+              const isChecked = selectedStatuses.includes(status);
+              const newStatuses = isChecked
+                ? selectedStatuses.filter((s: string) => s !== status)
+                : [...selectedStatuses, status];
+              const newParams = new URLSearchParams(searchParams);
+              newParams.delete('status');
+              newStatuses.forEach((s: string) => newParams.append('status', s));
+
+              return (
+                <label class="filter-option">
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onchange={`window.location.href = '/graph?${newParams.toString()}'`}
+                  />
+                  <span>{status}</span>
+                  <span class="filter-count">{graphData.nodes.filter((n: any) => n.status === status).length}</span>
+                </label>
+              );
+            })}
+          </div>
+        </div>
+
+        {(selectedCategories.length > 0 || selectedStatuses.length > 0 || selectedTags.length > 0) && (
+          <a href="/graph" class="clear-filters">Clear All Filters</a>
+        )}
+      </aside>
+
+      <!-- Graph Canvas -->
+      <div class="graph-canvas-container">
+        <div class="graph-info">
+          Showing {filteredNodes.length} of {graphData.nodes.length} patterns
+        </div>
+
+        <div class="graph-canvas" id="graph-canvas">
+          <svg width="100%" height="600" viewBox="0 0 800 600" class="graph-svg">
+            <defs>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Edges -->
+            {graphData.edges.map((edge: any) => (
+              <line
+                x1={edge.x1}
+                y1={edge.y1}
+                x2={edge.x2}
+                y2={edge.y2}
+                stroke="var(--color-border)"
+                stroke-width="2"
+                class="graph-edge"
+              />
+            ))}
+
+            <!-- Nodes -->
+            {filteredNodes.map((node: any, index: number) => {
+              // Simple force-directed layout simulation
+              const angle = (index / filteredNodes.length) * 2 * Math.PI;
+              const radius = 200 + (index % 3) * 50;
+              const x = 400 + Math.cos(angle) * radius;
+              const y = 300 + Math.sin(angle) * radius;
+
+              const categoryColor = getCategoryColor(node.category);
+
+              return (
+                <g
+                  class="graph-node"
+                  data-node-id={node.id}
+                  style="--category-color: {categoryColor}"
+                >
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r="20"
+                    fill={categoryColor}
+                    class="node-circle"
+                    filter={selectedNodeId === node.id ? 'url(#glow)' : ''}
+                  />
+                  <text
+                    x={x}
+                    y={y + 35}
+                    text-anchor="middle"
+                    class="node-label"
+                  >
+                    {node.title.length > 30 ? node.title.slice(0, 30) + '...' : node.title}
+                  </text>
+                  <foreignObject
+                    x={x - 100}
+                    y={y - 100}
+                    width="200"
+                    height="80"
+                    class="node-tooltip"
+                  >
+                    <div xmlns="http://www.w3.org/1999/xhtml">
+                      <strong>{node.title}</strong><br/>
+                      <span class="tooltip-category">{node.category}</span><br/>
+                      <span class="tooltip-status">{node.status}</span>
+                    </div>
+                  </foreignObject>
+                  <a
+                    href={`/graph?node=${node.id}`}
+                    class="node-link"
+                    data-node-id={node.id}
+                  >
+                    <circle cx={x} cy={y} r="25" fill="transparent" />
+                  </a>
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        <!-- Detail Panel -->
+        {selectedNode && (
+          <div class="graph-detail-panel">
+            <button
+              class="detail-close"
+              onclick="window.location.href = '/graph'"
+            >
+              ×
+            </button>
+
+            <h2 class="detail-title">{selectedNode.title}</h2>
+
+            <div class="detail-meta">
+              <span class="detail-category">{selectedNode.category}</span>
+              <span class="detail-status" style="--status-color: {getStatusColor(selectedNode.status)}">
+                {selectedNode.status}
+              </span>
+            </div>
+
+            <a href={`/patterns/{selectedNode.slug}`} class="detail-link">
+              View Full Pattern →
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function getCategoryColor(category: string): string {
+    const colors: Record<string, string> = {
+      'Orchestration & Control': '#3b82f6',
+      'Context & Memory': '#8b5cf6',
+      'Feedback Loops': '#ec4899',
+      'Learning & Adaptation': '#f59e0b',
+      'Reliability & Eval': '#10b981',
+      'Security & Safety': '#ef4444',
+      'Tool Use & Environment': '#06b6d4',
+      'UX & Collaboration': '#f97316',
+    };
+    return colors[category] || '#6b7280';
+  }
+
+  function getStatusColor(status: string): string {
+    const colors: Record<string, string> = {
+      'proposed': '#9ca3af',
+      'emerging': '#60a5fa',
+      'established': '#34d399',
+      'validated-in-production': '#10b981',
+      'best-practice': '#059669',
+      'experimental-but-awesome': '#f59e0b',
+      'rapidly-improving': '#8b5cf6',
+    };
+    return colors[status] || '#6b7280';
+  }
+</script>
+
+<style>
+  .graph-page {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .graph-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .graph-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .graph-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  .graph-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .graph-filters {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+  }
+
+  .filter-section {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .filter-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .filter-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease;
+  }
+
+  .filter-option:hover {
+    background-color: var(--color-border);
+  }
+
+  .filter-option input[type='checkbox'] {
+    cursor: pointer;
+  }
+
+  .filter-option span:first-of-type {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+
+  .filter-count {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background-color: var(--color-border);
+    padding: 2px 6px;
+    border-radius: 10px;
+  }
+
+  .clear-filters {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-sm);
+    text-align: center;
+    background-color: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .clear-filters:hover {
+    background-color: var(--color-primary-dark);
+  }
+
+  .graph-canvas-container {
+    position: relative;
+  }
+
+  .graph-info {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .graph-canvas {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .graph-svg {
+    display: block;
+  }
+
+  .graph-edge {
+    opacity: 0.3;
+  }
+
+  .graph-node {
+    cursor: pointer;
+  }
+
+  .node-circle {
+    stroke: white;
+    stroke-width: 2;
+    transition: all 0.2s ease;
+  }
+
+  .graph-node:hover .node-circle {
+    stroke-width: 3;
+    filter: drop-shadow(0 0 8px var(--category-color));
+  }
+
+  .node-label {
+    font-size: 12px;
+    fill: var(--color-text);
+    pointer-events: none;
+  }
+
+  .node-tooltip {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .graph-node:hover .node-tooltip {
+    opacity: 1;
+  }
+
+  .node-tooltip div {
+    padding: var(--spacing-sm);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .tooltip-category {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+  }
+
+  .tooltip-status {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    margin-top: var(--spacing-xs);
+  }
+
+  .node-link {
+    cursor: pointer;
+  }
+
+  .graph-detail-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .detail-close {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+  }
+
+  .detail-close:hover {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .detail-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+    padding-right: var(--spacing-lg);
+  }
+
+  .detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .detail-category,
+  .detail-status {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .detail-category {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .detail-status {
+    background-color: var(--status-color);
+    color: white;
+  }
+
+  .detail-link {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+
+  .detail-link:hover {
+    background-color: var(--color-primary-dark);
+  }
+
+  @media (max-width: 1024px) {
+    .graph-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .graph-filters {
+      position: static;
+      max-height: none;
+    }
+
+    .graph-detail-panel {
+      position: static;
+      width: 100%;
+      margin-top: var(--spacing-lg);
+    }
+  }
+</style>

@@ -1,0 +1,441 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import questions from '../data/decision-questions.json';
+
+interface Answer {
+  questionId: string;
+  value: string;
+}
+
+interface Recommendation {
+  patterns: string[];
+  rationale: string;
+}
+
+// Get answers from URL search params
+const searchParams = Astro.url.searchParams;
+const answersParam = searchParams.get('answers');
+
+// Parse answers or start fresh
+let currentStep = 0;
+let answers: Answer[] = [];
+
+if (answersParam) {
+  try {
+    answers = JSON.parse(decodeURIComponent(answersParam));
+    currentStep = Math.min(answers.length, questions.length);
+  } catch (e) {
+    console.error('Failed to parse answers:', e);
+  }
+}
+
+const currentQuestion = questions[currentStep];
+
+// Simple recommendation mapping based on answers
+function getRecommendations(answerList: Answer[]): Recommendation {
+  const answersMap = Object.fromEntries(answerList.map(a => [a.questionId, a.value]));
+
+  const patterns: string[] = [];
+  const rationales: string[] = [];
+
+  // Agent type recommendations
+  if (answersMap.agentType === 'autonomous') {
+    patterns.push(
+      'Continuous Autonomous Task Loop',
+      'Specification-Driven Agent Development',
+      'Progressive Autonomy with Model Evolution'
+    );
+    rationales.push('For autonomous agents, consider patterns that enable self-directed operation and gradual capability increase.');
+  } else if (answersMap.agentType === 'assisted') {
+    patterns.push(
+      'Human-in-Loop Approval Framework',
+      'Spectrum of Control: Blended Initiative',
+      'Seamless Background-to-Foreground Handoff'
+    );
+    rationales.push('Human-assisted agents benefit from clear control handoff and approval mechanisms.');
+  } else if (answersMap.agentType === 'workflow') {
+    patterns.push(
+      'Code-Then-Execute Pattern',
+      'Asynchronous Coding Agent Pipeline',
+      'Plan-Then-Execute Pattern'
+    );
+    rationales.push('Workflow automation benefits from clear separation of planning and execution phases.');
+  }
+
+  // Complexity recommendations
+  if (answersMap.complexity === 'complex') {
+    patterns.push(
+      'Tree-of-Thought Reasoning',
+      'Graph-of-Thoughts',
+      'Language Agent Tree Search (LATS)'
+    );
+    rationales.push('Complex tasks require advanced reasoning patterns that explore multiple solution paths.');
+  } else if (answersMap.complexity === 'moderate') {
+    patterns.push('Chain-of-Thought Monitoring', 'Reflection');
+    rationales.push('Moderately complex tasks benefit from structured reasoning and self-reflection.');
+  }
+
+  // Memory recommendations
+  if (answersMap.memory === 'persistent') {
+    patterns.push(
+      'Episodic Memory Retrieval Injection',
+      'Filesystem-Based Agent State',
+      'Memory Synthesis from Execution Logs'
+    );
+    rationales.push('Long-term memory requires patterns for storing, retrieving, and synthesizing past experiences.');
+  } else if (answersMap.memory === 'session') {
+    patterns.push('Context Window Optimization', 'Progressive Disclosure for Large Files');
+    rationales.push('Session memory benefits from efficient context management techniques.');
+  }
+
+  // Tools recommendations
+  if (answersMap.tools === 'many') {
+    patterns.push(
+      'Progressive Tool Discovery',
+      'Tool Capability Compartmentalization',
+      'Parallel Tool Execution'
+    );
+    rationales.push('When using many tools, consider patterns for discovery, organization, and parallel execution.');
+  } else if (answersMap.tools === 'few') {
+    patterns.push('Code-First Tool Interface Pattern', 'Tool Use Steering via Prompting');
+    rationales.push('For a small set of tools, focus on clear interfaces and effective prompting.');
+  }
+
+  // Safety recommendations
+  if (answersMap.safety === 'high') {
+    patterns.push(
+      'Anti-Reward Hacking Grader Design',
+      'Egress Lockdown: No Exfiltration Channel',
+      'Lethal Trifecta Threat Model',
+      'Deterministic Security Scanning Build Loop'
+    );
+    rationales.push('High-risk applications require security-focused patterns to prevent exploitation and ensure safety.');
+  } else if (answersMap.safety === 'medium') {
+    patterns.push('Workflow Evals with Mocked Tools', 'LLM Observability');
+    rationales.push('Medium-risk applications benefit from evaluation and observability patterns.');
+  }
+
+  return {
+    patterns: [...new Set(patterns)], // Remove duplicates
+    rationale: rationales.join(' ')
+  };
+}
+
+const recommendation = currentStep === questions.length ? getRecommendations(answers) : null;
+---
+
+<BaseLayout title="Pattern Decision Tree - Awesome Agentic Patterns">
+  <div class="decision-page">
+    <header class="decision-header">
+      <h1>Find the Right Pattern</h1>
+      <p class="decision-subtitle">
+        Answer a few questions to get personalized pattern recommendations for your AI agent project.
+      </p>
+    </header>
+
+    {currentStep < questions.length ? (
+      <div class="decision-question">
+        <div class="question-progress">
+          Question {currentStep + 1} of {questions.length}
+        </div>
+
+        <h2 class="question-title">{currentQuestion.question}</h2>
+
+        <div class="question-options">
+          {currentQuestion.options.map((option) => {
+            const isSelected = answers.some(
+              (a) => a.questionId === currentQuestion.id && a.value === option.value
+            );
+
+            const newAnswers = [...answers, { questionId: currentQuestion.id, value: option.value }];
+            const answersParam = encodeURIComponent(JSON.stringify(newAnswers));
+
+            return (
+              <a
+                href={`/decision?answers=${answersParam}`}
+                class:option-selected={isSelected}
+                class="option-card"
+              >
+                <div class="option-header">
+                  <input type="radio" checked={isSelected} readonly />
+                  <span class="option-label">{option.label}</span>
+                </div>
+                <p class="option-description">{option.description}</p>
+              </a>
+            );
+          })}
+        </div>
+
+        {answers.length > 0 && (
+          <div class="decision-nav">
+            {currentStep > 0 && (
+              <a
+                href={`/decision?answers=${encodeURIComponent(
+                  JSON.stringify(answers.slice(0, -1))
+                )}`}
+                class="button button--secondary"
+              >
+                ← Previous
+              </a>
+            )}
+            <span></span>
+          </div>
+        )}
+      </div>
+    ) : (
+      <div class="decision-results">
+        <h2 class="results-title">Recommended Patterns</h2>
+
+        <div class="results-rationale">
+          <h3>Why These Patterns?</h3>
+          <p>{recommendation?.rationale}</p>
+        </div>
+
+        <div class="results-patterns">
+          {recommendation?.patterns.map((pattern) => (
+            <div class="result-pattern">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="result-icon"
+              >
+                <path
+                  d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span>{pattern}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="decision-actions">
+          <a href="/decision" class="button button--primary">
+            Start Over
+          </a>
+          <a href="/patterns" class="button button--secondary">
+            Browse All Patterns
+          </a>
+        </div>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .decision-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .decision-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .decision-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .decision-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  .question-progress {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .question-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .question-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .option-card {
+    display: block;
+    padding: var(--spacing-lg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .option-card:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-border);
+    transform: translateY(-2px);
+  }
+
+  .option-card.option-selected {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+  }
+
+  .option-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .option-header input[type='radio'] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .option-label {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .option-description {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    margin-left: 36px;
+  }
+
+  .decision-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-xl);
+  }
+
+  .decision-results {
+    padding: var(--spacing-xl);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .results-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .results-rationale {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .results-rationale h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .results-rationale p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .results-patterns {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .result-pattern {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .result-icon {
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .decision-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .button--primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .button--primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .button--secondary {
+    background-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-divider);
+  }
+
+  @media (max-width: 640px) {
+    .decision-header h1 {
+      font-size: 2rem;
+    }
+
+    .question-title {
+      font-size: 1.5rem;
+    }
+
+    .decision-actions {
+      flex-direction: column;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+</style>
