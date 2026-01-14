@@ -312,6 +312,7 @@
 - [BLOCKED] 312 - Switch production to the new deployment. (Requires human decision - DNS/domain configuration)
 - [x] 313 - Announce the redesign in `README.md`. [Added redesign announcement section to README with migration details, commit 9c99b9c]
 - [x] 314 - Add a release note entry for the redesign. [Added CHANGELOG.md documenting v1.0.0 Astro redesign release, commit 45f914c]
+- [x] 315 - Add TypeScript configuration and type safety improvements. [Added tsconfig.json with strict config, created src/types/ with enhanced type definitions (patterns, graph, ui), added ESLint and Prettier configs, added lint/format/typecheck scripts, fixed all linting errors]
 
 ---
 
