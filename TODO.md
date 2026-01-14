@@ -149,9 +149,9 @@
 - [x] 149 - Add `apps/web/src/pages/404.astro`. [Created with BaseLayout wrapper, custom error page design, build verified working (2 pages), committed (445bd3a)]
 150→- [x] 150 - Add the chosen graph visualization dependency. [Installed d3@7.9.0 to package.json, verified build works, committed (d5adc68)]
 151→- [x] 151 - Add Pagefind dependency if required by the build. [Installed pagefind@1.4.0 to apps/web/package.json, verified build works, committed (9388f5b)]
-- [ ] 152 - Create `PatternCard.astro`.
-- [ ] 153 - Create `PatternMeta.astro`.
-- [ ] 154 - Create `TagPill.astro`.
+- [x] 152 - Create `PatternCard.astro`. [Created with title, summary, status badge, category, tags; hover effects and responsive design; build verified; commit 1625267]
+- [x] 153 - Create `PatternMeta.astro`. [Created with metadata fields display, formatted labels, grid layout, responsive design, commit e93dfc6]
+- [x] 154 - Create `TagPill.astro`. [Created with link and removable variants, hover effects, accessible remove button, build verified, committed]
 - [ ] 155 - Create `SectionNav.astro`.
 - [ ] 156 - Create `CopyButton.astro`.
 - [ ] 157 - Create `ThemeToggle.astro`.
