@@ -1,3 +1,71 @@
+/* CSS Custom Properties - Light Mode (default) */
+:root {
+  /* Colors - neutral */
+  --color-bg: #ffffff;
+  --color-fg: #0a0a0a;
+  --color-text: #1a1a1a;
+  --color-text-muted: #666666;
+  --color-border: #e5e5e5;
+  --color-divider: #d4d4d4;
+
+  /* Colors - primary */
+  --color-primary: #0066cc;
+  --color-primary-hover: #0052a3;
+  --color-primary-light: #e6f0ff;
+
+  /* Colors - status */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* CSS Custom Properties - Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Colors - neutral */
+    --color-bg: #0a0a0a;
+    --color-fg: #ffffff;
+    --color-text: #e5e5e5;
+    --color-text-muted: #a3a3a3;
+    --color-border: #262626;
+    --color-divider: #404040;
+
+    /* Colors - primary */
+    --color-primary: #3399ff;
+    --color-primary-hover: #66b3ff;
+    --color-primary-light: #0d1f33;
+
+    /* Colors - status */
+    --color-success: #22c55e;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+    --color-info: #60a5fa;
+  }
+}
+
 /* Global CSS Reset */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -7,10 +75,12 @@
 
 /* Base styles */
 html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 body {
