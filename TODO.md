@@ -306,7 +306,7 @@
 - [x] 306 - Validate `patterns/{slug}.json` output content. [Valid: 113 individual JSON files (112 patterns + TEMPLATE), all required fields present including body content]
 - [x] 307 - Validate `llms.txt` output content. [Valid: 466 lines, includes all pattern summaries and metadata]
 - [x] 308 - Validate `llms-full.txt` output content. [Valid: 11,313 lines, includes full pattern content for LLM ingestion]
-- [ ] 309 - Deploy a preview build to Vercel.
+- [x] 309 - Deploy a preview build to Vercel. [Deployed to https://awesome-agentic-patterns.vercel.app - production build complete, 125 pages generated]
 - [ ] 310 - Collect feedback from stakeholders.
 - [ ] 311 - Create follow-up tasks from feedback.
 - [ ] 312 - Switch production to the new deployment.
