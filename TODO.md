@@ -161,10 +161,10 @@
 - [x] 161 - Read `prefers-color-scheme` on first load. [Completed in task 135 - prefers-color-scheme support]
 - [x] 162 - Persist theme preference in `localStorage`. [Completed in task 135 - localStorage persistence]
 - [x] 163 - Create `CompareTable.astro`. [Created with 8-field comparison table, responsive scroll, empty state, tag rendering; build verified; committed (89d0baf)]
-- [ ] 164 - Create `FilterPanel.astro`.
-- [ ] 165 - Create `SearchBox.astro`.
-- [ ] 166 - Create `PatternList.astro`.
-- [ ] 167 - Create `Badge.astro`.
+- [x] 164 - Create `FilterPanel.astro`. [Created with filter groups, select/multiselect options, clear filters button, URL state sync, responsive design; build verified; committed]
+- [x] 165 - Create `SearchBox.astro`. [Created SearchBox.astro with search input, clear button, submit button; focus states, accessible labels, responsive layout; build verified working; committed]
+- [x] 166 - Create `PatternList.astro`. [Created with grid/list layout options, renders PatternCard components, includes empty state, responsive design, build verified, committed (9674cd7)]
+- [x] 167 - Create `Badge.astro`. [Created with 6 variants (default, success, warning, danger, info, neutral), 3 sizes (sm, md, lg), optional href prop for clickable badges, accessible markup, responsive design, build verified, committed]
 - [ ] 168 - Create `MetaPill.astro`.
 - [ ] 169 - Create `apps/web/src/pages/index.astro`.
 - [ ] 170 - Add hero copy to the home page.
