@@ -15,8 +15,9 @@
     "quarantined-llm",
     "symbolic-variables"
   ],
-  "id": "dual-llm-pattern",
   "slug": "dual-llm-pattern",
+  "id": "dual-llm-pattern",
+  "summary": "A privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls.",
   "updated_at": "2026-01-05",
-  "body": "\n## Problem\nA privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls.\n\n## Solution\nSplit roles:\n\n- **Privileged LLM:** Plans and calls tools but **never sees raw untrusted data**.  \n- **Quarantined LLM:** Reads untrusted data but **has zero tool access**.  \n- Pass data as **symbolic variables** or validated primitives; privileged side only manipulates references.\n\n```pseudo\nvar1 = QuarantineLLM(\"extract email\", text)  # returns $VAR1\nPrivLLM.plan(\"send $VAR1 to boss\")           # no raw text exposure\nexecute(plan, subst={ \"$VAR1\": var1 })\n```\n\n## How to use it\n\nEmail/calendar assistants, booking agents, API-powered chatbots.\n\n## Trade-offs\n\n* **Pros:** Clear trust boundary; compatible with static analysis.\n* **Cons:** Complexity; debugging across two minds.\n\n## References\n\n* Willison, *Dual LLM Pattern* (Apr 2023); adopted in Beurer-Kellner et al., §3.1 (4)."
+  "body": "\n## Problem\nA privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls.\n\n## Solution\nSplit roles:\n\n- **Privileged LLM:** Plans and calls tools but **never sees raw untrusted data**.  \n- **Quarantined LLM:** Reads untrusted data but **has zero tool access**.  \n- Pass data as **symbolic variables** or validated primitives; privileged side only manipulates references.\n\n```pseudo\nvar1 = QuarantineLLM(\"extract email\", text)  # returns $VAR1\nPrivLLM.plan(\"send $VAR1 to boss\")           # no raw text exposure\nexecute(plan, subst={ \"$VAR1\": var1 })\n```\n\n## How to use it\n\nEmail/calendar assistants, booking agents, API-powered chatbots.\n\n## Trade-offs\n\n* **Pros:** Clear trust boundary; compatible with static analysis.\n* **Cons:** Complexity; debugging across two minds.\n\n## References\n\n* Willison, *Dual LLM Pattern* (Apr 2023); adopted in Beurer-Kellner et al., §3.1 (4).\n"
 }

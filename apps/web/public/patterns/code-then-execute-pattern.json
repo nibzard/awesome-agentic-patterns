@@ -16,8 +16,9 @@
     "program-synthesis",
     "auditability"
   ],
-  "id": "code-then-execute-pattern",
   "slug": "code-then-execute-pattern",
+  "id": "code-then-execute-pattern",
+  "summary": "Plan lists are opaque; we want full data-flow analysis and taint tracking.",
   "updated_at": "2026-01-05",
-  "body": "\n## Problem\nPlan lists are opaque; we want **full data-flow analysis** and taint tracking.\n\n## Solution\nHave the LLM output a **sandboxed program or DSL script**:\n\n1. LLM writes code that calls tools and untrusted-data processors.  \n2. Static checker/Taint engine verifies flows (e.g., no tainted var to `send_email.recipient`).  \n3. Interpreter runs the code in a locked sandbox.\n\n```dsl\nx = calendar.read(today)\ny = QuarantineLLM.format(x)\nemail.write(to=\"john@acme.com\", body=y)\n```\n\n## How to use it\n\nComplex multi-step agents like SQL copilots, software-engineering bots.\n\n## Trade-offs\n\n* **Pros:** Formal verifiability; replay logs.\n* **Cons:** Requires DSL design and static-analysis infra.\n\n## References\n\n* Debenedetti et al., CaMeL (2025); Beurer-Kellner et al., §3.1 (5)."
+  "body": "\n## Problem\nPlan lists are opaque; we want **full data-flow analysis** and taint tracking.\n\n## Solution\nHave the LLM output a **sandboxed program or DSL script**:\n\n1. LLM writes code that calls tools and untrusted-data processors.  \n2. Static checker/Taint engine verifies flows (e.g., no tainted var to `send_email.recipient`).  \n3. Interpreter runs the code in a locked sandbox.\n\n```dsl\nx = calendar.read(today)\ny = QuarantineLLM.format(x)\nemail.write(to=\"john@acme.com\", body=y)\n```\n\n## How to use it\n\nComplex multi-step agents like SQL copilots, software-engineering bots.\n\n## Trade-offs\n\n* **Pros:** Formal verifiability; replay logs.\n* **Cons:** Requires DSL design and static-analysis infra.\n\n## References\n\n* Debenedetti et al., CaMeL (2025); Beurer-Kellner et al., §3.1 (5).\n"
 }

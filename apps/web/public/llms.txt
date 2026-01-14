@@ -5,449 +5,462 @@ A curated catalogue of AI agent design patterns.
 ## Patterns
 
 ### reflection
-Reflection Loop: 
+Reflection Loop: Generative models may produce subpar output if they never review or critique their own work.
 URL: https://agentic-patterns.com/patterns/reflection
 
 ### continuous-autonomous-task-loop-pattern
-Continuous Autonomous Task Loop Pattern: 
+Continuous Autonomous Task Loop Pattern: Continuous autonomous loop that handles task selection, execution, and completion without human intervention, with intelligent rate limit handling and automated git management.
 URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern
 
 ### tool-use-incentivization-via-reward-shaping
-Tool Use Incentivization via Reward Shaping: 
+Tool Use Incentivization via Reward Shaping: Provide dense, shaped rewards for every intermediate tool invocation to encourage coding agents to use compilers, linters, and test runners instead of relying solely on internal reasoning tokens.
 URL: https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping
 
 ### asynchronous-coding-agent-pipeline
-Asynchronous Coding Agent Pipeline: 
+Asynchronous Coding Agent Pipeline: Decouple inference, tool execution, and learning into parallel asynchronous components communicating via message queues to maximize GPU utilization and eliminate compute bubbles from synchronous tool calls.
 URL: https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline
 
 ### agent-friendly-workflow-design
-Agent-Friendly Workflow Design: 
+Agent-Friendly Workflow Design: Consciously design workflows with clear goals, appropriate autonomy, structured I/O, and feedback loops to maximize agent performance by aligning tasks with AI strengths.
 URL: https://agentic-patterns.com/patterns/agent-friendly-workflow-design
 
 ### isolated-vm-per-rl-rollout
-Isolated VM per RL Rollout: 
+Isolated VM per RL Rollout: Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination between parallel agent executions, ensuring safe training with destructive tool access.
 URL: https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout
 
 ### no-token-limit-magic
-No-Token-Limit Magic: 
+No-Token-Limit Magic: Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.
 URL: https://agentic-patterns.com/patterns/no-token-limit-magic
 
 ### human-in-loop-approval-framework
-Human-in-the-Loop Approval Framework: 
+Human-in-the-Loop Approval Framework: Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails.
 URL: https://agentic-patterns.com/patterns/human-in-loop-approval-framework
 
 ### stop-hook-auto-continue-pattern
-Stop Hook Auto-Continue Pattern: 
+Stop Hook Auto-Continue Pattern: Use stop hooks to programmatically check success criteria after each agent turn, automatically continuing execution until the task is genuinely complete, enabling true task completion without manual intervention.
 URL: https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern
 
 ### structured-output-specification
-Structured Output Specification: 
+Structured Output Specification: Constrain agent outputs using deterministic schemas that enforce structured, machine-readable results, enabling reliable validation, parsing, and integration with downstream systems.
 URL: https://agentic-patterns.com/patterns/structured-output-specification
 
 ### shell-command-contextualization
-Shell Command Contextualization: 
+Shell Command Contextualization: Provide a mechanism (e.g., `!` prefix) to execute shell commands locally and automatically inject both the command and output into the agent's context for seamless integration.
 URL: https://agentic-patterns.com/patterns/shell-command-contextualization
 
 ### context-minimization-pattern
-Context-Minimization Pattern: 
+Context-Minimization Pattern: User-supplied or tainted text lingers in the conversation, enabling it to influence later generations.
 URL: https://agentic-patterns.com/patterns/context-minimization-pattern
 
 ### code-first-tool-interface-pattern
-Code Mode MCP Tool Interface Improvement Pattern: 
+Code Mode MCP Tool Interface Improvement Pattern: LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with 10x+ token savings.
 URL: https://agentic-patterns.com/patterns/code-first-tool-interface-pattern
 
 ### filesystem-based-agent-state
-Filesystem-Based Agent State: 
+Filesystem-Based Agent State: Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.
 URL: https://agentic-patterns.com/patterns/filesystem-based-agent-state
 
 ### anti-reward-hacking-grader-design
-Anti-Reward-Hacking Grader Design: 
+Anti-Reward-Hacking Grader Design: Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality.
 URL: https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design
 
 ### team-shared-agent-configuration
-Team-Shared Agent Configuration as Code: 
+Team-Shared Agent Configuration as Code: Check agent configuration into version control as code, enabling consistent behavior across teams, faster onboarding, and collaborative improvement through PRs and code review.
 URL: https://agentic-patterns.com/patterns/team-shared-agent-configuration
 
 ### self-critique-evaluator-loop
-Self-Critique Evaluator Loop: 
+Self-Critique Evaluator Loop: Human preference labels are costly and quickly become outdated as base models improve.
 URL: https://agentic-patterns.com/patterns/self-critique-evaluator-loop
 
 ### cli-native-agent-orchestration
-CLI-Native Agent Orchestration: 
+CLI-Native Agent Orchestration: Web chat UIs are awkward for repeat runs, local file edits, or scripting inside CI pipelines.
 URL: https://agentic-patterns.com/patterns/cli-native-agent-orchestration
 
 ### democratization-of-tooling-via-agents
-Democratization of Tooling via Agents: 
+Democratization of Tooling via Agents: Empower non-technical users to create custom software tools and scripts using AI agents, lowering the barrier to software development and enabling domain experts to build their own productivity solutions.
 URL: https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents
 
 ### chain-of-thought-monitoring-interruption
-Chain-of-Thought Monitoring & Interruption: 
+Chain-of-Thought Monitoring & Interruption: Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.
 URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
 
 ### swarm-migration-pattern
-Swarm Migration Pattern: 
+Swarm Migration Pattern: Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations.
 URL: https://agentic-patterns.com/patterns/swarm-migration-pattern
 
 ### code-then-execute-pattern
-Code-Then-Execute Pattern: 
+Code-Then-Execute Pattern: Plan lists are opaque; we want full data-flow analysis and taint tracking.
 URL: https://agentic-patterns.com/patterns/code-then-execute-pattern
 
 ### skill-library-evolution
-Skill Library Evolution: 
+Skill Library Evolution: Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.
 URL: https://agentic-patterns.com/patterns/skill-library-evolution
 
 ### llm-map-reduce-pattern
-LLM Map-Reduce Pattern: 
+LLM Map-Reduce Pattern: Injecting a single poisoned document can manipulate global reasoning if all data is processed in one context.
 URL: https://agentic-patterns.com/patterns/llm-map-reduce-pattern
 
 ### graph-of-thoughts
-Graph of Thoughts (GoT): 
+Graph of Thoughts (GoT): Extend reasoning frameworks by representing thoughts as a directed graph with nodes, edges, and arbitrary relationships, enabling complex operations like branching, aggregation, refinement, and looping for problems with interdependencies.
 URL: https://agentic-patterns.com/patterns/graph-of-thoughts
 
 ### context-window-anxiety-management
-Context Window Anxiety Management: 
+Context Window Anxiety Management: Models like Claude Sonnet 4.5 exhibit "context anxiety"—becoming aware of approaching context limits and proactively summarizing or closing tasks prematurely—manageable through strategic context budgeting and aggressive counter-prompting.
 URL: https://agentic-patterns.com/patterns/context-window-anxiety-management
 
 ### multi-platform-webhook-triggers
-Multi-Platform Webhook Triggers: 
+Multi-Platform Webhook Triggers: Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled events) to allow external SaaS tools to automatically initiate agent workflows, enabling low-friction, reactive automation from existing platforms.
 URL: https://agentic-patterns.com/patterns/multi-platform-webhook-triggers
 
 ### tree-of-thought-reasoning
-Tree-of-Thought Reasoning: 
+Tree-of-Thought Reasoning: Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.
 URL: https://agentic-patterns.com/patterns/tree-of-thought-reasoning
 
 ### specification-driven-agent-development
-Specification-Driven Agent Development: 
+Specification-Driven Agent Development: Hand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.
 URL: https://agentic-patterns.com/patterns/specification-driven-agent-development
 
 ### proactive-agent-state-externalization
-Proactive Agent State Externalization: 
+Proactive Agent State Externalization: Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.
 URL: https://agentic-patterns.com/patterns/proactive-agent-state-externalization
 
 ### initializer-maintainer-dual-agent
-Initializer-Maintainer Dual Agent Architecture: 
+Initializer-Maintainer Dual Agent Architecture: Two-agent architecture with lifecycle-specialized responsibilities: Initializer creates comprehensive foundation once, Maintainer executes incremental development with session bootstrapping rituals to prevent context loss.
 URL: https://agentic-patterns.com/patterns/initializer-maintainer-dual-agent
 
 ### spec-as-test-feedback-loop
-Spec-As-Test Feedback Loop: 
+Spec-As-Test Feedback Loop: Even in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust.
 URL: https://agentic-patterns.com/patterns/spec-as-test-feedback-loop
 
 ### pii-tokenization
-PII Tokenization: 
+PII Tokenization: Implement interception layer in MCP client that automatically tokenizes PII before reaching model and untokenizes for tool calls, enabling agents to orchestrate sensitive workflows without exposing raw data to LLM.
 URL: https://agentic-patterns.com/patterns/pii-tokenization
 
 ### oracle-and-worker-multi-model
-Oracle and Worker Multi-Model Approach: 
+Oracle and Worker Multi-Model Approach: Relying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems.
 URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
 
 ### curated-code-context-window
-Curated Code Context Window: 
+Curated Code Context Window: Maintain minimal, high-signal code context using search subagents to identify and inject only relevant modules, preventing model overwhelm, reducing token usage, and improving reasoning clarity by excluding unrelated code.
 URL: https://agentic-patterns.com/patterns/curated-code-context-window
 
 ### cli-first-skill-design
-CLI-First Skill Design: 
+CLI-First Skill Design: Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.
 URL: https://agentic-patterns.com/patterns/cli-first-skill-design
 
 ### progressive-complexity-escalation
-Progressive Complexity Escalation: 
+Progressive Complexity Escalation: Start agents with low-complexity, high-reliability tasks and progressively unlock more complex capabilities as models improve and trust is established, matching task complexity to current model capabilities for risk mitigation.
 URL: https://agentic-patterns.com/patterns/progressive-complexity-escalation
 
 ### parallel-tool-execution
-Conditional Parallel Tool Execution: 
+Conditional Parallel Tool Execution: Execute read-only tools concurrently for speed while serializing state-modifying tools for safety, balancing performance optimization with race condition prevention through intelligent tool classification and orchestration.
 URL: https://agentic-patterns.com/patterns/parallel-tool-execution
 
 ### llm-observability
-LLM Observability: 
+LLM Observability: Integrate LLM observability platforms for span-level tracing of agent workflows, providing visual UI debugging, workflow linking, and aggregate metrics to enable fast navigation of complex multi-step executions.
 URL: https://agentic-patterns.com/patterns/llm-observability
 
 ### multi-platform-communication-aggregation
-Multi-Platform Communication Aggregation: 
+Multi-Platform Communication Aggregation: Create unified search interface that queries all communication platforms in parallel and aggregates results into consistent format, enabling single-query cross-platform search with minimal latency through parallel execution.
 URL: https://agentic-patterns.com/patterns/multi-platform-communication-aggregation
 
 ### code-over-api-pattern
-Code-Over-API Pattern: 
+Code-Over-API Pattern: Agents write and execute code that processes data in execution environment instead of making direct API calls, dramatically reducing token consumption by keeping intermediate data out of context window (150K → 2K tokens).
 URL: https://agentic-patterns.com/patterns/code-over-api-pattern
 
 ### agent-reinforcement-fine-tuning
-Agent Reinforcement Fine-Tuning (Agent RFT): 
+Agent Reinforcement Fine-Tuning (Agent RFT): Train model weights end-to-end on agentic tasks via reinforcement learning with real tool calls and custom reward signals, optimizing for domain-specific tool use efficiency and multi-step reasoning performance.
 URL: https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning
 
 ### merged-code-language-skill-model
-Merged Code + Language Skill Model: 
+Merged Code + Language Skill Model: Decentralized training with model merging—train language and code specialists independently then combine via weight averaging—enabling parallel R&D without massive centralized compute while preserving both skill sets.
 URL: https://agentic-patterns.com/patterns/merged-code-language-skill-model
 
 ### hybrid-llm-code-workflow-coordinator
-Hybrid LLM/Code Workflow Coordinator: 
+Hybrid LLM/Code Workflow Coordinator: Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems.
 URL: https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator
 
 ### agent-driven-research
-Agent-Driven Research: 
+Agent-Driven Research: ## Problem
+Traditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries.
 URL: https://agentic-patterns.com/patterns/agent-driven-research
 
 ### disposable-scaffolding-over-durable-features
-Disposable Scaffolding Over Durable Features: 
+Disposable Scaffolding Over Durable Features: Treat most code around models as temporary, lightweight scaffolding rather than durable features, prioritizing speed and adaptability to avoid over-engineering solutions that next model generations may render obsolete.
 URL: https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features
 
 ### egress-lockdown-no-exfiltration-channel
-Egress Lockdown (No-Exfiltration Channel): 
+Egress Lockdown (No-Exfiltration Channel): Even with private-data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data—implement egress firewall allowing only specific domains while filtering or stripping outbound content.
 URL: https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel
 
 ### compounding-engineering-pattern
-Compounding Engineering Pattern: 
+Compounding Engineering Pattern: Codify all learnings from each feature into reusable prompts, slash commands, subagents, and hooks—making each feature easier to build by creating increasingly "self-teaching" codebase that accelerates productivity over time.
 URL: https://agentic-patterns.com/patterns/compounding-engineering-pattern
 
 ### visual-ai-multimodal-integration
-Visual AI Multimodal Integration: 
+Visual AI Multimodal Integration: Integrate large multimodal models for visual understanding—enabling agents to process images, videos, screenshots alongside text for tasks like UI debugging, document processing, video analysis, and security monitoring.
 URL: https://agentic-patterns.com/patterns/visual-ai-multimodal-integration
 
 ### deterministic-security-scanning-build-loop
-Deterministic Security Scanning Build Loop: 
+Deterministic Security Scanning Build Loop: Implement deterministic security validation through build loop with two-phase approach: non-deterministic generation followed by deterministic backpressure from integrated SAST/DAST tools that must pass before code completion.
 URL: https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop
 
 ### action-selector-pattern
-Action-Selector Pattern: 
+Action-Selector Pattern: ## Problem
+Untrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.
 URL: https://agentic-patterns.com/patterns/action-selector-pattern
 
 ### workflow-evals-with-mocked-tools
-Workflow Evals with Mocked Tools: 
+Workflow Evals with Mocked Tools: TODO: Add a concise summary for "Workflow Evals with Mocked Tools" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools
 
 ### memory-synthesis-from-execution-logs
-Memory Synthesis from Execution Logs: 
+Memory Synthesis from Execution Logs: TODO: Add a concise summary for "Memory Synthesis from Execution Logs" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/memory-synthesis-from-execution-logs
 
 ### lethal-trifecta-threat-model
-Lethal Trifecta Threat Model: 
+Lethal Trifecta Threat Model: Combining three agent capabilities—access to private data, exposure to untrusted content, and ability to externally communicate—creates a straightforward path for prompt-injection attackers to steal sensitive information.
 URL: https://agentic-patterns.com/patterns/lethal-trifecta-threat-model
 
 ### multi-model-orchestration-for-complex-edits
-Multi-Model Orchestration for Complex Edits: 
+Multi-Model Orchestration for Complex Edits: TODO: Add a concise summary for "Multi-Model Orchestration for Complex Edits" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/multi-model-orchestration-for-complex-edits
 
 ### inference-healed-code-review-reward
-Inference-Healed Code Review Reward: 
+Inference-Healed Code Review Reward: TODO: Add a concise summary for "Inference-Healed Code Review Reward" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/inference-healed-code-review-reward
 
 ### iterative-multi-agent-brainstorming
-Iterative Multi-Agent Brainstorming: 
+Iterative Multi-Agent Brainstorming: ## Problem
+For complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process.
 URL: https://agentic-patterns.com/patterns/iterative-multi-agent-brainstorming
 
 ### variance-based-rl-sample-selection
-Variance-Based RL Sample Selection: 
+Variance-Based RL Sample Selection: TODO: Add a concise summary for "Variance-Based RL Sample Selection" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/variance-based-rl-sample-selection
 
 ### tool-use-steering-via-prompting
-Tool Use Steering via Prompting: 
+Tool Use Steering via Prompting: TODO: Add a concise summary for "Tool Use Steering via Prompting" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/tool-use-steering-via-prompting
 
 ### dogfooding-with-rapid-iteration-for-agent-improvement
-Dogfooding with Rapid Iteration for Agent Improvement: 
+Dogfooding with Rapid Iteration for Agent Improvement: ## Problem
+Developing effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may not capture all nuances.
 URL: https://agentic-patterns.com/patterns/dogfooding-with-rapid-iteration-for-agent-improvement
 
 ### autonomous-workflow-agent-architecture
-Autonomous Workflow Agent Architecture: 
+Autonomous Workflow Agent Architecture: TODO: Add a concise summary for "Autonomous Workflow Agent Architecture" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture
 
 ### memory-reinforcement-learning-memrl
-Memory Reinforcement Learning (MemRL): 
+Memory Reinforcement Learning (MemRL): TODO: Add a concise summary for "Memory Reinforcement Learning (MemRL)" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl
 
 ### spectrum-of-control-blended-initiative
-Spectrum of Control / Blended Initiative: 
+Spectrum of Control / Blended Initiative: Design human-agent interaction supporting autonomy spectrum from tab completion (low) to background agents creating entire PRs (high), enabling seamless switching between direct control and task delegation based on complexity and user familiarity.
 URL: https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative
 
 ### ai-assisted-code-review-verification
-AI-Assisted Code Review / Verification: 
+AI-Assisted Code Review / Verification: TODO: Add a concise summary for "AI-Assisted Code Review / Verification" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/ai-assisted-code-review-verification
 
 ### criticgpt-style-evaluation
-CriticGPT-Style Code Review: 
+CriticGPT-Style Code Review: TODO: Add a concise summary for "CriticGPT-Style Code Review" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
 
 ### coding-agent-ci-feedback-loop
-Coding Agent CI Feedback Loop: 
+Coding Agent CI Feedback Loop: TODO: Add a concise summary for "Coding Agent CI Feedback Loop" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/coding-agent-ci-feedback-loop
 
 ### rlaif-reinforcement-learning-from-ai-feedback
-RLAIF (Reinforcement Learning from AI Feedback): 
+RLAIF (Reinforcement Learning from AI Feedback): TODO: Add a concise summary for "RLAIF (Reinforcement Learning from AI Feedback)" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/rlaif-reinforcement-learning-from-ai-feedback
 
 ### self-rewriting-meta-prompt-loop
-Self-Rewriting Meta-Prompt Loop: 
+Self-Rewriting Meta-Prompt Loop: Static system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone.
 URL: https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop
 
 ### proactive-trigger-vocabulary
-Proactive Trigger Vocabulary: 
+Proactive Trigger Vocabulary: TODO: Add a concise summary for "Proactive Trigger Vocabulary" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/proactive-trigger-vocabulary
 
 ### progressive-autonomy-with-model-evolution
-Progressive Autonomy with Model Evolution: 
+Progressive Autonomy with Model Evolution: TODO: Add a concise summary for "Progressive Autonomy with Model Evolution" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution
 
 ### agent-first-tooling-and-logging
-Agent-First Tooling and Logging: 
+Agent-First Tooling and Logging: TODO: Add a concise summary for "Agent-First Tooling and Logging" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/agent-first-tooling-and-logging
 
 ### progressive-disclosure-large-files
-Progressive Disclosure for Large Files: 
+Progressive Disclosure for Large Files: TODO: Add a concise summary for "Progressive Disclosure for Large Files" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/progressive-disclosure-large-files
 
 ### language-agent-tree-search-lats
-Language Agent Tree Search (LATS): 
+Language Agent Tree Search (LATS): TODO: Add a concise summary for "Language Agent Tree Search (LATS)" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/language-agent-tree-search-lats
 
 ### agent-assisted-scaffolding
-Agent-Assisted Scaffolding: 
+Agent-Assisted Scaffolding: ## Problem
+Starting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers.
 URL: https://agentic-patterns.com/patterns/agent-assisted-scaffolding
 
 ### layered-configuration-context
-Layered Configuration Context: 
+Layered Configuration Context: TODO: Add a concise summary for "Layered Configuration Context" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/layered-configuration-context
 
 ### virtual-machine-operator-agent
-Virtual Machine Operator Agent: 
+Virtual Machine Operator Agent: ## Problem
+AI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage system resources, install software, and operate various applications.
 URL: https://agentic-patterns.com/patterns/virtual-machine-operator-agent
 
 ### seamless-background-to-foreground-handoff
-Seamless Background-to-Foreground Handoff: 
+Seamless Background-to-Foreground Handoff: TODO: Add a concise summary for "Seamless Background-to-Foreground Handoff" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/seamless-background-to-foreground-handoff
 
 ### opponent-processor-multi-agent-debate
-Opponent Processor / Multi-Agent Debate Pattern: 
+Opponent Processor / Multi-Agent Debate Pattern: TODO: Add a concise summary for "Opponent Processor / Multi-Agent Debate Pattern" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
 
 ### iterative-prompt-skill-refinement
-Iterative Prompt & Skill Refinement: 
+Iterative Prompt & Skill Refinement: TODO: Add a concise summary for "Iterative Prompt & Skill Refinement" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement
 
 ### dynamic-context-injection
-Dynamic Context Injection: 
+Dynamic Context Injection: TODO: Add a concise summary for "Dynamic Context Injection" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/dynamic-context-injection
 
 ### tool-capability-compartmentalization
-Tool Capability Compartmentalization: 
+Tool Capability Compartmentalization: ## Problem
+Model Context Protocol (MCP) encourages "mix-and-match" tools—often combining private-data readers, web fetchers, and writers in a single callable unit. This amplifies the lethality of prompt-injection chains.
 URL: https://agentic-patterns.com/patterns/tool-capability-compartmentalization
 
 ### agentic-search-over-vector-embeddings
-Agentic Search Over Vector Embeddings: 
+Agentic Search Over Vector Embeddings: TODO: Add a concise summary for "Agentic Search Over Vector Embeddings" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings
 
 ### subagent-compilation-checker
-Subagent Compilation Checker: 
+Subagent Compilation Checker: TODO: Add a concise summary for "Subagent Compilation Checker" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/subagent-compilation-checker
 
 ### rich-feedback-loops
-Rich Feedback Loops > Perfect Prompts: 
+Rich Feedback Loops > Perfect Prompts: ## Problem
+Polishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.
 URL: https://agentic-patterns.com/patterns/rich-feedback-loops
 
 ### ai-accelerated-learning-and-skill-development
-AI-Accelerated Learning and Skill Development: 
+AI-Accelerated Learning and Skill Development: ## Problem
+Developing strong software engineering skills, including "taste" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers.
 URL: https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development
 
 ### latent-demand-product-discovery
-Latent Demand Product Discovery: 
+Latent Demand Product Discovery: TODO: Add a concise summary for "Latent Demand Product Discovery" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/latent-demand-product-discovery
 
 ### agent-sdk-for-programmatic-control
-Agent SDK for Programmatic Control: 
+Agent SDK for Programmatic Control: TODO: Add a concise summary for "Agent SDK for Programmatic Control" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control
 
 ### dual-llm-pattern
-Dual LLM Pattern: 
+Dual LLM Pattern: A privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls.
 URL: https://agentic-patterns.com/patterns/dual-llm-pattern
 
 ### plan-then-execute-pattern
-Plan-Then-Execute Pattern: 
+Plan-Then-Execute Pattern: ## Problem
+If tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps.
 URL: https://agentic-patterns.com/patterns/plan-then-execute-pattern
 
 ### parallel-tool-call-learning
-Parallel Tool Call Learning: 
+Parallel Tool Call Learning: TODO: Add a concise summary for "Parallel Tool Call Learning" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/parallel-tool-call-learning
 
 ### dynamic-code-injection-on-demand-file-fetch
-Dynamic Code Injection (On-Demand File Fetch): 
+Dynamic Code Injection (On-Demand File Fetch): TODO: Add a concise summary for "Dynamic Code Injection (On-Demand File Fetch)" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand-file-fetch
 
 ### inference-time-scaling
-Inference-Time Scaling: 
+Inference-Time Scaling: TODO: Add a concise summary for "Inference-Time Scaling" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/inference-time-scaling
 
 ### verbose-reasoning-transparency
-Verbose Reasoning Transparency: 
+Verbose Reasoning Transparency: TODO: Add a concise summary for "Verbose Reasoning Transparency" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/verbose-reasoning-transparency
 
 ### distributed-execution-cloud-workers
-Distributed Execution with Cloud Workers: 
+Distributed Execution with Cloud Workers: TODO: Add a concise summary for "Distributed Execution with Cloud Workers" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/distributed-execution-cloud-workers
 
 ### background-agent-ci
-Background Agent with CI Feedback: 
+Background Agent with CI Feedback: ## Problem
+Long-running tasks tie up the editor and require developers to babysit the agent.
 URL: https://agentic-patterns.com/patterns/background-agent-ci
 
 ### feature-list-as-immutable-contract
-Feature List as Immutable Contract: 
+Feature List as Immutable Contract: TODO: Add a concise summary for "Feature List as Immutable Contract" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/feature-list-as-immutable-contract
 
 ### abstracted-code-representation-for-review
-Abstracted Code Representation for Review: 
+Abstracted Code Representation for Review: TODO: Add a concise summary for "Abstracted Code Representation for Review" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/abstracted-code-representation-for-review
 
 ### dual-use-tool-design
-Dual-Use Tool Design: 
+Dual-Use Tool Design: TODO: Add a concise summary for "Dual-Use Tool Design" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/dual-use-tool-design
 
 ### patch-steering-via-prompted-tool-selection
-Patch Steering via Prompted Tool Selection: 
+Patch Steering via Prompted Tool Selection: TODO: Add a concise summary for "Patch Steering via Prompted Tool Selection" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection
 
 ### sub-agent-spawning
-Sub-Agent Spawning: 
+Sub-Agent Spawning: TODO: Add a concise summary for "Sub-Agent Spawning" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/sub-agent-spawning
 
 ### llm-friendly-api-design
-LLM-Friendly API Design: 
+LLM-Friendly API Design: TODO: Add a concise summary for "LLM-Friendly API Design" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/llm-friendly-api-design
 
 ### curated-file-context-window
-Curated File Context Window: 
+Curated File Context Window: TODO: Add a concise summary for "Curated File Context Window" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/curated-file-context-window
 
 ### progressive-tool-discovery
-Progressive Tool Discovery: 
+Progressive Tool Discovery: TODO: Add a concise summary for "Progressive Tool Discovery" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/progressive-tool-discovery
 
 ### three-stage-perception-architecture
-Three-Stage Perception Architecture: 
+Three-Stage Perception Architecture: TODO: Add a concise summary for "Three-Stage Perception Architecture" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/three-stage-perception-architecture
 
 ### extended-coherence-work-sessions
-Extended Coherence Work Sessions: 
+Extended Coherence Work Sessions: TODO: Add a concise summary for "Extended Coherence Work Sessions" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/extended-coherence-work-sessions
 
 ### episodic-memory-retrieval-injection
-Episodic Memory Retrieval & Injection: 
+Episodic Memory Retrieval & Injection: Stateless calls make agents forget prior decisions, causing repetition and shallow reasoning.
 URL: https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection
 
 ### self-discover-reasoning-structures
-Self-Discover: LLM Self-Composed Reasoning Structures: 
+Self-Discover: LLM Self-Composed Reasoning Structures: TODO: Add a concise summary for "Self-Discover: LLM Self-Composed Reasoning Structures" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/self-discover-reasoning-structures
 
 ### discrete-phase-separation
-Discrete Phase Separation: 
+Discrete Phase Separation: TODO: Add a concise summary for "Discrete Phase Separation" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/discrete-phase-separation
 
 ### explicit-posterior-sampling-planner
-Explicit Posterior-Sampling Planner: 
+Explicit Posterior-Sampling Planner: Agents that rely on ad-hoc heuristics explore poorly, wasting tokens and API calls on dead ends.
 URL: https://agentic-patterns.com/patterns/explicit-posterior-sampling-planner
 
 ### inversion-of-control
-Inversion of Control: 
+Inversion of Control: Traditional "prompt-as-puppeteer" workflows force humans to spell out every step, limiting scale and creativity.
 URL: https://agentic-patterns.com/patterns/inversion-of-control
 
 ### versioned-constitution-governance
-Versioned Constitution Governance: 
+Versioned Constitution Governance: ## Problem
+When an agent rewrites its own "constitution," it may accidentally violate safety or regress on alignment objectives if changes aren't reviewed.
 URL: https://agentic-patterns.com/patterns/versioned-constitution-governance
 
 ### agent-powered-codebase-qa-onboarding
-Agent-Powered Codebase Q&A / Onboarding: 
+Agent-Powered Codebase Q&A / Onboarding: ## Problem
+Understanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming.
 URL: https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding

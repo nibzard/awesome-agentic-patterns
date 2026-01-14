@@ -14,8 +14,9 @@
     "ci",
     "feedback"
   ],
-  "id": "background-agent-with-ci-feedback",
   "slug": "background-agent-ci",
+  "id": "background-agent-with-ci-feedback",
+  "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.",
   "updated_at": "2026-01-05",
-  "body": "\n## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.\n\n## Solution\nRun the agent **asynchronously**; it pushes a branch, waits for CI, ingests pass/fail output, iterates, and pings the user when green. Perfect for mobile kick-offs (“fix flaky test while I'm at soccer practice”).\n\n## Example (flow)\n```mermaid\nsequenceDiagram\n  Dev->>Agent: \"Upgrade to React 19\"\n  Agent->>Git: push branch react19-upgrade\n  Agent-->>CI: trigger tests\n  CI-->>Agent: 12 failures\n  Agent->>Files: patch imports\n  Agent-->>CI: re-run\n  CI-->>Agent: ✅ all green\n  Agent-->>Dev: PR ready\n```\n\n## References\n\n* Raising An Agent - Episode 6: Background agents use existing CI as the feedback loop.\n\n[Source](https://ampcode.com/manual#background)"
+  "body": "\n## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.\n\n## Solution\nRun the agent **asynchronously**; it pushes a branch, waits for CI, ingests pass/fail output, iterates, and pings the user when green. Perfect for mobile kick-offs (“fix flaky test while I'm at soccer practice”).\n\n## Example (flow)\n```mermaid\nsequenceDiagram\n  Dev->>Agent: \"Upgrade to React 19\"\n  Agent->>Git: push branch react19-upgrade\n  Agent-->>CI: trigger tests\n  CI-->>Agent: 12 failures\n  Agent->>Files: patch imports\n  Agent-->>CI: re-run\n  CI-->>Agent: ✅ all green\n  Agent-->>Dev: PR ready\n```\n\n## References\n\n* Raising An Agent - Episode 6: Background agents use existing CI as the feedback loop.\n\n[Source](https://ampcode.com/manual#background)\n"
 }

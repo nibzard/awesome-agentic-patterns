@@ -262,9 +262,9 @@
 - [x] 262 - Add Mermaid styling to `global.css`. [Added .mermaid class styles with border, padding, border-radius, and dark mode support]
 - [x] 263 - Port the pattern source block into an Astro component. [Created PatternSource.astro with icon, label, and external link styling]
 - [x] 264 - Render the pattern source block on pattern pages. [Added to pattern detail page with sample source rendering]
-- [ ] 265 - Enforce absolute asset paths in markdown rendering.
-- [ ] 266 - Map existing MkDocs URLs to new routes.
-- [ ] 267 - Generate a redirects file for Vercel.
+- [x] 265 - Enforce absolute asset paths in markdown rendering. [Created remark-asset-paths.ts plugin to transform relative image paths to absolute; added copyImageAssets() to build-data.ts to copy images from patterns/ to public/patterns/; configured plugin in astro.config.mjs]
+- [x] 266 - Map existing MkDocs URLs to new routes. [Created REDIRECTS.md confirming pattern URLs are identical; documented new Astro-only routes (/decision, /graph, /compare, /packs/, /guides/); unblocks tasks 267, 268, 290]
+- [x] 267 - Generate a redirects file for Vercel. [Created vercel.json with build config, output dir, cleanUrls, no trailingSlash; no redirects needed per REDIRECTS.md analysis; commit b2b936e]
 - [ ] 268 - Configure Vercel to use the redirects file.
 - [ ] 269 - Decide the future of `scripts/build_readme.py`.
 - [ ] 270 - Remove `mkdocs.yaml` from the repo.

@@ -15,8 +15,9 @@
       "iterative-improvement",
       "evaluation"
     ],
-    "id": "reflection-loop",
     "slug": "reflection",
+    "id": "reflection-loop",
+    "summary": "Generative models may produce subpar output if they never review or critique their own work.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nGenerative models may produce subpar output if they never review or critique their own work."
   },
@@ -39,8 +40,9 @@
       "cli-driven",
       "stream-processing"
     ],
-    "id": "continuous-autonomous-task-loop-pattern",
     "slug": "continuous-autonomous-task-loop-pattern",
+    "id": "continuous-autonomous-task-loop-pattern",
+    "summary": "Continuous autonomous loop that handles task selection, execution, and completion without human intervention, with intelligent rate limit handling and automated git management.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -61,8 +63,9 @@
       "coding-agent",
       "RL"
     ],
-    "id": "tool-use-incentivization-via-reward-shaping",
     "slug": "tool-use-incentivization-via-reward-shaping",
+    "id": "tool-use-incentivization-via-reward-shaping",
+    "summary": "Provide dense, shaped rewards for every intermediate tool invocation to encourage coding agents to use compilers, linters, and test runners instead of relying solely on internal reasoning tokens.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -83,8 +86,9 @@
       "code-agent",
       "parallelism"
     ],
-    "id": "asynchronous-coding-agent-pipeline",
     "slug": "asynchronous-coding-agent-pipeline",
+    "id": "asynchronous-coding-agent-pipeline",
+    "summary": "Decouple inference, tool execution, and learning into parallel asynchronous components communicating via message queues to maximize GPU utilization and eliminate compute bubbles from synchronous tool calls.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -106,8 +110,9 @@
       "task decomposition",
       "HCI"
     ],
-    "id": "agent-friendly-workflow-design",
     "slug": "agent-friendly-workflow-design",
+    "id": "agent-friendly-workflow-design",
+    "summary": "Consciously design workflows with clear goals, appropriate autonomy, structured I/O, and feedback loops to maximize agent performance by aligning tasks with AI strengths.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nSimply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may st"
   },
@@ -131,8 +136,9 @@
       "state-management",
       "agent-rft"
     ],
-    "id": "isolated-vm-per-rl-rollout",
     "slug": "isolated-vm-per-rl-rollout",
+    "id": "isolated-vm-per-rl-rollout",
+    "summary": "Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination between parallel agent executions, ensuring safe training with destructive tool access.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -153,8 +159,9 @@
       "cost",
       "experimentation"
     ],
-    "id": "no-token-limit-magic",
     "slug": "no-token-limit-magic",
+    "id": "no-token-limit-magic",
+    "summary": "Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAggressive prompt compression to save tokens stifles reasoning depth and self-correction."
   },
@@ -177,8 +184,9 @@
       "collaboration",
       "slack-integration"
     ],
-    "id": "human-in-the-loop-approval-framework",
     "slug": "human-in-loop-approval-framework",
+    "id": "human-in-the-loop-approval-framework",
+    "summary": "Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -202,8 +210,9 @@
       "success-criteria",
       "continuous-execution"
     ],
-    "id": "stop-hook-auto-continue-pattern",
     "slug": "stop-hook-auto-continue-pattern",
+    "id": "stop-hook-auto-continue-pattern",
+    "summary": "Use stop hooks to programmatically check success criteria after each agent turn, automatically continuing execution until the task is genuinely complete, enabling true task completion without manual intervention.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -226,8 +235,9 @@
       "type-safety",
       "integration"
     ],
-    "id": "structured-output-specification",
     "slug": "structured-output-specification",
+    "id": "structured-output-specification",
+    "summary": "Constrain agent outputs using deterministic schemas that enforce structured, machine-readable results, enabling reliable validation, parsing, and integration with downstream systems.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -250,8 +260,9 @@
       "cli",
       "interactive tools"
     ],
-    "id": "shell-command-contextualization",
     "slug": "shell-command-contextualization",
+    "id": "shell-command-contextualization",
+    "summary": "Provide a mechanism (e.g., `!` prefix) to execute shell commands locally and automatically inject both the command and output into the agent's context for seamless integration.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nWhen an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these"
   },
@@ -271,8 +282,9 @@
       "taint-removal",
       "prompt-injection"
     ],
-    "id": "context-minimization-pattern",
     "slug": "context-minimization-pattern",
+    "id": "context-minimization-pattern",
+    "summary": "User-supplied or tainted text lingers in the conversation, enabling it to influence later generations.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nUser-supplied or tainted text lingers in the conversation, enabling it to influence later generations."
   },
@@ -297,8 +309,9 @@
       "v8-isolates",
       "token-optimization"
     ],
-    "id": "code-mode-mcp-tool-interface-improvement-pattern",
     "slug": "code-first-tool-interface-pattern",
+    "id": "code-mode-mcp-tool-interface-improvement-pattern",
+    "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with 10x+ token savings.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -319,8 +332,9 @@
       "resumption",
       "long-running-tasks"
     ],
-    "id": "filesystem-based-agent-state",
     "slug": "filesystem-based-agent-state",
+    "id": "filesystem-based-agent-state",
+    "summary": "Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -343,8 +357,9 @@
       "adversarial-robustness",
       "agent-rft"
     ],
-    "id": "anti-reward-hacking-grader-design",
     "slug": "anti-reward-hacking-grader-design",
+    "id": "anti-reward-hacking-grader-design",
+    "summary": "Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -368,8 +383,9 @@
       "consistency",
       "onboarding"
     ],
-    "id": "team-shared-agent-configuration-as-code",
     "slug": "team-shared-agent-configuration",
+    "id": "team-shared-agent-configuration-as-code",
+    "summary": "Check agent configuration into version control as code, enabling consistent behavior across teams, faster onboarding, and collaborative improvement through PRs and code review.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -390,8 +406,9 @@
       "reward-model",
       "synthetic-data"
     ],
-    "id": "self-critique-evaluator-loop",
     "slug": "self-critique-evaluator-loop",
+    "id": "self-critique-evaluator-loop",
+    "summary": "Human preference labels are costly and quickly become outdated as base models improve.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nHuman preference labels are costly and quickly become outdated as base models improve."
   },
@@ -412,8 +429,9 @@
       "local-dev",
       "headless"
     ],
-    "id": "cli-native-agent-orchestration",
     "slug": "cli-native-agent-orchestration",
+    "id": "cli-native-agent-orchestration",
+    "summary": "Web chat UIs are awkward for repeat runs, local file edits, or scripting inside CI pipelines.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nWeb chat UIs are awkward for repeat runs, local file edits, or scripting inside CI pipelines."
   },
@@ -438,8 +456,9 @@
       "automation",
       "custom-software"
     ],
-    "id": "democratization-of-tooling-via-agents",
     "slug": "democratization-of-tooling-via-agents",
+    "id": "democratization-of-tooling-via-agents",
+    "summary": "Empower non-technical users to create custom software tools and scripts using AI agents, lowering the barrier to software development and enabling domain experts to build their own productivity solutions.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nMany individuals in non-software engineering roles (e.g., sales, marketing, operations, communications) could benefit from custom software tools, scripts, or dashboards tailored to their s"
   },
@@ -461,8 +480,9 @@
       "reasoning",
       "ux"
     ],
-    "id": "chain-of-thought-monitoring-interruption",
     "slug": "chain-of-thought-monitoring-interruption",
+    "id": "chain-of-thought-monitoring-interruption",
+    "summary": "Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -487,8 +507,9 @@
       "scalability",
       "framework-migration"
     ],
-    "id": "swarm-migration-pattern",
     "slug": "swarm-migration-pattern",
+    "id": "swarm-migration-pattern",
+    "summary": "Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -510,8 +531,9 @@
       "program-synthesis",
       "auditability"
     ],
-    "id": "code-then-execute-pattern",
     "slug": "code-then-execute-pattern",
+    "id": "code-then-execute-pattern",
+    "summary": "Plan lists are opaque; we want full data-flow analysis and taint tracking.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nPlan lists are opaque; we want **full data-flow analysis** and taint tracking."
   },
@@ -539,8 +561,9 @@
       "mcp",
       "lazy-loading"
     ],
-    "id": "skill-library-evolution",
     "slug": "skill-library-evolution",
+    "id": "skill-library-evolution",
+    "summary": "Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -561,8 +584,9 @@
       "isolation",
       "untrusted-data"
     ],
-    "id": "llm-map-reduce-pattern",
     "slug": "llm-map-reduce-pattern",
+    "id": "llm-map-reduce-pattern",
+    "summary": "Injecting a single poisoned document can manipulate global reasoning if all data is processed in one context.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nInjecting a single poisoned document can manipulate global reasoning if all data is processed in one context."
   },
@@ -586,8 +610,9 @@
       "backtracking",
       "aggregation"
     ],
-    "id": "graph-of-thoughts-got",
     "slug": "graph-of-thoughts",
+    "id": "graph-of-thoughts-got",
+    "summary": "Extend reasoning frameworks by representing thoughts as a directed graph with nodes, edges, and arbitrary relationships, enabling complex operations like branching, aggregation, refinement, and looping for problems with interdependencies.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -608,8 +633,9 @@
       "premature-completion",
       "model-behavior"
     ],
-    "id": "context-window-anxiety-management",
     "slug": "context-window-anxiety-management",
+    "id": "context-window-anxiety-management",
+    "summary": "Models like Claude Sonnet 4.5 exhibit \"context anxiety\"—becoming aware of approaching context limits and proactively summarizing or closing tasks prematurely—manageable through strategic context budgeting and aggressive counter-prompting.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nModels like Claude Sonnet 4.5 exhibit \"context anxiety\"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, eve"
   },
@@ -634,8 +660,9 @@
       "scheduled-events",
       "event-driven"
     ],
-    "id": "multi-platform-webhook-triggers",
     "slug": "multi-platform-webhook-triggers",
+    "id": "multi-platform-webhook-triggers",
+    "summary": "Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled events) to allow external SaaS tools to automatically initiate agent workflows, enabling low-friction, reactive automation from existing platforms.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -655,8 +682,9 @@
       "deliberate-reasoning",
       "search"
     ],
-    "id": "tree-of-thought-reasoning",
     "slug": "tree-of-thought-reasoning",
+    "id": "tree-of-thought-reasoning",
+    "summary": "Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nLinear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack."
   },
@@ -677,8 +705,9 @@
       "contract",
       "requirements"
     ],
-    "id": "specification-driven-agent-development",
     "slug": "specification-driven-agent-development",
+    "id": "specification-driven-agent-development",
+    "summary": "Hand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent."
   },
@@ -699,8 +728,9 @@
       "self-documentation",
       "note-taking"
     ],
-    "id": "proactive-agent-state-externalization",
     "slug": "proactive-agent-state-externalization",
+    "id": "proactive-agent-state-externalization",
+    "summary": "Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nModern models like Claude Sonnet 4.5 proactively attempt to externalize their state by writing summaries and notes (e.g., `CHANGELOG.md`, `SUMMARY.md`) to the file system without explicit "
   },
@@ -722,8 +752,9 @@
       "project-bootstrap",
       "incremental-development"
     ],
-    "id": "initializer-maintainer-dual-agent-architecture",
     "slug": "initializer-maintainer-dual-agent",
+    "id": "initializer-maintainer-dual-agent-architecture",
+    "summary": "Two-agent architecture with lifecycle-specialized responsibilities: Initializer creates comprehensive foundation once, Maintainer executes incremental development with session bootstrapping rituals to prevent context loss.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -743,8 +774,9 @@
       "drift-detection",
       "continuous-testing"
     ],
-    "id": "spec-as-test-feedback-loop",
     "slug": "spec-as-test-feedback-loop",
+    "id": "spec-as-test-feedback-loop",
+    "summary": "Even in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nEven in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust."
   },
@@ -766,8 +798,9 @@
       "mcp",
       "data-protection"
     ],
-    "id": "pii-tokenization",
     "slug": "pii-tokenization",
+    "id": "pii-tokenization",
+    "summary": "Implement interception layer in MCP client that automatically tokenizes PII before reaching model and untokenizes for tool calls, enabling agents to orchestrate sensitive workflows without exposing raw data to LLM.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -788,8 +821,9 @@
       "strategic-reasoning",
       "architecture"
     ],
-    "id": "oracle-and-worker-multi-model-approach",
     "slug": "oracle-and-worker-multi-model",
+    "id": "oracle-and-worker-multi-model-approach",
+    "summary": "Relying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nRelying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning po"
   },
@@ -812,8 +846,9 @@
       "file-selection",
       "noise-reduction"
     ],
-    "id": "curated-code-context-window",
     "slug": "curated-code-context-window",
+    "id": "curated-code-context-window",
+    "summary": "Maintain minimal, high-signal code context using search subagents to identify and inject only relevant modules, preventing model overwhelm, reducing token usage, and improving reasoning clarity by excluding unrelated code.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -837,8 +872,9 @@
       "composability",
       "unix-philosophy"
     ],
-    "id": "cli-first-skill-design",
     "slug": "cli-first-skill-design",
+    "id": "cli-first-skill-design",
+    "summary": "Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -861,8 +897,9 @@
       "adaptive-systems",
       "complexity-management"
     ],
-    "id": "progressive-complexity-escalation",
     "slug": "progressive-complexity-escalation",
+    "id": "progressive-complexity-escalation",
+    "summary": "Start agents with low-complexity, high-reliability tasks and progressively unlock more complex capabilities as models improve and trust is established, matching task complexity to current model capabilities for risk mitigation.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -887,8 +924,9 @@
       "concurrency control",
       "task scheduling"
     ],
-    "id": "conditional-parallel-tool-execution",
     "slug": "parallel-tool-execution",
+    "id": "conditional-parallel-tool-execution",
+    "summary": "Execute read-only tools concurrently for speed while serializing state-modifying tools for safety, balancing performance optimization with race condition prevention through intelligent tool classification and orchestration.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -914,8 +952,9 @@
       "monitoring",
       "llmops"
     ],
-    "id": "llm-observability",
     "slug": "llm-observability",
+    "id": "llm-observability",
+    "summary": "Integrate LLM observability platforms for span-level tracing of agent workflows, providing visual UI debugging, workflow linking, and aggregate metrics to enable fast navigation of complex multi-step executions.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -937,8 +976,9 @@
       "communication",
       "unified-interface"
     ],
-    "id": "multi-platform-communication-aggregation",
     "slug": "multi-platform-communication-aggregation",
+    "id": "multi-platform-communication-aggregation",
+    "summary": "Create unified search interface that queries all communication platforms in parallel and aggregates results into consistent format, enabling single-query cross-platform search with minimal latency through parallel execution.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -959,8 +999,9 @@
       "data-processing",
       "mcp"
     ],
-    "id": "code-over-api-pattern",
     "slug": "code-over-api-pattern",
+    "id": "code-over-api-pattern",
+    "summary": "Agents write and execute code that processes data in execution environment instead of making direct API calls, dramatically reducing token consumption by keeping intermediate data out of context window (150K → 2K tokens).",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -984,8 +1025,9 @@
       "agent-training",
       "exploration"
     ],
-    "id": "agent-reinforcement-fine-tuning-agent-rft",
     "slug": "agent-reinforcement-fine-tuning",
+    "id": "agent-reinforcement-fine-tuning-agent-rft",
+    "summary": "Train model weights end-to-end on agentic tasks via reinforcement learning with real tool calls and custom reward signals, optimizing for domain-specific tool use efficiency and multi-step reasoning performance.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1007,8 +1049,9 @@
       "coding-agent",
       "multilingual"
     ],
-    "id": "merged-code-language-skill-model",
     "slug": "merged-code-language-skill-model",
+    "id": "merged-code-language-skill-model",
+    "summary": "Decentralized training with model merging—train language and code specialists independently then combine via weight averaging—enabling parallel R&D without massive centralized compute while preserving both skill sets.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1032,8 +1075,9 @@
       "workflow-orchestration",
       "progressive-enhancement"
     ],
-    "id": "hybrid-llmcode-workflow-coordinator",
     "slug": "hybrid-llm-code-workflow-coordinator",
+    "id": "hybrid-llmcode-workflow-coordinator",
+    "summary": "Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -1056,8 +1100,9 @@
       "iterative process",
       "autonomous search"
     ],
-    "id": "agent-driven-research",
     "slug": "agent-driven-research",
+    "id": "agent-driven-research",
+    "summary": "## Problem\nTraditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nTraditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries."
   },
@@ -1079,8 +1124,9 @@
       "adaptability",
       "future-proofing"
     ],
-    "id": "disposable-scaffolding-over-durable-features",
     "slug": "disposable-scaffolding-over-durable-features",
+    "id": "disposable-scaffolding-over-durable-features",
+    "summary": "Treat most code around models as temporary, lightweight scaffolding rather than durable features, prioritizing speed and adaptability to avoid over-engineering solutions that next model generations may render obsolete.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1102,8 +1148,9 @@
       "outbound-controls",
       "security"
     ],
-    "id": "egress-lockdown-no-exfiltration-channel",
     "slug": "egress-lockdown-no-exfiltration-channel",
+    "id": "egress-lockdown-no-exfiltration-channel",
+    "summary": "Even with private-data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data—implement egress firewall allowing only specific domains while filtering or stripping outbound content.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nEven with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. Many real-world fixes simply removed or filtered outbound channels."
   },
@@ -1128,8 +1175,9 @@
       "onboarding",
       "knowledge-sharing"
     ],
-    "id": "compounding-engineering-pattern",
     "slug": "compounding-engineering-pattern",
+    "id": "compounding-engineering-pattern",
+    "summary": "Codify all learnings from each feature into reusable prompts, slash commands, subagents, and hooks—making each feature easier to build by creating increasingly \"self-teaching\" codebase that accelerates productivity over time.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1155,8 +1203,9 @@
       "visual-understanding",
       "agent-capabilities"
     ],
-    "id": "visual-ai-multimodal-integration",
     "slug": "visual-ai-multimodal-integration",
+    "id": "visual-ai-multimodal-integration",
+    "summary": "Integrate large multimodal models for visual understanding—enabling agents to process images, videos, screenshots alongside text for tasks like UI debugging, document processing, video analysis, and security monitoring.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1178,8 +1227,9 @@
       "backpressure",
       "static-analysis"
     ],
-    "id": "deterministic-security-scanning-build-loop",
     "slug": "deterministic-security-scanning-build-loop",
+    "id": "deterministic-security-scanning-build-loop",
+    "summary": "Implement deterministic security validation through build loop with two-phase approach: non-deterministic generation followed by deterministic backpressure from integrated SAST/DAST tools that must pass before code completion.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1200,8 +1250,9 @@
       "safety",
       "tool-use"
     ],
-    "id": "action-selector-pattern",
     "slug": "action-selector-pattern",
+    "id": "action-selector-pattern",
+    "summary": "## Problem\nUntrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nUntrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions."
   },
@@ -1226,8 +1277,9 @@
       "workflow-validation",
       "end-to-end-testing"
     ],
-    "id": "workflow-evals-with-mocked-tools",
     "slug": "workflow-evals-with-mocked-tools",
+    "id": "workflow-evals-with-mocked-tools",
+    "summary": "TODO: Add a concise summary for \"Workflow Evals with Mocked Tools\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -1252,8 +1304,9 @@
       "knowledge-extraction",
       "learning"
     ],
-    "id": "memory-synthesis-from-execution-logs",
     "slug": "memory-synthesis-from-execution-logs",
+    "id": "memory-synthesis-from-execution-logs",
+    "summary": "TODO: Add a concise summary for \"Memory Synthesis from Execution Logs\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1274,8 +1327,9 @@
       "threat-model",
       "data-exfiltration"
     ],
-    "id": "lethal-trifecta-threat-model",
     "slug": "lethal-trifecta-threat-model",
+    "id": "lethal-trifecta-threat-model",
+    "summary": "Combining three agent capabilities—access to private data, exposure to untrusted content, and ability to externally communicate—creates a straightforward path for prompt-injection attackers to steal sensitive information.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nCombining three agent capabilities—\n1. **Access to private data**\n2. **Exposure to untrusted content**\n3. **Ability to externally communicate**"
   },
@@ -1298,8 +1352,9 @@
       "pipeline",
       "complex-tasks"
     ],
-    "id": "multi-model-orchestration-for-complex-edits",
     "slug": "multi-model-orchestration-for-complex-edits",
+    "id": "multi-model-orchestration-for-complex-edits",
+    "summary": "TODO: Add a concise summary for \"Multi-Model Orchestration for Complex Edits\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nA single large language model, even if powerful, may not be optimally suited for all sub-tasks involved in a complex operation like multi-file code editing. Tasks such as understanding bro"
   },
@@ -1321,8 +1376,9 @@
       "inference-healing",
       "quality-assessment"
     ],
-    "id": "inference-healed-code-review-reward",
     "slug": "inference-healed-code-review-reward",
+    "id": "inference-healed-code-review-reward",
+    "summary": "TODO: Add a concise summary for \"Inference-Healed Code Review Reward\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1345,8 +1401,9 @@
       "sub-agents",
       "collaborative ideation"
     ],
-    "id": "iterative-multi-agent-brainstorming",
     "slug": "iterative-multi-agent-brainstorming",
+    "id": "iterative-multi-agent-brainstorming",
+    "summary": "## Problem\nFor complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nFor complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can "
   },
@@ -1369,8 +1426,9 @@
       "data-quality",
       "agent-rft"
     ],
-    "id": "variance-based-rl-sample-selection",
     "slug": "variance-based-rl-sample-selection",
+    "id": "variance-based-rl-sample-selection",
+    "summary": "TODO: Add a concise summary for \"Variance-Based RL Sample Selection\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1393,8 +1451,9 @@
       "cli",
       "natural language control"
     ],
-    "id": "tool-use-steering-via-prompting",
     "slug": "tool-use-steering-via-prompting",
+    "id": "tool-use-steering-via-prompting",
+    "summary": "TODO: Add a concise summary for \"Tool Use Steering via Prompting\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simpl"
   },
@@ -1418,8 +1477,9 @@
       "internal-testing",
       "product-development"
     ],
-    "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
     "slug": "dogfooding-with-rapid-iteration-for-agent-improvement",
+    "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
+    "summary": "## Problem\nDeveloping effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may not capture all nuances.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nDeveloping effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may no"
   },
@@ -1442,8 +1502,9 @@
       "tmux",
       "error-recovery"
     ],
-    "id": "autonomous-workflow-agent-architecture",
     "slug": "autonomous-workflow-agent-architecture",
+    "id": "autonomous-workflow-agent-architecture",
+    "summary": "TODO: Add a concise summary for \"Autonomous Workflow Agent Architecture\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1466,8 +1527,9 @@
       "runtime-learning",
       "stability-plasticity"
     ],
-    "id": "memory-reinforcement-learning-memrl",
     "slug": "memory-reinforcement-learning-memrl",
+    "id": "memory-reinforcement-learning-memrl",
+    "summary": "TODO: Add a concise summary for \"Memory Reinforcement Learning (MemRL)\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -1490,8 +1552,9 @@
       "code-editing",
       "ide-integration"
     ],
-    "id": "spectrum-of-control-blended-initiative",
     "slug": "spectrum-of-control-blended-initiative",
+    "id": "spectrum-of-control-blended-initiative",
+    "summary": "Design human-agent interaction supporting autonomy spectrum from tab completion (low) to background agents creating entire PRs (high), enabling seamless switching between direct control and task delegation based on complexity and user familiarity.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAI agents for tasks like coding can offer various levels of assistance, from simple completions to complex, multi-step operations. A one-size-fits-all approach to agent autonomy doesn't ca"
   },
@@ -1515,8 +1578,9 @@
       "explainability",
       "software-quality"
     ],
-    "id": "ai-assisted-code-review-verification",
     "slug": "ai-assisted-code-review-verification",
+    "id": "ai-assisted-code-review-verification",
+    "summary": "TODO: Add a concise summary for \"AI-Assisted Code Review / Verification\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAs AI models generate increasing amounts of code, the bottleneck in software development shifts from code generation to code verification and review. Ensuring that AI-generated code is not"
   },
@@ -1539,8 +1603,9 @@
       "bug-detection",
       "gpt-4"
     ],
-    "id": "criticgpt-style-code-review",
     "slug": "criticgpt-style-evaluation",
+    "id": "criticgpt-style-code-review",
+    "summary": "TODO: Add a concise summary for \"CriticGPT-Style Code Review\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1563,8 +1628,9 @@
       "test-driven",
       "feedback"
     ],
-    "id": "coding-agent-ci-feedback-loop",
     "slug": "coding-agent-ci-feedback-loop",
+    "id": "coding-agent-ci-feedback-loop",
+    "summary": "TODO: Add a concise summary for \"Coding Agent CI Feedback Loop\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1589,8 +1655,9 @@
       "alignment",
       "evaluation"
     ],
-    "id": "rlaif-reinforcement-learning-from-ai-feedback",
     "slug": "rlaif-reinforcement-learning-from-ai-feedback",
+    "id": "rlaif-reinforcement-learning-from-ai-feedback",
+    "summary": "TODO: Add a concise summary for \"RLAIF (Reinforcement Learning from AI Feedback)\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1611,8 +1678,9 @@
       "system-prompt",
       "reflection"
     ],
-    "id": "self-rewriting-meta-prompt-loop",
     "slug": "self-rewriting-meta-prompt-loop",
+    "id": "self-rewriting-meta-prompt-loop",
+    "summary": "Static system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nStatic system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone."
   },
@@ -1634,8 +1702,9 @@
       "skill-routing",
       "natural-language"
     ],
-    "id": "proactive-trigger-vocabulary",
     "slug": "proactive-trigger-vocabulary",
+    "id": "proactive-trigger-vocabulary",
+    "summary": "TODO: Add a concise summary for \"Proactive Trigger Vocabulary\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1659,8 +1728,9 @@
       "capabilities",
       "model-intelligence"
     ],
-    "id": "progressive-autonomy-with-model-evolution",
     "slug": "progressive-autonomy-with-model-evolution",
+    "id": "progressive-autonomy-with-model-evolution",
+    "summary": "TODO: Add a concise summary for \"Progressive Autonomy with Model Evolution\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1682,8 +1752,9 @@
       "observability",
       "agent-environment"
     ],
-    "id": "agent-first-tooling-and-logging",
     "slug": "agent-first-tooling-and-logging",
+    "id": "agent-first-tooling-and-logging",
+    "summary": "TODO: Add a concise summary for \"Agent-First Tooling and Logging\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1707,8 +1778,9 @@
       "file-handling",
       "metadata"
     ],
-    "id": "progressive-disclosure-for-large-files",
     "slug": "progressive-disclosure-large-files",
+    "id": "progressive-disclosure-for-large-files",
+    "summary": "TODO: Add a concise summary for \"Progressive Disclosure for Large Files\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -1733,8 +1805,9 @@
       "reflection",
       "evaluation"
     ],
-    "id": "language-agent-tree-search-lats",
     "slug": "language-agent-tree-search-lats",
+    "id": "language-agent-tree-search-lats",
+    "summary": "TODO: Add a concise summary for \"Language Agent Tree Search (LATS)\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1757,8 +1830,9 @@
       "ide",
       "initial-setup"
     ],
-    "id": "agent-assisted-scaffolding",
     "slug": "agent-assisted-scaffolding",
+    "id": "agent-assisted-scaffolding",
+    "summary": "## Problem\nStarting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nStarting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers."
   },
@@ -1780,8 +1854,9 @@
       "automatic loading",
       "CLAUDE.md"
     ],
-    "id": "layered-configuration-context",
     "slug": "layered-configuration-context",
+    "id": "layered-configuration-context",
+    "summary": "TODO: Add a concise summary for \"Layered Configuration Context\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAI agents require relevant context to perform effectively. Providing this context manually in every prompt is cumbersome, and a one-size-fits-all global context is often too broad or too n"
   },
@@ -1802,8 +1877,9 @@
       "execution environment",
       "agent capability"
     ],
-    "id": "virtual-machine-operator-agent",
     "slug": "virtual-machine-operator-agent",
+    "id": "virtual-machine-operator-agent",
+    "summary": "## Problem\nAI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage system resources, install software, and operate various applications.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage sy"
   },
@@ -1826,8 +1902,9 @@
       "agent-collaboration",
       "developer-workflow"
     ],
-    "id": "seamless-background-to-foreground-handoff",
     "slug": "seamless-background-to-foreground-handoff",
+    "id": "seamless-background-to-foreground-handoff",
+    "summary": "TODO: Add a concise summary for \"Seamless Background-to-Foreground Handoff\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nWhile background agents can handle long-running, complex tasks autonomously, they might not achieve 100% correctness or perfectly match the user's nuanced intent. If an agent completes 90%"
   },
@@ -1851,8 +1928,9 @@
       "uncorrelated-context",
       "validation"
     ],
-    "id": "opponent-processor-multi-agent-debate-pattern",
     "slug": "opponent-processor-multi-agent-debate",
+    "id": "opponent-processor-multi-agent-debate-pattern",
+    "summary": "TODO: Add a concise summary for \"Opponent Processor / Multi-Agent Debate Pattern\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1877,8 +1955,9 @@
       "continuous-improvement",
       "dashboards"
     ],
-    "id": "iterative-prompt-skill-refinement",
     "slug": "iterative-prompt-skill-refinement",
+    "id": "iterative-prompt-skill-refinement",
+    "summary": "TODO: Add a concise summary for \"Iterative Prompt & Skill Refinement\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -1901,8 +1980,9 @@
       "at-mention",
       "interactive context"
     ],
-    "id": "dynamic-context-injection",
     "slug": "dynamic-context-injection",
+    "id": "dynamic-context-injection",
+    "summary": "TODO: Add a concise summary for \"Dynamic Context Injection\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1922,8 +2002,9 @@
       "least-privilege",
       "tool-permissions"
     ],
-    "id": "tool-capability-compartmentalization",
     "slug": "tool-capability-compartmentalization",
+    "id": "tool-capability-compartmentalization",
+    "summary": "## Problem\nModel Context Protocol (MCP) encourages \"mix-and-match\" tools—often combining private-data readers, web fetchers, and writers in a single callable unit. This amplifies the lethality of prompt-injection chains.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nModel Context Protocol (MCP) encourages \"mix-and-match\" tools—often combining private-data readers, web fetchers, and writers in a single callable unit. This amplifies the lethality of pro"
   },
@@ -1948,8 +2029,9 @@
       "agentic-RAG",
       "maintenance"
     ],
-    "id": "agentic-search-over-vector-embeddings",
     "slug": "agentic-search-over-vector-embeddings",
+    "id": "agentic-search-over-vector-embeddings",
+    "summary": "TODO: Add a concise summary for \"Agentic Search Over Vector Embeddings\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1971,8 +2053,9 @@
       "modularity",
       "error-isolation"
     ],
-    "id": "subagent-compilation-checker",
     "slug": "subagent-compilation-checker",
+    "id": "subagent-compilation-checker",
+    "summary": "TODO: Add a concise summary for \"Subagent Compilation Checker\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -1993,8 +2076,9 @@
       "testing",
       "reliability"
     ],
-    "id": "rich-feedback-loops-perfect-prompts",
     "slug": "rich-feedback-loops",
+    "id": "rich-feedback-loops-perfect-prompts",
+    "summary": "## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct."
   },
@@ -2021,8 +2105,9 @@
       "education",
       "junior-developer"
     ],
-    "id": "ai-accelerated-learning-and-skill-development",
     "slug": "ai-accelerated-learning-and-skill-development",
+    "id": "ai-accelerated-learning-and-skill-development",
+    "summary": "## Problem\nDeveloping strong software engineering skills, including \"taste\" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nDeveloping strong software engineering skills, including \"taste\" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a "
   },
@@ -2045,8 +2130,9 @@
       "power-users",
       "latent-demand"
     ],
-    "id": "latent-demand-product-discovery",
     "slug": "latent-demand-product-discovery",
+    "id": "latent-demand-product-discovery",
+    "summary": "TODO: Add a concise summary for \"Latent Demand Product Discovery\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2070,8 +2156,9 @@
       "api",
       "headless agent"
     ],
-    "id": "agent-sdk-for-programmatic-control",
     "slug": "agent-sdk-for-programmatic-control",
+    "id": "agent-sdk-for-programmatic-control",
+    "summary": "TODO: Add a concise summary for \"Agent SDK for Programmatic Control\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nInteractive terminal or chat interfaces are suitable for many agent tasks, but not for all. Integrating agent capabilities into automated workflows (e.g., CI/CD pipelines, scheduled jobs, "
   },
@@ -2092,8 +2179,9 @@
       "quarantined-llm",
       "symbolic-variables"
     ],
-    "id": "dual-llm-pattern",
     "slug": "dual-llm-pattern",
+    "id": "dual-llm-pattern",
+    "summary": "A privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nA privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls."
   },
@@ -2113,8 +2201,9 @@
       "control-flow-integrity",
       "prompt-injection"
     ],
-    "id": "plan-then-execute-pattern",
     "slug": "plan-then-execute-pattern",
+    "id": "plan-then-execute-pattern",
+    "summary": "## Problem\nIf tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nIf tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps."
   },
@@ -2137,8 +2226,9 @@
       "reinforcement-learning",
       "performance"
     ],
-    "id": "parallel-tool-call-learning",
     "slug": "parallel-tool-call-learning",
+    "id": "parallel-tool-call-learning",
+    "summary": "TODO: Add a concise summary for \"Parallel Tool Call Learning\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2159,8 +2249,9 @@
       "slash-commands",
       "IDE-integration"
     ],
-    "id": "dynamic-code-injection-on-demand-file-fetch",
     "slug": "dynamic-code-injection-on-demand-file-fetch",
+    "id": "dynamic-code-injection-on-demand-file-fetch",
+    "summary": "TODO: Add a concise summary for \"Dynamic Code Injection (On-Demand File Fetch)\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2185,8 +2276,9 @@
       "o1-model",
       "test-time-compute"
     ],
-    "id": "inference-time-scaling",
     "slug": "inference-time-scaling",
+    "id": "inference-time-scaling",
+    "summary": "TODO: Add a concise summary for \"Inference-Time Scaling\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2209,8 +2301,9 @@
       "verbose mode",
       "introspection"
     ],
-    "id": "verbose-reasoning-transparency",
     "slug": "verbose-reasoning-transparency",
+    "id": "verbose-reasoning-transparency",
+    "summary": "TODO: Add a concise summary for \"Verbose Reasoning Transparency\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAI agents, especially those using complex models or multiple tools, can sometimes behave like \"black boxes.\" Users may not understand why an agent made a particular decision, chose a speci"
   },
@@ -2233,8 +2326,9 @@
       "scalability",
       "team-coordination"
     ],
-    "id": "distributed-execution-with-cloud-workers",
     "slug": "distributed-execution-cloud-workers",
+    "id": "distributed-execution-with-cloud-workers",
+    "summary": "TODO: Add a concise summary for \"Distributed Execution with Cloud Workers\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2254,8 +2348,9 @@
       "ci",
       "feedback"
     ],
-    "id": "background-agent-with-ci-feedback",
     "slug": "background-agent-ci",
+    "id": "background-agent-with-ci-feedback",
+    "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent."
   },
@@ -2277,8 +2372,9 @@
       "long-running-agents",
       "task-management"
     ],
-    "id": "feature-list-as-immutable-contract",
     "slug": "feature-list-as-immutable-contract",
+    "id": "feature-list-as-immutable-contract",
+    "summary": "TODO: Add a concise summary for \"Feature List as Immutable Contract\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2303,8 +2399,9 @@
       "software-quality",
       "human-ai-interface"
     ],
-    "id": "abstracted-code-representation-for-review",
     "slug": "abstracted-code-representation-for-review",
+    "id": "abstracted-code-representation-for-review",
+    "summary": "TODO: Add a concise summary for \"Abstracted Code Representation for Review\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nReviewing large volumes of AI-generated code line-by-line can be tedious, error-prone, and inefficient. Human reviewers are often more interested in verifying the high-level intent and log"
   },
@@ -2328,8 +2425,9 @@
       "human-ai-collaboration",
       "consistency"
     ],
-    "id": "dual-use-tool-design",
     "slug": "dual-use-tool-design",
+    "id": "dual-use-tool-design",
+    "summary": "TODO: Add a concise summary for \"Dual-Use Tool Design\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2351,8 +2449,9 @@
       "tool-selection",
       "coding-agent"
     ],
-    "id": "patch-steering-via-prompted-tool-selection",
     "slug": "patch-steering-via-prompted-tool-selection",
+    "id": "patch-steering-via-prompted-tool-selection",
+    "summary": "TODO: Add a concise summary for \"Patch Steering via Prompted Tool Selection\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2377,8 +2476,9 @@
       "yaml-configuration",
       "virtual-files"
     ],
-    "id": "sub-agent-spawning",
     "slug": "sub-agent-spawning",
+    "id": "sub-agent-spawning",
+    "summary": "TODO: Add a concise summary for \"Sub-Agent Spawning\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-13",
     "excerpt": "\n## Problem"
   },
@@ -2401,8 +2501,9 @@
       "code-structure",
       "agent-compatibility"
     ],
-    "id": "llm-friendly-api-design",
     "slug": "llm-friendly-api-design",
+    "id": "llm-friendly-api-design",
+    "summary": "TODO: Add a concise summary for \"LLM-Friendly API Design\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nFor AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters. APIs designed solely for human consumption might be ambi"
   },
@@ -2423,8 +2524,9 @@
       "relevance",
       "memory-management"
     ],
-    "id": "curated-file-context-window",
     "slug": "curated-file-context-window",
+    "id": "curated-file-context-window",
+    "summary": "TODO: Add a concise summary for \"Curated File Context Window\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2445,8 +2547,9 @@
       "context-optimization",
       "lazy-loading"
     ],
-    "id": "progressive-tool-discovery",
     "slug": "progressive-tool-discovery",
+    "id": "progressive-tool-discovery",
+    "summary": "TODO: Add a concise summary for \"Progressive Tool Discovery\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2469,8 +2572,9 @@
       "pipeline",
       "modular-design"
     ],
-    "id": "three-stage-perception-architecture",
     "slug": "three-stage-perception-architecture",
+    "id": "three-stage-perception-architecture",
+    "summary": "TODO: Add a concise summary for \"Three-Stage Perception Architecture\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2492,8 +2596,9 @@
       "llm",
       "complex projects"
     ],
-    "id": "extended-coherence-work-sessions",
     "slug": "extended-coherence-work-sessions",
+    "id": "extended-coherence-work-sessions",
+    "summary": "TODO: Add a concise summary for \"Extended Coherence Work Sessions\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nEarly AI agents and models often suffered from a short \"coherence window,\" meaning they could only maintain focus and context for a few minutes before their performance degraded significan"
   },
@@ -2515,8 +2620,9 @@
       "retrieval-augmented",
       "context-hint"
     ],
-    "id": "episodic-memory-retrieval-injection",
     "slug": "episodic-memory-retrieval-injection",
+    "id": "episodic-memory-retrieval-injection",
+    "summary": "Stateless calls make agents forget prior decisions, causing repetition and shallow reasoning.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nStateless calls make agents forget prior decisions, causing repetition and shallow reasoning."
   },
@@ -2540,8 +2646,9 @@
       "task-specific",
       "optimization"
     ],
-    "id": "self-discover-llm-self-composed-reasoning-structures",
     "slug": "self-discover-reasoning-structures",
+    "id": "self-discover-llm-self-composed-reasoning-structures",
+    "summary": "TODO: Add a concise summary for \"Self-Discover: LLM Self-Composed Reasoning Structures\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2563,8 +2670,9 @@
       "context-management",
       "multi-model"
     ],
-    "id": "discrete-phase-separation",
     "slug": "discrete-phase-separation",
+    "id": "discrete-phase-separation",
+    "summary": "TODO: Add a concise summary for \"Discrete Phase Separation\" describing the pattern's purpose and key benefits.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem"
   },
@@ -2587,8 +2695,9 @@
       "planning",
       "decision-making"
     ],
-    "id": "explicit-posterior-sampling-planner",
     "slug": "explicit-posterior-sampling-planner",
+    "id": "explicit-posterior-sampling-planner",
+    "summary": "Agents that rely on ad-hoc heuristics explore poorly, wasting tokens and API calls on dead ends.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nAgents that rely on ad-hoc heuristics explore poorly, wasting tokens and API calls on dead ends."
   },
@@ -2609,8 +2718,9 @@
       "autonomy",
       "control"
     ],
-    "id": "inversion-of-control",
     "slug": "inversion-of-control",
+    "id": "inversion-of-control",
+    "summary": "Traditional \"prompt-as-puppeteer\" workflows force humans to spell out every step, limiting scale and creativity.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nTraditional \"prompt-as-puppeteer\" workflows force humans to spell out every step, limiting scale and creativity."
   },
@@ -2633,8 +2743,9 @@
       "signed-commits",
       "policy"
     ],
-    "id": "versioned-constitution-governance",
     "slug": "versioned-constitution-governance",
+    "id": "versioned-constitution-governance",
+    "summary": "## Problem\nWhen an agent rewrites its own \"constitution,\" it may accidentally violate safety or regress on alignment objectives if changes aren't reviewed.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nWhen an agent rewrites its own \"constitution,\" it may accidentally violate safety or regress on alignment objectives if changes aren't reviewed."
   },
@@ -2659,8 +2770,9 @@
       "context-awareness",
       "knowledge-base"
     ],
-    "id": "agent-powered-codebase-qa-onboarding",
     "slug": "agent-powered-codebase-qa-onboarding",
+    "id": "agent-powered-codebase-qa-onboarding",
+    "summary": "## Problem\nUnderstanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nUnderstanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually search"
   }

@@ -16,8 +16,9 @@
     "retrieval-augmented",
     "context-hint"
   ],
-  "id": "episodic-memory-retrieval-injection",
   "slug": "episodic-memory-retrieval-injection",
+  "id": "episodic-memory-retrieval-injection",
+  "summary": "Stateless calls make agents forget prior decisions, causing repetition and shallow reasoning.",
   "updated_at": "2026-01-05",
-  "body": "\n## Problem\nStateless calls make agents forget prior decisions, causing repetition and shallow reasoning.\n\n## Solution\nAdd a **vector-backed episodic memory store**:\n\n1. After every episode, write a short \"memory blob\" (event, outcome, rationale) to the DB.  \n2. On new tasks, embed the prompt, retrieve top-k similar memories, and inject as *hints* in the context.  \n3. Apply TTL or decay scoring to prune stale memories.\n\n## Trade-offs\n**Pros:** richer continuity, fewer repeated mistakes.  \n**Cons:** retrieval noise if memories aren't curated; storage cost.\n\n## References\n- Cursor \"10x-MCP\" persistent memory layer\n- Windsurf Memories docs"
+  "body": "\n## Problem\nStateless calls make agents forget prior decisions, causing repetition and shallow reasoning.\n\n## Solution\nAdd a **vector-backed episodic memory store**:\n\n1. After every episode, write a short \"memory blob\" (event, outcome, rationale) to the DB.  \n2. On new tasks, embed the prompt, retrieve top-k similar memories, and inject as *hints* in the context.  \n3. Apply TTL or decay scoring to prune stale memories.\n\n## Trade-offs\n**Pros:** richer continuity, fewer repeated mistakes.  \n**Cons:** retrieval noise if memories aren't curated; storage cost.\n\n## References\n- Cursor \"10x-MCP\" persistent memory layer\n- Windsurf Memories docs\n"
 }

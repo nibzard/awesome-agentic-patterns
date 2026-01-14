@@ -4,15 +4,14 @@
         <description><![CDATA[A curated catalogue of AI agent design patterns]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 13 Jan 2026 23:47:29 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 Jan 2026 02:24:31 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Tue, 13 Jan 2026 23:47:29 GMT</pubDate>
+        <pubDate>Wed, 14 Jan 2026 02:24:31 GMT</pubDate>
         <language><![CDATA[en]]></language>
         <ttl>60</ttl>
         <item>
             <title><![CDATA[Skill Library Evolution]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.]]></description>
             <link>https://agentic-patterns.com/patterns/skill-library-evolution</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/skill-library-evolution</guid>
             <category><![CDATA[Learning & Adaptation]]></category>
@@ -29,8 +28,7 @@
         </item>
         <item>
             <title><![CDATA[Multi-Platform Webhook Triggers]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled events) to allow external SaaS tools to automatically initiate agent workflows, enabling low-friction, reactive automation from existing platforms.]]></description>
             <link>https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</guid>
             <category><![CDATA[Tool Use & Environment]]></category>
@@ -46,8 +44,7 @@
         </item>
         <item>
             <title><![CDATA[LLM Observability]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Integrate LLM observability platforms for span-level tracing of agent workflows, providing visual UI debugging, workflow linking, and aggregate metrics to enable fast navigation of complex multi-step executions.]]></description>
             <link>https://agentic-patterns.com/patterns/llm-observability</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/llm-observability</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -64,8 +61,7 @@
         </item>
         <item>
             <title><![CDATA[Hybrid LLM/Code Workflow Coordinator]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems.]]></description>
             <link>https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -80,8 +76,7 @@
         </item>
         <item>
             <title><![CDATA[Workflow Evals with Mocked Tools]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[TODO: Add a concise summary for "Workflow Evals with Mocked Tools" describing the pattern's purpose and key benefits.]]></description>
             <link>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -96,8 +91,7 @@
         </item>
         <item>
             <title><![CDATA[Memory Reinforcement Learning (MemRL)]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[TODO: Add a concise summary for "Memory Reinforcement Learning (MemRL)" describing the pattern's purpose and key benefits.]]></description>
             <link>https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</guid>
             <category><![CDATA[Learning & Adaptation]]></category>
@@ -111,8 +105,7 @@
         </item>
         <item>
             <title><![CDATA[Progressive Disclosure for Large Files]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[TODO: Add a concise summary for "Progressive Disclosure for Large Files" describing the pattern's purpose and key benefits.]]></description>
             <link>https://agentic-patterns.com/patterns/progressive-disclosure-large-files</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/progressive-disclosure-large-files</guid>
             <category><![CDATA[Context & Memory]]></category>
@@ -127,8 +120,7 @@
         </item>
         <item>
             <title><![CDATA[Iterative Prompt & Skill Refinement]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[TODO: Add a concise summary for "Iterative Prompt & Skill Refinement" describing the pattern's purpose and key benefits.]]></description>
             <link>https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</guid>
             <category><![CDATA[Feedback Loops]]></category>
@@ -144,8 +136,7 @@
         </item>
         <item>
             <title><![CDATA[Sub-Agent Spawning]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[TODO: Add a concise summary for "Sub-Agent Spawning" describing the pattern's purpose and key benefits.]]></description>
             <link>https://agentic-patterns.com/patterns/sub-agent-spawning</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/sub-agent-spawning</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -159,9 +150,7 @@
         </item>
         <item>
             <title><![CDATA[Reflection Loop]]></title>
-            <description><![CDATA[
-## Problem
-Generative models may produce subpar output if they never review or critique their own work.]]></description>
+            <description><![CDATA[Generative models may produce subpar output if they never review or critique their own work.]]></description>
             <link>https://agentic-patterns.com/patterns/reflection</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/reflection</guid>
             <category><![CDATA[Feedback Loops]]></category>
@@ -172,8 +161,7 @@ Generative models may produce subpar output if they never review or critique the
         </item>
         <item>
             <title><![CDATA[Continuous Autonomous Task Loop Pattern]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Continuous autonomous loop that handles task selection, execution, and completion without human intervention, with intelligent rate limit handling and automated git management.]]></description>
             <link>https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -187,8 +175,7 @@ Generative models may produce subpar output if they never review or critique the
         </item>
         <item>
             <title><![CDATA[Tool Use Incentivization via Reward Shaping]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Provide dense, shaped rewards for every intermediate tool invocation to encourage coding agents to use compilers, linters, and test runners instead of relying solely on internal reasoning tokens.]]></description>
             <link>https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</guid>
             <category><![CDATA[Feedback Loops]]></category>
@@ -200,8 +187,7 @@ Generative models may produce subpar output if they never review or critique the
         </item>
         <item>
             <title><![CDATA[Asynchronous Coding Agent Pipeline]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Decouple inference, tool execution, and learning into parallel asynchronous components communicating via message queues to maximize GPU utilization and eliminate compute bubbles from synchronous tool calls.]]></description>
             <link>https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -213,9 +199,7 @@ Generative models may produce subpar output if they never review or critique the
         </item>
         <item>
             <title><![CDATA[Agent-Friendly Workflow Design]]></title>
-            <description><![CDATA[
-## Problem
-Simply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may st]]></description>
+            <description><![CDATA[Consciously design workflows with clear goals, appropriate autonomy, structured I/O, and feedback loops to maximize agent performance by aligning tasks with AI strengths.]]></description>
             <link>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-friendly-workflow-design</guid>
             <category><![CDATA[UX & Collaboration]]></category>
@@ -228,8 +212,7 @@ Simply providing an AI agent with a task is often not enough for optimal perform
         </item>
         <item>
             <title><![CDATA[Isolated VM per RL Rollout]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination between parallel agent executions, ensuring safe training with destructive tool access.]]></description>
             <link>https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</guid>
             <category><![CDATA[Security & Safety]]></category>
@@ -243,9 +226,7 @@ Simply providing an AI agent with a task is often not enough for optimal perform
         </item>
         <item>
             <title><![CDATA[No-Token-Limit Magic]]></title>
-            <description><![CDATA[
-## Problem
-Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.]]></description>
+            <description><![CDATA[Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.]]></description>
             <link>https://agentic-patterns.com/patterns/no-token-limit-magic</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/no-token-limit-magic</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -256,8 +237,7 @@ Aggressive prompt compression to save tokens stifles reasoning depth and self-co
         </item>
         <item>
             <title><![CDATA[Human-in-the-Loop Approval Framework]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails.]]></description>
             <link>https://agentic-patterns.com/patterns/human-in-loop-approval-framework</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/human-in-loop-approval-framework</guid>
             <category><![CDATA[UX & Collaboration]]></category>
@@ -271,8 +251,7 @@ Aggressive prompt compression to save tokens stifles reasoning depth and self-co
         </item>
         <item>
             <title><![CDATA[Stop Hook Auto-Continue Pattern]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Use stop hooks to programmatically check success criteria after each agent turn, automatically continuing execution until the task is genuinely complete, enabling true task completion without manual intervention.]]></description>
             <link>https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -286,8 +265,7 @@ Aggressive prompt compression to save tokens stifles reasoning depth and self-co
         </item>
         <item>
             <title><![CDATA[Structured Output Specification]]></title>
-            <description><![CDATA[
-## Problem]]></description>
+            <description><![CDATA[Constrain agent outputs using deterministic schemas that enforce structured, machine-readable results, enabling reliable validation, parsing, and integration with downstream systems.]]></description>
             <link>https://agentic-patterns.com/patterns/structured-output-specification</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/structured-output-specification</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -301,9 +279,7 @@ Aggressive prompt compression to save tokens stifles reasoning depth and self-co
         </item>
         <item>
             <title><![CDATA[Shell Command Contextualization]]></title>
-            <description><![CDATA[
-## Problem
-When an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these]]></description>
+            <description><![CDATA[Provide a mechanism (e.g., `!` prefix) to execute shell commands locally and automatically inject both the command and output into the agent's context for seamless integration.]]></description>
             <link>https://agentic-patterns.com/patterns/shell-command-contextualization</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/shell-command-contextualization</guid>
             <category><![CDATA[Tool Use & Environment]]></category>

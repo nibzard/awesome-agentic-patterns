@@ -155,6 +155,7 @@ STREAM_JSON=true           # Real-time progress tracking
 - [Original Autonomous Task Processing Script](https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78) - Complete implementation example
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) - CLI agent capabilities
 
+
 ---
 
 ## Tool Use Incentivization via Reward Shaping
@@ -219,6 +220,7 @@ trajectory.append((state, action, tool_output, local_reward))
 
 - Will Brown's discussion on how "if you set these models up to use tools, they just won't" unless incentivized.
 - Concepts from "Reinforcing Multi-Turn Reasoning in LLM Agents via Turn-Level Credit Assignment" (Prime Intellect paper previewed in talk).
+
 
 ---
 
@@ -300,6 +302,7 @@ flowchart LR
 - Will Brown's emphasis on "everything being async and overlapped" to hide latencies in multi-hour RL tasks.
 - "IMPALA: Scalable Distributed Deep-RL" for a precedent in actor-learner pipelines.
 
+
 ---
 
 ## Agent-Friendly Workflow Design
@@ -347,6 +350,7 @@ flowchart TD
 - Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
 
 [Source](https://www.nibzard.com/silent-revolution)
+
 
 ---
 
@@ -759,6 +763,7 @@ flowchart TD
 - Raising An Agent - Episode 2 cost discussion—$1000 prototype spend justified by productivity.
 
 [Source](https://www.nibzard.com/ampcode)
+
 
 ---
 
@@ -1265,6 +1270,7 @@ sequenceDiagram
 
 [Source](https://www.nibzard.com/claude-code)
 
+
 ---
 
 ## Context-Minimization Pattern
@@ -1304,6 +1310,7 @@ Customer-service chat, medical Q&A, any multi-turn flow where initial text shoul
 
 * Beurer-Kellner et al., §3.1 (6) Context-Minimization.
 * [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Emphasizes importance of eliminating context contradictions: "if there's any contradictions in your prompt, you're going to receive lower quality output"
+
 
 ---
 
@@ -1593,6 +1600,7 @@ User Request → LLM → Generated Code → V8 Isolate
 - [Rafal Wilinski's Code Mode Analysis](https://x.com/rafalwilinski/status/1972362720579035146) - Real-world insights on Code Mode strengths and limitations
 
 [^1]: Phrase coined by Rafal Wilinski in his Code Mode analysis
+
 
 ---
 
@@ -2198,6 +2206,7 @@ Train a **self-taught evaluator** that bootstraps from synthetic data:
 ## References
 - Wang et al., *Self-Taught Evaluators*
 
+
 ---
 
 ## CLI-Native Agent Orchestration
@@ -2240,6 +2249,7 @@ claude spec test || exit 1
 ## References
 - "Claude CLI" explicitly named in the HTML keywords.
 
+
 ---
 
 ## Democratization of Tooling via Agents
@@ -2268,6 +2278,7 @@ A sales team member uses an AI agent to create a custom dashboard that pulls dat
 ## References
 - Jacob Jackson (Cursor) at 0:27:52: "...you're going to see people building software, people in organizational functions building software who were not previously building software. You know, like people in sales who would not have built their own tools before will now be building, for example, dashboards to track what's important to them..."
 - Alex Albert (Anthropic) at 0:28:10, referencing a comms team member: "...he's actually been like shipping bug fixes to claude.ai... he pops in with like a PR and he's like asking for a stamp."
+
 
 ---
 
@@ -2549,6 +2560,7 @@ Complex multi-step agents like SQL copilots, software-engineering bots.
 ## References
 
 * Debenedetti et al., CaMeL (2025); Beurer-Kellner et al., §3.1 (5).
+
 
 ---
 
@@ -2849,6 +2861,7 @@ File triage, product-review summarizers, resume filters—any N-to-1 decision wh
 
 * Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce.
 
+
 ---
 
 ## Graph of Thoughts (GoT)
@@ -3055,6 +3068,7 @@ graph TD
 - [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687)
 - [Presentation at AAAI '24 Vancouver](https://aaai.org/aaai-conference/)
 - [Code Implementation](https://github.com/spcl/graph-of-thoughts)
+
 
 ---
 
@@ -3366,6 +3380,7 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 ## References
 - Talk teaser in the World's Fair meta-description about "shift to specification-driven development."
 
+
 ---
 
 ## Proactive Agent State Externalization
@@ -3625,6 +3640,7 @@ This creates a continuous feedback loop ensuring specification and implementatio
 ## References
 - Natural extension of the "specification-driven development" concept surfaced in the page metadata.
 
+
 ---
 
 ## PII Tokenization
@@ -3794,6 +3810,7 @@ Development environments, complex coding tasks, architectural decisions, debuggi
 ## References
 * Sourcegraph Team presentation on multi-model AI systems
 
+
 ---
 
 ## Curated Code Context Window
@@ -3860,6 +3877,7 @@ sequenceDiagram
 - "Context is sacred" principle from the Open Source Agent RL talk (May 2025).
 - Will Brown's commentary on "avoiding blowing up your context length" for long-horizon tasks.
 - [Thorsten Ball's "Raising An Agent - Episode 3"](https://www.nibzard.com/ampcode) - Production-validated implementation of dedicated search agent pattern.
+
 
 ---
 
@@ -4292,6 +4310,7 @@ flowchart TD
 -   The book describes this pattern in the context of the `anon-kode` / `Claude Code` agentic system: *"The system solves this by classifying operations as read-only or stateful, applying different execution strategies to each."* (from `src/parallel-tool-execution.md`) and *"Read vs. Write Classification... Smart Concurrency Control: Parallel for read operations... Sequential for write operations"* (from `src/core-architecture.md`).
 -   The concept is based on the idea that read operations are generally idempotent and free of side-effects when run concurrently, while write operations require careful sequencing.
 -   [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) observes that Sonnet 4.5 naturally maximizes actions per context window through parallel tool execution.
+
 
 ---
 
@@ -4905,6 +4924,7 @@ python merge_models.py \
 - Based on "model merging works weirdly well" observation from the Open Source Agent RL talk (May 2025) and Will Brown's remarks on decentralized skill acquisition.
 - Cohere's "Command A" whitepaper on merging specialty models.
 
+
 ---
 
 ## Hybrid LLM/Code Workflow Coordinator
@@ -5087,6 +5107,7 @@ flowchart TD
 ## References
 - "How AI Agents Are Reshaping Creation": "That question goes to the agent, the agent formulates the searches in the form of tool calls. So it'll search the Web, it'll search some existing index or what have you, and it'll iterate until it's sort of satisfied with the amount of information that it gets, and then summarizes the output for you."
 
+
 ---
 
 ## Disposable Scaffolding Over Durable Features
@@ -5130,6 +5151,7 @@ flowchart TD
 
 - Described by Thorsten Ball: "What you want is... a scaffolding. Like you want to build a scaffolding around the model, a wooden scaffolding that if the model gets better or you have to switch it out, the scaffolding falls away. You know, like the bitter lesson like embrace that a lot of stuff might fall into the model as soon as the model gets better."
 
+
 ---
 
 ## Egress Lockdown (No-Exfiltration Channel)
@@ -5171,6 +5193,7 @@ RUN iptables -A OUTPUT -d api.mycompany.internal -j ACCEPT
 ## References
 
 * Multiple vendor post-mortems cited by Willison: Microsoft 365 Copilot, GitHub MCP, GitLab Duo Chatbot fixes all disabled egress paths as the first patch.
+
 
 ---
 
@@ -5442,6 +5465,7 @@ flowchart TD
 - [Claude 3 Vision Capabilities](https://www.anthropic.com/claude)
 - [Google Gemini Multimodal Features](https://deepmind.google/technologies/gemini/)
 
+
 ---
 
 ## Deterministic Security Scanning Build Loop
@@ -5545,6 +5569,7 @@ graph TD
 * [Geoffrey Huntley's blog post on secure code generation](https://ghuntley.com/secure-codegen/)
 * This generalizes beyond security to any code quality or pattern enforcement
 
+
 ---
 
 ## Action-Selector Pattern
@@ -5584,6 +5609,7 @@ Useful for customer-service bots, notification routers, kiosk interfaces.
 ## References
 
 * Beurer-Kellner et al., §3.1 (1) Action-Selector.
+
 
 ---
 
@@ -6016,6 +6042,7 @@ if tool.can_externally_communicate and
 * Willison, *The Lethal Trifecta for AI Agents* (June 16 2025).
 * "Design Patterns for Securing LLM Agents against Prompt Injections" (June 13 2025).
 
+
 ---
 
 ## Multi-Model Orchestration for Complex Edits
@@ -6052,6 +6079,7 @@ flowchart TD
 - Aman Sanger (Cursor) discusses this at 0:01:34: "...when you kind of mix the intelligence of a model like 3.5 Sonnet with a few other kind of custom models we use for retrieval and then applying the edits made by this larger model, you now have the ability to do kind of multi-file edits."
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Model-specific task delegation: Opus 4.1 for research and complex planning, Sonnet 4.5 for implementation execution
 - Related pattern: [Discrete Phase Separation](discrete-phase-separation.md) - Extends multi-model orchestration to separate conversation phases
+
 
 ---
 
@@ -6139,6 +6167,7 @@ return final_score, subscores, comments
 - Derived from "inference healing" in reward modeling, as discussed in the Open Source Agent RL talk (May 2025) and by Will Brown (Prime Intellect).
 - Similar principles in "Criterion-Led Reward Models" (DeepMind blog, April 2025).
 
+
 ---
 
 ## Iterative Multi-Agent Brainstorming
@@ -6190,6 +6219,7 @@ flowchart TD
 -   Inspired by the example of using parallel agents for brainstorming in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III.
 
 [Source](https://www.nibzard.com/claude-code)
+
 
 ---
 
@@ -6578,6 +6608,7 @@ flowchart TD
 
 [Source](https://www.nibzard.com/claude-code)
 
+
 ---
 
 ## Dogfooding with Rapid Iteration for Agent Improvement
@@ -6636,6 +6667,7 @@ This creates a development culture where features are validated through actual d
 - Aman Sanger (Cursor) at 0:04:55: "...that's how we're able to move really quickly and building new features and then throwing away things that clearly don't work because we we can be really honest to ourselves of whether we find it useful. And then not have to ship it out to users... it just speeds up the iteration loop for for building features."
 - Cat Wu (Anthropic): "Internally over 70 or 80 percent of ants use Claude Code every day... we get a post every five minutes."
 - [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+
 
 ---
 
@@ -6954,6 +6986,7 @@ flowchart LR
 ## References
 - Aman Sanger (Cursor) extensively discusses this spectrum at 0:05:16-0:06:44, detailing different features like tab completion, Command K, Agent for multi-file edits, and Background Agent for entire PRs, describing it as "almost a spectrum."
 
+
 ---
 
 ## AI-Assisted Code Review / Verification
@@ -6986,6 +7019,7 @@ The goal is to make the code review process more efficient and reliable, buildin
 ## References
 
 - Aman Sanger (Cursor) at 0:09:12: "So I think we're going to need to figure out how to make it easier for people to review code, how to to be confident that the agent's making the changes that are not just correct... was it actually what you had in your mind's eye? And so making the process of review much, much better, I think will be really, really important."
+
 
 ---
 
@@ -7252,6 +7286,7 @@ sequenceDiagram
 - [Using LLMs for Code Review - Microsoft Research](https://www.microsoft.com/en-us/research/)
 - [Automated Code Review with AI - Google Research](https://research.google/)
 
+
 ---
 
 ## Coding Agent CI Feedback Loop
@@ -7322,6 +7357,7 @@ sequenceDiagram
 
 - Inspired by "Background Agent with CI Feedback" pattern, adapted for coding-specific workflows.
 - Will Brown's emphasis on **asynchronous pipelines** to avoid idle compute bubbles.
+
 
 ---
 
@@ -7417,6 +7453,7 @@ class RLAIFAgent:
 - [RLHF Book - Constitutional AI & AI Feedback](https://rlhfbook.com/c/13-cai.html)
 - [OpenAI's CriticGPT announcement (July 2024)](https://openai.com/research/criticgpt)
 
+
 ---
 
 ## Self-Rewriting Meta-Prompt Loop
@@ -7456,6 +7493,7 @@ if passes_guardrails(delta):
 ## References
 
 * Goodman, *Meta-Prompt: A Simple Self-Improving Language Agent*. ([noahgoodman.substack.com](https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving))
+
 
 ---
 
@@ -7766,6 +7804,7 @@ sequenceDiagram
 
 - From Thorsten Ball: "What we've seen people now do is well instead of having the client log and having the browser log and having the database log, let's have one unified log because then it's easier for the agent to just look at this log... You can just have like JSON line outputs and whatnot because the agent can understand it much better than a human can... This is not made for human consumption anymore. How can we optimize this for a genetic consumption?"
 
+
 ---
 
 ## Progressive Disclosure for Large Files
@@ -8007,6 +8046,7 @@ class LATSAgent:
 - [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406)
 - [Comparison with ReACT, Reflexion, and Tree of Thoughts](https://www.langchain.com/langgraph)
 
+
 ---
 
 ## Agent-Assisted Scaffolding
@@ -8043,6 +8083,7 @@ flowchart TD
 
 ## References
 - Lukas Möller (Cursor) mentions this at 0:03:40: "So I think for like initially laying out some code base, some new feature, it's very, very useful to just like use the agent feature to kind of get that started."
+
 
 ---
 
@@ -8087,6 +8128,7 @@ flowchart TD
 - Based on the `CLAUDE.md` system described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
 
 [Source](https://www.nibzard.com/claude-code)
+
 
 ---
 
@@ -8133,6 +8175,7 @@ sequenceDiagram
 
 [Source](https://www.nibzard.com/silent-revolution)
 
+
 ---
 
 ## Seamless Background-to-Foreground Handoff
@@ -8171,6 +8214,7 @@ flowchart TD
 
 ## References
 - Aman Sanger (Cursor) at 0:06:52: "...if it's only 90% of the way there, you want to go in and then take control and and do the rest of it. And then you want to use, you know, the features of Cursor in order to do that. So really being able to quickly move between the background and the foreground is really important."
+
 
 ---
 
@@ -8442,6 +8486,7 @@ sequenceDiagram
 
 [Source](https://www.nibzard.com/claude-code)
 
+
 ---
 
 ## Tool Capability Compartmentalization
@@ -8490,6 +8535,7 @@ issue_creator:
 ## References
 
 * Willison's warning that "one MCP mixed all three patterns in a single tool."
+
 
 ---
 
@@ -8654,6 +8700,7 @@ sequenceDiagram
 - Inspired by "Subagent Spawning" for code-related subtasks in the Open Source Agent RL talk (May 2025).
 - Will Brown's note on decoupling long I/O-bound steps from the main model's inference to avoid context explosion.
 
+
 ---
 
 ## Rich Feedback Loops > Perfect Prompts
@@ -8691,6 +8738,7 @@ sequenceDiagram
 
 [Source](https://www.nibzard.com/ampcode)
 
+
 ---
 
 ## AI-Accelerated Learning and Skill Development
@@ -8718,6 +8766,7 @@ This creates an environment where developers, particularly those less experience
 ## References
 - Lukas Möller (Cursor) at 0:13:35: "I think quality comes very much from iterating quickly, making mistakes, figuring out why certain things failed. And I think models vastly accelerate this iteration process and can actually through that make you learn more quickly what works and what doesn't."
 - Jacob Jackson (Cursor) at 0:17:57: "these tools are very good educationally as well, and they can help you become a great programmer... if you have a question about how something works... now you can just press command L and ask Claude... and I think that's very valuable."
+
 
 ---
 
@@ -8839,6 +8888,7 @@ $ claude -p "what did i do this week?" \
 
 [Source](https://www.nibzard.com/claude-code)
 
+
 ---
 
 ## Dual LLM Pattern
@@ -8877,6 +8927,7 @@ Email/calendar assistants, booking agents, API-powered chatbots.
 ## References
 
 * Willison, *Dual LLM Pattern* (Apr 2023); adopted in Beurer-Kellner et al., §3.1 (4).
+
 
 ---
 
@@ -8942,6 +8993,7 @@ This means simpler tasks that once required planning can now be one-shot with mo
 * Boris Cherny (Anthropic): "Plan mode... you kind of have to understand the limits and where you get in the loop. Plan mode can 2-3x success rates pretty easily if you align on the plan first."
 * Boris Cherny: "The boundary changes with every model... newer models are more intelligent so the boundary of what you need plan mode for got pushed out."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+
 
 ---
 
@@ -9372,6 +9424,7 @@ Concretely:
 - Adapted from "Dynamic Context Injection" patterns (e.g., at-mention in Claude Code) for general coding-agent use.
 - Common in AI-powered IDE plugins (e.g., GitHub Copilot X live code browsing).
 
+
 ---
 
 ## Inference-Time Scaling
@@ -9597,6 +9650,7 @@ flowchart TD
 - [OpenAI o1 System Card](https://openai.com/research/)
 - [Inference-Time Scaling Laws](https://arxiv.org/)
 
+
 ---
 
 ## Verbose Reasoning Transparency
@@ -9648,6 +9702,7 @@ sequenceDiagram
 -   Based on the `Ctrl+R` keybinding for showing verbose output in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
 
 [Source](https://www.nibzard.com/claude-code)
+
 
 ---
 
@@ -9841,6 +9896,7 @@ sequenceDiagram
 
 [Source](https://ampcode.com/manual#background)
 
+
 ---
 
 ## Feature List as Immutable Contract
@@ -10032,6 +10088,7 @@ With a system guarantee that this change is correctly implemented in the underly
 ## References
 - Aman Sanger (Cursor, referencing Michael Grinich) at 0:09:48: "...operating in a different representation of the codebase. So maybe it looks like pseudo code. And if you can represent changes in this really concise way and you have guarantees that it maps cleanly onto the actual changes made in the in the real software, that just shorten the time of verification a ton."
 
+
 ---
 
 ## Dual-Use Tool Design
@@ -10206,6 +10263,7 @@ flowchart TD
 
 - Adapted from "Tool Use Steering via Prompting" in Claude Code best practices.
 - Will Brown's notes on "if you want it to be a tool use agent" you must decide that's the default behavior in the prompt.
+
 
 ---
 
@@ -10429,6 +10487,7 @@ The aim is to create interfaces that are robust and intuitive for LLMs to intera
 ## References
 - Lukas Möller (Cursor) at 0:16:00: "API design is already adjusting such that LLMs are more comfortable with that. For example, changing not only the the version number internally but making it like very visible to the model that this is a new version of some software just to make sure that the the API is used correctly." And at 0:16:20: "...structuring the code in a way where one doesn't have to go through like n level of indirection but maybe just through two levels of indirection makes, yeah, LLM models better at at working with that code base."
 
+
 ---
 
 ## Curated File Context Window
@@ -10508,6 +10567,7 @@ This ensures that the agent has precisely the files it needs (no more, no less),
 
 - Inspired by "Curated Context Window" from Claude Code best practices; adapted for coding-agent workflows.
 - Common practice seen in large-scale monorepo code assistants (e.g., Lyft's internal code AI).
+
 
 ---
 
@@ -10794,6 +10854,7 @@ flowchart LR
 - [Software Architecture Patterns](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/)
 - [Pipeline Pattern in ML Systems](https://ml-ops.org/content/mlops-principles)
 
+
 ---
 
 ## Extended Coherence Work Sessions
@@ -10838,6 +10899,7 @@ gantt
 
 [Source](https://www.nibzard.com/silent-revolution)
 
+
 ---
 
 ## Episodic Memory Retrieval & Injection
@@ -10865,6 +10927,7 @@ Add a **vector-backed episodic memory store**:
 ## References
 - Cursor "10x-MCP" persistent memory layer
 - Windsurf Memories docs
+
 
 ---
 
@@ -11011,6 +11074,7 @@ flowchart TD
 - [Self-Discover: Large Language Models Self-Compose Reasoning Structures (2024)](https://arxiv.org/abs/2402.03620)
 - [Google DeepMind Research Blog](https://deepmind.google/research/)
 
+
 ---
 
 ## Discrete Phase Separation
@@ -11145,6 +11209,7 @@ Wrap the algorithm in a reusable prompt template or code skeleton the LLM can fi
 ## References
 - Arumugam & Griffiths, *Toward Efficient Exploration by LLM Agents*
 
+
 ---
 
 ## Inversion of Control
@@ -11208,6 +11273,7 @@ Store the constitution in a **version-controlled, signed repository**:
 - Hiveism, *Self-Alignment by Constitutional AI*
 - Anthropic, *Constitutional AI* white-paper
 
+
 ---
 
 ## Agent-Powered Codebase Q&A / Onboarding
@@ -11242,5 +11308,6 @@ sequenceDiagram
 ## References
 - Lukas Möller (Cursor) at 0:03:58: "...when initially getting started with a codebase that one might not be too knowledgeable about, that's using kind of the QA features a lot, using a lot of search... doing research in a codebase and figuring out how certain things interact with each other."
 - Aman Sanger (Cursor) at 0:05:50: "...as you got to places where you're really unfamiliar, like Lucas was describing when you're kind of coming into a new codebase, it's just there's this massive step function that you get from using these models."
+
 
 ---

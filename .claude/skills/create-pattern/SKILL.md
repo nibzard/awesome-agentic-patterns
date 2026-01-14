@@ -288,13 +288,12 @@ Write the updated content back to `patterns/{existing-slug}.md`
 
 ### Step 6-1: Run Build Script
 ```bash
-python scripts/build_readme.py
+cd apps/web && bun run build-data
 ```
 
 ### Step 6-2: Verify Success
 Check for:
-- "Updated README.md" in output
-- "Updated mkdocs.yaml" in output
+- Pattern JSON files updated in `apps/web/public/patterns/`
 - No error messages
 
 ---
@@ -349,8 +348,8 @@ After completion, provide:
 
 Next steps:
 1. Review and edit the pattern file for completeness
-2. Run: make site_preview
-3. Commit: git add patterns/{slug}.md README.md mkdocs.yaml
+2. Run: cd apps/web && bun run dev
+3. Commit: git add patterns/{slug}.md
 ```
 
 **For Updated Pattern:**
@@ -362,8 +361,8 @@ Next steps:
 
 Next steps:
 1. Review the updated pattern file
-2. Run: make site_preview
-3. Commit: git add patterns/{slug}.md README.md
+2. Run: cd apps/web && bun run dev
+3. Commit: git add patterns/{slug}.md
 ```
 
 ---
