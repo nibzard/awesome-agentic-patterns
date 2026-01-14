@@ -185,6 +185,26 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ---
 
+## For AI Assistants (llms.txt)
+
+This project includes [`llms.txt`](./llms.txt), a machine-readable documentation file designed to help AI assistants and LLMs understand and recommend appropriate patterns.
+
+**What's included:**
+- Pattern categories and their purposes
+- Key patterns with concise descriptions
+- Usage guidelines for AI assistants
+- Pattern selection strategies based on use case requirements
+
+**For developers building AI assistants:**
+The `llms.txt` file can be provided to LLMs as context to improve pattern recommendations. It's optimized for:
+- RAG systems indexing this catalogue
+- AI coding assistants suggesting patterns
+- LLM-powered tools that recommend agentic patterns
+
+**Access:** https://github.com/nibzard/awesome-agentic-patterns/blob/main/llms.txt
+
+---
+
 ## Contributing in 3 steps
 
 1. **Fork & branch** → `git checkout -b add-my-pattern`

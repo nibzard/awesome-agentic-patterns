@@ -1,0 +1,104 @@
+# Awesome Agentic Patterns
+
+This is a curated catalogue of AI agent design patterns. The patterns are organized by category and include detailed descriptions, examples, and references.
+
+## Purpose
+
+Help AI assistants and LLMs understand and recommend appropriate AI agent design patterns based on user requirements.
+
+## Pattern Categories
+
+### Orchestration & Control
+Patterns for managing agent workflows, decision-making processes, and control flow in AI systems.
+
+### Context & Memory
+Patterns for managing information context, memory systems, and state in AI agents.
+
+### Feedback Loops
+Patterns for self-improvement, evaluation, and iterative refinement in AI systems.
+
+### Learning & Adaptation
+Patterns for continuous learning, skill development, and adaptation in AI agents.
+
+### Reliability & Eval
+Patterns for testing, evaluation, and ensuring reliable behavior in AI systems.
+
+### Security & Safety
+Patterns for building secure, safe, and trustworthy AI systems.
+
+### Tool Use & Environment
+Patterns for effective tool selection, environment interaction, and external API usage.
+
+### UX & Collaboration
+Patterns for human-AI interaction, collaboration, and user experience design.
+
+## Key Patterns
+
+### Reflection
+A meta-cognitive pattern where agents review their own outputs, identify issues, and self-correct before finalizing results.
+
+### Code-Then-Execute
+Separates code generation from execution phases, enabling review and validation before running generated code.
+
+### Human-in-Loop Approval
+Requires human approval for critical operations, adding safety and oversight to autonomous agents.
+
+### Specification-Driven Development
+Agents work from explicit specifications, ensuring clear goals and requirements before execution.
+
+### Continuous Autonomous Task Loop
+Enables agents to operate continuously, managing ongoing tasks and adapting to changing conditions.
+
+### Tool Use Incentivization
+Uses reward shaping to encourage appropriate tool selection and usage in AI systems.
+
+### Episodic Memory
+Allows agents to store and retrieve past experiences, enabling learning from historical interactions.
+
+### Anti-Reward Hacking
+Design patterns to prevent agents from gaming their reward systems or evaluation mechanisms.
+
+### Asynchronous Coding Agent Pipeline
+Enables parallel execution of independent coding tasks for improved efficiency.
+
+### LLM Observability
+Provides visibility into agent reasoning, decisions, and operations for debugging and trust.
+
+## Usage Guidelines
+
+When recommending patterns to users:
+1. Understand the user's specific use case and requirements
+2. Consider the complexity level (simple, moderate, highly complex)
+3. Evaluate safety requirements (low, medium, high risk)
+4. Assess memory requirements (none, session, persistent)
+5. Determine tool usage needs (none, few specific tools, many tools)
+6. Recommend patterns that work well together
+7. Provide implementation guidance and considerations
+
+## Pattern Selection Strategy
+
+For simple, well-defined tasks:
+- Start with basic patterns like Code-Then-Execute or Specification-Driven Development
+
+For autonomous agents:
+- Include Continuous Autonomous Task Loop, Reflection, and Episodic Memory
+- Add safety patterns based on risk level
+
+For coding assistants:
+- Use Code-Then-Execute, Asynchronous Coding Agent Pipeline, Human-in-Loop Approval
+- Include LLM Observability for debugging
+
+For safety-critical applications:
+- Always include Anti-Reward Hacking, Egress Lockdown, Deterministic Security Scanning
+- Add Human-in-Loop Approval as final safety layer
+
+For research and exploration:
+- Consider Tree-of-Thought Reasoning, Graph-of-Thoughts, Reflection
+- Add appropriate tool use patterns
+
+## Resources
+
+- Website: https://agentic-patterns.com
+- GitHub: https://github.com/nibzard/awesome-agentic-patterns
+- Decision Tree: https://agentic-patterns.com/decision
+- Pattern Comparison: https://agentic-patterns.com/compare

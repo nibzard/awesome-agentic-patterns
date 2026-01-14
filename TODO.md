@@ -252,7 +252,7 @@
 - [x] 252 - Add "new" badge logic using `updated_at`. [Added with 7-day filter and green badge]
 - [x] 253 - Add "updated" badge logic using `updated_at`. [Added with 30-day filter and blue badge]
 - [x] 254 - Add category counts to filter UI. [Added counts for category, status, maturity, and complexity filters; sorted by count descending]
-- [ ] 255 - Add `llms.txt` documentation section to `README.md`.
+- [x] 255 - Add `llms.txt` documentation section to `README.md`. [Created llms.txt with pattern catalog for AI assistants; added documentation section to README]
 - [ ] 256 - Add "Copy prompt pack" button on the compare page.
 - [ ] 257 - Implement prompt pack generator for selected patterns.
 - [ ] 258 - Add citation format definition to `SPECIFICATION.md`.
