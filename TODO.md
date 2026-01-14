@@ -165,7 +165,7 @@
 - [x] 165 - Create `SearchBox.astro`. [Created SearchBox.astro with search input, clear button, submit button; focus states, accessible labels, responsive layout; build verified working; committed]
 - [x] 166 - Create `PatternList.astro`. [Created with grid/list layout options, renders PatternCard components, includes empty state, responsive design, build verified, committed (9674cd7)]
 - [x] 167 - Create `Badge.astro`. [Created with 6 variants (default, success, warning, danger, info, neutral), 3 sizes (sm, md, lg), optional href prop for clickable badges, accessible markup, responsive design, build verified, committed]
-- [ ] 168 - Create `MetaPill.astro`.
+- [x] 168 - Create `MetaPill.astro`. [Created with label, value, optional color; pill-shaped design for metadata display; build verified working; committed]
 - [ ] 169 - Create `apps/web/src/pages/index.astro`.
 - [ ] 170 - Add hero copy to the home page.
 - [ ] 171 - Add hero CTA buttons to the home page.
