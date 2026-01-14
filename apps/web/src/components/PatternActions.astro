@@ -1,4 +1,6 @@
 ---
+import CopyButton from './CopyButton.astro';
+
 interface Props {
   pattern: {
     title: string;
@@ -19,6 +21,45 @@ interface Props {
 }
 
 const { pattern } = Astro.props;
+
+const SITE_URL = 'https://agentic-patterns.com';
+
+function formatAuthors(authors: string[]): string {
+  if (authors.length === 0) return 'Awesome Agentic Patterns';
+  if (authors.length === 1) return authors[0];
+  if (authors.length === 2) return `${authors[0]} & ${authors[1]}`;
+  return `${authors.slice(0, -1).join(', ')}, & ${authors[authors.length - 1]}`;
+}
+
+function formatBibtexAuthors(authors: string[]): string {
+  if (authors.length === 0) return 'Awesome Agentic Patterns';
+  return authors.join(' and ');
+}
+
+function getCitationYear(updatedAt?: string): string {
+  if (!updatedAt) return String(new Date().getFullYear());
+  const match = updatedAt.match(/^\d{4}/);
+  return match ? match[0] : String(new Date().getFullYear());
+}
+
+const citationYear = getCitationYear(pattern.updated_at);
+const retrievalDate = new Date().toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const citationUrl = `${SITE_URL}/patterns/${pattern.slug}`;
+const authors = formatAuthors(pattern.authors);
+const bibtexAuthors = formatBibtexAuthors(pattern.authors);
+
+const apaCitation = `${authors} (${citationYear}). ${pattern.title}. In *Awesome Agentic Patterns*. Retrieved ${retrievalDate}, from ${citationUrl}`;
+const bibtexCitation = `@misc{agentic_patterns_${pattern.slug},
+  title = {${pattern.title}},
+  author = {${bibtexAuthors}},
+  year = {${citationYear}},
+  howpublished = {\\url{${citationUrl}}},
+  note = {Awesome Agentic Patterns}
+}`;
 
 // Convert pattern to markdown format
 function toMarkdown(pattern: Props['pattern']): string {
@@ -125,6 +166,26 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     Copy as JSON
   </button>
 
+  <details class="citation-details">
+    <summary class="action-button" aria-label="Cite this pattern">Cite This Pattern</summary>
+    <div class="citation-panel">
+      <div class="citation-row">
+        <div class="citation-header">
+          <span class="citation-label">APA</span>
+          <CopyButton content={apaCitation} label="Copy APA citation" />
+        </div>
+        <pre class="citation-text">{apaCitation}</pre>
+      </div>
+      <div class="citation-row">
+        <div class="citation-header">
+          <span class="citation-label">BibTeX</span>
+          <CopyButton content={bibtexCitation} label="Copy BibTeX citation" />
+        </div>
+        <pre class="citation-text citation-text--code">{bibtexCitation}</pre>
+      </div>
+    </div>
+  </details>
+
   <span class="copy-feedback" aria-live="polite"></span>
 </div>
 
@@ -190,6 +251,64 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
   .action-button svg {
     flex-shrink: 0;
+  }
+
+  .citation-details {
+    flex-basis: 100%;
+  }
+
+  .citation-details summary {
+    list-style: none;
+  }
+
+  .citation-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .citation-panel {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  .citation-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .citation-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+  }
+
+  .citation-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .citation-text {
+    margin: 0;
+    padding: var(--spacing-sm);
+    background-color: var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .citation-text--code {
+    font-family: var(--font-mono);
   }
 
   .copy-feedback {

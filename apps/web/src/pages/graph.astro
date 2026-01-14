@@ -14,6 +14,9 @@ const graphData: PatternGraph = {
     status: pattern.status,
     slug: pattern.slug,
     tags: pattern.tags,
+    summary: pattern.summary,
+    maturity: pattern.maturity,
+    domains: pattern.domains,
   })),
   edges: patterns.flatMap((pattern) => {
     const relatedEdges =
@@ -31,6 +34,40 @@ const graphData: PatternGraph = {
 // Get unique values for filters
 const categories = [...new Set(graphData.nodes.map((n: GraphNode) => n.category))].sort();
 const statuses = [...new Set(graphData.nodes.map((n: GraphNode) => n.status))].sort();
+
+const tagMap = graphData.nodes.reduce((acc: Record<string, number>, node: GraphNode) => {
+  (node.tags || []).forEach((tag) => {
+    acc[tag] = (acc[tag] || 0) + 1;
+  });
+  return acc;
+}, {});
+
+const tags = Object.entries(tagMap)
+  .map(([tag, count]) => ({ tag, count }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 20);
+
+const maturityMap = graphData.nodes.reduce((acc: Record<string, number>, node: GraphNode) => {
+  if (node.maturity) {
+    acc[node.maturity] = (acc[node.maturity] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+const maturities = Object.entries(maturityMap)
+  .map(([maturity, count]) => ({ maturity, count }))
+  .sort((a, b) => b.count - a.count);
+
+const domainMap = graphData.nodes.reduce((acc: Record<string, number>, node: GraphNode) => {
+  (node.domains || []).forEach((domain) => {
+    acc[domain] = (acc[domain] || 0) + 1;
+  });
+  return acc;
+}, {});
+
+const domains = Object.entries(domainMap)
+  .map(([domain, count]) => ({ domain, count }))
+  .sort((a, b) => b.count - a.count);
 
 const positionedNodes = graphData.nodes.map((node: GraphNode, index: number) => {
   const angle = (index / Math.max(graphData.nodes.length, 1)) * 2 * Math.PI;
@@ -122,6 +159,63 @@ function getCategoryColor(category: string): string {
           </div>
         </div>
 
+        {
+          maturities.length > 0 && (
+            <div class="filter-section">
+              <h3 class="filter-title">Maturity</h3>
+              <div class="filter-options">
+                {
+                  maturities.map(({ maturity, count }) => (
+                    <label class="filter-option">
+                      <input type="checkbox" value={maturity} data-filter="maturity" />
+                      <span>{maturity}</span>
+                      <span class="filter-count">{count}</span>
+                    </label>
+                  ))
+                }
+              </div>
+            </div>
+          )
+        }
+
+        {
+          tags.length > 0 && (
+            <div class="filter-section">
+              <h3 class="filter-title">Tags</h3>
+              <div class="filter-options">
+                {
+                  tags.map(({ tag, count }) => (
+                    <label class="filter-option">
+                      <input type="checkbox" value={tag} data-filter="tag" />
+                      <span>{tag}</span>
+                      <span class="filter-count">{count}</span>
+                    </label>
+                  ))
+                }
+              </div>
+            </div>
+          )
+        }
+
+        {
+          domains.length > 0 && (
+            <div class="filter-section">
+              <h3 class="filter-title">Domains</h3>
+              <div class="filter-options">
+                {
+                  domains.map(({ domain, count }) => (
+                    <label class="filter-option">
+                      <input type="checkbox" value={domain} data-filter="domain" />
+                      <span>{domain}</span>
+                      <span class="filter-count">{count}</span>
+                    </label>
+                  ))
+                }
+              </div>
+            </div>
+          )
+        }
+
         <a href="/graph" class="clear-filters" id="graph-clear-filters" hidden>
           Clear All Filters
         </a>
@@ -176,6 +270,9 @@ function getCategoryColor(category: string): string {
                     data-category={node.category}
                     data-status={node.status}
                     data-tags={(node.tags || []).join('|')}
+                    data-maturity={node.maturity || ''}
+                    data-domains={(node.domains || []).join('|')}
+                    data-summary={node.summary || ''}
                     data-title={node.title}
                     data-slug={node.slug}
                     style="--category-color: {categoryColor}"
@@ -193,21 +290,16 @@ function getCategoryColor(category: string): string {
                     </text>
                     <foreignObject
                       x={node.x - 100}
-                      y={node.y - 100}
+                      y={node.y - 120}
                       width="200"
-                      height="80"
+                      height="120"
                       class="node-tooltip"
                     >
                       <div xmlns="http://www.w3.org/1999/xhtml">
-                        <>
-                          <strong>{node.title}</strong>
-                          <br />
-                        </>
-                        <>
-                          <span class="tooltip-category">{node.category}</span>
-                          <br />
-                        </>
+                        <strong>{node.title}</strong>
+                        <span class="tooltip-category">{node.category}</span>
                         <span class="tooltip-status">{node.status}</span>
+                        {node.summary && <span class="tooltip-summary">{node.summary}</span>}
                       </div>
                     </foreignObject>
                     <a href={`/graph?node=${node.id}`} class="node-link" data-node-id={node.id}>
@@ -231,7 +323,11 @@ function getCategoryColor(category: string): string {
             <span class="detail-status" id="detail-status"></span>
           </div>
 
-          <a href="/patterns" class="detail-link" id="detail-link"> View Full Pattern → </a>
+          <p class="detail-summary" id="detail-summary"></p>
+
+          <div class="detail-badges" id="detail-badges"></div>
+
+          <a href="/patterns" class="detail-link" id="detail-link">View Full Pattern →</a>
         </div>
       </div>
     </div>
@@ -243,6 +339,8 @@ function getCategoryColor(category: string): string {
   const selectedCategories = params.getAll('category');
   const selectedStatuses = params.getAll('status');
   const selectedTags = params.getAll('tag');
+  const selectedMaturities = params.getAll('maturity');
+  const selectedDomains = params.getAll('domain');
   const selectedNodeId = params.get('node');
 
   const clearFiltersLink = document.getElementById('graph-clear-filters');
@@ -251,11 +349,16 @@ function getCategoryColor(category: string): string {
   const edgeElements = document.querySelectorAll('[data-edge]');
   const categoryFilters = document.querySelectorAll('input[data-filter="category"]');
   const statusFilters = document.querySelectorAll('input[data-filter="status"]');
+  const tagFilters = document.querySelectorAll('input[data-filter="tag"]');
+  const maturityFilters = document.querySelectorAll('input[data-filter="maturity"]');
+  const domainFilters = document.querySelectorAll('input[data-filter="domain"]');
 
   const detailPanel = document.getElementById('graph-detail');
   const detailTitle = document.getElementById('detail-title');
   const detailCategory = document.getElementById('detail-category');
   const detailStatus = document.getElementById('detail-status');
+  const detailSummary = document.getElementById('detail-summary');
+  const detailBadges = document.getElementById('detail-badges');
   const detailLink = document.getElementById('detail-link');
   const detailClose = document.getElementById('detail-close');
 
@@ -265,6 +368,8 @@ function getCategoryColor(category: string): string {
       const category = node.getAttribute('data-category') || '';
       const status = node.getAttribute('data-status') || '';
       const tags = (node.getAttribute('data-tags') || '').split('|').filter(Boolean);
+      const maturity = node.getAttribute('data-maturity') || '';
+      const domains = (node.getAttribute('data-domains') || '').split('|').filter(Boolean);
 
       let matches = true;
       if (selectedCategories.length > 0 && !selectedCategories.includes(category)) {
@@ -274,6 +379,12 @@ function getCategoryColor(category: string): string {
         matches = false;
       }
       if (selectedTags.length > 0 && !tags.some((tag) => selectedTags.includes(tag))) {
+        matches = false;
+      }
+      if (selectedMaturities.length > 0 && !selectedMaturities.includes(maturity)) {
+        matches = false;
+      }
+      if (selectedDomains.length > 0 && !domains.some((domain) => selectedDomains.includes(domain))) {
         matches = false;
       }
 
@@ -299,44 +410,37 @@ function getCategoryColor(category: string): string {
       clearFiltersLink.hidden =
         selectedCategories.length === 0 &&
         selectedStatuses.length === 0 &&
-        selectedTags.length === 0;
+        selectedTags.length === 0 &&
+        selectedMaturities.length === 0 &&
+        selectedDomains.length === 0;
     }
   };
 
-  const updateFilterInputs = () => {
-    categoryFilters.forEach((input) => {
-      input.checked = selectedCategories.includes(input.value);
+  const bindFilterGroup = (inputs, paramName, selectedValues) => {
+    inputs.forEach((input) => {
+      input.checked = selectedValues.includes(input.value);
       input.addEventListener('change', () => {
         const params = new URLSearchParams(window.location.search);
-        const values = params.getAll('category');
+        const values = params.getAll(paramName);
         if (input.checked) {
           values.push(input.value);
         } else {
           const index = values.indexOf(input.value);
           if (index !== -1) values.splice(index, 1);
         }
-        params.delete('category');
-        values.forEach((value) => params.append('category', value));
+        params.delete(paramName);
+        values.forEach((value) => params.append(paramName, value));
         window.location.search = params.toString();
       });
     });
+  };
 
-    statusFilters.forEach((input) => {
-      input.checked = selectedStatuses.includes(input.value);
-      input.addEventListener('change', () => {
-        const params = new URLSearchParams(window.location.search);
-        const values = params.getAll('status');
-        if (input.checked) {
-          values.push(input.value);
-        } else {
-          const index = values.indexOf(input.value);
-          if (index !== -1) values.splice(index, 1);
-        }
-        params.delete('status');
-        values.forEach((value) => params.append('status', value));
-        window.location.search = params.toString();
-      });
-    });
+  const updateFilterInputs = () => {
+    bindFilterGroup(categoryFilters, 'category', selectedCategories);
+    bindFilterGroup(statusFilters, 'status', selectedStatuses);
+    bindFilterGroup(tagFilters, 'tag', selectedTags);
+    bindFilterGroup(maturityFilters, 'maturity', selectedMaturities);
+    bindFilterGroup(domainFilters, 'domain', selectedDomains);
   };
 
   const updateDetailPanel = () => {
@@ -366,11 +470,38 @@ function getCategoryColor(category: string): string {
     const category = node.getAttribute('data-category') || '';
     const status = node.getAttribute('data-status') || '';
     const slug = node.getAttribute('data-slug') || '';
+    const summary = node.getAttribute('data-summary') || '';
+    const maturity = node.getAttribute('data-maturity') || '';
+    const tags = (node.getAttribute('data-tags') || '').split('|').filter(Boolean);
+    const domains = (node.getAttribute('data-domains') || '').split('|').filter(Boolean);
 
     if (detailTitle) detailTitle.textContent = title;
     if (detailCategory) detailCategory.textContent = category;
     if (detailStatus) detailStatus.textContent = status;
     if (detailLink && slug) detailLink.setAttribute('href', `/patterns/${slug}`);
+    if (detailSummary) {
+      detailSummary.textContent = summary;
+      detailSummary.hidden = summary.length === 0;
+    }
+
+    if (detailBadges) {
+      detailBadges.innerHTML = '';
+      const badgeItems: Array<{ label: string; type: string }> = [];
+      if (maturity) {
+        badgeItems.push({ label: maturity, type: 'maturity' });
+      }
+      tags.forEach((tag) => badgeItems.push({ label: tag, type: 'tag' }));
+      domains.forEach((domain) => badgeItems.push({ label: domain, type: 'domain' }));
+
+      badgeItems.forEach((badge) => {
+        const span = document.createElement('span');
+        span.className = `detail-badge detail-badge--${badge.type}`;
+        span.textContent = badge.label;
+        detailBadges.appendChild(span);
+      });
+
+      detailBadges.hidden = badgeItems.length === 0;
+    }
 
     if (detailStatus) {
       detailStatus.style.setProperty('--status-color', getStatusColor(status));
@@ -605,6 +736,17 @@ function getCategoryColor(category: string): string {
     margin-top: var(--spacing-xs);
   }
 
+  .tooltip-summary {
+    display: -webkit-box;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+    line-height: 1.4;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .node-link {
     cursor: pointer;
   }
@@ -658,6 +800,36 @@ function getCategoryColor(category: string): string {
     flex-wrap: wrap;
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-lg);
+  }
+
+  .detail-summary {
+    margin: 0 0 var(--spacing-md);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .detail-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .detail-badge {
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    background-color: var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .detail-badge--maturity {
+    background-color: var(--color-success);
+    color: white;
+  }
+
+  .detail-badge--domain {
+    color: var(--color-text);
   }
 
   .detail-category,

@@ -12,6 +12,9 @@ export interface GraphNode {
   status: string;
   slug: string;
   tags?: string[];
+  summary?: string;
+  maturity?: string;
+  domains?: string[];
 }
 
 /**

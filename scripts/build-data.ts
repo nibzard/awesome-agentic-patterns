@@ -301,6 +301,9 @@ function writeOutputs(patterns: ParsedPattern[]): void {
       status: pattern.status,
       slug: pattern.slug,
       tags: pattern.tags,
+      summary: pattern.summary,
+      maturity: pattern.maturity,
+      domains: pattern.domains,
     })),
     edges: patterns.flatMap((pattern) => {
       const relatedEdges =

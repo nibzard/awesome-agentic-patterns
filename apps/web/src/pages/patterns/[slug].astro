@@ -2,18 +2,45 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
 import PatternActions from '../../components/PatternActions.astro';
+import PatternList from '../../components/PatternList.astro';
+import type { PatternEntry } from '../../types';
 import { getAllPatterns } from '../../lib/patterns';
 import { renderMarkdown } from '../../lib/markdown';
 
+const allPatterns = await getAllPatterns();
+
 export async function getStaticPaths() {
-  const patterns = await getAllPatterns();
-  return patterns.map((pattern) => ({
+  return allPatterns.map((pattern) => ({
     params: { slug: pattern.slug },
     props: { pattern },
   }));
 }
 
-const { pattern } = Astro.props;
+const { pattern } = Astro.props as { pattern: PatternEntry };
+
+const patternById = new Map(allPatterns.map((entry) => [entry.id, entry]));
+const patternBySlug = new Map(allPatterns.map((entry) => [entry.slug, entry]));
+
+const resolvePattern = (id: string) => patternById.get(id) || patternBySlug.get(id);
+
+const toListItem = (entry: PatternEntry) => ({
+  title: entry.title,
+  slug: entry.slug,
+  summary: entry.summary,
+  status: entry.status,
+  category: entry.category,
+  tags: entry.tags,
+});
+
+const relatedPatterns = (pattern.related || [])
+  .map((id) => resolvePattern(id))
+  .filter(Boolean)
+  .map((entry) => toListItem(entry as typeof pattern));
+
+const antiPatterns = (pattern.anti_patterns || [])
+  .map((id) => resolvePattern(id))
+  .filter(Boolean)
+  .map((entry) => toListItem(entry as typeof pattern));
 
 // Extract sections from pattern body
 function extractSection(body: string, sectionName: string): string | null {
@@ -54,7 +81,7 @@ const references = renderSection(pattern.body, 'References');
     <nav class="pattern-nav">
       <a href="#problem">Problem</a>
       <a href="#solution">Solution</a>
-      {howToUseIt && <a href="#how-to-use">How to use it</a>}
+      {howToUseIt && <a href="#how-to-use-it">How to use it</a>}
       {tradeoffs && <a href="#tradeoffs">Trade-offs</a>}
       {example && <a href="#example">Example</a>}
       <a href="#references">References</a>
@@ -81,7 +108,7 @@ const references = renderSection(pattern.body, 'References');
 
       {
         howToUseIt && (
-          <section id="how-to-use" class="pattern-section">
+          <section id="how-to-use-it" class="pattern-section">
             <h2>How to use it</h2>
             <div set:html={howToUseIt} />
           </section>
@@ -123,6 +150,24 @@ const references = renderSection(pattern.body, 'References');
         )
       }
     </article>
+
+    {
+      relatedPatterns.length > 0 && (
+        <section class="pattern-section pattern-related">
+          <h2>Related Patterns</h2>
+          <PatternList patterns={relatedPatterns} />
+        </section>
+      )
+    }
+
+    {
+      antiPatterns.length > 0 && (
+        <section class="pattern-section pattern-anti-patterns">
+          <h2>Anti-Patterns</h2>
+          <PatternList patterns={antiPatterns} />
+        </section>
+      )
+    }
 
     <footer class="pattern-footer">
       <div class="pattern-tags">

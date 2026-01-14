@@ -68,6 +68,7 @@ const initialQuestion = questions[0];
 
     const patterns = [];
     const rationales = [];
+    const avoid = [];
 
     if (agentType === 'autonomous') {
       patterns.push(
@@ -78,6 +79,7 @@ const initialQuestion = questions[0];
       rationales.push(
         'For autonomous agents, consider patterns that enable self-directed operation and gradual capability increase.'
       );
+      avoid.push('Unbounded tool access without guardrails.', 'Long-running loops without checkpoints.');
     } else if (agentType === 'assisted') {
       patterns.push(
         'Human-in-Loop Approval Framework',
@@ -87,6 +89,7 @@ const initialQuestion = questions[0];
       rationales.push(
         'Human-assisted agents benefit from clear control handoff and approval mechanisms.'
       );
+      avoid.push('Opaque autonomy without explicit handoff points.');
     } else if (agentType === 'workflow') {
       patterns.push(
         'Code-Then-Execute Pattern',
@@ -96,6 +99,7 @@ const initialQuestion = questions[0];
       rationales.push(
         'Workflow automation benefits from clear separation of planning and execution phases.'
       );
+      avoid.push('Single-step automation without validation gates.');
     }
 
     if (answersMap.complexity === 'complex') {
@@ -107,11 +111,14 @@ const initialQuestion = questions[0];
       rationales.push(
         'Complex tasks require advanced reasoning patterns that explore multiple solution paths.'
       );
+      avoid.push('Single-pass solutions that skip exploration and verification.');
     } else if (answersMap.complexity === 'moderate') {
       patterns.push('Chain-of-Thought Monitoring', 'Reflection');
       rationales.push(
         'Moderately complex tasks benefit from structured reasoning and self-reflection.'
       );
+    } else if (answersMap.complexity === 'simple') {
+      avoid.push('Over-engineered planners that add latency to simple tasks.');
     }
 
     if (answersMap.memory === 'persistent') {
@@ -123,9 +130,13 @@ const initialQuestion = questions[0];
       rationales.push(
         'Long-term memory requires patterns for storing, retrieving, and synthesizing past experiences.'
       );
+      avoid.push('Persisting sensitive data without retention policies.');
     } else if (answersMap.memory === 'session') {
       patterns.push('Context Window Optimization', 'Progressive Disclosure for Large Files');
       rationales.push('Session memory benefits from efficient context management techniques.');
+      avoid.push('Over-reliance on long context windows without summarization.');
+    } else if (answersMap.memory === 'none') {
+      avoid.push('Adding storage layers that are never used.');
     }
 
     if (answersMap.tools === 'many') {
@@ -137,11 +148,15 @@ const initialQuestion = questions[0];
       rationales.push(
         'When using many tools, consider patterns for discovery, organization, and parallel execution.'
       );
+      avoid.push('Tool sprawl without permissions and usage boundaries.');
     } else if (answersMap.tools === 'few') {
       patterns.push('Code-First Tool Interface Pattern', 'Tool Use Steering via Prompting');
       rationales.push(
         'For a small set of tools, focus on clear interfaces and effective prompting.'
       );
+      avoid.push('Overbuilding dynamic tool discovery for a fixed tool set.');
+    } else if (answersMap.tools === 'none') {
+      avoid.push('Designing prompts around tools you do not have.');
     }
 
     if (answersMap.safety === 'high') {
@@ -154,16 +169,20 @@ const initialQuestion = questions[0];
       rationales.push(
         'High-risk applications require security-focused patterns to prevent exploitation and ensure safety.'
       );
+      avoid.push('Shipping without evals, monitoring, and rollback plans.');
+      avoid.push('Granting high-risk permissions by default.');
     } else if (answersMap.safety === 'medium') {
       patterns.push('Workflow Evals with Mocked Tools', 'LLM Observability');
       rationales.push(
         'Medium-risk applications benefit from evaluation and observability patterns.'
       );
+      avoid.push('Skipping evaluation and observability instrumentation.');
     }
 
     return {
       patterns: [...new Set(patterns)],
       rationale: rationales.join(' '),
+      avoid: [...new Set(avoid)],
     };
   };
 
@@ -220,12 +239,24 @@ const initialQuestion = questions[0];
       )
       .join('');
 
+    const avoidItems = recommendation.avoid
+      .map((item) => `<li>${item}</li>`)
+      .join('');
+    const avoidHtml =
+      avoidItems.length > 0
+        ? `<ul>${avoidItems}</ul>`
+        : '<p>Focus on clear boundaries, reliable validation, and safe tool access.</p>';
+
     return `
       <div class="decision-results">
         <h2 class="results-title">Recommended Patterns</h2>
         <div class="results-rationale">
           <h3>Why These Patterns?</h3>
           <p>${recommendation.rationale}</p>
+        </div>
+        <div class="results-avoid">
+          <h3>What to Avoid</h3>
+          ${avoidHtml}
         </div>
         <div class="results-patterns">${patternsHtml}</div>
         <div class="decision-actions">
@@ -253,7 +284,7 @@ const initialQuestion = questions[0];
   renderDecision();
 </script>
 
-<style>
+<style is:global>
   .decision-page {
     max-width: 800px;
     margin: 0 auto;
@@ -387,6 +418,32 @@ const initialQuestion = questions[0];
     font-size: 1rem;
     color: var(--color-text-muted);
     line-height: 1.6;
+  }
+
+  .results-avoid {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-border);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--color-warning);
+  }
+
+  .results-avoid h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .results-avoid ul {
+    margin: 0;
+    padding-left: var(--spacing-lg);
+  }
+
+  .results-avoid li {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
   }
 
   .results-patterns {
