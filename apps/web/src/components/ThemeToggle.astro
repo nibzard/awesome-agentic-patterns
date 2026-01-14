@@ -65,30 +65,21 @@
     display: block;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .theme-toggle .sun-icon {
-      display: block;
-    }
-  }
-
   /* Show moon icon in light mode */
   :global([data-theme='light']) .theme-toggle .moon-icon {
     display: block;
   }
 
-  @media (prefers-color-scheme: light) {
-    .theme-toggle .moon-icon {
+  @media (prefers-color-scheme: dark) {
+    :global(:not([data-theme])) .theme-toggle .sun-icon {
       display: block;
     }
   }
 
-  /* When theme is explicitly set */
-  :global([data-theme='dark']) .theme-toggle .moon-icon {
-    display: none;
-  }
-
-  :global([data-theme='light']) .theme-toggle .sun-icon {
-    display: none;
+  @media (prefers-color-scheme: light) {
+    :global(:not([data-theme])) .theme-toggle .moon-icon {
+      display: block;
+    }
   }
 </style>
 

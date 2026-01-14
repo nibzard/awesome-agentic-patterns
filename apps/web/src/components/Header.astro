@@ -63,6 +63,22 @@ const navItems = [
     </nav>
 
     <div class="header-actions">
+      <a
+        class="github-badges"
+        href="https://github.com/nibzard/awesome-agentic-patterns"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="View GitHub stars and forks"
+      >
+        <img
+          src="https://img.shields.io/github/stars/nibzard/awesome-agentic-patterns?style=social"
+          alt="GitHub stars"
+        />
+        <img
+          src="https://img.shields.io/github/forks/nibzard/awesome-agentic-patterns?style=social"
+          alt="GitHub forks"
+        />
+      </a>
       <button id="search-toggle" class="search-toggle" aria-label="Search">
         <svg
           width="20"
@@ -382,6 +398,20 @@ const navItems = [
     gap: var(--spacing-sm);
   }
 
+  .github-badges {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 2px 6px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-bg);
+  }
+
+  .github-badges img {
+    height: 20px;
+  }
+
   .search-toggle {
     display: flex;
     align-items: center;
@@ -580,6 +610,10 @@ const navItems = [
 
     .nav-list {
       justify-content: center;
+    }
+
+    .github-badges img {
+      height: 18px;
     }
   }
 </style>

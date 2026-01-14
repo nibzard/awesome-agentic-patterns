@@ -1,0 +1,24 @@
+{
+  "title": "Multi-Platform Communication Aggregation",
+  "status": "emerging",
+  "authors": [
+    "Lucas Carlson"
+  ],
+  "based_on": [
+    "Anthropic (Claude Code)"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://github.com/anthropics/claude-code",
+  "tags": [
+    "search",
+    "aggregation",
+    "parallel",
+    "communication",
+    "unified-interface"
+  ],
+  "slug": "multi-platform-communication-aggregation",
+  "id": "multi-platform-communication-aggregation",
+  "summary": "Create unified search interface that queries all communication platforms in parallel and aggregates results into consistent format, enabling single-query cross-platform search with minimal latency through parallel execution.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nUsers communicate across multiple platforms (email, Slack, iMessage, etc.) and need to search for information that might exist in any of them. Searching each platform manually is slow and error-prone. An agent tasked with \"find what X said about Y\" must know which platform to check—or check all of them.\n\n## Solution\n\nCreate a unified search interface that queries all communication platforms in parallel and aggregates results into a single, consistent format.\n\n```mermaid\ngraph TD\n    A[\"User Query: find messages about project deadline\"] --> B[Aggregator Agent]\n    B --> C[iMessage Search]\n    B --> D[Slack Search]\n    B --> E[Email Search]\n    B --> F[Other Platforms...]\n    C --> G[Result Collector]\n    D --> G\n    E --> G\n    F --> G\n    G --> H[Unified Results Table]\n```\n\n**Key components:**\n\n1. **Platform Adapters**: Each platform has a CLI/API wrapper with consistent interface\n2. **Parallel Dispatcher**: Spawns searches concurrently (sub-agent pattern or background jobs)\n3. **Result Normalizer**: Converts platform-specific formats to unified schema\n4. **Aggregator**: Combines, deduplicates, and ranks results\n\n```bash\n# Example: Unified search skill implementation\nsearch_all() {\n    query=\"$1\"\n\n    # Spawn parallel searches\n    messages search \"$query\" > /tmp/messages.json &\n    slack-messages search \"$query\" > /tmp/slack.json &\n    fastmail.sh search \"$query\" > /tmp/fastmail.json &\n    gmail.sh search \"$query\" > /tmp/gmail.json &\n\n    wait  # All complete\n\n    # Aggregate and normalize\n    aggregate_results /tmp/*.json\n}\n```\n\n## How to use it\n\n**When to apply:**\n\n- User asks \"where did someone mention X\"\n- User needs to find a conversation but doesn't remember the platform\n- Cross-platform audit or compliance searches\n- Building unified inbox or communication hub features\n\n**Implementation steps:**\n\n1. Create CLI wrappers for each platform with consistent output format (JSON)\n2. Define a common schema: `{platform, sender, timestamp, content, url}`\n3. Build parallel dispatch mechanism (bash background jobs, sub-agents, or async)\n4. Implement result ranking (by recency, relevance, or platform priority)\n5. Present in unified table format with platform badges\n\n**Skill definition example:**\n\n```markdown\n## Unified Communication Search\n\n**Proactive triggers:** \"search everywhere\", \"find across all\", \"where did someone say\"\n\nSearches in parallel:\n\n- Apple Messages\n- Slack\n- Fastmail\n- Gmail\n\nResults presented in unified table, grouped by platform.\n```\n\n## Trade-offs\n\n**Pros:**\n\n- Single query searches all platforms—no context switching\n- Parallel execution minimizes latency (total time ≈ slowest platform)\n- Unified format makes comparison and filtering easy\n- Extensible: add new platforms without changing interface\n- Reduces \"which platform was that on?\" friction\n\n**Cons:**\n\n- Requires maintaining adapters for each platform\n- Rate limits may apply across platforms simultaneously\n- Result ranking across platforms is subjective (is a Slack message more relevant than an email?)\n- Privacy/security: aggregating data across platforms increases exposure\n- Some platforms have poor search APIs (result quality varies)\n\n## References\n\n* Sub-Agent Spawning pattern for parallel execution\n* LLM Map-Reduce pattern for result aggregation\n* Claude Code `/search-all` skill implementation\n"
+}

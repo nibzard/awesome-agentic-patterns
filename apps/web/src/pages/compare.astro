@@ -313,12 +313,19 @@ const _compareData = patterns.map((pattern) => {
         .map((input) => input.value)
         .slice(0, maxCompare);
 
-      const nextUrl = selected.length > 0 ? `/compare?ids=${selected.join(',')}` : '/compare';
-      window.location.href = nextUrl;
+      const params = new URLSearchParams();
+      if (selected.length > 0) {
+        params.set('ids', selected.join(','));
+      }
+      const nextUrl = params.toString() ? `/compare?${params.toString()}` : '/compare';
+      window.history.replaceState({}, '', nextUrl);
+      updateSelection();
     });
   });
 
   updateSelection();
+
+  window.addEventListener('popstate', updateSelection);
 </script>
 <style is:global>
   .compare-page {

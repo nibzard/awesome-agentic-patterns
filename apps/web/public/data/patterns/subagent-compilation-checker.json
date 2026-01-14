@@ -1,0 +1,24 @@
+{
+  "title": "Subagent Compilation Checker",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anonymous Speaker (Open Source Agent RL Talk)",
+    "Will Brown (Prime Intellect Talk)"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
+  "tags": [
+    "subagent",
+    "compilation",
+    "modularity",
+    "error-isolation"
+  ],
+  "slug": "subagent-compilation-checker",
+  "id": "subagent-compilation-checker",
+  "summary": "TODO: Add a concise summary for \"Subagent Compilation Checker\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nLarge coding tasks often involve multiple independent components (e.g., microservices, libraries). Having the **main agent** handle compilation and error checking for every component in-context:\n\n- **Blows Up Context Length:** Including entire build logs or bytecode in the prompt is impractical.\n- **Slows Down Inference:** Sending full build commands and parsing verbose output in-context uses excessive tokens.\n\nAdditionally, when the agent's single \"compile-and-run\" step fails, it's hard to pinpoint which submodule caused the error without a more granular approach.\n\n## Solution\n\nSpawn **specialized \"Compilation Subagents\"** to independently build and verify each code submodule, reporting back only:\n\n**1. Error Summary:** File paths, line numbers, and error messages.\n**2. Binary Artifacts (if needed):** Reference IDs (e.g., paths to compiled object files) rather than raw binaries.\n\n**Workflow:**\n- **Main Agent Request:** \"Compile module `auth-service`.\"\n- **Spawn `CompileSubagent(auth-service)`**\n  - Subagent runs `mvn clean install` or `go build ./auth-service`.\n  - Returns a structured error list or location of compiled artifact.\n- **Main Agent:** Updates its context with the **concise error report** (e.g., `[{file: \"auth_controller.go\", line: 85, error: \"undefined: UserModel\"}]`).\n\n## Example\n\n```mermaid\nsequenceDiagram\n    MainAgent->>CompileSubagent: \"Compile service A\"\n    CompileSubagent->>BuildEnv: go build ./serviceA\n    alt Build Success\n        CompileSubagent-->>MainAgent: {status: \"success\", artifact: \"serviceA.bin\"}\n    else Build Failure\n        CompileSubagent-->>MainAgent: [{file: \"fileA.go\", line: 10, error: \"Syntax error\"}]\n    end\n    MainAgent->>Context: Inject concise error summary\n```\n\n## How to use it\n\n- **Subagent Definition:** Each subagent is a lightweight container or process with the appropriate runtime (e.g., JVM for Java code, Node for JavaScript).\n- **Integration in RL Loop:** Treat each subagent invocation as a **tool call** within the RL environment.\n- **Error-Driven Reward:** If the error list is non-empty, assign a negative reward proportional to the number of errors (e.g., `reward = −len(error_list)`), to encourage the agent to fix compile errors quickly.\n\n## Trade-offs\n\n- **Pros:**\n  - **Modular Isolation:** The main agent never needs to load entire build logs into its context.\n  - **Parallel Builds:** Multiple subagents can compile different modules in parallel, speeding up end-to-end workflow.\n- **Cons/Considerations:**\n  - **Infrastructure Overhead:** Requires a mechanism to spin up and tear down multiple build environments.\n  - **Subagent Synchronization:** If one module depends on another's build artifact, coordination policies must ensure the correct build order.\n\n## References\n\n- Inspired by \"Subagent Spawning\" for code-related subtasks in the Open Source Agent RL talk (May 2025).\n- Will Brown's note on decoupling long I/O-bound steps from the main model's inference to avoid context explosion.\n"
+}

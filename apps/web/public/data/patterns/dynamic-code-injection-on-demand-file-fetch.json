@@ -1,0 +1,23 @@
+{
+  "title": "Dynamic Code Injection (On-Demand File Fetch)",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Internal AI Dev Team"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "Internal Practice",
+  "tags": [
+    "file-injection",
+    "at-mention",
+    "slash-commands",
+    "IDE-integration"
+  ],
+  "slug": "dynamic-code-injection-on-demand-file-fetch",
+  "id": "dynamic-code-injection-on-demand-file-fetch",
+  "summary": "TODO: Add a concise summary for \"Dynamic Code Injection (On-Demand File Fetch)\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nDuring an interactive coding session, a user or agent may need to inspect or modify files **not originally loaded** into the main context. Manually copying/pasting entire files into the prompt is:\n\n- Tedious and error-prone.\n- Wastes tokens on boilerplate (e.g., large config files).\n- Interrupts workflow momentum when switching between the editor and chat.\n\n## Solution\n\nAllow **on-demand file injection** via special syntax (e.g., `@filename` or `/load file`) that automatically:\n\n**1. Fetches the requested file(s)** from disk or version control.\n**2. Summarizes** or **extracts** only the relevant portions (e.g., function bodies or specific line ranges) if the file is large.\n**3. Injects** that snippet into the agent's current context, seamlessly extending its \"memory\" for the ongoing task.\n\nConcretely:\n\n- A user types `/load src/components/Button.js:lines 10–50` or `@src/setup/db.js`.\n- The agent's preprocessor intercepts this command, reads the specified file (or line range), and replaces the command with the file content (or trimmed snippet).\n- The rest of the prompt remains unchanged, so the agent can continue reasoning without restarting the conversation.\n\n## How to use it\n\n- **Command Syntax Examples:**\n  - `@path/to/file.ext` → loads entire file if < 2,000 tokens; otherwise runs a heuristic summarizer.\n  - `/load path/to/file.ext:10-50` → loads exactly lines 10 through 50.\n  - `/summarize path/to/test_spec.py` → runs a summary routine (e.g., extract docstrings + test names).\n\n- **Implementation Steps:**\n  1. Build a **listener** in your chat frontend or CLI that recognizes `@` and `/load` tokens.\n  2. Map recognized tokens to file paths; verify permissions if outside project root.\n  3. Read file text, run a **line-range parser** or **AST-based snippet extractor** if needed.\n  4. Replace the token in the outgoing prompt with `/// BEGIN <filename> …content… /// END <filename>`.\n  5. Forward the augmented prompt to the LLM for inference.\n\n- **Common Pitfalls:**\n  - Untrusted file paths: agent must validate that `@../../../etc/passwd` (for example) is disallowed.\n  - Large injected files: if file > 4,096 tokens, automatically run a **summarizer sub-routine** to extract only function/method definitions.\n\n## Trade-offs\n\n- **Pros:**\n  - Enables **interactive exploration** of code without leaving the chat environment.\n  - Reduces human overhead: no manual copy/paste of code blocks.\n  - Improves agent accuracy by ensuring the most relevant code is directly visible.\n\n- **Cons/Considerations:**\n  - Requires the chat interface (or a proxy server) to have **local file system access**.\n  - Potential security risk: if the agent can load arbitrary files, it could exfiltrate sensitive credentials unless carefully sandboxed.\n  - Summarization heuristics may omit subtle context (e.g., private helper functions).\n\n## References\n\n- Adapted from \"Dynamic Context Injection\" patterns (e.g., at-mention in Claude Code) for general coding-agent use.\n- Common in AI-powered IDE plugins (e.g., GitHub Copilot X live code browsing).\n"
+}

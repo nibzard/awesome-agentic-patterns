@@ -1,0 +1,23 @@
+{
+  "title": "Action-Selector Pattern",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Luca Beurer-Kellner et al. (2025)"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://arxiv.org/abs/2506.08837",
+  "tags": [
+    "prompt-injection",
+    "control-flow",
+    "safety",
+    "tool-use"
+  ],
+  "slug": "action-selector-pattern",
+  "id": "action-selector-pattern",
+  "summary": "## Problem\nUntrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nUntrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.\n\n## Solution\nTreat the LLM as an **\"instruction decoder\" only**:\n\n- Map the user's natural-language request to a *pre-approved* action (or action template).  \n- **No tool outputs are fed back** into the LLM.  \n- The agent therefore cannot be influenced after selecting the action.\n\n```pseudo\naction = LLM.translate(prompt, allowlist)\nexecute(action)\n# tool output NOT returned to LLM\n```\n\n## How to use it\n\nProvide a hard allowlist of safe actions (API calls, SQL templates, page links).\nUseful for customer-service bots, notification routers, kiosk interfaces.\n\n## Trade-offs\n\n* **Pros:** Near-immunity to prompt injection; trivial to audit.\n* **Cons:** Limited flexibility; new capabilities require code updates.\n\n## References\n\n* Beurer-Kellner et al., §3.1 (1) Action-Selector.\n"
+}

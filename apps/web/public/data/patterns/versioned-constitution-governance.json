@@ -1,0 +1,25 @@
+{
+  "title": "Versioned Constitution Governance",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Hiveism (self-alignment loop)",
+    "Anthropic (Constitutional AI)"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web",
+  "tags": [
+    "constitution",
+    "alignment",
+    "governance",
+    "signed-commits",
+    "policy"
+  ],
+  "slug": "versioned-constitution-governance",
+  "id": "versioned-constitution-governance",
+  "summary": "## Problem\nWhen an agent rewrites its own \"constitution,\" it may accidentally violate safety or regress on alignment objectives if changes aren't reviewed.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nWhen an agent rewrites its own \"constitution,\" it may accidentally violate safety or regress on alignment objectives if changes aren't reviewed.\n\n## Solution\nStore the constitution in a **version-controlled, signed repository**:\n\n- YAML/TOML rules live in Git.  \n- Each commit is signed (e.g., Sigstore); CI runs automated policy checks.  \n- Only commits signed by approved reviewers or automated tests are merged.  \n- The agent can *propose* changes, but a gatekeeper merges them.\n\n## How to use it\n- Require `git commit -S` or similar.  \n- Run diff-based linting to flag deletions of critical rules.  \n- Expose constitution `HEAD` as read-only context in every agent episode.\n\n## References\n- Hiveism, *Self-Alignment by Constitutional AI*\n- Anthropic, *Constitutional AI* white-paper\n"
+}

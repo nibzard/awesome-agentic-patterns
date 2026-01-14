@@ -1,0 +1,27 @@
+{
+  "title": "Language Agent Tree Search (LATS)",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Zhou et al.",
+    "University of Illinois"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://arxiv.org/abs/2310.04406",
+  "tags": [
+    "search",
+    "monte-carlo",
+    "tree-search",
+    "reasoning",
+    "planning",
+    "reflection",
+    "evaluation"
+  ],
+  "slug": "language-agent-tree-search-lats",
+  "id": "language-agent-tree-search-lats",
+  "summary": "TODO: Add a concise summary for \"Language Agent Tree Search (LATS)\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nCurrent language agents often struggle with complex reasoning tasks that require exploration of multiple solution paths. Simple linear approaches like ReACT or basic reflection patterns can get stuck in local optima or fail to consider alternative strategies. This is particularly problematic for tasks requiring strategic planning, mathematical reasoning, or multi-step problem solving where early decisions significantly impact later outcomes.\n\n## Solution\n\nLanguage Agent Tree Search (LATS) combines Monte Carlo Tree Search (MCTS) with language model reflection and evaluation capabilities. The approach treats the problem-solving process as a tree where:\n\n1. **Nodes** represent states (partial solutions or reasoning steps)\n2. **Edges** represent actions (next steps in reasoning)\n3. **Leaf nodes** are evaluated using the LLM's self-reflection capabilities\n4. **Backpropagation** updates value estimates throughout the tree\n\nThe agent explores promising branches more deeply while maintaining breadth to avoid getting stuck. This creates a best-of-both-worlds approach combining systematic search with LLM reasoning.\n\n## Example\n\n```python\nclass LATSAgent:\n    def __init__(self, llm, max_iterations=50, exploration_constant=1.4):\n        self.llm = llm\n        self.max_iterations = max_iterations\n        self.c = exploration_constant  # UCB exploration parameter\n        \n    def search(self, initial_state, problem):\n        root = Node(state=initial_state)\n        \n        for _ in range(self.max_iterations):\n            # Selection: traverse tree using UCB\n            node = self.select(root)\n            \n            # Expansion: generate possible actions\n            if not node.is_terminal():\n                actions = self.generate_actions(node.state, problem)\n                for action in actions:\n                    child_state = self.apply_action(node.state, action)\n                    node.add_child(Node(state=child_state, action=action))\n            \n            # Simulation: evaluate the node\n            value = self.evaluate(node, problem)\n            \n            # Backpropagation: update values up the tree\n            self.backpropagate(node, value)\n        \n        return self.best_path(root)\n    \n    def select(self, node):\n        \"\"\"Select child using UCB (Upper Confidence Bound)\"\"\"\n        while node.children:\n            node = max(node.children, key=lambda n: self.ucb_score(n))\n        return node\n    \n    def ucb_score(self, node):\n        if node.visits == 0:\n            return float('inf')\n        exploitation = node.value / node.visits\n        exploration = self.c * sqrt(log(node.parent.visits) / node.visits)\n        return exploitation + exploration\n    \n    def evaluate(self, node, problem):\n        \"\"\"Use LLM to evaluate the quality of current state\"\"\"\n        prompt = f\"\"\"\n        Problem: {problem}\n        Current solution state: {node.state}\n        \n        Evaluate this partial solution:\n        1. Is this on the right track? (0-10)\n        2. What are the strengths?\n        3. What are potential issues?\n        4. Estimated distance to complete solution?\n        \n        Overall value score (0-1):\n        \"\"\"\n        evaluation = self.llm.generate(prompt)\n        return self.parse_value_score(evaluation)\n    \n    def generate_actions(self, state, problem):\n        \"\"\"Use LLM to generate possible next steps\"\"\"\n        prompt = f\"\"\"\n        Problem: {problem}\n        Current state: {state}\n        \n        Generate 3-5 possible next steps that could advance the solution.\n        Each step should be different and explore various approaches.\n        \"\"\"\n        return self.llm.generate(prompt).split('\\n')\n```\n\n## Benefits\n\n- **Better Performance**: Outperforms ReACT, Reflexion, and Tree of Thoughts on complex reasoning tasks\n- **Strategic Exploration**: Balances exploration of new paths with exploitation of promising ones\n- **Self-Improving**: Uses reflection to learn which paths are more promising\n- **Robust**: Less likely to get stuck in dead ends compared to linear approaches\n\n## Trade-offs\n\n**Pros:**\n- Significantly better performance on complex reasoning tasks\n- Systematic exploration prevents getting stuck\n- Naturally handles problems with multiple valid approaches\n- Provides interpretable reasoning traces\n\n**Cons:**\n- Higher computational cost due to tree exploration\n- Requires more LLM calls than simple approaches\n- May be overkill for simple tasks\n- Requires careful tuning of exploration parameters\n\n## References\n\n- [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406)\n- [Comparison with ReACT, Reflexion, and Tree of Thoughts](https://www.langchain.com/langgraph)\n"
+}

@@ -1,9 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { getAllPatterns } from '../../lib/patterns';
 
 // Get all packs
 const packs = await getCollection('packs');
+const allPatterns = await getAllPatterns();
+
+const patternIndex = allPatterns.map((pattern) => ({
+  slug: pattern.slug,
+  title: pattern.title,
+  summary: pattern.summary,
+  category: pattern.category,
+}));
 
 // Sort packs by title
 const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title));
@@ -30,6 +39,59 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
         <li>Links to related patterns and resources</li>
       </ul>
     </div>
+
+    <section class="packs-user">
+      <div class="packs-user-header">
+        <h2>Your Packs</h2>
+        <p>
+          Build your own collections and save them locally. Add patterns straight from any pattern
+          page.
+        </p>
+      </div>
+
+      <div class="packs-user-grid">
+        <form class="pack-create" id="pack-create-form">
+          <h3>Create a New Pack</h3>
+          <label class="pack-field">
+            <span>Pack name</span>
+            <input type="text" id="pack-name" placeholder="e.g. Internal AI Ops Stack" required />
+          </label>
+          <label class="pack-field">
+            <span>Why this pack exists</span>
+            <textarea
+              id="pack-notes"
+              rows="3"
+              placeholder="Capture the goal, audience, or build phase."
+            ></textarea>
+          </label>
+          <button type="submit" class="button button--primary">Create pack</button>
+        </form>
+
+        <div class="pack-sync">
+          <h3>Save Across Devices</h3>
+          <p>
+            Leave your email to get a shareable backup link and early access when pack sync
+            launches.
+          </p>
+          <div class="pack-sync-row">
+            <input type="email" id="pack-email" placeholder="you@company.com" />
+            <button type="button" class="button button--secondary" data-email-capture>
+              Join early access
+            </button>
+          </div>
+          <p class="pack-sync-hint">We will only use this for pack backup and release updates.</p>
+        </div>
+      </div>
+
+      <div class="user-packs-feedback" id="user-packs-feedback" aria-live="polite"></div>
+
+      <div class="user-packs-list" id="user-packs-list"></div>
+
+      <div class="user-packs-empty" id="user-packs-empty" hidden>
+        <h3>No custom packs yet</h3>
+        <p>Create one above, then use “Add to Pack” on any pattern to fill it.</p>
+      </div>
+    </section>
 
     <div class="packs-grid">
       {
@@ -88,6 +150,206 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
   </div>
 </BaseLayout>
 
+<script type="application/json" id="pattern-index" set:html={JSON.stringify(patternIndex)} />
+
+<script>
+  const storageKey = 'aap:user-packs';
+  const waitlistKey = 'aap:pack-waitlist';
+  const patternIndexEl = document.getElementById('pattern-index');
+  const patternIndex = patternIndexEl ? JSON.parse(patternIndexEl.textContent || '[]') : [];
+  const patternMap = new Map(patternIndex.map((pattern) => [pattern.slug, pattern]));
+
+  const packList = document.getElementById('user-packs-list');
+  const packEmpty = document.getElementById('user-packs-empty');
+  const packFeedback = document.getElementById('user-packs-feedback');
+  const packForm = document.getElementById('pack-create-form');
+  const packName = document.getElementById('pack-name');
+  const packNotes = document.getElementById('pack-notes');
+  const emailInput = document.getElementById('pack-email');
+  const emailButton = document.querySelector('[data-email-capture]');
+
+  const loadPacks = () => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      const parsed = stored ? JSON.parse(stored) : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map((pack) => ({
+        ...pack,
+        patterns: Array.isArray(pack.patterns) ? pack.patterns : [],
+      }));
+    } catch (error) {
+      return [];
+    }
+  };
+
+  const savePacks = (packs) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(packs));
+    } catch (error) {
+      showFeedback('Unable to save packs in this browser.', true);
+    }
+  };
+
+  const showFeedback = (message, isError = false) => {
+    if (!packFeedback) return;
+    packFeedback.textContent = message;
+    packFeedback.classList.toggle('user-packs-feedback--error', isError);
+    setTimeout(() => {
+      packFeedback.textContent = '';
+      packFeedback.classList.remove('user-packs-feedback--error');
+    }, 2600);
+  };
+
+  const formatDate = (value) => {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleDateString();
+  };
+
+  const escapeHtml = (value) =>
+    String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+  const exportPack = async (pack) => {
+    const payload = JSON.stringify(pack, null, 2);
+    try {
+      await navigator.clipboard.writeText(payload);
+      showFeedback(`Copied ${pack.name} to clipboard.`);
+    } catch (error) {
+      showFeedback('Unable to copy pack.', true);
+    }
+  };
+
+  const renderPacks = () => {
+    if (!packList) return;
+    const packs = loadPacks();
+    packList.innerHTML = '';
+
+    if (packEmpty) {
+      packEmpty.hidden = packs.length > 0;
+    }
+
+    packs.forEach((pack) => {
+      const patterns = pack.patterns
+        .map((slug) => patternMap.get(slug))
+        .filter(Boolean);
+
+      const card = document.createElement('div');
+      card.className = 'user-pack-card';
+      card.innerHTML = `
+        <div class="user-pack-header">
+          <div>
+            <h3>${escapeHtml(pack.name)}</h3>
+            ${pack.notes ? `<p class="user-pack-notes">${escapeHtml(pack.notes)}</p>` : ''}
+          </div>
+          <div class="user-pack-actions">
+            <button type="button" class="user-pack-button" data-pack-export>Export</button>
+            <button type="button" class="user-pack-button user-pack-button--danger" data-pack-delete>
+              Delete
+            </button>
+          </div>
+        </div>
+        <div class="user-pack-meta">
+          <span>${pack.patterns.length} patterns</span>
+          ${pack.updatedAt ? `<span>Updated ${formatDate(pack.updatedAt)}</span>` : ''}
+        </div>
+        <div class="user-pack-patterns">
+          ${
+            patterns.length > 0
+              ? patterns
+                  .slice(0, 6)
+                  .map(
+                    (pattern) => `
+              <a href="/patterns/${pattern.slug}" class="user-pack-pattern">
+                <span>${escapeHtml(pattern.title)}</span>
+                <span class="user-pack-category">${escapeHtml(pattern.category)}</span>
+              </a>
+            `
+                  )
+                  .join('')
+              : '<p class="user-pack-empty-note">No patterns yet. Add some from a pattern page.</p>'
+          }
+        </div>
+      `;
+
+      const exportButton = card.querySelector('[data-pack-export]');
+      const deleteButton = card.querySelector('[data-pack-delete]');
+      exportButton?.addEventListener('click', () => exportPack(pack));
+      deleteButton?.addEventListener('click', () => {
+        const confirmed = window.confirm(`Delete "${pack.name}"?`);
+        if (!confirmed) return;
+        const next = loadPacks().filter((item) => item.id !== pack.id);
+        savePacks(next);
+        renderPacks();
+        showFeedback('Pack deleted.');
+      });
+
+      packList.appendChild(card);
+    });
+  };
+
+  packForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = packName?.value.trim();
+    if (!name) {
+      showFeedback('Add a pack name.', true);
+      return;
+    }
+    const packs = loadPacks();
+    const newPack = {
+      id: `pack-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+      name,
+      notes: packNotes?.value.trim() || '',
+      patterns: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    packs.unshift(newPack);
+    savePacks(packs);
+    if (packName) packName.value = '';
+    if (packNotes) packNotes.value = '';
+    renderPacks();
+    showFeedback(`Created "${name}".`);
+  });
+
+  emailButton?.addEventListener('click', () => {
+    const email = emailInput?.value.trim();
+    if (!email) {
+      showFeedback('Add an email address.', true);
+      return;
+    }
+    try {
+      localStorage.setItem(waitlistKey, email);
+    } catch (error) {
+      showFeedback('Unable to save email locally.', true);
+      return;
+    }
+    showFeedback('Thanks! We will reach out with pack sync updates.');
+  });
+
+  try {
+    const storedEmail = localStorage.getItem(waitlistKey);
+    if (storedEmail && emailInput) {
+      emailInput.value = storedEmail;
+    }
+  } catch (error) {
+    // Ignore storage errors for waitlist email
+  }
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === storageKey) {
+      renderPacks();
+    }
+  });
+
+  renderPacks();
+</script>
+
 <style>
   .packs-page {
     max-width: 1200px;
@@ -124,6 +386,204 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
     color: var(--color-text);
     line-height: 1.6;
     margin-bottom: var(--spacing-md);
+  }
+
+  .packs-user {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .packs-user-header {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .packs-user-header h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .packs-user-header p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .packs-user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .pack-create,
+  .pack-sync {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  .pack-create h3,
+  .pack-sync h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--color-text);
+  }
+
+  .pack-field {
+    display: grid;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+  }
+
+  .pack-field span {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .pack-field input,
+  .pack-field textarea,
+  .pack-sync-row input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.875rem;
+  }
+
+  .pack-sync-row {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .pack-sync-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .user-packs-feedback {
+    min-height: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-success);
+  }
+
+  .user-packs-feedback--error {
+    color: var(--color-error);
+  }
+
+  .user-packs-list {
+    display: grid;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .user-pack-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg);
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  .user-pack-header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+
+  .user-pack-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-text);
+  }
+
+  .user-pack-notes {
+    margin: var(--spacing-xs) 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .user-pack-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .user-pack-button {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-border);
+    color: var(--color-text);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.8125rem;
+    cursor: pointer;
+  }
+
+  .user-pack-button:hover {
+    background-color: var(--color-divider);
+  }
+
+  .user-pack-button--danger {
+    border-color: rgba(239, 68, 68, 0.4);
+    color: var(--color-error);
+  }
+
+  .user-pack-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .user-pack-patterns {
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .user-pack-pattern {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+
+  .user-pack-pattern span:last-child {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+  }
+
+  .user-pack-empty-note {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .user-packs-empty {
+    text-align: center;
+    padding: var(--spacing-xl);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .user-packs-empty h3 {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .user-packs-empty p {
+    margin: 0;
+    color: var(--color-text-muted);
   }
 
   .packs-features {
@@ -308,7 +768,29 @@ const sortedPacks = packs.sort((a, b) => a.data.title.localeCompare(b.data.title
     transform: translateY(-1px);
   }
 
+  .button--secondary {
+    background-color: var(--color-border);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .button--secondary:hover {
+    background-color: var(--color-divider);
+  }
+
   @media (max-width: 768px) {
+    .packs-user-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pack-sync-row {
+      flex-direction: column;
+    }
+
+    .user-pack-actions {
+      width: 100%;
+    }
+
     .packs-grid {
       grid-template-columns: 1fr;
     }

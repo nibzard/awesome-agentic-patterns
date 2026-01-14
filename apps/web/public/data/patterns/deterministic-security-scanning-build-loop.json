@@ -1,0 +1,24 @@
+{
+  "title": "Deterministic Security Scanning Build Loop",
+  "status": "proposed",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Geoffrey Huntley"
+  ],
+  "category": "Security & Safety",
+  "source": "https://ghuntley.com/secure-codegen/",
+  "tags": [
+    "security",
+    "deterministic",
+    "build-loop",
+    "backpressure",
+    "static-analysis"
+  ],
+  "slug": "deterministic-security-scanning-build-loop",
+  "id": "deterministic-security-scanning-build-loop",
+  "summary": "Implement deterministic security validation through build loop with two-phase approach: non-deterministic generation followed by deterministic backpressure from integrated SAST/DAST tools that must pass before code completion.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nNon-deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism - code is either secure or not secure, with no grey area. These approaches are merely suggestions to the LLM that may or may not be followed consistently.\n\n## Solution\n\nImplement **deterministic security validation** through the build loop using a two-phase approach:\n\n1. **Generation Phase** (non-deterministic): Agent generates code based on suggestions and context\n2. **Backpressure Phase** (deterministic): Security scanning tools validate the generated code\n\nThe key is integrating existing security scanning tools (SAST, DAST, PBT) directly into the build target that agents must execute after every code change.\n\n```makefile\n.PHONY: all build test security-scan\n\nall: build test security-scan\n\nbuild:\n    @echo \"Build completed successfully\"\n    @exit 0\n\ntest:\n    @echo \"Tests completed successfully\" \n    @exit 0\n\nsecurity-scan:\n    # Use your existing security scanning tool\n    semgrep --config=auto src/\n    bandit -r src/\n    @exit $?\n```\n\nConfigure agent instructions to mandate build execution:\n\n```markdown\n# Agent Instructions\n\n## Code Quality \n\nAfter every code change, you MUST:\n\n1. Run `make all` to verify that the code builds successfully and tests pass.\n2. IMPORTANT: You MUST resolve any security issues identified during compilation.\n```\n\n```mermaid\ngraph TD\n    A[Agent Generates Code] --> B[Run Build Target]\n    B --> C{Security Scan Passes?}\n    C -->|No| D[Security Tool Output in Context]\n    D --> E[Agent Sees Error & Regenerates]\n    E --> A\n    C -->|Yes| F[Code Generation Complete]\n```\n\n## How to use it\n\n1. **Inner Loop (Development)**:\n   \n- Integrate existing security scanning tools into your build target\n   - Configure agent instructions to run build after every change\n   - Let the agent see security tool output and iterate\n\n2. **Outer Loop (CI/CD)**:\n   \n- Use the same security tools in your pull request checks\n   - Maintain one unified rules database across both loops\n\n3. **Implementation Steps**:\n   \n- Add security scanning tools to Makefile/package.json/build script\n   - Update agent configuration (AGENTS.md/Cursor rules) to mandate build execution\n   - Ensure security tools exit with non-zero codes on violations\n\n## Trade-offs\n\n**Pros:** \n- Leverages deterministic, battle-tested security tools\n- Reuses existing security infrastructure and rules\n- Works with any coding agent/harness\n- Provides consistent security validation\n\n**Cons:** \n- Increases build time and CI resource usage\n- May produce false positives requiring human review\n- Requires fast security tools for good developer experience\n\n## References\n\n* [Geoffrey Huntley's blog post on secure code generation](https://ghuntley.com/secure-codegen/)\n* This generalizes beyond security to any code quality or pattern enforcement\n"
+}

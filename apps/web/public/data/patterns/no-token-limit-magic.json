@@ -1,0 +1,23 @@
+{
+  "title": "No-Token-Limit Magic",
+  "status": "experimental-but-awesome",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Thorsten Ball",
+    "Quinn Slack"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://www.nibzard.com/ampcode",
+  "tags": [
+    "performance",
+    "cost",
+    "experimentation"
+  ],
+  "slug": "no-token-limit-magic",
+  "id": "no-token-limit-magic",
+  "summary": "Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nAggressive prompt compression to save tokens stifles reasoning depth and self-correction.\n\n## Solution\nDuring prototyping, **remove hard token limits**. Allow lavish context and multiple reasoning passes. Yes, it's pricier—but dramatically better outputs surface valuable patterns before optimizing.\n\n## Example (token budget approach)\n```mermaid\nflowchart TD\n    A[Development Phase] --> B{Token Strategy}\n    B -->|Prototype| C[No Token Limits]\n    B -->|Production| D[Optimized Limits]\n\n    C --> E[Lavish Context]\n    C --> F[Multiple Reasoning Passes]\n    C --> G[Rich Self-Correction]\n\n    E --> H[Better Output Quality]\n    F --> H\n    G --> H\n\n    H --> I[Identify Valuable Patterns]\n    I --> J[Optimize for Production]\n    J --> D\n```\n\n## References\n- Raising An Agent - Episode 2 cost discussion—$1000 prototype spend justified by productivity.\n\n[Source](https://www.nibzard.com/ampcode)\n"
+}

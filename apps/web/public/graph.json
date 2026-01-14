@@ -1,788 +1,1722 @@
 {
   "nodes": [
     {
-      "id": "reflection-loop",
-      "title": "Reflection Loop",
-      "category": "Feedback Loops",
-      "status": "established",
-      "slug": "reflection"
-    },
-    {
-      "id": "continuous-autonomous-task-loop-pattern",
-      "title": "Continuous Autonomous Task Loop Pattern",
-      "category": "Orchestration & Control",
-      "status": "established",
-      "slug": "continuous-autonomous-task-loop-pattern"
-    },
-    {
-      "id": "tool-use-incentivization-via-reward-shaping",
-      "title": "Tool Use Incentivization via Reward Shaping",
-      "category": "Feedback Loops",
-      "status": "emerging",
-      "slug": "tool-use-incentivization-via-reward-shaping"
-    },
-    {
-      "id": "asynchronous-coding-agent-pipeline",
-      "title": "Asynchronous Coding Agent Pipeline",
-      "category": "Reliability & Eval",
-      "status": "proposed",
-      "slug": "asynchronous-coding-agent-pipeline"
-    },
-    {
-      "id": "agent-friendly-workflow-design",
-      "title": "Agent-Friendly Workflow Design",
+      "id": "abstracted-code-representation-for-review",
+      "title": "Abstracted Code Representation for Review",
       "category": "UX & Collaboration",
-      "status": "best-practice",
-      "slug": "agent-friendly-workflow-design"
-    },
-    {
-      "id": "isolated-vm-per-rl-rollout",
-      "title": "Isolated VM per RL Rollout",
-      "category": "Security & Safety",
-      "status": "emerging",
-      "slug": "isolated-vm-per-rl-rollout"
-    },
-    {
-      "id": "no-token-limit-magic",
-      "title": "No-Token-Limit Magic",
-      "category": "Reliability & Eval",
-      "status": "experimental-but-awesome",
-      "slug": "no-token-limit-magic"
-    },
-    {
-      "id": "human-in-the-loop-approval-framework",
-      "title": "Human-in-the-Loop Approval Framework",
-      "category": "UX & Collaboration",
-      "status": "validated-in-production",
-      "slug": "human-in-loop-approval-framework"
-    },
-    {
-      "id": "stop-hook-auto-continue-pattern",
-      "title": "Stop Hook Auto-Continue Pattern",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "stop-hook-auto-continue-pattern"
-    },
-    {
-      "id": "structured-output-specification",
-      "title": "Structured Output Specification",
-      "category": "Reliability & Eval",
-      "status": "established",
-      "slug": "structured-output-specification"
-    },
-    {
-      "id": "shell-command-contextualization",
-      "title": "Shell Command Contextualization",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "shell-command-contextualization"
-    },
-    {
-      "id": "context-minimization-pattern",
-      "title": "Context-Minimization Pattern",
-      "category": "Context & Memory",
-      "status": "emerging",
-      "slug": "context-minimization-pattern"
-    },
-    {
-      "id": "code-mode-mcp-tool-interface-improvement-pattern",
-      "title": "Code Mode MCP Tool Interface Improvement Pattern",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "code-first-tool-interface-pattern"
-    },
-    {
-      "id": "filesystem-based-agent-state",
-      "title": "Filesystem-Based Agent State",
-      "category": "Context & Memory",
-      "status": "established",
-      "slug": "filesystem-based-agent-state"
-    },
-    {
-      "id": "anti-reward-hacking-grader-design",
-      "title": "Anti-Reward-Hacking Grader Design",
-      "category": "Reliability & Eval",
-      "status": "emerging",
-      "slug": "anti-reward-hacking-grader-design"
-    },
-    {
-      "id": "team-shared-agent-configuration-as-code",
-      "title": "Team-Shared Agent Configuration as Code",
-      "category": "UX & Collaboration",
-      "status": "best-practice",
-      "slug": "team-shared-agent-configuration"
-    },
-    {
-      "id": "self-critique-evaluator-loop",
-      "title": "Self-Critique Evaluator Loop",
-      "category": "Feedback Loops",
-      "status": "emerging",
-      "slug": "self-critique-evaluator-loop"
-    },
-    {
-      "id": "cli-native-agent-orchestration",
-      "title": "CLI-Native Agent Orchestration",
-      "category": "Tool Use & Environment",
       "status": "proposed",
-      "slug": "cli-native-agent-orchestration"
-    },
-    {
-      "id": "democratization-of-tooling-via-agents",
-      "title": "Democratization of Tooling via Agents",
-      "category": "UX & Collaboration",
-      "status": "emerging",
-      "slug": "democratization-of-tooling-via-agents"
-    },
-    {
-      "id": "chain-of-thought-monitoring-interruption",
-      "title": "Chain-of-Thought Monitoring & Interruption",
-      "category": "UX & Collaboration",
-      "status": "emerging",
-      "slug": "chain-of-thought-monitoring-interruption"
-    },
-    {
-      "id": "swarm-migration-pattern",
-      "title": "Swarm Migration Pattern",
-      "category": "Orchestration & Control",
-      "status": "validated-in-production",
-      "slug": "swarm-migration-pattern"
-    },
-    {
-      "id": "code-then-execute-pattern",
-      "title": "Code-Then-Execute Pattern",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "code-then-execute-pattern"
-    },
-    {
-      "id": "skill-library-evolution",
-      "title": "Skill Library Evolution",
-      "category": "Learning & Adaptation",
-      "status": "established",
-      "slug": "skill-library-evolution"
-    },
-    {
-      "id": "llm-map-reduce-pattern",
-      "title": "LLM Map-Reduce Pattern",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "llm-map-reduce-pattern"
-    },
-    {
-      "id": "graph-of-thoughts-got",
-      "title": "Graph of Thoughts (GoT)",
-      "category": "Feedback Loops",
-      "status": "emerging",
-      "slug": "graph-of-thoughts"
-    },
-    {
-      "id": "context-window-anxiety-management",
-      "title": "Context Window Anxiety Management",
-      "category": "Context & Memory",
-      "status": "emerging",
-      "slug": "context-window-anxiety-management"
-    },
-    {
-      "id": "multi-platform-webhook-triggers",
-      "title": "Multi-Platform Webhook Triggers",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "multi-platform-webhook-triggers"
-    },
-    {
-      "id": "tree-of-thought-reasoning",
-      "title": "Tree-of-Thought Reasoning",
-      "category": "Orchestration & Control",
-      "status": "established",
-      "slug": "tree-of-thought-reasoning"
-    },
-    {
-      "id": "specification-driven-agent-development",
-      "title": "Specification-Driven Agent Development",
-      "category": "Orchestration & Control",
-      "status": "proposed",
-      "slug": "specification-driven-agent-development"
-    },
-    {
-      "id": "proactive-agent-state-externalization",
-      "title": "Proactive Agent State Externalization",
-      "category": "Context & Memory",
-      "status": "emerging",
-      "slug": "proactive-agent-state-externalization"
-    },
-    {
-      "id": "initializer-maintainer-dual-agent-architecture",
-      "title": "Initializer-Maintainer Dual Agent Architecture",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "initializer-maintainer-dual-agent"
-    },
-    {
-      "id": "spec-as-test-feedback-loop",
-      "title": "Spec-As-Test Feedback Loop",
-      "category": "Feedback Loops",
-      "status": "proposed",
-      "slug": "spec-as-test-feedback-loop"
-    },
-    {
-      "id": "pii-tokenization",
-      "title": "PII Tokenization",
-      "category": "Security & Safety",
-      "status": "established",
-      "slug": "pii-tokenization"
-    },
-    {
-      "id": "oracle-and-worker-multi-model-approach",
-      "title": "Oracle and Worker Multi-Model Approach",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "oracle-and-worker-multi-model"
-    },
-    {
-      "id": "curated-code-context-window",
-      "title": "Curated Code Context Window",
-      "category": "Context & Memory",
-      "status": "validated-in-production",
-      "slug": "curated-code-context-window"
-    },
-    {
-      "id": "cli-first-skill-design",
-      "title": "CLI-First Skill Design",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "cli-first-skill-design"
-    },
-    {
-      "id": "progressive-complexity-escalation",
-      "title": "Progressive Complexity Escalation",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "progressive-complexity-escalation"
-    },
-    {
-      "id": "conditional-parallel-tool-execution",
-      "title": "Conditional Parallel Tool Execution",
-      "category": "Orchestration & Control",
-      "status": "validated-in-production",
-      "slug": "parallel-tool-execution"
-    },
-    {
-      "id": "llm-observability",
-      "title": "LLM Observability",
-      "category": "Reliability & Eval",
-      "status": "proposed",
-      "slug": "llm-observability"
-    },
-    {
-      "id": "multi-platform-communication-aggregation",
-      "title": "Multi-Platform Communication Aggregation",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "multi-platform-communication-aggregation"
-    },
-    {
-      "id": "code-over-api-pattern",
-      "title": "Code-Over-API Pattern",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "code-over-api-pattern"
-    },
-    {
-      "id": "agent-reinforcement-fine-tuning-agent-rft",
-      "title": "Agent Reinforcement Fine-Tuning (Agent RFT)",
-      "category": "Learning & Adaptation",
-      "status": "emerging",
-      "slug": "agent-reinforcement-fine-tuning"
-    },
-    {
-      "id": "merged-code-language-skill-model",
-      "title": "Merged Code + Language Skill Model",
-      "category": "Reliability & Eval",
-      "status": "emerging",
-      "slug": "merged-code-language-skill-model"
-    },
-    {
-      "id": "hybrid-llmcode-workflow-coordinator",
-      "title": "Hybrid LLM/Code Workflow Coordinator",
-      "category": "Orchestration & Control",
-      "status": "proposed",
-      "slug": "hybrid-llm-code-workflow-coordinator"
-    },
-    {
-      "id": "agent-driven-research",
-      "title": "Agent-Driven Research",
-      "category": "Orchestration & Control",
-      "status": "established",
-      "slug": "agent-driven-research"
-    },
-    {
-      "id": "disposable-scaffolding-over-durable-features",
-      "title": "Disposable Scaffolding Over Durable Features",
-      "category": "Orchestration & Control",
-      "status": "best-practice",
-      "slug": "disposable-scaffolding-over-durable-features"
-    },
-    {
-      "id": "egress-lockdown-no-exfiltration-channel",
-      "title": "Egress Lockdown (No-Exfiltration Channel)",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "egress-lockdown-no-exfiltration-channel"
-    },
-    {
-      "id": "compounding-engineering-pattern",
-      "title": "Compounding Engineering Pattern",
-      "category": "Learning & Adaptation",
-      "status": "emerging",
-      "slug": "compounding-engineering-pattern"
-    },
-    {
-      "id": "visual-ai-multimodal-integration",
-      "title": "Visual AI Multimodal Integration",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "visual-ai-multimodal-integration"
-    },
-    {
-      "id": "deterministic-security-scanning-build-loop",
-      "title": "Deterministic Security Scanning Build Loop",
-      "category": "Security & Safety",
-      "status": "proposed",
-      "slug": "deterministic-security-scanning-build-loop"
+      "slug": "abstracted-code-representation-for-review",
+      "tags": [
+        "code-review",
+        "verification",
+        "abstraction",
+        "pseudocode",
+        "intent-based-review",
+        "explainability",
+        "software-quality",
+        "human-ai-interface"
+      ],
+      "summary": "TODO: Add a concise summary for \"Abstracted Code Representation for Review\" describing the pattern's purpose and key benefits."
     },
     {
       "id": "action-selector-pattern",
       "title": "Action-Selector Pattern",
       "category": "Orchestration & Control",
       "status": "emerging",
-      "slug": "action-selector-pattern"
+      "slug": "action-selector-pattern",
+      "tags": [
+        "prompt-injection",
+        "control-flow",
+        "safety",
+        "tool-use"
+      ],
+      "summary": "## Problem\nUntrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions."
     },
     {
-      "id": "workflow-evals-with-mocked-tools",
-      "title": "Workflow Evals with Mocked Tools",
-      "category": "Reliability & Eval",
-      "status": "emerging",
-      "slug": "workflow-evals-with-mocked-tools"
-    },
-    {
-      "id": "memory-synthesis-from-execution-logs",
-      "title": "Memory Synthesis from Execution Logs",
-      "category": "Context & Memory",
-      "status": "emerging",
-      "slug": "memory-synthesis-from-execution-logs"
-    },
-    {
-      "id": "lethal-trifecta-threat-model",
-      "title": "Lethal Trifecta Threat Model",
-      "category": "Reliability & Eval",
-      "status": "best-practice",
-      "slug": "lethal-trifecta-threat-model"
-    },
-    {
-      "id": "multi-model-orchestration-for-complex-edits",
-      "title": "Multi-Model Orchestration for Complex Edits",
-      "category": "Orchestration & Control",
-      "status": "validated-in-production",
-      "slug": "multi-model-orchestration-for-complex-edits"
-    },
-    {
-      "id": "inference-healed-code-review-reward",
-      "title": "Inference-Healed Code Review Reward",
-      "category": "Feedback Loops",
-      "status": "proposed",
-      "slug": "inference-healed-code-review-reward"
-    },
-    {
-      "id": "iterative-multi-agent-brainstorming",
-      "title": "Iterative Multi-Agent Brainstorming",
-      "category": "Orchestration & Control",
-      "status": "experimental-but-awesome",
-      "slug": "iterative-multi-agent-brainstorming"
-    },
-    {
-      "id": "variance-based-rl-sample-selection",
-      "title": "Variance-Based RL Sample Selection",
+      "id": "agent-reinforcement-fine-tuning-agent-rft",
+      "title": "Agent Reinforcement Fine-Tuning (Agent RFT)",
       "category": "Learning & Adaptation",
       "status": "emerging",
-      "slug": "variance-based-rl-sample-selection"
-    },
-    {
-      "id": "tool-use-steering-via-prompting",
-      "title": "Tool Use Steering via Prompting",
-      "category": "Tool Use & Environment",
-      "status": "best-practice",
-      "slug": "tool-use-steering-via-prompting"
-    },
-    {
-      "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
-      "title": "Dogfooding with Rapid Iteration for Agent Improvement",
-      "category": "Feedback Loops",
-      "status": "best-practice",
-      "slug": "dogfooding-with-rapid-iteration-for-agent-improvement"
-    },
-    {
-      "id": "autonomous-workflow-agent-architecture",
-      "title": "Autonomous Workflow Agent Architecture",
-      "category": "Orchestration & Control",
-      "status": "established",
-      "slug": "autonomous-workflow-agent-architecture"
-    },
-    {
-      "id": "memory-reinforcement-learning-memrl",
-      "title": "Memory Reinforcement Learning (MemRL)",
-      "category": "Learning & Adaptation",
-      "status": "proposed",
-      "slug": "memory-reinforcement-learning-memrl"
-    },
-    {
-      "id": "spectrum-of-control-blended-initiative",
-      "title": "Spectrum of Control / Blended Initiative",
-      "category": "UX & Collaboration",
-      "status": "validated-in-production",
-      "slug": "spectrum-of-control-blended-initiative"
-    },
-    {
-      "id": "ai-assisted-code-review-verification",
-      "title": "AI-Assisted Code Review / Verification",
-      "category": "Feedback Loops",
-      "status": "emerging",
-      "slug": "ai-assisted-code-review-verification"
-    },
-    {
-      "id": "criticgpt-style-code-review",
-      "title": "CriticGPT-Style Code Review",
-      "category": "Reliability & Eval",
-      "status": "validated-in-production",
-      "slug": "criticgpt-style-evaluation"
-    },
-    {
-      "id": "coding-agent-ci-feedback-loop",
-      "title": "Coding Agent CI Feedback Loop",
-      "category": "Feedback Loops",
-      "status": "best-practice",
-      "slug": "coding-agent-ci-feedback-loop"
-    },
-    {
-      "id": "rlaif-reinforcement-learning-from-ai-feedback",
-      "title": "RLAIF (Reinforcement Learning from AI Feedback)",
-      "category": "Reliability & Eval",
-      "status": "emerging",
-      "slug": "rlaif-reinforcement-learning-from-ai-feedback"
-    },
-    {
-      "id": "self-rewriting-meta-prompt-loop",
-      "title": "Self-Rewriting Meta-Prompt Loop",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "self-rewriting-meta-prompt-loop"
-    },
-    {
-      "id": "proactive-trigger-vocabulary",
-      "title": "Proactive Trigger Vocabulary",
-      "category": "UX & Collaboration",
-      "status": "emerging",
-      "slug": "proactive-trigger-vocabulary"
-    },
-    {
-      "id": "progressive-autonomy-with-model-evolution",
-      "title": "Progressive Autonomy with Model Evolution",
-      "category": "Orchestration & Control",
-      "status": "best-practice",
-      "slug": "progressive-autonomy-with-model-evolution"
-    },
-    {
-      "id": "agent-first-tooling-and-logging",
-      "title": "Agent-First Tooling and Logging",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "agent-first-tooling-and-logging"
-    },
-    {
-      "id": "progressive-disclosure-for-large-files",
-      "title": "Progressive Disclosure for Large Files",
-      "category": "Context & Memory",
-      "status": "emerging",
-      "slug": "progressive-disclosure-large-files"
-    },
-    {
-      "id": "language-agent-tree-search-lats",
-      "title": "Language Agent Tree Search (LATS)",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "language-agent-tree-search-lats"
-    },
-    {
-      "id": "agent-assisted-scaffolding",
-      "title": "Agent-Assisted Scaffolding",
-      "category": "UX & Collaboration",
-      "status": "validated-in-production",
-      "slug": "agent-assisted-scaffolding"
-    },
-    {
-      "id": "layered-configuration-context",
-      "title": "Layered Configuration Context",
-      "category": "Context & Memory",
-      "status": "established",
-      "slug": "layered-configuration-context"
-    },
-    {
-      "id": "virtual-machine-operator-agent",
-      "title": "Virtual Machine Operator Agent",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "virtual-machine-operator-agent"
-    },
-    {
-      "id": "seamless-background-to-foreground-handoff",
-      "title": "Seamless Background-to-Foreground Handoff",
-      "category": "UX & Collaboration",
-      "status": "emerging",
-      "slug": "seamless-background-to-foreground-handoff"
-    },
-    {
-      "id": "opponent-processor-multi-agent-debate-pattern",
-      "title": "Opponent Processor / Multi-Agent Debate Pattern",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "opponent-processor-multi-agent-debate"
-    },
-    {
-      "id": "iterative-prompt-skill-refinement",
-      "title": "Iterative Prompt & Skill Refinement",
-      "category": "Feedback Loops",
-      "status": "proposed",
-      "slug": "iterative-prompt-skill-refinement"
-    },
-    {
-      "id": "dynamic-context-injection",
-      "title": "Dynamic Context Injection",
-      "category": "Context & Memory",
-      "status": "established",
-      "slug": "dynamic-context-injection"
-    },
-    {
-      "id": "tool-capability-compartmentalization",
-      "title": "Tool Capability Compartmentalization",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "tool-capability-compartmentalization"
-    },
-    {
-      "id": "agentic-search-over-vector-embeddings",
-      "title": "Agentic Search Over Vector Embeddings",
-      "category": "Tool Use & Environment",
-      "status": "best-practice",
-      "slug": "agentic-search-over-vector-embeddings"
-    },
-    {
-      "id": "subagent-compilation-checker",
-      "title": "Subagent Compilation Checker",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "subagent-compilation-checker"
-    },
-    {
-      "id": "rich-feedback-loops-perfect-prompts",
-      "title": "Rich Feedback Loops > Perfect Prompts",
-      "category": "Feedback Loops",
-      "status": "validated-in-production",
-      "slug": "rich-feedback-loops"
-    },
-    {
-      "id": "ai-accelerated-learning-and-skill-development",
-      "title": "AI-Accelerated Learning and Skill Development",
-      "category": "UX & Collaboration",
-      "status": "validated-in-production",
-      "slug": "ai-accelerated-learning-and-skill-development"
-    },
-    {
-      "id": "latent-demand-product-discovery",
-      "title": "Latent Demand Product Discovery",
-      "category": "UX & Collaboration",
-      "status": "best-practice",
-      "slug": "latent-demand-product-discovery"
+      "slug": "agent-reinforcement-fine-tuning",
+      "tags": [
+        "reinforcement-learning",
+        "fine-tuning",
+        "tool-use",
+        "multi-step-rl",
+        "agent-training",
+        "exploration"
+      ],
+      "summary": "Train model weights end-to-end on agentic tasks via reinforcement learning with real tool calls and custom reward signals, optimizing for domain-specific tool use efficiency and multi-step reasoning performance."
     },
     {
       "id": "agent-sdk-for-programmatic-control",
       "title": "Agent SDK for Programmatic Control",
       "category": "Tool Use & Environment",
       "status": "emerging",
-      "slug": "agent-sdk-for-programmatic-control"
+      "slug": "agent-sdk-for-programmatic-control",
+      "tags": [
+        "sdk",
+        "automation",
+        "ci/cd",
+        "programmatic access",
+        "scripting",
+        "api",
+        "headless agent"
+      ],
+      "summary": "TODO: Add a concise summary for \"Agent SDK for Programmatic Control\" describing the pattern's purpose and key benefits."
     },
     {
-      "id": "dual-llm-pattern",
-      "title": "Dual LLM Pattern",
+      "id": "agent-assisted-scaffolding",
+      "title": "Agent-Assisted Scaffolding",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "agent-assisted-scaffolding",
+      "tags": [
+        "code-generation",
+        "bootstrapping",
+        "scaffolding",
+        "feature-development",
+        "ide",
+        "initial-setup"
+      ],
+      "summary": "## Problem\nStarting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers."
+    },
+    {
+      "id": "agent-driven-research",
+      "title": "Agent-Driven Research",
       "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "dual-llm-pattern"
-    },
-    {
-      "id": "plan-then-execute-pattern",
-      "title": "Plan-Then-Execute Pattern",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "plan-then-execute-pattern"
-    },
-    {
-      "id": "parallel-tool-call-learning",
-      "title": "Parallel Tool Call Learning",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "parallel-tool-call-learning"
-    },
-    {
-      "id": "dynamic-code-injection-on-demand-file-fetch",
-      "title": "Dynamic Code Injection (On-Demand File Fetch)",
-      "category": "Tool Use & Environment",
       "status": "established",
-      "slug": "dynamic-code-injection-on-demand-file-fetch"
+      "slug": "agent-driven-research",
+      "tags": [
+        "research",
+        "information retrieval",
+        "tool use",
+        "iterative process",
+        "autonomous search"
+      ],
+      "summary": "## Problem\nTraditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries."
     },
     {
-      "id": "inference-time-scaling",
-      "title": "Inference-Time Scaling",
-      "category": "Orchestration & Control",
+      "id": "agent-first-tooling-and-logging",
+      "title": "Agent-First Tooling and Logging",
+      "category": "Tool Use & Environment",
       "status": "emerging",
-      "slug": "inference-time-scaling"
+      "slug": "agent-first-tooling-and-logging",
+      "tags": [
+        "tool-design",
+        "logging",
+        "machine-readable",
+        "observability",
+        "agent-environment"
+      ],
+      "summary": "TODO: Add a concise summary for \"Agent-First Tooling and Logging\" describing the pattern's purpose and key benefits."
     },
     {
-      "id": "verbose-reasoning-transparency",
-      "title": "Verbose Reasoning Transparency",
+      "id": "agent-friendly-workflow-design",
+      "title": "Agent-Friendly Workflow Design",
       "category": "UX & Collaboration",
       "status": "best-practice",
-      "slug": "verbose-reasoning-transparency"
-    },
-    {
-      "id": "distributed-execution-with-cloud-workers",
-      "title": "Distributed Execution with Cloud Workers",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "distributed-execution-cloud-workers"
-    },
-    {
-      "id": "background-agent-with-ci-feedback",
-      "title": "Background Agent with CI Feedback",
-      "category": "Feedback Loops",
-      "status": "validated-in-production",
-      "slug": "background-agent-ci"
-    },
-    {
-      "id": "feature-list-as-immutable-contract",
-      "title": "Feature List as Immutable Contract",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "feature-list-as-immutable-contract"
-    },
-    {
-      "id": "abstracted-code-representation-for-review",
-      "title": "Abstracted Code Representation for Review",
-      "category": "UX & Collaboration",
-      "status": "proposed",
-      "slug": "abstracted-code-representation-for-review"
-    },
-    {
-      "id": "dual-use-tool-design",
-      "title": "Dual-Use Tool Design",
-      "category": "Tool Use & Environment",
-      "status": "best-practice",
-      "slug": "dual-use-tool-design"
-    },
-    {
-      "id": "patch-steering-via-prompted-tool-selection",
-      "title": "Patch Steering via Prompted Tool Selection",
-      "category": "Tool Use & Environment",
-      "status": "best-practice",
-      "slug": "patch-steering-via-prompted-tool-selection"
-    },
-    {
-      "id": "sub-agent-spawning",
-      "title": "Sub-Agent Spawning",
-      "category": "Orchestration & Control",
-      "status": "validated-in-production",
-      "slug": "sub-agent-spawning"
-    },
-    {
-      "id": "llm-friendly-api-design",
-      "title": "LLM-Friendly API Design",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "llm-friendly-api-design"
-    },
-    {
-      "id": "curated-file-context-window",
-      "title": "Curated File Context Window",
-      "category": "Context & Memory",
-      "status": "best-practice",
-      "slug": "curated-file-context-window"
-    },
-    {
-      "id": "progressive-tool-discovery",
-      "title": "Progressive Tool Discovery",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "progressive-tool-discovery"
-    },
-    {
-      "id": "three-stage-perception-architecture",
-      "title": "Three-Stage Perception Architecture",
-      "category": "Orchestration & Control",
-      "status": "proposed",
-      "slug": "three-stage-perception-architecture"
-    },
-    {
-      "id": "extended-coherence-work-sessions",
-      "title": "Extended Coherence Work Sessions",
-      "category": "Reliability & Eval",
-      "status": "rapidly-improving",
-      "slug": "extended-coherence-work-sessions"
-    },
-    {
-      "id": "episodic-memory-retrieval-injection",
-      "title": "Episodic Memory Retrieval & Injection",
-      "category": "Context & Memory",
-      "status": "validated-in-production",
-      "slug": "episodic-memory-retrieval-injection"
-    },
-    {
-      "id": "self-discover-llm-self-composed-reasoning-structures",
-      "title": "Self-Discover: LLM Self-Composed Reasoning Structures",
-      "category": "Feedback Loops",
-      "status": "emerging",
-      "slug": "self-discover-reasoning-structures"
-    },
-    {
-      "id": "discrete-phase-separation",
-      "title": "Discrete Phase Separation",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "discrete-phase-separation"
-    },
-    {
-      "id": "explicit-posterior-sampling-planner",
-      "title": "Explicit Posterior-Sampling Planner",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "explicit-posterior-sampling-planner"
-    },
-    {
-      "id": "inversion-of-control",
-      "title": "Inversion of Control",
-      "category": "Orchestration & Control",
-      "status": "validated-in-production",
-      "slug": "inversion-of-control"
-    },
-    {
-      "id": "versioned-constitution-governance",
-      "title": "Versioned Constitution Governance",
-      "category": "Reliability & Eval",
-      "status": "emerging",
-      "slug": "versioned-constitution-governance"
+      "slug": "agent-friendly-workflow-design",
+      "tags": [
+        "human-agent collaboration",
+        "workflow design",
+        "agent autonomy",
+        "task decomposition",
+        "HCI"
+      ],
+      "summary": "Consciously design workflows with clear goals, appropriate autonomy, structured I/O, and feedback loops to maximize agent performance by aligning tasks with AI strengths."
     },
     {
       "id": "agent-powered-codebase-qa-onboarding",
       "title": "Agent-Powered Codebase Q&A / Onboarding",
       "category": "Context & Memory",
       "status": "validated-in-production",
-      "slug": "agent-powered-codebase-qa-onboarding"
+      "slug": "agent-powered-codebase-qa-onboarding",
+      "tags": [
+        "code-understanding",
+        "onboarding",
+        "q&a",
+        "retrieval",
+        "search",
+        "context-awareness",
+        "knowledge-base"
+      ],
+      "summary": "## Problem\nUnderstanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming."
+    },
+    {
+      "id": "agentic-search-over-vector-embeddings",
+      "title": "Agentic Search Over Vector Embeddings",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "agentic-search-over-vector-embeddings",
+      "tags": [
+        "search",
+        "vector-embeddings",
+        "bash",
+        "grep",
+        "RAG",
+        "agentic-RAG",
+        "maintenance"
+      ],
+      "summary": "TODO: Add a concise summary for \"Agentic Search Over Vector Embeddings\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "ai-accelerated-learning-and-skill-development",
+      "title": "AI-Accelerated Learning and Skill Development",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "ai-accelerated-learning-and-skill-development",
+      "tags": [
+        "developer-productivity",
+        "learning",
+        "skill-acquisition",
+        "iteration",
+        "feedback",
+        "taste-development",
+        "education",
+        "junior-developer"
+      ],
+      "summary": "## Problem\nDeveloping strong software engineering skills, including \"taste\" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers."
+    },
+    {
+      "id": "ai-assisted-code-review-verification",
+      "title": "AI-Assisted Code Review / Verification",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "ai-assisted-code-review-verification",
+      "tags": [
+        "code-review",
+        "verification",
+        "quality-assurance",
+        "human-ai-collaboration",
+        "trust",
+        "explainability",
+        "software-quality"
+      ],
+      "summary": "TODO: Add a concise summary for \"AI-Assisted Code Review / Verification\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "anti-reward-hacking-grader-design",
+      "title": "Anti-Reward-Hacking Grader Design",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "anti-reward-hacking-grader-design",
+      "tags": [
+        "reward-hacking",
+        "grading",
+        "reinforcement-learning",
+        "adversarial-robustness",
+        "agent-rft"
+      ],
+      "summary": "Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality."
+    },
+    {
+      "id": "asynchronous-coding-agent-pipeline",
+      "title": "Asynchronous Coding Agent Pipeline",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "asynchronous-coding-agent-pipeline",
+      "tags": [
+        "asynchronous",
+        "pipeline",
+        "code-agent",
+        "parallelism"
+      ],
+      "summary": "Decouple inference, tool execution, and learning into parallel asynchronous components communicating via message queues to maximize GPU utilization and eliminate compute bubbles from synchronous tool calls."
+    },
+    {
+      "id": "autonomous-workflow-agent-architecture",
+      "title": "Autonomous Workflow Agent Architecture",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "autonomous-workflow-agent-architecture",
+      "tags": [
+        "workflow-automation",
+        "containerization",
+        "multi-agent",
+        "engineering-tasks",
+        "tmux",
+        "error-recovery"
+      ],
+      "summary": "TODO: Add a concise summary for \"Autonomous Workflow Agent Architecture\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "background-agent-with-ci-feedback",
+      "title": "Background Agent with CI Feedback",
+      "category": "Feedback Loops",
+      "status": "validated-in-production",
+      "slug": "background-agent-ci",
+      "tags": [
+        "asynchronous",
+        "ci",
+        "feedback"
+      ],
+      "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent."
+    },
+    {
+      "id": "chain-of-thought-monitoring-interruption",
+      "title": "Chain-of-Thought Monitoring & Interruption",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "chain-of-thought-monitoring-interruption",
+      "tags": [
+        "monitoring",
+        "intervention",
+        "debugging",
+        "reasoning",
+        "ux"
+      ],
+      "summary": "Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches."
+    },
+    {
+      "id": "cli-first-skill-design",
+      "title": "CLI-First Skill Design",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "cli-first-skill-design",
+      "tags": [
+        "cli",
+        "skills",
+        "shell",
+        "dual-use",
+        "composability",
+        "unix-philosophy"
+      ],
+      "summary": "Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces."
+    },
+    {
+      "id": "cli-native-agent-orchestration",
+      "title": "CLI-Native Agent Orchestration",
+      "category": "Tool Use & Environment",
+      "status": "proposed",
+      "slug": "cli-native-agent-orchestration",
+      "tags": [
+        "cli",
+        "automation",
+        "local-dev",
+        "headless"
+      ],
+      "summary": "Web chat UIs are awkward for repeat runs, local file edits, or scripting inside CI pipelines."
+    },
+    {
+      "id": "code-mode-mcp-tool-interface-improvement-pattern",
+      "title": "Code Mode MCP Tool Interface Improvement Pattern",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "code-first-tool-interface-pattern",
+      "tags": [
+        "tool-interface",
+        "code-generation",
+        "sandboxing",
+        "mcp",
+        "mcp-improvement",
+        "typescript",
+        "v8-isolates",
+        "token-optimization"
+      ],
+      "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with 10x+ token savings."
+    },
+    {
+      "id": "code-over-api-pattern",
+      "title": "Code-Over-API Pattern",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "code-over-api-pattern",
+      "tags": [
+        "token-optimization",
+        "code-execution",
+        "data-processing",
+        "mcp"
+      ],
+      "summary": "Agents write and execute code that processes data in execution environment instead of making direct API calls, dramatically reducing token consumption by keeping intermediate data out of context window (150K → 2K tokens)."
+    },
+    {
+      "id": "code-then-execute-pattern",
+      "title": "Code-Then-Execute Pattern",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "code-then-execute-pattern",
+      "tags": [
+        "dsl",
+        "sandbox",
+        "program-synthesis",
+        "auditability"
+      ],
+      "summary": "Plan lists are opaque; we want full data-flow analysis and taint tracking."
+    },
+    {
+      "id": "coding-agent-ci-feedback-loop",
+      "title": "Coding Agent CI Feedback Loop",
+      "category": "Feedback Loops",
+      "status": "best-practice",
+      "slug": "coding-agent-ci-feedback-loop",
+      "tags": [
+        "CI",
+        "coding-agent",
+        "asynchronous",
+        "test-driven",
+        "feedback"
+      ],
+      "summary": "TODO: Add a concise summary for \"Coding Agent CI Feedback Loop\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "compounding-engineering-pattern",
+      "title": "Compounding Engineering Pattern",
+      "category": "Learning & Adaptation",
+      "status": "emerging",
+      "slug": "compounding-engineering-pattern",
+      "tags": [
+        "learning",
+        "feedback-loops",
+        "codification",
+        "prompts",
+        "slash-commands",
+        "onboarding",
+        "knowledge-sharing"
+      ],
+      "summary": "Codify all learnings from each feature into reusable prompts, slash commands, subagents, and hooks—making each feature easier to build by creating increasingly \"self-teaching\" codebase that accelerates productivity over time."
+    },
+    {
+      "id": "conditional-parallel-tool-execution",
+      "title": "Conditional Parallel Tool Execution",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "parallel-tool-execution",
+      "tags": [
+        "parallel execution",
+        "tool orchestration",
+        "read-only tools",
+        "stateful tools",
+        "agent efficiency",
+        "agent safety",
+        "concurrency control",
+        "task scheduling"
+      ],
+      "summary": "Execute read-only tools concurrently for speed while serializing state-modifying tools for safety, balancing performance optimization with race condition prevention through intelligent tool classification and orchestration."
+    },
+    {
+      "id": "context-window-anxiety-management",
+      "title": "Context Window Anxiety Management",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "context-window-anxiety-management",
+      "tags": [
+        "context-anxiety",
+        "token-management",
+        "premature-completion",
+        "model-behavior"
+      ],
+      "summary": "Models like Claude Sonnet 4.5 exhibit \"context anxiety\"—becoming aware of approaching context limits and proactively summarizing or closing tasks prematurely—manageable through strategic context budgeting and aggressive counter-prompting."
+    },
+    {
+      "id": "context-minimization-pattern",
+      "title": "Context-Minimization Pattern",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "context-minimization-pattern",
+      "tags": [
+        "context-hygiene",
+        "taint-removal",
+        "prompt-injection"
+      ],
+      "summary": "User-supplied or tainted text lingers in the conversation, enabling it to influence later generations."
+    },
+    {
+      "id": "continuous-autonomous-task-loop-pattern",
+      "title": "Continuous Autonomous Task Loop Pattern",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "continuous-autonomous-task-loop-pattern",
+      "tags": [
+        "autonomous-execution",
+        "task-loop",
+        "rate-limiting",
+        "git-automation",
+        "cli-driven",
+        "stream-processing"
+      ],
+      "summary": "Continuous autonomous loop that handles task selection, execution, and completion without human intervention, with intelligent rate limit handling and automated git management."
+    },
+    {
+      "id": "criticgpt-style-code-review",
+      "title": "CriticGPT-Style Code Review",
+      "category": "Reliability & Eval",
+      "status": "validated-in-production",
+      "slug": "criticgpt-style-evaluation",
+      "tags": [
+        "evaluation",
+        "code-review",
+        "critique",
+        "quality-assurance",
+        "bug-detection",
+        "gpt-4"
+      ],
+      "summary": "TODO: Add a concise summary for \"CriticGPT-Style Code Review\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "curated-code-context-window",
+      "title": "Curated Code Context Window",
+      "category": "Context & Memory",
+      "status": "validated-in-production",
+      "slug": "curated-code-context-window",
+      "tags": [
+        "context-management",
+        "code-agent",
+        "file-selection",
+        "noise-reduction"
+      ],
+      "summary": "Maintain minimal, high-signal code context using search subagents to identify and inject only relevant modules, preventing model overwhelm, reducing token usage, and improving reasoning clarity by excluding unrelated code."
+    },
+    {
+      "id": "curated-file-context-window",
+      "title": "Curated File Context Window",
+      "category": "Context & Memory",
+      "status": "best-practice",
+      "slug": "curated-file-context-window",
+      "tags": [
+        "code-context",
+        "file-scope",
+        "relevance",
+        "memory-management"
+      ],
+      "summary": "TODO: Add a concise summary for \"Curated File Context Window\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "democratization-of-tooling-via-agents",
+      "title": "Democratization of Tooling via Agents",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "democratization-of-tooling-via-agents",
+      "tags": [
+        "no-code",
+        "low-code",
+        "citizen-developer",
+        "tool-creation",
+        "business-users",
+        "automation",
+        "custom-software"
+      ],
+      "summary": "Empower non-technical users to create custom software tools and scripts using AI agents, lowering the barrier to software development and enabling domain experts to build their own productivity solutions."
+    },
+    {
+      "id": "deterministic-security-scanning-build-loop",
+      "title": "Deterministic Security Scanning Build Loop",
+      "category": "Security & Safety",
+      "status": "proposed",
+      "slug": "deterministic-security-scanning-build-loop",
+      "tags": [
+        "security",
+        "deterministic",
+        "build-loop",
+        "backpressure",
+        "static-analysis"
+      ],
+      "summary": "Implement deterministic security validation through build loop with two-phase approach: non-deterministic generation followed by deterministic backpressure from integrated SAST/DAST tools that must pass before code completion."
+    },
+    {
+      "id": "discrete-phase-separation",
+      "title": "Discrete Phase Separation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "discrete-phase-separation",
+      "tags": [
+        "orchestration",
+        "planning",
+        "research",
+        "context-management",
+        "multi-model"
+      ],
+      "summary": "TODO: Add a concise summary for \"Discrete Phase Separation\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "disposable-scaffolding-over-durable-features",
+      "title": "Disposable Scaffolding Over Durable Features",
+      "category": "Orchestration & Control",
+      "status": "best-practice",
+      "slug": "disposable-scaffolding-over-durable-features",
+      "tags": [
+        "bitter-lesson",
+        "temporary-tooling",
+        "model-centric",
+        "adaptability",
+        "future-proofing"
+      ],
+      "summary": "Treat most code around models as temporary, lightweight scaffolding rather than durable features, prioritizing speed and adaptability to avoid over-engineering solutions that next model generations may render obsolete."
+    },
+    {
+      "id": "distributed-execution-with-cloud-workers",
+      "title": "Distributed Execution with Cloud Workers",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "distributed-execution-cloud-workers",
+      "tags": [
+        "distributed-systems",
+        "parallelization",
+        "cloud",
+        "worktrees",
+        "scalability",
+        "team-coordination"
+      ],
+      "summary": "TODO: Add a concise summary for \"Distributed Execution with Cloud Workers\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
+      "title": "Dogfooding with Rapid Iteration for Agent Improvement",
+      "category": "Feedback Loops",
+      "status": "best-practice",
+      "slug": "dogfooding-with-rapid-iteration-for-agent-improvement",
+      "tags": [
+        "dogfooding",
+        "iterative-development",
+        "feedback-loop",
+        "agent-improvement",
+        "internal-testing",
+        "product-development"
+      ],
+      "summary": "## Problem\nDeveloping effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may not capture all nuances."
+    },
+    {
+      "id": "dual-llm-pattern",
+      "title": "Dual LLM Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "dual-llm-pattern",
+      "tags": [
+        "privilege-separation",
+        "quarantined-llm",
+        "symbolic-variables"
+      ],
+      "summary": "A privileged agent that both sees untrusted text **and** wields tools can be coerced into dangerous calls."
+    },
+    {
+      "id": "dual-use-tool-design",
+      "title": "Dual-Use Tool Design",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "dual-use-tool-design",
+      "tags": [
+        "tools",
+        "ux",
+        "slash-commands",
+        "hooks",
+        "human-ai-collaboration",
+        "consistency"
+      ],
+      "summary": "TODO: Add a concise summary for \"Dual-Use Tool Design\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "dynamic-code-injection-on-demand-file-fetch",
+      "title": "Dynamic Code Injection (On-Demand File Fetch)",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "dynamic-code-injection-on-demand-file-fetch",
+      "tags": [
+        "file-injection",
+        "at-mention",
+        "slash-commands",
+        "IDE-integration"
+      ],
+      "summary": "TODO: Add a concise summary for \"Dynamic Code Injection (On-Demand File Fetch)\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "dynamic-context-injection",
+      "title": "Dynamic Context Injection",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "dynamic-context-injection",
+      "tags": [
+        "context management",
+        "dynamic context",
+        "lazy loading",
+        "slash commands",
+        "at-mention",
+        "interactive context"
+      ],
+      "summary": "TODO: Add a concise summary for \"Dynamic Context Injection\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "egress-lockdown-no-exfiltration-channel",
+      "title": "Egress Lockdown (No-Exfiltration Channel)",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "egress-lockdown-no-exfiltration-channel",
+      "tags": [
+        "network-sandbox",
+        "exfiltration",
+        "outbound-controls",
+        "security"
+      ],
+      "summary": "Even with private-data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data—implement egress firewall allowing only specific domains while filtering or stripping outbound content."
+    },
+    {
+      "id": "episodic-memory-retrieval-injection",
+      "title": "Episodic Memory Retrieval & Injection",
+      "category": "Context & Memory",
+      "status": "validated-in-production",
+      "slug": "episodic-memory-retrieval-injection",
+      "tags": [
+        "episodic-memory",
+        "vector-db",
+        "retrieval-augmented",
+        "context-hint"
+      ],
+      "summary": "Stateless calls make agents forget prior decisions, causing repetition and shallow reasoning."
+    },
+    {
+      "id": "explicit-posterior-sampling-planner",
+      "title": "Explicit Posterior-Sampling Planner",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "explicit-posterior-sampling-planner",
+      "tags": [
+        "RL",
+        "PSRL",
+        "exploration",
+        "planning",
+        "decision-making"
+      ],
+      "summary": "Agents that rely on ad-hoc heuristics explore poorly, wasting tokens and API calls on dead ends."
+    },
+    {
+      "id": "extended-coherence-work-sessions",
+      "title": "Extended Coherence Work Sessions",
+      "category": "Reliability & Eval",
+      "status": "rapidly-improving",
+      "slug": "extended-coherence-work-sessions",
+      "tags": [
+        "coherence",
+        "long-running tasks",
+        "agent capability",
+        "llm",
+        "complex projects"
+      ],
+      "summary": "TODO: Add a concise summary for \"Extended Coherence Work Sessions\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "feature-list-as-immutable-contract",
+      "title": "Feature List as Immutable Contract",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "feature-list-as-immutable-contract",
+      "tags": [
+        "scope-control",
+        "acceptance-criteria",
+        "anti-scope-creep",
+        "long-running-agents",
+        "task-management"
+      ],
+      "summary": "TODO: Add a concise summary for \"Feature List as Immutable Contract\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "filesystem-based-agent-state",
+      "title": "Filesystem-Based Agent State",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "filesystem-based-agent-state",
+      "tags": [
+        "state-management",
+        "persistence",
+        "resumption",
+        "long-running-tasks"
+      ],
+      "summary": "Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks."
+    },
+    {
+      "id": "graph-of-thoughts-got",
+      "title": "Graph of Thoughts (GoT)",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "graph-of-thoughts",
+      "tags": [
+        "reasoning",
+        "graph-based",
+        "problem-solving",
+        "thought-exploration",
+        "backtracking",
+        "aggregation"
+      ],
+      "summary": "Extend reasoning frameworks by representing thoughts as a directed graph with nodes, edges, and arbitrary relationships, enabling complex operations like branching, aggregation, refinement, and looping for problems with interdependencies."
+    },
+    {
+      "id": "human-in-the-loop-approval-framework",
+      "title": "Human-in-the-Loop Approval Framework",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "human-in-loop-approval-framework",
+      "tags": [
+        "human-oversight",
+        "safety",
+        "approvals",
+        "risk-management",
+        "collaboration",
+        "slack-integration"
+      ],
+      "summary": "Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails."
+    },
+    {
+      "id": "hybrid-llmcode-workflow-coordinator",
+      "title": "Hybrid LLM/Code Workflow Coordinator",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "hybrid-llm-code-workflow-coordinator",
+      "tags": [
+        "hybrid",
+        "llm-driven",
+        "code-driven",
+        "coordinator",
+        "determinism",
+        "workflow-orchestration",
+        "progressive-enhancement"
+      ],
+      "summary": "Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems."
+    },
+    {
+      "id": "inference-healed-code-review-reward",
+      "title": "Inference-Healed Code Review Reward",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "inference-healed-code-review-reward",
+      "tags": [
+        "reward-modeling",
+        "code-review",
+        "inference-healing",
+        "quality-assessment"
+      ],
+      "summary": "TODO: Add a concise summary for \"Inference-Healed Code Review Reward\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "inference-time-scaling",
+      "title": "Inference-Time Scaling",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "inference-time-scaling",
+      "tags": [
+        "scaling",
+        "inference",
+        "compute",
+        "reasoning",
+        "performance",
+        "o1-model",
+        "test-time-compute"
+      ],
+      "summary": "TODO: Add a concise summary for \"Inference-Time Scaling\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "initializer-maintainer-dual-agent-architecture",
+      "title": "Initializer-Maintainer Dual Agent Architecture",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "initializer-maintainer-dual-agent",
+      "tags": [
+        "long-running-agents",
+        "session-handoff",
+        "lifecycle-specialization",
+        "project-bootstrap",
+        "incremental-development"
+      ],
+      "summary": "Two-agent architecture with lifecycle-specialized responsibilities: Initializer creates comprehensive foundation once, Maintainer executes incremental development with session bootstrapping rituals to prevent context loss."
+    },
+    {
+      "id": "inversion-of-control",
+      "title": "Inversion of Control",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "inversion-of-control",
+      "tags": [
+        "orchestration",
+        "autonomy",
+        "control"
+      ],
+      "summary": "Traditional \"prompt-as-puppeteer\" workflows force humans to spell out every step, limiting scale and creativity."
+    },
+    {
+      "id": "isolated-vm-per-rl-rollout",
+      "title": "Isolated VM per RL Rollout",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "isolated-vm-per-rl-rollout",
+      "tags": [
+        "isolation",
+        "security",
+        "reinforcement-learning",
+        "infrastructure",
+        "state-management",
+        "agent-rft"
+      ],
+      "summary": "Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination between parallel agent executions, ensuring safe training with destructive tool access."
+    },
+    {
+      "id": "iterative-multi-agent-brainstorming",
+      "title": "Iterative Multi-Agent Brainstorming",
+      "category": "Orchestration & Control",
+      "status": "experimental-but-awesome",
+      "slug": "iterative-multi-agent-brainstorming",
+      "tags": [
+        "multi-agent",
+        "brainstorming",
+        "parallel processing",
+        "idea generation",
+        "sub-agents",
+        "collaborative ideation"
+      ],
+      "summary": "## Problem\nFor complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process."
+    },
+    {
+      "id": "iterative-prompt-skill-refinement",
+      "title": "Iterative Prompt & Skill Refinement",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "iterative-prompt-skill-refinement",
+      "tags": [
+        "refinement",
+        "iteration",
+        "prompts",
+        "skills",
+        "feedback",
+        "multi-mechanism",
+        "continuous-improvement",
+        "dashboards"
+      ],
+      "summary": "TODO: Add a concise summary for \"Iterative Prompt & Skill Refinement\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "language-agent-tree-search-lats",
+      "title": "Language Agent Tree Search (LATS)",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "language-agent-tree-search-lats",
+      "tags": [
+        "search",
+        "monte-carlo",
+        "tree-search",
+        "reasoning",
+        "planning",
+        "reflection",
+        "evaluation"
+      ],
+      "summary": "TODO: Add a concise summary for \"Language Agent Tree Search (LATS)\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "latent-demand-product-discovery",
+      "title": "Latent Demand Product Discovery",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "latent-demand-product-discovery",
+      "tags": [
+        "product-discovery",
+        "extensibility",
+        "hackable-products",
+        "power-users",
+        "latent-demand"
+      ],
+      "summary": "TODO: Add a concise summary for \"Latent Demand Product Discovery\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "layered-configuration-context",
+      "title": "Layered Configuration Context",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "layered-configuration-context",
+      "tags": [
+        "context management",
+        "configuration",
+        "scoped context",
+        "automatic loading",
+        "CLAUDE.md"
+      ],
+      "summary": "TODO: Add a concise summary for \"Layered Configuration Context\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "lethal-trifecta-threat-model",
+      "title": "Lethal Trifecta Threat Model",
+      "category": "Reliability & Eval",
+      "status": "best-practice",
+      "slug": "lethal-trifecta-threat-model",
+      "tags": [
+        "security",
+        "prompt-injection",
+        "threat-model",
+        "data-exfiltration"
+      ],
+      "summary": "Combining three agent capabilities—access to private data, exposure to untrusted content, and ability to externally communicate—creates a straightforward path for prompt-injection attackers to steal sensitive information."
+    },
+    {
+      "id": "llm-map-reduce-pattern",
+      "title": "LLM Map-Reduce Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "llm-map-reduce-pattern",
+      "tags": [
+        "map-reduce",
+        "sub-agents",
+        "isolation",
+        "untrusted-data"
+      ],
+      "summary": "Injecting a single poisoned document can manipulate global reasoning if all data is processed in one context."
+    },
+    {
+      "id": "llm-observability",
+      "title": "LLM Observability",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "llm-observability",
+      "tags": [
+        "observability",
+        "logging",
+        "debugging",
+        "tracing",
+        "datadog",
+        "langsmith",
+        "spans",
+        "monitoring",
+        "llmops"
+      ],
+      "summary": "Integrate LLM observability platforms for span-level tracing of agent workflows, providing visual UI debugging, workflow linking, and aggregate metrics to enable fast navigation of complex multi-step executions."
+    },
+    {
+      "id": "llm-friendly-api-design",
+      "title": "LLM-Friendly API Design",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "llm-friendly-api-design",
+      "tags": [
+        "api-design",
+        "llm-interaction",
+        "tool-use",
+        "system-design",
+        "code-structure",
+        "agent-compatibility"
+      ],
+      "summary": "TODO: Add a concise summary for \"LLM-Friendly API Design\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "memory-reinforcement-learning-memrl",
+      "title": "Memory Reinforcement Learning (MemRL)",
+      "category": "Learning & Adaptation",
+      "status": "proposed",
+      "slug": "memory-reinforcement-learning-memrl",
+      "tags": [
+        "reinforcement-learning",
+        "episodic-memory",
+        "self-evolution",
+        "value-aware-retrieval",
+        "runtime-learning",
+        "stability-plasticity"
+      ],
+      "summary": "TODO: Add a concise summary for \"Memory Reinforcement Learning (MemRL)\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "memory-synthesis-from-execution-logs",
+      "title": "Memory Synthesis from Execution Logs",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "memory-synthesis-from-execution-logs",
+      "tags": [
+        "memory",
+        "logs",
+        "diary",
+        "synthesis",
+        "pattern-detection",
+        "knowledge-extraction",
+        "learning"
+      ],
+      "summary": "TODO: Add a concise summary for \"Memory Synthesis from Execution Logs\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "merged-code-language-skill-model",
+      "title": "Merged Code + Language Skill Model",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "merged-code-language-skill-model",
+      "tags": [
+        "model-merging",
+        "transfer-learning",
+        "coding-agent",
+        "multilingual"
+      ],
+      "summary": "Decentralized training with model merging—train language and code specialists independently then combine via weight averaging—enabling parallel R&D without massive centralized compute while preserving both skill sets."
+    },
+    {
+      "id": "multi-model-orchestration-for-complex-edits",
+      "title": "Multi-Model Orchestration for Complex Edits",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "multi-model-orchestration-for-complex-edits",
+      "tags": [
+        "multi-model",
+        "code-generation",
+        "code-editing",
+        "retrieval",
+        "pipeline",
+        "complex-tasks"
+      ],
+      "summary": "TODO: Add a concise summary for \"Multi-Model Orchestration for Complex Edits\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "multi-platform-communication-aggregation",
+      "title": "Multi-Platform Communication Aggregation",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "multi-platform-communication-aggregation",
+      "tags": [
+        "search",
+        "aggregation",
+        "parallel",
+        "communication",
+        "unified-interface"
+      ],
+      "summary": "Create unified search interface that queries all communication platforms in parallel and aggregates results into consistent format, enabling single-query cross-platform search with minimal latency through parallel execution."
+    },
+    {
+      "id": "multi-platform-webhook-triggers",
+      "title": "Multi-Platform Webhook Triggers",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "multi-platform-webhook-triggers",
+      "tags": [
+        "webhooks",
+        "triggers",
+        "integrations",
+        "slack",
+        "notion",
+        "jira",
+        "scheduled-events",
+        "event-driven"
+      ],
+      "summary": "Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled events) to allow external SaaS tools to automatically initiate agent workflows, enabling low-friction, reactive automation from existing platforms."
+    },
+    {
+      "id": "no-token-limit-magic",
+      "title": "No-Token-Limit Magic",
+      "category": "Reliability & Eval",
+      "status": "experimental-but-awesome",
+      "slug": "no-token-limit-magic",
+      "tags": [
+        "performance",
+        "cost",
+        "experimentation"
+      ],
+      "summary": "Aggressive prompt compression to save tokens stifles reasoning depth and self-correction."
+    },
+    {
+      "id": "opponent-processor-multi-agent-debate-pattern",
+      "title": "Opponent Processor / Multi-Agent Debate Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "opponent-processor-multi-agent-debate",
+      "tags": [
+        "multi-agent",
+        "debate",
+        "adversarial",
+        "bias-reduction",
+        "uncorrelated-context",
+        "validation"
+      ],
+      "summary": "TODO: Add a concise summary for \"Opponent Processor / Multi-Agent Debate Pattern\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "oracle-and-worker-multi-model-approach",
+      "title": "Oracle and Worker Multi-Model Approach",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "oracle-and-worker-multi-model",
+      "tags": [
+        "multi-model",
+        "cost-optimization",
+        "strategic-reasoning",
+        "architecture"
+      ],
+      "summary": "Relying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems."
+    },
+    {
+      "id": "parallel-tool-call-learning",
+      "title": "Parallel Tool Call Learning",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "parallel-tool-call-learning",
+      "tags": [
+        "parallelization",
+        "latency-optimization",
+        "tool-use",
+        "reinforcement-learning",
+        "performance"
+      ],
+      "summary": "TODO: Add a concise summary for \"Parallel Tool Call Learning\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "patch-steering-via-prompted-tool-selection",
+      "title": "Patch Steering via Prompted Tool Selection",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "patch-steering-via-prompted-tool-selection",
+      "tags": [
+        "patching",
+        "prompt-steering",
+        "tool-selection",
+        "coding-agent"
+      ],
+      "summary": "TODO: Add a concise summary for \"Patch Steering via Prompted Tool Selection\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "pii-tokenization",
+      "title": "PII Tokenization",
+      "category": "Security & Safety",
+      "status": "established",
+      "slug": "pii-tokenization",
+      "tags": [
+        "privacy",
+        "pii",
+        "security",
+        "mcp",
+        "data-protection"
+      ],
+      "summary": "Implement interception layer in MCP client that automatically tokenizes PII before reaching model and untokenizes for tool calls, enabling agents to orchestrate sensitive workflows without exposing raw data to LLM."
+    },
+    {
+      "id": "plan-then-execute-pattern",
+      "title": "Plan-Then-Execute Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "plan-then-execute-pattern",
+      "tags": [
+        "planning",
+        "control-flow-integrity",
+        "prompt-injection"
+      ],
+      "summary": "## Problem\nIf tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps."
+    },
+    {
+      "id": "proactive-agent-state-externalization",
+      "title": "Proactive Agent State Externalization",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "proactive-agent-state-externalization",
+      "tags": [
+        "state-externalization",
+        "memory-management",
+        "self-documentation",
+        "note-taking"
+      ],
+      "summary": "Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps."
+    },
+    {
+      "id": "proactive-trigger-vocabulary",
+      "title": "Proactive Trigger Vocabulary",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "proactive-trigger-vocabulary",
+      "tags": [
+        "ux",
+        "triggers",
+        "intent-detection",
+        "skill-routing",
+        "natural-language"
+      ],
+      "summary": "TODO: Add a concise summary for \"Proactive Trigger Vocabulary\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "progressive-autonomy-with-model-evolution",
+      "title": "Progressive Autonomy with Model Evolution",
+      "category": "Orchestration & Control",
+      "status": "best-practice",
+      "slug": "progressive-autonomy-with-model-evolution",
+      "tags": [
+        "model-evolution",
+        "scaffolding",
+        "autonomy",
+        "system-prompts",
+        "capabilities",
+        "model-intelligence"
+      ],
+      "summary": "TODO: Add a concise summary for \"Progressive Autonomy with Model Evolution\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "progressive-complexity-escalation",
+      "title": "Progressive Complexity Escalation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "progressive-complexity-escalation",
+      "tags": [
+        "capabilities",
+        "gradual-rollout",
+        "risk-management",
+        "evolution",
+        "adaptive-systems",
+        "complexity-management"
+      ],
+      "summary": "Start agents with low-complexity, high-reliability tasks and progressively unlock more complex capabilities as models improve and trust is established, matching task complexity to current model capabilities for risk mitigation."
+    },
+    {
+      "id": "progressive-disclosure-for-large-files",
+      "title": "Progressive Disclosure for Large Files",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "progressive-disclosure-large-files",
+      "tags": [
+        "progressive-disclosure",
+        "large-files",
+        "context-optimization",
+        "file-management",
+        "lazy-loading",
+        "file-handling",
+        "metadata"
+      ],
+      "summary": "TODO: Add a concise summary for \"Progressive Disclosure for Large Files\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "progressive-tool-discovery",
+      "title": "Progressive Tool Discovery",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "progressive-tool-discovery",
+      "tags": [
+        "mcp",
+        "tool-discovery",
+        "context-optimization",
+        "lazy-loading"
+      ],
+      "summary": "TODO: Add a concise summary for \"Progressive Tool Discovery\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "reflection-loop",
+      "title": "Reflection Loop",
+      "category": "Feedback Loops",
+      "status": "established",
+      "slug": "reflection",
+      "tags": [
+        "self-feedback",
+        "iterative-improvement",
+        "evaluation"
+      ],
+      "summary": "Generative models may produce subpar output if they never review or critique their own work."
+    },
+    {
+      "id": "rich-feedback-loops-perfect-prompts",
+      "title": "Rich Feedback Loops > Perfect Prompts",
+      "category": "Feedback Loops",
+      "status": "validated-in-production",
+      "slug": "rich-feedback-loops",
+      "tags": [
+        "feedback",
+        "testing",
+        "reliability"
+      ],
+      "summary": "## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct."
+    },
+    {
+      "id": "rlaif-reinforcement-learning-from-ai-feedback",
+      "title": "RLAIF (Reinforcement Learning from AI Feedback)",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "rlaif-reinforcement-learning-from-ai-feedback",
+      "tags": [
+        "rlhf",
+        "rlaif",
+        "constitutional-ai",
+        "synthetic-data",
+        "feedback",
+        "alignment",
+        "evaluation"
+      ],
+      "summary": "TODO: Add a concise summary for \"RLAIF (Reinforcement Learning from AI Feedback)\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "seamless-background-to-foreground-handoff",
+      "title": "Seamless Background-to-Foreground Handoff",
+      "category": "UX & Collaboration",
+      "status": "emerging",
+      "slug": "seamless-background-to-foreground-handoff",
+      "tags": [
+        "background-agent",
+        "human-in-the-loop",
+        "task-handoff",
+        "interactive-refinement",
+        "agent-collaboration",
+        "developer-workflow"
+      ],
+      "summary": "TODO: Add a concise summary for \"Seamless Background-to-Foreground Handoff\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "self-critique-evaluator-loop",
+      "title": "Self-Critique Evaluator Loop",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "self-critique-evaluator-loop",
+      "tags": [
+        "self-critique",
+        "evaluator",
+        "reward-model",
+        "synthetic-data"
+      ],
+      "summary": "Human preference labels are costly and quickly become outdated as base models improve."
+    },
+    {
+      "id": "self-discover-llm-self-composed-reasoning-structures",
+      "title": "Self-Discover: LLM Self-Composed Reasoning Structures",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "self-discover-reasoning-structures",
+      "tags": [
+        "reasoning",
+        "self-improvement",
+        "meta-learning",
+        "problem-solving",
+        "task-specific",
+        "optimization"
+      ],
+      "summary": "TODO: Add a concise summary for \"Self-Discover: LLM Self-Composed Reasoning Structures\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "self-rewriting-meta-prompt-loop",
+      "title": "Self-Rewriting Meta-Prompt Loop",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "self-rewriting-meta-prompt-loop",
+      "tags": [
+        "meta-prompting",
+        "self-improvement",
+        "system-prompt",
+        "reflection"
+      ],
+      "summary": "Static system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone."
+    },
+    {
+      "id": "shell-command-contextualization",
+      "title": "Shell Command Contextualization",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "shell-command-contextualization",
+      "tags": [
+        "shell integration",
+        "context management",
+        "local execution",
+        "bash",
+        "cli",
+        "interactive tools"
+      ],
+      "summary": "Provide a mechanism (e.g., `!` prefix) to execute shell commands locally and automatically inject both the command and output into the agent's context for seamless integration."
+    },
+    {
+      "id": "skill-library-evolution",
+      "title": "Skill Library Evolution",
+      "category": "Learning & Adaptation",
+      "status": "established",
+      "slug": "skill-library-evolution",
+      "tags": [
+        "code-reuse",
+        "skills",
+        "learning",
+        "capabilities",
+        "evolution",
+        "progressive-disclosure",
+        "on-demand-loading",
+        "mcp",
+        "lazy-loading"
+      ],
+      "summary": "Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions."
+    },
+    {
+      "id": "spec-as-test-feedback-loop",
+      "title": "Spec-As-Test Feedback Loop",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "spec-as-test-feedback-loop",
+      "tags": [
+        "validation",
+        "drift-detection",
+        "continuous-testing"
+      ],
+      "summary": "Even in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust."
+    },
+    {
+      "id": "specification-driven-agent-development",
+      "title": "Specification-Driven Agent Development",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "specification-driven-agent-development",
+      "tags": [
+        "spec-first",
+        "scaffolding",
+        "contract",
+        "requirements"
+      ],
+      "summary": "Hand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent."
+    },
+    {
+      "id": "spectrum-of-control-blended-initiative",
+      "title": "Spectrum of Control / Blended Initiative",
+      "category": "UX & Collaboration",
+      "status": "validated-in-production",
+      "slug": "spectrum-of-control-blended-initiative",
+      "tags": [
+        "human-agent-collaboration",
+        "autonomy-spectrum",
+        "interactive-control",
+        "task-delegation",
+        "code-editing",
+        "ide-integration"
+      ],
+      "summary": "Design human-agent interaction supporting autonomy spectrum from tab completion (low) to background agents creating entire PRs (high), enabling seamless switching between direct control and task delegation based on complexity and user familiarity."
+    },
+    {
+      "id": "stop-hook-auto-continue-pattern",
+      "title": "Stop Hook Auto-Continue Pattern",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "stop-hook-auto-continue-pattern",
+      "tags": [
+        "hooks",
+        "automation",
+        "testing",
+        "determinism",
+        "success-criteria",
+        "continuous-execution"
+      ],
+      "summary": "Use stop hooks to programmatically check success criteria after each agent turn, automatically continuing execution until the task is genuinely complete, enabling true task completion without manual intervention."
+    },
+    {
+      "id": "structured-output-specification",
+      "title": "Structured Output Specification",
+      "category": "Reliability & Eval",
+      "status": "established",
+      "slug": "structured-output-specification",
+      "tags": [
+        "structured-output",
+        "schema",
+        "validation",
+        "reliability",
+        "type-safety",
+        "integration"
+      ],
+      "summary": "Constrain agent outputs using deterministic schemas that enforce structured, machine-readable results, enabling reliable validation, parsing, and integration with downstream systems."
+    },
+    {
+      "id": "sub-agent-spawning",
+      "title": "Sub-Agent Spawning",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "sub-agent-spawning",
+      "tags": [
+        "orchestration",
+        "context",
+        "scalability",
+        "subagents",
+        "yaml-configuration",
+        "virtual-files"
+      ],
+      "summary": "TODO: Add a concise summary for \"Sub-Agent Spawning\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "subagent-compilation-checker",
+      "title": "Subagent Compilation Checker",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "subagent-compilation-checker",
+      "tags": [
+        "subagent",
+        "compilation",
+        "modularity",
+        "error-isolation"
+      ],
+      "summary": "TODO: Add a concise summary for \"Subagent Compilation Checker\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "swarm-migration-pattern",
+      "title": "Swarm Migration Pattern",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "swarm-migration-pattern",
+      "tags": [
+        "swarm",
+        "map-reduce",
+        "migration",
+        "parallelization",
+        "sub-agents",
+        "scalability",
+        "framework-migration"
+      ],
+      "summary": "Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations."
+    },
+    {
+      "id": "team-shared-agent-configuration-as-code",
+      "title": "Team-Shared Agent Configuration as Code",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "team-shared-agent-configuration",
+      "tags": [
+        "configuration",
+        "version-control",
+        "team-collaboration",
+        "permissions",
+        "consistency",
+        "onboarding"
+      ],
+      "summary": "Check agent configuration into version control as code, enabling consistent behavior across teams, faster onboarding, and collaborative improvement through PRs and code review."
+    },
+    {
+      "id": "three-stage-perception-architecture",
+      "title": "Three-Stage Perception Architecture",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "three-stage-perception-architecture",
+      "tags": [
+        "architecture",
+        "perception",
+        "processing",
+        "action",
+        "pipeline",
+        "modular-design"
+      ],
+      "summary": "TODO: Add a concise summary for \"Three-Stage Perception Architecture\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "tool-capability-compartmentalization",
+      "title": "Tool Capability Compartmentalization",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "tool-capability-compartmentalization",
+      "tags": [
+        "capability-segregation",
+        "least-privilege",
+        "tool-permissions"
+      ],
+      "summary": "## Problem\nModel Context Protocol (MCP) encourages \"mix-and-match\" tools—often combining private-data readers, web fetchers, and writers in a single callable unit. This amplifies the lethality of prompt-injection chains."
+    },
+    {
+      "id": "tool-use-incentivization-via-reward-shaping",
+      "title": "Tool Use Incentivization via Reward Shaping",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "tool-use-incentivization-via-reward-shaping",
+      "tags": [
+        "tool-use",
+        "reward-shaping",
+        "coding-agent",
+        "RL"
+      ],
+      "summary": "Provide dense, shaped rewards for every intermediate tool invocation to encourage coding agents to use compilers, linters, and test runners instead of relying solely on internal reasoning tokens."
+    },
+    {
+      "id": "tool-use-steering-via-prompting",
+      "title": "Tool Use Steering via Prompting",
+      "category": "Tool Use & Environment",
+      "status": "best-practice",
+      "slug": "tool-use-steering-via-prompting",
+      "tags": [
+        "tool use",
+        "prompting",
+        "agent guidance",
+        "custom tools",
+        "cli",
+        "natural language control"
+      ],
+      "summary": "TODO: Add a concise summary for \"Tool Use Steering via Prompting\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "tree-of-thought-reasoning",
+      "title": "Tree-of-Thought Reasoning",
+      "category": "Orchestration & Control",
+      "status": "established",
+      "slug": "tree-of-thought-reasoning",
+      "tags": [
+        "branching",
+        "deliberate-reasoning",
+        "search"
+      ],
+      "summary": "Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack."
+    },
+    {
+      "id": "variance-based-rl-sample-selection",
+      "title": "Variance-Based RL Sample Selection",
+      "category": "Learning & Adaptation",
+      "status": "emerging",
+      "slug": "variance-based-rl-sample-selection",
+      "tags": [
+        "reinforcement-learning",
+        "sample-efficiency",
+        "variance",
+        "data-quality",
+        "agent-rft"
+      ],
+      "summary": "TODO: Add a concise summary for \"Variance-Based RL Sample Selection\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "verbose-reasoning-transparency",
+      "title": "Verbose Reasoning Transparency",
+      "category": "UX & Collaboration",
+      "status": "best-practice",
+      "slug": "verbose-reasoning-transparency",
+      "tags": [
+        "explainability",
+        "debugging",
+        "transparency",
+        "agent reasoning",
+        "verbose mode",
+        "introspection"
+      ],
+      "summary": "TODO: Add a concise summary for \"Verbose Reasoning Transparency\" describing the pattern's purpose and key benefits."
+    },
+    {
+      "id": "versioned-constitution-governance",
+      "title": "Versioned Constitution Governance",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "versioned-constitution-governance",
+      "tags": [
+        "constitution",
+        "alignment",
+        "governance",
+        "signed-commits",
+        "policy"
+      ],
+      "summary": "## Problem\nWhen an agent rewrites its own \"constitution,\" it may accidentally violate safety or regress on alignment objectives if changes aren't reviewed."
+    },
+    {
+      "id": "virtual-machine-operator-agent",
+      "title": "Virtual Machine Operator Agent",
+      "category": "Tool Use & Environment",
+      "status": "established",
+      "slug": "virtual-machine-operator-agent",
+      "tags": [
+        "computer operation",
+        "virtual machine",
+        "execution environment",
+        "agent capability"
+      ],
+      "summary": "## Problem\nAI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage system resources, install software, and operate various applications."
+    },
+    {
+      "id": "visual-ai-multimodal-integration",
+      "title": "Visual AI Multimodal Integration",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "visual-ai-multimodal-integration",
+      "tags": [
+        "multimodal",
+        "vision",
+        "video",
+        "image-processing",
+        "visual-understanding",
+        "agent-capabilities"
+      ],
+      "summary": "Integrate large multimodal models for visual understanding—enabling agents to process images, videos, screenshots alongside text for tasks like UI debugging, document processing, video analysis, and security monitoring."
+    },
+    {
+      "id": "workflow-evals-with-mocked-tools",
+      "title": "Workflow Evals with Mocked Tools",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "workflow-evals-with-mocked-tools",
+      "tags": [
+        "evals",
+        "testing",
+        "ci-cd",
+        "mocked-tools",
+        "simulations",
+        "workflow-validation",
+        "end-to-end-testing"
+      ],
+      "summary": "TODO: Add a concise summary for \"Workflow Evals with Mocked Tools\" describing the pattern's purpose and key benefits."
     }
   ],
   "edges": []

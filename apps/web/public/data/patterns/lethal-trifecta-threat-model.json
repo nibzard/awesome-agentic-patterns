@@ -1,0 +1,23 @@
+{
+  "title": "Lethal Trifecta Threat Model",
+  "status": "best-practice",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Simon Willison"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
+  "tags": [
+    "security",
+    "prompt-injection",
+    "threat-model",
+    "data-exfiltration"
+  ],
+  "slug": "lethal-trifecta-threat-model",
+  "id": "lethal-trifecta-threat-model",
+  "summary": "Combining three agent capabilities—access to private data, exposure to untrusted content, and ability to externally communicate—creates a straightforward path for prompt-injection attackers to steal sensitive information.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nCombining three agent capabilities—\n1. **Access to private data**\n2. **Exposure to untrusted content**\n3. **Ability to externally communicate**\n\n—creates a straightforward path for prompt-injection attackers to steal sensitive information.  \nLLMs cannot reliably distinguish \"good\" instructions from malicious ones once they appear in the same context window.\n\n## Solution\nAdopt a **Trifecta Threat Model**:  \n\n- **Audit every tool** an agent can call and classify it against the three capabilities.  \n- **Guarantee that at least one circle is missing** in any execution path. Options include:  \n  \n- Remove external network access (no exfiltration).  \n  - Deny direct file/database reads (no private data).  \n  - Sanitize or segregate untrusted inputs (no hostile instructions).  \n- Enforce this at orchestration time, not with brittle prompt guardrails.\n\n```python\n# pseudo-policy\nif tool.can_externally_communicate and\n   tool.accesses_private_data and\n   input_source == \"untrusted\":\n       raise SecurityError(\"Lethal trifecta detected\")\n```\n\n## How to use it\n\n* Maintain a machine-readable capability matrix for every tool.\n* Add a pre-execution policy check in your agent runner.\n* Fail closed: if capability metadata is missing, treat the tool as high-risk.\n\n## Trade-offs\n\n**Pros:** Simple mental model; eliminates entire attack class.\n**Cons:** Limits powerful \"all-in-one\" agents; requires disciplined capability tagging.\n\n## References\n\n* Willison, *The Lethal Trifecta for AI Agents* (June 16 2025).\n* \"Design Patterns for Securing LLM Agents against Prompt Injections\" (June 13 2025).\n"
+}

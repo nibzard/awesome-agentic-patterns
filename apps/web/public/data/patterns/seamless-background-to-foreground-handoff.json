@@ -1,0 +1,25 @@
+{
+  "title": "Seamless Background-to-Foreground Handoff",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Aman Sanger (Cursor)"
+  ],
+  "category": "UX & Collaboration",
+  "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
+  "tags": [
+    "background-agent",
+    "human-in-the-loop",
+    "task-handoff",
+    "interactive-refinement",
+    "agent-collaboration",
+    "developer-workflow"
+  ],
+  "slug": "seamless-background-to-foreground-handoff",
+  "id": "seamless-background-to-foreground-handoff",
+  "summary": "TODO: Add a concise summary for \"Seamless Background-to-Foreground Handoff\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nWhile background agents can handle long-running, complex tasks autonomously, they might not achieve 100% correctness or perfectly match the user's nuanced intent. If an agent completes 90% of a task in the background but the remaining 10% requires human finesse, a clunky handoff process can negate the benefits of automation.\n\n## Solution\nDesign the agent system to allow for a seamless transition from background (autonomous) agent work to foreground (human-in-the-loop or direct human control) work. This means:\n\n1.  The background agent performs its task (e.g., generating a PR).\n2.  The user reviews the agent's work.\n3.  If the work is not entirely satisfactory (e.g., 90% correct), the user can easily \"take control\" or bring the task into their active foreground environment.\n4.  The user can then utilize the same (or related) interactive AI tools and direct editing capabilities used in the foreground to refine, correct, or complete the remaining parts of the task.\n5.  The context from the background agent's work should ideally be available to inform the foreground interaction.\n\nThis pattern ensures that developers can leverage the power of autonomous background processing while retaining the ability to easily intervene and apply their expertise for the final touches, without losing context or efficiency.\n\n## Example\n```mermaid\nflowchart TD\n    A[User: Refactor X in background] --> B[Background Agent: Works on X]\n    B --> C[Agent Proposes PR for X]\n    C --> D{User Reviews PR}\n    D -->|90% Correct| E[User: Take over & refine]\n    E --> F[User uses Foreground Agent Tools & IDE to complete X]\n    F --> G[Finalized PR]\n    D -->|100% Correct| G\n```\n\n## References\n- Aman Sanger (Cursor) at 0:06:52: \"...if it's only 90% of the way there, you want to go in and then take control and and do the rest of it. And then you want to use, you know, the features of Cursor in order to do that. So really being able to quickly move between the background and the foreground is really important.\"\n"
+}

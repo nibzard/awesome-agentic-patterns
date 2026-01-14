@@ -1,0 +1,23 @@
+{
+  "title": "Code-Over-API Pattern",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
+  "tags": [
+    "token-optimization",
+    "code-execution",
+    "data-processing",
+    "mcp"
+  ],
+  "slug": "code-over-api-pattern",
+  "id": "code-over-api-pattern",
+  "summary": "Agents write and execute code that processes data in execution environment instead of making direct API calls, dramatically reducing token consumption by keeping intermediate data out of context window (150K → 2K tokens).",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nWhen agents make direct API or tool calls, all intermediate data must flow through the model's context window. For data-heavy workflows (processing spreadsheets, filtering logs, transforming datasets), this creates massive token consumption and increased latency. A workflow that fetches 10,000 spreadsheet rows and filters them can easily consume 150,000+ tokens just moving data through the context.\n\n## Solution\n\nInstead of making direct tool calls, agents write and execute code that interacts with tools. Data processing, filtering, and transformation happens in the execution environment, with only results flowing back to the model context.\n\n**Direct API approach (high token cost):**\n\n```pseudo\n# Agent makes tool call\nrows = api_call(\"spreadsheet.getRows\", sheet_id=\"abc123\")\n# All 10,000 rows flow through context → 150K tokens\n\n# Agent processes in context\nfiltered = [row for row in rows if row.status == \"active\"]\n# More tokens for processing\n\nreturn filtered\n```\n\n**Code-Over-API approach (low token cost):**\n\n```python\n# Agent writes code that executes in environment\ndef process_spreadsheet():\n    # Tool call happens in execution environment\n    rows = spreadsheet.getRows(sheet_id=\"abc123\")\n\n    # Filtering happens in code, not in context\n    filtered = [row for row in rows if row.status == \"active\"]\n\n    # Only log summary for agent visibility\n    print(f\"Processed {len(rows)} rows, found {len(filtered)} active\")\n    print(f\"First 5 active rows: {filtered[:5]}\")\n\n    return filtered\n\nresult = process_spreadsheet()\n# Only summary and sample flow to context → ~2K tokens\n```\n\nThe agent sees the log output and return value, but the full dataset never enters its context window.\n\n## How to use it\n\n**Best for:**\n\n- Data-heavy workflows (spreadsheets, databases, logs)\n- Multi-step transformations or aggregations\n- Workflows with intermediate results that don't need model inspection\n- Cost-sensitive applications where token usage matters\n\n**Prerequisites:**\n\n- Secure code execution environment with sandboxing\n- Access to tools/APIs from within the execution environment\n- Resource limits (CPU, memory, time) to prevent runaway execution\n\n**Implementation pattern:**\n\n1. Agent analyzes task and determines data processing needs\n2. Agent writes code that:\n   \n- Calls tools/APIs within the execution environment\n   - Performs filtering, transformation, aggregation in code\n   - Logs only summaries or samples for visibility\n   - Returns final results\n3. Execution environment runs code with tool access\n4. Only logs and return values flow back to agent context\n\n## Trade-offs\n\n**Pros:**\n\n- Dramatic token reduction (150K → 2K in reported cases)\n- Lower latency (fewer large context API calls)\n- Natural fit for data processing tasks\n- Intermediate data stays contained in execution environment\n\n**Cons:**\n\n- Requires secure code execution infrastructure\n- More complex setup than direct tool calls\n- Agents must be capable of writing correct code\n- Debugging can be harder (errors happen in execution, not in context)\n- Needs monitoring, resource limits, and sandboxing\n\n**Operational requirements:**\n\n- Sandboxed execution environment (containers, VMs, WebAssembly)\n- Resource limits (CPU, memory, execution time)\n- Monitoring and logging infrastructure\n- Error handling and recovery mechanisms\n\n## References\n\n* Anthropic Engineering: Code Execution with MCP (2024)\n* Related: Code-Then-Execute Pattern (focuses on security/formal verification)\n"
+}

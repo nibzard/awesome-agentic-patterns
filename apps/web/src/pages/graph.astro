@@ -1,41 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAllPatterns } from '../lib/patterns';
-import type { PatternGraph, GraphEdge, GraphNode } from '../types';
+import type { GraphNode } from '../types';
 
 const patterns = await getAllPatterns();
-const nodeIds = new Set(patterns.map((pattern) => pattern.id));
-
-const graphData: PatternGraph = {
-  nodes: patterns.map((pattern) => ({
-    id: pattern.id,
-    title: pattern.title,
-    category: pattern.category,
-    status: pattern.status,
-    slug: pattern.slug,
-    tags: pattern.tags,
-    summary: pattern.summary,
-    maturity: pattern.maturity,
-    domains: pattern.domains,
-  })),
-  edges: patterns.flatMap((pattern) => {
-    const relatedEdges =
-      pattern.related
-        ?.filter((id) => nodeIds.has(id))
-        .map((id) => ({ source: pattern.id, target: id, type: 'related' as const })) || [];
-    const antiEdges =
-      pattern.anti_patterns
-        ?.filter((id) => nodeIds.has(id))
-        .map((id) => ({ source: pattern.id, target: id, type: 'anti-pattern' as const })) || [];
-    return [...relatedEdges, ...antiEdges];
-  }),
-};
+const graphNodes = patterns.map((pattern) => ({
+  id: pattern.id,
+  title: pattern.title,
+  category: pattern.category,
+  status: pattern.status,
+  slug: pattern.slug,
+  tags: pattern.tags,
+  summary: pattern.summary,
+  maturity: pattern.maturity,
+  domains: pattern.domains,
+  related: pattern.related || [],
+  anti_patterns: pattern.anti_patterns || [],
+}));
 
 // Get unique values for filters
-const categories = [...new Set(graphData.nodes.map((n: GraphNode) => n.category))].sort();
-const statuses = [...new Set(graphData.nodes.map((n: GraphNode) => n.status))].sort();
+const categories = [...new Set(graphNodes.map((n: GraphNode) => n.category))].sort();
+const statuses = [...new Set(graphNodes.map((n: GraphNode) => n.status))].sort();
 
-const tagMap = graphData.nodes.reduce((acc: Record<string, number>, node: GraphNode) => {
+const tagMap = graphNodes.reduce((acc: Record<string, number>, node: GraphNode) => {
   (node.tags || []).forEach((tag) => {
     acc[tag] = (acc[tag] || 0) + 1;
   });
@@ -47,7 +34,7 @@ const tags = Object.entries(tagMap)
   .sort((a, b) => b.count - a.count)
   .slice(0, 20);
 
-const maturityMap = graphData.nodes.reduce((acc: Record<string, number>, node: GraphNode) => {
+const maturityMap = graphNodes.reduce((acc: Record<string, number>, node: GraphNode) => {
   if (node.maturity) {
     acc[node.maturity] = (acc[node.maturity] || 0) + 1;
   }
@@ -58,7 +45,7 @@ const maturities = Object.entries(maturityMap)
   .map(([maturity, count]) => ({ maturity, count }))
   .sort((a, b) => b.count - a.count);
 
-const domainMap = graphData.nodes.reduce((acc: Record<string, number>, node: GraphNode) => {
+const domainMap = graphNodes.reduce((acc: Record<string, number>, node: GraphNode) => {
   (node.domains || []).forEach((domain) => {
     acc[domain] = (acc[domain] || 0) + 1;
   });
@@ -69,8 +56,8 @@ const domains = Object.entries(domainMap)
   .map(([domain, count]) => ({ domain, count }))
   .sort((a, b) => b.count - a.count);
 
-const positionedNodes = graphData.nodes.map((node: GraphNode, index: number) => {
-  const angle = (index / Math.max(graphData.nodes.length, 1)) * 2 * Math.PI;
+const positionedNodes = graphNodes.map((node: GraphNode, index: number) => {
+  const angle = (index / Math.max(graphNodes.length, 1)) * 2 * Math.PI;
   const radius = 200 + (index % 3) * 50;
   const x = 400 + Math.cos(angle) * radius;
   const y = 300 + Math.sin(angle) * radius;
@@ -82,22 +69,6 @@ const positionedNodes = graphData.nodes.map((node: GraphNode, index: number) => 
   };
 });
 
-const nodeById = new Map(positionedNodes.map((node) => [node.id, node]));
-
-const positionedEdges = graphData.edges
-  .map((edge) => {
-    const source = nodeById.get(edge.source);
-    const target = nodeById.get(edge.target);
-    if (!source || !target) return null;
-    return {
-      ...edge,
-      x1: source.x,
-      y1: source.y,
-      x2: target.x,
-      y2: target.y,
-    } as GraphEdge;
-  })
-  .filter(Boolean) as GraphEdge[];
 
 // Helper functions for category/status colors
 function getCategoryColor(category: string): string {
@@ -126,6 +97,29 @@ function getCategoryColor(category: string): string {
       <!-- Filters Sidebar -->
       <aside class="graph-filters">
         <div class="filter-section">
+          <h3 class="filter-title">Connections</h3>
+          <div class="filter-options">
+            <label class="filter-option">
+              <input type="radio" name="graph-mode" value="tag" data-mode />
+              <span>Shared tags</span>
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="graph-mode" value="category" data-mode />
+              <span>Shared category</span>
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="graph-mode" value="related" data-mode />
+              <span>Explicit links</span>
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="graph-mode" value="similarity" data-mode />
+              <span>Semantic similarity</span>
+            </label>
+          </div>
+          <p class="filter-hint">Change how connections are drawn between patterns.</p>
+        </div>
+
+        <div class="filter-section">
           <h3 class="filter-title">Category</h3>
           <div class="filter-options">
             {
@@ -134,7 +128,7 @@ function getCategoryColor(category: string): string {
                   <input type="checkbox" value={category} data-filter="category" />
                   <span>{category}</span>
                   <span class="filter-count">
-                    {graphData.nodes.filter((n: GraphNode) => n.category === category).length}
+                    {graphNodes.filter((n: GraphNode) => n.category === category).length}
                   </span>
                 </label>
               ))
@@ -151,7 +145,7 @@ function getCategoryColor(category: string): string {
                   <input type="checkbox" value={status} data-filter="status" />
                   <span>{status}</span>
                   <span class="filter-count">
-                    {graphData.nodes.filter((n: GraphNode) => n.status === status).length}
+                    {graphNodes.filter((n: GraphNode) => n.status === status).length}
                   </span>
                 </label>
               ))
@@ -218,8 +212,9 @@ function getCategoryColor(category: string): string {
       <!-- Graph Canvas -->
       <div class="graph-canvas-container">
         <div class="graph-info">
-          Showing <span id="graph-count">{graphData.nodes.length}</span> of {graphData.nodes.length}
-          patterns
+          Showing <span id="graph-count">{graphNodes.length}</span> of {graphNodes.length}
+          patterns · <span id="graph-edge-count">0</span> connections ·
+          <span id="graph-mode-label">Shared tags</span>
         </div>
 
         <div class="graph-canvas" id="graph-canvas">
@@ -235,24 +230,7 @@ function getCategoryColor(category: string): string {
             </defs>
 
             <g id="graph-viewport">
-              <!-- Edges -->
-              {
-                positionedEdges.map((edge) => (
-                  <line
-                    x1={edge.x1}
-                    y1={edge.y1}
-                    x2={edge.x2}
-                    y2={edge.y2}
-                    stroke="var(--color-border)"
-                    stroke-width="2"
-                    class="graph-edge"
-                    data-edge
-                    data-source={edge.source}
-                    data-target={edge.target}
-                  />
-                ))
-              }
-
+              <g id="graph-edges"></g>
               <!-- Nodes -->
               {
                 positionedNodes.map((node: GraphNode & { x: number; y: number }) => {
@@ -267,6 +245,8 @@ function getCategoryColor(category: string): string {
                       data-tags={(node.tags || []).join('|')}
                       data-maturity={node.maturity || ''}
                       data-domains={(node.domains || []).join('|')}
+                      data-related={(node.related || []).join('|')}
+                      data-anti={(node.anti_patterns || []).join('|')}
                       data-summary={node.summary || ''}
                       data-title={node.title}
                       data-slug={node.slug}
@@ -352,11 +332,18 @@ function getCategoryColor(category: string): string {
   const selectedMaturities = params.getAll('maturity');
   const selectedDomains = params.getAll('domain');
   const selectedNodeId = params.get('node');
+  const modeParam = params.get('mode');
+  const modeOptions = new Set(['tag', 'category', 'related', 'similarity']);
+  let activeMode = modeOptions.has(modeParam) ? modeParam : 'tag';
 
   const clearFiltersLink = document.getElementById('graph-clear-filters');
   const countEl = document.getElementById('graph-count');
+  const edgeCountEl = document.getElementById('graph-edge-count');
+  const modeLabelEl = document.getElementById('graph-mode-label');
   const nodeElements = document.querySelectorAll('.graph-node');
-  const edgeElements = document.querySelectorAll('[data-edge]');
+  const modeInputs = document.querySelectorAll('input[data-mode]');
+  const edgesLayer = document.getElementById('graph-edges');
+  let edgeElements = [];
   const categoryFilters = document.querySelectorAll('input[data-filter="category"]');
   const statusFilters = document.querySelectorAll('input[data-filter="status"]');
   const tagFilters = document.querySelectorAll('input[data-filter="tag"]');
@@ -376,37 +363,248 @@ function getCategoryColor(category: string): string {
   const viewport = document.getElementById('graph-viewport');
   const svgSelection = svg ? select(svg) : null;
 
+  const parseList = (value) => (value ? value.split('|').filter(Boolean) : []);
   const nodes = Array.from(nodeElements)
     .map((node) => ({
       id: node.getAttribute('data-node-id') || '',
+      title: node.getAttribute('data-title') || '',
+      category: node.getAttribute('data-category') || '',
+      tags: parseList(node.getAttribute('data-tags')),
+      related: parseList(node.getAttribute('data-related')),
+      antiPatterns: parseList(node.getAttribute('data-anti')),
+      summary: node.getAttribute('data-summary') || '',
       x: Number(node.getAttribute('data-x')) || 400,
       y: Number(node.getAttribute('data-y')) || 300,
     }))
     .filter((node) => node.id);
 
-  const edges = Array.from(edgeElements)
-    .map((edge) => ({
-      source: edge.getAttribute('data-source'),
-      target: edge.getAttribute('data-target'),
-    }))
-    .filter((edge) => edge.source && edge.target);
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+
+  const modeLabels = {
+    tag: 'Shared tags',
+    category: 'Shared category',
+    related: 'Explicit links',
+    similarity: 'Semantic similarity',
+  };
+
+  const edgeKey = (edge) => {
+    const source = typeof edge.source === 'string' ? edge.source : edge.source?.id;
+    const target = typeof edge.target === 'string' ? edge.target : edge.target?.id;
+    return `${source}|${target}|${edge.type || 'link'}`;
+  };
+
+  const edgesCache = new Map();
+
+  const addEdge = (edges, edgeKeys, source, target, type) => {
+    if (!nodeById.has(source) || !nodeById.has(target) || source === target) return;
+    const [left, right] = source < target ? [source, target] : [target, source];
+    const key = `${left}|${right}|${type}`;
+    if (edgeKeys.has(key)) return;
+    edgeKeys.add(key);
+    edges.push({ source, target, type });
+  };
+
+  const buildRelatedEdges = () => {
+    const edges = [];
+    const edgeKeys = new Set();
+    nodes.forEach((node) => {
+      node.related.forEach((target) => addEdge(edges, edgeKeys, node.id, target, 'related'));
+      node.antiPatterns.forEach((target) =>
+        addEdge(edges, edgeKeys, node.id, target, 'anti-pattern')
+      );
+    });
+    return edges;
+  };
+
+  const buildCategoryEdges = () => {
+    const edges = [];
+    const edgeKeys = new Set();
+    const categoryMap = new Map();
+    nodes.forEach((node) => {
+      if (!categoryMap.has(node.category)) {
+        categoryMap.set(node.category, []);
+      }
+      categoryMap.get(node.category).push(node);
+    });
+
+    categoryMap.forEach((list) => {
+      if (list.length < 2) return;
+      const hub = list[0];
+      list.slice(1).forEach((node) => addEdge(edges, edgeKeys, hub.id, node.id, 'category'));
+    });
+
+    return edges;
+  };
+
+  const buildTagEdges = () => {
+    const edges = [];
+    const edgeKeys = new Set();
+    const tagMap = new Map();
+    nodes.forEach((node) => {
+      node.tags.forEach((tag) => {
+        if (!tagMap.has(tag)) {
+          tagMap.set(tag, []);
+        }
+        tagMap.get(tag).push(node);
+      });
+    });
+
+    tagMap.forEach((list) => {
+      if (list.length < 2) return;
+      const hub = list[0];
+      list.slice(1).forEach((node) => addEdge(edges, edgeKeys, hub.id, node.id, 'tag'));
+    });
+
+    return edges;
+  };
+
+  const stopwords = new Set([
+    'the',
+    'and',
+    'for',
+    'with',
+    'that',
+    'this',
+    'from',
+    'into',
+    'using',
+    'your',
+    'their',
+    'over',
+    'under',
+    'between',
+    'when',
+    'then',
+    'than',
+    'its',
+    'are',
+    'was',
+    'were',
+    'but',
+    'not',
+    'all',
+    'any',
+    'can',
+    'may',
+    'helps',
+    'help',
+    'each',
+    'more',
+  ]);
+
+  const tokenize = (text) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter((token) => token.length > 2 && !stopwords.has(token));
+
+  const buildSimilarityEdges = () => {
+    const edges = [];
+    const edgeKeys = new Set();
+    const tokenSets = nodes.map((node) => {
+      const tokens = tokenize(`${node.title} ${node.summary} ${node.tags.join(' ')}`);
+      return new Set(tokens);
+    });
+
+    const similarity = (setA, setB) => {
+      if (setA.size === 0 || setB.size === 0) return 0;
+      let intersection = 0;
+      setA.forEach((token) => {
+        if (setB.has(token)) intersection += 1;
+      });
+      const union = setA.size + setB.size - intersection;
+      return union === 0 ? 0 : intersection / union;
+    };
+
+    nodes.forEach((node, index) => {
+      const scores = [];
+      for (let j = 0; j < nodes.length; j += 1) {
+        if (j === index) continue;
+        const score = similarity(tokenSets[index], tokenSets[j]);
+        if (score > 0.12) {
+          scores.push({ id: nodes[j].id, score });
+        }
+      }
+      scores.sort((a, b) => b.score - a.score);
+      scores.slice(0, 3).forEach((match) => {
+        addEdge(edges, edgeKeys, node.id, match.id, 'similarity');
+      });
+    });
+
+    return edges;
+  };
+
+  const buildEdges = (mode) => {
+    if (edgesCache.has(mode)) return edgesCache.get(mode);
+    let edges = [];
+    if (mode === 'category') {
+      edges = buildCategoryEdges();
+    } else if (mode === 'related') {
+      edges = buildRelatedEdges();
+    } else if (mode === 'similarity') {
+      edges = buildSimilarityEdges();
+    } else {
+      edges = buildTagEdges();
+    }
+    edgesCache.set(mode, edges);
+    return edges;
+  };
 
   const nodeSelection = svgSelection ? svgSelection.selectAll('.graph-node').data(nodes) : null;
-  const edgeSelection = svgSelection ? svgSelection.selectAll('[data-edge]').data(edges) : null;
+  let edgeSelection = svgSelection ? svgSelection.selectAll('[data-edge]') : null;
+  const getNodeId = (value) => (typeof value === 'string' ? value : value?.id);
+
+  const renderEdges = (edges) => {
+    if (!edgesLayer || !svgSelection) return;
+
+    edgeSelection = select(edgesLayer)
+      .selectAll('line')
+      .data(edges, (edge) => edgeKey(edge));
+
+    edgeSelection.exit().remove();
+
+    edgeSelection = edgeSelection
+      .enter()
+      .append('line')
+      .attr('class', 'graph-edge')
+      .attr('data-edge', '')
+      .merge(edgeSelection);
+
+    edgeSelection
+      .attr('data-source', (edge) => getNodeId(edge.source))
+      .attr('data-target', (edge) => getNodeId(edge.target))
+      .attr('data-edge-type', (edge) => edge.type || '');
+
+    edgeElements = edgesLayer.querySelectorAll('[data-edge]');
+
+    if (edgeCountEl) {
+      edgeCountEl.textContent = String(edges.length);
+    }
+
+    if (modeLabelEl) {
+      modeLabelEl.textContent = modeLabels[activeMode] || modeLabels.tag;
+    }
+  };
+
+  let currentEdges = buildEdges(activeMode);
+  renderEdges(currentEdges);
+
+  let simulation;
+  let linkForce;
 
   if (svgSelection && viewport && nodes.length > 0) {
     const viewBox = svg?.viewBox?.baseVal;
     const width = viewBox?.width || 800;
     const height = viewBox?.height || 600;
 
-    const simulation = forceSimulation(nodes)
-      .force(
-        'link',
-        forceLink(edges)
-          .id((d) => d.id)
-          .distance(140)
-          .strength(0.25)
-      )
+    linkForce = forceLink(currentEdges)
+      .id((d) => d.id)
+      .distance(140)
+      .strength(0.25);
+
+    simulation = forceSimulation(nodes)
+      .force('link', linkForce)
       .force('charge', forceManyBody().strength(-240))
       .force('center', forceCenter(width / 2, height / 2))
       .force('collision', forceCollide(42))
@@ -514,6 +712,19 @@ function getCategoryColor(category: string): string {
     }
   };
 
+  const updateEdgesForMode = (mode) => {
+    activeMode = modeOptions.has(mode) ? mode : 'tag';
+    currentEdges = buildEdges(activeMode);
+    renderEdges(currentEdges);
+
+    if (linkForce && simulation) {
+      linkForce.links(currentEdges);
+      simulation.alpha(0.6).restart();
+    }
+
+    applyFilters();
+  };
+
   const bindFilterGroup = (inputs, paramName, selectedValues) => {
     inputs.forEach((input) => {
       input.checked = selectedValues.includes(input.value);
@@ -533,12 +744,32 @@ function getCategoryColor(category: string): string {
     });
   };
 
+  const bindModeInputs = () => {
+    modeInputs.forEach((input) => {
+      input.checked = input.value === activeMode;
+      input.addEventListener('change', () => {
+        const nextMode = input.value;
+        const params = new URLSearchParams(window.location.search);
+        if (nextMode === 'tag') {
+          params.delete('mode');
+        } else {
+          params.set('mode', nextMode);
+        }
+        const query = params.toString();
+        const nextUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+        window.history.replaceState({}, '', nextUrl);
+        updateEdgesForMode(nextMode);
+      });
+    });
+  };
+
   const updateFilterInputs = () => {
     bindFilterGroup(categoryFilters, 'category', selectedCategories);
     bindFilterGroup(statusFilters, 'status', selectedStatuses);
     bindFilterGroup(tagFilters, 'tag', selectedTags);
     bindFilterGroup(maturityFilters, 'maturity', selectedMaturities);
     bindFilterGroup(domainFilters, 'domain', selectedDomains);
+    bindModeInputs();
   };
 
   const updateDetailPanel = () => {
@@ -701,6 +932,13 @@ function getCategoryColor(category: string): string {
     gap: var(--spacing-sm);
   }
 
+  .filter-hint {
+    margin-top: var(--spacing-sm);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
   .filter-option {
     display: flex;
     align-items: center;
@@ -784,7 +1022,33 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-edge {
-    opacity: 0.3;
+    stroke: var(--color-border);
+    stroke-width: 2;
+    opacity: 0.35;
+  }
+
+  .graph-edge[data-edge-type='related'] {
+    stroke: var(--color-primary);
+    opacity: 0.45;
+  }
+
+  .graph-edge[data-edge-type='anti-pattern'] {
+    stroke: var(--color-error);
+    stroke-dasharray: 4 4;
+    opacity: 0.5;
+  }
+
+  .graph-edge[data-edge-type='category'] {
+    stroke: var(--color-divider);
+  }
+
+  .graph-edge[data-edge-type='tag'] {
+    stroke: var(--color-info);
+  }
+
+  .graph-edge[data-edge-type='similarity'] {
+    stroke: var(--color-success);
+    stroke-dasharray: 3 5;
   }
 
   .graph-node {

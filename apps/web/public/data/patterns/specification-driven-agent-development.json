@@ -1,0 +1,23 @@
+{
+  "title": "Specification-Driven Agent Development",
+  "status": "proposed",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Jory Pestorious (AI Engineer World's Fair 2025)"
+  ],
+  "category": "Orchestration & Control",
+  "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
+  "tags": [
+    "spec-first",
+    "scaffolding",
+    "contract",
+    "requirements"
+  ],
+  "slug": "specification-driven-agent-development",
+  "id": "specification-driven-agent-development",
+  "summary": "Hand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.\n\n## Solution\nAdopt a **spec-first workflow** in which a formal specification file (e.g., Markdown, OpenAPI, JSON Schema) is the agent's *primary* input and source of truth.\n\n- **Parse spec** → agent builds an explicit task graph.\n- **Scaffold** project structure & stub code straight from the spec.\n- **Enforce** that every generated artifact links back to a spec clause.\n- **Iterate** only by editing the spec, *not* by re-prompting ad-hoc.\n\n```pseudo\nif new_feature_requested:\n    write_spec(update)\n    agent.sync_with(spec)\n```\n\n## How to use it\nGive the agent a well-structured spec file, then run `claude spec run`.\nPitfalls: coarse or under-specified requirements still propagate errors.\n\n## Trade-offs\n\n- **Pros:** repeatable, audit-friendly, easy diffing.\n- **Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.\n\n## References\n- Talk teaser in the World's Fair meta-description about \"shift to specification-driven development.\"\n"
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Tree-of-Thought Reasoning",
+  "status": "established",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Yao et al. (2023)"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://arxiv.org/abs/2305.10601",
+  "tags": [
+    "branching",
+    "deliberate-reasoning",
+    "search"
+  ],
+  "slug": "tree-of-thought-reasoning",
+  "id": "tree-of-thought-reasoning",
+  "summary": "Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\nLinear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.\n\n## Solution\nExplore a search tree of intermediate \"thoughts\" instead of a single chain. The agent expands multiple possible steps and evaluates partial solutions before committing to a path.\n\n```pseudo\nqueue = [root_problem]\nwhile queue:\n    thought = queue.pop()\n    for step in expand(thought):\n        score = evaluate(step)\n        queue.push((score, step))\nselect_best(queue)\n```\n\n## How to use it\nApply when tasks benefit from exploring many potential strategies—puzzles, code generation, or planning. Use heuristics or a value function to prune unpromising branches.\n\n## Trade-offs\n* **Pros:** Covers more possibilities; improves reliability on hard tasks.\n* **Cons:** Higher compute cost; needs a good scoring method to guide the search.\n\n## References\n* [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601)\n"
+}

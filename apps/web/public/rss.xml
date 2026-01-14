@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title><![CDATA[Awesome Agentic Patterns]]></title>
-        <description><![CDATA[A curated catalogue of AI agent design patterns]]></description>
+        <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 14 Jan 2026 02:24:31 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 Jan 2026 18:43:43 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Wed, 14 Jan 2026 02:24:31 GMT</pubDate>
-        <language><![CDATA[en]]></language>
-        <ttl>60</ttl>
         <item>
-            <title><![CDATA[Skill Library Evolution]]></title>
-            <description><![CDATA[Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.]]></description>
-            <link>https://agentic-patterns.com/patterns/skill-library-evolution</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/skill-library-evolution</guid>
-            <category><![CDATA[Learning & Adaptation]]></category>
-            <category><![CDATA[code-reuse]]></category>
-            <category><![CDATA[skills]]></category>
-            <category><![CDATA[learning]]></category>
-            <category><![CDATA[capabilities]]></category>
-            <category><![CDATA[evolution]]></category>
-            <category><![CDATA[progressive-disclosure]]></category>
-            <category><![CDATA[on-demand-loading]]></category>
-            <category><![CDATA[mcp]]></category>
-            <category><![CDATA[lazy-loading]]></category>
+            <title><![CDATA[Hybrid LLM/Code Workflow Coordinator]]></title>
+            <description><![CDATA[Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems.]]></description>
+            <link>https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[hybrid]]></category>
+            <category><![CDATA[llm-driven]]></category>
+            <category><![CDATA[code-driven]]></category>
+            <category><![CDATA[coordinator]]></category>
+            <category><![CDATA[determinism]]></category>
+            <category><![CDATA[workflow-orchestration]]></category>
+            <category><![CDATA[progressive-enhancement]]></category>
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Multi-Platform Webhook Triggers]]></title>
-            <description><![CDATA[Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled events) to allow external SaaS tools to automatically initiate agent workflows, enabling low-friction, reactive automation from existing platforms.]]></description>
-            <link>https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[webhooks]]></category>
-            <category><![CDATA[triggers]]></category>
-            <category><![CDATA[integrations]]></category>
-            <category><![CDATA[slack]]></category>
-            <category><![CDATA[notion]]></category>
-            <category><![CDATA[jira]]></category>
-            <category><![CDATA[scheduled-events]]></category>
-            <category><![CDATA[event-driven]]></category>
+            <title><![CDATA[Iterative Prompt & Skill Refinement]]></title>
+            <description><![CDATA[TODO: Add a concise summary for "Iterative Prompt & Skill Refinement" describing the pattern's purpose and key benefits.]]></description>
+            <link>https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</guid>
+            <category><![CDATA[Feedback Loops]]></category>
+            <category><![CDATA[refinement]]></category>
+            <category><![CDATA[iteration]]></category>
+            <category><![CDATA[prompts]]></category>
+            <category><![CDATA[skills]]></category>
+            <category><![CDATA[feedback]]></category>
+            <category><![CDATA[multi-mechanism]]></category>
+            <category><![CDATA[continuous-improvement]]></category>
+            <category><![CDATA[dashboards]]></category>
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -60,36 +55,6 @@
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Hybrid LLM/Code Workflow Coordinator]]></title>
-            <description><![CDATA[Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems.]]></description>
-            <link>https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[hybrid]]></category>
-            <category><![CDATA[llm-driven]]></category>
-            <category><![CDATA[code-driven]]></category>
-            <category><![CDATA[coordinator]]></category>
-            <category><![CDATA[determinism]]></category>
-            <category><![CDATA[workflow-orchestration]]></category>
-            <category><![CDATA[progressive-enhancement]]></category>
-            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Workflow Evals with Mocked Tools]]></title>
-            <description><![CDATA[TODO: Add a concise summary for "Workflow Evals with Mocked Tools" describing the pattern's purpose and key benefits.]]></description>
-            <link>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[evals]]></category>
-            <category><![CDATA[testing]]></category>
-            <category><![CDATA[ci-cd]]></category>
-            <category><![CDATA[mocked-tools]]></category>
-            <category><![CDATA[simulations]]></category>
-            <category><![CDATA[workflow-validation]]></category>
-            <category><![CDATA[end-to-end-testing]]></category>
-            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
             <title><![CDATA[Memory Reinforcement Learning (MemRL)]]></title>
             <description><![CDATA[TODO: Add a concise summary for "Memory Reinforcement Learning (MemRL)" describing the pattern's purpose and key benefits.]]></description>
             <link>https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</link>
@@ -101,6 +66,22 @@
             <category><![CDATA[value-aware-retrieval]]></category>
             <category><![CDATA[runtime-learning]]></category>
             <category><![CDATA[stability-plasticity]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Multi-Platform Webhook Triggers]]></title>
+            <description><![CDATA[Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled events) to allow external SaaS tools to automatically initiate agent workflows, enabling low-friction, reactive automation from existing platforms.]]></description>
+            <link>https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[webhooks]]></category>
+            <category><![CDATA[triggers]]></category>
+            <category><![CDATA[integrations]]></category>
+            <category><![CDATA[slack]]></category>
+            <category><![CDATA[notion]]></category>
+            <category><![CDATA[jira]]></category>
+            <category><![CDATA[scheduled-events]]></category>
+            <category><![CDATA[event-driven]]></category>
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -119,19 +100,20 @@
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Iterative Prompt & Skill Refinement]]></title>
-            <description><![CDATA[TODO: Add a concise summary for "Iterative Prompt & Skill Refinement" describing the pattern's purpose and key benefits.]]></description>
-            <link>https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[refinement]]></category>
-            <category><![CDATA[iteration]]></category>
-            <category><![CDATA[prompts]]></category>
+            <title><![CDATA[Skill Library Evolution]]></title>
+            <description><![CDATA[Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.]]></description>
+            <link>https://agentic-patterns.com/patterns/skill-library-evolution</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/skill-library-evolution</guid>
+            <category><![CDATA[Learning & Adaptation]]></category>
+            <category><![CDATA[code-reuse]]></category>
             <category><![CDATA[skills]]></category>
-            <category><![CDATA[feedback]]></category>
-            <category><![CDATA[multi-mechanism]]></category>
-            <category><![CDATA[continuous-improvement]]></category>
-            <category><![CDATA[dashboards]]></category>
+            <category><![CDATA[learning]]></category>
+            <category><![CDATA[capabilities]]></category>
+            <category><![CDATA[evolution]]></category>
+            <category><![CDATA[progressive-disclosure]]></category>
+            <category><![CDATA[on-demand-loading]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[lazy-loading]]></category>
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -149,52 +131,118 @@
             <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Reflection Loop]]></title>
-            <description><![CDATA[Generative models may produce subpar output if they never review or critique their own work.]]></description>
-            <link>https://agentic-patterns.com/patterns/reflection</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/reflection</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[self-feedback]]></category>
-            <category><![CDATA[iterative-improvement]]></category>
-            <category><![CDATA[evaluation]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Continuous Autonomous Task Loop Pattern]]></title>
-            <description><![CDATA[Continuous autonomous loop that handles task selection, execution, and completion without human intervention, with intelligent rate limit handling and automated git management.]]></description>
-            <link>https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[autonomous-execution]]></category>
-            <category><![CDATA[task-loop]]></category>
-            <category><![CDATA[rate-limiting]]></category>
-            <category><![CDATA[git-automation]]></category>
-            <category><![CDATA[cli-driven]]></category>
-            <category><![CDATA[stream-processing]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Tool Use Incentivization via Reward Shaping]]></title>
-            <description><![CDATA[Provide dense, shaped rewards for every intermediate tool invocation to encourage coding agents to use compilers, linters, and test runners instead of relying solely on internal reasoning tokens.]]></description>
-            <link>https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[tool-use]]></category>
-            <category><![CDATA[reward-shaping]]></category>
-            <category><![CDATA[coding-agent]]></category>
-            <category><![CDATA[RL]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Asynchronous Coding Agent Pipeline]]></title>
-            <description><![CDATA[Decouple inference, tool execution, and learning into parallel asynchronous components communicating via message queues to maximize GPU utilization and eliminate compute bubbles from synchronous tool calls.]]></description>
-            <link>https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</guid>
+            <title><![CDATA[Workflow Evals with Mocked Tools]]></title>
+            <description><![CDATA[TODO: Add a concise summary for "Workflow Evals with Mocked Tools" describing the pattern's purpose and key benefits.]]></description>
+            <link>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</guid>
             <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[asynchronous]]></category>
-            <category><![CDATA[pipeline]]></category>
-            <category><![CDATA[code-agent]]></category>
-            <category><![CDATA[parallelism]]></category>
+            <category><![CDATA[evals]]></category>
+            <category><![CDATA[testing]]></category>
+            <category><![CDATA[ci-cd]]></category>
+            <category><![CDATA[mocked-tools]]></category>
+            <category><![CDATA[simulations]]></category>
+            <category><![CDATA[workflow-validation]]></category>
+            <category><![CDATA[end-to-end-testing]]></category>
+            <pubDate>Tue, 13 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Abstracted Code Representation for Review]]></title>
+            <description><![CDATA[TODO: Add a concise summary for "Abstracted Code Representation for Review" describing the pattern's purpose and key benefits.]]></description>
+            <link>https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[code-review]]></category>
+            <category><![CDATA[verification]]></category>
+            <category><![CDATA[abstraction]]></category>
+            <category><![CDATA[pseudocode]]></category>
+            <category><![CDATA[intent-based-review]]></category>
+            <category><![CDATA[explainability]]></category>
+            <category><![CDATA[software-quality]]></category>
+            <category><![CDATA[human-ai-interface]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Action-Selector Pattern]]></title>
+            <description><![CDATA[## Problem
+Untrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.]]></description>
+            <link>https://agentic-patterns.com/patterns/action-selector-pattern</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/action-selector-pattern</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[prompt-injection]]></category>
+            <category><![CDATA[control-flow]]></category>
+            <category><![CDATA[safety]]></category>
+            <category><![CDATA[tool-use]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent Reinforcement Fine-Tuning (Agent RFT)]]></title>
+            <description><![CDATA[Train model weights end-to-end on agentic tasks via reinforcement learning with real tool calls and custom reward signals, optimizing for domain-specific tool use efficiency and multi-step reasoning performance.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning</guid>
+            <category><![CDATA[Learning & Adaptation]]></category>
+            <category><![CDATA[reinforcement-learning]]></category>
+            <category><![CDATA[fine-tuning]]></category>
+            <category><![CDATA[tool-use]]></category>
+            <category><![CDATA[multi-step-rl]]></category>
+            <category><![CDATA[agent-training]]></category>
+            <category><![CDATA[exploration]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent SDK for Programmatic Control]]></title>
+            <description><![CDATA[TODO: Add a concise summary for "Agent SDK for Programmatic Control" describing the pattern's purpose and key benefits.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[sdk]]></category>
+            <category><![CDATA[automation]]></category>
+            <category><![CDATA[ci/cd]]></category>
+            <category><![CDATA[programmatic access]]></category>
+            <category><![CDATA[scripting]]></category>
+            <category><![CDATA[api]]></category>
+            <category><![CDATA[headless agent]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent-Assisted Scaffolding]]></title>
+            <description><![CDATA[## Problem
+Starting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-assisted-scaffolding</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-assisted-scaffolding</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[code-generation]]></category>
+            <category><![CDATA[bootstrapping]]></category>
+            <category><![CDATA[scaffolding]]></category>
+            <category><![CDATA[feature-development]]></category>
+            <category><![CDATA[ide]]></category>
+            <category><![CDATA[initial-setup]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent-Driven Research]]></title>
+            <description><![CDATA[## Problem
+Traditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-driven-research</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-driven-research</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[research]]></category>
+            <category><![CDATA[information retrieval]]></category>
+            <category><![CDATA[tool use]]></category>
+            <category><![CDATA[iterative process]]></category>
+            <category><![CDATA[autonomous search]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent-First Tooling and Logging]]></title>
+            <description><![CDATA[TODO: Add a concise summary for "Agent-First Tooling and Logging" describing the pattern's purpose and key benefits.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[tool-design]]></category>
+            <category><![CDATA[logging]]></category>
+            <category><![CDATA[machine-readable]]></category>
+            <category><![CDATA[observability]]></category>
+            <category><![CDATA[agent-environment]]></category>
             <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -211,84 +259,51 @@
             <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Isolated VM per RL Rollout]]></title>
-            <description><![CDATA[Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination between parallel agent executions, ensuring safe training with destructive tool access.]]></description>
-            <link>https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[isolation]]></category>
-            <category><![CDATA[security]]></category>
-            <category><![CDATA[reinforcement-learning]]></category>
-            <category><![CDATA[infrastructure]]></category>
-            <category><![CDATA[state-management]]></category>
-            <category><![CDATA[agent-rft]]></category>
+            <title><![CDATA[Agent-Powered Codebase Q&A / Onboarding]]></title>
+            <description><![CDATA[## Problem
+Understanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[code-understanding]]></category>
+            <category><![CDATA[onboarding]]></category>
+            <category><![CDATA[q&a]]></category>
+            <category><![CDATA[retrieval]]></category>
+            <category><![CDATA[search]]></category>
+            <category><![CDATA[context-awareness]]></category>
+            <category><![CDATA[knowledge-base]]></category>
             <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[No-Token-Limit Magic]]></title>
-            <description><![CDATA[Aggressive prompt compression to save tokens stifles reasoning depth and self-correction.]]></description>
-            <link>https://agentic-patterns.com/patterns/no-token-limit-magic</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/no-token-limit-magic</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[performance]]></category>
-            <category><![CDATA[cost]]></category>
-            <category><![CDATA[experimentation]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Human-in-the-Loop Approval Framework]]></title>
-            <description><![CDATA[Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails.]]></description>
-            <link>https://agentic-patterns.com/patterns/human-in-loop-approval-framework</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/human-in-loop-approval-framework</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[human-oversight]]></category>
-            <category><![CDATA[safety]]></category>
-            <category><![CDATA[approvals]]></category>
-            <category><![CDATA[risk-management]]></category>
-            <category><![CDATA[collaboration]]></category>
-            <category><![CDATA[slack-integration]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Stop Hook Auto-Continue Pattern]]></title>
-            <description><![CDATA[Use stop hooks to programmatically check success criteria after each agent turn, automatically continuing execution until the task is genuinely complete, enabling true task completion without manual intervention.]]></description>
-            <link>https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[hooks]]></category>
-            <category><![CDATA[automation]]></category>
-            <category><![CDATA[testing]]></category>
-            <category><![CDATA[determinism]]></category>
-            <category><![CDATA[success-criteria]]></category>
-            <category><![CDATA[continuous-execution]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Structured Output Specification]]></title>
-            <description><![CDATA[Constrain agent outputs using deterministic schemas that enforce structured, machine-readable results, enabling reliable validation, parsing, and integration with downstream systems.]]></description>
-            <link>https://agentic-patterns.com/patterns/structured-output-specification</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/structured-output-specification</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[structured-output]]></category>
-            <category><![CDATA[schema]]></category>
-            <category><![CDATA[validation]]></category>
-            <category><![CDATA[reliability]]></category>
-            <category><![CDATA[type-safety]]></category>
-            <category><![CDATA[integration]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Shell Command Contextualization]]></title>
-            <description><![CDATA[Provide a mechanism (e.g., `!` prefix) to execute shell commands locally and automatically inject both the command and output into the agent's context for seamless integration.]]></description>
-            <link>https://agentic-patterns.com/patterns/shell-command-contextualization</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/shell-command-contextualization</guid>
+            <title><![CDATA[Agentic Search Over Vector Embeddings]]></title>
+            <description><![CDATA[TODO: Add a concise summary for "Agentic Search Over Vector Embeddings" describing the pattern's purpose and key benefits.]]></description>
+            <link>https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings</guid>
             <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[shell integration]]></category>
-            <category><![CDATA[context management]]></category>
-            <category><![CDATA[local execution]]></category>
+            <category><![CDATA[search]]></category>
+            <category><![CDATA[vector-embeddings]]></category>
             <category><![CDATA[bash]]></category>
-            <category><![CDATA[cli]]></category>
-            <category><![CDATA[interactive tools]]></category>
+            <category><![CDATA[grep]]></category>
+            <category><![CDATA[RAG]]></category>
+            <category><![CDATA[agentic-RAG]]></category>
+            <category><![CDATA[maintenance]]></category>
+            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[AI-Accelerated Learning and Skill Development]]></title>
+            <description><![CDATA[## Problem
+Developing strong software engineering skills, including "taste" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers.]]></description>
+            <link>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[developer-productivity]]></category>
+            <category><![CDATA[learning]]></category>
+            <category><![CDATA[skill-acquisition]]></category>
+            <category><![CDATA[iteration]]></category>
+            <category><![CDATA[feedback]]></category>
+            <category><![CDATA[taste-development]]></category>
+            <category><![CDATA[education]]></category>
+            <category><![CDATA[junior-developer]]></category>
             <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

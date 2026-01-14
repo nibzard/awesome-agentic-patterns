@@ -1,0 +1,25 @@
+{
+  "title": "Memory Reinforcement Learning (MemRL)",
+  "status": "proposed",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian University, MemTensor)"
+  ],
+  "category": "Learning & Adaptation",
+  "source": "https://arxiv.org/html/2601.03192v1",
+  "tags": [
+    "reinforcement-learning",
+    "episodic-memory",
+    "self-evolution",
+    "value-aware-retrieval",
+    "runtime-learning",
+    "stability-plasticity"
+  ],
+  "slug": "memory-reinforcement-learning-memrl",
+  "id": "memory-reinforcement-learning-memrl",
+  "summary": "TODO: Add a concise summary for \"Memory Reinforcement Learning (MemRL)\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-13",
+  "body": "\n## Problem\n\nLLMs struggle with **runtime self-evolution** due to the stability-plasticity dilemma:\n\n- **Fine-tuning**: Computationally expensive and prone to catastrophic forgetting\n- **RAG/memory systems**: Rely on semantic similarity that retrieves noise\n- **No utility learning**: Can't distinguish high-value strategies from semantically similar but ineffective ones\n\nStandard retrieval assumes \"similar implies useful,\" but that's often wrong. A semantically relevant past solution might actually be a bad approach for the current task.\n\n## Solution\n\n**MemRL** adds learned \"utility scores\" to episodic memory, so agents learn from experience which memories actually lead to success—without modifying the model.\n\n**Core idea:** Instead of just retrieving by similarity, rank memories by how well they've worked in the past.\n\n**Memory triplet structure:**\n\n- **Intent**: What the user asked for (embedded)\n- **Experience**: What the agent tried (solution trace)\n- **Utility**: How well it worked (learned score, updated over time)\n\n**Two-phase retrieval:**\n\n1. **Phase A - Semantic filter**: Find semantically similar memories\n2. **Phase B - Utility ranking**: Re-rank by learned utility scores\n\nThis filters out \"distractor\" memories that look relevant but historically lead to poor outcomes.\n\n```mermaid\ngraph LR\n    A[Query] --> B[Find Similar Memories]\n    B --> C[Rank by Utility Scores]\n    C --> D[Use Top Memories]\n    D --> E[Get Result]\n    E --> F[Update Utilities]\n    F --> G[Store New Experience]\n\n    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px\n    style F fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n```\n\n## How to use it\n\n**Basic implementation:**\n\n1. **Store experiences with utility scores**\n\n   ```python\n   memory_bank.append({\n       \"intent\": embed(query),\n       \"experience\": solution_trace,\n       \"utility\": 0.5  # initial score, learned over time\n   })\n   ```\n\n2. **Retrieve with utility ranking**\n\n   ```python\n   # First: filter by similarity\n   candidates = similar_memories(query, threshold=0.7)\n\n   # Then: re-rank by utility\n   ranked = sorted(candidates, key=lambda m: m.utility, reverse=True)\n   context = ranked[:k]\n   ```\n\n3. **Update utilities based on outcomes**\n\n   ```python\n   reward = 1 if success else 0\n   for mem in retrieved_contexts:\n       mem.utility += learning_rate * (reward - mem.utility)\n   ```\n\n**Why this works:**\n- Successful memories get higher scores, retrieved more often\n- Failed memories get downranked, even if semantically similar\n- Frozen LLM stays stable; only memory utilities evolve\n- Agent self-improves through runtime experience\n\n## Trade-offs\n\n**Pros:**\n\n- No catastrophic forgetting (frozen LLM)\n- Self-improves from experience\n- Filters out \"look-alike\" bad solutions\n- No retraining needed\n\n**Cons:**\n\n- Need reliable success/failure signals\n- Memory overhead grows over time\n- Cold start: needs episodes to learn\n- More complex than basic RAG\n\n**When to use:**\n- Multi-step tasks with clear success signals\n- Reusable problem-solving patterns\n- Can't afford fine-tuning\n\n**When NOT to use:**\n- Single-turn queries\n- No clear reward signals\n- Highly diverse tasks (no patterns)\n\n## References\n\n* [Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](https://arxiv.org/html/2601.03192v1) - Shengtao Zhang, Jiaqian Wang, et al. (2025)\n* Related: Episodic Memory Retrieval & Injection, Memory Synthesis from Execution Logs, Agent Reinforcement Fine-Tuning\n"
+}

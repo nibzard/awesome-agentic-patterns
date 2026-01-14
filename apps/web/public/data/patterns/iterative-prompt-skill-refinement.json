@@ -1,0 +1,27 @@
+{
+  "title": "Iterative Prompt & Skill Refinement",
+  "status": "proposed",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Will Larson (Imprint)"
+  ],
+  "category": "Feedback Loops",
+  "source": "https://lethain.com/agents-iterative-refinement/",
+  "tags": [
+    "refinement",
+    "iteration",
+    "prompts",
+    "skills",
+    "feedback",
+    "multi-mechanism",
+    "continuous-improvement",
+    "dashboards"
+  ],
+  "slug": "iterative-prompt-skill-refinement",
+  "id": "iterative-prompt-skill-refinement",
+  "summary": "TODO: Add a concise summary for \"Iterative Prompt & Skill Refinement\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-13",
+  "body": "\n## Problem\n\nAgent usage reveals gaps in prompts, skills, and tools—but how do you systematically improve them? When a workflow fails or behaves sub-optimally, you need multiple mechanisms to capture feedback and iterate. Single approaches aren't enough; you need a **multi-pronged refinement strategy**.\n\n## Solution\n\nImplement **multiple complementary refinement mechanisms** that work together. No single mechanism catches all issues—you need layered approaches.\n\n**Four key mechanisms:**\n\n**1. Responsive Feedback (Primary)**\n- Monitor internal `#ai` channel for issues\n- Skim workflow interactions daily\n- This is the most valuable ongoing source of improvement\n\n**2. Owner-Led Refinement (Secondary)**\n- Store prompts in editable documents (Notion, Google Docs)\n- Most prompts editable by anyone at the company\n- Include prompt links in workflow outputs (Slack messages, Jira comments)\n- Prompts must be discoverable + editable\n\n**3. Claude-Enhanced Refinement (Specialized)**\n- Use Datadog MCP to pull logs into skill repository\n- Skills are a \"platform\" used by many workflows\n- Often maintained by central AI team, not individual owners\n\n**4. Dashboard Tracking (Quantitative)**\n- Track workflow run frequency and errors\n- Track tool usage (how often each skill loads)\n- Data-driven prioritization of improvements\n\n```mermaid\ngraph TD\n    A[Workflow Runs] --> B[Feedback Channel: #ai]\n    A --> C[Owner Edits Prompts]\n    A --> D[Datadog Logs → Claude]\n    A --> E[Dashboards: Metrics]\n\n    B --> F[Identify Issues]\n    C --> F\n    D --> F\n    E --> F\n\n    F --> G[Update Prompts/Skills]\n    G --> A\n\n    style B fill:#e8f5e9,stroke:#388e3c,stroke-width:2px\n    style E fill:#e3f2fd,stroke:#1976d2,stroke-width:2px\n```\n\n## How to use it\n\n**Implementation checklist:**\n\n- [ ] **Feedback channel**: Internal Slack/Discord for agent issues\n- [ ] **Editable prompts**: Store in Notion/docs, not code\n- [ ] **Prompt links**: Include in every workflow output\n- [ ] **Log access**: Datadog/observability with MCP integration\n- [ ] **Dashboards**: Track workflow runs, errors, tool usage\n\n**Refinement workflow:**\n\n```python\n# After each workflow run, include link\nworkflow_result = {\n    \"output\": \"...\",\n    \"prompt_link\": \"https://notion.so/prompt-abc123\"\n}\n```\n\n**Discovery strategy:**\n\n- **Daily**: Skim feedback channel, review workflow interactions\n- **Weekly**: Review dashboard metrics for error spikes\n- **Ad-hoc**: Pull logs when specific issues reported\n- **Quarterly**: Comprehensive prompt/skill audit\n\n**Post-run evals (next step):**\n\nInclude subjective eval after each run:\n- Was this workflow effective?\n- What would have made it better?\n- Human-in-the-loop to nudge evolution\n\n## Trade-offs\n\n**Pros:**\n\n- **Multi-layered**: Catches issues different mechanisms miss\n- **Continuous**: Always improving, not episodic\n- **Accessible**: Anyone can contribute to improvement\n- **Data-driven**: Dashboards prioritize what matters\n- **Skill-sharing**: Central team can maintain platform-level skills\n\n**Cons:**\n\n- **No silver bullet**: Can't eliminate any mechanism\n- **Maintenance overhead**: Multiple systems to manage\n- **Permission complexity**: Need balanced edit access\n- **Alert fatigue**: Too many signals can overwhelm\n\n**Workflow archetypes:**\n\n| Type | Refinement Strategy |\n|------|---------------------|\n| **Chatbots** | Post-run evals + human-in-the-loop |\n| **Well-understood workflows** | Code-driven (deterministic) |\n| **Not-yet-understood workflows** | The open question |\n\n**Open challenge:** How to scalably identify and iterate on \"not-yet-well-understood\" workflows without product engineers implementing each individually?\n\n## References\n\n* [Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (Imprint, 2026)\n* Related: Dogfooding with Rapid Iteration, Compounding Engineering, Memory Synthesis from Execution Logs\n"
+}

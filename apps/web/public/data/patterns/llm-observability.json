@@ -1,0 +1,28 @@
+{
+  "title": "LLM Observability",
+  "status": "proposed",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Will Larson (Imprint)"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://lethain.com/agents-logging/",
+  "tags": [
+    "observability",
+    "logging",
+    "debugging",
+    "tracing",
+    "datadog",
+    "langsmith",
+    "spans",
+    "monitoring",
+    "llmops"
+  ],
+  "slug": "llm-observability",
+  "id": "llm-observability",
+  "summary": "Integrate LLM observability platforms for span-level tracing of agent workflows, providing visual UI debugging, workflow linking, and aggregate metrics to enable fast navigation of complex multi-step executions.",
+  "updated_at": "2026-01-13",
+  "body": "\n## Problem\n\nAgents introduce **non-determinism**—the same input can produce different outputs. When agents do something sub-optimal, users flag it as a \"bug\" even if it's just prompt ambiguity. Debugging these issues requires tracing through complex multi-step workflows, but standard logging (CloudWatch, Lambda logs) is painful to navigate. Engineers need easy access to workflow execution details to debug quickly, or agents won't get adopted.\n\n## Solution\n\nIntegrate **LLM observability platforms** (Datadog LLM Observability, LangSmith, etc.) that provide **span-level tracing** of agent workflows. Instead of spelunking through raw logs, get a visual UI showing each step of the agent's execution.\n\n**Key capabilities:**\n\n- **Span visualization**: See each LLM call, tool use, and intermediate result\n- **Workflow linking**: Trace from user input through all sub-steps to final output\n- **Dashboarding**: Aggregate metrics on cost, latency, success rates\n- **Accessible debugging**: Non-engineers can debug without log access\n\n**Evolution from standard logging:**\n\n1. **Print to stdout** → Captured in Lambda logs (hard to access)\n2. **Slack channel** → Post run summary + AWS log link (better, still spelunking)\n3. **LLM observability** → Visual span tracing, easy navigation\n\n```mermaid\ngraph LR\n    A[Agent Run] --> B[Observability SDK]\n    B --> C[Span: LLM Call 1]\n    B --> D[Span: Tool Use]\n    B --> E[Span: LLM Call 2]\n    C --> F[Trace UI]\n    D --> F\n    E --> F\n    F --> G[Debug View]\n\n    style F fill:#e8f5e9,stroke:#388e3c,stroke-width:2px\n```\n\n## How to use it\n\n**Integration steps:**\n\n1. **Choose observability platform**: Datadog LLM Observability, LangSmith, Arize, etc.\n2. **Install SDK**: Add to your agent code (often 1-2 lines)\n3. **Configure tracing**: Tag workflows, users, environments\n4. **Access controls**: Give broader team access (not just engineers)\n\n**Example with Datadog:**\n\n```python\nfrom ddtrace import tracer\n\n# Automatically traces LLM calls\n@tracer.wrap(\"agent_workflow\")\ndef run_agent(query):\n    result = agent.run(query)\n    # Each LLM call, tool use becomes a span\n    return result\n```\n\n**Best practices:**\n\n- **Tag everything**: Workflow name, user ID, environment (prod/staging)\n- **Link to dashboards**: Make observability UI discoverable from chat\n- **Share access**: Don't restrict to eng org; workflow creators need visibility\n- **Monitor aggregate metrics**: Track success rates, latency, costs over time\n\n## Trade-offs\n\n**Pros:**\n\n- **Fast debugging**: Navigate complex workflows visually\n- **Accessible**: Non-engineers can debug without log permissions\n- **Aggregated metrics**: See patterns across many runs\n- **Span-level detail**: Drill into any step of execution\n\n**Cons:**\n\n- **Vendor dependency**: Locked into observability platform\n- **Cost**: Enterprise observability can be expensive\n- **Overhead**: Adds latency (usually minimal)\n- **Access control**: Balancing visibility with security\n\n**When NOT to use:**\n\n- Simple, deterministic tools (no agent behavior)\n- Single-step operations (standard logs suffice)\n- Budget constraints preventing observability spend\n\n## References\n\n* [Building an internal agent: Logging and debugability](https://lethain.com/agents-logging/) - Will Larson (Imprint, 2025)\n* Datadog LLM Observability documentation\n* LangSmith documentation\n* Related: Agent-First Tooling and Logging, Chain-of-Thought Monitoring & Interruption\n"
+}

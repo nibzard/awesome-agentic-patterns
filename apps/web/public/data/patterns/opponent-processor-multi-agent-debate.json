@@ -1,0 +1,26 @@
+{
+  "title": "Opponent Processor / Multi-Agent Debate Pattern",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Dan Shipper (Every)",
+    "Reddit Community"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
+  "tags": [
+    "multi-agent",
+    "debate",
+    "adversarial",
+    "bias-reduction",
+    "uncorrelated-context",
+    "validation"
+  ],
+  "slug": "opponent-processor-multi-agent-debate",
+  "id": "opponent-processor-multi-agent-debate-pattern",
+  "summary": "TODO: Add a concise summary for \"Opponent Processor / Multi-Agent Debate Pattern\" describing the pattern's purpose and key benefits.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nSingle-agent decision making can suffer from:\n\n- **Confirmation bias**: Agent finds evidence supporting initial hypothesis\n- **Limited perspectives**: One context window misses alternative approaches\n- **Insufficient scrutiny**: No adversarial pressure to defend decisions\n- **Unexamined assumptions**: Agent doesn't challenge its own reasoning\n\n## Solution\n\nSpawn **opposing agents** with different goals or perspectives to debate each other's positions. The conflict between agents surfaces blind spots, biases, and unconsidered alternatives.\n\n**Key mechanism**: Create agents with opposing incentives or roles, let them critique each other's work, then synthesize results.\n\n```mermaid\ngraph TD\n    A[Main Task] --> B[Agent 1: Advocate]\n    A --> C[Agent 2: Critic/Auditor]\n    B --> D[Proposes Solution]\n    C --> E[Challenges Solution]\n    D --> F[Debate / Iteration]\n    E --> F\n    F --> G[Synthesized Decision]\n```\n\n**Example configurations:**\n\n- **Pro vs. Con**: One agent argues for acceptance, another for rejection\n- **Optimistic vs. Conservative**: Different risk tolerances\n- **User advocate vs. Company auditor**: Competing interests\n- **Frontend dev vs. Backend dev**: Different technical perspectives\n\n## How to use it\n\n**Implementation pattern:**\n\n1. Define opposing roles with clear incentives\n2. Spawn both agents with same context but different system prompts\n3. Have them work independently (uncorrelated context windows)\n4. Collect their outputs\n5. Either synthesize automatically or review differences manually\n\n**Concrete example from transcript (expense filing):**\n\n> \"I have two subagents, one that represents me and one that represents the company. And they do battle to figure out what's the proper actual set of expenses. It's like an auditor subagent and a pro-Dan subagent.\"\n\n**Other use cases:**\n\n- **Code review**: Author-defender vs. Security-auditor\n- **Architecture decisions**: Simplicity advocate vs. Future-proofing advocate\n- **Content moderation**: Free speech vs. Safety\n- **Resource allocation**: Different department representatives\n\n**Historical inspiration (from transcript):**\n\nEarly Reddit thread showed subagents as: Frontend dev, Backend dev, Designer, Testing dev, PM—all debating implementation.\n\n## Trade-offs\n\n**Pros:**\n\n- **Reduces bias**: Opposing views surface blind spots\n- **Better decisions**: Adversarial pressure improves quality\n- **Uncorrelated context**: Independent reasoning prevents groupthink\n- **Explicit trade-offs**: Forces articulation of competing values\n- **Checks and balances**: No single agent has unchallenged authority\n\n**Cons:**\n\n- **2x+ token cost**: Multiple agents processing same information\n- **Slower execution**: Debate takes time compared to single decision\n- **May produce conflict**: Agents might deadlock without resolution mechanism\n- **Requires synthesis**: Need method to reconcile opposing views\n- **Over-engineering for simple tasks**: Not every decision needs debate\n\n## References\n\n* Dan Shipper: \"One of my non-technical Claude Code use cases is expense filing... I have two subagents, one that represents me and one that represents the company. And they do battle to figure out what's the proper actual set of expenses.\"\n* Boris Cherny: \"There's a Reddit thread where someone made subagents for front end dev, back end dev, designer, testing dev, PM... I think the value is actually the uncorrelated context windows where you have these two context windows that don't know about each other. You tend to get better results this way.\"\n* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)\n"
+}

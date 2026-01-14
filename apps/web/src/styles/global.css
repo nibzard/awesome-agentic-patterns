@@ -1,5 +1,6 @@
 /* CSS Custom Properties - Light Mode (default) */
-:root {
+:root,
+:root[data-theme='light'] {
   /* Colors - neutral */
   --color-bg: #ffffff;
   --color-fg: #0a0a0a;
@@ -43,8 +44,29 @@
 }
 
 /* CSS Custom Properties - Dark Mode */
+:root[data-theme='dark'] {
+  /* Colors - neutral */
+  --color-bg: #0a0a0a;
+  --color-fg: #ffffff;
+  --color-text: #e5e5e5;
+  --color-text-muted: #a3a3a3;
+  --color-border: #262626;
+  --color-divider: #404040;
+
+  /* Colors - primary */
+  --color-primary: #3399ff;
+  --color-primary-hover: #66b3ff;
+  --color-primary-light: #0d1f33;
+
+  /* Colors - status */
+  --color-success: #22c55e;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     /* Colors - neutral */
     --color-bg: #0a0a0a;
     --color-fg: #ffffff;
@@ -162,8 +184,13 @@ img {
 }
 
 /* Dark mode support for Mermaid */
+:root[data-theme='dark'] .mermaid {
+  background-color: var(--color-bg);
+  border-color: var(--color-border);
+}
+
 @media (prefers-color-scheme: dark) {
-  .mermaid {
+  :root:not([data-theme]) .mermaid {
     background-color: var(--color-bg);
     border-color: var(--color-border);
   }

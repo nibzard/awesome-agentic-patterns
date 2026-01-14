@@ -1,0 +1,27 @@
+{
+  "title": "Compounding Engineering Pattern",
+  "status": "emerging",
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Dan Shipper (Every)",
+    "Every Engineering Team"
+  ],
+  "category": "Learning & Adaptation",
+  "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
+  "tags": [
+    "learning",
+    "feedback-loops",
+    "codification",
+    "prompts",
+    "slash-commands",
+    "onboarding",
+    "knowledge-sharing"
+  ],
+  "slug": "compounding-engineering-pattern",
+  "id": "compounding-engineering-pattern",
+  "summary": "Codify all learnings from each feature into reusable prompts, slash commands, subagents, and hooks—making each feature easier to build by creating increasingly \"self-teaching\" codebase that accelerates productivity over time.",
+  "updated_at": "2026-01-05",
+  "body": "\n## Problem\n\nTraditional software engineering has **diminishing returns**: each feature added increases complexity, making subsequent features harder to build. Technical debt accumulates, onboarding takes longer, and new team members struggle to be productive.\n\nWith AI coding agents, this problem is amplified—agents make the same mistakes repeatedly because learnings aren't systematically captured and codified.\n\n## Solution\n\nFlip the equation: make each feature **compound** by codifying all learnings into reusable agent instructions. When you complete a feature, document:\n\n1. **What worked in the plan** and what needed adjustment\n2. **Issues discovered during testing** that weren't caught earlier\n3. **Common mistakes** the agent made\n4. **Patterns and best practices** that should be reused\n\nThen embed these insights into:\n\n- **Claude MD / system prompts**: Global coding standards\n- **Slash commands**: Repeatable workflows (e.g., `/test-with-validation`)\n- **Subagents**: Specialized validators (e.g., security review agent)\n- **Hooks**: Automated checks that prevent regressions\n\n**Result**: Each feature makes the next easier because the codebase becomes increasingly \"self-teaching.\"\n\n```mermaid\ngraph LR\n    A[Build Feature] --> B[Document Learnings]\n    B --> C[Codify into Prompts/Commands]\n    C --> D[Next Feature Uses Knowledge]\n    D --> E[Easier & Faster Build]\n    E --> A\n```\n\n## How to use it\n\n**During feature development:**\n\n1. Track what the agent got wrong initially\n2. Note which parts of the plan needed revision\n3. Document edge cases discovered during testing\n4. Identify questions you had to answer repeatedly\n\n**After completion:**\n\n1. Update `CLAUDE.md` with new coding standards or patterns\n2. Create slash commands for workflows you'll repeat\n3. Build subagents for specialized validation tasks\n4. Add hooks to prevent common mistakes automatically\n5. Write tests that encode requirements\n\n**Example from Every:**\n\n> \"We have this engineering paradigm called compounding engineering where your goal is to make the next feature easier to build... We codify all the learnings from everything we've done. When we started testing, what issues did we find? What things did we miss? And we codify them back into all the prompts and subagents and slash commands.\"\n\nThis allows non-experts to be productive immediately:\n\n> \"I can hop into one of our code bases and start being productive even though I don't know anything about how the code works because we have this built up memory system.\"\n\n## Trade-offs\n\n**Pros:**\n\n- **Accelerating productivity**: Each feature genuinely makes the next faster\n- **Knowledge preservation**: Learnings don't depend on individual memory\n- **Better onboarding**: New team members (human or AI) leverage accumulated knowledge\n- **Reduced repetition**: Agent stops making the same mistakes\n- **Living documentation**: Instructions stay current because they're used daily\n\n**Cons:**\n\n- **Upfront time investment**: Requires discipline to document after each feature\n- **Maintenance overhead**: Prompts and commands need updates as patterns change\n- **Over-specification risk**: Too many rules can make agents inflexible\n- **Requires tooling**: Needs extensible agent system (slash commands, hooks, etc.)\n- **Prompt bloat**: System prompts can grow large over time\n\n## References\n\n* Dan Shipper: \"In normal engineering, every feature you add, it makes it harder to add the next feature. In compounding engineering, your goal is to make the next feature easier to build from the feature that you just added.\"\n* Dan Shipper: \"We codify all the learnings... how did we make the plan, what parts needed to be changed, when we started testing it what issues did we find, what are the things that we missed, and then we codify them back into all the prompts and all the subagents and all the slash commands.\"\n* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)\n"
+}

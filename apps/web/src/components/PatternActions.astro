@@ -166,6 +166,39 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     Copy as JSON
   </button>
 
+  <details
+    class="pack-details"
+    data-pack-action
+    data-pattern-slug={pattern.slug}
+    data-pattern-title={pattern.title}
+  >
+    <summary class="action-button" aria-label="Add this pattern to a pack">Add to Pack</summary>
+    <div class="pack-panel">
+      <div class="pack-row">
+        <label class="pack-label" for={`pack-select-${pattern.slug}`}>Choose pack</label>
+        <select class="pack-select" id={`pack-select-${pattern.slug}`} aria-label="Select a pack">
+          <option value="">No packs yet</option>
+        </select>
+        <button class="pack-add" type="button" data-pack-add>Add</button>
+      </div>
+      <div class="pack-divider">or</div>
+      <div class="pack-row">
+        <label class="pack-label" for={`pack-new-${pattern.slug}`}>New pack</label>
+        <input
+          class="pack-input"
+          id={`pack-new-${pattern.slug}`}
+          type="text"
+          placeholder="Name your pack"
+        />
+        <button class="pack-create" type="button" data-pack-create>Create</button>
+      </div>
+      <p class="pack-hint">
+        Saved locally in this browser. Manage and export packs on the Packs page.
+      </p>
+      <span class="pack-feedback" aria-live="polite"></span>
+    </div>
+  </details>
+
   <details class="citation-details">
     <summary class="action-button" aria-label="Cite this pattern">Cite This Pattern</summary>
     <div class="citation-panel">
@@ -192,6 +225,8 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 <script>
   const buttons = document.querySelectorAll('[data-copy]');
   const feedback = document.querySelector('.copy-feedback');
+  const packContainer = document.querySelector('[data-pack-action]');
+  const storageKey = 'aap:user-packs';
 
   buttons.forEach((button) => {
     button.addEventListener('click', async () => {
@@ -214,6 +249,130 @@ const jsonContent = JSON.stringify(pattern, null, 2);
       }
     });
   });
+
+  const loadPacks = () => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      const parsed = stored ? JSON.parse(stored) : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map((pack) => ({
+        ...pack,
+        patterns: Array.isArray(pack.patterns) ? pack.patterns : [],
+      }));
+    } catch (error) {
+      return [];
+    }
+  };
+
+  const savePacks = (packs) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(packs));
+    } catch (error) {
+      showPackFeedback('Unable to save packs in this browser.', true);
+    }
+  };
+
+  const showPackFeedback = (message, isError = false) => {
+    if (!packContainer) return;
+    const feedbackEl = packContainer.querySelector('.pack-feedback');
+    if (!feedbackEl) return;
+    feedbackEl.textContent = message;
+    feedbackEl.classList.toggle('pack-feedback--error', isError);
+    setTimeout(() => {
+      feedbackEl.textContent = '';
+      feedbackEl.classList.remove('pack-feedback--error');
+    }, 2400);
+  };
+
+  const renderPackSelect = (selectEl, addButton, packs) => {
+    if (!selectEl) return;
+    selectEl.innerHTML = '';
+    if (packs.length === 0) {
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = 'No packs yet';
+      selectEl.appendChild(option);
+      selectEl.disabled = true;
+      if (addButton) addButton.disabled = true;
+      return;
+    }
+    selectEl.disabled = false;
+    if (addButton) addButton.disabled = false;
+    packs.forEach((pack) => {
+      const option = document.createElement('option');
+      option.value = pack.id;
+      option.textContent = `${pack.name} (${pack.patterns.length})`;
+      selectEl.appendChild(option);
+    });
+  };
+
+  const createPackId = () =>
+    `pack-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+
+  const addPatternToPack = (packs, packId, slug) => {
+    const pack = packs.find((item) => item.id === packId);
+    if (!pack) return { packs, status: 'missing' };
+    if (!pack.patterns.includes(slug)) {
+      pack.patterns.push(slug);
+      pack.updatedAt = new Date().toISOString();
+      return { packs, status: 'added', pack };
+    }
+    return { packs, status: 'exists', pack };
+  };
+
+  if (packContainer) {
+    const slug = packContainer.getAttribute('data-pattern-slug') || '';
+    const selectEl = packContainer.querySelector('.pack-select');
+    const addButton = packContainer.querySelector('[data-pack-add]');
+    const createButton = packContainer.querySelector('[data-pack-create]');
+    const createInput = packContainer.querySelector('.pack-input');
+
+    const packs = loadPacks();
+    renderPackSelect(selectEl, addButton, packs);
+
+    addButton?.addEventListener('click', () => {
+      const selectedId = selectEl?.value;
+      if (!selectedId) {
+        showPackFeedback('Create a pack first.', true);
+        return;
+      }
+      const nextPacks = loadPacks();
+      const result = addPatternToPack(nextPacks, selectedId, slug);
+      if (result.status === 'missing') {
+        showPackFeedback('Pack not found.', true);
+        return;
+      }
+      if (result.status === 'exists') {
+        showPackFeedback('Already in that pack.');
+        return;
+      }
+      savePacks(result.packs);
+      renderPackSelect(selectEl, addButton, result.packs);
+      showPackFeedback(`Added to ${result.pack.name}.`);
+    });
+
+    createButton?.addEventListener('click', () => {
+      const name = createInput?.value.trim();
+      if (!name) {
+        showPackFeedback('Add a pack name.', true);
+        return;
+      }
+      const nextPacks = loadPacks();
+      const newPack = {
+        id: createPackId(),
+        name,
+        patterns: slug ? [slug] : [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      nextPacks.unshift(newPack);
+      savePacks(nextPacks);
+      renderPackSelect(selectEl, addButton, nextPacks);
+      if (selectEl) selectEl.value = newPack.id;
+      if (createInput) createInput.value = '';
+      showPackFeedback(`Created "${name}".`);
+    });
+  }
 </script>
 
 <style>
@@ -251,6 +410,98 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
   .action-button svg {
     flex-shrink: 0;
+  }
+
+  .pack-details {
+    flex-basis: 100%;
+  }
+
+  .pack-details summary {
+    list-style: none;
+  }
+
+  .pack-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pack-panel {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg);
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .pack-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) 1.5fr auto;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  .pack-label {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .pack-select,
+  .pack-input {
+    width: 100%;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.875rem;
+  }
+
+  .pack-add,
+  .pack-create {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .pack-add:hover,
+  .pack-create:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .pack-add:disabled,
+  .pack-create:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .pack-divider {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .pack-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .pack-feedback {
+    font-size: 0.8125rem;
+    color: var(--color-success);
+  }
+
+  .pack-feedback--error {
+    color: var(--color-error);
   }
 
   .citation-details {
@@ -325,6 +576,16 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     .action-button {
       width: 100%;
       justify-content: center;
+    }
+
+    .pack-row {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    .pack-add,
+    .pack-create {
+      width: 100%;
     }
   }
 </style>

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SearchBox from '../components/SearchBox.astro';
 import PatternCard from '../components/PatternCard.astro';
 import type { PatternEntry } from '../types';
 import { getAllPatterns } from '../lib/patterns';
@@ -69,12 +68,6 @@ featuredPatterns = featuredPatterns
     <div class="home-cta">
       <a href="/patterns" class="button button--primary">Browse Patterns</a>
       <a href="/compare" class="button button--secondary">Compare Patterns</a>
-    </div>
-  </div>
-
-  <div class="home-section">
-    <div class="home-search">
-      <SearchBox placeholder="Search patterns..." />
     </div>
   </div>
 
@@ -254,11 +247,6 @@ featuredPatterns = featuredPatterns
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-xl) var(--spacing-lg);
-  }
-
-  .home-search {
-    max-width: 600px;
-    margin: 0 auto;
   }
 
   .home-section-title {

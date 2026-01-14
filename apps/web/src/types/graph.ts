@@ -15,6 +15,8 @@ export interface GraphNode {
   summary?: string;
   maturity?: string;
   domains?: string[];
+  related?: string[];
+  anti_patterns?: string[];
 }
 
 /**
