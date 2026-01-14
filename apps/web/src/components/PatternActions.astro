@@ -1,0 +1,191 @@
+---
+interface Props {
+  pattern: {
+    title: string;
+    slug: string;
+    summary?: string;
+    status: string;
+    category?: string;
+    complexity?: string;
+    maturity?: string;
+    effort?: string;
+    impact?: string;
+    authors: string[];
+    tags: string[];
+    source?: string;
+    body: string;
+    updated_at?: string;
+  };
+}
+
+const { pattern } = Astro.props;
+
+// Convert pattern to markdown format
+function toMarkdown(pattern: Props['pattern']): string {
+  let md = `# ${pattern.title}\n\n`;
+
+  if (pattern.summary) {
+    md += `${pattern.summary}\n\n`;
+  }
+
+  md += `**Status:** ${pattern.status}\n`;
+
+  if (pattern.category) {
+    md += `**Category:** ${pattern.category}\n`;
+  }
+
+  if (pattern.complexity) {
+    md += `**Complexity:** ${pattern.complexity}\n`;
+  }
+
+  if (pattern.maturity) {
+    md += `**Maturity:** ${pattern.maturity}\n`;
+  }
+
+  if (pattern.effort) {
+    md += `**Effort:** ${pattern.effort}\n`;
+  }
+
+  if (pattern.impact) {
+    md += `**Impact:** ${pattern.impact}\n`;
+  }
+
+  if (pattern.authors.length > 0) {
+    md += `**Authors:** ${pattern.authors.join(', ')}\n`;
+  }
+
+  if (pattern.tags.length > 0) {
+    md += `**Tags:** ${pattern.tags.join(', ')}\n`;
+  }
+
+  if (pattern.source) {
+    md += `**Source:** ${pattern.source}\n`;
+  }
+
+  if (pattern.updated_at) {
+    md += `**Updated:** ${pattern.updated_at}\n`;
+  }
+
+  md += `\n${pattern.body}`;
+
+  return md;
+}
+
+const markdownContent = toMarkdown(pattern);
+const jsonContent = JSON.stringify(pattern, null, 2);
+---
+
+<div class="pattern-actions">
+  <button
+    class="action-button"
+    data-copy="markdown"
+    data-content={markdownContent}
+    aria-label="Copy as Markdown"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+      <line x1="16" y1="13" x2="8" y2="13"></line>
+      <line x1="16" y1="17" x2="8" y2="17"></line>
+      <polyline points="10 9 9 9 8 9"></polyline>
+    </svg>
+    Copy as Markdown
+  </button>
+
+  <button
+    class="action-button"
+    data-copy="json"
+    data-content={jsonContent}
+    aria-label="Copy as JSON"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="16 18 22 12 16 6"></polyline>
+      <polyline points="8 6 2 12 8 18"></polyline>
+    </svg>
+    Copy as JSON
+  </button>
+
+  <span class="copy-feedback" aria-live="polite"></span>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('[data-copy]');
+  const feedback = document.querySelector('.copy-feedback');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const content = button.getAttribute('data-content');
+      const format = button.getAttribute('data-copy');
+
+      if (!content) return;
+
+      try {
+        await navigator.clipboard.writeText(content);
+        feedback!.textContent = `Copied as ${format}!`;
+        setTimeout(() => {
+          feedback!.textContent = '';
+        }, 2000);
+      } catch (err) {
+        feedback!.textContent = 'Failed to copy';
+        setTimeout(() => {
+          feedback!.textContent = '';
+        }, 2000);
+      }
+    });
+  });
+</script>
+
+<style>
+  .pattern-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .action-button:hover {
+    background-color: var(--color-border);
+    border-color: var(--color-text-muted);
+  }
+
+  .action-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .action-button svg {
+    flex-shrink: 0;
+  }
+
+  .copy-feedback {
+    font-size: 0.875rem;
+    color: var(--color-success);
+    margin-left: var(--spacing-sm);
+  }
+
+  @media (max-width: 640px) {
+    .pattern-actions {
+      flex-direction: column;
+    }
+
+    .action-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

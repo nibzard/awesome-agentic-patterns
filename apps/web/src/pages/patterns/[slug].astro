@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
+import PatternActions from '../../components/PatternActions.astro';
 import { getAllPatterns } from '../../lib/patterns';
 
 export async function getStaticPaths() {
@@ -31,6 +32,7 @@ const references = extractSection(pattern.body, 'References');
 <BaseLayout title={`${pattern.title} - Pattern`}>
   <div class="pattern-page">
     <header class="pattern-header">
+      <PatternActions pattern={pattern} />
       <div class="pattern-meta">
         <span class="badge badge--status">{pattern.status}</span>
         {pattern.complexity && <span class="badge badge--complexity">{pattern.complexity}</span>}
