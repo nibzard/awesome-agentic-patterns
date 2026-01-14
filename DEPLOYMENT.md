@@ -20,15 +20,15 @@ Vercel will automatically build and deploy the site.
 
 ## Prerequisites
 
-- Node.js 20+ and npm installed
+- Bun installed (recommended) or Node.js 20+
 - Git repository access
 - **For automatic deployment**: Vercel account connected to your GitHub repository
 
 ## Initial Setup
 
-1. **Install Node.js dependencies:**
+1. **Install dependencies:**
    ```bash
-   npm install
+   bun install
    ```
 
 ## Build Process
@@ -37,7 +37,7 @@ Vercel will automatically build and deploy the site.
 
 For local development and testing:
 ```bash
-npm run dev  # Serves at http://localhost:4321
+bun run dev  # Serves at http://localhost:4321
 ```
 
 Changes are automatically reloaded. Press `Ctrl+C` to stop the server.
@@ -46,7 +46,7 @@ Changes are automatically reloaded. Press `Ctrl+C` to stop the server.
 
 To build the site locally:
 ```bash
-npm run build  # Builds to apps/web/dist/
+bun run build  # Builds to apps/web/dist/
 ```
 
 ## Deployment Options
@@ -63,8 +63,8 @@ git push
 
 **What happens automatically:**
 1. Vercel webhook triggers on push to main
-2. Installs Node.js dependencies
-3. Runs `npm run build` in apps/web directory
+2. Installs dependencies using bun
+3. Runs `bun run build` in apps/web directory
 4. Deploys the production build
 5. Site live at: https://agentic-patterns.com
 
@@ -72,7 +72,7 @@ git push
 - Connect your GitHub repository to Vercel
 - Configure build settings:
   - Root directory: `apps/web`
-  - Build command: `npm run build`
+  - Build command: `bun run build`
   - Output directory: `dist`
 
 ### Option 2: Manual Vercel Deployment
@@ -80,7 +80,7 @@ git push
 For manual deployment:
 ```bash
 cd apps/web
-npm run build
+bun run build
 vercel deploy --prod
 ```
 
@@ -90,13 +90,13 @@ vercel deploy --prod
 
 If the build process fails:
 1. Check that all pattern JSON files exist in `apps/web/public/patterns/`
-2. Ensure all required dependencies are installed: `npm install`
+2. Ensure all required dependencies are installed: `bun install`
 3. Verify Astro configuration is correct in `apps/web/astro.config.mjs`
 
 ### Local Development Issues
 
-If `npm run dev` fails:
-1. Ensure dependencies are installed: `npm install`
+If `bun run dev` fails:
+1. Ensure dependencies are installed: `bun install`
 2. Check that port 4321 is available
 3. Try clearing the Astro cache: `rm -rf apps/web/.astro`
 
@@ -117,4 +117,4 @@ The site is configured for the custom domain `agentic-patterns.com`:
 - Pattern files in `patterns/` are the source of truth for all content
 - JSON files in `apps/web/public/patterns/` are generated from pattern files
 - The `apps/web/dist/` directory is generated and should not be manually edited
-- Use `npm run dev` for local development with hot reload
+- Use `bun run dev` for local development with hot reload
