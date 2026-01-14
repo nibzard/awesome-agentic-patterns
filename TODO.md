@@ -148,7 +148,7 @@
 - [x] 148 - Add `CNAME` to `apps/web/public` if needed. (Not needed - Vercel handles custom domains via dashboard, CNAME files only for GitHub Pages)
 - [x] 149 - Add `apps/web/src/pages/404.astro`. [Created with BaseLayout wrapper, custom error page design, build verified working (2 pages), committed (445bd3a)]
 150→- [x] 150 - Add the chosen graph visualization dependency. [Installed d3@7.9.0 to package.json, verified build works, committed (d5adc68)]
-- [ ] 151 - Add Pagefind dependency if required by the build.
+151→- [x] 151 - Add Pagefind dependency if required by the build. [Installed pagefind@1.4.0 to apps/web/package.json, verified build works, committed (9388f5b)]
 - [ ] 152 - Create `PatternCard.astro`.
 - [ ] 153 - Create `PatternMeta.astro`.
 - [ ] 154 - Create `TagPill.astro`.
