@@ -1,0 +1,153 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  summary?: string;
+  status?: string;
+  category?: string;
+  tags?: string[];
+}
+
+const {
+  title,
+  slug,
+  summary,
+  status = 'proposed',
+  category = 'Uncategorized',
+  tags = [],
+} = Astro.props;
+
+// Status badge colors
+const statusColors: Record<string, string> = {
+  'proposed': 'var(--color-text-muted)',
+  'emerging': 'var(--color-info)',
+  'established': 'var(--color-primary)',
+  'validated-in-production': 'var(--color-success)',
+  'best-practice': 'var(--color-success)',
+  'experimental-but-awesome': 'var(--color-warning)',
+  'rapidly-improving': 'var(--color-info)',
+};
+---
+
+<article class="pattern-card">
+  <a href={`/patterns/${slug}`} class="pattern-card-link">
+    <div class="pattern-card-header">
+      <h3 class="pattern-card-title">{title}</h3>
+      <span class="pattern-card-status" style={`--status-color: ${statusColors[status] || 'var(--color-text-muted)'}`}>
+        {status}
+      </span>
+    </div>
+
+    {summary && (
+      <p class="pattern-card-summary">{summary}</p>
+    )}
+
+    <div class="pattern-card-footer">
+      <span class="pattern-card-category">{category}</span>
+      {tags.length > 0 && (
+        <div class="pattern-card-tags">
+          {tags.slice(0, 3).map(tag => (
+            <span class="pattern-card-tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .pattern-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    overflow: hidden;
+  }
+
+  .pattern-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .pattern-card-link {
+    display: block;
+    padding: var(--spacing-lg);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .pattern-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pattern-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .pattern-card-status {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--status-color);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pattern-card-summary {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--spacing-md) 0;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pattern-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .pattern-card-category {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  .pattern-card-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .pattern-card-tag {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    background-color: var(--color-border);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 640px) {
+    .pattern-card-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .pattern-card-header {
+      flex-direction: column;
+    }
+  }
+</style>
