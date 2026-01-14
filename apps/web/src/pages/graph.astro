@@ -297,22 +297,52 @@ function getCategoryColor(category: string): string {
           <!-- Zoom Controls -->
           <div class="graph-controls">
             <button class="control-btn" id="zoom-in" aria-label="Zoom in">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M12 5v14M5 12h14"></path>
               </svg>
             </button>
             <button class="control-btn" id="zoom-out" aria-label="Zoom out">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M5 12h14"></path>
               </svg>
             </button>
             <button class="control-btn" id="reset-view" aria-label="Reset view">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
               </svg>
             </button>
             <button class="control-btn" id="fit-view" aria-label="Fit to screen">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
               </svg>
             </button>
@@ -604,7 +634,7 @@ function getCategoryColor(category: string): string {
           'anti-pattern': 'var(--color-error)',
           category: '#94a3b8',
           tag: '#94a3b8',
-          similarity: '#94a3b8'
+          similarity: '#94a3b8',
         };
         return colors[d.type] || '#64748b';
       })
@@ -764,7 +794,10 @@ function getCategoryColor(category: string): string {
         if (visibleNodeIds.size === 0) return;
 
         // Calculate bounds from live simulation data
-        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        let minX = Infinity,
+          minY = Infinity,
+          maxX = -Infinity,
+          maxY = -Infinity;
 
         nodes.forEach((node) => {
           if (visibleNodeIds.has(node.id)) {
@@ -803,10 +836,10 @@ function getCategoryColor(category: string): string {
         const tx = svgWidth / 2 - centerX * scale;
         const ty = svgHeight / 2 - centerY * scale;
 
-        svgSelection.transition().duration(500).call(
-          zoomBehavior.transform,
-          zoomIdentity.translate(tx, ty).scale(scale)
-        );
+        svgSelection
+          .transition()
+          .duration(500)
+          .call(zoomBehavior.transform, zoomIdentity.translate(tx, ty).scale(scale));
       });
     }
   }
@@ -1047,14 +1080,19 @@ function getCategoryColor(category: string): string {
       edgeElements.forEach((edge) => {
         const source = edge.getAttribute('data-source');
         const target = edge.getAttribute('data-target');
-        const sourceNode = source ? document.querySelector(`.graph-node[data-node-id="${source}"]`) : null;
-        const targetNode = target ? document.querySelector(`.graph-node[data-node-id="${target}"]`) : null;
+        const sourceNode = source
+          ? document.querySelector(`.graph-node[data-node-id="${source}"]`)
+          : null;
+        const targetNode = target
+          ? document.querySelector(`.graph-node[data-node-id="${target}"]`)
+          : null;
 
         const sourceOpacity = sourceNode ? parseFloat(sourceNode.style.opacity || '1') : 1;
         const targetOpacity = targetNode ? parseFloat(targetNode.style.opacity || '1') : 1;
 
         // Show edge only if both connected nodes are visible
-        edge.style.opacity = query === '' ? '' : (Math.min(sourceOpacity, targetOpacity) * 0.6).toString();
+        edge.style.opacity =
+          query === '' ? '' : (Math.min(sourceOpacity, targetOpacity) * 0.6).toString();
       });
     });
 

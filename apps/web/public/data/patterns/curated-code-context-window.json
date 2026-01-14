@@ -1,9 +1,7 @@
 {
   "title": "Curated Code Context Window",
   "status": "validated-in-production",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
   "based_on": [
     "Anonymous Speaker (Open Source Agent RL Talk)",
     "Will Brown (Prime Intellect Talk)",
@@ -11,12 +9,7 @@
   ],
   "category": "Context & Memory",
   "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-  "tags": [
-    "context-management",
-    "code-agent",
-    "file-selection",
-    "noise-reduction"
-  ],
+  "tags": ["context-management", "code-agent", "file-selection", "noise-reduction"],
   "slug": "curated-code-context-window",
   "id": "curated-code-context-window",
   "summary": "Maintain minimal, high-signal code context using search subagents to identify and inject only relevant modules, preventing model overwhelm, reducing token usage, and improving reasoning clarity by excluding unrelated code.",

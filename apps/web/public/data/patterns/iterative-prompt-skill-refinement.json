@@ -1,12 +1,8 @@
 {
   "title": "Iterative Prompt & Skill Refinement",
   "status": "proposed",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Will Larson (Imprint)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Will Larson (Imprint)"],
   "category": "Feedback Loops",
   "source": "https://lethain.com/agents-iterative-refinement/",
   "tags": [

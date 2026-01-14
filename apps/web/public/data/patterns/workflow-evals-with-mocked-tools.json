@@ -1,13 +1,8 @@
 {
   "title": "Workflow Evals with Mocked Tools",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Will Larson (lethain.com)",
-    "Sierra (chat/voice platform)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Will Larson (lethain.com)", "Sierra (chat/voice platform)"],
   "category": "Reliability & Eval",
   "source": "https://lethain.com/agents-evals/",
   "tags": [

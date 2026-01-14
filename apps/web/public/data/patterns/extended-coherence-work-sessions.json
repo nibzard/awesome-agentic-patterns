@@ -1,21 +1,11 @@
 {
   "title": "Extended Coherence Work Sessions",
   "status": "rapidly-improving",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Amjad Masad (observation)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Amjad Masad (observation)"],
   "category": "Reliability & Eval",
   "source": "https://www.nibzard.com/silent-revolution",
-  "tags": [
-    "coherence",
-    "long-running tasks",
-    "agent capability",
-    "llm",
-    "complex projects"
-  ],
+  "tags": ["coherence", "long-running tasks", "agent capability", "llm", "complex projects"],
   "slug": "extended-coherence-work-sessions",
   "id": "extended-coherence-work-sessions",
   "summary": "TODO: Add a concise summary for \"Extended Coherence Work Sessions\" describing the pattern's purpose and key benefits.",

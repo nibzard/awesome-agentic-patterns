@@ -1,13 +1,8 @@
 {
   "title": "Agent-Powered Codebase Q&A / Onboarding",
   "status": "validated-in-production",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Lukas Möller (Cursor)",
-    "Aman Sanger (Cursor)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"],
   "category": "Context & Memory",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

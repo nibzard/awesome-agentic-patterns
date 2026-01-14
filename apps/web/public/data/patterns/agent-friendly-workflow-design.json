@@ -1,12 +1,8 @@
 {
   "title": "Agent-Friendly Workflow Design",
   "status": "best-practice",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Amjad Masad"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Amjad Masad"],
   "category": "UX & Collaboration",
   "source": "https://www.nibzard.com/silent-revolution",
   "tags": [

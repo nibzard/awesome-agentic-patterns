@@ -1,14 +1,8 @@
 {
   "title": "AI-Accelerated Learning and Skill Development",
   "status": "validated-in-production",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Lukas Möller (Cursor)",
-    "Alex Albert (Anthropic)",
-    "Jacob Jackson (Cursor)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Lukas Möller (Cursor)", "Alex Albert (Anthropic)", "Jacob Jackson (Cursor)"],
   "category": "UX & Collaboration",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

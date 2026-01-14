@@ -1,20 +1,11 @@
 {
   "title": "Proactive Agent State Externalization",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Cognition AI (2025)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Cognition AI (2025)"],
   "category": "Context & Memory",
   "source": "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges",
-  "tags": [
-    "state-externalization",
-    "memory-management",
-    "self-documentation",
-    "note-taking"
-  ],
+  "tags": ["state-externalization", "memory-management", "self-documentation", "note-taking"],
   "slug": "proactive-agent-state-externalization",
   "id": "proactive-agent-state-externalization",
   "summary": "Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.",

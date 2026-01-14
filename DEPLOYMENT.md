@@ -107,6 +107,40 @@ If Vercel deployment fails:
 2. Verify the build command and output directory settings
 3. Ensure all environment variables are configured (if any)
 
+## Environment Variables
+
+For the newsletter subscription feature to work, you need to configure the following environment variables in Vercel:
+
+### Required
+
+- `RESEND_API_KEY`: Your Resend API key for newsletter subscriptions
+  - Get your API key from: https://resend.com/api-keys
+  - Required for the newsletter subscription form to work
+
+### Optional
+
+- `RESEND_AUDIENCE_ID`: Your Resend audience ID (if using audiences)
+  - Create an audience in the Resend dashboard
+  - Use this to segment subscribers
+
+### Setting Environment Variables in Vercel
+
+1. Go to your Vercel project dashboard
+2. Navigate to **Settings** → **Environment Variables**
+3. Add the variables:
+   - Name: `RESEND_API_KEY`
+   - Value: `re_xxxxxxxxxxxxx` (your actual API key)
+   - Environments: Production, Preview, Development (as needed)
+4. Redeploy your application after adding environment variables
+
+### Getting a Resend API Key
+
+1. Sign up at https://resend.com/signup
+2. Navigate to **API Keys** in the dashboard
+3. Click **Create API Key**
+4. Give it a name (e.g., "Agentic Patterns Website")
+5. Copy the API key and add it to your Vercel environment variables
+
 ## Domain Configuration
 
 The site is configured for the custom domain `agentic-patterns.com`:

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
 import PatternActions from '../../components/PatternActions.astro';
 import PatternList from '../../components/PatternList.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
 import type { PatternEntry } from '../../types';
 import { getAllPatterns } from '../../lib/patterns';
 import { renderMarkdown } from '../../lib/markdown';
@@ -151,6 +152,13 @@ const references = renderSection(pattern.body, 'References');
         )
       }
     </article>
+
+    <NewsletterCTA
+      variant="default"
+      title="Enjoy this pattern?"
+      description="Subscribe to get notified when we add new patterns like this."
+      buttonText="Subscribe for Updates"
+    />
 
     {
       relatedPatterns.length > 0 && (

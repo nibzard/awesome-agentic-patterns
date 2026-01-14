@@ -1,12 +1,8 @@
 {
   "title": "Layered Configuration Context",
   "status": "established",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Boris Cherny (via Claude Code)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Boris Cherny (via Claude Code)"],
   "category": "Context & Memory",
   "source": "https://www.nibzard.com/claude-code",
   "tags": [

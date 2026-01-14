@@ -1,12 +1,8 @@
 {
   "title": "Hybrid LLM/Code Workflow Coordinator",
   "status": "proposed",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Will Larson (Imprint)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Will Larson (Imprint)"],
   "category": "Orchestration & Control",
   "source": "https://lethain.com/agents-coordinators/",
   "tags": [

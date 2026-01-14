@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PatternCard from '../components/PatternCard.astro';
+import NewsletterCTA from '../components/NewsletterCTA.astro';
 import type { PatternEntry } from '../types';
 import { getAllPatterns } from '../lib/patterns';
 
@@ -112,70 +113,75 @@ featuredPatterns = featuredPatterns.slice(0, 6);
     </div>
   </div>
 
+  <div class="home-section">
+    <NewsletterCTA
+      variant="banner"
+      title="Stay in the Loop"
+      description="Get notified when we add new patterns or publish guides. No spam, just updates."
+      buttonText="Subscribe"
+    />
+  </div>
+
   {
     (newPatterns.length > 0 || recentlyUpdated.length > 0) && (
       <div class="home-two-column-grid">
-        {
-          newPatterns.length > 0 && (
-            <div class="home-section">
-              <h2 class="home-section-title">
-                <span class="section-badge section-badge--new">New</span>
-                New Patterns
-              </h2>
-              <p class="home-section-description">Freshly added patterns from the last 7 days.</p>
-              <div class="home-patterns-list">
-                {newPatterns.map((pattern: PatternEntry) => (
-                  <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
-                    <span class="pattern-badge pattern-badge--new">New</span>
-                    <div class="pattern-info">
-                      <div class="pattern-title">{pattern.title}</div>
-                      <div class="pattern-meta">
-                        <span class="pattern-category">{pattern.category}</span>
-                        {pattern.updated_at && (
-                          <span class="pattern-date">
-                            {new Date(pattern.updated_at).toLocaleDateString()}
-                          </span>
-                        )}
-                      </div>
+        {newPatterns.length > 0 && (
+          <div class="home-section">
+            <h2 class="home-section-title">
+              <span class="section-badge section-badge--new">New</span>
+              New Patterns
+            </h2>
+            <p class="home-section-description">Freshly added patterns from the last 7 days.</p>
+            <div class="home-patterns-list">
+              {newPatterns.map((pattern: PatternEntry) => (
+                <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
+                  <span class="pattern-badge pattern-badge--new">New</span>
+                  <div class="pattern-info">
+                    <div class="pattern-title">{pattern.title}</div>
+                    <div class="pattern-meta">
+                      <span class="pattern-category">{pattern.category}</span>
+                      {pattern.updated_at && (
+                        <span class="pattern-date">
+                          {new Date(pattern.updated_at).toLocaleDateString()}
+                        </span>
+                      )}
                     </div>
-                  </a>
-                ))}
-              </div>
+                  </div>
+                </a>
+              ))}
             </div>
-          )
-        }
+          </div>
+        )}
 
-        {
-          recentlyUpdated.length > 0 && (
-            <div class="home-section">
-              <h2 class="home-section-title">
-                <span class="section-badge section-badge--updated">Updated</span>
-                Recently Updated
-              </h2>
-              <p class="home-section-description">
-                Patterns that have been improved or expanded in the last 30 days.
-              </p>
-              <div class="home-patterns-list">
-                {recentlyUpdated.map((pattern: PatternEntry) => (
-                  <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
-                    <span class="pattern-badge pattern-badge--updated">Updated</span>
-                    <div class="pattern-info">
-                      <div class="pattern-title">{pattern.title}</div>
-                      <div class="pattern-meta">
-                        <span class="pattern-category">{pattern.category}</span>
-                        {pattern.updated_at && (
-                          <span class="pattern-date">
-                            {new Date(pattern.updated_at).toLocaleDateString()}
-                          </span>
-                        )}
-                      </div>
+        {recentlyUpdated.length > 0 && (
+          <div class="home-section">
+            <h2 class="home-section-title">
+              <span class="section-badge section-badge--updated">Updated</span>
+              Recently Updated
+            </h2>
+            <p class="home-section-description">
+              Patterns that have been improved or expanded in the last 30 days.
+            </p>
+            <div class="home-patterns-list">
+              {recentlyUpdated.map((pattern: PatternEntry) => (
+                <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
+                  <span class="pattern-badge pattern-badge--updated">Updated</span>
+                  <div class="pattern-info">
+                    <div class="pattern-title">{pattern.title}</div>
+                    <div class="pattern-meta">
+                      <span class="pattern-category">{pattern.category}</span>
+                      {pattern.updated_at && (
+                        <span class="pattern-date">
+                          {new Date(pattern.updated_at).toLocaleDateString()}
+                        </span>
+                      )}
                     </div>
-                  </a>
-                ))}
-              </div>
+                  </div>
+                </a>
+              ))}
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
     )
   }

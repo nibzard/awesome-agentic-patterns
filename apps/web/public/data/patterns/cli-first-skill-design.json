@@ -1,23 +1,11 @@
 {
   "title": "CLI-First Skill Design",
   "status": "emerging",
-  "authors": [
-    "Lucas Carlson"
-  ],
-  "based_on": [
-    "Anthropic (Claude Code)",
-    "Unix Philosophy"
-  ],
+  "authors": ["Lucas Carlson"],
+  "based_on": ["Anthropic (Claude Code)", "Unix Philosophy"],
   "category": "Tool Use & Environment",
   "source": "https://github.com/anthropics/claude-code",
-  "tags": [
-    "cli",
-    "skills",
-    "shell",
-    "dual-use",
-    "composability",
-    "unix-philosophy"
-  ],
+  "tags": ["cli", "skills", "shell", "dual-use", "composability", "unix-philosophy"],
   "slug": "cli-first-skill-design",
   "id": "cli-first-skill-design",
   "summary": "Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.",

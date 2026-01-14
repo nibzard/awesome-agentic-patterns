@@ -427,6 +427,10 @@ Tool Capability Compartmentalization: ## Problem
 Model Context Protocol (MCP) encourages "mix-and-match" tools—often combining private-data readers, web fetchers, and writers in a single callable unit. This amplifies the lethality of prompt-injection chains.
 URL: https://agentic-patterns.com/patterns/tool-capability-compartmentalization
 
+### tool-search-lazy-loading
+Tool Search Lazy Loading: Dynamically load tools via search instead of preloading all available tools to reduce context usage
+URL: https://agentic-patterns.com/patterns/tool-search-lazy-loading
+
 ### tool-use-incentivization-via-reward-shaping
 Tool Use Incentivization via Reward Shaping: Provide dense, shaped rewards for every intermediate tool invocation to encourage coding agents to use compilers, linters, and test runners instead of relying solely on internal reasoning tokens.
 URL: https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping

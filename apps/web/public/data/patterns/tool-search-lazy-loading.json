@@ -1,0 +1,40 @@
+{
+  "title": "Tool Search Lazy Loading",
+  "status": "emerging",
+  "authors": ["Niko"],
+  "based_on": ["Thariq (@trq212) - Anthropic"],
+  "category": "Context & Memory",
+  "source": "https://x.com/trq212/status/2011523109871108570",
+  "tags": [
+    "mcp",
+    "tool-discovery",
+    "context-optimization",
+    "lazy-loading",
+    "search",
+    "dynamic-loading"
+  ],
+  "slug": "tool-search-lazy-loading",
+  "id": "tool-search-lazy-loading",
+  "summary": "Dynamically load tools via search instead of preloading all available tools to reduce context usage",
+  "maturity": "maturing",
+  "complexity": "medium",
+  "effort": "days",
+  "impact": "high",
+  "signals": [
+    "MCP servers with 20+ tools",
+    "Tool descriptions consuming >10% of context window",
+    "Multiple MCP servers enabled simultaneously"
+  ],
+  "anti_signals": ["Single tool or small tool sets", "Tools always needed in every interaction"],
+  "prerequisites": ["MCP server implementation", "Search infrastructure for tool metadata"],
+  "related": [
+    "context-minimization-pattern",
+    "progressive-tool-discovery",
+    "dynamic-context-injection"
+  ],
+  "anti_patterns": ["preload-all-tools"],
+  "tools": ["mcp-servers", "tool-search-api"],
+  "domains": ["tool-use", "context-optimization"],
+  "updated_at": "2026-01-14",
+  "body": "\n## Problem\n\nAs the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools that consume significant context space. Documented setups with 7+ servers have been documented consuming 67k+ tokens just for tool descriptions. This creates a fundamental scalability issue:\n\n* **Context bloat**: Preloading all tool descriptions consumes tokens that could be used for the actual task\n* **Latency**: More tools means more processing overhead on every request\n* **Discovery challenges**: Agents must scan through many irrelevant tools to find relevant ones\n* **Memory pressure**: Large tool catalogs can exceed practical context limits\n\n## Solution\n\nImplement Tool Search: a lazy-loading mechanism where tools are dynamically loaded into context via search only when needed, rather than preloaded on initialization.\n\nThe pattern works by:\n\n1. **Threshold detection**: Monitor when tool descriptions would exceed a context threshold (e.g., 10% of context window)\n2. **Search interface**: Provide a ToolSearchTool that allows agents to search tool metadata and selectively load tools\n3. **Server instructions**: Leverage MCP server instruction fields to guide the agent on when to search for specific tools\n4. **Agentic search**: Use intelligent search rather than basic RAG to find relevant tools\n\n```mermaid\ngraph TD\n    A[Agent Request] --> B{Would tools exceed 10% context?}\n    B -->|No| C[Preload All Tools]\n    B -->|Yes| D[Enable Tool Search Mode]\n    D --> E[Load Tool Metadata Only]\n    E --> F[Agent Determines Tool Need]\n    F --> G[Search via ToolSearchTool]\n    G --> H[Load Specific Tool on Demand]\n    H --> I[Execute Tool]\n    C --> I\n```\n\n**Implementation approach:**\n\n```pseudo\nfunction initialize_mcp_servers(servers) {\n    total_tool_tokens = calculate_tool_tokens(servers)\n\n    if (total_tool_tokens > CONTEXT_THRESHOLD) {\n        // Lazy loading mode\n        tool_registry = load_tool_metadata_only(servers)\n        return ToolSearchTool(tool_registry)\n    } else {\n        // Traditional preload mode\n        return preload_all_tools(servers)\n    }\n}\n\nfunction tool_search(query: string, tool_registry) {\n    // Agentic search - not basic RAG\n    relevant_tools = agentically_search(tool_registry, query)\n    return load_tool_definitions(relevant_tools)\n}\n```\n\n## How to use it\n\n**For MCP server creators:**\n\n* **Enhance server instructions**: The \"server instructions\" field becomes more critical with tool search enabled. It helps the agent know when to search for your tools.\n* **Descriptive metadata**: Include rich descriptions and tags to improve searchability\n* **Logical grouping**: Organize related tools to make discovery more intuitive\n\n**For MCP client creators:**\n\n* **Implement ToolSearchTool**: Provide a search interface for tool discovery\n* **Use agentic search**: Implement intelligent search rather than basic vector RAG\n* **Set appropriate thresholds**: Choose context thresholds based on your use case (Claude Code uses 10%)\n* **Provide opt-out**: Allow users to disable search if they prefer preloading\n\n**Usage scenarios:**\n\n* Development environments with many specialized tools (file operations, git, database access, API clients)\n* Multi-server setups where each server provides domain-specific capabilities\n* Agents that only need a subset of available tools for any given task\n\n## Trade-offs\n\n* **Pros:**\n  * Dramatically reduces baseline context usage (67k+ tokens to just metadata)\n  * Enables scaling to 100+ tools without context issues\n  * Faster cold-start times when tools aren't needed\n  * Better tool discovery through intentional search\n  * Allows more MCP servers to be enabled simultaneously\n\n* **Cons:**\n  * Adds latency when tools need to be dynamically loaded\n  * Requires search infrastructure and metadata management\n  * May miss serendipitous tool discovery that happens when browsing full catalogs\n  * Server instructions become more critical and require careful authoring\n  * Additional complexity in client implementation\n\n## References\n\n* [Original announcement tweet](https://x.com/trq212/status/2011523109871108570) by Thariq (@trq212)\n* [MCP Documentation](https://modelcontextprotocol.io/) for implementation details\n* GitHub issue references on lazy loading for MCP servers\n\n## Variations\n\n**Toggle-based forcing**: Allow users to force enable tool search even under the 10% threshold, for consistency or testing purposes.\n\n**Caching strategies**: Implement LRU caching for recently used tools to minimize reload overhead.\n\n**Progressive loading**: Load commonly-used tools upfront while keeping long-tail tools in search-only mode.\n\n**Programmatic composition**: Future direction allowing tools to be composed with each other via code (experimented with but deferred for tool search priority).\n\n## Pitfalls\n\n* **Poor server instructions**: Without clear guidance on when to search, agents may miss relevant tools\n* **Inadequate search**: Basic RAG may not capture tool capabilities effectively; agentic search is preferred\n* **Metadata neglect**: Failing to maintain rich, searchable tool descriptions defeats the purpose\n* **Threshold tuning**: Setting the context threshold too low or too high can negate benefits or create unnecessary overhead\n"
+}

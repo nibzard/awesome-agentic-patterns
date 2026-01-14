@@ -389,7 +389,9 @@ const navItems = [
       // Event listeners
       mobileMenuToggle?.addEventListener('click', toggleMobileMenu);
 
-      mobileMenu?.querySelector('.mobile-menu-backdrop')?.addEventListener('click', closeMobileMenu);
+      mobileMenu
+        ?.querySelector('.mobile-menu-backdrop')
+        ?.addEventListener('click', closeMobileMenu);
 
       mobileMenu?.querySelectorAll('.mobile-menu-link').forEach((link) => {
         link.addEventListener('click', closeMobileMenu);

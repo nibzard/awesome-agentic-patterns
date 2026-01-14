@@ -1,12 +1,8 @@
 {
   "title": "Agent SDK for Programmatic Control",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Anthropic (Claude Code SDK example)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Anthropic (Claude Code SDK example)"],
   "category": "Tool Use & Environment",
   "source": "https://www.nibzard.com/claude-code",
   "tags": [

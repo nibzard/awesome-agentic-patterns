@@ -1,20 +1,11 @@
 {
   "title": "LLM Map-Reduce Pattern",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Luca Beurer-Kellner et al. (2025)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Luca Beurer-Kellner et al. (2025)"],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2506.08837",
-  "tags": [
-    "map-reduce",
-    "sub-agents",
-    "isolation",
-    "untrusted-data"
-  ],
+  "tags": ["map-reduce", "sub-agents", "isolation", "untrusted-data"],
   "slug": "llm-map-reduce-pattern",
   "id": "llm-map-reduce-pattern",
   "summary": "Injecting a single poisoned document can manipulate global reasoning if all data is processed in one context.",

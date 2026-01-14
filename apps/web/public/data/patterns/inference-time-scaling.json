@@ -1,13 +1,8 @@
 {
   "title": "Inference-Time Scaling",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Google DeepMind",
-    "OpenAI"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Google DeepMind", "OpenAI"],
   "category": "Orchestration & Control",
   "source": "https://deepmind.google/research/",
   "tags": [

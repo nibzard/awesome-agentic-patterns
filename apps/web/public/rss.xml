@@ -4,8 +4,22 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 14 Jan 2026 21:27:41 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 Jan 2026 22:25:04 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Tool Search Lazy Loading]]></title>
+            <description><![CDATA[Dynamically load tools via search instead of preloading all available tools to reduce context usage]]></description>
+            <link>https://agentic-patterns.com/patterns/tool-search-lazy-loading</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/tool-search-lazy-loading</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[tool-discovery]]></category>
+            <category><![CDATA[context-optimization]]></category>
+            <category><![CDATA[lazy-loading]]></category>
+            <category><![CDATA[search]]></category>
+            <category><![CDATA[dynamic-loading]]></category>
+            <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Hybrid LLM/Code Workflow Coordinator]]></title>
             <description><![CDATA[Configurable coordinator supporting both LLM-driven (flexible, fast iteration) and code-driven (deterministic, code review) workflows, enabling progressive enhancement from prototype to production-ready systems.]]></description>
@@ -287,23 +301,6 @@ Understanding a large or unfamiliar codebase can be a significant challenge for 
             <category><![CDATA[RAG]]></category>
             <category><![CDATA[agentic-RAG]]></category>
             <category><![CDATA[maintenance]]></category>
-            <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[AI-Accelerated Learning and Skill Development]]></title>
-            <description><![CDATA[## Problem
-Developing strong software engineering skills, including "taste" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers.]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[developer-productivity]]></category>
-            <category><![CDATA[learning]]></category>
-            <category><![CDATA[skill-acquisition]]></category>
-            <category><![CDATA[iteration]]></category>
-            <category><![CDATA[feedback]]></category>
-            <category><![CDATA[taste-development]]></category>
-            <category><![CDATA[education]]></category>
-            <category><![CDATA[junior-developer]]></category>
             <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
