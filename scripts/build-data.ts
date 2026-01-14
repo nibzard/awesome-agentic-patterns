@@ -15,7 +15,7 @@
  */
 
 import matter from "gray-matter";
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync, copyFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { create } from "xmlbuilder2";
 
@@ -376,6 +376,40 @@ function generateRssFeed(patterns: ParsedPattern[]): string {
 }
 
 /**
+ * Copy image assets from patterns/ to public/patterns/
+ * Ensures images referenced in markdown are available to the web app
+ */
+function copyImageAssets(): void {
+  const patternsDir = PATTERNS_DIR;
+  const publicPatternsDir = join(OUTPUT_DIR, "patterns");
+  const imageExtensions = [".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"];
+
+  // Ensure target directory exists
+  mkdirSync(publicPatternsDir, { recursive: true });
+
+  // Copy all image files
+  const entries = readdirSync(patternsDir, { withFileTypes: true });
+  let copiedCount = 0;
+
+  for (const entry of entries) {
+    if (entry.isFile()) {
+      const ext = entry.name.substring(entry.name.lastIndexOf(".")).toLowerCase();
+      if (imageExtensions.includes(ext)) {
+        const srcPath = join(patternsDir, entry.name);
+        const destPath = join(publicPatternsDir, entry.name);
+        copyFileSync(srcPath, destPath);
+        copiedCount++;
+        console.log(`  Copied ${entry.name} to public/patterns/`);
+      }
+    }
+  }
+
+  if (copiedCount > 0) {
+    console.log(`Copied ${copiedCount} image asset(s) to public/patterns/`);
+  }
+}
+
+/**
  * Write output files
  */
 function writeOutputs(patterns: ParsedPattern[]): void {
@@ -437,6 +471,9 @@ function main(): void {
 
   const patterns = parseAllPatterns();
   console.log(`Parsed ${patterns.length} pattern files`);
+
+  // Copy image assets before writing outputs
+  copyImageAssets();
 
   writeOutputs(patterns);
 
