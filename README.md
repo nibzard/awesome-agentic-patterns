@@ -57,6 +57,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='updated-badge'>UPDATED</span>
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md) <span class='updated-badge'>UPDATED</span>
 - [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md) <span class='new-badge'>NEW</span>
+- [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md)
 
 ### <a name="feedback-loops"></a>Feedback Loops
 
@@ -120,6 +121,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="reliability-eval"></a>Reliability & Eval
 
+- [Action Caching & Replay Pattern](patterns/action-caching-replay.md)
 - [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md) <span class='updated-badge'>UPDATED</span>
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md) <span class='updated-badge'>UPDATED</span>
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md) <span class='updated-badge'>UPDATED</span>
@@ -129,6 +131,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md) <span class='updated-badge'>UPDATED</span>
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md) <span class='updated-badge'>UPDATED</span>
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md) <span class='updated-badge'>UPDATED</span>
+- [Schema Validation Retry with Cross-Step Learning](patterns/schema-validation-retry-cross-step-learning.md)
 - [Structured Output Specification](patterns/structured-output-specification.md) <span class='updated-badge'>UPDATED</span>
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md) <span class='updated-badge'>UPDATED</span>
 - [Workflow Evals with Mocked Tools](patterns/workflow-evals-with-mocked-tools.md) <span class='new-badge'>NEW</span>
