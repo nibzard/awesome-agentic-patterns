@@ -1,5 +1,5 @@
 {
   "framework": null,
-  "buildCommand": "cd apps/web && bun run build && rm -rf ../.vercel/output && mkdir -p ../.vercel && mv .vercel/output ../.vercel/output",
+  "buildCommand": "cd apps/web && bun run build && rm -rf ../../.vercel/output && mkdir -p ../../.vercel && mv .vercel/output ../../.vercel/output",
   "installCommand": "cd apps/web && bun install"
 }
