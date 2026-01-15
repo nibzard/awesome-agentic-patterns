@@ -14,9 +14,9 @@ const __dirname = dirname(__filename);
 function findPatternsDir(): string {
   const cwd = process.cwd();
   const candidates = [
-    join(cwd, 'patterns'),           // repo root/patterns
-    join(cwd, '../patterns'),         // apps/patterns -> repo root/patterns
-    join(cwd, '../../patterns'),      // apps/web/patterns -> repo root/patterns
+    join(cwd, 'patterns'), // repo root/patterns
+    join(cwd, '../patterns'), // apps/patterns -> repo root/patterns
+    join(cwd, '../../patterns'), // apps/web/patterns -> repo root/patterns
   ];
 
   for (const candidate of candidates) {

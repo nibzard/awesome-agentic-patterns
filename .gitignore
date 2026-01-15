@@ -209,3 +209,4 @@ node_modules/
 
 # Pagefind search index (generated during build)
 apps/web/public/pagefind/
+.env*.local

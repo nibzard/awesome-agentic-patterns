@@ -8,6 +8,8 @@ This is a documentation website for "Awesome Agentic Patterns" - a curated catal
 
 ## Key Commands
 
+> **NOTE:** This project uses **bun** as the package manager, not npm.
+
 ### Development Workflow
 ```bash
 # Initial setup (run once)

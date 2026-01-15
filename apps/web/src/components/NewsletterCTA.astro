@@ -26,9 +26,7 @@ const {
     id="newsletter-form"
     data-nonce={Math.random().toString(36).substring(7)}
   >
-    {variant === 'minimal' && (
-      <p class="newsletter-cta-invite">Get new patterns in your inbox</p>
-    )}
+    {variant === 'minimal' && <p class="newsletter-cta-invite">Get new patterns in your inbox</p>}
     <div class="newsletter-cta-input-group">
       <input
         type="email"
