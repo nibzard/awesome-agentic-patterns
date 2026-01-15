@@ -1,10 +1,10 @@
 ---
-title: "Semantic Context Filtering Pattern"
+title: 'Semantic Context Filtering Pattern'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
-category: "Context & Memory"
-source: "https://github.com/hyperbrowserai/HyperAgent"
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Hyperbrowser Team (@hyperbrowserai)']
+category: 'Context & Memory'
+source: 'https://github.com/hyperbrowserai/HyperAgent'
 tags: [context-filtering, token-optimization, semantic-extraction, noise-reduction]
 ---
 
@@ -43,7 +43,11 @@ Instead of full HTML DOM:
 <html>
   <head>
     <script src="analytics.js"></script>
-    <style>body { margin: 0; }</style>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div class="tracking-pixel" style="display:none"></div>
@@ -97,7 +101,7 @@ Extract the accessibility tree (100-200 tokens):
 ```typescript
 // Use browser's built-in accessibility tree
 const tree = await page.accessibility.snapshot({
-  interestingOnly: true  // Only interactive elements
+  interestingOnly: true, // Only interactive elements
 });
 
 // Automatically filters:
@@ -247,13 +251,13 @@ graph LR
 
 ### Key Benefits
 
-| Aspect | Raw Data | Semantic Filter | Improvement |
-|--------|----------|-----------------|-------------|
-| Token count | 10,000 | 100-1,000 | **10-100x reduction** |
-| LLM reasoning | Confused by noise | Focused on signal | **Better decisions** |
-| Cost | High | Low | **10-100x cheaper** |
-| Latency | Slow | Fast | **2-5x faster** |
-| Accuracy | Prone to errors | More reliable | **Higher success rate** |
+| Aspect        | Raw Data          | Semantic Filter   | Improvement             |
+| ------------- | ----------------- | ----------------- | ----------------------- |
+| Token count   | 10,000            | 100-1,000         | **10-100x reduction**   |
+| LLM reasoning | Confused by noise | Focused on signal | **Better decisions**    |
+| Cost          | High              | Low               | **10-100x cheaper**     |
+| Latency       | Slow              | Fast              | **2-5x faster**         |
+| Accuracy      | Prone to errors   | More reliable     | **Higher success rate** |
 
 ## How to use it
 
@@ -263,20 +267,13 @@ For your domain, determine what actually matters:
 
 ```typescript
 // Web scraping: interactive elements only
-const semanticElements = [
-  'button', 'link', 'textbox', 'checkbox',
-  'radio', 'combobox', 'slider'
-];
+const semanticElements = ['button', 'link', 'textbox', 'checkbox', 'radio', 'combobox', 'slider'];
 
 // API responses: business data only
-const relevantFields = [
-  'name', 'email', 'status', 'amount'
-];
+const relevantFields = ['name', 'email', 'status', 'amount'];
 
 // Documents: content sections only
-const contentSections = [
-  'executive_summary', 'analysis', 'conclusions'
-];
+const contentSections = ['executive_summary', 'analysis', 'conclusions'];
 ```
 
 ### 2. Build Filter Layer
@@ -297,13 +294,13 @@ class SemanticFilter {
   private filterAccessibilityTree(dom: any): any {
     // Only interactive elements with ARIA roles
     return dom
-      .filter(el => el.interactive)
-      .filter(el => !el.isHidden)
-      .filter(el => !this.isAdIframe(el))
-      .map(el => ({
+      .filter((el) => el.interactive)
+      .filter((el) => !el.isHidden)
+      .filter((el) => !this.isAdIframe(el))
+      .map((el) => ({
         role: el.role,
         name: el.name,
-        xpath: el.xpath
+        xpath: el.xpath,
       }));
   }
 }
@@ -314,13 +311,13 @@ class SemanticFilter {
 ```typescript
 // Wrong: Send raw data
 const response = await llm.generate({
-  prompt: `Analyze this page: ${rawHTML}`
+  prompt: `Analyze this page: ${rawHTML}`,
 });
 
 // Right: Filter first
 const filtered = semanticFilter.filter(rawHTML, 'web');
 const response = await llm.generate({
-  prompt: `Analyze this page: ${JSON.stringify(filtered)}`
+  prompt: `Analyze this page: ${JSON.stringify(filtered)}`,
 });
 ```
 
@@ -330,15 +327,13 @@ Keep track of filtered-to-original mappings for execution:
 
 ```typescript
 interface FilteredElement {
-  semanticId: string;    // "login-button"
-  originalRef: string;   // "frameIndex-backendNodeId"
-  xpath: string;         // "/html/body/main/button"
+  semanticId: string; // "login-button"
+  originalRef: string; // "frameIndex-backendNodeId"
+  xpath: string; // "/html/body/main/button"
 }
 
 // Filtered context uses semantic IDs
-const filteredContext = [
-  { id: "btn-1", name: "Login", role: "button" }
-];
+const filteredContext = [{ id: 'btn-1', name: 'Login', role: 'button' }];
 
 // Execution layer maps back to original references
 const element = mapToOriginal(filteredContext[0].id);
