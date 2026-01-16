@@ -201,3 +201,9 @@ cython_debug/
 .cursorindexingignore
 
 node_modules/
+
+# Vercel
+.vercel/
+apps/
+
+# Astro migration (work in progress on separate branch)
