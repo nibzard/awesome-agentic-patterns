@@ -57,7 +57,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md) <span class='updated-badge'>UPDATED</span>
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md) <span class='updated-badge'>UPDATED</span>
 - [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md) <span class='new-badge'>NEW</span>
-- [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md)
+- [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md) <span class='new-badge'>NEW</span>
 
 ### <a name="feedback-loops"></a>Feedback Loops
 
@@ -121,7 +121,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="reliability-eval"></a>Reliability & Eval
 
-- [Action Caching & Replay Pattern](patterns/action-caching-replay.md)
+- [Action Caching & Replay Pattern](patterns/action-caching-replay.md) <span class='new-badge'>NEW</span>
 - [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md) <span class='updated-badge'>UPDATED</span>
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md) <span class='updated-badge'>UPDATED</span>
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md) <span class='updated-badge'>UPDATED</span>
@@ -131,7 +131,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md) <span class='updated-badge'>UPDATED</span>
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md) <span class='updated-badge'>UPDATED</span>
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md) <span class='updated-badge'>UPDATED</span>
-- [Schema Validation Retry with Cross-Step Learning](patterns/schema-validation-retry-cross-step-learning.md)
+- [Schema Validation Retry with Cross-Step Learning](patterns/schema-validation-retry-cross-step-learning.md) <span class='new-badge'>NEW</span>
 - [Structured Output Specification](patterns/structured-output-specification.md) <span class='updated-badge'>UPDATED</span>
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md) <span class='updated-badge'>UPDATED</span>
 - [Workflow Evals with Mocked Tools](patterns/workflow-evals-with-mocked-tools.md) <span class='new-badge'>NEW</span>
@@ -147,6 +147,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md) <span class='updated-badge'>UPDATED</span>
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md) <span class='updated-badge'>UPDATED</span>
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md) <span class='updated-badge'>UPDATED</span>
+- [AI Web Search Agent Loop](patterns/ai-web-search-agent-loop.md)
 - [CLI-First Skill Design](patterns/cli-first-skill-design.md) <span class='updated-badge'>UPDATED</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md) <span class='updated-badge'>UPDATED</span>
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md) <span class='updated-badge'>UPDATED</span>
