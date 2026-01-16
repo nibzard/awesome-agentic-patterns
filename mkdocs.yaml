@@ -118,7 +118,7 @@ nav:
           - "Agent SDK for Programmatic Control <span class='updated-badge'>UPDATED</span>": "patterns/agent-sdk-for-programmatic-control.md"
           - "Agent-First Tooling and Logging <span class='updated-badge'>UPDATED</span>": "patterns/agent-first-tooling-and-logging.md"
           - "Agentic Search Over Vector Embeddings <span class='updated-badge'>UPDATED</span>": "patterns/agentic-search-over-vector-embeddings.md"
-          - "AI Web Search Agent Loop": "patterns/ai-web-search-agent-loop.md"
+          - "AI Web Search Agent Loop <span class='new-badge'>NEW</span>": "patterns/ai-web-search-agent-loop.md"
           - "CLI-First Skill Design <span class='updated-badge'>UPDATED</span>": "patterns/cli-first-skill-design.md"
           - "CLI-Native Agent Orchestration <span class='updated-badge'>UPDATED</span>": "patterns/cli-native-agent-orchestration.md"
           - "Code Mode MCP Tool Interface Improvement Pattern <span class='updated-badge'>UPDATED</span>": "patterns/code-first-tool-interface-pattern.md"

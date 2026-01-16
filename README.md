@@ -147,7 +147,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md) <span class='updated-badge'>UPDATED</span>
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md) <span class='updated-badge'>UPDATED</span>
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md) <span class='updated-badge'>UPDATED</span>
-- [AI Web Search Agent Loop](patterns/ai-web-search-agent-loop.md)
+- [AI Web Search Agent Loop](patterns/ai-web-search-agent-loop.md) <span class='new-badge'>NEW</span>
 - [CLI-First Skill Design](patterns/cli-first-skill-design.md) <span class='updated-badge'>UPDATED</span>
 - [CLI-Native Agent Orchestration](patterns/cli-native-agent-orchestration.md) <span class='updated-badge'>UPDATED</span>
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md) <span class='updated-badge'>UPDATED</span>
