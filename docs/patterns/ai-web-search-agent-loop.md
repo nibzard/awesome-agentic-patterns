@@ -2,7 +2,7 @@
 title: AI Web Search Agent Loop
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Colin Flaherty (Muse)", "Amplify Partners"]
+based_on: ["Colin Flaherty (Muse)", "Amplify Partners Blog"]
 category: Tool Use & Environment
 source: https://www.amplifypartners.com/blog-posts/how-ai-web-search-works
 tags: [web-search, serp-api, citations, parallel-agents, query-translation, operators, grounding]
@@ -85,6 +85,7 @@ flowchart TD
 **Query strategy:**
 
 Models should emulate human search behavior:
+
 - Don't just take the first result
 - Check multiple sources (Reddit, news sites, specialized domains)
 - Iterate with refined queries based on findings
