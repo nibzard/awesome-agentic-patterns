@@ -67,7 +67,7 @@ nav:
           - "Autonomous Workflow Agent Architecture": "patterns/autonomous-workflow-agent-architecture.md"
           - "Conditional Parallel Tool Execution": "patterns/parallel-tool-execution.md"
           - "Continuous Autonomous Task Loop Pattern": "patterns/continuous-autonomous-task-loop-pattern.md"
-          - "Custom Sandboxed Background Agent": "patterns/custom-sandboxed-background-agent.md"
+          - "Custom Sandboxed Background Agent <span class='new-badge'>NEW</span>": "patterns/custom-sandboxed-background-agent.md"
           - "Discrete Phase Separation <span class='updated-badge'>UPDATED</span>": "patterns/discrete-phase-separation.md"
           - "Disposable Scaffolding Over Durable Features": "patterns/disposable-scaffolding-over-durable-features.md"
           - "Distributed Execution with Cloud Workers": "patterns/distributed-execution-cloud-workers.md"
