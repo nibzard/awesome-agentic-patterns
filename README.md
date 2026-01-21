@@ -90,6 +90,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
+- [Custom Sandboxed Background Agent](patterns/custom-sandboxed-background-agent.md)
 - [Discrete Phase Separation](patterns/discrete-phase-separation.md) <span class='updated-badge'>UPDATED</span>
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md)
 - [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md)
