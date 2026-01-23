@@ -34,7 +34,7 @@ flowchart TD
     A[Agent Requests Multiple Tools Simultaneously] --> B{Inspect Tool Types in Batch}
     B --> C{All Tools Read-Only?}
     C -- Yes --> D[Execute All Tools Concurrently]
-    C -- No --> E[Execute All Tools Sequentially (in order)]
+    C -- No --> E["Execute All Tools Sequentially (in order)"]
     D --> F[Collect & Order Results]
     E --> F
     F --> G[Return Aggregate Results to Agent]
