@@ -11,6 +11,7 @@ tags: [context-management, compaction, overflow-recovery, token-estimation, tran
 ## Problem
 
 Context overflow is a silent killer of agent reliability. When accumulated conversation history exceeds the model's context window:
+
 - **API errors**: Requests fail with `context_length_exceeded` or similar errors
 - **Manual intervention**: Operators must truncate transcripts, losing valuable context
 - **Retry complexity**: Detecting overflow and retrying with compaction is error-prone

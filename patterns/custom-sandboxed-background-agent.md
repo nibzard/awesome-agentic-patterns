@@ -11,11 +11,13 @@ tags: [background-agent, sandboxed, model-agnostic, real-time, websocket, custom
 ## Problem
 
 Off-the-shelf coding agents (e.g., Devin, Claude Code, Cursor) are either:
+
 - **Too generic** - Not deeply integrated with company-specific dev environments, tools, and workflows
 - **Vendor-locked** - Tightly coupled to one model provider, limiting flexibility and creating dependency
 - **Limited context** - Cannot access internal infrastructure, private repos, or company-specific tooling
 
 Companies need coding agents that:
+
 - Work within their specific development environment
 - Can iterate with closed feedback loops (compiler, linter, tests)
 - Provide real-time visibility into agent progress

@@ -137,6 +137,7 @@ generic_webhook:
 > "The quality details facilitate adoption in a way that Zapier integration's constraints simply do not."
 
 Custom implementation allows nuances like:
+
 - Slack entity resolution for seamless experience
 - Careful logging behavior in private channels
 - Centralized ticket routing logic

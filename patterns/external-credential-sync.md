@@ -11,6 +11,7 @@ tags: [credentials, oauth, token-sync, keychain, cli-integration, auth-reuse]
 ## Problem
 
 Users manage AI API credentials across multiple tools—CLIs (Claude Code, Codex CLI), web portals, and local development environments. Manually re-entering credentials for each tool is friction-prone and leads to:
+
 - **Stale tokens**: OAuth refresh tokens expire, causing authentication failures
 - **Inconsistent state**: Credentials updated in one tool don't propagate to others
 - **Token-only drift**: Some tools support OAuth refresh; others store static tokens that expire

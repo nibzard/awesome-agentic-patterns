@@ -46,6 +46,7 @@ subagent(agent_name, prompt, files)
 ```
 
 This allows:
+
 - **Virtual file isolation**: Subagent only sees files explicitly passed to it
 - **Tool scoping**: Subagents can inherit all parent tools or use a subset
 - **Specialized system prompts**: Each subagent type has predefined behavior

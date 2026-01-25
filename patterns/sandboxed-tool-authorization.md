@@ -11,6 +11,7 @@ tags: [authorization, policy, allowlist, deny-by-default, pattern-matching, suba
 ## Problem
 
 Tool authorization needs flexibility but also security. Static allowlists don't scale across:
+
 - **Multiple environments**: Development (permissive) vs. production (restrictive)
 - **Different agent roles**: Coding agents need filesystem access; messaging agents shouldn't
 - **Hierarchical delegation**: Subagents should inherit restrictions from parents but with additional constraints

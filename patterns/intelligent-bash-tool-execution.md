@@ -11,6 +11,7 @@ tags: [bash, shell, pty, fallback, security, process-management, sandboxing]
 ## Problem
 
 Secure, reliable command execution from agents is complex and error-prone:
+
 - **PTY requirements**: TTY-required CLIs (coding agents, terminal UIs) fail with direct exec
 - **Platform differences**: Linux and macOS behave differently for detached processes, signal handling
 - **Security concerns**: Arbitrary command execution needs approval workflows, elevated mode detection

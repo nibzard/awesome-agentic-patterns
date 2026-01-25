@@ -11,6 +11,7 @@ tags: [fallback, reliability, error-classification, multi-model, failover, resil
 ## Problem
 
 AI model requests fail for varied and often opaque reasons. Simple retry logic fails to distinguish between:
+
 - **Transient failures** (timeouts, rate limits) that benefit from retry with backoff
 - **Semantic failures** (auth errors, billing issues) where retry is futile
 - **User aborts** where retry wastes resources and frustrates users

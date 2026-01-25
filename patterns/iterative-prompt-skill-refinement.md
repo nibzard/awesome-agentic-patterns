@@ -88,6 +88,7 @@ workflow_result = {
 **Post-run evals (next step):**
 
 Include subjective eval after each run:
+
 - Was this workflow effective?
 - What would have made it better?
 - Human-in-the-loop to nudge evolution

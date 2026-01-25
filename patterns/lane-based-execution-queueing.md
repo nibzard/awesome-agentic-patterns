@@ -11,6 +11,7 @@ tags: [queueing, concurrency, lanes, isolation, parallelism, deadlock-prevention
 ## Problem
 
 Traditional agent systems serialize all operations through a single execution queue, creating bottlenecks that limit throughput. Concurrent execution is desirable but risky:
+
 - **Interleaving hazards**: Multiple commands writing to stdin/stdout simultaneously corrupt user-facing output
 - **Race conditions**: Shared state access without proper synchronization causes data corruption
 - **Deadlock risks**: Naive concurrent queuing can create circular dependencies between operations

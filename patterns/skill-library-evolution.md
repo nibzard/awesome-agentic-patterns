@@ -100,6 +100,7 @@ metadata:
 # System prompt injection
 AVAILABLE_SKILLS = """
 Available skills (use load_skills tool to read full content):
+
 - pdf-processing: Extract text and tables from PDF documents
 - slack-formatting: Format messages for Slack with proper mrkdwn
 - large-file-handling: Handle files exceeding context window
