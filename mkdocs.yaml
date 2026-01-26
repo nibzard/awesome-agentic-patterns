@@ -41,6 +41,8 @@ nav:
           - "Memory Synthesis from Execution Logs": "patterns/memory-synthesis-from-execution-logs.md"
           - "Proactive Agent State Externalization": "patterns/proactive-agent-state-externalization.md"
           - "Progressive Disclosure for Large Files <span class='updated-badge'>UPDATED</span>": "patterns/progressive-disclosure-large-files.md"
+          - "Prompt Caching via Exact Prefix Preservation": "patterns/prompt-caching-via-exact-prefix-preservation.md"
+          - "Self-Identity Accumulation <span class='new-badge'>NEW</span>": "patterns/self-identity-accumulation.md"
           - "Semantic Context Filtering Pattern <span class='updated-badge'>UPDATED</span>": "patterns/semantic-context-filtering.md"
       - "Feedback Loops":
           - "AI-Assisted Code Review / Verification": "patterns/ai-assisted-code-review-verification.md"

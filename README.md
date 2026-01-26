@@ -58,6 +58,8 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md)
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 - [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md) <span class='updated-badge'>UPDATED</span>
+- [Prompt Caching via Exact Prefix Preservation](patterns/prompt-caching-via-exact-prefix-preservation.md)
+- [Self-Identity Accumulation](patterns/self-identity-accumulation.md) <span class='new-badge'>NEW</span>
 - [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md) <span class='updated-badge'>UPDATED</span>
 
 ### <a name="feedback-loops"></a>Feedback Loops
