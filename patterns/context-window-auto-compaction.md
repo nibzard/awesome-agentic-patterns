@@ -2,10 +2,10 @@
 title: "Context Window Auto-Compaction"
 status: "validated-in-production"
 authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)", "Pi Coding Agent (@mariozechner/pi-coding-agent)"]
+based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)", "Pi Coding Agent (@mariozechner/pi-coding-agent)", "Michael Bolin (OpenAI Codex)"]
 category: "Context & Memory"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts"
-tags: [context-management, compaction, overflow-recovery, token-estimation, transcript-validation]
+tags: [context-management, compaction, overflow-recovery, token-estimation, transcript-validation, api-compaction]
 ---
 
 ## Problem
@@ -117,6 +117,29 @@ function ensurePiCompactionReserveTokens(params: {
 }
 ```
 
+**API-based compaction (OpenAI Responses API):**
+
+Some providers offer dedicated compaction endpoints that are more efficient than manual summarization:
+
+```typescript
+// OpenAI's /responses/compact endpoint
+const compacted = await responsesAPI.compact({
+  messages: currentMessages,
+});
+
+// Returns a list of items that includes:
+// - A special type=compaction item with encrypted_content
+//   that preserves the model's latent understanding
+// - Condensed conversation items
+
+currentMessages = compacted.items;
+```
+
+This approach has advantages:
+- **Preserves latent understanding**: The `encrypted_content` maintains the model's compressed representation of the original conversation
+- **More efficient**: Server-side compaction is faster than client-side summarization
+- **Auto-compaction**: Can trigger automatically when `auto_compact_limit` is exceeded
+
 **Lane-aware retry to prevent deadlocks:**
 
 ```typescript
@@ -170,4 +193,6 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
 - [Clawdbot pi-settings.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-settings.ts) - Reserve token configuration
 - [Clawdbot context-window-guard.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/context-window-guard.ts) - Context evaluation
 - [Pi Coding Agent SessionManager](https://github.com/mariozechner/pi-coding-agent) - Core compaction logic
+- [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/) - API-based `/responses/compact` endpoint approach
 - Related: [Context Window Anxiety Management](/patterns/context-window-anxiety-management) for proactive management
+- Related: [Prompt Caching via Exact Prefix Preservation](/patterns/prompt-caching-via-exact-prefix-preservation)
