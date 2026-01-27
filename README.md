@@ -58,7 +58,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Memory Synthesis from Execution Logs](patterns/memory-synthesis-from-execution-logs.md)
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 - [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md) <span class='updated-badge'>UPDATED</span>
-- [Prompt Caching via Exact Prefix Preservation](patterns/prompt-caching-via-exact-prefix-preservation.md)
+- [Prompt Caching via Exact Prefix Preservation](patterns/prompt-caching-via-exact-prefix-preservation.md) <span class='new-badge'>NEW</span>
 - [Self-Identity Accumulation](patterns/self-identity-accumulation.md) <span class='new-badge'>NEW</span>
 - [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md) <span class='updated-badge'>UPDATED</span>
 
@@ -116,6 +116,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Planner-Worker Separation for Long-Running Agents](patterns/planner-worker-separation-for-long-running-agents.md) <span class='new-badge'>NEW</span>
 - [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md)
 - [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md)
+- [Recursive Best-of-N Delegation](patterns/recursive-best-of-n-delegation.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md)
@@ -128,6 +129,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="reliability-eval"></a>Reliability & Eval
 
 - [Action Caching & Replay Pattern](patterns/action-caching-replay.md) <span class='updated-badge'>UPDATED</span>
+- [Adaptive Sandbox Fan-Out Controller](patterns/adaptive-sandbox-fanout-controller.md)
 - [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md)
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)

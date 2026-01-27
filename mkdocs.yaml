@@ -41,7 +41,7 @@ nav:
           - "Memory Synthesis from Execution Logs": "patterns/memory-synthesis-from-execution-logs.md"
           - "Proactive Agent State Externalization": "patterns/proactive-agent-state-externalization.md"
           - "Progressive Disclosure for Large Files <span class='updated-badge'>UPDATED</span>": "patterns/progressive-disclosure-large-files.md"
-          - "Prompt Caching via Exact Prefix Preservation": "patterns/prompt-caching-via-exact-prefix-preservation.md"
+          - "Prompt Caching via Exact Prefix Preservation <span class='new-badge'>NEW</span>": "patterns/prompt-caching-via-exact-prefix-preservation.md"
           - "Self-Identity Accumulation <span class='new-badge'>NEW</span>": "patterns/self-identity-accumulation.md"
           - "Semantic Context Filtering Pattern <span class='updated-badge'>UPDATED</span>": "patterns/semantic-context-filtering.md"
       - "Feedback Loops":
@@ -93,6 +93,7 @@ nav:
           - "Planner-Worker Separation for Long-Running Agents <span class='new-badge'>NEW</span>": "patterns/planner-worker-separation-for-long-running-agents.md"
           - "Progressive Autonomy with Model Evolution": "patterns/progressive-autonomy-with-model-evolution.md"
           - "Progressive Complexity Escalation": "patterns/progressive-complexity-escalation.md"
+          - "Recursive Best-of-N Delegation": "patterns/recursive-best-of-n-delegation.md"
           - "Self-Rewriting Meta-Prompt Loop": "patterns/self-rewriting-meta-prompt-loop.md"
           - "Specification-Driven Agent Development": "patterns/specification-driven-agent-development.md"
           - "Stop Hook Auto-Continue Pattern": "patterns/stop-hook-auto-continue-pattern.md"
@@ -103,6 +104,7 @@ nav:
           - "Tree-of-Thought Reasoning": "patterns/tree-of-thought-reasoning.md"
       - "Reliability & Eval":
           - "Action Caching & Replay Pattern <span class='updated-badge'>UPDATED</span>": "patterns/action-caching-replay.md"
+          - "Adaptive Sandbox Fan-Out Controller": "patterns/adaptive-sandbox-fanout-controller.md"
           - "Anti-Reward-Hacking Grader Design": "patterns/anti-reward-hacking-grader-design.md"
           - "Asynchronous Coding Agent Pipeline": "patterns/asynchronous-coding-agent-pipeline.md"
           - "CriticGPT-Style Code Review": "patterns/criticgpt-style-evaluation.md"
