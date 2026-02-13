@@ -161,6 +161,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [PII Tokenization](patterns/pii-tokenization.md)
 - [Sandboxed Tool Authorization](patterns/sandboxed-tool-authorization.md) <span class='updated-badge'>UPDATED</span>
 - [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
+- [Soulbound Identity Verification](patterns/soulbound-identity-verification.md) <span class='new-badge'>NEW</span>
 
 ### <a name="tool-use-environment"></a>Tool Use & Environment
 
