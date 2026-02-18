@@ -160,6 +160,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
 - [Sandboxed Tool Authorization](patterns/sandboxed-tool-authorization.md) <span class='updated-badge'>UPDATED</span>
+- [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
 
 ### <a name="tool-use-environment"></a>Tool Use & Environment
 
