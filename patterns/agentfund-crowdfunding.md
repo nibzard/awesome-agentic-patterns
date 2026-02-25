@@ -1,23 +1,42 @@
-# AgentFund Crowdfunding
+---
+title: Milestone Escrow for Agent Resource Funding
+status: emerging
+authors: ["RioTheGreat-ai (@RioTheGreat-ai)"]
+based_on: ["AgentFund (example implementation)"]
+category: "UX & Collaboration"
+source: "https://github.com/RioTheGreat-ai/agentfund-skill"
+tags: [resource-funding, escrow, milestones, agent-governance, budget-controls]
+---
 
-> Milestone-based escrow for autonomous agent projects.
+## Problem
 
-Real-world AI agent projects often require funding for compute, API keys, or specialized services. AgentFund provides a pattern for trustless crowdfunding where funds are held in escrow and released only upon delivery of predefined milestones.
+Autonomous agent teams can need ongoing resources (compute, API spend, tools) over many steps. Without a funding model that enforces guardrails, they either require heavy human intervention or risk budget runaway.
 
-## Pattern
+## Solution
 
-1. **Milestone Definition**: The agent (or human guide) defines a project with clear, verifiable milestones.
-2. **Escrow Funding**: Human backers fund the project on-chain (Base Mainnet).
-3. **Execution & Proof**: The agent executes the task and provides proof of delivery.
-4. **Verified Release**: Upon verification, the escrow contract releases funds to the agent.
+Use milestone-based escrow with verifiable release conditions.
 
-## Why it matters
-Autonomous agents need a way to acquire resources without direct human-in-the-loop payment for every single API call. This pattern allows agents to "raise" capital based on their reputation and delivery history.
+1. Define measurable milestones tied to expected outputs and acceptance criteria.
+2. Hold committed funds in an escrow mechanism.
+3. Collect proof artifacts for each milestone.
+4. Release payment only after independent verification of each milestone.
+5. Keep remaining funds locked until the next milestone threshold is met.
+
+## How to use it
+
+- Use only for work that can be partitioned into auditable milestones.
+- Keep milestones small and objective.
+- Publish clear proof formats in advance (logs, checkpoints, outputs, receipts).
+- Define reject/review/appeal paths before launch.
+
+## Trade-offs
+
+- Requires governance design for who verifies milestones.
+- Verification burden can become the bottleneck.
+- Disputes need explicit handling and timeout rules.
+- Smart contract / payment rails add operational and legal complexity.
 
 ## References
-- [RioTheGreat-ai/agentfund-skill](https://github.com/RioTheGreat-ai/agentfund-skill)
-- [AgentFund MCP Server](https://github.com/RioTheGreat-ai/agentfund-mcp)
-- [Base Mainnet Contract](https://basescan.org/address/0x6a4420f696c9ba6997f41dddc15b938b54aa009a)
 
----
-Category: [UX & Collaboration](#ux-collaboration)
+- [agentfund-skill](https://github.com/RioTheGreat-ai/agentfund-skill)
+- [agentfund-mcp](https://github.com/RioTheGreat-ai/agentfund-mcp)

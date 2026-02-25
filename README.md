@@ -218,6 +218,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 1. **Fork & branch** → `git checkout -b add-my-pattern`
 2. **Add a pattern file** under `patterns/` using the template above.
 3. **Open a PR** titled `Add: my-pattern-name` — the README & site will regenerate automatically.
+4. This repository is pattern-first: proposals that are primarily product announcements or promotions will be rejected, even if technically valid.
 
 See [`CONTRIBUTING.md`](https://github.com/nibzard/awesome-agentic-patterns/blob/main/CONTRIBUTING.md) for the fine print.
 

@@ -29,7 +29,17 @@ Refer to the [contribution guidelines](https://github.com/nibzard/awesome-agenti
 ### **Tags (Comma-separated):**
 <!-- Add relevant keywords, e.g., planning, RAG, tool-use, LLM-critic -->
 
----
+### **Policy checks (required):**
+
+Please check all that apply:
+
+- [ ] This proposal is a reusable pattern, not a product launch or marketing post.
+- [ ] The write-up clearly covers Problem, Solution, and Trade-offs/limitations.
+- [ ] Reference links are public and traceable.
+- [ ] I am not using the proposal to pitch a product; any project names are examples only.
+- [ ] If I am affiliated with an implementation, I disclosed that in this proposal.
+
+--- 
 
 ### **Problem:**
 <!-- Describe the specific challenge or pain point this pattern addresses.
