@@ -1,36 +1,51 @@
-# Non-Custodial Spending Controls
+---
+title: "Non-Custodial Spending Controls"
+status: "emerging"
+authors: ["SAMA-I (@s-a-m-a-i)"]
+based_on: ["Walleted agent execution patterns"]
+category: "Security & Safety"
+source: "https://policylayer.com"
+tags: [wallet-controls, spend-limits, policy-enforcement, non-custodial, AI-agents, safety]
+---
 
 ## Problem
 
-AI agents with wallet access can sign transactions autonomously. Without guardrails, a single bad prompt injection, buggy loop, or hallucination can drain a wallet. Hardcoding limits in agent code or system prompts is unreliable — prompts can be jailbroken and code limits are easily bypassed.
+AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass.
 
 ## Solution
 
-Insert a policy enforcement layer between the agent and the wallet signing function. The agent submits a **transaction intent** (not a signed transaction) to the policy layer, which evaluates it against owner-defined rules. Only if the policy check passes does the wallet SDK proceed to sign.
+Insert an explicit policy enforcement layer between the agent and transaction signing. The agent submits transaction intent, the policy layer validates it against rules, and only approved intents are forwarded to a signer.
 
-Key properties:
-- **Non-custodial** — the policy layer never holds private keys. It only sees transaction metadata.
-- **Fail-closed** — if the policy service is unreachable, the agent cannot spend.
-- **Two-gate enforcement** — Gate 1: policy evaluation. Gate 2: authorisation token verification before signing.
+Core mechanics:
 
-## Rules you can enforce
+- **Intent-first workflow**: the agent never signs directly.
+- **Non-custodial boundary**: the policy service validates and returns authorization, but never stores or manages private keys.
+- **Fail-closed behavior**: when policy checks are unavailable, transaction approval is denied.
+- **Two-gate control**: a policy evaluation step plus a separate authorization/timing check before signing.
 
-- Per-transaction amount limits
-- Daily/hourly spending caps with automatic reset
-- Recipient allowlists and blocklists
-- Per-endpoint or per-API budgets
-- Transaction frequency throttling
-- Circuit breakers (auto-pause after consecutive failures)
-- Duplicate payment detection
+## How to use it
+
+- Model the action space as an allowlist of transaction types and destinations.
+- Add per-asset and per-endpoint spending budgets.
+- Enforce cadence constraints (frequency/throttle) and daily/hourly spend caps.
+- Require allowlists/blocklists for critical counterparties.
+- Emit structured audit logs for every denied/allowed decision.
 
 ## Trade-offs
 
-- Adds latency (one network call per transaction for policy check)
-- Requires the policy service to be available (fail-closed is safe but can block legitimate transactions)
-- Policy rules need to be configured — poorly set rules can be too restrictive or too permissive
+- **Pros:**
+  - Prevents direct misuse of signing credentials by agent runtime errors.
+  - Supports policy changes without touching prompt logic.
+  - Clear audit trail for governance and incident review.
 
-## Known uses
+- **Cons/Considerations:**
+  - Adds latency for each transaction.
+  - Requires high availability of the policy service for normal operation.
+  - Misconfigured policies can block legitimate work.
+  - More operational complexity than embedded prompt checks.
 
-- [PolicyLayer](https://policylayer.com) — non-custodial spending controls for x402 agent payments, with cryptographic decision proofs and audit logging
-- Coinbase Agentic Wallets — basic session caps and per-transaction limits (custodial)
-- Openfort — wallet-level spend limits and allowlists (wallet-specific)
+## References
+
+- [PolicyLayer](https://policylayer.com)
+- [Coinbase Agentic Wallet controls](https://www.coinbase.com)
+- [Openfort](https://www.openfort.xyz)
