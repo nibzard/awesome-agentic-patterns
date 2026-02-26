@@ -64,3 +64,5 @@ python merge_models.py \
 
 - Based on "model merging works weirdly well" observation from the Open Source Agent RL talk (May 2025) and Will Brown's remarks on decentralized skill acquisition.
 - Cohere's "Command A" whitepaper on merging specialty models.
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

@@ -9,9 +9,11 @@ tags: [explainability, debugging, transparency, agent reasoning, verbose mode, i
 ---
 
 ## Problem
+
 AI agents, especially those using complex models or multiple tools, can sometimes behave like "black boxes." Users may not understand why an agent made a particular decision, chose a specific tool, or generated a certain output. This lack of transparency can hinder debugging, trust, and the ability to effectively guide the agent.
 
 ## Solution
+
 Implement a feature that allows users to inspect the agent's internal "thought process" or reasoning steps on demand. This could be triggered by a keybinding (e.g., `Ctrl+R` in Claude Code) or a command.
 
 When activated, the verbose output might reveal:
@@ -26,6 +28,7 @@ When activated, the verbose output might reveal:
 This transparency helps users understand the agent's decision-making process, identify issues if the agent is stuck or producing incorrect results, and learn how to prompt more effectively.
 
 ## Example (transparency activation)
+
 ```mermaid
 sequenceDiagram
     participant User
@@ -45,7 +48,19 @@ sequenceDiagram
     UI-->>User: Detailed transparency view
 ```
 
+## How to use it
+
+- Use this when humans and agents share ownership of work across handoffs.
+- Start with clear interaction contracts for approvals, overrides, and escalation.
+- Capture user feedback in structured form so prompts and workflows can improve.
+
+## Trade-offs
+
+* **Pros:** Creates clearer human-agent handoffs and better operational trust.
+* **Cons:** Needs explicit process design and coordination across teams.
+
 ## References
+
 -   Based on the `Ctrl+R` keybinding for showing verbose output in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
 
 [Source](https://www.nibzard.com/claude-code)

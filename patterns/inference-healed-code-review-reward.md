@@ -83,3 +83,5 @@ return final_score, subscores, comments
 
 - Derived from "inference healing" in reward modeling, as discussed in the Open Source Agent RL talk (May 2025) and by Will Brown (Prime Intellect).
 - Similar principles in "Criterion-Led Reward Models" (DeepMind blog, April 2025).
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

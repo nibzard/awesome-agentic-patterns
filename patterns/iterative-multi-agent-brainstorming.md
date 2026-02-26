@@ -9,9 +9,11 @@ tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-age
 ---
 
 ## Problem
+
 For complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process.
 
 ## Solution
+
 Employ a multi-agent approach for brainstorming and idea generation. This involves:
 1.  Defining a core problem or task.
 2.  Spawning multiple independent (or semi-independent) AI agent instances.
@@ -23,6 +25,7 @@ Employ a multi-agent approach for brainstorming and idea generation. This involv
 This pattern leverages parallelism to explore a wider solution space and can lead to more creative or robust outcomes than a single agent might produce alone.
 
 ## Example (parallel brainstorming)
+
 ```mermaid
 flowchart TD
     A[Core Problem/Task] --> B[Agent 1: Perspective A]
@@ -43,9 +46,22 @@ flowchart TD
 ```
 
 ## Example
+
 -   "Use 3 parallel agents to brainstorm ideas for how to clean up `@services/aggregator/feed_service.cpp`." (from Claude Code examples)
 
+## How to use it
+
+- Use this when tasks need explicit control flow between planning, execution, and fallback.
+- Start with one high-volume workflow before applying it across all agent lanes.
+- Define ownership for each phase so failures can be routed and recovered quickly.
+
+## Trade-offs
+
+* **Pros:** Improves coordination across multi-step workflows and reduces hidden control flow.
+* **Cons:** Adds orchestration complexity and more states to debug.
+
 ## References
+
 -   Inspired by the example of using parallel agents for brainstorming in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III.
 
 [Source](https://www.nibzard.com/claude-code)

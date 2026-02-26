@@ -9,13 +9,17 @@ tags: [context-hygiene, taint-removal, prompt-injection]
 ---
 
 ## Problem
-User-supplied or tainted text lingers in the conversation, enabling it to influence later generations.
+
+In long agent sessions, raw user text and tool outputs often remain in-context long after they are needed. If those tokens include adversarial instructions, they can silently bias later reasoning steps, even when the current step is unrelated. This creates delayed prompt-injection risk and unnecessary context bloat.
 
 ## Solution
+
 **Purge or redact** untrusted segments once they've served their purpose:
 
 - After transforming input into a safe intermediate (query, structured object), strip the original prompt from context.  
 - Subsequent reasoning sees **only trusted data**, eliminating latent injections.
+
+Treat context as a staged pipeline: ingest untrusted text, transform it, then aggressively discard the original tainted material. Keep only signed-off structured artifacts that downstream steps are allowed to consume.
 
 ```pseudo
 sql = LLM("to SQL", user_prompt)

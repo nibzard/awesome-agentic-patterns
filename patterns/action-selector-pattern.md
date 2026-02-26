@@ -9,14 +9,19 @@ tags: [prompt-injection, control-flow, safety, tool-use]
 ---
 
 ## Problem
-Untrusted input can hijack an agent's reasoning once tool feedback re-enters the context window, leading to arbitrary, harmful actions.
+
+In tool-enabled agents, untrusted data from emails, web pages, and API responses is often fed back into the model between steps. That creates a control-flow vulnerability: injected text can influence which action the agent chooses next, not just what it writes. Even if individual tools are safe, a compromised action-selection loop can trigger harmful sequences at the orchestration layer.
 
 ## Solution
-Treat the LLM as an **"instruction decoder" only**:
 
-- Map the user's natural-language request to a *pre-approved* action (or action template).  
-- **No tool outputs are fed back** into the LLM.  
-- The agent therefore cannot be influenced after selecting the action.
+Treat the LLM as an instruction decoder, not a live controller. The model maps user intent to a pre-approved action ID plus schema-validated parameters, and execution is handled by deterministic code.
+
+- Map natural language to a constrained action allowlist.
+- Validate parameters against strict schemas before execution.
+- Prevent tool outputs from re-entering the selector prompt.
+- For multi-step workflows, compose actions in code with explicit state transitions.
+
+This preserves natural-language usability while removing post-selection prompt-injection leverage.
 
 ```pseudo
 action = LLM.translate(prompt, allowlist)
@@ -26,8 +31,7 @@ execute(action)
 
 ## How to use it
 
-Provide a hard allowlist of safe actions (API calls, SQL templates, page links).
-Useful for customer-service bots, notification routers, kiosk interfaces.
+Provide a hard allowlist of actions (API calls, SQL templates, page links) and version it like an API contract. Use it for customer-service bots, routing assistants, kiosk flows, and approval systems where allowed actions are finite and auditable.
 
 ## Trade-offs
 
@@ -37,3 +41,5 @@ Useful for customer-service bots, notification routers, kiosk interfaces.
 ## References
 
 * Beurer-Kellner et al., §3.1 (1) Action-Selector.
+
+- Primary source: https://arxiv.org/abs/2506.08837

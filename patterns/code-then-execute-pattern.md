@@ -9,14 +9,18 @@ tags: [dsl, sandbox, program-synthesis, auditability]
 ---
 
 ## Problem
-Plan lists are opaque; we want **full data-flow analysis** and taint tracking.
+
+Free-form plan-and-act loops are difficult to audit because critical control decisions stay implicit in natural-language reasoning. In security-sensitive workflows, teams need verifiable guarantees that tainted inputs cannot flow into dangerous sinks (for example, external messages, payments, or destructive commands). Plain-text plans are too weak for formal validation.
 
 ## Solution
+
 Have the LLM output a **sandboxed program or DSL script**:
 
 1. LLM writes code that calls tools and untrusted-data processors.  
 2. Static checker/Taint engine verifies flows (e.g., no tainted var to `send_email.recipient`).  
 3. Interpreter runs the code in a locked sandbox.
+
+The key shift is to move from "reasoning about actions" to "compiling actions" into an inspectable artifact. Once actions are code, policy engines and static analyzers can enforce data-flow rules before execution.
 
 ```dsl
 x = calendar.read(today)
@@ -26,7 +30,7 @@ email.write(to="john@acme.com", body=y)
 
 ## How to use it
 
-Complex multi-step agents like SQL copilots, software-engineering bots.
+Use this for complex multi-step agents such as SQL copilots, software-engineering bots, and workflow automators where auditability matters. Start with a small DSL and explicit forbidden flows, then expand language features as checks mature.
 
 ## Trade-offs
 
@@ -36,3 +40,5 @@ Complex multi-step agents like SQL copilots, software-engineering bots.
 ## References
 
 * Debenedetti et al., CaMeL (2025); Beurer-Kellner et al., §3.1 (5).
+
+- Primary source: https://arxiv.org/abs/2506.08837

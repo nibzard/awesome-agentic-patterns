@@ -317,7 +317,7 @@ class PatternValidator:
                     Severity.ERROR,
                     "Structure",
                     f"Missing required section: '{section}'",
-                    fix_suggestion=f"Add '## {section}' section"
+                    fix_suggestion=f"Add '{section}' section"
                 )
 
         # Check for recommended sections (without ## prefix for matching)
@@ -358,7 +358,7 @@ class PatternValidator:
             # Basic Mermaid syntax checks
             valid_diagram_types = {
                 "graph", "flowchart", "sequenceDiagram", "classDiagram",
-                "stateDiagram", "erDiagram", "gantt", "pie", "gitGraph"
+                "stateDiagram", "stateDiagram-v2", "erDiagram", "gantt", "pie", "gitGraph"
             }
 
             first_line = diagram.strip().split('\n')[0].strip()
@@ -395,14 +395,24 @@ class PatternValidator:
 
     def _validate_urls(self, content: str, lines: List[str], result: ValidationResult):
         """Validate URLs in the document."""
+        # Ignore YAML front-matter lines to avoid false positives on quoted source fields.
+        front_matter_end_line = 0
+        if lines and lines[0].strip() == "---":
+            for idx, line in enumerate(lines[1:], start=2):
+                if line.strip() == "---":
+                    front_matter_end_line = idx
+                    break
+
         # Find all URLs
-        url_pattern = re.compile(r'https?://[^\s\)]+')
+        url_pattern = re.compile(r'https?://[^\s\)\]>"\']+')
 
         for i, line in enumerate(lines, start=1):
+            if i <= front_matter_end_line:
+                continue
             urls = url_pattern.findall(line)
             for url in urls:
                 # Clean URL (remove trailing punctuation)
-                clean_url = re.sub(r'[.,;:]$', '', url)
+                clean_url = url.rstrip('.,;:)]}>\'"')
 
                 # Basic URL format check
                 if not re.match(r'^https?://[a-zA-Z0-9\-._~:/?#\[\]@!$&\'()*+,;=%]+$', clean_url):

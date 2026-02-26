@@ -122,3 +122,5 @@ Most effective when implemented in the MCP client layer, so it's transparent to 
 * Anthropic Engineering: Code Execution with MCP (2024)
 * GDPR Guidelines on Pseudonymization
 * NIST Privacy Framework
+
+- Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp

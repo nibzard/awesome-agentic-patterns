@@ -168,6 +168,12 @@ flowchart TD
 - May require specialized infrastructure for video processing
 - Quality depends on visual model capabilities
 
+## How to use it
+
+- Use this when agent success depends on reliable tool invocation and environment setup.
+- Start with a narrow tool surface and explicit parameter validation.
+- Add observability around tool latency, failures, and fallback paths.
+
 ## References
 
 - [Andrew Ng on Visual AI and Agentic Workflows (2024)](https://www.deeplearning.ai/the-batch/)

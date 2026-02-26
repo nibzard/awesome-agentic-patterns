@@ -9,9 +9,11 @@ tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-d
 ---
 
 ## Problem
+
 AI agents for tasks like coding can offer various levels of assistance, from simple completions to complex, multi-step operations. A one-size-fits-all approach to agent autonomy doesn't cater to the diverse needs of users or the varying complexity of tasks. Users need to fluidly shift between direct control and delegating tasks to the agent.
 
 ## Solution
+
 Design the human-agent interaction to support a spectrum of control, allowing users to choose the level of agent autonomy appropriate for the current task or their familiarity with the codebase. This involves providing multiple modes or features for interaction:
 
 -   **Low Autonomy (High Human Control):** Simple, inline assistance like tab-completion for code, where the human is primarily driving and the AI augments their input.
@@ -22,6 +24,7 @@ Design the human-agent interaction to support a spectrum of control, allowing us
 Users can seamlessly switch between these modes depending on their needs, allowing for a "blended initiative" where both human and AI contribute effectively.
 
 ## Example
+
 ```mermaid
 flowchart LR
     subgraph "Human Control"
@@ -43,5 +46,19 @@ flowchart LR
     D --> A
 ```
 
+## How to use it
+
+- Use this when humans and agents share ownership of work across handoffs.
+- Start with clear interaction contracts for approvals, overrides, and escalation.
+- Capture user feedback in structured form so prompts and workflows can improve.
+
+## Trade-offs
+
+* **Pros:** Creates clearer human-agent handoffs and better operational trust.
+* **Cons:** Needs explicit process design and coordination across teams.
+
 ## References
+
 - Aman Sanger (Cursor) extensively discusses this spectrum at 0:05:16-0:06:44, detailing different features like tab completion, Command K, Agent for multi-file edits, and Background Agent for entire PRs, describing it as "almost a spectrum."
+
+- Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

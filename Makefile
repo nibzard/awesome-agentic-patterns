@@ -40,3 +40,7 @@ build_with_labels:
 # Lint pattern front-matter for schema drift
 lint_front_matter:
 	python3 scripts/lint_front_matter.py
+
+# Auto-fix missing sections and reference hygiene in patterns
+fix_pattern_quality:
+	python3 scripts/fix_pattern_quality.py

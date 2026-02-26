@@ -43,22 +43,23 @@ graph TD
 
 ```markdown
 ## Task: Add authentication to checkout flow
-### Attempted approaches:
+
+Attempted approaches:
 1. JWT tokens in localStorage - failed due to XSS concerns
 2. HTTP-only cookies - worked but needed CORS config
 3. Session tokens with Redis - chosen solution
 
-### What worked:
+What worked:
 
 - Redis session store with 24hr expiry
 - CORS whitelist in production config
 
-### Mistakes made:
+Mistakes made:
 
 - Forgot to handle token refresh initially
 - Missed error handling for expired sessions
 
-### Patterns discovered:
+Patterns discovered:
 
 - Auth changes always need CORS update
 - Need both client and server-side expiry checks

@@ -9,9 +9,11 @@ tags: [tool use, prompting, agent guidance, custom tools, cli, natural language 
 ---
 
 ## Problem
+
 AI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simply having tools available doesn't guarantee they will be used appropriately for the task at hand, especially for tools unfamiliar to the base model or specific to a team's workflow.
 
 ## Solution
+
 Guide the agent's tool selection and execution through explicit natural language instructions within the prompt. This includes:
 
 -   **Direct Tool Invocation:** Telling the agent which tool to use for a specific part of a task (e.g., "Use the file search tool to find...", "Run a bash command to...").
@@ -22,6 +24,7 @@ Guide the agent's tool selection and execution through explicit natural language
 This pattern emphasizes the user's role in actively shaping the agent's behavior with respect to its available tools, rather than relying solely on autonomous tool selection.
 
 ## Example (tool guidance flow)
+
 ```mermaid
 flowchart TD
     A[User Task] --> B[Available Tools]
@@ -41,7 +44,19 @@ flowchart TD
     I --> J[Task Completion]
 ```
 
+## How to use it
+
+- Use this when agent success depends on reliable tool invocation and environment setup.
+- Start with a narrow tool surface and explicit parameter validation.
+- Add observability around tool latency, failures, and fallback paths.
+
+## Trade-offs
+
+* **Pros:** Improves execution success and lowers tool-call failure rates.
+* **Cons:** Introduces integration coupling and environment-specific upkeep.
+
 ## References
+
 - Based on examples and tips in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III, particularly "Steering Claude to Use Tools" and "Tip #3: Teach Claude to use *your* team's tools."
 
 [Source](https://www.nibzard.com/claude-code)

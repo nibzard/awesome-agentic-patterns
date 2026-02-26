@@ -86,6 +86,12 @@ class RLAIFAgent:
 - **Quality Variance**: Feedback quality depends on the critic model's capabilities
 - **Principle Design**: Requires careful crafting of constitutional principles
 
+## How to use it
+
+- Use this when you need predictable outcomes under changing load or model behavior.
+- Start with explicit SLOs for quality, latency, and error rates.
+- Add release gates so violations block rollout automatically.
+
 ## References
 
 - [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073)

@@ -121,3 +121,5 @@ Combine explicit triggers with semantic fallback:
 * Intent classification in conversational AI
 * Chatbot trigger/response pattern matching
 * Slack workflow triggers
+
+- Primary source: https://github.com/anthropics/claude-code

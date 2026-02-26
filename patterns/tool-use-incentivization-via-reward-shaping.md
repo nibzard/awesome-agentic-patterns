@@ -62,3 +62,5 @@ trajectory.append((state, action, tool_output, local_reward))
 
 - Will Brown's discussion on how "if you set these models up to use tools, they just won't" unless incentivized.
 - Concepts from "Reinforcing Multi-Turn Reasoning in LLM Agents via Turn-Level Credit Assignment" (Prime Intellect paper previewed in talk).
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

@@ -16,6 +16,10 @@ Many agent workflows are long-running or may be interrupted (by errors, timeouts
 
 Agents persist intermediate results and working state to files in the execution environment. This creates durable checkpoints that enable workflow resumption, recovery from failures, and support for tasks that exceed single-session context limits.
 
+Instead of treating state as transient prompt text, the workflow externalizes progress into explicit artifacts that any later run can inspect and continue from. This gives agents a resumable execution model and makes failure recovery deterministic.
+
+File-backed state also improves observability: humans can inspect checkpoints, compare intermediate outputs across retries, and diagnose where runs diverged.
+
 **Core pattern:**
 
 ```python
@@ -158,3 +162,5 @@ workspace/
 
 * Anthropic Engineering: Code Execution with MCP (2024)
 * Related: Episodic Memory pattern (for conversation-level persistence)
+
+- Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp

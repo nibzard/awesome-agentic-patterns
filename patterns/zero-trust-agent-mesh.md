@@ -21,6 +21,8 @@ Apply zero-trust principles to inter-agent communication:
 - **Delegation tokens** carry signed scope, TTL, and parent authority.
 - **Bounded delegation** limits chain depth and blast radius.
 
+Every request is evaluated as an untrusted call until identity, authorization, and delegation lineage are verified. Policies are enforced per hop, not just at the edge, and verification results are logged as first-class audit events. This turns "agent collaboration" into a traceable authorization graph rather than a trust-by-convention channel.
+
 ```mermaid
 sequenceDiagram
     participant A as Agent A

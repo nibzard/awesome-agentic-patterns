@@ -72,3 +72,5 @@ flowchart TD
 
 - Adapted from "Tool Use Steering via Prompting" in Claude Code best practices.
 - Will Brown's notes on "if you want it to be a tool use agent" you must decide that's the default behavior in the prompt.
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

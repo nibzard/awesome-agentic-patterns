@@ -9,13 +9,17 @@ tags: [planning, control-flow-integrity, prompt-injection]
 ---
 
 ## Problem
-If tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps.
+
+When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next. That makes the control flow itself attackable: a malicious intermediate result can redirect the agent into unsafe tools or unauthorized operations.
 
 ## Solution
+
 Split reasoning into two phases:
 
 1. **Plan phase** – LLM generates a *fixed* sequence of tool calls **before** it sees any untrusted data.  
 2. **Execution phase** – Controller runs that exact sequence. Tool outputs may shape *parameters*, but **cannot change which tools run**.
+
+This separates strategic decisions from data-dependent execution. The planner commits to a bounded action graph up front, and the executor enforces that graph deterministically, which preserves flexibility on arguments while protecting control-flow integrity.
 
 ```pseudo
 plan = LLM.make_plan(prompt)      # frozen list of calls

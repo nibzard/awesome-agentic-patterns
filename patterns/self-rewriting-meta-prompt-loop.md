@@ -9,9 +9,11 @@ tags: [meta-prompting, self-improvement, system-prompt, reflection]
 ---
 
 ## Problem
+
 Static system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone.
 
 ## Solution
+
 Let the agent **rewrite its own system prompt** after each interaction:
 
 1. **Reflect** on the latest dialogue or episode.  
@@ -33,6 +35,12 @@ if passes_guardrails(delta):
 
 **Pros:** rapid adaptation; no human in the loop for minor tweaks.
 **Cons:** risk of drift or jailbreak—needs a strong guardrail step.
+
+## How to use it
+
+- Use this when tasks need explicit control flow between planning, execution, and fallback.
+- Start with one high-volume workflow before applying it across all agent lanes.
+- Define ownership for each phase so failures can be routed and recovered quickly.
 
 ## References
 

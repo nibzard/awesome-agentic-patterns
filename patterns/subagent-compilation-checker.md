@@ -64,3 +64,5 @@ sequenceDiagram
 
 - Inspired by "Subagent Spawning" for code-related subtasks in the Open Source Agent RL talk (May 2025).
 - Will Brown's note on decoupling long I/O-bound steps from the main model's inference to avoid context explosion.
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

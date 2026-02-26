@@ -4,7 +4,7 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Internal AI Dev Team"]
 category: "Tool Use & Environment"
-source: "Internal Practice"
+source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
 tags: [file-injection, at-mention, slash-commands, IDE-integration]
 ---
 
@@ -64,3 +64,5 @@ Concretely:
 
 - Adapted from "Dynamic Context Injection" patterns (e.g., at-mention in Claude Code) for general coding-agent use.
 - Common in AI-powered IDE plugins (e.g., GitHub Copilot X live code browsing).
+
+- Add at least one public reference link.

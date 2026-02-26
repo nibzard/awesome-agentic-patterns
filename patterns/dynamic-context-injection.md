@@ -22,6 +22,7 @@ Implement mechanisms for users to dynamically inject context into the agent's wo
 These methods allow for a more fluid and efficient way to provide targeted context exactly when needed.
 
 ## Example (context injection flow)
+
 ```mermaid
 sequenceDiagram
     participant User
@@ -43,7 +44,19 @@ sequenceDiagram
     Agent-->>User: Continue with enriched context
 ```
 
+## How to use it
+
+- Use this when model quality depends on selecting or retaining the right context.
+- Start with strict context budgets and explicit memory retention rules.
+- Measure relevance and retrieval hit-rate before increasing memory breadth.
+
+## Trade-offs
+
+* **Pros:** Raises answer quality by keeping context relevant and reducing retrieval noise.
+* **Cons:** Requires ongoing tuning of memory policies and indexing quality.
+
 ## References
+
 - Based on the at-mention and slash command features described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
 
 [Source](https://www.nibzard.com/claude-code)

@@ -38,6 +38,14 @@ jobs:
     - name: Generate git-based pattern labels
       run: |
         python3 scripts/build_readme.py
+
+    - name: Lint pattern front-matter
+      run: |
+        python3 scripts/lint_front_matter.py
+
+    - name: Validate pattern structure and content
+      run: |
+        python3 scripts/pattern_validator.py --all
     
     - name: Build site
       run: |

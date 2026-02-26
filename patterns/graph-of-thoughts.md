@@ -199,6 +199,12 @@ graph TD
 - Requires sophisticated scoring and path-finding algorithms
 - Can be overkill for simple problems
 
+## How to use it
+
+- Use this when agent quality improves only after iterative critique or retries.
+- Start with one objective metric and one feedback loop trigger.
+- Record failure modes so each loop produces reusable learning artifacts.
+
 ## References
 
 - [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687)

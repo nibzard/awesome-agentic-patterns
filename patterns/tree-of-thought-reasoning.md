@@ -9,10 +9,14 @@ tags: [branching, deliberate-reasoning, search]
 ---
 
 ## Problem
-Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.
+
+Linear reasoning commits early to one path and can fail silently when intermediate assumptions are wrong. On complex planning or synthesis tasks, this causes premature convergence, weak recovery from mistakes, and missed alternatives that a broader search would discover.
 
 ## Solution
-Explore a search tree of intermediate "thoughts" instead of a single chain. The agent expands multiple possible steps and evaluates partial solutions before committing to a path.
+
+Explore a search tree of intermediate thoughts instead of a single chain. Generate multiple candidate continuations, score partial states, prune weak branches, and continue expanding the most promising paths until a stopping condition is met.
+
+This turns reasoning into guided search: backtracking is explicit, branch quality is measurable, and the final answer can be chosen from competing candidates rather than the first trajectory.
 
 ```pseudo
 queue = [root_problem]
@@ -25,11 +29,14 @@ select_best(queue)
 ```
 
 ## How to use it
+
 Apply when tasks benefit from exploring many potential strategies—puzzles, code generation, or planning. Use heuristics or a value function to prune unpromising branches.
 
 ## Trade-offs
+
 * **Pros:** Covers more possibilities; improves reliability on hard tasks.
 * **Cons:** Higher compute cost; needs a good scoring method to guide the search.
 
 ## References
+
 * [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601)

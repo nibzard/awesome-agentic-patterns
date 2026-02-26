@@ -50,3 +50,13 @@ graph TD
 - [Chitin](https://chitin.id)
 - [Chitin MCP Server](https://www.npmjs.com/package/chitin-mcp-server)
 - [Chitin Contracts](https://github.com/chitin-id/chitin-contracts)
+
+## How to use it
+
+- Use this when tool access, data exposure, or action authority must be tightly controlled.
+- Start with deny-by-default policy and minimal required privileges.
+- Continuously audit logs for attempted policy bypass and anomalous behavior.
+
+## References
+
+- Primary source: https://eips.ethereum.org/EIPS/eip-5192

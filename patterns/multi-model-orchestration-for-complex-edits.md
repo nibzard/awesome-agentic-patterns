@@ -9,9 +9,11 @@ tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-
 ---
 
 ## Problem
+
 A single large language model, even if powerful, may not be optimally suited for all sub-tasks involved in a complex operation like multi-file code editing. Tasks such as understanding broad context, generating precise code, and applying edits might benefit from specialized model capabilities.
 
 ## Solution
+
 Employ a pipeline or orchestration of multiple AI models, each specialized for different parts of a complex task. For code editing, this could involve:
 
 1.  A **retrieval model** to gather relevant context from the codebase.
@@ -21,6 +23,7 @@ Employ a pipeline or orchestration of multiple AI models, each specialized for d
 This approach leverages the strengths of different models in a coordinated fashion to achieve a more robust and effective outcome for complex operations than a single model might achieve alone.
 
 ## Example
+
 ```mermaid
 flowchart TD
     A[User Request: Multi-File Edit] --> B[Retrieval Model: Gather Context]
@@ -28,6 +31,17 @@ flowchart TD
     C --> D[Edit Application Model: Apply Edits Across Files]
     D --> E[Edited Codebase]
 ```
+
+## How to use it
+
+- Use this when tasks need explicit control flow between planning, execution, and fallback.
+- Start with one high-volume workflow before applying it across all agent lanes.
+- Define ownership for each phase so failures can be routed and recovered quickly.
+
+## Trade-offs
+
+* **Pros:** Improves coordination across multi-step workflows and reduces hidden control flow.
+* **Cons:** Adds orchestration complexity and more states to debug.
 
 ## References
 

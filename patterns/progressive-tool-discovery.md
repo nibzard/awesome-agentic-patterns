@@ -89,3 +89,5 @@ servers/
 
 * Anthropic Engineering: Code Execution with MCP (2024)
 * Model Context Protocol specification
+
+- Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp

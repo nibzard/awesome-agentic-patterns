@@ -117,6 +117,12 @@ class LATSAgent:
 - May be overkill for simple tasks
 - Requires careful tuning of exploration parameters
 
+## How to use it
+
+- Use this when tasks need explicit control flow between planning, execution, and fallback.
+- Start with one high-volume workflow before applying it across all agent lanes.
+- Define ownership for each phase so failures can be routed and recovered quickly.
+
 ## References
 
 - [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406)

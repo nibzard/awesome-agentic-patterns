@@ -9,9 +9,11 @@ tags: [coherence, long-running tasks, agent capability, llm, complex projects]
 ---
 
 ## Problem
+
 Early AI agents and models often suffered from a short "coherence window," meaning they could only maintain focus and context for a few minutes before their performance degraded significantly (e.g., losing track of instructions, generating irrelevant output). This limited their utility for complex, multi-stage tasks that require sustained effort over hours.
 
 ## Solution
+
 Utilize AI models and agent architectures that are specifically designed or have demonstrably improved capabilities to maintain coherence over extended periods (e.g., several hours). This involves:
 
 - Leveraging newer foundation models with larger context windows and better long-term memory.
@@ -21,6 +23,7 @@ Utilize AI models and agent architectures that are specifically designed or have
 The goal is to enable agents to work on tasks for as long as a human counterpart might, without a degradation in the quality or relevance of their work.
 
 ## Example (coherence over time)
+
 ```mermaid
 gantt
     title Agent Coherence Capabilities Over Time
@@ -37,7 +40,19 @@ gantt
     All-day coherence :future, 10800, 86400
 ```
 
+## How to use it
+
+- Use this when you need predictable outcomes under changing load or model behavior.
+- Start with explicit SLOs for quality, latency, and error rates.
+- Add release gates so violations block rollout automatically.
+
+## Trade-offs
+
+* **Pros:** Improves predictability and catches regressions before user impact.
+* **Cons:** Requires robust instrumentation and disciplined evaluation maintenance.
+
 ## References
+
 - Highlighted in "How AI Agents Are Reshaping Creation": "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." This capability is described as a "qualitative shift."
 
 [Source](https://www.nibzard.com/silent-revolution)
