@@ -68,3 +68,5 @@ sequenceDiagram
 
 - Inspired by "Background Agent with CI Feedback" pattern, adapted for coding-specific workflows.
 - Will Brown's emphasis on **asynchronous pipelines** to avoid idle compute bubbles.
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

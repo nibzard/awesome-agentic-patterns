@@ -112,3 +112,5 @@ Results presented in unified table, grouped by platform.
 * Sub-Agent Spawning pattern for parallel execution
 * LLM Map-Reduce pattern for result aggregation
 * Claude Code `/search-all` skill implementation
+
+- Primary source: https://github.com/anthropics/claude-code

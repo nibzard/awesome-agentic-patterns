@@ -9,9 +9,11 @@ tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless age
 ---
 
 ## Problem
+
 Interactive terminal or chat interfaces are suitable for many agent tasks, but not for all. Integrating agent capabilities into automated workflows (e.g., CI/CD pipelines, scheduled jobs, batch processing) or building more complex applications on top of core agent functionalities requires a programmatic interface.
 
 ## Solution
+
 Provide a Software Development Kit (SDK) that exposes the agent's core functionalities for programmatic access. This SDK allows developers to:
 
 -   Invoke agent actions (e.g., process a prompt, use a tool, access memory) from code (e.g., Python, TypeScript).
@@ -23,6 +25,7 @@ Provide a Software Development Kit (SDK) that exposes the agent's core functiona
 The SDK typically includes libraries, command-line interfaces (CLIs) for scripting, and documentation for headless or embedded use of the agent.
 
 ## Example (SDK integration)
+
 ```mermaid
 flowchart TD
     A[Application/Script] --> B[Agent SDK]
@@ -42,13 +45,26 @@ flowchart TD
 ```
 
 ## Example CLI Usage (Conceptual, from Claude Code SDK info):
+
 ```bash
 $ claude -p "what did i do this week?" \
   --allowedTools Bash(git log:*) \
   --output-format json
 ```
 
+## How to use it
+
+- Use this when agent success depends on reliable tool invocation and environment setup.
+- Start with a narrow tool surface and explicit parameter validation.
+- Add observability around tool latency, failures, and fallback paths.
+
+## Trade-offs
+
+* **Pros:** Improves execution success and lowers tool-call failure rates.
+* **Cons:** Introduces integration coupling and environment-specific upkeep.
+
 ## References
+
 -   Based on the description of the Claude Code SDK in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section VI.
 
 [Source](https://www.nibzard.com/claude-code)

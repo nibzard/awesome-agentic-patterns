@@ -9,11 +9,13 @@ tags: [feedback, testing, reliability, user-feedback, positive-reinforcement, co
 ---
 
 ## Problem
+
 Polishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.
 
 Additionally, agents need to integrate **human feedback** (positive and corrective) to improve session quality over time. Projects that better respond to user feedback have fewer corrections and better outcomes.
 
 ## Solution
+
 Expose **iterative, machine-readable feedback**—compiler errors, test failures, linter output, screenshots—after every tool call.
 The agent uses diagnostics to plan the next step, leading to emergent self-debugging.
 
@@ -38,6 +40,7 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 Modern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).
 
 ## Example
+
 ```mermaid
 sequenceDiagram
   Agent->>CLI: go test ./...
@@ -47,6 +50,17 @@ sequenceDiagram
   Agent->>CLI: go test ./...
   CLI-->>Agent: PASS 87/87 tests
 ```
+
+## How to use it
+
+- Use this when agent quality improves only after iterative critique or retries.
+- Start with one objective metric and one feedback loop trigger.
+- Record failure modes so each loop produces reusable learning artifacts.
+
+## Trade-offs
+
+* **Pros:** Turns repeated failures into measurable improvements over time.
+* **Cons:** Can increase runtime and operational cost due to iterative passes.
 
 ## References
 

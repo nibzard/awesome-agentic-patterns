@@ -9,9 +9,11 @@ tags: [spec-first, scaffolding, contract, requirements]
 ---
 
 ## Problem
+
 Hand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.
 
 ## Solution
+
 Adopt a **spec-first workflow** in which a formal specification file (e.g., Markdown, OpenAPI, JSON Schema) is the agent's *primary* input and source of truth.
 
 - **Parse spec** → agent builds an explicit task graph.
@@ -26,6 +28,7 @@ if new_feature_requested:
 ```
 
 ## How to use it
+
 Give the agent a well-structured spec file, then run `claude spec run`.
 Pitfalls: coarse or under-specified requirements still propagate errors.
 
@@ -35,4 +38,7 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 - **Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.
 
 ## References
+
 - Talk teaser in the World's Fair meta-description about "shift to specification-driven development."
+
+- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/

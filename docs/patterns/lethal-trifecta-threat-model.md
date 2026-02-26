@@ -9,6 +9,7 @@ tags: [security, prompt-injection, threat-model, data-exfiltration]
 ---
 
 ## Problem
+
 Combining three agent capabilities—
 1. **Access to private data**
 2. **Exposure to untrusted content**
@@ -18,6 +19,7 @@ Combining three agent capabilities—
 LLMs cannot reliably distinguish "good" instructions from malicious ones once they appear in the same context window.
 
 ## Solution
+
 Adopt a **Trifecta Threat Model**:  
 
 - **Audit every tool** an agent can call and classify it against the three capabilities.  
@@ -51,3 +53,5 @@ if tool.can_externally_communicate and
 
 * Willison, *The Lethal Trifecta for AI Agents* (June 16 2025).
 * "Design Patterns for Securing LLM Agents against Prompt Injections" (June 13 2025).
+
+- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/

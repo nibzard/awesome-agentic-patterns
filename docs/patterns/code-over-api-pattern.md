@@ -108,3 +108,5 @@ The agent sees the log output and return value, but the full dataset never enter
 
 * Anthropic Engineering: Code Execution with MCP (2024)
 * Related: Code-Then-Execute Pattern (focuses on security/formal verification)
+
+- Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp

@@ -9,9 +9,11 @@ tags: [human-agent collaboration, workflow design, agent autonomy, task decompos
 ---
 
 ## Problem
+
 Simply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may struggle or produce suboptimal results. Agents perform best when given some degree of freedom and when the tasks are structured in a way that aligns with their strengths.
 
 ## Solution
+
 Consciously design and adapt workflows, task structures, and human-agent interaction points to be "agent-friendly." This involves:
 
 - **Clear Goal Definition:** Provide clear, high-level goals rather than overly prescriptive, step-by-step instructions for every detail.
@@ -23,6 +25,7 @@ Consciously design and adapt workflows, task structures, and human-agent interac
 This approach aims to create a collaborative environment where the agent's capabilities are maximized by a thoughtfully designed process.
 
 ## Example (workflow adaptation)
+
 ```mermaid
 flowchart TD
     A[Traditional Workflow] --> B{Agent-Friendly?}
@@ -41,7 +44,19 @@ flowchart TD
     I --> J[Enhanced Agent Performance]
 ```
 
+## How to use it
+
+- Use this when humans and agents share ownership of work across handoffs.
+- Start with clear interaction contracts for approvals, overrides, and escalation.
+- Capture user feedback in structured form so prompts and workflows can improve.
+
+## Trade-offs
+
+* **Pros:** Creates clearer human-agent handoffs and better operational trust.
+* **Cons:** Needs explicit process design and coordination across teams.
+
 ## References
+
 - Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
 
 [Source](https://www.nibzard.com/silent-revolution)

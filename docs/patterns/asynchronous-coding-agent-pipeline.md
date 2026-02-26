@@ -77,3 +77,5 @@ flowchart LR
 
 - Will Brown's emphasis on "everything being async and overlapped" to hide latencies in multi-hour RL tasks.
 - "IMPALA: Scalable Distributed Deep-RL" for a precedent in actor-learner pipelines.
+
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

@@ -9,6 +9,7 @@ tags: [state-externalization, memory-management, self-documentation, note-taking
 ---
 
 ## Problem
+
 Modern models like Claude Sonnet 4.5 proactively attempt to externalize their state by writing summaries and notes (e.g., `CHANGELOG.md`, `SUMMARY.md`) to the file system without explicit prompting. However:
 
 - Self-generated notes are often incomplete or miss crucial context
@@ -17,6 +18,7 @@ Modern models like Claude Sonnet 4.5 proactively attempt to externalize their st
 - Knowledge gaps emerge from inadequate self-documentation
 
 ## Solution
+
 Implement structured approaches to leverage and enhance the model's natural tendency toward state externalization:
 
 **1. Guided Self-Documentation Framework**
@@ -80,6 +82,7 @@ class ProactiveStateManager:
 ```
 
 ## How to use it
+
 Best applied in scenarios where agents work on extended tasks:
 
 - **Long-Running Development Sessions**: Multi-hour coding projects requiring state continuity
@@ -94,5 +97,6 @@ Monitor self-documentation quality and supplement with external memory systems w
 * **Cons:** May consume tokens on documentation over progress; requires validation overhead; risk of incomplete self-assessment; potential for "documentation theater"
 
 ## References
+
 * [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges)
 * Related: [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md)

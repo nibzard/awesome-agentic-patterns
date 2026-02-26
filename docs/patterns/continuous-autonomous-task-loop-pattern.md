@@ -69,6 +69,7 @@ sequenceDiagram
 ## How to use it
 
 ### Prerequisites
+
 - CLI agent tool (Claude Code, etc.) with autonomous execution capabilities
 - Git repository with TODO.md or similar task file
 - JSON parsing tools (jq) for stream processing
@@ -82,6 +83,7 @@ sequenceDiagram
 5. **Launch Loop**: Start autonomous execution with configured parameters
 
 ### Key Configuration Options
+
 ```bash
 # Example configuration
 MAX_ITERATIONS=50           # Safety limit
@@ -91,6 +93,7 @@ STREAM_JSON=true           # Real-time progress tracking
 ```
 
 ### Safety Considerations
+
 - Always set maximum iteration limits
 - Use version control for rollback capability
 - Monitor execution logs for unexpected behavior

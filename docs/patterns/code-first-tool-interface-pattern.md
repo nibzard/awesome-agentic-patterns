@@ -13,6 +13,7 @@ tags: [tool-interface, code-generation, sandboxing, mcp, mcp-improvement, typesc
 Traditional Model Context Protocol (MCP) approaches of directly exposing tools to Large Language Models create significant token waste and complexity issues. We've moved from telling LLMs what to do, to teaching them to write instructions for themselves—it's **turtles writing code all the way down**[^1] for all domains.
 
 ### Token Waste in Multi-Step Operations
+
 Classic MCP forces this inefficient pattern:
 ```
 LLM → tool #1 → large JSON response → LLM context
@@ -24,6 +25,7 @@ LLM → tool #3 → large JSON response → LLM context
 Every intermediate result must ride back through the model's context, burning tokens and adding latency at each step. For complex workflows requiring 5-10 tool calls, this becomes extremely expensive.
 
 ### Fan-Out Inefficiency at Scale
+
 The traditional approach breaks down dramatically with bulk operations:
 
 **Processing 100 emails for personalized outreach:**
@@ -36,6 +38,7 @@ The traditional approach breaks down dramatically with bulk operations:
 **Code Mode alternative:** Simple `for` loop over 100 entries, processing entirely within the sandbox with only final results surfaced to LLM context.
 
 ### Core Interface Limitations
+
 - LLMs struggle to effectively use complex tool interfaces
 - Limited training data on "tool calls" compared to abundant code training
 - Multi-step tool interactions become cumbersome with direct API calls
@@ -209,6 +212,7 @@ for (const contact of contacts) {
 ## Traditional MCP vs Code Mode Comparison
 
 ### Traditional MCP Flow
+
 ```
 User Request → LLM
 ↓
@@ -224,6 +228,7 @@ Final Answer (Context bloated with intermediate data)
 **Cost:** High token usage, multiple round-trips, latency accumulation
 
 ### Code Mode Flow
+
 ```
 User Request → LLM → Generated Code → V8 Isolate
                                     ↓

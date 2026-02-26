@@ -217,6 +217,12 @@ flowchart TD
 - Not beneficial for simple tasks
 - Requires careful tuning of scaling strategies
 
+## How to use it
+
+- Use this when tasks need explicit control flow between planning, execution, and fallback.
+- Start with one high-volume workflow before applying it across all agent lanes.
+- Define ownership for each phase so failures can be routed and recovered quickly.
+
 ## References
 
 - [Google DeepMind Research on Test-Time Compute Scaling (August 2024)](https://deepmind.google/research/)

@@ -185,6 +185,12 @@ flowchart LR
 - Requires careful interface design between stages
 - May introduce overhead for data transformation between stages
 
+## How to use it
+
+- Use this when tasks need explicit control flow between planning, execution, and fallback.
+- Start with one high-volume workflow before applying it across all agent lanes.
+- Define ownership for each phase so failures can be routed and recovered quickly.
+
 ## References
 
 - [Software Architecture Patterns](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/)

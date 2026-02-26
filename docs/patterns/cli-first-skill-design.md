@@ -89,13 +89,13 @@ Bash: trello.sh cards abc123 | jq '.[0].name'
 ```bash
 # priority-report.sh composes multiple skill CLIs
 #!/bin/bash
-echo "## GitHub"
+echo "-- GitHub --"
 gh pr list --search "review-requested:@me"
 
-echo "## Trello"
+echo "-- Trello --"
 ~/.claude/skills/trello/scripts/trello.sh cards abc123
 
-echo "## Asana"
+echo "-- Asana --"
 ~/.claude/skills/asana/scripts/asana.sh tasks personal
 ```
 
@@ -130,3 +130,5 @@ echo "## Asana"
 * Dual-Use Tool Design pattern
 * Claude Code skills directory structure
 * 12-Factor App: Config via environment
+
+- Primary source: https://github.com/anthropics/claude-code

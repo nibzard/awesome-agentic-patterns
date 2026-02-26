@@ -9,9 +9,11 @@ tags: [multi-model, cost-optimization, strategic-reasoning, architecture]
 ---
 
 ## Problem
+
 Relying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems.
 
 ## Solution
+
 Implement a two-tier system with specialized roles:
 
 - **The Worker (Claude Sonnet 4):** Fast, capable, and cost-effective agent handling bulk tool use and code generation
@@ -32,11 +34,16 @@ graph TD
 ```
 
 ## How to use it
+
 Development environments, complex coding tasks, architectural decisions, debugging sessions where initial approaches fail.
 
 ## Trade-offs
+
 * **Pros:** Cost-efficient use of frontier models; sophisticated problem-solving; specialized AI team approach
 * **Cons:** Additional orchestration complexity; potential latency from model switching; requires careful Oracle invocation logic
 
 ## References
+
 * Sourcegraph Team presentation on multi-model AI systems
+
+- Primary source: https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ

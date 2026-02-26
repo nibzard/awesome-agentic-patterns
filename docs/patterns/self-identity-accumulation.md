@@ -4,7 +4,7 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Claude Code Hooks System"]
 category: "Context & Memory"
-source: "Based on my personal bot WHO_AM_I system"
+source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
 tags: [self-identity, persona, session-hooks, familiarity, cross-session, profile, soul-document, agent-personality]
 ---
 
@@ -188,3 +188,5 @@ This document accumulates familiarity across sessions.
 
 * Based on my personal bot WHO_AM_I system
 * Related: [Dynamic Context Injection](dynamic-context-injection.md), [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), [Filesystem-Based Agent State](filesystem-based-agent-state.md)
+
+- Add at least one public reference link.

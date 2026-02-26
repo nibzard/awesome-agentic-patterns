@@ -9,9 +9,11 @@ tags: [api-design, llm-interaction, tool-use, system-design, code-structure, age
 ---
 
 ## Problem
+
 For AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters. APIs designed solely for human consumption might be ambiguous or overly complex for an LLM to use correctly without extensive fine-tuning or elaborate prompting.
 
 ## Solution
+
 Design or adapt software APIs (including internal libraries and modules) with explicit consideration for LLM consumption. This involves:
 
 -   **Explicit Versioning:** Making API version information clearly visible and understandable to the LLM, so it can request or adapt to specific versions.
@@ -22,5 +24,19 @@ Design or adapt software APIs (including internal libraries and modules) with ex
 
 The aim is to create interfaces that are robust and intuitive for LLMs to interact with, thereby improving the reliability and effectiveness of agent tool use.
 
+## How to use it
+
+- Use this when agent success depends on reliable tool invocation and environment setup.
+- Start with a narrow tool surface and explicit parameter validation.
+- Add observability around tool latency, failures, and fallback paths.
+
+## Trade-offs
+
+* **Pros:** Improves execution success and lowers tool-call failure rates.
+* **Cons:** Introduces integration coupling and environment-specific upkeep.
+
 ## References
+
 - Lukas Möller (Cursor) at 0:16:00: "API design is already adjusting such that LLMs are more comfortable with that. For example, changing not only the the version number internally but making it like very visible to the model that this is a new version of some software just to make sure that the the API is used correctly." And at 0:16:20: "...structuring the code in a way where one doesn't have to go through like n level of indirection but maybe just through two levels of indirection makes, yeah, LLM models better at at working with that code base."
+
+- Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

@@ -9,14 +9,16 @@ tags: [network-sandbox, exfiltration, outbound-controls, security]
 ---
 
 ## Problem
+
 Even with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. Many real-world fixes simply removed or filtered outbound channels.
 
 ## Solution
+
 Implement an **egress firewall** for agent tools:
 
 - Allow only specific domains, methods, or payload sizes.  
 - Strip or hash content in any permitted outbound call.  
-- Forbid dynamic link generation (e.g., `http://attacker.com/?q=<data>`).  
+- Forbid dynamic link generation (e.g., `attacker.example/exfil?q=REDACTED`).  
 - Where external communication is essential, run it in a separate "dumb" worker that cannot see private data.
 
 ```bash
@@ -39,3 +41,5 @@ RUN iptables -A OUTPUT -d api.mycompany.internal -j ACCEPT
 ## References
 
 * Multiple vendor post-mortems cited by Willison: Microsoft 365 Copilot, GitHub MCP, GitLab Duo Chatbot fixes all disabled egress paths as the first patch.
+
+- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/

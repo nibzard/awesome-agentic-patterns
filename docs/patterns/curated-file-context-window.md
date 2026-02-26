@@ -4,7 +4,7 @@ status: best-practice
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Internal AI Dev Team"]
 category: "Context & Memory"
-source: "Internal Practice"
+source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
 tags: [code-context, file-scope, relevance, memory-management]
 ---
 
@@ -77,3 +77,5 @@ This ensures that the agent has precisely the files it needs (no more, no less),
 
 - Inspired by "Curated Context Window" from Claude Code best practices; adapted for coding-agent workflows.
 - Common practice seen in large-scale monorepo code assistants (e.g., Lyft's internal code AI).
+
+- Add at least one public reference link.

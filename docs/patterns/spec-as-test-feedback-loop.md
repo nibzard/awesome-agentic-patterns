@@ -9,9 +9,11 @@ tags: [validation, drift-detection, continuous-testing]
 ---
 
 ## Problem
+
 Even in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust.
 
 ## Solution
+
 Generate **executable assertions** directly from the spec (e.g., unit or integration tests) and let the agent:
 
 - Watch for any spec or code commit.  
@@ -24,8 +26,18 @@ Generate **executable assertions** directly from the spec (e.g., unit or integra
 This creates a continuous feedback loop ensuring specification and implementation remain synchronized.
 
 ## Trade-offs
+
 - **Pros:** catches drift early, keeps spec & impl in lock-step.
 - **Cons:** heavy CI usage; false positives if spec wording is too loose.
 
+## How to use it
+
+- Use this when agent quality improves only after iterative critique or retries.
+- Start with one objective metric and one feedback loop trigger.
+- Record failure modes so each loop produces reusable learning artifacts.
+
 ## References
+
 - Natural extension of the "specification-driven development" concept surfaced in the page metadata.
+
+- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/

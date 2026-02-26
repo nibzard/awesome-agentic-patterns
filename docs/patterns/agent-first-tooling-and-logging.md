@@ -31,7 +31,7 @@ sequenceDiagram
     participant Logger as Unified Logger
     participant System as System Services
 
-    Agent->>CLI: command --for-agent --json
+    Agent->>CLI: command [for-agent] [json]
     CLI->>System: Execute operation
     System->>Logger: Write structured log entry
     Logger->>Agent: JSON log stream
@@ -63,3 +63,5 @@ sequenceDiagram
 ## References
 
 - From Thorsten Ball: "What we've seen people now do is well instead of having the client log and having the browser log and having the database log, let's have one unified log because then it's easier for the agent to just look at this log... You can just have like JSON line outputs and whatnot because the agent can understand it much better than a human can... This is not made for human consumption anymore. How can we optimize this for a genetic consumption?"
+
+- Primary source: https://www.sourcegraph.com

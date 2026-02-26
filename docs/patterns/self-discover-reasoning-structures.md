@@ -138,6 +138,12 @@ flowchart TD
 - May over-engineer simple problems
 - Structure quality depends on task analysis accuracy
 
+## How to use it
+
+- Use this when agent quality improves only after iterative critique or retries.
+- Start with one objective metric and one feedback loop trigger.
+- Record failure modes so each loop produces reusable learning artifacts.
+
 ## References
 
 - [Self-Discover: Large Language Models Self-Compose Reasoning Structures (2024)](https://arxiv.org/abs/2402.03620)

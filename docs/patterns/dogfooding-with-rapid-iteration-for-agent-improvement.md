@@ -9,9 +9,11 @@ tags: [dogfooding, iterative-development, feedback-loop, agent-improvement, inte
 ---
 
 ## Problem
+
 Developing effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may not capture all nuances.
 
 ## Solution
+
 The development team extensively uses their own AI agent product ("dogfooding") for their daily software development tasks. This provides:
 
 1.  **Direct, Immediate Feedback:** Developers encounter the agent's strengths and weaknesses firsthand.
@@ -49,6 +51,11 @@ Anthropic practices intensive "ant fooding" (their internal term for dogfooding)
 > "Internally over 70 or 80 percent of ants—technical Anthropic employees—use Claude Code every day. Every time we are thinking about a new feature, we push it out to people internally and we get so much feedback. We have a feedback channel. I think we get a post every five minutes. And so you get a really quick signal on whether people like it, whether it's buggy, or whether it's not good and we should unship it."
 
 This creates a development culture where features are validated through actual daily use before external release, dramatically reducing the risk of building unwanted functionality.
+
+## Trade-offs
+
+* **Pros:** Turns repeated failures into measurable improvements over time.
+* **Cons:** Can increase runtime and operational cost due to iterative passes.
 
 ## References
 

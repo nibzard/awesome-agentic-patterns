@@ -257,6 +257,12 @@ sequenceDiagram
 - May miss novel vulnerability types
 - Requires integration into existing workflows
 
+## How to use it
+
+- Use this when you need predictable outcomes under changing load or model behavior.
+- Start with explicit SLOs for quality, latency, and error rates.
+- Add release gates so violations block rollout automatically.
+
 ## References
 
 - [OpenAI's CriticGPT Announcement (July 2024)](https://openai.com/research/criticgpt)
