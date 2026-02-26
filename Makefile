@@ -44,3 +44,8 @@ lint_front_matter:
 # Auto-fix missing sections and reference hygiene in patterns
 fix_pattern_quality:
 	python3 scripts/fix_pattern_quality.py
+
+PROJECT_PINNED_CLAUDE_BIN ?= $(HOME)/.local/share/claude/versions/2.1.34
+
+research_loop:
+	CLAUDE_BIN="$(PROJECT_PINNED_CLAUDE_BIN)" ./scripts/claude-research-loop.sh

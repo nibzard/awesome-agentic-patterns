@@ -207,3 +207,7 @@ node_modules/
 apps/
 
 # Astro migration (work in progress on separate branch)
+
+# Claude research loop state/logs
+research/logs/
+research/pattern-research-tracker.json
