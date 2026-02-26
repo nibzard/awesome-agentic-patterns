@@ -41,19 +41,19 @@ Decouple the **inference**, **tool execution**, and **learning** into **parallel
 ## Example
 
 ```mermaid
-flowchart LR
+graph LR
     subgraph InferenceCluster
-        A[Inference Worker] -->|"Compile serviceA"| B[Tool Queue]
-        B -->|request| C[CompileSubagent]
-        C -->|result (succ/fail)| A
-        A -->|trajectory data| D[Replay Buffer]
+        A[Inference Worker] --> B[Tool Queue]
+        B --> C[Compile Subagent]
+        C --> A
+        A --> D[Replay Buffer]
     end
     subgraph TrainingCluster
-        D -->|batch| E[Learner (Policy Update)]
-        E -->|new checkpoint| A
+        D --> E[Learner]
+        E --> A
     end
     subgraph RewardCluster
-        F[RewardModel Worker] -->|consume trajectories| D
+        F[RewardModel Worker] --> D
     end
 ```
 
