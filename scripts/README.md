@@ -4,33 +4,37 @@ Run from repo root:
 
 ```bash
 make research_loop
-make research_loop PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34"
 scripts/claude-research-loop.sh --bootstrap-only
 scripts/claude-research-loop.sh --once
 scripts/claude-research-loop.sh
 scripts/claude-research-loop.sh --pattern plan-then-execute-pattern
+make research_loop PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34"
+PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34" scripts/claude-research-loop.sh --once
 ```
 
 Requirements:
 
 ```bash
 jq
-~/.local/share/claude/versions/2.1.34 (project default pin)
+claude (in PATH) -- latest global is preferred
 ```
 
-Override pin for one run:
+Optional pinned fallback for this project (used when `claude` is unavailable):
 
 ```bash
-CLAUDE_BIN=claude scripts/claude-research-loop.sh --once
+PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34" scripts/claude-research-loop.sh --once
 ```
 
 ## Pinning Note
 
-This loop is pinned to `~/.local/share/claude/versions/2.1.34` by default because newer bundled builds were unstable on this host during testing.
+This loop now prefers the global `claude` binary by default.
+
+`PROJECT_PINNED_CLAUDE_BIN` can be used as a fallback path if needed.
 
 Project-only pin:
-- `make research_loop` uses the pinned binary.
-- You can still override per run with `CLAUDE_BIN=...`.
+- `make research_loop` uses global `claude` when available.
+- You can still force a specific binary with `CLAUDE_BIN=...`.
+- You can force the project pin fallback with `PROJECT_PINNED_CLAUDE_BIN=...`.
 
 Revert your global `claude` to the latest published build:
 

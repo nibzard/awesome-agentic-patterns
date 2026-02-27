@@ -10,10 +10,13 @@ TRACKER_FILE=${TRACKER_FILE:-"$RESEARCH_DIR/pattern-research-tracker.json"}
 LOG_DIR="$RESEARCH_DIR/logs"
 PROJECT_PINNED_CLAUDE_BIN=${PROJECT_PINNED_CLAUDE_BIN:-"$HOME/.local/share/claude/versions/2.1.34"}
 if [ -z "${CLAUDE_BIN:-}" ]; then
-  if [ -x "$PROJECT_PINNED_CLAUDE_BIN" ]; then
+  if command -v claude >/dev/null 2>&1; then
+    CLAUDE_BIN="claude"
+  elif [ -x "$PROJECT_PINNED_CLAUDE_BIN" ]; then
     CLAUDE_BIN="$PROJECT_PINNED_CLAUDE_BIN"
   else
-    CLAUDE_BIN="claude"
+    echo "Error: CLAUDE_BIN not set and neither 'claude' nor pinned binary '${PROJECT_PINNED_CLAUDE_BIN}' are available." >&2
+    exit 1
   fi
 fi
 CLAUDE_MODEL=${CLAUDE_MODEL:-}
@@ -36,9 +39,9 @@ Options:
   -h, --help            Show this help.
 
 Environment:
-  CLAUDE_BIN            Claude CLI binary override (default: project pinned 2.1.34 if present)
+  CLAUDE_BIN            Claude CLI binary override (default: global `claude`)
   PROJECT_PINNED_CLAUDE_BIN
-                        Project pin path (default: ~/.local/share/claude/versions/2.1.34)
+                        Optional fallback pinned binary path (default: ~/.local/share/claude/versions/2.1.34)
   CLAUDE_MODEL          Optional Claude model name
   LOOP_DELAY_SECONDS    Optional delay between runs (default: 0)
   PATTERNS_DIR          Optional override (default: <repo>/patterns)
@@ -124,14 +127,14 @@ sync_tracker_with_patterns() {
             | if $existing then
                 $existing
                 | .source_file = ("patterns/" + $pattern + ".md")
-                | .report_file = ("research/" + $pattern + "-research.md")
+                | .report_file = ("research/" + $pattern + "-report.md")
                 | .run_count = (.run_count // 0)
                 | .runs = (.runs // [])
               else
                 {
                   pattern: $pattern,
                   source_file: ("patterns/" + $pattern + ".md"),
-                  report_file: ("research/" + $pattern + "-research.md"),
+                  report_file: ("research/" + $pattern + "-report.md"),
                   status: "pending",
                   run_count: 0,
                   last_run_id: null,
@@ -147,6 +150,11 @@ sync_tracker_with_patterns() {
   ' "$TRACKER_FILE" > "$tmp"
 
   mv "$tmp" "$TRACKER_FILE"
+}
+
+get_pattern_report_file() {
+  local pattern="$1"
+  jq -r --arg pattern "$pattern" '.patterns[] | select(.pattern == $pattern) | .report_file' "$TRACKER_FILE"
 }
 
 recover_running_states() {
@@ -293,9 +301,12 @@ run_pattern() {
   run_id="$(date -u +%Y%m%d-%H%M%S)-$$-${pattern}"
   log_rel="research/logs/${run_id}.log"
   log_abs="$ROOT_DIR/$log_rel"
-  report_rel="research/${pattern}-research.md"
+  report_rel=$(get_pattern_report_file "$pattern")
+  if [ -z "$report_rel" ] || [ "$report_rel" = "null" ]; then
+    report_rel="research/${pattern}-report.md"
+  fi
   report_abs="$ROOT_DIR/$report_rel"
-  prompt="Create a team of agents to perform a deep web research on this pattern $pattern and save it to the research/ folder, name it using the same name of the pattern with suffix \"-research\" and save it as markdown."
+  prompt="Create a team of agents. Your only deliverable is one markdown report at ${report_rel} for the pattern ${pattern}, and it must be written by updating this single file as work progresses. Constraints: 1) Write to only one file: ${report_rel}. 2) If ${report_rel} exists, update it in-place; if not, create it. 3) Do not create, edit, or reference any other files in research/. 4) If any content is uncertain, mark it as \"Needs verification\". 5) Keep the tracker canonical: this run is recorded in ${TRACKER_FILE} and the report_file for this pattern must be ${report_rel}. 6) At completion print exactly: COMPLETED_REPORT=${report_rel}"
 
   mark_pattern_running "$pattern" "$run_id" "$started_at"
 

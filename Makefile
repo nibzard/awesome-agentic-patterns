@@ -45,7 +45,7 @@ lint_front_matter:
 fix_pattern_quality:
 	python3 scripts/fix_pattern_quality.py
 
-PROJECT_PINNED_CLAUDE_BIN ?= $(HOME)/.local/share/claude/versions/2.1.34
+PROJECT_PINNED_CLAUDE_BIN ?=
 
 research_loop:
-	CLAUDE_BIN="$(PROJECT_PINNED_CLAUDE_BIN)" ./scripts/claude-research-loop.sh
+	PROJECT_PINNED_CLAUDE_BIN="$(PROJECT_PINNED_CLAUDE_BIN)" ./scripts/claude-research-loop.sh

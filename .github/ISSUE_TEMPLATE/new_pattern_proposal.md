@@ -41,6 +41,17 @@ Please check all that apply:
 
 --- 
 
+### **Community Fit Checklist:**
+<!-- This project is community-first and avoids promotional/sales content. -->
+
+- [ ] This proposal is not promotional, sales-oriented, or direct marketing.
+- [ ] I am not using this proposal to add backlinks to my product/service.
+- [ ] External links are limited to github.com, github.io, or non-vendor neutral references.
+- [ ] If I included a vendor/product link, I explained why this is truly novel and adds clear value.
+- [ ] I reviewed existing patterns and this proposal is materially novel (not a repeat with minor wording changes).
+
+---
+
 ### **Problem:**
 <!-- Describe the specific challenge or pain point this pattern addresses.
 - What makes this difficult for AI agents or developers of AI systems?
