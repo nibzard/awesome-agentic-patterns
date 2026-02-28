@@ -1,54 +1,70 @@
 ---
-title: "Pattern Title: Clearly and Concisely"
-status: "proposed | emerging | established | validated-in-production | best-practice | experimental-but-awesome | rapidly-improving"
+title: Pattern Title Here
+status: proposed # One of: proposed, emerging, established, validated-in-production, best-practice, experimental-but-awesome, rapidly-improving
 authors: ["Contributor Name (@username)"] # Repo contributors
-based_on: ["Original Creator (Source)"]   # Pattern originators/inspiration
+based_on: ["Original Creator (Source)"]    # Pattern originators/inspiration
 category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
 source: "URL to the primary blog post, talk, repo, or paper"
 tags: [tag1, tag2, keyword3, relevant-concept]
+# Optional evidence metadata for research-informed updates
+# evidence_grade: unknown  # one of: high, medium, low, mixed, unknown
+# evidence_snapshot: "1-2 high-signal findings + key uncertainty"
+# last_updated: "YYYY-MM-DD"
 ---
 
 ## Problem
 
-Describe the specific challenge or pain point this pattern addresses.
-- What makes this difficult for AI agents or developers of AI systems?
-- Why is a dedicated pattern needed?
+Clearly state the problem this pattern solves. What challenge or limitation does it address? Be specific about the context where this problem occurs.
 
 ## Solution
 
-Explain the core idea of the pattern and how it works.
-- What are the key components or steps?
-- How does this solution overcome the problem stated above?
-- Use bullet points for clarity if explaining multiple facets or steps.
-    - Step 1 or Component A
-    - Step 2 or Component B
-- Consider adding a small, illustrative code snippet or pseudo-code if helpful, but keep it brief.
+Describe the core approach or technique this pattern uses. Include:
 
+- Key components or roles
+- How they interact
+- The mechanism that solves the problem
+- Inputs, outputs, and control points
+
+If helpful, include a code snippet or pseudocode:
+
+```pseudo
+example_function() {
+    // Show the pattern in action
+}
 ```
-# Optional: Brief code example or pseudo-code
-if problem_is_complex:
-    apply_pattern()
+
+For complex patterns, include a Mermaid diagram:
+
+```mermaid
+graph TD
+    A[Component A] --> B[Component B]
+    B --> C[Result]
 ```
+
+## Evidence
+
+Summarize only high-confidence findings from research. Keep this section short.
+
+- **Evidence Grade:** `high | medium | low | mixed | unknown`
+- **Most Valuable Findings:** 1-3 concise bullets
+- **Unverified / Unclear:** what requires follow-up before treating as core truth
 
 ## How to use it
 
-(Optional section: Add if the pattern requires specific implementation guidance beyond the general solution.)
-- Are there specific pre-requisites?
-- Any common pitfalls to avoid?
-- Concrete examples of when to apply this.
+Provide practical guidance on when and how to implement this pattern. Include:
+
+- Specific use cases or scenarios
+- Prerequisites or requirements
+- Implementation considerations
 
 ## Trade-offs
 
-(Optional section: Useful for more established or complex patterns.)
-- **Pros:**
-    - Benefit 1
-    - Benefit 2
-- **Cons/Considerations:**
-    - Limitation 1
-    - Potential drawback 2
+Be honest about the pros and cons:
+
+- **Pros:** List the benefits and advantages
+- **Cons:** List the drawbacks, complexity, or limitations
 
 ## References
 
-- Link to the original blog post, paper, or talk if not already the primary `source`.
-- Links to related patterns or further reading.
-- Credit to individuals or projects that inspired or demonstrated the pattern.
+- Link to original source, papers, or implementations
+- Additional reading or related work

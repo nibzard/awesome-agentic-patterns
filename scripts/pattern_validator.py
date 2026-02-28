@@ -99,6 +99,10 @@ REQUIRED_YAML_FIELDS = {"title", "status", "authors", "based_on", "category", "s
 # Required markdown sections
 REQUIRED_SECTIONS = {"## Problem", "## Solution", "## References"}
 
+# Optional evidence metadata quality checks (warnings/info only)
+VALID_EVIDENCE_GRADES = {"high", "medium", "low", "mixed", "unknown"}
+EVIDENCE_SNAPSHOT_PLACEHOLDER = "1-2 high-signal findings + key uncertainty"
+
 
 class PatternValidator:
     """Validator for pattern files."""
@@ -300,6 +304,45 @@ class PatternValidator:
                     fix_suggestion="Capitalize the first letter of each word"
                 )
 
+        # Optional evidence metadata checks (soft guidance, not required)
+        if "evidence_grade" in metadata:
+            grade = str(metadata["evidence_grade"]).strip().lower()
+            if grade not in VALID_EVIDENCE_GRADES:
+                result.add_issue(
+                    Severity.WARNING,
+                    "Metadata",
+                    f"Invalid evidence_grade: '{metadata['evidence_grade']}'. "
+                    f"Use one of: {', '.join(sorted(VALID_EVIDENCE_GRADES))}",
+                    fix_suggestion="Set evidence_grade to: high, medium, low, mixed, or unknown"
+                )
+
+        if "evidence_snapshot" in metadata:
+            snapshot = str(metadata["evidence_snapshot"]).strip()
+            if snapshot.lower() == EVIDENCE_SNAPSHOT_PLACEHOLDER.lower():
+                result.add_issue(
+                    Severity.INFO,
+                    "Metadata",
+                    "evidence_snapshot still contains template placeholder text",
+                    fix_suggestion="Replace with concise concrete findings or remove the field"
+                )
+
+        if "last_updated" in metadata:
+            last_updated = str(metadata["last_updated"]).strip()
+            if last_updated.upper() == "YYYY-MM-DD":
+                result.add_issue(
+                    Severity.INFO,
+                    "Metadata",
+                    "last_updated still contains template placeholder text",
+                    fix_suggestion="Set to an actual date in YYYY-MM-DD format or remove the field"
+                )
+            elif not re.match(r"^\d{4}-\d{2}-\d{2}$", last_updated):
+                result.add_issue(
+                    Severity.WARNING,
+                    "Metadata",
+                    f"last_updated should be in YYYY-MM-DD format: '{last_updated}'",
+                    fix_suggestion="Use format YYYY-MM-DD"
+                )
+
     def _validate_sections(self, content: str, lines: List[str], result: ValidationResult):
         """Validate required markdown sections."""
         # Skip YAML front-matter
@@ -492,6 +535,36 @@ class PatternValidator:
                     "Headers should be followed by a blank line for proper list rendering",
                     line=line_num,
                     fix_suggestion="Add a blank line after the header"
+                )
+
+        # Evidence section and metadata alignment (soft guidance only)
+        evidence_match = re.search(r'## Evidence\s*\n(.*?)(?=\n## |\Z)', content, re.DOTALL)
+        has_evidence_section = evidence_match is not None
+        has_evidence_metadata = any(
+            key in metadata for key in ("evidence_grade", "evidence_snapshot", "last_updated")
+        )
+
+        if has_evidence_metadata and not has_evidence_section:
+            result.add_issue(
+                Severity.INFO,
+                "Structure",
+                "Evidence metadata is present but '## Evidence' section is missing",
+                fix_suggestion="Add a concise '## Evidence' section or remove unused evidence metadata"
+            )
+
+        if has_evidence_section and evidence_match:
+            evidence_text = evidence_match.group(1).strip().lower()
+            placeholder_markers = (
+                "high | medium | low | mixed | unknown",
+                "1-3 concise bullets",
+                "what requires follow-up before treating as core truth",
+            )
+            if any(marker in evidence_text for marker in placeholder_markers):
+                result.add_issue(
+                    Severity.INFO,
+                    "Content",
+                    "Evidence section appears to contain template placeholder bullets",
+                    fix_suggestion="Replace placeholder bullets with concrete findings or remove the section"
                 )
 
 

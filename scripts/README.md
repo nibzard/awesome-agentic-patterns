@@ -10,12 +10,22 @@ scripts/claude-research-loop.sh
 scripts/claude-research-loop.sh --pattern plan-then-execute-pattern
 make research_loop PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34"
 PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34" scripts/claude-research-loop.sh --once
+
+# Update pattern files from existing research
+scripts/update-patterns-from-research.sh
+scripts/update-patterns-from-research.sh --pattern action-selector-pattern
+TEMPLATE_LINK="https://github.com/nibzard/awesome-agentic-patterns/blob/main/TEMPLATE.md" \
+  scripts/update-patterns-from-research.sh --pattern action-selector-pattern
 ```
+
+`scripts/update-patterns-from-research.sh` now injects a template reference URL into the Claude prompt.
+Override it with `TEMPLATE_LINK=...` if you want a different template source.
 
 Requirements:
 
 ```bash
 jq
+rg
 claude (in PATH) -- latest global is preferred
 ```
 
