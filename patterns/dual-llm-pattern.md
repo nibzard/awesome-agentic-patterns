@@ -30,7 +30,7 @@ execute(plan, subst={ "$VAR1": var1 })
 
 ## How to use it
 
-Email/calendar assistants, booking agents, API-powered chatbots.
+Email/calendar assistants, booking agents, API-powered chatbots, or any system handling untrusted user input with privileged actions (e.g., database writes, external API calls, file system operations).
 
 ## Trade-offs
 

@@ -10,7 +10,7 @@ tags: [dev-tools, assumptions, github, tickets, code-review, tooling, agent-work
 
 ## Problem
 
-Traditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense. When agents write 90% of code, these tools create bottlenecks and friction.
+Traditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense. When agents write most code, these tools create bottlenecks and friction. Academic research confirms this is a paradigm shift requiring ecosystem-level rethinking, not incremental adjustments.
 
 ## Solution
 
@@ -103,6 +103,8 @@ But when agents write 90% of code:
 3. **Automated verification**: Tests > reviews
 4. **Direct integration**: Fewer handoffs, more automation
 5. **Observable execution**: See what agents are doing, not approve each step
+6. **Machine-readable output**: JSON/structured data > human-readable logs
+7. **Unified logging**: Single log stream for all system events (client, server, database)
 
 **The "primordial soup" metaphor:**
 
@@ -115,6 +117,12 @@ This requires new mental models and new interfaces:
 - Not PR reviews, but automated quality gates
 - Not sprint planning, but real-time prioritization
 - Not code ownership, but dynamic attribution
+
+**Industry examples:**
+- **Model Context Protocol (MCP)**: Universal "USB-C for AI" standard replacing proprietary tool integrations
+- **Unified logging** (Sourcegraph): Single JSONL stream for all system events, optimized for agent consumption
+- **Code-first interfaces** (Cloudflare): LLMs write code to call tools, reducing tokens 10-100x
+- **CLI-first design**: Tools with `--json` flags for machine-readable output
 
 ## Trade-offs
 
@@ -153,4 +161,6 @@ This requires new mental models and new interfaces:
 ## References
 
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Factory over Assistant](factory-over-assistant.md), [Codebase Optimization for Agents](codebase-optimization-for-agents.md)
+* [Toward an Agentic Infused Software Ecosystem](https://arxiv.org/abs/2602.20979) - Mark Marron, 2026
+* [EditFlow: Benchmarking Code Edit Recommendation Systems](https://arxiv.org/abs/2602.21697) - Chenyan Liu et al., 2026
+* Related: [Factory over Assistant](factory-over-assistant.md), [Codebase Optimization for Agents](codebase-optimization-for-agents.md), [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md)

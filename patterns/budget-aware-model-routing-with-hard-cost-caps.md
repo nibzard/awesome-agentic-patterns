@@ -29,6 +29,8 @@ Typical flow:
 4. Enforce a hard cap before each model/tool step.
 5. Escalate only when objective signals justify the extra cost.
 
+**Cascade routing**: Try the cheapest adequate model first; if quality gates fail, escalate to stronger models. Learned routing policies trained on human preference data can improve selection accuracy while respecting budget constraints.
+
 ```pseudo
 budget = policy.max_cost(task_type, user_tier)
 candidate = router.pick_model(task_features, budget)
@@ -57,3 +59,6 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 
 - https://martinfowler.com/articles/llm.html
 - https://simonwillison.net/2024/May/29/training-not-chatting/
+- https://arxiv.org/abs/2305.05176 - FrugalGPT (Stanford, 2023)
+- https://arxiv.org/abs/2406.18665 - RouteLLM (ICLR 2024)
+- https://arxiv.org/html/2510.08439v1 - xRouter (2025)

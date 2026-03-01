@@ -1,8 +1,8 @@
 ---
 title: Initializer-Maintainer Dual Agent Architecture
-status: emerging
+status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic Engineering Team"]
+based_on: ["Anthropic Engineering Team", "Cursor Engineering (Planner-Worker Architecture)"]
 category: Orchestration & Control
 source: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
 tags: [long-running-agents, session-handoff, lifecycle-specialization, project-bootstrap, incremental-development]
@@ -121,5 +121,6 @@ sequenceDiagram
 ## References
 
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+* [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents)
 * Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 * Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md)

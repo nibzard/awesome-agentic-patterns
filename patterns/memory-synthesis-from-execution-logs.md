@@ -26,7 +26,7 @@ Implement a **two-tier memory system**:
 1. **Task diaries**: Agent writes structured logs for each task (what it tried, what failed, why)
 2. **Synthesis agents**: Periodically review multiple task logs to extract reusable patterns
 
-The synthesis step identifies recurring themes across logs, surfacing insights that aren't obvious from any single execution.
+The synthesis step identifies recurring themes across logs, surfacing insights that aren't obvious from any single execution. This approach is validated by academic research: Reflexion (NeurIPS 2023) achieved 91% pass@1 on HumanEval using episodic memory with self-reflection, and Stanford's Generative Agents paper demonstrates "reflection" mechanisms that synthesize higher-level insights from multiple memories.
 
 ```mermaid
 graph TD
@@ -64,6 +64,8 @@ Patterns discovered:
 - Auth changes always need CORS update
 - Need both client and server-side expiry checks
 ```
+
+Structured formats (event, outcome, rationale) outperform raw conversation logs—validated by Reflexion's "memory blob" structure and ParamMem's finding that structured records reduce repetition and improve synthesis.
 
 ## How to use it
 
@@ -126,6 +128,7 @@ Feed synthesized insights back into:
 - **Maintenance burden**: Synthesized rules need periodic review
 - **Privacy concerns**: Logs may contain sensitive information
 - **Token costs**: Synthesis over many logs is expensive
+- **Cold start problem**: Insufficient data for reliable pattern extraction initially
 
 **Open questions:**
 
@@ -139,3 +142,5 @@ Feed synthesized insights back into:
 * Cat Wu: "Some people at Anthropic where for every task they do, they tell Claude Code to write a diary entry in a specific format. What did it try? Why didn't it work? And then they even have these agents that look over the past memory and synthesize it into observations."
 * Boris Cherny: "Synthesizing the memory from a lot of logs is a way to find these patterns more consistently... If I say make the button pink, I don't want you to remember to make all buttons pink in the future."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* Shinn et al. [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - episodic memory with self-reflection achieving 91% pass@1 on HumanEval
+* Park et al. [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) (Stanford 2023) - reflection synthesis from multiple memories

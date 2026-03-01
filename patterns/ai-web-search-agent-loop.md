@@ -30,6 +30,7 @@ Implement an iterative web search agent loop where a coordinating agent manages 
    - Keyword extraction (SERP APIs have 32 keyword limits)
    - Domain-specific searches (e.g., only instagram.com, only Reddit)
    - Temporal operators (e.g., results from last 3 months)
+   - Query rewriting: Converting natural language to standardized semantic expressions
 
 3. **Parallel Worker Agent Spawning**: The coordinating agent creates multiple specialized worker agents that:
    - Search different domains/angles simultaneously
@@ -78,9 +79,15 @@ flowchart TD
 **Implementation considerations:**
 
 - **SERP API limitations**: Current SERP APIs (Google, Bing, DuckDuckGo) are optimized for humans, not AI. They curate top 10 results rather than providing breadth/diversity
-- **Caching strategy**: Consider maintaining a cached web index for performance, using SERP APIs only for search algorithms
+- **Caching strategy**: For performance, consider maintaining a cached web index for quick retrieval, using SERP APIs primarily for URL discovery and then pulling content directly
 - **Operator support**: Some SERP APIs have deprecated advanced operators, limiting refinement capabilities
 - **Parallelization**: Web search is easily parallelizable - spawn multiple workers for speed
+
+**Search levels (analogous to autonomy levels):**
+
+- **L1 - Default mode**: Model autonomously decides when to invoke web search
+- **L2 - Dedicated mode**: User explicitly triggers search via UI interaction
+- **L3 - Research mode**: Multi-step iterative search for comprehensive coverage
 
 **Query strategy:**
 
@@ -112,3 +119,6 @@ Models should emulate human search behavior:
 ## References
 
 * [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works)
+* [Retrieval-Augmented Generation (RAG) | Lewis et al., NeurIPS 2020](https://arxiv.org/abs/2005.11401)
+* [ReAct: Synergizing Reasoning and Acting | Yao et al., ICLR 2023](https://arxiv.org/abs/2210.03629)
+* [Toolformer | Schick et al., NeurIPS 2023](https://arxiv.org/abs/2302.04761)

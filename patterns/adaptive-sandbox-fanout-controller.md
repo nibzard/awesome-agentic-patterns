@@ -15,8 +15,9 @@ Parallel sandboxes are intoxicating: you can spawn 10... 100... 1000 runs. But t
 1. **Diminishing returns:** After some N, you're mostly paying for redundant failures or near-duplicate solutions
 2. **Prompt fragility:** If the prompt is underspecified, scaling N just scales errors (lots of sandboxes fail fast)
 3. **Resource risk:** Unbounded fan-out can overwhelm budgets, rate limits, or queues
+4. **Oscillation risk:** Poorly tuned thresholds can cause scale-up/scale-down thrashing as the controller oscillates between decisions
 
-Static "N=10 always" policies don't adapt to task difficulty, model variance, or observed failure rates.
+Static "N=10 always" policies don't adapt to task difficulty, model variance, or observed failure rates. Most implementations use static caps rather than true signal-driven adaptation.
 
 ## Solution
 
@@ -40,6 +41,8 @@ Add a controller that *adapts fan-out in real time* based on observed signals fr
    - **Switch strategy** if: repeated failure suggests decomposition is needed (spawn investigative sub-agent)
 
 4. **Budget guardrails:** Enforce max sandboxes, max runtime, and "no-progress" stop conditions
+
+5. **Hysteresis for stability:** Use different thresholds for scale-up vs. stop (e.g., scale up if confidence < 0.65, stop only if > 0.75) to prevent oscillation
 
 ```mermaid
 flowchart TD
@@ -68,6 +71,7 @@ Concrete heuristics (example):
 - Start N=3
 - If >=2 succeed but disagree and judge confidence < 0.65 -> add +3 more
 - If 0 succeed and top error signature covers >70% runs -> run a "spec clarifier" step, then restart
+- **Hysteresis:** Stop only if confidence > 0.75 (higher threshold than scale-up) to prevent thrash
 - Hard cap: N_max (e.g., 50), runtime cap, and "two refinement attempts then decompose"
 
 ## Trade-offs
@@ -81,11 +85,13 @@ Concrete heuristics (example):
 **Cons:**
 
 - Requires instrumentation (collecting failure signatures, confidence, diversity)
-- Needs careful defaults to avoid oscillation (scale up/down thrash)
+- Needs careful defaults and hysteresis to avoid oscillation (scale up/down thrash)
 - Bad scoring functions can cause premature stopping
+- Few verified implementations; most systems use static caps instead of true signal-driven adaptation
 
 ## References
 
-* [Labruno: Scaling number of parallel sandboxes + judging winners (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0)
-* [Labruno (GitHub)](https://github.com/nibzard/labruno-agent)
+* [Labruno: Scaling number of parallel sandboxes + judging winners (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0) — **Note: Uses static `MAX_SANDBOXES` rather than true signal-driven adaptation**
+* [Labruno (GitHub)](https://github.com/nibzard/labruno-agent) — Parallel execution with post-hoc judging, not adaptive fanout
+* [OpenClaw Orchestrator](https://github.com/zeynepyorulmaz/openclaw-orchestrator) — Closest verified implementation; LLM decides next steps based on accumulated results
 * Related patterns: [Swarm Migration Pattern](swarm-migration-pattern.md) (batch tuning, resource caps), [Sub-Agent Spawning](sub-agent-spawning.md) (switch to decomposition when needed)

@@ -22,6 +22,8 @@ This leads to redundant work, forgotten tasks, and confused users.
 
 Use `TodoWrite` (or equivalent state externalization) to maintain explicit working memory throughout the session. This serves as both agent and user visibility into session state.
 
+**Theoretical foundation:** Externalizes working memory per Baddeley's episodic buffer model and Miller's 7±2 capacity limit—humans and LLMs both struggle to track more than a handful of items internally.
+
 **What to track:**
 
 1. **Task status**: pending, in_progress, completed
@@ -83,9 +85,10 @@ stateDiagram-v2
 
 1. **Create tasks proactively**: When you identify work, create a TodoWrite entry
 2. **Update status as you go**: Mark tasks in_progress when starting
-3. **Document dependencies**: Use `blocks`/`blockedBy` relationships
-4. **Mark complete when done**: Only mark tasks completed when truly finished
-5. **Keep descriptions clear**: Include enough context for future reference
+3. **Maintain single active task**: Exactly ONE task should be in_progress at a time
+4. **Document dependencies**: Use `blocks`/`blockedBy` relationships
+5. **Mark complete when done**: Only mark tasks completed when truly finished
+6. **Keep descriptions clear**: Include enough context for future reference
 
 **Example workflow:**
 
@@ -134,3 +137,5 @@ stateDiagram-v2
 
 * [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
 * Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Task List Pattern](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/task-lists)
+* Baddeley, A. (2000). "The Episodic Buffer: A New Component of Working Memory?" *Trends in Cognitive Sciences*, 4(11), 417-423.
+* Miller, G. A. (1956). "The Magical Number Seven, Plus or Minus Two." *Psychological Review*, 63(2), 81-97.

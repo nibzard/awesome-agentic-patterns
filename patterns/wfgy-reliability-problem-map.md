@@ -14,7 +14,7 @@ RAG pipelines and agent systems often fail in ways that are hard to diagnose: mi
 
 Teams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.
 
-This pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths.
+This pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths. Research shows structured incident data correlates with better reliability outcomes (ACM SIGOPS 2022, IEEE ISSRE 2019).
 
 ## Solution
 
@@ -100,15 +100,18 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 
 ### Core WFGY Instruments
 
-- **Delta S (Delta S):** Measures semantic tension (threshold: <=0.45 good, >0.60 failure)
+- **Delta S (ΔS):** Measures semantic tension (threshold: ≤0.45 good, >0.60 failure)
 - **lambda_observe:** Monitors logic directionality (convergent, divergent, chaotic)
+- **epsilon_resonance:** Domain-level harmony tuning
 - **BBMC:** Minimizes semantic residue
 - **BBCR:** Rollback and branch spawn for logic recovery
+- **BBPF:** Maintains divergent branches
+- **BBAM:** Suppresses noisy tokens
 - **Semantic Tree:** Hierarchical memory structure with Delta S-tagged nodes
 
 ### Key Insight
 
-WFGY implements a "semantic firewall" that validates semantic stability **before** generation rather than patching after output. Once a failure mode is clearly mapped and monitored, it tends to stay fixed for that configuration.
+WFGY implements a "semantic firewall" that validates semantic stability **before** generation rather than patching after output. Once a failure mode is clearly mapped and monitored, it tends to stay fixed for that configuration. This checklist-based triage approach represents a novel contribution—no direct academic or industry research exists on RAG/agent-specific debugging with this four-area taxonomy.
 
 ## References
 
@@ -117,3 +120,4 @@ WFGY implements a "semantic firewall" that validates semantic stability **before
 - [Technical Deep Dive Report](https://github.com/nibzard/awesome-agentic-patterns/blob/main/research/wfgy-reliability-problem-map-technical-deep-dive.md)
 - [Semantic Clinic Index](https://github.com/onestardao/WFGY/blob/main/ProblemMap/SemanticClinicIndex.md)
 - [Grandma's Clinic (Beginner-Friendly)](https://github.com/onestardao/WFGY/blob/main/ProblemMap/GrandmaClinic/README.md)
+- "Agentic Retrieval-Augmented Generation: A Survey" (arXiv:2501.09136, 2025)

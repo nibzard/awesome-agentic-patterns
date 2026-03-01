@@ -33,9 +33,15 @@ graph TD
     E --> H
 ```
 
+## Evidence
+
+- **Evidence Grade:** `emerging`
+- **Most Valuable Findings:** Validated in production at Sourcegraph (~90% cost reduction vs. all-frontier); academic foundation from model cascading research (FrugalGPT: up to 98% cost reduction with quality parity)
+- **Unverified:** Optimal Oracle invocation thresholds remain application-specific
+
 ## How to use it
 
-Development environments, complex coding tasks, architectural decisions, debugging sessions where initial approaches fail.
+Development environments, complex coding tasks, architectural decisions, debugging sessions where initial approaches fail. Also known in literature as model cascading, weak-strong model routing, or hierarchical model systems.
 
 ## Trade-offs
 
@@ -45,5 +51,8 @@ Development environments, complex coding tasks, architectural decisions, debuggi
 ## References
 
 * Sourcegraph Team presentation on multi-model AI systems
+* FrugalGPT (Stanford, 2023): https://arxiv.org/abs/2305.05176
+* RouteLLM (ICLR 2024): https://arxiv.org/abs/2406.18665
+* LiteLLM Router: https://github.com/BerriAI/litellm
 
 - Primary source: https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ

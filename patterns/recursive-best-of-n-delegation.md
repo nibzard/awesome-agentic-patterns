@@ -2,7 +2,7 @@
 title: "Recursive Best-of-N Delegation"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models paper"]
+based_on: ["Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models (arXiv 2512.24601)", "Self-Consistency (Wang et al. 2022)", "Tree-of-Thoughts (Yao et al. 2023)"]
 category: "Orchestration & Control"
 source: "https://github.com/nibzard/labruno-agent"
 tags: [recursion, best-of-n, parallel-sandboxes, judge, delegation, rlms, selection, sub-agents]
@@ -10,17 +10,17 @@ tags: [recursion, best-of-n, parallel-sandboxes, judge, delegation, rlms, select
 
 ## Problem
 
-Recursive delegation (parent agent -> sub-agents -> sub-sub-agents) is great for decomposing big tasks, but it has a failure mode:
+Recursive delegation (parent agent → sub-agents → sub-sub-agents) decomposes big tasks, but has a failure mode:
 
 - A single weak sub-agent result can poison the parent's next steps (wrong assumption, missed file, bad patch)
 - Errors compound up the tree: "one bad leaf" can derail the whole rollout
-- Pure recursion also underuses parallelism when a node is uncertain: you really want multiple shots *right where the ambiguity is*
+- Pure recursion underuses parallelism when a node is uncertain: you want multiple shots *right where the ambiguity is*
 
-Meanwhile, "best-of-N" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the *same* problem instead of decomposing it.
+Meanwhile, "best-of-N" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the *same* problem instead of decomposing it. The pattern applies parallelism only where uncertainty exists—at the subtask level—while maintaining structured decomposition.
 
 ## Solution
 
-At *each node* in a recursive agent tree, run **best-of-N** for the current subtask before expanding further:
+At *each node* in a recursive agent tree, run **best-of-N** for the current subtask before expanding further. This combines the structured decomposition of recursive delegation with the reliability of self-consistency sampling:
 
 1. **Decompose:** Parent turns task into sub-tasks (like normal recursive delegation)
 2. **Parallel candidates per subtask:** For each subtask, spawn **K candidate workers** in isolated sandboxes (K=2-5 typical)
@@ -87,8 +87,9 @@ Practical defaults:
 
 ## References
 
-* [Labruno: Parallel sandboxes + LLM judge selects best implementation (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0)
-* [Labruno (GitHub)](https://github.com/nibzard/labruno-agent)
+* [Self-Consistency (Wang et al. 2022): Foundation for best-of-N sampling via majority voting](https://arxiv.org/abs/2203.11171)
+* [Recursive Language Models (arXiv 2512.24601, 2025): Recursion as inference-time scaling](https://arxiv.org/abs/2512.24601)
+* [Tree-of-Thoughts (Yao et al. 2023): Tree-based reasoning with evaluation mechanisms](https://arxiv.org/abs/2305.10601)
+* [Labruno (GitHub): Parallel sandboxes + LLM judge selects best implementation](https://github.com/nibzard/labruno-agent)
 * [Daytona RLM Guide: Recursive delegation with sandboxed execution](https://www.daytona.io/docs/en/recursive-language-models/)
-* [Recursive Language Models (arXiv 2512.24601): Recursion as inference-time scaling for long context](https://arxiv.org/abs/2512.24601)
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)

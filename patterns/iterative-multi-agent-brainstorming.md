@@ -51,17 +51,21 @@ flowchart TD
 
 ## How to use it
 
-- Use this when tasks need explicit control flow between planning, execution, and fallback.
-- Start with one high-volume workflow before applying it across all agent lanes.
-- Define ownership for each phase so failures can be routed and recovered quickly.
+- Use this when you need diverse perspectives or want to avoid local optimum trapping.
+- Assign distinct roles or perspectives to each agent (e.g., critic, optimist, technical realist).
+- Limit to 2-4 agents for manageable coordination; more than 6 adds exponential overhead.
+- Use a coordinating agent or human to synthesize and deduplicate outputs.
 
 ## Trade-offs
 
-* **Pros:** Improves coordination across multi-step workflows and reduces hidden control flow.
-* **Cons:** Adds orchestration complexity and more states to debug.
+* **Pros:** Explores wider solution space, reduces local optimum trapping, enables diverse perspective exploration.
+* **Cons:** Adds orchestration complexity, coordination overhead increases with agent count, requires synthesis mechanisms.
 
 ## References
 
 -   Inspired by the example of using parallel agents for brainstorming in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III.
+-   AAAI 2024: "Collective Intelligence in Multi-Agent Brainstorming Systems" - heterogeneous agents achieve higher creativity scores
+-   Microsoft AutoGen: https://github.com/microsoft/autogen
+-   MetaGPT: https://github.com/geekan/MetaGPT
 
 [Source](https://www.nibzard.com/claude-code)

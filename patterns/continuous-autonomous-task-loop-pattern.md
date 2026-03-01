@@ -22,7 +22,7 @@ This manual orchestration reduces overall productivity and prevents developers f
 
 ## Solution
 
-Implement a continuous autonomous loop that handles task selection, execution, and completion without human intervention:
+Implement a continuous autonomous loop that handles task selection, execution, and completion without human intervention. This pattern operationalizes the **ReAct paradigm** (Thought → Action → Observation) as a continuous execution cycle:
 
 1. **Fresh Context Per Iteration**: Each task starts with a clean context to avoid contamination
 2. **Autonomous Task Selection**: Use specialized subagents to pick the next appropriate task
@@ -121,3 +121,5 @@ STREAM_JSON=true           # Real-time progress tracking
 
 - [Original Autonomous Task Processing Script](https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78) - Complete implementation example
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) - CLI agent capabilities
+- [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) (NeurIPS 2022) - Yao et al. — establishes Thought→Action→Observation paradigm foundational to continuous task loops
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - Shinn et al. — episodic memory and self-reflection for continuous improvement

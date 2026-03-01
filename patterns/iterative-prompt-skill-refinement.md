@@ -1,6 +1,6 @@
 ---
 title: "Iterative Prompt & Skill Refinement"
-status: proposed
+status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Will Larson (Imprint)"]
 category: "Feedback Loops"
@@ -14,7 +14,7 @@ Agent usage reveals gaps in prompts, skills, and tools—but how do you systemat
 
 ## Solution
 
-Implement **multiple complementary refinement mechanisms** that work together. No single mechanism catches all issues—you need layered approaches.
+Implement **multiple complementary refinement mechanisms** that work together. No single mechanism catches all issues—you need layered approaches. This approach is grounded in RLHF research showing that human feedback is irreplaceable for alignment, while RLAIF demonstrates AI-assisted feedback enables scale.
 
 **Four key mechanisms:**
 
@@ -123,4 +123,6 @@ Include subjective eval after each run:
 ## References
 
 * [Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (Imprint, 2026)
+* [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al. (arXiv, 2022)
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (NeurIPS, 2023)
 * Related: Dogfooding with Rapid Iteration, Compounding Engineering, Memory Synthesis from Execution Logs

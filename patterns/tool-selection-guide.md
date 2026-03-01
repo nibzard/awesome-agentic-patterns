@@ -41,8 +41,9 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
    - Use `Read` for targeted file inspection
 
 2. **Code modification tasks** (changing existing code):
-   - **Prefer `Edit` over `Write`** - preserves existing context and comments
+   - **Prefer `Edit` over `Write`** - preserves existing context and comments, saves ~66% tokens
    - Only use `Write` for brand new files or complete rewrites (with permission)
+   - Use `Write` when changing >50% of a file; otherwise use `Edit`
    - Always `Read` the file before editing
 
 3. **Verification tasks** (testing, building, checking):
@@ -54,6 +55,7 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
    - Use `Task` tool for subagent delegation
    - **Always provide clear task subjects** (no empty strings)
    - Prefer parallel over sequential for independent exploration
+   - Parallel delegation can provide 10x+ speedup for independent tasks (e.g., framework migrations)
 
 ```mermaid
 flowchart TD
@@ -125,3 +127,5 @@ flowchart TD
 
 * [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Discrete Phase Separation](discrete-phase-separation.md), [Subject Hygiene](subject-hygiene.md)
+* ToolFormer: [Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (Schick et al., 2023)
+* ReAct: [Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., 2022)

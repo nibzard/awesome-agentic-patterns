@@ -21,13 +21,13 @@ Common pain points include:
 
 ## Solution
 
-The pattern is to make agents native participants in the workspace platform itself, so they share the same context, memory, and lifecycle as human collaborators.
+The pattern is to make agents native participants in the workspace platform itself, so they share the same context, memory, and lifecycle as human collaborators. This approach builds on established patterns like blackboard architecture (shared memory for coordination) and tuple spaces (associative addressing for decoupled communication).
 
 **Core components:**
 
 1. **Agent definitions are shared, versioned artifacts**: each agent has role/constraints/tool access defined in one place.
-2. **Shared workspace memory**: persistent, team-curated sources (documents, URLs, files) feed agent context.
-3. **Workflow orchestration inside the workspace**: outputs from one agent can trigger downstream agents via event-driven workflows.
+2. **Shared workspace memory**: persistent, team-curated sources (documents, URLs, files) feed agent context. Memory types include episodic (past executions), semantic (knowledge base), and procedural (capabilities and tools).
+3. **Workflow orchestration inside the workspace**: outputs from one agent can trigger downstream agents via event-driven workflows. Trigger patterns include direct (event → action), conditional (event + condition → action), composite (multiple events → action), and temporal (event + delay → action).
 4. **Standardized integration surface**: expose tools/actions through a consistent protocol layer (for example MCP-compatible tool interfaces).
 5. **Cross-platform accessibility**: keep behavior consistent across web, desktop, mobile, and browser contexts.
 
@@ -71,3 +71,5 @@ graph TD
 - [Taskade MCP Server](https://github.com/taskade/mcp)
 - [Taskade AI App Builder](https://taskade.com/ai/apps)
 - [Taskade Automations](https://taskade.com/automate)
+- Nii, H. P. (1986). [Blackboard Systems: A Survey](https://doi.org/10.1145/6499.6503). AI Magazine.
+- Gelernter, D. (1985). [Generative Communication in Linda](https://doi.org/10.1145/2166.2168). ACM TOPLAS.

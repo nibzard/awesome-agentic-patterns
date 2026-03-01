@@ -23,6 +23,8 @@ Agents need a policy system that supports pattern matching, deny-by-default sema
 
 Pattern-based policies with deny-by-default and inheritance. Tools are authorized by matching against compiled patterns (exact, regex, wildcard), with deny lists taking precedence over allow lists. Subagents inherit parent policies with additional restrictions, and profile-based tiers provide presets for common agent types.
 
+This approach aligns with the academic Action Selector pattern (Beurer-Kellner et al., 2025), which treats the LLM as an instruction decoder rather than a live controller, validating tool parameters against strict schemas before execution and preventing tool outputs from re-entering the selector prompt without additional validation.
+
 **Core concepts:**
 
 - **Pattern matching**: Supports exact matches (`exec`), wildcards (`fs:*`), and regex-like patterns (`*test*`).
@@ -221,4 +223,6 @@ function resolveEffectiveToolPolicy(params: {
 - [Clawdbot tool-policy.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts) - Policy resolution
 - [Clawdbot pi-tools.policy.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-tools.policy.ts) - Policy enforcement
 - [Clawdbot sandbox policies](https://github.com/clawdbot/clawdbot/tree/main/src/agents/sandbox) - Sandbox-specific policies
+- Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837 - Action Selector pattern academic foundation
+- [Model Context Protocol](https://modelcontextprotocol.io) - Production standard for tool authorization (Anthropic, 2025)
 - Related: [Egress Lockdown (No-Exfiltration Channel)](/patterns/egress-lockdown-no-exfiltration-channel) for security patterns

@@ -10,7 +10,7 @@ tags: [isolation, security, reinforcement-learning, infrastructure, state-manage
 
 ## Problem
 
-During reinforcement learning training with tool-using agents, multiple rollouts execute simultaneously and may call destructive or stateful tools:
+During reinforcement learning training with tool-using agents, multiple rollouts execute simultaneously and may call destructive or stateful tools. This challenge is well-established in distributed RL research—A3C (Mnih et al., 2016) and PPO (Schulman et al., 2017) both rely on parallel isolated environment instances for stable gradient estimation.
 
 - **Cross-contamination**: One rollout's actions affect another rollout's environment
 - **Destructive commands**: Agent might run `rm -rf`, corrupting shared state
@@ -212,10 +212,11 @@ sequenceDiagram
 
 Choose your isolation technology:
 
+- **Modal/E2B**: MicroVMs with ~1s startup, Firecracker isolation (recommended for agent training)
 - **Modal/Lambda**: Serverless functions with container isolation (easiest)
 - **Docker**: Containers per rollout (good balance)
-- **Cloud VMs**: EC2/GCP instances per rollout (maximum isolation, slower)
 - **Kubernetes Jobs**: K8s pods per rollout (production-grade)
+- **Cloud VMs**: EC2/GCP instances per rollout (maximum isolation, 30-120s startup)
 
 **Phase 2: Implement Rollout ID Tracking**
 
@@ -255,10 +256,10 @@ Configure auto-scaling:
 
 Critical metrics:
 
-- **VM provisioning time**: Should be <5 seconds
-- **Failure rate**: Infrastructure errors → zero reward → training collapse
-- **Resource leaks**: VMs not cleaning up properly
-- **Cost**: 500 VMs * training duration can get expensive
+- **VM provisioning time**: Should be <5 seconds (alert if >10s)
+- **Infrastructure error rate**: Target <1%, alert if >5% (higher rates cause training collapse)
+- **Rollout timeout rate**: Target <0.1%, alert if >1%
+- **Resource leaks**: Active rollout count should match expected; alert if +50 over baseline
 
 Sam's advice from Cognition:
 
@@ -364,6 +365,9 @@ def execute_tool(self, rollout_id: str, tool: str, params: dict):
 ## References
 
 - [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
+- Mnih et al. (2016). "Asynchronous Methods for Deep Reinforcement Learning". [arXiv:1602.01783](https://arxiv.org/abs/1602.01783) — A3C foundation for parallel isolated environments
+- Schulman et al. (2017). "Proximal Policy Optimization Algorithms". [arXiv:1707.06347](https://arxiv.org/abs/1707.06347) — PPO parallel rollout collection
+- Liang et al. (2018). "Ray RLLib: A Scalable Reinforcement Learning Library". [arXiv:1807.03343](https://arxiv.org/abs/1807.03343) — Actor-model isolation for RL
 - [Modal Documentation](https://modal.com/docs)
-- [Docker Isolation Best Practices](https://docs.docker.com/engine/security/)
-- Related patterns: Agent Reinforcement Fine-Tuning, Virtual Machine Operator Agent
+- [E2B Documentation](https://e2b.dev/docs) — Firecracker microVMs for agent sandboxes
+- Related patterns: Agent Reinforcement Fine-Tuning, Adaptive Sandbox Fanout Controller, Sandboxed Tool Authorization, Egress Lockdown, Virtual Machine Operator Agent

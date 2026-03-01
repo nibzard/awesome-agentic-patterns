@@ -35,10 +35,12 @@ Constrain agent outputs using deterministic schemas that enforce structured, mac
 
 **Leverage framework structured output APIs:**
 
-- OpenAI's structured outputs with JSON schema
+- OpenAI's structured outputs with JSON schema (constrained decoding)
 - Anthropic's tool use for structured results
 - Vercel AI SDK's `generateObject` function
 - LangChain's output parsers
+- LlamaIndex Pydantic programs
+- Instructor retry wrapper
 
 **Validate at generation time:**
 
@@ -140,7 +142,7 @@ else:
 
 **4. Handle validation failures:**
 
-- Retry with clarified prompt
+- Retry with clarified prompt (3 attempts standard)
 - Fallback to human review
 - Log schema violations for prompt improvement
 
@@ -158,6 +160,7 @@ else:
 - **Type safety:** Compile-time checking in typed languages
 - **Integration:** Seamless connection to databases, APIs, workflows
 - **Validation:** Built-in constraint enforcement
+- **Security:** Schema validation prevents prompt injection before execution
 - **Maintainability:** Explicit contracts between system components
 - **Testability:** Easy to verify output correctness
 
@@ -183,4 +186,5 @@ else:
 - [OpenAI Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs) - JSON schema enforcement
 - [Vercel AI SDK generateObject](https://sdk.vercel.ai/docs/reference/ai-sdk-core/generate-object) - TypeScript-native structured generation
 - [Anthropic Tool Use](https://docs.anthropic.com/claude/docs/tool-use) - Structured outputs via tool calling
+- [JSONformer: A Structural Generation Framework for JSON](https://arxiv.org/abs/2306.05659) - Constrained decoding eliminating retry loops (Billings et al., 2023)
 - Related patterns: [Discrete Phase Separation](discrete-phase-separation.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)

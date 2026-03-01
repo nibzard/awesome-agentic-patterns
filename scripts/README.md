@@ -12,6 +12,8 @@ make research_loop PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions
 PROJECT_PINNED_CLAUDE_BIN="$HOME/.local/share/claude/versions/2.1.34" scripts/claude-research-loop.sh --once
 
 # Update pattern files from existing research
+make update_patterns_from_research
+make update_patterns_from_research PATTERN=action-selector-pattern
 scripts/update-patterns-from-research.sh
 scripts/update-patterns-from-research.sh --pattern action-selector-pattern
 TEMPLATE_LINK="https://github.com/nibzard/awesome-agentic-patterns/blob/main/TEMPLATE.md" \

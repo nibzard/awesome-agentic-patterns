@@ -56,6 +56,10 @@ graph TD
     L --> M[Documentation Update]
 ```
 
+**Key Distinction from Traditional Automation:**
+
+Traditional workflow automation follows a pre-defined script; autonomous agents follow a goal. Where traditional systems stop on error, these agents reason about *why* a step failed and determine *how* to recover, selecting alternative paths rather than executing predetermined retry logic.
+
 **Implementation Patterns:**
 
 1. **Infrastructure Setup**: Create containerized environments with necessary tools and dependencies
@@ -63,6 +67,13 @@ graph TD
 3. **Adaptive Monitoring**: Implement intelligent wait mechanisms that adapt to process completion times
 4. **Checkpoint Management**: Regular state preservation for recovery scenarios
 5. **Context-Aware Recovery**: Error analysis with appropriate retry or alternative path selection
+
+**Key Design Principles:**
+
+- Start with bounded, well-defined tasks
+- Implement explicit checkpoints at risky boundaries
+- Design for recoverability at each step
+- Maintain comprehensive logging throughout
 
 ## How to use it
 
@@ -87,7 +98,7 @@ graph TD
 2. **Create Execution Environment**: Set up containerized environment with all required tools
 3. **Implement Session Management**: Configure tmux or similar for process coordination
 4. **Add Monitoring Hooks**: Insert checkpoints and progress indicators throughout workflow
-5. **Design Recovery Strategies**: Plan fallback approaches for common failure modes
+5. **Design Recovery Strategies**: Plan fallback approaches for common failure modes (transient errors → adaptive retry; permanent errors → alternative path)
 6. **Test and Iterate**: Run workflows with increasing complexity to validate robustness
 
 **Example Implementation:**
@@ -140,5 +151,7 @@ class WorkflowAgent:
 ## References
 
 * [AI Agents to Automate Complex Engineering Tasks - Together AI Blog](https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks)
+* [Building Effective Agents - Anthropic Engineering](https://www.anthropic.com/engineering/building-effective-agents) (2024)
+* [Deep Research Agents: A Systematic Examination And Roadmap - arXiv 2506.18096v1](https://arxiv.org/html/2506.18096v1) (2025)
 * [OpenHands Agent Framework](https://github.com/All-Hands-AI/OpenHands)
 * [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)

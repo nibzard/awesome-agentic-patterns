@@ -14,7 +14,9 @@ Linear reasoning approaches like Chain-of-Thought (CoT) and even tree-based meth
 
 ## Solution
 
-Graph of Thoughts (GoT) extends reasoning frameworks by representing the thought process as a directed graph where:
+Graph of Thoughts (GoT) extends reasoning frameworks by representing the thought process as a directed graph. GoT provides a general framework that subsumes Chain-of-Thought (linear) and Tree-of-Thoughts (branching) as special cases, with aggregation as the key enabling operation.
+
+In GoT:
 
 - **Nodes** represent individual thoughts or reasoning states
 - **Edges** represent transformations or reasoning steps between thoughts
@@ -193,7 +195,7 @@ graph TD
 - More expressive than linear or tree-based approaches
 
 **Cons:**
-- Significantly higher computational cost
+- Significantly higher computational cost (5-20x vs. linear reasoning)
 - Complex to implement and debug
 - May generate many redundant thoughts
 - Requires sophisticated scoring and path-finding algorithms
@@ -201,12 +203,15 @@ graph TD
 
 ## How to use it
 
-- Use this when agent quality improves only after iterative critique or retries.
-- Start with one objective metric and one feedback loop trigger.
-- Record failure modes so each loop produces reusable learning artifacts.
+Use for complex problems where multiple solution approaches need to be merged or where early decisions may need revision based on later insights. LangGraph provides native support for GoT-like workflows with cycles and backtracking.
+
+Use simpler approaches (CoT, ToT) for:
+- Straightforward problems with single viable solution paths
+- Cases where computational resources are limited
+- Problems where reasoning branches don't need to recombine
 
 ## References
 
-- [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687)
-- [Presentation at AAAI '24 Vancouver](https://aaai.org/aaai-conference/)
+- [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687) - Besta et al., ETH Zurich
 - [Code Implementation](https://github.com/spcl/graph-of-thoughts)
+- [LangGraph - Graph-based Agent Workflows](https://www.langchain.com/langgraph)

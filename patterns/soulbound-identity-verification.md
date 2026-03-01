@@ -10,7 +10,7 @@ tags: [identity, verification, trust, soulbound-token, blockchain, agent-identit
 
 ## Problem
 
-As autonomous agents start interacting across networks, it becomes harder to verify identity and detect prompt/operator drift. Without durable identity and change history, an agent can impersonate another agent or silently diverge from its authorized configuration.
+As autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations.
 
 ## Solution
 
@@ -32,6 +32,12 @@ graph TD
     F --> G[Trust Decision]
 ```
 
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:** Non-transferable credentials prevent credential theft and impersonation; hash-based state commitments enable verifiable continuity checks without requiring identity disclosure.
+- **Unverified / Unclear:** Long-term operational costs and scalability across large agent fleets require further production validation.
+
 ## When to use
 
 - Before delegating work to another agent.
@@ -40,10 +46,8 @@ graph TD
 
 ## Trade-offs
 
-- Requires an external registry and on-chain/append-only logging trust model.
-- Hash commitments verify state integrity but not necessarily semantic correctness.
-- Operational overhead for issuing/rotating identity claims.
-- Latency and integration cost can be non-trivial.
+- **Pros:** Non-transferability prevents credential delegation and theft; tamper-resistant logging provides auditable state history; enables verification without identity disclosure.
+- **Cons:** Requires external registry and append-only log infrastructure; hash commitments verify state integrity but not semantic correctness; operational overhead for issuing/rotating credentials.
 
 ## Known Implementations
 
@@ -59,4 +63,5 @@ graph TD
 
 ## References
 
-- Primary source: https://eips.ethereum.org/EIPS/eip-5192
+- ERC-5192: Non-Transferable Tokens (Soulbound Tokens) - https://eips.ethereum.org/EIPS/eip-5192
+- Vitalik Buterin on Soulbound Items - https://vitalik.ca/general/2022/01/26/soulbound.html

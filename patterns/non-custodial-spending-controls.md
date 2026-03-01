@@ -10,7 +10,7 @@ tags: [wallet-controls, spend-limits, policy-enforcement, non-custodial, AI-agen
 
 ## Problem
 
-AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass.
+AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. This is a specific instance of the "lethal trifecta" threat model: combining wallet access with untrusted inputs and external communication creates exploitation paths.
 
 ## Solution
 
@@ -22,6 +22,7 @@ Core mechanics:
 - **Non-custodial boundary**: the policy service validates and returns authorization, but never stores or manages private keys.
 - **Fail-closed behavior**: when policy checks are unavailable, transaction approval is denied.
 - **Two-gate control**: a policy evaluation step plus a separate authorization/timing check before signing.
+- **Tool-layer integration**: the agent calls wallet tools normally; the policy layer wraps the underlying wallet library, remaining transparent to the agent.
 
 ## How to use it
 
@@ -49,3 +50,6 @@ Core mechanics:
 - [PolicyLayer](https://policylayer.com)
 - [Coinbase Agentic Wallet controls](https://www.coinbase.com)
 - [Openfort](https://www.openfort.xyz)
+- [EIP-4337: Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337) - Smart contract wallets with policy enforcement
+- [ERC-7715: Permissions and Delegation](https://eips.ethereum.org/EIPS/eip-7715) - Standardized wallet delegation for agents
+- [The Lethal Trifecta - Simon Willison](https://simonwillison.net/2025/Jun/16/lethal-trifecta/) - Foundational threat model

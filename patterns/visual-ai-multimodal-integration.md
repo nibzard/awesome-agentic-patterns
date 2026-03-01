@@ -16,12 +16,15 @@ Many real-world tasks require understanding and processing visual information al
 
 Integrate large multimodal models (LMMs) into agent architectures to enable visual understanding capabilities. This pattern involves:
 
-1. **Visual Input Handling**: Accept images, videos, or screenshots as input alongside text
-2. **Visual Analysis**: Use multimodal models to extract information, identify objects, read text, understand spatial relationships
-3. **Cross-Modal Reasoning**: Combine visual and textual information for comprehensive understanding
-4. **Visual-Guided Actions**: Take actions based on visual understanding (clicking UI elements, describing scenes, counting objects)
+1. **Visual Input Handling**: Accept images, videos, or screenshots as input alongside text. Images are typically resized and base64-encoded or provided via URL. Video may require frame extraction (except Gemini which supports native video processing).
 
-The integration can be implemented through specialized visual processing agents or by upgrading existing agents with multimodal capabilities.
+2. **Visual Analysis**: Use multimodal models to extract information, identify objects, read text (OCR), understand spatial relationships, and interpret diagrams or charts.
+
+3. **Cross-Modal Reasoning**: Combine visual and textual information for comprehensive understanding, enabling tasks like UI debugging from screenshots or data extraction from charts.
+
+4. **Visual-Guided Actions**: Take actions based on visual understanding (clicking UI elements, describing scenes, counting objects).
+
+**Provider Selection**: Different providers excel at different tasks—Anthropic Claude for UI understanding and code generation, Google Gemini for native video processing, OpenAI GPT-4o for general-purpose tasks, Meta LLaVA for open-source needs.
 
 ## Example
 
@@ -170,9 +173,11 @@ flowchart TD
 
 ## How to use it
 
-- Use this when agent success depends on reliable tool invocation and environment setup.
-- Start with a narrow tool surface and explicit parameter validation.
-- Add observability around tool latency, failures, and fallback paths.
+- Use when tasks require visual understanding—UI debugging, document processing, image analysis, video comprehension, or code generation from screenshots.
+
+- **Choose provider by use case**: Anthropic Claude for UI understanding and screenshot-to-code; Google Gemini for native video processing; OpenAI GPT-4o for general-purpose tasks; Meta LLaVA for open-source/self-hosted needs; Mistral for EU/GDPR compliance.
+
+- **Optimize for costs**: Resize images to minimum viable size, use appropriate detail levels (low for general understanding, high for OCR), and consider cascading approaches (smaller models first, escalate when needed).
 
 ## References
 
@@ -180,3 +185,4 @@ flowchart TD
 - [GPT-4V(ision) System Card](https://openai.com/research/gpt-4v-system-card)
 - [Claude 3 Vision Capabilities](https://www.anthropic.com/claude)
 - [Google Gemini Multimodal Features](https://deepmind.google/technologies/gemini/)
+- [LLaVA: Visual Instruction Tuning (Liu et al., 2023)](https://arxiv.org/abs/2304.08485) - Foundational multimodal instruction-following model

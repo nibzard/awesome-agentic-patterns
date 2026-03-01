@@ -35,8 +35,10 @@ Use milestone-based escrow with verifiable release conditions.
 - Verification burden can become the bottleneck.
 - Disputes need explicit handling and timeout rules.
 - Smart contract / payment rails add operational and legal complexity.
+- Funder-controlled verification (manual) vs autonomous verification (oracle-based) trade-off: simpler but slower vs faster but more complex.
 
 ## References
 
 - [agentfund-skill](https://github.com/RioTheGreat-ai/agentfund-skill)
 - [agentfund-mcp](https://github.com/RioTheGreat-ai/agentfund-mcp)
+- [Coral Protocol](https://arxiv.org/html/2505.00749v2) - Academic foundation for trustless multi-agent escrow with autonomous verification (2025)

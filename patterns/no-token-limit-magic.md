@@ -18,6 +18,13 @@ During discovery and prototyping, relax hard token limits and optimize for learn
 
 This pattern treats cost optimization as a second phase, not the first objective.
 
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Multiple critique passes improve output quality** (Wang et al. 2022, Shinn et al. 2023): Self-consistency sampling and self-reflection loops significantly improve reasoning, but require generous token budgets.
+- **Premature optimization creates technical debt** (Sculley et al. 2015): Early optimization decisions in ML systems create long-term maintenance burdens—supports deferring token optimization.
+- **Unverified:** Direct quantitative studies comparing early vs late token optimization timing.
+
 ## Example (token budget approach)
 
 ```mermaid
@@ -54,5 +61,8 @@ flowchart TD
 ## References
 
 - Raising An Agent - Episode 2 cost discussion—$1000 prototype spend justified by productivity.
+- Wang et al. (2022) "Self-Consistency Improves Chain-of-Thought Reasoning" - arXiv:2203.11171
+- Shinn et al. (2023) "Reflexion: Language Agents with Verbal Reinforcement Learning" - arXiv:2303.11366
+- Sculley et al. (2015) "Technical Debt in Machine Learning Systems" - NeurIPS 2015
 
 [Source](https://www.nibzard.com/ampcode)

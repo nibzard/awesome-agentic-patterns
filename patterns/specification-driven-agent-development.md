@@ -27,9 +27,17 @@ if new_feature_requested:
     agent.sync_with(spec)
 ```
 
+**Core Framework (SPEC/EXPOSURE/TASK DELTA):**
+- **SPEC**: Version-controlled markdown capturing intent and values
+- **EXPOSURE**: What customers experience; spec is permanent, code is temporary
+- **TASK DELTA**: Continuous loop evaluating SPEC ↔ PRODUCT to identify gaps
+
 ## How to use it
 
-Give the agent a well-structured spec file, then run `claude spec run`.
+Write specifications first (Markdown files in git), then let agents scaffold from them. Documentation IS the spec—write it before code.
+
+Use tiered review: AI for patterns, humans for logic. Parallelize via git worktrees or multiple agents coordinating through shared spec files.
+
 Pitfalls: coarse or under-specified requirements still propagate errors.
 
 ## Trade-offs
@@ -39,6 +47,6 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 
 ## References
 
-- Talk teaser in the World's Fair meta-description about "shift to specification-driven development."
-
-- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/
+- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
+- Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
+- Parisien et al. (2024): "Deliberation Before Action" (ICLR 2024) - https://arxiv.org/abs/2403.05441

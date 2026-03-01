@@ -41,6 +41,13 @@ fi
 exit 0  # 0 = allow
 ```
 
+## Evidence
+
+- **Evidence Grade:** `high`
+- **Academic Validation:** External governance layers are necessary — even top-tier models show 40-51% unsafe behavior without guard rails (OpenAgentSafety, 2025)
+- **Runtime Governance:** MI9 framework (2025) validates that rule-based, telemetry-driven safety logic operating outside the agent's context can effectively constrain behavior
+- **Pre-Execution Validation:** CaMeL framework demonstrates that formal verification before code execution significantly improves security (Beurer-Kellner et al., 2025)
+
 ## How to use it
 
 - Register hooks in the agent's settings file (e.g., `settings.json` for Claude Code).
@@ -67,4 +74,6 @@ exit 0  # 0 = allow
 
 - [Claude Code Hooks documentation](https://docs.anthropic.com/en/docs/claude-code/hooks) — Official hook system for Claude Code
 - [claude-code-ops-starter](https://github.com/yurukusa/claude-code-ops-starter) — Open-source implementation of these 4 hooks with a risk-score diagnostic
-- [Replit AI deletes production database](https://www.theregister.com/2025/07/21/replit_bug/) — Real-world example of why guard rails matter
+- [MI9: Runtime Governance Framework](https://arxiv.org/html/2508.03858v3) (2025) — Validating external governance layers for agentic AI
+- [OpenAgentSafety](https://arxiv.org/html/2507.06134v1) (2025) — Demonstrating 40-51% unsafe behavior without external guard rails
+- [CaMeL: Code-Augmented Language Model](https://arxiv.org/abs/2506.08837) (2025) — Formal verification framework for secure LLM agent execution

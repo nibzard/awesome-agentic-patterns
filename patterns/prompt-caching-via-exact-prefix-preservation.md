@@ -25,6 +25,8 @@ Maintain prompt cache efficiency through **exact prefix preservation** - always 
 
 **Core insight**: Prompt caches only work on **exact prefix matches**. If the first N tokens of a request match a previous request, the cached computation can be reused.
 
+**Mechanism**: Caching operates at the token level, not message level. The cache checks token-by-token for prefix matches, independent of message boundaries.
+
 **Message ordering strategy:**
 
 1. **Static content first** (beginning of prompt - cached across all requests):
@@ -60,6 +62,11 @@ This preserves the exact prefix of all previous messages, maintaining cache hits
 - Reordering messages
 - Modifying existing message content
 - Changing the model (affects server-side system message)
+
+**Provider variations:**
+
+- **OpenAI**: Automatic caching on exact prefix matches
+- **Anthropic**: Explicit cache-control headers, TTL-based invalidation (up to 5 minutes), 90% discount on cached tokens
 
 **Stateless design for ZDR:**
 
@@ -194,6 +201,7 @@ function handleConfigChange(
 - **ZDR-compatible**: Stateless design supports Zero Data Retention policies
 - **No server state**: Avoids `previous_response_id` complexity
 - **Simple conceptual model**: Exact prefix matching is easy to reason about
+- **Production-validated savings**: 43% cost reduction demonstrated at scale (HyperAgent, 9.4B tokens/month)
 
 **Cons:**
 
@@ -207,5 +215,6 @@ function handleConfigChange(
 
 * [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/)
 * [Prompt Caching Documentation | OpenAI](https://platform.openai.com/docs/guides/prompt-caching)
+* [Context Caching | Anthropic](https://docs.anthropic.com/en/docs/build-with-claude/context-caching)
 * [Codex CLI | GitHub](https://github.com/openai/codex)
 * Related: [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)

@@ -14,7 +14,7 @@ An internal agent only provides value when its workflows are initiated. Building
 
 ## Solution
 
-Implement **multi-platform webhook triggers** that allow external SaaS tools to initiate agent workflows automatically.
+Implement **multi-platform webhook triggers** that allow external SaaS tools to initiate agent workflows automatically. This pattern leverages a mature ecosystem of workflow automation platforms (n8n with 400+ integrations, Zapier with 6,000+, Make.com with 1,000+) that can be used directly or as reference implementations.
 
 **Trigger types implemented:**
 
@@ -56,6 +56,28 @@ Platform Event → Webhook → Agent Trigger → Workflow Execution
 - OAuth2 tokens + SSL where possible
 - Platform-specific security (Slack request verification)
 - No authorization tokens for platforms that don't support it
+
+**Reliability patterns:**
+
+```yaml
+# Idempotency - handle duplicate webhook deliveries
+idempotency:
+  key: "${platform}:${eventType}:${entityId}"
+  ttl: 3600  # 1 hour
+  behavior: "skip_if_processed"
+
+# Replay protection
+replay_protection:
+  timestamp_validation: true
+  max_age: "5 minutes"
+  signature_verification: "HMAC-SHA256"
+
+# Queue-based architecture
+queue:
+  backend: "redis"
+  dead_letter_queue: true
+  retry_strategy: "exponential_backoff"
+```
 
 **Private channel security:**
 ```yaml
@@ -159,3 +181,6 @@ Custom implementation allows nuances like:
 
 * [Building an internal agent: Triggers](https://lethain.com/agents-triggers/) - Will Larson (2025)
 * Related: [Proactive Trigger Vocabulary](proactive-trigger-vocabulary.md) - Natural language trigger phrases for skill routing
+* [n8n](https://n8n.io) - Open-source workflow automation with 400+ integrations (45K+ GitHub stars)
+* Hohpe, G. "Enterprise Integration Patterns." 2003 - Foundational patterns for event-driven integration
+* Omicini et al. "Blending Event-Based and Multi-Agent Systems Around Coordination Abstractions." IFIP WG 6.1, 2015

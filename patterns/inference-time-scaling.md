@@ -2,10 +2,10 @@
 title: "Inference-Time Scaling"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Google DeepMind", "OpenAI"]
+based_on: ["Google DeepMind", "OpenAI", "Wei et al. (CoT)", "Wang et al. (Self-Consistency)", "Yao et al. (Tree-of-Thought)"]
 category: "Orchestration & Control"
 source: "https://deepmind.google/research/"
-tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute]
+tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute, search, verification]
 ---
 
 ## Problem
@@ -16,11 +16,11 @@ Traditional language models are limited by their training-time capabilities. Onc
 
 Inference-Time Scaling allocates additional computational resources during inference to improve output quality. Instead of generating a single response, the system can:
 
-1. **Generate multiple candidates** and select the best one
-2. **Perform extended reasoning** chains before responding  
-3. **Iterate and refine** outputs through multiple passes
-4. **Search through solution spaces** more thoroughly
-5. **Verify and validate** answers before returning them
+1. **Generate multiple candidates** and select the best one (Best-of-N)
+2. **Perform extended reasoning** chains before responding (Chain-of-Thought)
+3. **Iterate and refine** outputs through multiple passes (Self-Refinement)
+4. **Search through solution spaces** more thoroughly (Tree-of-Thought, MCTS)
+5. **Verify and validate** answers before returning them (Self-Consistency)
 
 This approach trades compute time for solution quality, allowing smaller models with inference-time scaling to outperform larger models using standard inference.
 
@@ -198,9 +198,10 @@ flowchart TD
 
 ## Real-World Evidence
 
-- **Google DeepMind (August 2024)**: Research showing that inference-time compute scaling allows smaller models to outperform 14x larger models
-- **OpenAI's o1 model**: Implements "chain of thought reasoning" with extended inference time, showing significant improvements on complex tasks
-- Models can dynamically adjust compute based on problem difficulty, spending more time on harder problems
+- **Academic Foundation**: Wei et al. (2022) established chain-of-thought prompting; Wang et al. (2022) demonstrated self-consistency gains via multiple sampling
+- **Search-Based Methods**: Yao et al. (2023) showed Tree-of-Thought improves complex problem-solving through search over reasoning paths
+- **Production Models**: OpenAI o1 (September 2024) and Anthropic Claude Extended Thinking implement inference-time scaling with improved reasoning on math and coding tasks
+- **Self-Refinement**: Shinn et al. (2023) Reflexion shows models can improve outputs through iterative self-critique
 
 ## Trade-offs
 
@@ -225,6 +226,8 @@ flowchart TD
 
 ## References
 
-- [Google DeepMind Research on Test-Time Compute Scaling (August 2024)](https://deepmind.google/research/)
-- [OpenAI o1 System Card](https://openai.com/research/)
-- [Inference-Time Scaling Laws](https://arxiv.org/)
+- [Chain-of-Thought Prompting Elicits Reasoning (Wei et al., 2022)](https://arxiv.org/abs/2201.11903)
+- [Self-Consistency Improves CoT Reasoning (Wang et al., 2022)](https://arxiv.org/abs/2203.11171)
+- [Tree of Thoughts (Yao et al., 2023)](https://arxiv.org/abs/2305.10601)
+- [Reflexion: Language Agents with Verbal Reinforcement Learning (Shinn et al., 2023)](https://arxiv.org/abs/2303.11366)
+- [OpenAI Learning to Reason with LLMs](https://openai.com/index/learning-to-reason-with-llms/)

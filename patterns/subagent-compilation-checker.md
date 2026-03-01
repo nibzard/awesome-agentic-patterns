@@ -3,9 +3,12 @@ title: "Subagent Compilation Checker"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
-category: "Tool Use & Environment"
+category: "Reliability & Eval"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [subagent, compilation, modularity, error-isolation]
+evidence_grade: medium
+evidence_snapshot: "Core mechanism validated by academic work on multi-agent verification (Reflexion, Self-Refine) and formal verification (CaMeL). Industry implementations exist (Cursor, Aider, SWE-agent) but limited controlled studies."
+last_updated: "2026-02-28"
 ---
 
 ## Problem
@@ -30,6 +33,15 @@ Spawn **specialized "Compilation Subagents"** to independently build and verify 
   - Subagent runs `mvn clean install` or `go build ./auth-service`.
   - Returns a structured error list or location of compiled artifact.
 - **Main Agent:** Updates its context with the **concise error report** (e.g., `[{file: "auth_controller.go", line: 85, error: "undefined: UserModel"}]`).
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Self-Refine (Shinn et al., 2023) shows 15-45% quality improvements through iterative feedback loops
+  - CaMeL (Debenedetti et al., 2025) demonstrates static verification before execution as a safety pattern
+  - Industry tools (Cursor, Aider, OpenHands) implement similar compilation/test-checking workflows
+- **Unverified / Unclear:** Quantitative impact on main agent context efficiency; optimal subagent parallelization strategies
 
 ## Example
 
@@ -64,5 +76,7 @@ sequenceDiagram
 
 - Inspired by "Subagent Spawning" for code-related subtasks in the Open Source Agent RL talk (May 2025).
 - Will Brown's note on decoupling long I/O-bound steps from the main model's inference to avoid context explosion.
+- Shinn, N., et al. (2023). "Self-Refine: Improving Reasoning in Language Models via Iterative Feedback." *arXiv:2303.11366*
+- Debenedetti, E., et al. (2025). "CaMeL: Code-Augmented Language Model for Tool Use." *arXiv:2506.08837*
 
 - Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

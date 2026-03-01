@@ -40,19 +40,29 @@ flowchart TD
     style F fill:#ffebee
 ```
 
+## Evidence
+
+- **Evidence Grade:** `high`
+- **Industry Adoption:** Production-validated across Claude Code, Continue.dev, Cursor AI, and GitHub Copilot
+- **Origin:** Industry-practitioner pattern; limited formal academic literature
+
 ## How to use it
 
 - Use this when model quality depends on selecting or retaining the right context.
 - Start with strict context budgets and explicit memory retention rules.
 - Measure relevance and retrieval hit-rate before increasing memory breadth.
+- Version-control project context (`CLAUDE.md`); exclude local overrides (`CLAUDE.local.md`) from VCS.
 
 ## Trade-offs
 
-* **Pros:** Raises answer quality by keeping context relevant and reducing retrieval noise.
-* **Cons:** Requires ongoing tuning of memory policies and indexing quality.
+* **Pros:** Raises answer quality by keeping context relevant and reducing retrieval noise; enables enterprise-wide policy enforcement; supports automatic context loading without manual intervention.
+* **Cons:** Requires ongoing tuning of memory policies and indexing quality; context window limits may truncate layers; potential for configuration conflicts.
 
 ## References
 
 - Based on the `CLAUDE.md` system described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
+- Claude Code: https://github.com/anthropics/claude-code
+- Continue.dev: https://github.com/continuedev/continue
+- Cursor AI: https://cursor.sh
 
 [Source](https://www.nibzard.com/claude-code)
