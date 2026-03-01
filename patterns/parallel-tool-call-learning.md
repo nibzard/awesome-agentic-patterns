@@ -44,6 +44,14 @@ During RL exploration, the agent discovers that:
 3. Parallel patterns receive similar rewards in less time (implicit efficiency reward)
 4. The model naturally converges toward parallel execution patterns
 
+**Tool Classification for Safe Parallelization:**
+
+Agents learn to distinguish between:
+- **Read-only tools**: Safe to parallelize (search, read_file, list)
+- **State-modifying tools**: Require serialization (write_file, delete, state-changing APIs)
+
+This classification prevents race conditions while maximizing parallelism for safe operations.
+
 **Natural Emergence through RL:**
 
 Unlike explicit programming, the parallelization emerges from:
@@ -261,6 +269,12 @@ Total: 3-4 rounds (50% reduction in back-and-forth)
 
 > "We noticed that the model starts learning how to do a lot of parallel tool calls. The first action that the model does, it will kick off like eight different things... and then following on it will independently explore all of those things by again running more parallel tool calls."
 
+**Additional Validation: Ambience Healthcare**
+
+- **Task**: Medical coding with ICD-10 code lookups
+- **Result**: 18% latency reduction after Agent RFT
+- **Pattern**: Parallel execution of independent code lookups reduced sequential rounds
+
 ## When Parallelization Helps Most
 
 **High Impact Scenarios:**
@@ -358,3 +372,8 @@ graph TD
 - [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Parallel Tool Execution Pattern](./parallel-tool-execution.md)
 - Related patterns: Agent Reinforcement Fine-Tuning, Tool Use Incentivization via Reward Shaping
+
+### Academic Foundations
+
+- Schick et al. [ToolFormer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (ACL, 2023)
+- Yao et al. [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (NeurIPS, 2022)

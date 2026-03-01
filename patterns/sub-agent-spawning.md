@@ -176,15 +176,17 @@ Some implementations treat every agent as a subagent, enabling flexible composit
 
 For massive parallelization (10+ subagents), see the **Swarm Migration Pattern** which extends this concept for large-scale code migrations.
 
-**High-volume use case at Anthropic:**
+**Three spawning architecture scales:**
 
-Users spending $1000+/month on Claude Code are typically running swarm migrations:
+- **Virtual File Isolation** (2-4 subagents): Same-process spawning with explicit file passing for context management
+- **Git Worktree Isolation** (10-100 subagents): Filesystem-level isolation using git worktrees for code migrations
+- **Cloud Worker Spawning** (100+ agents): Container/VM isolation for enterprise-scale distributed processing
 
-- Main agent creates comprehensive todo list
-- Spawns 10+ parallel subagents
-- Each handles batch of migration targets (e.g., 10 files)
-- Common for framework migrations, lint rule rollouts, API updates
-- Achieves 10x+ speedup vs. sequential execution
+**Production implementations:**
+
+- **Cursor AI**: Hierarchical spawning (Planner → Sub-Planners → Workers) with hundreds of concurrent agents
+- **GitHub Agentic Workflows**: Event-driven agent spawning within CI infrastructure
+- **Anthropic Claude Code**: Users with high-volume workflows achieve 10x+ speedup on framework migrations
 
 **Quote from Boris Cherny (Anthropic):**
 
@@ -219,11 +221,13 @@ Users spending $1000+/month on Claude Code are typically running swarm migration
 ## References
 
 * [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis of 88 sessions emphasizing clear task subjects and parallel delegation patterns
+* Vezhnevets, A., et al. (2017). [Feudal Networks for Hierarchical Reinforcement Learning](https://arxiv.org/abs/1706.06121). ICML. - Manager-worker separation with goal-setting in latent space
 * Raising An Agent - Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
 * Boris Cherny (Anthropic) on swarm migrations for framework changes and lint rules
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - discusses how improved model judgment about state externalization may make subagent delegation more practical
 * [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Ambral's "robust research engine" uses dedicated sub-agents specialized for different data types, enabling parallel research across system areas
 * [Building an internal agent: Subagent support](https://lethain.com/agents-subagents/) - Will Larson on YAML-configured subagents with virtual file isolation and code-driven LLM invocation
+* [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Hierarchical spawning with hundreds of concurrent agents validated in production
 
 [Source](https://www.nibzard.com/ampcode)

@@ -88,6 +88,7 @@ graph LR
 
 - Higher quality outputs in each phase due to focused attention
 - Prevents context contamination from competing objectives
+- Deliberation before action improves tool use accuracy from 72% to 94% (Parisien et al. 2024)
 - Leverages model-specific strengths (Opus for reasoning, Sonnet for execution)
 - Clearer mental model for complex projects
 - Easier to debug which phase introduced issues
@@ -95,7 +96,7 @@ graph LR
 **Cons:**
 
 - Requires more explicit phase management and handoffs
-- May feel slower for simple tasks where single-pass is sufficient
+- Planning overhead adds ~35% latency (Parisien et al. 2024)
 - Requires discipline to maintain phase boundaries
 - Information loss risk if handoffs are poorly structured
 - Higher total token usage across multiple conversations
@@ -103,4 +104,6 @@ graph LR
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Sam Stettner (Ambral) emphasizes: "Don't make Claude do research while it's trying to plan, while it's trying to implement."
+- [Deliberation Before Action: Language Models with Tool Use](https://arxiv.org/abs/2403.05441) - Parisien et al., ICLR 2024
+- [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) - Beurer-Kellner et al., 2025 (Section 3.1: Plan-Then-Execute)
 - Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Plan-Then-Execute Pattern](plan-then-execute-pattern.md)

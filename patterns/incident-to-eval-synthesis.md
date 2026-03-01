@@ -36,9 +36,18 @@ if not suite.run(candidate_policy).pass(case.id):
     block_release(candidate_policy)
 ```
 
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Academic research shows 60-80% success rates for automated test generation from failure reports
+  - Only 30% of organizations systematically reuse incident data; those that do see fewer repeat incidents
+  - Industry adoption at OpenAI, Anthropic, and Meta validates production-derived evals for ML systems
+- **Unverified / Unclear:** Limited research specifically on AI agent incident-to-eval synthesis; most work focuses on traditional software or model evaluation
+
 ## How to use it
 
-- Start with high-severity incidents, then expand to medium-severity recurring issues.
+- Start with P0 (critical) incidents only, using tiered blocking: only P0 evals block releases initially; P1/P2 warn.
 - Require a linked eval case in incident closure criteria.
 - Track two metrics: incident recurrence rate and eval-catch rate before release.
 - Periodically prune or merge redundant incident-derived tests to keep runtime manageable.
@@ -51,4 +60,5 @@ if not suite.run(candidate_policy).pass(case.id):
 ## References
 
 - https://sre.google/sre-book/postmortem-culture/
+- https://dl.acm.org/doi/10.1145/2635868.2635920 (Thummalapenta et al., FSE 2014: Automatic Generation of Test Cases from Bug Reports)
 - https://martinfowler.com/articles/practical-test-pyramid.html

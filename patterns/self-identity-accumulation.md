@@ -6,6 +6,9 @@ based_on: ["Claude Code Hooks System"]
 category: "Context & Memory"
 source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
 tags: [self-identity, persona, session-hooks, familiarity, cross-session, profile, soul-document, agent-personality]
+evidence_grade: medium
+evidence_snapshot: "Dual-hook validated in production; MemGPT/Reflexion show 91% vs 80% HumanEval via reflection"
+last_updated: "2026-02-28"
 ---
 
 ## Problem
@@ -75,6 +78,15 @@ def session_end_hook(conversation):
 - **Communication Style**: Tone preferences, formatting conventions
 - **Workflow Patterns**: Research practices, decision-making patterns
 - **Boundaries**: What the agent should/shouldn't do
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Reflexion (Shinn et al., 2023) achieved 91% pass rate on HumanEval vs 80% baseline through episodic memory with self-reflection
+  - MemGPT (Packer et al., 2023) demonstrates hierarchical memory systems with virtual context management in production
+  - Cursor AI's 10x-MCP persistent memory reported 26% improvement over OpenAI Memory with 90% token reduction (forum validation)
+- **Unverified / Unclear:** Long-term identity accumulation studies (multi-month) and conflict resolution mechanisms for contradictory identity statements
 
 ## How to use it
 
@@ -189,4 +201,6 @@ This document accumulates familiarity across sessions.
 * Based on my personal bot WHO_AM_I system
 * Related: [Dynamic Context Injection](dynamic-context-injection.md), [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 
-- Add at least one public reference link.
+- [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) - Park et al. (Stanford, 2023)
+- [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) - Packer et al. (UC Berkeley, 2023)
+- [Claude Code Hooks Documentation](https://docs.anthropic.com/en/docs/claude-code/hooks)

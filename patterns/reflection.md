@@ -16,7 +16,7 @@ Single-pass generation frequently misses edge cases, constraints, or quality cri
 
 After generating a draft, run an explicit self-evaluation pass against defined criteria and feed the critique into a revision attempt. Repeat until the output clears a threshold or retry budget is exhausted.
 
-Use stable scoring rubrics (correctness, completeness, safety, style) so the loop improves objective quality rather than free-form restyling.
+Use stable scoring rubrics (correctness, completeness, safety, style) so the loop improves objective quality rather than free-form restyling. For reduced bias, use a separate model for critique (dual-model architecture) at the cost of additional compute.
 
 ```pseudo
 for attempt in range(max_iters):
@@ -29,7 +29,7 @@ for attempt in range(max_iters):
 
 ## How to use it
 
-Use this when quality must meet explicit criteria in writing, reasoning, or code generation. Keep loop budgets small (for example 2-4 passes), and log score deltas to verify that extra iterations are producing measurable gains.
+Use this when quality must meet explicit criteria in writing, reasoning, or code generation. Keep loop budgets small (2-3 iterations are typically optimal; beyond 3 shows diminishing returns), and log score deltas to verify that extra iterations are producing measurable gains.
 
 ## Trade-offs
 
@@ -39,3 +39,4 @@ Use this when quality must meet explicit criteria in writing, reasoning, or code
 ## References
 
 * [Self-Refine: Improving Reasoning in Language Models via Iterative Feedback](https://arxiv.org/abs/2303.11366)
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://neurips.cc/) (NeurIPS 2023) - adds episodic memory for persistent learning across trials

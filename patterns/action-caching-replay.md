@@ -24,6 +24,8 @@ This creates several issues:
 
 Record every action during execution with precise metadata (XPaths, frame indices, execution details), enabling deterministic replay without LLM calls. The cache captures enough information to replay actions even when page structure changes slightly.
 
+This pattern builds on **experience replay** from reinforcement learning, where agents learn by reusing past successful actions rather than exploring anew each time.
+
 ### Core Approach
 
 **Action cache entries** store complete execution metadata:
@@ -218,7 +220,7 @@ npx hyperagent script workflows/login-cache.json > login.test.ts
 
 **Pros:**
 
-- **Dramatic cost reduction**: Replay costs near-zero (no LLM calls) if XPaths work
+- **Dramatic cost reduction**: Replay costs near-zero (no LLM calls) if XPaths work; documented cost reductions range from 43-97% across implementations; cache hit rates of 85%+ indicate excellent effectiveness
 - **Deterministic regression testing**: Verify fixes don't break existing workflows
 - **Performance**: Cached replays are 10-100x faster than LLM execution
 - **Debugging**: Cache provides complete execution history
@@ -244,4 +246,6 @@ npx hyperagent script workflows/login-cache.json > login.test.ts
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original implementation
 - [HyperAgent Documentation](https://docs.hyperbrowser.ai/hyperagent/introduction) - Usage guide
+- [Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching](https://arxiv.org/abs/2506.14852) (Zhang et al., 2025) - Academic foundation showing 46.62% average cost reduction
+- [Docker Cagent](https://github.com/docker/cagent) - Proxy-and-cassette model for deterministic agent testing
 - Related patterns: [Structured Output Specification](structured-output-specification.md), [Schema Validation Retry](schema-validation-retry-cross-step-learning.md)

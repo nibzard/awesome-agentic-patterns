@@ -31,17 +31,29 @@ if passes_guardrails(delta):
     save(system_prompt)
 ```
 
-## Trade-offs
+## Evidence
 
-**Pros:** rapid adaptation; no human in the loop for minor tweaks.
-**Cons:** risk of drift or jailbreak—needs a strong guardrail step.
+- **Evidence Grade:** `high` (academic), `low` (direct production implementation)
+- **Key Findings:** Strong academic foundation from Reflexion, APE, Self-Refine, DSPy, and Constitutional AI. Direct autonomous implementations are rare in production due to safety concerns (drift, jailbreak risk). Industry prefers hybrid approaches with guardrails and human oversight.
+- **Best Practice:** Pair with canary rollouts, multi-layer guardrails, and version control integration.
 
 ## How to use it
 
-- Use this when tasks need explicit control flow between planning, execution, and fallback.
-- Start with one high-volume workflow before applying it across all agent lanes.
-- Define ownership for each phase so failures can be routed and recovered quickly.
+- Best for low-risk domains with high-volume, well-defined workflows (e.g., formatting, style)
+- Requires strong guardrails: structural validation, intent preservation checks, change magnitude limits
+- Include version control integration and rollback capability
+- Consider dual-agent architecture (executor + critic) for safer delta generation
+- Avoid in safety-critical or high-regulation domains without human approval gates
+
+## Trade-offs
+
+**Pros:** Rapid adaptation; data-driven improvements; no training infrastructure required.
+
+**Cons:** Risk of drift or jailbreak; prompt bloat; oscillation and instability.
 
 ## References
 
 * Goodman, *Meta-Prompt: A Simple Self-Improving Language Agent*. ([noahgoodman.substack.com](https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving))
+* Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning*. arXiv:2303.11366 (2023)
+* Madaan et al., *Self-Refine: Large Language Models Can Self-Correct*. arXiv:2303.05125 (2023)
+* Khattab et al., *DSPy: Declarative Self-Improving Language Programs*. ([github.com/stanfordnlp/dspy](https://github.com/stanfordnlp/dspy))

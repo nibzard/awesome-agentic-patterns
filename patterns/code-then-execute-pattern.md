@@ -16,11 +16,13 @@ Free-form plan-and-act loops are difficult to audit because critical control dec
 
 Have the LLM output a **sandboxed program or DSL script**:
 
-1. LLM writes code that calls tools and untrusted-data processors.  
-2. Static checker/Taint engine verifies flows (e.g., no tainted var to `send_email.recipient`).  
+1. LLM writes code that calls tools and untrusted-data processors.
+2. Static checker/Taint engine verifies flows (e.g., no tainted var to `send_email.recipient`).
 3. Interpreter runs the code in a locked sandbox.
 
 The key shift is to move from "reasoning about actions" to "compiling actions" into an inspectable artifact. Once actions are code, policy engines and static analyzers can enforce data-flow rules before execution.
+
+This pattern also serves a complementary purpose: **token optimization**. When tool calls execute within the sandbox rather than through special tokens, only condensed results return to the LLM context, reducing token usage for data-heavy workflows by 75-99% in production deployments.
 
 ```dsl
 x = calendar.read(today)
@@ -34,11 +36,13 @@ Use this for complex multi-step agents such as SQL copilots, software-engineerin
 
 ## Trade-offs
 
-* **Pros:** Formal verifiability; replay logs.
-* **Cons:** Requires DSL design and static-analysis infra.
+* **Pros:** Formal verifiability; replay logs; reduced token costs for data-heavy workflows.
+* **Cons:** Requires DSL design and static-analysis infra; sandbox execution overhead.
 
 ## References
 
 * Debenedetti et al., CaMeL (2025); Beurer-Kellner et al., §3.1 (5).
+* Anthropic Engineering, Code Execution with MCP (2024).
 
 - Primary source: https://arxiv.org/abs/2506.08837
+- Industry implementation: https://www.anthropic.com/engineering/code-execution-with-mcp

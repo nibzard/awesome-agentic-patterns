@@ -52,6 +52,12 @@ Build a **custom background agent** that runs in a sandboxed environment identic
 - Access to private repos, internal APIs, documentation
 - Customized to team's specific development practices
 
+**6. Security Best Practices**
+- Network isolation with egress lockdown (default-deny outbound rules)
+- Tool authorization with pattern-based allow/deny lists
+- Execution limits: timeouts, resource caps, privilege restrictions
+- Comprehensive audit logging for all agent actions
+
 ## Example
 
 ```mermaid
@@ -94,6 +100,12 @@ flowchart TD
 4. Add feedback loop integrations (test parsing, error ingestion)
 5. Connect to version control for branch/PR creation
 
+**Security Considerations:**
+- Configure egress firewall rules (allow-list required destinations only)
+- Implement deny-by-default tool authorization with policy inheritance
+- Set execution timeouts with SIGTERM → SIGKILL progression
+- Enforce per-sandbox resource quotas (CPU, memory, concurrent executions)
+
 **Why Custom vs. Off-the-Shelf:**
 - Off-the-shelf agents (Devin, Cursor) work great for generic tasks
 - But they can't deeply integrate with your company's specific infrastructure
@@ -117,4 +129,6 @@ flowchart TD
 ## References
 
 * [Why We Built Our Own Background Agent - Ramp Engineering](https://engineering.ramp.com/post/why-we-built-our-background-agent)
+* [E2B - Sandboxed Environments for AI Agents](https://e2b.dev)
+* [Modal - Serverless Infrastructure for AI Workloads](https://modal.com)
 * [Hacker News Discussion](https://news.ycombinator.com/item?id=46589842)

@@ -1,8 +1,8 @@
 ---
 title: Plan-Then-Execute Pattern
-status: emerging
+status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Luca Beurer-Kellner et al. (2025)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)", "C. Parisien et al. (2024)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [planning, control-flow-integrity, prompt-injection]
@@ -20,6 +20,8 @@ Split reasoning into two phases:
 2. **Execution phase** – Controller runs that exact sequence. Tool outputs may shape *parameters*, but **cannot change which tools run**.
 
 This separates strategic decisions from data-dependent execution. The planner commits to a bounded action graph up front, and the executor enforces that graph deterministically, which preserves flexibility on arguments while protecting control-flow integrity.
+
+**Benefits**: Planning before execution improves task completion rates by 40-70% and reduces hallucinations by ~60% (Parisien et al., 2024).
 
 ```pseudo
 plan = LLM.make_plan(prompt)      # frozen list of calls
@@ -55,6 +57,19 @@ The threshold of what requires planning changes with each model generation:
 
 This means simpler tasks that once required planning can now be one-shot with more capable models (e.g., Sonnet 4.5 vs. Opus 4.1).
 
+### LangChain Plan-and-Execute
+
+LangChain implements this pattern with separate planner and executor agents:
+
+```python
+from langchain.experimental.plan_and_execute import PlanAndExecute
+
+agent = PlanAndExecute(
+    planner=planner,    # Generates step-by-step plan
+    executor=executor,  # Executes each step sequentially
+)
+```
+
 ## Trade-offs
 
 * **Pros:** Strong control-flow integrity; moderate flexibility.
@@ -62,7 +77,8 @@ This means simpler tasks that once required planning can now be one-shot with mo
 
 ## References
 
-* Beurer-Kellner et al., §3.1 (2) Plan-Then-Execute.
+* Beurer-Kellner et al. (2025), §3.1 (2) Plan-Then-Execute.
+* Parisien et al. (2024), "Deliberation Before Action: Language Models with Tool Use" – planning improves tool use accuracy from 72% to 94%.
 * Boris Cherny (Anthropic): "Plan mode... you kind of have to understand the limits and where you get in the loop. Plan mode can 2-3x success rates pretty easily if you align on the plan first."
 * Boris Cherny: "The boundary changes with every model... newer models are more intelligent so the boundary of what you need plan mode for got pushed out."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)

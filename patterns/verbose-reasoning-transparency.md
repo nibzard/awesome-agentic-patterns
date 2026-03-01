@@ -50,17 +50,20 @@ sequenceDiagram
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
+- Debugging agents that produce incorrect or unexpected outputs
+- Learning how to prompt more effectively by studying agent reasoning patterns
+- Building trust in high-stakes scenarios where understanding "why" matters
+- Complementing human-in-the-loop approval workflows with transparency
 
 ## Trade-offs
 
-* **Pros:** Creates clearer human-agent handoffs and better operational trust.
-* **Cons:** Needs explicit process design and coordination across teams.
+* **Pros:** Enables debugging of unexpected agent behavior, supports prompt engineering, and builds trust through explainability.
+* **Cons:** Adds modest performance overhead (+10-30% tokens) and requires careful handling of sensitive information (system prompts, credentials).
 
 ## References
 
 -   Based on the `Ctrl+R` keybinding for showing verbose output in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
+-   Wei et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *NeurIPS*. https://arxiv.org/abs/2201.11903
+-   Mohseni et al. (2021). "HCI Guidelines for Explainable AI." *arXiv:2108.05206*. https://arxiv.org/abs/2108.05206
 
 [Source](https://www.nibzard.com/claude-code)

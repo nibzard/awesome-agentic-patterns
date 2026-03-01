@@ -84,6 +84,8 @@ Practical examples:
 - Minimal verbose output
 ```
 
+**Established examples:** Modern CLIs universally support JSON output for agent consumption—GitHub CLI (`--json`), kubectl (`-o json`), AWS CLI (`--output json`), Terraform (`output -json`).
+
 **2. Documentation and knowledge**
 
 ```yaml
@@ -131,6 +133,8 @@ Create `AGENTS.md` or similar documentation that explains:
 - How to authenticate
 - What feedback mechanisms to use
 - Special considerations for automated interaction
+
+**Related pattern:** `CLAUDE.md` (Anthropic) is emerging as a complementary standard for agent guidance with project-specific instructions and tooling conventions.
 
 **The "Agent-Native Codebase" Checklist (2026 version of Joel Spolsky's test):**
 
@@ -203,4 +207,5 @@ Agents excel with simple, reliable, dumb tools. Complex tools designed for human
 
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [ESAA: Event Sourcing for Autonomous Agents](https://arxiv.org/abs/2602.23193v1) - Elzo Brito dos Santos Filho (arXiv 2026-02) — validates unified logging pattern
 * Related: [Skill Library Evolution](skill-library-evolution.md), [Factory over Assistant](factory-over-assistant.md)

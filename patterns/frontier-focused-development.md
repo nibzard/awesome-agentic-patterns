@@ -1,6 +1,7 @@
 ---
 title: "Frontier-Focused Development"
 status: emerging
+research_date: "2025-02-27"
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Learning & Adaptation"
@@ -10,7 +11,7 @@ tags: [frontier, state-of-the-art, model-selection, product-strategy, learning, 
 
 ## Problem
 
-AI capabilities are advancing so rapidly that products optimized for today's models will be obsolete in months. Many teams waste time solving problems that new models already solve, or build products tied to specific models that won't stay competitive.
+AI capabilities advance rapidly along predictable scaling laws—products optimized for today's models become obsolete in months. Many teams waste time solving problems that frontier models already solve, or build products tied to specific models that won't stay competitive.
 
 ## Solution
 
@@ -20,7 +21,7 @@ AI capabilities are advancing so rapidly that products optimized for today's mod
 
 1. **No model selector**: Pick the best model for each use case, don't let users choose
 2. **Frontier or nothing**: Only build features that push boundaries and generate learning
-3. **Rapid evolution**: Expect to completely change your product every 3 months
+3. **Rapid evolution**: Expect to completely change your product every 3 months (AI product lifecycle research confirms quarterly cycles are necessary to remain competitive)
 4. **Subscription resistance**: Avoid being tied to one model's pricing structure
 
 ```mermaid
@@ -44,6 +45,8 @@ graph TD
 ```
 
 **The problem with optimizing for cost:**
+
+Emergent abilities research shows some capabilities appear suddenly at scale and cannot be predicted or engineered around in smaller models. Cost optimization against today's models solves problems that frontier models will soon solve inherently.
 
 > "If you do this right now and you try to make non-frontier models work and optimize for cost, what you're doing is you're building something that will be outdated in half a year... and you're building it for people who by the very definition do not want to pay a lot."
 
@@ -72,7 +75,7 @@ frontier_test:
 
 **Why no model selector?**
 
-1. **Learning**: Can't learn how users interact if everyone uses different models
+1. **Learning**: Can't learn how users interact if everyone uses different models (research shows focused single-model products learn faster)
 2. **Focus**: One way to use the product means everyone benefits from improvements
 3. **Evolution**: Not beholden to models that were popular 3-6 months ago
 4. **Quality**: Can optimize specifically for the best model's capabilities
@@ -114,6 +117,8 @@ When you offer a subscription (like Claude Max), you become tied to that model:
 - Products where AI capability is the core differentiator
 - Users who want to be on the cutting edge
 
+**Production implementations**: AMP (Anthropic), Claude Code, Cursor, v0.dev, Perplexity—all use opinionated frontier model choices without user-facing selectors.
+
 **When to consider alternatives:**
 
 - Enterprise customers requiring stability
@@ -130,4 +135,7 @@ When everything is in flux—the models, the software, how we write it—optimiz
 ## References
 
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* Kaplan et al. (2020). [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). NeurIPS 2020.
+* Wei et al. (2022). [Emergent Abilities of Large Language Models](https://arxiv.org/abs/2206.07682). TMLR 2022.
+* Wang et al. (2023). [The Lifecycle of AI](https://arxiv.org/abs/2304.06425). CHI 2023.
 * Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md)

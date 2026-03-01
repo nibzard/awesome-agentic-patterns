@@ -16,9 +16,11 @@ In fast-moving AI development, holding onto features or workflows that are "work
 
 **Burn the boats: intentionally kill features and workflows** to force evolution and prevent being stuck on old paradigms. Set hard deadlines for feature removal to create urgency and commitment to the new way.
 
-**Historical context:** The phrase refers to Captain Hernán Cortés, who destroyed his ships upon arriving in Mexico, eliminating any possibility of retreat. His soldiers had to conquer or die.
+**Historical context:** The earliest documented instance is Xiang Yu (207 BC) at the Battle of Julu, who sank boats and broke cauldrons (破釜沉舟) to force victory against superior Qin forces. The phrase is popularly associated with Hernán Cortés (1519 AD), who destroyed his ships upon arriving in Mexico, eliminating any possibility of retreat.
 
-**In AI product development:** This means removing features that still work—features users still love—to prevent being stuck on the wrong trajectory.
+**Academic foundation:** Thomas Schelling's *The Strategy of Conflict* (1960) formalized this as "credible commitment"—restricting options makes threats believable and creates strategic commitment.
+
+**In AI product development:** This means removing features that still work—features users still love—to prevent being stuck on the wrong trajectory. Note: Production AI systems typically reject "no fallback" approaches in favor of bounded autonomy with human oversight. This pattern is most relevant as a product/organizational strategy, not a technical agent safety pattern.
 
 ```mermaid
 graph LR
@@ -133,6 +135,7 @@ This creates urgency and inevitability. Users can't ignore it.
 - The new way is unproven and risky
 - Your team isn't aligned on the change
 - Killing it would destroy the business
+- **Agent safety**: Giving agents irreversible operations with broad permissions ("God Agent" anti-pattern) creates catastrophic risk from prompt injection, context overflow, or cascading errors
 
 **Related principle: Re-earn revenue every quarter**
 
@@ -143,4 +146,7 @@ Burning boats is part of this mindset: nothing is sacred, everything must be re-
 ## References
 
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* Thomas Schelling, *The Strategy of Conflict* (1960) - Foundational work on credible commitment
+* Cohen & Levesque, "Intention is Choice with Commitment" (1990) - Formal framework for AI agent commitment
+* [Measuring Agents in Production (UC Berkeley, 2025)](https://arxiv.org/html/2512.04123v1) - Industry rejects "no fallback" for bounded autonomy
 * Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Factory over Assistant](factory-over-assistant.md)

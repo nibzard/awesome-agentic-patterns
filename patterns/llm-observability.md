@@ -22,6 +22,7 @@ Integrate **LLM observability platforms** (Datadog LLM Observability, LangSmith,
 - **Workflow linking**: Trace from user input through all sub-steps to final output
 - **Dashboarding**: Aggregate metrics on cost, latency, success rates
 - **Accessible debugging**: Non-engineers can debug without log access
+- **Event sourcing**: Structured logs enable replay, state reconstruction, and verification
 
 **Evolution from standard logging:**
 
@@ -71,6 +72,8 @@ def run_agent(query):
 - **Link to dashboards**: Make observability UI discoverable from chat
 - **Share access**: Don't restrict to eng org; workflow creators need visibility
 - **Monitor aggregate metrics**: Track success rates, latency, costs over time
+- **Use structured formats**: JSONL with schema versioning for long-running systems
+- **Aggregate at write time**: Log enrichment happens during capture, not during queries
 
 ## Trade-offs
 
@@ -97,6 +100,9 @@ def run_agent(query):
 ## References
 
 * [Building an internal agent: Logging and debugability](https://lethain.com/agents-logging/) - Will Larson (Imprint, 2025)
+* [Chain of Thought Monitoring](https://openai.com/research/thought-monitoring) - OpenAI Research (March 2025)
+* [ESAA: Event Sourcing for Autonomous Agents](https://arxiv.org/abs/2602.23193v1) - Elzo Brito dos Santos Filho et al. (February 2026)
+* [Chain of Thought Monitorability: A Fragile Opportunity](https://arxiv.org/abs/2510.19476) - Korbak et al. (October 2025)
 * Datadog LLM Observability documentation
 * LangSmith documentation
 * Related: Agent-First Tooling and Logging, Chain-of-Thought Monitoring & Interruption

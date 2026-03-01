@@ -4,7 +4,7 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Cognition AI (2025)"]
 category: Context & Memory
-source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges"
+source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)"
 tags: [context-anxiety, token-management, premature-completion, model-behavior]
 ---
 
@@ -71,4 +71,5 @@ Monitor for signs of context anxiety: sudden summarization, rushed decisions, or
 
 ## References
 
-* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges)
+* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025)
+* [Cognition AI: Announcing Devin Agent Preview with Sonnet 4.5](https://cognition.ai/blog/devin-agent-preview-sonnet-4-5) (September 2025)

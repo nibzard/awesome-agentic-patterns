@@ -42,6 +42,19 @@ require_cmd() {
   fi
 }
 
+log_contains_update_marker() {
+  local log_path="$1"
+  local marker="$2"
+
+  if command -v rg >/dev/null 2>&1; then
+    rg -F -q "$marker" "$log_path"
+    return $?
+  fi
+
+  require_cmd grep
+  grep -F -q "$marker" "$log_path"
+}
+
 slug_from_pattern_file() {
   local path="$1"
   path="${path##*/}"
@@ -96,13 +109,21 @@ run_update_once() {
 
 Guidelines:
 1) Edit only '${pattern_file}'. Do not create or edit any other file.
-2) Keep the pattern focused; do not add new top-level sections, new categories, or broad scope.
-3) Keep size changes minimal and do not materially expand the file.
-4) Update only in-place, high-confidence content in existing sections (Problem, Solution, Example, References) with a compact style.
-5) Use the template style and section naming as guidance, but do not force extra expansion.
-6) Prefer removing/shortening weak, speculative, or redundant language over adding a lot of new text.
-7) Preserve YAML front matter structure and existing sectioning unless a change is clearly required.
-8) If this cannot be improved from the research, leave sections unchanged.
+2) Follow template style from: ${TEMPLATE_LINK}.
+3) Keep existing top-level sections; do not add new top-level sections.
+4) Update only existing content with high-confidence findings from '${research_file}'.
+5) Keep net diff small (target <= 25 added lines and <= 3 new references).
+6) Prioritize mechanism clarity over case-study detail; avoid long company/vendor examples.
+7) Numeric claim rule: include only if explicit in research with source/year context; otherwise omit.
+8) If evidence is uncertain or conflicting, shorten/remove the claim instead of elaborating.
+9) Preserve concise tone and avoid speculative language.
+10) If there is no clear improvement, leave the file unchanged.
+
+Before finishing, self-check:
+- No new top-level sections
+- No speculative claims
+- References remain compact
+- Pattern stays concise
 
 After you finish editing, print exactly one line:
 PATTERN_UPDATED=${pattern_file}"
@@ -124,7 +145,8 @@ PATTERN_UPDATED=${pattern_file}"
   set +e
   (
     cd "$ROOT_DIR"
-    "${cmd[@]}"
+    # Keep Claude from consuming the parent loop's stdin (pattern file list).
+    "${cmd[@]}" </dev/null
   ) >"$log_abs" 2>&1
   exit_code=$?
   set -e
@@ -134,7 +156,7 @@ PATTERN_UPDATED=${pattern_file}"
     return 1
   fi
 
-  if ! rg -q "^PATTERN_UPDATED=${pattern_file}$" "$log_abs"; then
+  if ! log_contains_update_marker "$log_abs" "PATTERN_UPDATED=${pattern_file}"; then
     echo "No completion marker found for $pattern_file, inspect $log_file" >&2
     return 1
   fi
@@ -221,7 +243,11 @@ parse_args() {
 
 main() {
   parse_args "$@"
-  require_cmd rg
+  if command -v rg >/dev/null 2>&1; then
+    : 
+  else
+    echo "Notice: rg not found; using grep for marker checks."
+  fi
   require_cmd "$CLAUDE_BIN"
 
   if [ ! -d "$PATTERNS_DIR" ]; then

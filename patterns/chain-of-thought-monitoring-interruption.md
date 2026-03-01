@@ -27,8 +27,15 @@ Implement active surveillance of the agent's intermediate reasoning steps with t
 **Low-friction interruption:**
 
 - Enable quick halt capability (keyboard shortcuts, UI controls)
-- Preserve partial work when interrupting
+- Preserve partial work when interrupting (KV cache checkpointing)
 - Allow mid-execution context injection
+
+**Interruption triggers:**
+
+- Manual intervention (user-initiated)
+- Confidence thresholds (early exit when model is confident)
+- Budget limits (token/time constraints)
+- Safety violations (detected harmful reasoning)
 
 **Early detection signals:**
 
@@ -62,6 +69,12 @@ sequenceDiagram
 - Development workflows where iteration speed matters
 
 **Implementation approaches:**
+
+**Framework-level:**
+
+- **LangGraph:** `interrupt()` function with checkpointing via `MemorySaver`; supports static breakpoints (`interrupt_before`/`interrupt_after`) and dynamic event-driven interruption
+- **LlamaIndex:** Event logging with `AgentRunStepStartEvent`/`AgentRunStepEndEvent` for step boundaries
+- **AgentScope:** Safe interruption with context preservation and graceful cancellation
 
 **UI-level implementation:**
 
@@ -102,8 +115,12 @@ sequenceDiagram
 - May create dependency on human oversight for routine tasks
 - Adds cognitive load to monitor agent reasoning
 - Risk of over-correcting and preventing valid creative approaches
+- **Low faithfulness:** Current models' CoT frequently doesn't reflect true reasoning (Claude 3.7: ~25%, DeepSeek R1: ~39%)
 
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Tanner Jones (Vulcan) advises: "Have your finger on the trigger to escape and interrupt any bad behavior."
+- [Effectively Controlling Reasoning Models through Thinking Intervention](https://arxiv.org/pdf/2503.24370) (Princeton et al., March 2025) - "Thinking intervention" for strategically inserting/modifying thinking tokens during generation
+- [Dynamic Early Exit in Reasoning Models](https://arxiv.org/abs/2504.15895) (arXiv:2504.15895, April 2025) - Confidence-based early stopping; ~75% of samples contain early exit opportunities
+- [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/) - Standard attributes for AI agent tracing
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control.md), [Verbose Reasoning Transparency](verbose-reasoning-transparency.md)

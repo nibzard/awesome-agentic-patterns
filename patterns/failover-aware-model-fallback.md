@@ -24,7 +24,7 @@ Semantic error classification with intelligent fallback chains. Each failure is 
 
 **Core concepts:**
 
-- **Error classification**: Failures are mapped to semantic reason types (`timeout`, `rate_limit`, `auth`, `billing`, `format`, `context_overflow`).
+- **Error classification**: Failures are mapped to semantic reason types (`timeout`, `rate_limit`, `auth`, `billing`, `format`, `context_overflow`), mapping provider-specific error codes to universal semantic types for consistent handling.
 - **Reason-aware fallback**: Different reasons trigger different fallback behaviors:
   - `timeout`, `rate_limit`: Retry with next model in chain
   - `auth`, `billing`: Fail immediately; retry won't help
@@ -126,7 +126,7 @@ agents:
 
 **Pitfalls to avoid:**
 
-- **Over-fallback**: Too many fallback chains can cascade failures across providers. Use exponential backoff.
+- **Over-fallback**: Too many fallback chains can cascade failures across providers. Use exponential backoff with jitter to prevent thundering herd problems.
 - **Semantic mismatch**: Fallback models may have different capabilities (vision, tools). Filter by required features.
 - **Silent failures**: Some errors (`format`) indicate request incompatibility. Fallback may fail identically.
 
@@ -149,6 +149,7 @@ agents:
 ## References
 
 - [Clawdbot model-fallback.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts) - Fallback orchestration
+- [Release It!](https://www.pragmaticprogrammer.com/titles/mnee2) by Michael Nygard (2007) - Circuit Breaker pattern foundation
 - [Clawdbot failover-error.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/failover-error.ts) - Error classification
 - [Clawdbot error helpers](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-helpers/errors.ts) - Reason classification logic
 - Related: [Extended Coherence Work Sessions](/patterns/extended-coherence-work-sessions) for reliability patterns

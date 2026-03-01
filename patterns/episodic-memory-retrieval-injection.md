@@ -20,7 +20,7 @@ Add a **vector-backed episodic memory store**:
 2. On new tasks, embed the prompt, retrieve top-k similar memories, and inject as *hints* in the context.  
 3. Apply TTL or decay scoring to prune stale memories.
 
-Design memory writes as structured records (decision, evidence, outcome, confidence) rather than raw transcripts. At retrieval time, filter by task scope and recency so injected memories improve reasoning quality instead of introducing retrieval noise.
+Design memory writes as structured records (decision, evidence, outcome, confidence) rather than raw transcripts. Structured memory reduces repetitive outputs and improves reasoning (ParamMem 2026). At retrieval time, filter by task scope and recency so injected memories improve reasoning quality instead of introducing retrieval noise. Episodic memory with self-reflection achieved 91% pass@1 on HumanEval vs 80% baseline (Reflexion, NeurIPS 2023).
 
 ## Trade-offs
 
@@ -36,6 +36,9 @@ Design memory writes as structured records (decision, evidence, outcome, confide
 
 ## References
 
+- Reflexion (Shinn et al., NeurIPS 2023): https://arxiv.org/abs/2303.11366
+- ParamMem (Yao et al., 2026): https://arxiv.org/abs/2602.23320v1
+- MemGPT (Packer et al., UC Berkeley 2023): https://arxiv.org/abs/2310.08560
 - Cursor "10x-MCP" persistent memory layer
 - Windsurf Memories docs
 

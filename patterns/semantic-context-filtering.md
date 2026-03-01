@@ -12,6 +12,8 @@ tags: [context-filtering, token-optimization, semantic-extraction, noise-reducti
 
 Raw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.
 
+Research on boilerplate detection shows that **40-80% of web page content** is typically navigation, footers, ads, and other boilerplate that should be filtered before semantic processing (Kohlschütter et al., SIGIR 2010).
+
 This creates several problems:
 
 - **Token explosion**: Raw data exceeds context limits or becomes prohibitively expensive
@@ -33,6 +35,8 @@ Extract only the semantic, interactive, or relevant elements from raw data. Filt
 ### Core Principle
 
 **Don't send raw data to the LLM. Send semantic abstractions.**
+
+This approach is validated across production systems including browser automation tools (Puppeteer/Playwright accessibility trees), RAG frameworks (LangChain, LlamaIndex semantic chunking), and code analysis tools (Aider's AST-based repo-map).
 
 ### Example 1: Browser Accessibility Tree
 
@@ -363,6 +367,12 @@ await page.click(element.xpath);
 - **Mapping overhead**: Need to track filtered-to-original references
 - **Potential bugs**: Filter might remove important elements
 
+**Edge cases to handle:**
+
+- **Hidden but content-rich**: Accordions, tab panels, and collapsed content may be excluded by accessibility tree
+- **Dynamic content**: AJAX-loaded content, infinite scroll, and lazy-loaded elements require wait/scroll strategies
+- **Canvas/SVG**: Charts and custom-rendered content may need OCR or fallback HTML
+
 **Mitigation strategies:**
 
 - Start conservative: Filter obvious noise, include borderline cases
@@ -371,8 +381,12 @@ await page.click(element.xpath);
 - Version filters alongside data schemas
 - Provide hints to LLM: "Context has been filtered for relevance"
 
+**Security note:** Semantic extraction can also provide security benefits. By removing untrusted content after extracting safe intermediate representations, agents gain resistance to prompt injection (see: Context-Minimization Pattern).
+
 ## References
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original accessibility tree implementation
+- Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1835449.1835550), SIGIR 2010 - Foundational research showing 40-80% of web content is boilerplate
+- Beurer-Kellner et al., ["Design Patterns for Securing LLM Agents"](https://arxiv.org/abs/2506.08837), arXiv 2025 - Context-Minimization Pattern (security framework)
 - [WAI-ARIA Accessibility Tree](https://www.w3.org/TR/core-aam-1.1/) - Browser accessibility API
 - Related patterns: [Context Window Anxiety Management](context-window-anxiety-management.md), [Curated Context Windows](curated-context-windows.md)

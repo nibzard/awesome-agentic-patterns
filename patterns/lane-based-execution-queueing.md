@@ -93,11 +93,14 @@ await enqueueCommandInLane(sessionLane, () =>
 4. **Queue tasks**: Call `enqueueCommandInLane(lane, task)` to schedule work.
 5. **Compose hierarchically**: When a queued task must spawn work in another lane, await the inner enqueue from the outer task.
 
+**Observability**: Track per-lane metrics (queue depth, active count, wait times) to detect backpressure and starvation. Key signals include `queue_size_per_lane`, `active_tasks_per_lane`, and `wait_time_p95`.
+
 **Pitfalls to avoid:**
 
 - **Over-parallelization**: Too many concurrent workers can exhaust resources (file handles, memory). Monitor `active` count.
 - **Starvation**: Low-priority lanes may wait indefinitely if high-priority lanes are always full. Use wait-time warnings to detect.
 - **Missing hierarchy**: Direct cross-lane dependencies without nested queuing risk deadlocks. Always compose via `enqueueCommandInLane(() => enqueueCommandInLane(...))`.
+- **Dynamic lane proliferation**: Creating lanes with unstable identifiers (e.g., timestamps) causes unbounded memory growth. Use stable names and implement lane garbage collection for session-scoped lanes.
 
 ## Trade-offs
 
@@ -119,4 +122,6 @@ await enqueueCommandInLane(sessionLane, () =>
 - [Clawdbot command-queue.ts](https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts) - Core queue implementation
 - [Clawdbot lanes.ts](https://github.com/clawdbot/clawdbot/blob/main/src/process/lanes.ts) - Lane definitions
 - [Clawdbot lane resolution](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/lanes.ts) - Runtime lane mapping
-- Related: [Conditional Parallel Tool Execution](/patterns/parallel-tool-execution) for tool-level parallelism
+- Related: [Parallel Tool Execution](/patterns/parallel-tool-execution) for tool-level parallelism
+- Academic foundations: Actor Model (IJCAI '73), Work-Stealing (SOSP '95), CALM Theorem (PODS '11)
+- Industry analogs: Sidekiq queues, BullMQ isolation, Airflow pools

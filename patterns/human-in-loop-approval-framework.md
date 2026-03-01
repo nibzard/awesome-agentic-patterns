@@ -37,6 +37,7 @@ Systematically insert human approval gates for designated high-risk functions wh
 - Human receives context-rich approval request
 - Quick approve/reject/modify decision
 - Agent proceeds or adapts based on response
+- Timeout handling with configurable escalation (default deny recommended)
 
 **Audit trail:**
 
@@ -81,9 +82,9 @@ sequenceDiagram
 - Destructive file operations (bulk deletes, overwrites)
 - Compliance-sensitive operations (GDPR, HIPAA, SOC2)
 
-**Implementation example (HumanLayer approach):**
+**Implementation examples:**
 
-**1. Instrument risky functions:**
+**Decorator pattern (HumanLayer):**
 
 ```python
 from humanlayer import HumanLayer
@@ -99,6 +100,22 @@ def delete_user_data(user_id: str):
 delete_user_data("user_123")
 # Execution pauses, approval request sent to Slack
 # Resumes after human approval/rejection
+```
+
+**Interrupt pattern (LangGraph):**
+
+```python
+from langgraph.types import interrupt
+
+def risky_operation(state):
+    approval = interrupt({
+        "question": "Should I proceed with this operation?",
+        "operation": state["message"]
+    })
+    return {"user_approval": approval}
+
+# Compile with checkpointer for state preservation
+app = workflow.compile(checkpointer=MemorySaver())
 ```
 
 **2. Configure approval channels:**
@@ -156,4 +173,5 @@ approval_channels:
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - HumanLayer's core product coordinates agent actions with "human approval steps" via Slack
 - [HumanLayer Documentation](https://docs.humanlayer.dev/) - Framework and examples for human-in-the-loop agent workflows
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) - Principles for production agent systems including human oversight patterns
+- [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)

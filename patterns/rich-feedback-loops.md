@@ -21,10 +21,12 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 
 **Integrate human feedback patterns:**
 
-- **Recognize positive feedback** to reinforce patterns that work
+- **Recognize positive feedback** to reinforce patterns that work—positive signals are training data, not politeness
 - **Learn from corrections** to avoid repeating mistakes
 - **Adapt based on user communication style** and preferences
 - **Track what works** for specific users over time
+
+**Tool design matters:** Structured outputs (JSON, exit codes, error objects) are more effective than natural language for agent self-correction.
 
 **Evidence from 88 session analysis:**
 
@@ -35,7 +37,7 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 | awesome-agentic-patterns | 1 | 5 | Low (17%) |
 | skills-marketplace | 0 | 2 | Low (0%) |
 
-**Key insight**: Projects with more positive feedback had better outcomes. Reinforcement works—it's not just politeness, it's training data for the agent.
+**Key insight**: Projects with more positive feedback had better outcomes. Reinforcement works—it's training data that teaches the agent what *to* do, whereas corrections only teach what *not* to do.
 
 Modern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).
 
@@ -67,5 +69,7 @@ sequenceDiagram
 * [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis showing positive feedback correlation with better session outcomes (nibzard-web: 8 positive, 2 corrections vs. awesome-agentic-patterns: 1 positive, 5 corrections)
 * Raising An Agent - Episode 1 & 3 discussions on "give it errors, not bigger prompts."
 * [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., 2023) - agents learn from past failures through self-reflection and memory
+* [Self-Refine: LLMs Can Self-Correct Through Self-Feedback](https://arxiv.org/abs/2303.08972) (Madaan et al., 2023) - iterative refinement with self-generated critique
 
 [Source](https://www.nibzard.com/ampcode)

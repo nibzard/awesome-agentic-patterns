@@ -1,6 +1,6 @@
 ---
 title: "Factory over Assistant"
-status: emerging
+status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"]
 category: "Orchestration & Control"
@@ -64,6 +64,8 @@ graph TD
 
 **Key insight:** With models like GPT-5.2 that can work autonomously for 45+ minutes, watching them in a sidebar is wasteful. You should be able to spawn 10 such agents and check on them all later.
 
+**Academic support:** Multi-agent research (OpenDevin, AutoGen, CAMEL) validates parallel autonomous execution over single-assistant interaction.
+
 ## How to use it
 
 **Transitioning from assistant to factory:**
@@ -117,6 +119,11 @@ AMP is killing their VS Code extension because they believe:
 - The sidebar is dead for frontier development
 - Factory model enables more effective use of autonomous models
 
+**Other production implementations:**
+- **Anthropic Claude Code**: Internal users report 10x+ speedups on framework migrations using map-reduce across 10+ parallel agents
+- **GitHub Agentic Workflows**: Agents run in CI/CD with branch-per-task isolation
+- **Cursor Background Agent**: Cloud-based autonomous development with automatic PR creation
+
 ## Trade-offs
 
 **Pros:**
@@ -156,4 +163,7 @@ The factory model is why AMP is killing their VS Code extension. The extension o
 
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Communicative Agents for Software Development (OpenDevin)](https://arxiv.org/abs/2407.16819) - Wang et al., 2024
+* [AutoGen: Enabling Multi-Agent LLM Applications](https://arxiv.org/abs/2308.08160) - Duan et al. (Microsoft Research), 2023
+* [CAMEL: Communicative Agents for Mind Exploration](https://arxiv.org/abs/2303.17760) - Li et al., 2023
 * Related: [Agent Modes by Model Personality](agent-modes-by-model-personality.md), [Rich Feedback Loops](rich-feedback-loops.md)

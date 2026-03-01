@@ -82,6 +82,7 @@ Code Mode complements (not replaces) MCP servers by adding an ephemeral executio
 ### Enhanced Capabilities
 
 - **Verification**: Compile-time validation catches errors before execution
+- **Static Analysis**: Code-first patterns enable formal verification (e.g., CaMeL's taint analysis for security-sensitive workflows)
 - **Semantic Caching**: Reuse successful workflows via typed API signatures
 - **Idempotency**: Checkpoint/resume patterns using KV stores for partial failure recovery
 
@@ -245,7 +246,7 @@ User Request → LLM → Generated Code → V8 Isolate
 
 **Pros:**
 
-- **Dramatic token savings** on multi-step workflows (10x+ reduction)
+- **Dramatic token savings** on multi-step workflows (10-100x reduction; Anthropic reports 75x on 10K-row spreadsheets: 150K → 2K tokens)
 - **Dramatic fan-out efficiency** - for loops over 100+ entries vs 100+ tool calls (speed + reliability at scale)
 - **Faster execution** through elimination of round-trips
 - **Enhanced security** - credentials stay in MCP servers, never in LLM
@@ -287,6 +288,8 @@ User Request → LLM → Generated Code → V8 Isolate
 ## References
 
 - [Cloudflare Code Mode Blog Post](https://blog.cloudflare.com/code-mode/) - Original announcement and technical details
+- [Anthropic Engineering: Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Code-Over-API pattern with data processing examples
+- [CaMeL: Code-Augmented Language Model (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837) - Formal verification and taint analysis for code-first tool use
 - [Model Context Protocol](https://modelcontextprotocol.io/) - Background on traditional tool calling approaches
 - [Rafal Wilinski's Code Mode Analysis](https://x.com/rafalwilinski/status/1972362720579035146) - Real-world insights on Code Mode strengths and limitations
 

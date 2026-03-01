@@ -25,12 +25,14 @@ Multi-mode execution with adaptive fallback: direct exec → PTY, with automatic
 
 **Core concepts:**
 
+- **Tool schema definition**: Bash commands invoked through structured tool interfaces (MCP, OpenAI Function Calling) with validated parameters.
 - **PTY-first for TTY-required commands**: Detects when commands need a pseudo-terminal (coding agents, interactive CLIs) and spawns via `node-pty`.
 - **Graceful PTY fallback**: If PTY spawn fails (module missing, platform unsupported), falls back to direct exec with a warning.
 - **Platform-specific handling**: macOS requires detached processes for proper signal propagation; Linux handles both modes.
 - **Security-aware modes**: Elevated mode detection with approval workflows (deny, allowlist, full).
-- **Background process registry**: Long-running processes are tracked with session IDs, output tailing, and exit notifications.
-- **Proper signal propagation**: SIGTERM/SIGKILL are delivered correctly to child processes on timeout or abort.
+- **Background process registry**: Long-running processes tracked with session IDs, output tailing, and exit notifications.
+- **Output truncation**: Enforce `maxOutput` limits to prevent memory exhaustion for verbose processes.
+- **Proper signal propagation**: SIGTERM/SIGKILL delivered correctly to child processes on timeout or abort.
 
 **Implementation sketch:**
 
@@ -41,6 +43,8 @@ async function runExecProcess(opts: {
   env: Record<string, string>;
   usePty: boolean;
   timeoutSec: number;
+  runInBackground?: boolean;
+  maxOutput?: number;
 }): Promise<ExecProcessHandle> {
   let child: ChildProcess | null = null;
   let pty: PtyHandle | null = null;
@@ -214,6 +218,7 @@ function killSession(session: ProcessSession) {
 4. **Register background processes**: Add sessions to a registry for tracking, polling, and cleanup.
 5. **Propagate signals correctly**: Use SIGTERM then SIGKILL for graceful shutdown, and handle platform-specific detached process behavior.
 6. **Aggregate output**: Collect stdout/stderr into `aggregated` and maintain a `tail` for user notifications.
+7. **Enforce output limits**: Set `maxOutput` thresholds to prevent memory exhaustion on verbose processes.
 
 **Pitfalls to avoid:**
 
@@ -244,4 +249,6 @@ function killSession(session: ProcessSession) {
 - [Clawdbot bash-tools.exec.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts) - Execution modes
 - [Clawdbot bash-tools.process.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.process.ts) - Process management
 - [Clawdbot bash-process-registry.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-process-registry.ts) - Background registry
+- [Claude Code](https://claude.ai/code) - Tool-mediated bash execution with `run_in_background` support
+- [Model Context Protocol](https://modelcontextprotocol.io) - Structured tool definition standard
 - Related: [Virtual Machine Operator Agent](/patterns/virtual-machine-operator-agent) for remote execution patterns

@@ -27,7 +27,9 @@ This creates a tight, high-velocity feedback loop where the agent is continuousl
 ## How to use it
 
 - Encourage all members of the agent development team to use the agent as their primary tool for relevant tasks.
-- Establish channels for easily reporting issues or suggesting improvements based on internal use.
+- Establish low-friction feedback channels (e.g., dedicated Slack/Discord) for reporting issues and suggestions.
+- Store prompts and agent instructions in editable documents that anyone can update.
+- Push experimental features to internal users first for rapid validation; be willing to discard what doesn't work.
 - Prioritize fixing pain points experienced by the internal team.
 
 ## Real-world examples
@@ -52,10 +54,14 @@ Anthropic practices intensive "ant fooding" (their internal term for dogfooding)
 
 This creates a development culture where features are validated through actual daily use before external release, dramatically reducing the risk of building unwanted functionality.
 
+### AMP
+
+AMP practices "shipping as research" with aggressive dogfooding: features are rapidly added and removed based on internal learning. Users respond positively to this approach, appreciating when ineffective features are cut.
+
 ## Trade-offs
 
-* **Pros:** Turns repeated failures into measurable improvements over time.
-* **Cons:** Can increase runtime and operational cost due to iterative passes.
+* **Pros:** Real-world problem solving; rapid feature validation; quick pivots from ineffective approaches; reduced risk of shipping unwanted features.
+* **Cons:** Requires high internal adoption to be effective; internal users may not represent all customer segments.
 
 ## References
 

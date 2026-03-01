@@ -73,18 +73,21 @@ Apply **progressive disclosure**: load file metadata first, then provide tools t
 - `extract_file` should return simplified text (tables, text content)
 - Consider making `extract_file` return a virtual `file_id` for very large extractions
 - Preloading first N KB is optional - can give agent initial context without full load
+- Recommended preload amounts: text 10-50 KB, PDF first page/5 KB, images metadata only
+- Cache extracted content to avoid re-processing (TTL: text 24h, tables 7 days, metadata 1h)
 
 **Tool design:**
 
 ```python
-def load_file(file_id: str) -> str:
+def load_file(file_id: str, format: str = "text") -> str:
     """Load entire file content into context window."""
 
-def peek_file(file_id: str, start: int, stop: int) -> str:
-    """Load a specific byte range from file."""
+def peek_file(file_id: str, offset: int, length: int, unit: str = "bytes") -> str:
+    """Load a specific range from file. Unit options: bytes, lines, pages, tokens."""
 
-def extract_file(file_id: str) -> str:
-    """Convert PDF/DOCX/PPT to simplified text representation."""
+def extract_file(file_id: str, extraction: str = "text") -> str:
+    """Convert PDF/DOCX/PPT to simplified representation.
+    Extraction options: text, structure, tables, summary."""
 ```
 
 ## Trade-offs
@@ -113,3 +116,5 @@ def extract_file(file_id: str) -> str:
 * [Building an internal agent: Progressive disclosure and handling large files](https://lethain.com/agents-large-files/) - Will Larson (2025)
 * Related: [Progressive Tool Discovery](progressive-tool-discovery.md) - Similar lazy-loading concept for tools
 * Related: [Context-Minimization Pattern](context-minimization-pattern.md) - Complementary pattern for reducing context bloat
+* Yang et al. (2016). "Hierarchical Attention Networks for Document Classification." NAACL - Academic foundation for hierarchical processing
+* LangChain - Document loaders with metadata-first approach ([github.com/langchain-ai/langchain](https://github.com/langchain-ai/langchain))

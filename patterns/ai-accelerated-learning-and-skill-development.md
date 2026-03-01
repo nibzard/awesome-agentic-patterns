@@ -22,22 +22,33 @@ Utilize AI agents as interactive learning tools that accelerate a developer's sk
 4.  **Get Explanations on Demand:** Developers can ask the AI to explain complex concepts or unfamiliar code, acting as an always-available tutor.
 5.  **Reduce Fear of Experimentation:** The ease of generating or refactoring code with AI can encourage developers to explore more, knowing they can easily revert or try again.
 
+**Key mechanisms:**
+
+* **Skill Leveling Effect:** Less experienced developers benefit more from AI assistance, helping bridge gaps between junior and senior developers.
+* **Adaptive Scaffolding:** AI provides guidance at the edge of the learner's ability (Zone of Proximal Development), with support fading as competence grows.
+* **Deliberate Practice at Scale:** 24/7 availability enables goal-oriented, feedback-driven practice with infinite patience for repetition.
+
 This creates an environment where developers, particularly those less experienced, can learn and refine their skills at an accelerated pace by having a powerful, responsive partner in the coding process.
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
+- **Learning new frameworks or domains:** Use AI to accelerate onboarding while maintaining independent problem-solving.
+- **Deliberate practice:** Ask for explanations and rationale, not just code. Request alternatives to compare approaches.
+- **Fade support gradually:** Start with heavy AI assistance, then reduce as competence builds to preserve skill development.
+- **Socratic interaction:** Have AI ask questions rather than give answers to build understanding and judgment.
+- **Code review partnerships:** Use AI as a first-pass reviewer to expose different perspectives and patterns.
 
 ## Trade-offs
 
-* **Pros:** Creates clearer human-agent handoffs and better operational trust.
-* **Cons:** Needs explicit process design and coordination across teams.
+* **Pros:** Accelerated skill acquisition, particularly for junior developers; 24/7 availability with infinite patience; personalized learning paths; reduced fear of experimentation.
+* **Cons:** Risk of superficial learning without independent problem-solving; overreliance can inhibit skill formation; requires metacognitive discipline to fade support appropriately.
 
 ## References
 
 - Lukas Möller (Cursor) at 0:13:35: "I think quality comes very much from iterating quickly, making mistakes, figuring out why certain things failed. And I think models vastly accelerate this iteration process and can actually through that make you learn more quickly what works and what doesn't."
 - Jacob Jackson (Cursor) at 0:17:57: "these tools are very good educationally as well, and they can help you become a great programmer... if you have a question about how something works... now you can just press command L and ask Claude... and I think that's very valuable."
+
+- "Teaching with AI: A Systematic Review" (Nature, 2025): Meta-analysis of 51 studies finding significant positive impact on learning outcomes, most effective in problem-based learning and skill-oriented courses.
+- Microsoft/Princeton/UPenn RCT Study (2025): 4,000+ developers; less experienced developers benefited more from AI assistance (skill leveling effect).
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

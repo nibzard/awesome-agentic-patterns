@@ -58,6 +58,8 @@ graph LR
 4. Add hooks to prevent common mistakes automatically
 5. Write tests that encode requirements
 
+**Related patterns**: This approach works synergistically with Memory Synthesis from Execution Logs (identifies patterns across features), Coding Agent CI Feedback Loop (provides structured testing feedback), and Skill Library Evolution (codifies working solutions).
+
 **Example from Every:**
 
 > "We have this engineering paradigm called compounding engineering where your goal is to make the next feature easier to build... We codify all the learnings from everything we've done. When we started testing, what issues did we find? What things did we miss? And we codify them back into all the prompts and subagents and slash commands."
@@ -89,3 +91,4 @@ This allows non-experts to be productive immediately:
 * Dan Shipper: "In normal engineering, every feature you add, it makes it harder to add the next feature. In compounding engineering, your goal is to make the next feature easier to build from the feature that you just added."
 * Dan Shipper: "We codify all the learnings... how did we make the plan, what parts needed to be changed, when we started testing it what issues did we find, what are the things that we missed, and then we codify them back into all the prompts and all the subagents and all the slash commands."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Compounding Engineering Pattern Research Report](/research/compounding-engineering-pattern-report.md)

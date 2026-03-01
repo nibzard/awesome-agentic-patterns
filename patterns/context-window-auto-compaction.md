@@ -140,6 +140,10 @@ This approach has advantages:
 - **More efficient**: Server-side compaction is faster than client-side summarization
 - **Auto-compaction**: Can trigger automatically when `auto_compact_limit` is exceeded
 
+**Two complementary approaches:**
+
+This pattern describes **reactive compaction** (detect overflow, compact, retry). An alternative approach is **preventive filtering** (reduce context at ingestion), used by systems like HyperAgent for browser accessibility tree extraction. Preventive filtering can delay or eliminate the need for reactive compaction by keeping context leaner from the start.
+
 **Lane-aware retry to prevent deadlocks:**
 
 ```typescript
@@ -155,6 +159,15 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
   );
 }
 ```
+
+## Evidence
+
+- **Evidence Grade:** `high` (validated-in-production implementations)
+- **Key Findings:**
+  - Academic research on dialogue summarization shows 60-80% token reduction is achievable while preserving critical information (Liu & Lapata, ACL 2022)
+  - Context minimization can reduce token consumption by 40-90% through proactive untrusted data removal (Beurer-Kellner et al., 2025)
+  - Despite its importance, auto-compaction has limited public implementations; Clawdbot and Pi Coding Agent remain the most complete open-source examples
+- **Unverified:** Commercial products (Cursor, GitHub Copilot) do not publish compaction strategies, treating them as proprietary
 
 ## How to use it
 
@@ -194,5 +207,6 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
 - [Clawdbot context-window-guard.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/context-window-guard.ts) - Context evaluation
 - [Pi Coding Agent SessionManager](https://github.com/mariozechner/pi-coding-agent) - Core compaction logic
 - [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/) - API-based `/responses/compact` endpoint approach
+- [Efficient Transformer-Based Long-Form Dialogue Summarization](https://aclanthology.org/2022.acl-long.41/) - Liu & Lapata (ACL 2022): 60-80% token reduction via extractive-then-abstractive summarization
 - Related: [Context Window Anxiety Management](/patterns/context-window-anxiety-management) for proactive management
 - Related: [Prompt Caching via Exact Prefix Preservation](/patterns/prompt-caching-via-exact-prefix-preservation)

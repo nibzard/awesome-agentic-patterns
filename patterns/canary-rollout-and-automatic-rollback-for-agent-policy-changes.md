@@ -19,8 +19,9 @@ Treat agent policy changes like production releases: ship to a small traffic sli
 Core components:
 - A traffic splitter that routes a fixed percentage to the new policy.
 - A policy version registry with immutable identifiers.
-- Real-time monitors for quality, latency, failure rate, safety flags, and spend.
+- Real-time monitors for quality, latency, failure rate, safety flags, spend, goal achievement rate, and infinite loop detection.
 - Rollback automation that restores the previous stable policy without manual intervention.
+- Optional shadow mode: validate technical stability before user exposure.
 
 Recommended stages:
 1. `1%` traffic canary for fast anomaly detection.
@@ -43,7 +44,7 @@ if monitors.breach(policy.version):
 ## How to use it
 
 - Use this for any change that can alter external behavior: prompts, tools, evaluator logic, memory policies, and routing.
-- Define rollback triggers before rollout starts.
+- Define rollback triggers before rollout starts. Set observation windows (e.g., 2+ minutes) to avoid false positives.
 - Keep rollback deterministic: always restore the last known-good version.
 - Store policy artifacts with versioned metadata so incidents are reproducible.
 
@@ -56,3 +57,5 @@ if monitors.breach(policy.version):
 
 - https://martinfowler.com/bliki/CanaryRelease.html
 - https://sre.google/sre-book/monitoring-distributed-systems/
+- https://arxiv.org/html/2508.03858v3 - MI9 Runtime Governance Framework (2025)
+- https://arxiv.org/html/2512.03180v1 - AGENTSAFE Safety Evaluation (2025)

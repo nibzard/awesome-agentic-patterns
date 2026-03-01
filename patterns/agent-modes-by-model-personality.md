@@ -40,6 +40,12 @@ graph LR
     F --> H[Results in 45-60 minutes]
 ```
 
+**Implementation mechanisms:**
+
+- **System prompts**: Define personality-specific instructions per mode
+- **Temperature/sampling**: Low (0.1-0.3) for consistent, controlled modes; medium (0.4-0.7) for balanced creativity; high (0.7-1.0+) for creative modes
+- **Tool configuration**: Mode-specific permission sets and constraints
+
 **Mode differentiation strategies:**
 
 1. **Visual/UI differentiation**
@@ -63,6 +69,14 @@ AMP created three distinct modes:
 - **Deep Mode**: GPT-5.2 for thorough research and autonomous work
 
 The team explicitly avoids a "model selector" dropdown and instead presents these as different working modes.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Industry platforms implement personality modes via system prompts and temperature parameters (Anthropic: Normal/Concise/Explanatory/Formal; OpenAI: Default/Cynic/Robot/Listener/Nerd)
+  - Multi-agent frameworks (AutoGen, CrewAI) support role-based personality configuration through `system_message` and backstory parameters
+- **Unverified:** Long-term stability of personality-based modes as models evolve
 
 ## How to use it
 
@@ -134,4 +148,6 @@ The fundamental challenge: Different modes require fundamentally different user 
 ## References
 
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Anthropic: Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - System prompt patterns and persona configuration (2024)
+* [OpenAI: Prompt Engineering Best Practices](https://platform.openai.com/docs/guides/prompt-engineering) - System prompts and personality modes (2024)
 * Related: [Oracle and Worker Multi-Model Approach](oracle-and-worker-multi-model.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)

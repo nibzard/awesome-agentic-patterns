@@ -5,7 +5,7 @@ authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Hiveism (self-alignment loop)", "Anthropic (Constitutional AI)"]
 category: Reliability & Eval
 source: "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web"
-tags: [constitution, alignment, governance, signed-commits, policy]
+tags: [constitution, alignment, governance, signed-commits, policy, rlaif, critique-revise]
 ---
 
 ## Problem
@@ -16,10 +16,11 @@ When agents can modify policy/constitution text, safety regressions can be intro
 
 Store the constitution in a **version-controlled, signed repository**:
 
-- YAML/TOML rules live in Git.  
-- Each commit is signed (e.g., Sigstore); CI runs automated policy checks.  
-- Only commits signed by approved reviewers or automated tests are merged.  
+- YAML/TOML rules live in Git for automated rule enforcement; natural language principles guide LLM-based evaluation.
+- Each commit is signed (e.g., Sigstore); CI runs automated policy checks.
+- Only commits signed by approved reviewers or automated tests are merged.
 - The agent can *propose* changes, but a gatekeeper merges them.
+- Use semantic versioning: MAJOR for core safety principle changes, MINOR for additions, PATCH for clarifications.
 
 Combine policy-as-code with release discipline: every constitutional change is diffable, reviewable, and test-gated before activation. This gives governance history, rollback capability, and auditable control over alignment policy evolution.
 
@@ -36,7 +37,8 @@ Combine policy-as-code with release discipline: every constitutional change is d
 
 ## References
 
+- Anthropic, *Constitutional AI: Harmlessness from AI Feedback* (arXiv:2212.08073, 2022)
 - Hiveism, *Self-Alignment by Constitutional AI*
-- Anthropic, *Constitutional AI* white-paper
+- OpenAI, *Model Spec*
 
 - Primary source: https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web

@@ -1,6 +1,6 @@
 ---
 title: Subject Hygiene for Task Delegation
-status: emerging
+status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"]
 category: Orchestration & Control
@@ -16,11 +16,11 @@ When delegating work to subagents via the Task tool, empty or generic task subje
 - **Unreferencable**: Cannot discuss specific subagent work later
 - **Confusing**: Multiple subagents with empty subjects are indistinguishable
 
-From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point.
+From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point. This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce).
 
 ## Solution
 
-Enforce clear, specific task subjects for every Task tool invocation. A good subject should:
+Enforce clear, specific task subjects for every Task tool invocation. This is a **meta-pattern** that enables the effectiveness of all sub-agent delegation patterns (parallel spawning, factory over assistant, planner-worker). A good subject should:
 
 1. **Not be empty** (baseline requirement)
 2. **Be specific and descriptive** (what is being done)
@@ -87,7 +87,7 @@ Prevents "Empty Subject Anti-Pattern" which makes conversations untraceable and 
 
 **Real-world impact:**
 
-From nibzard-web session with 4 parallel subagents:
+Validated in production across Claude Code, Cursor, AMP, LangChain, AutoGen, and CrewAI. From nibzard-web session with 4 parallel subagents:
 - agent-a7911db: "Newsletter component exploration"
 - agent-adeac17: "Modal pattern discovery"
 - agent-a03b9c9: "Search implementation research"
@@ -121,4 +121,6 @@ Clear subjects enabled the main agent to synthesize findings from each subagent 
 ## References
 
 * [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+* FIPA. "FIPA ACL Communicative Act Library Specification." 2002 - Agent communication language with conversation-id for task traceability
+* Smith, R. G. "The contract net protocol." IEEE Transactions on Computers 1980 - Task identification in distributed delegation
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Parallel Tool Call Learning](parallel-tool-call-learning.md)

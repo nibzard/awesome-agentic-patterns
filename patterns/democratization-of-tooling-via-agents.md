@@ -28,14 +28,15 @@ A sales team member uses an AI agent to create a custom dashboard that pulls dat
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
+- Use when domain experts need custom tools but lack programming expertise.
+- Design for iterative refinement: users must see results quickly and provide feedback.
+- Hide technical complexity (context management, dependencies, error handling) while maintaining capability.
+- Provide approval workflows for destructive operations to build trust with non-technical users.
 
 ## Trade-offs
 
-* **Pros:** Creates clearer human-agent handoffs and better operational trust.
-* **Cons:** Needs explicit process design and coordination across teams.
+* **Pros:** Enables domain experts to build their own tools; reduces engineering bottlenecks; creates learning feedback loops where users develop technical intuition through exposure.
+* **Cons:** Generated code may have reliability issues that non-technical users cannot detect; production deployment remains challenging; quality and security require guardrails rather than training.
 
 ## References
 
@@ -43,3 +44,4 @@ A sales team member uses an AI agent to create a custom dashboard that pulls dat
 - Alex Albert (Anthropic) at 0:28:10, referencing a comms team member: "...he's actually been like shipping bug fixes to claude.ai... he pops in with like a PR and he's like asking for a stamp."
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
+- MetaGPT: Multi-agent system assigning PM, engineer, architect roles to agents, making full SDLC accessible through simple prompts—https://arxiv.org/abs/2308.00309

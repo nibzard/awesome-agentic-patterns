@@ -66,6 +66,11 @@ Enforce through prompt instructions:
 - Agent MAY NOT modify acceptance criteria/steps
 - Agent MAY NOT mark features as "not applicable"
 
+**Two implementation variations:**
+
+- **Static list**: Features hardcoded at compile time (maximum security, requires redeploy to change)
+- **Dynamic-but-immutable**: Features loaded at startup then frozen (config changes via restart, used by LangChain/CrewAI)
+
 **3. Verification Requirements**
 
 Features are only marked passing after:
@@ -137,6 +142,14 @@ CRITICAL RULES:
 - Rigid format doesn't accommodate changing requirements
 - Large feature lists can overwhelm agent context
 
+**Security implications:**
+
+| Guaranteed by Immutable Contract | Not Guaranteed (requires additional patterns) |
+|----------------------------------|----------------------------------------------|
+| No unauthorized tool access | Prompt injection in parameters |
+| Predictable attack surface | Authorization bypass |
+| Schema validation prevents injection | Output exfiltration |
+
 **When to use:**
 
 - Building complete applications with known requirements
@@ -154,5 +167,7 @@ CRITICAL RULES:
 ## References
 
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-* Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md)
-* Related: [Spec-as-Test Feedback Loop](spec-as-test-feedback-loop.md)
+* [Action-Selector Pattern (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837)
+* Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — extends this pattern with two-agent lifecycle
+* Related: [Action-Selector Pattern](action-selector-pattern.md) — alternative approach using allowlists
+* Related: [Sandboxed Tool Authorization](sandboxed-tool-authorization.md) — complementary pattern for capability restriction

@@ -21,6 +21,8 @@ Provide a Software Development Kit (SDK) that exposes the agent's core functiona
 -   Integrate agent logic into larger software systems.
 -   Automate repetitive tasks that involve the agent.
 -   Build custom user interfaces or applications powered by the agent's backend.
+-   Control resource limits (token budgets, execution time, cost caps).
+-   Implement fine-grained permission management and authorization scopes.
 
 The SDK typically includes libraries, command-line interfaces (CLIs) for scripting, and documentation for headless or embedded use of the agent.
 
@@ -54,17 +56,35 @@ $ claude -p "what did i do this week?" \
 
 ## How to use it
 
-- Use this when agent success depends on reliable tool invocation and environment setup.
-- Start with a narrow tool surface and explicit parameter validation.
-- Add observability around tool latency, failures, and fallback paths.
+**When to use:**
+
+- CI/CD pipeline integration and automated workflows
+- Batch processing across multiple files or projects
+- Building custom applications or UIs powered by agent backends
+- High-performance requirements where caching and reduced overhead matter
+- External developer integration and standardization needs
+
+**When to avoid:**
+
+- Microservices architecture (prefer REST/gRPC APIs)
+- Language and framework independence is critical
+- High-frequency calls (>100/sec) or real-time streaming
+
+**Implementation guidance:**
+
+- Start with a narrow tool surface and explicit parameter validation
+- Add observability around tool latency, failures, and fallback paths
+- Implement sandbox isolation for code execution
 
 ## Trade-offs
 
-* **Pros:** Improves execution success and lowers tool-call failure rates.
-* **Cons:** Introduces integration coupling and environment-specific upkeep.
+* **Pros:** Enables automation and CI/CD integration; provides fine-grained control over permissions, resources, and observability; supports batch processing and custom UIs.
+* **Cons:** Introduces integration coupling and environment-specific upkeep; loses conversational interactivity and clarification; requires programmatic error handling with robust retry/fallback logic.
 
 ## References
 
 -   Based on the description of the Claude Code SDK in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section VI.
+-   OpenAI Agents SDK (Swarm framework): https://github.com/openai/openai-agents-python
+-   Google Agent Development Kit (ADK): https://github.com/google/adk-python
 
 [Source](https://www.nibzard.com/claude-code)
