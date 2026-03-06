@@ -56,5 +56,5 @@ sequenceDiagram
 
 - [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/publications/detail/sp/800-207/final)
 - [SPIFFE/SPIRE](https://spiffe.io/)
-- [AgentMesh (example implementation)](https://github.com/imran-siddique/agent-mesh)
+- [AgentMesh (example implementation)](https://github.com/microsoft/agent-governance-toolkit)
 - [A2A Protocol](https://github.com/a2aproject/A2A)
