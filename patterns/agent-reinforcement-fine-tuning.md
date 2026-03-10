@@ -220,7 +220,7 @@ graph TD
 
 - [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [OpenAI Fine-tuning Guide](https://platform.openai.com/docs/guides/fine-tuning)
-- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., NeurIPS 2022)
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., ICLR 2023)
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., NeurIPS 2023)
 - [DeepSeekMath: GRPO for Mathematical Reasoning](https://arxiv.org/abs/2402.03300) (Shao et al., 2024)
 - Related patterns: RLAIF, Tool Use Incentivization via Reward Shaping, Inference-Healed Code Review Reward, Memory Reinforcement Learning
