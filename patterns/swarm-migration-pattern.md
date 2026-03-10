@@ -40,7 +40,7 @@ Humans doing these manually is tedious; single agents doing them sequentially is
 
 ## Solution
 
-Use a **swarm architecture** where the main agent orchestrates 10+ parallel subagents working simultaneously on independent chunks of the migration.
+Use a **swarm architecture** where the main agent orchestrates 10-20 parallel subagents working simultaneously on independent chunks of the migration.
 
 **Pattern:**
 
@@ -112,10 +112,10 @@ for batch in batches:
 
 **Pros:**
 
-- **Massive parallelization**: 10x+ speedup vs. sequential migration
+- **Massive parallelization**: 6-10x speedup vs. sequential migration (well-suited tasks)
 - **Easy verification**: Each subagent handles tractable chunk
 - **Fault isolation**: One subagent failing doesn't break others
-- **Cost-effective for scale**: $1000 for migrations that would take weeks manually
+- **Cost-effective for scale**: 100x+ ROI despite 10x token cost increase
 - **Reproducible**: Same migration applied consistently across all files
 
 **Cons:**
@@ -133,9 +133,18 @@ for batch in batches:
 - **Good test coverage**: Automated verification of correctness
 - **Sandbox environment**: Safe to run many agents simultaneously
 
+**When NOT to use:**
+
+- **< 10 files**: Sequential execution is more efficient
+- **High coupling**: Files require coordinated changes
+- **Complex semantic changes**: Require holistic understanding
+- **High expected failure rate** (>30%): Better to iterate carefully
+- **Extremely constrained budget**: Token costs scale with parallelism
+
 **Optimization tips:**
 
-- **Batch size tuning**: Start with 10 files per agent, adjust based on complexity
+- **Batch size tuning**: Start with 10 files per agent; adjust 2-50 files based on complexity
+- **Optimal swarm size**: 10-20 agents for best ROI; diminishing returns beyond 20
 - **Staged rollout**: Migrate 10% first, verify, then do the rest
 - **Failure handling**: Have main agent retry failed batches with refined instructions
 - **Resource limits**: Cap parallel agents to avoid overwhelming infrastructure
@@ -145,3 +154,4 @@ for batch in batches:
 * Boris Cherny: "There's an increasing number of people internally at Anthropic using a lot of credits every month. Spending over a thousand bucks. The common use case is code migration. Framework A to framework B. The main agent makes a big to-do list for everything and map reduces over a bunch of subagents. Start 10 agents and go 10 at a time and migrate all the stuff over."
 * Boris Cherny: "Lint rules... there's some kind of lint rule you're rolling out, there's no auto fixer because static analysis can't really—it's too simplistic for it. Framework migrations... we just migrated from one testing framework to a different one. That's a pretty common one where it's super easy to verify the output."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Cursor Blog: Scaling Agents](https://cursor.com/blog/scaling-agents) — Production use with hundreds of concurrent agents; case studies include Solid→React migration (+266K/-193K edits)

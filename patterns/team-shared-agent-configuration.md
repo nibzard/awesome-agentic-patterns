@@ -106,7 +106,22 @@ cd repo
 # Agent reads .claude/settings.json automatically
 ```
 
-### 4. Iterate as a team
+### 4. Support local overrides
+
+Use gitignored local files for individual customization:
+
+```bash
+# .claude/settings.local.json (gitignored)
+{
+  "permissions": {
+    "pre_allowed": ["docker build"]  // personal additions
+  }
+}
+```
+
+Most platforms merge layered configs with local overrides taking precedence.
+
+### 5. Iterate as a team
 
 - PRs can update agent configuration
 - Code review applies to agent settings too
@@ -137,13 +152,15 @@ cd repo
 
 **Best practices:**
 
-- **Separate local overrides**: Support `.claude/settings.local.json` (gitignored)
+- **Separate local overrides**: Support `.claude/settings.local.json` (gitignored) for personal customization
+- **Schema validation**: Use JSON Schema validation to catch configuration errors before runtime
 - **Document configuration**: Explain why things are pre-allowed/blocked
 - **Regular review**: Audit config quarterly as tools/threats evolve
 - **Gradual adoption**: Start minimal, expand based on team pain points
-- **Template repositories**: Create starter configs for common project types
+- **Secrets management**: Never commit credentials; use environment variables or local-only config files
 
 ## References
 
 * Boris Cherny: "Companies that have really big deployments of Claude Code... having settings.json that you check into the code base is really important because you can use this to pre-allow certain commands so you don't get permission prompted every time. And also to block certain commands... and this way as an engineer I don't get prompted and I can check this in and share it with the whole team so everyone gets to use it."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* Alazawi et al. (2021). "Infrastructure as Code: A Systematic Mapping Study". IEEE Access. — Academic foundation for treating configuration as version-controlled code with emphasis on repeatability and collaborative review.

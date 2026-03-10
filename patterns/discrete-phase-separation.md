@@ -108,7 +108,6 @@ graph LR
 **Cons:**
 
 - Requires more explicit phase management and handoffs
-- May feel slower for simple tasks where single-pass is sufficient
 - Requires discipline to maintain phase boundaries
 - Information loss risk if handoffs are poorly structured
 - Higher total token usage across multiple conversations
@@ -116,4 +115,5 @@ graph LR
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Sam Stettner (Ambral) emphasizes: "Don't make Claude do research while it's trying to plan, while it's trying to implement."
-- Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Plan-Then-Execute Pattern](plan-then-execute.md)
+- [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) - Beurer-Kellner et al., 2025 (Section 3.1: Plan-Then-Execute)
+- Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Plan-Then-Execute Pattern](plan-then-execute-pattern.md)

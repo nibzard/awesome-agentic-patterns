@@ -1,10 +1,10 @@
 ---
-title: 'Action Caching & Replay Pattern'
+title: "Action Caching & Replay Pattern"
 status: emerging
-authors: ['Nikola Balic (@nibzard)']
-based_on: ['Hyperbrowser Team (@hyperbrowserai)']
-category: 'Reliability & Eval'
-source: 'https://github.com/hyperbrowserai/HyperAgent'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
+category: "Reliability & Eval"
+source: "https://github.com/hyperbrowserai/HyperAgent"
 tags: [caching, replay, regression-testing, cost-reduction, deterministic, xpath]
 ---
 
@@ -30,16 +30,16 @@ Record every action during execution with precise metadata (XPaths, frame indice
 
 ```typescript
 interface ActionCacheEntry {
-  stepIndex: number; // Order in workflow
-  instruction: string; // Natural language description
-  elementId: string; // Encoded frameIndex-backendNodeId
-  method: string; // click, fill, type, etc.
-  arguments: string[]; // Method parameters
-  frameIndex: number; // Frame context for iframes
-  xpath: string; // Normalized XPath for element
-  actionType: string; // Action category
-  success: boolean; // Execution result
-  message: string; // Output or error message
+  stepIndex: number;           // Order in workflow
+  instruction: string;         // Natural language description
+  elementId: string;           // Encoded frameIndex-backendNodeId
+  method: string;              // click, fill, type, etc.
+  arguments: string[];         // Method parameters
+  frameIndex: number;          // Frame context for iframes
+  xpath: string;               // Normalized XPath for element
+  actionType: string;          // Action category
+  success: boolean;            // Execution result
+  message: string;             // Output or error message
 }
 
 interface ActionCacheOutput {
@@ -95,8 +95,8 @@ export const buildActionCacheEntry = ({
 ```typescript
 // Replay from cache with XPath retry and LLM fallback
 const replay = await page.runFromActionCache(cache, {
-  maxXPathRetries: 3, // Retry XPath resolution up to 3 times
-  fallbackToLLM: true, // Use LLM if XPath resolution fails
+  maxXPathRetries: 3,           // Retry XPath resolution up to 3 times
+  fallbackToLLM: true,          // Use LLM if XPath resolution fails
   debug: true,
 });
 
@@ -160,7 +160,7 @@ Most agent frameworks have caching options. Enable them during execution:
 
 ```typescript
 const agent = new HyperAgent(browser);
-const cache = await agent.executeTask('Login and navigate to dashboard', {
+const cache = await agent.executeTask("Login and navigate to dashboard", {
   enableActionCache: true,
 });
 ```
@@ -172,13 +172,18 @@ Save the cache for later use:
 ```typescript
 import fs from 'fs';
 
-fs.writeFileSync('workflows/login-cache.json', JSON.stringify(cache, null, 2));
+fs.writeFileSync(
+  'workflows/login-cache.json',
+  JSON.stringify(cache, null, 2)
+);
 ```
 
 ### 3. Replay from Cache
 
 ```typescript
-const savedCache = JSON.parse(fs.readFileSync('workflows/login-cache.json', 'utf-8'));
+const savedCache = JSON.parse(
+  fs.readFileSync('workflows/login-cache.json', 'utf-8')
+);
 
 const result = await page.runFromActionCache(savedCache, {
   maxXPathRetries: 3,

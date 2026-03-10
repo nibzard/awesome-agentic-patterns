@@ -27,9 +27,11 @@ updated_at: '2026-01-05'
 ---
 
 ## Problem
+
 Developing effective AI agents requires understanding real-world usage and quickly identifying areas for improvement. External feedback loops can be slow, and simulated environments may not capture all nuances.
 
 ## Solution
+
 The development team extensively uses their own AI agent product ("dogfooding") for their daily software development tasks. This provides:
 
 1.  **Direct, Immediate Feedback:** Developers encounter the agent's strengths and weaknesses firsthand.
@@ -43,7 +45,9 @@ This creates a tight, high-velocity feedback loop where the agent is continuousl
 ## How to use it
 
 - Encourage all members of the agent development team to use the agent as their primary tool for relevant tasks.
-- Establish channels for easily reporting issues or suggesting improvements based on internal use.
+- Establish low-friction feedback channels (e.g., dedicated Slack/Discord) for reporting issues and suggestions.
+- Store prompts and agent instructions in editable documents that anyone can update.
+- Push experimental features to internal users first for rapid validation; be willing to discard what doesn't work.
 - Prioritize fixing pain points experienced by the internal team.
 
 ## Real-world examples
@@ -67,6 +71,15 @@ Anthropic practices intensive "ant fooding" (their internal term for dogfooding)
 > "Internally over 70 or 80 percent of ants—technical Anthropic employees—use Claude Code every day. Every time we are thinking about a new feature, we push it out to people internally and we get so much feedback. We have a feedback channel. I think we get a post every five minutes. And so you get a really quick signal on whether people like it, whether it's buggy, or whether it's not good and we should unship it."
 
 This creates a development culture where features are validated through actual daily use before external release, dramatically reducing the risk of building unwanted functionality.
+
+### AMP
+
+AMP practices "shipping as research" with aggressive dogfooding: features are rapidly added and removed based on internal learning. Users respond positively to this approach, appreciating when ineffective features are cut.
+
+## Trade-offs
+
+* **Pros:** Real-world problem solving; rapid feature validation; quick pivots from ineffective approaches; reduced risk of shipping unwanted features.
+* **Cons:** Requires high internal adoption to be effective; internal users may not represent all customer segments.
 
 ## References
 

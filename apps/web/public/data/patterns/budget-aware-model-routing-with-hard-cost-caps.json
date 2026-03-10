@@ -1,0 +1,24 @@
+{
+  "title": "Budget-Aware Model Routing with Hard Cost Caps",
+  "status": "established",
+  "authors": [
+    "Codex (@openai)"
+  ],
+  "based_on": [
+    "Multi-model routing practices from production LLM systems"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://martinfowler.com/articles/llm.html",
+  "tags": [
+    "routing",
+    "cost-control",
+    "multi-model",
+    "orchestration",
+    "reliability"
+  ],
+  "slug": "budget-aware-model-routing-with-hard-cost-caps",
+  "id": "budget-aware-model-routing-with-hard-cost-caps",
+  "summary": "Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.",
+  "updated_at": "2026-03-10",
+  "body": "\n## Problem\n\nAgent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load. Soft budget guidance in prompts is not enough because model selection happens in control code, not language outputs. Teams need deterministic guardrails that preserve quality for hard tasks while preventing runaway token spend for routine work.\n\n## Solution\n\nIntroduce a routing layer with explicit budget contracts and hard caps per request, user, and workflow lane.\n\nKey elements:\n- A tiered model catalog (`small`, `medium`, `frontier`) with capability metadata.\n- A policy engine that computes a maximum allowable spend before each call.\n- Deterministic fallback rules when the selected model would exceed budget.\n- Quality override paths for safety-critical or high-value workflows.\n\nTypical flow:\n1. Classify task complexity and risk.\n2. Assign an expected token envelope and max dollar budget.\n3. Select the cheapest model that satisfies required capabilities.\n4. Enforce a hard cap before each model/tool step.\n5. Escalate only when objective signals justify the extra cost.\n\n**Cascade routing**: Try the cheapest adequate model first; if quality gates fail, escalate to stronger models. Learned routing policies trained on human preference data can improve selection accuracy while respecting budget constraints.\n\n```pseudo\nbudget = policy.max_cost(task_type, user_tier)\ncandidate = router.pick_model(task_features, budget)\n\nif estimate_cost(candidate, context) > budget:\n    candidate = router.next_cheaper(candidate)\n\nresult = call_model(candidate, context)\nif quality_gate.failed(result) and policy.can_escalate(task_type):\n    result = call_model(router.next_stronger(candidate), context)\n```\n\n## How to use it\n\n- Use it when model bills are growing faster than product value.\n- Start with high-volume workflows where quality targets are measurable.\n- Add routing telemetry: selected model, estimated cost, actual cost, escalation reason.\n- Define hard-fail behavior for cap breaches (defer, partial answer, or human handoff).\n\n## Trade-offs\n\n* **Pros:** Predictable spending, better capacity planning, and clear escalation policy.\n* **Cons:** More control-plane complexity and risk of under-powering hard requests if classification is weak.\n\n## References\n\n- https://martinfowler.com/articles/llm.html\n- https://simonwillison.net/2024/May/29/training-not-chatting/\n- https://arxiv.org/abs/2305.05176 - FrugalGPT (Stanford, 2023)\n- https://arxiv.org/abs/2406.18665 - RouteLLM (ICLR 2024)\n- https://arxiv.org/html/2510.08439v1 - xRouter (2025)\n"
+}

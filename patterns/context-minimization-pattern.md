@@ -1,32 +1,26 @@
 ---
 title: Context-Minimization Pattern
 status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Luca Beurer-Kellner et al. (2025)
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Context & Memory
-source: 'https://arxiv.org/abs/2506.08837'
-tags:
-  - context-hygiene
-  - taint-removal
-  - prompt-injection
-slug: context-minimization-pattern
-id: context-minimization-pattern
-summary: >-
-  User-supplied or tainted text lingers in the conversation, enabling it to
-  influence later generations.
-updated_at: '2026-01-05'
+source: "https://arxiv.org/abs/2506.08837"
+tags: [context-hygiene, taint-removal, prompt-injection]
 ---
 
 ## Problem
-User-supplied or tainted text lingers in the conversation, enabling it to influence later generations.
+
+In long agent sessions, raw user text and tool outputs often remain in-context long after they are needed. If those tokens include adversarial instructions, they can silently bias later reasoning steps, even when the current step is unrelated. This creates delayed prompt-injection risk and unnecessary context bloat.
 
 ## Solution
+
 **Purge or redact** untrusted segments once they've served their purpose:
 
-- After transforming input into a safe intermediate (query, structured object), strip the original prompt from context.  
+- After transforming input into a safe intermediate (query, structured object), strip the original prompt from context.
 - Subsequent reasoning sees **only trusted data**, eliminating latent injections.
+- A **strong variant** also removes intermediate LLM outputs that may have been tainted.
+
+Treat context as a staged pipeline: ingest untrusted text, transform it, then aggressively discard the original tainted material. Keep only signed-off structured artifacts that downstream steps are allowed to consume.
 
 ```pseudo
 sql = LLM("to SQL", user_prompt)
@@ -35,16 +29,28 @@ rows = db.query(sql)
 answer = LLM("summarize rows", rows)
 ```
 
+## Example
+
+```mermaid
+flowchart LR
+    A[User Prompt] --> B[Extract Intent]
+    B --> C[Remove Original]
+    C --> D[Trusted Data]
+    D --> E[Execute Safely]
+    A -.removed.-> C
+```
+
 ## How to use it
 
-Customer-service chat, medical Q&A, any multi-turn flow where initial text shouldn't steer later steps.
+Customer-service chat, medical Q&A, database query generation, any multi-turn flow where initial text shouldn't steer later steps.
 
 ## Trade-offs
 
-* **Pros:** Simple; no extra models needed; helps prevent [context window anxiety](context-window-anxiety-management.md) by reducing overall context usage.
-* **Cons:** Later turns lose conversational nuance; may hurt UX; overly aggressive minimization can remove useful context.
+* **Pros:** Simple; no extra models needed; helps prevent [context window anxiety](context-window-anxiety-management.md) by reducing overall context usage; provides compliance benefits (HIPAA/GDPR data minimization).
+* **Cons:** Later turns lose conversational nuance; may hurt UX; overly aggressive minimization can remove useful context; risks broken referential coherence when earlier turns are referenced ("the function I mentioned before").
 
 ## References
 
 * Beurer-Kellner et al., §3.1 (6) Context-Minimization.
-* [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Emphasizes importance of eliminating context contradictions: "if there's any contradictions in your prompt, you're going to receive lower quality output"
+* [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Emphasizes discrete phase separation and distilled handoffs to prevent context contamination.
+* OpenAI, [Unrolling the Codex Agent Loop](https://openai.com/index/unrolling-the-codex-agent-loop/) - Documents context auto-compaction in production.

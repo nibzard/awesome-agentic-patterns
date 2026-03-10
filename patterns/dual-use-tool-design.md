@@ -40,6 +40,8 @@ Design all tools to be **dual-use**—equally accessible and useful to both huma
 
 **Core principle**: "Everything you can do, Claude can do. There's nothing in between."
 
+**Academic support**: Validated by LLM-HAS research (arXiv:2505.00753, 2025) showing shared interfaces reduce coordination overhead and improve human-agent collaboration.
+
 **Key characteristics of dual-use tools:**
 
 1. **Same interface**: Humans and agents use identical APIs/commands
@@ -76,6 +78,13 @@ agent.call_slash_command("/commit")
 2. **Make everything scriptable**: What humans can click, agents should be able to call
 3. **Shared state visibility**: Both see the same terminal output, file changes, etc.
 4. **Consistent permissions**: Same security rules apply to both
+5. **Unified logging**: Single structured log stream (JSONL) that both can parse
+
+**Industry examples beyond Claude Code:**
+
+- **GitHub CLI**: `--json` flag enables programmatic consumption; same command works for humans and agents
+- **kubectl/AWS CLI**: `-o json` provides machine-readable output while preserving human-friendly defaults
+- **Sourcegraph Cody**: `--for-agent` flags on existing tools with unified JSONL logging
 
 **Claude Code implementation examples:**
 
@@ -87,6 +96,12 @@ agent.call_slash_command("/commit")
 **Benefits observed:**
 
 > "It's sort of elegant design for humans that translates really well to the models." —Boris Cherny
+
+**Anti-patterns to avoid:**
+
+- **Interactive prompts** without `--yes`/`--force` flags block autonomous agent usage
+- **Non-standard output** without `--json` option requires custom parsing
+- **Inconsistent error handling** by caller type breaks predictability
 
 ## Trade-offs
 
@@ -108,6 +123,8 @@ agent.call_slash_command("/commit")
 
 ## References
 
+* [A Survey on Large Language Model based Human-Agent Systems](https://arxiv.org/abs/2505.00753) (arXiv:2505.00753, May 2025) — validates shared interfaces for effective human-agent collaboration
+* [Why Human-Agent Systems Should Precede AI Autonomy](https://arxiv.org/html/2506.09420v1) (arXiv:2506.09420, June 2025) — argues for designing tools for both humans and agents from the start
 * Boris Cherny: "Tools were built for engineers, but now it's equal parts engineers and models... everything is dual use."
 * Boris Cherny: "I have a slash command for slash commit... I run it manually, but also Claude can run this for me. And this is pretty useful because we get to share this logic."
 * Cat Wu: "Claude Code has access to everything that an engineer does at the terminal. Making them dual use actually makes the tools a lot easier to understand. Everything you can do, Claude can do. There's nothing in between."

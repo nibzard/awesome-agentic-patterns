@@ -1,26 +1,11 @@
 ---
-title: Continuous Autonomous Task Loop Pattern
+title: "Continuous Autonomous Task Loop Pattern"
 status: established
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Internal Practice
-category: Orchestration & Control
-source: 'https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78'
-tags:
-  - autonomous-execution
-  - task-loop
-  - rate-limiting
-  - git-automation
-  - cli-driven
-  - stream-processing
-slug: continuous-autonomous-task-loop-pattern
-id: continuous-autonomous-task-loop-pattern
-summary: >-
-  Continuous autonomous loop that handles task selection, execution, and completion
-  without human intervention, with intelligent rate limit handling and automated
-  git management.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Internal Practice"]
+category: "Orchestration & Control"
+source: "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78"
+tags: [autonomous-execution, task-loop, rate-limiting, git-automation, cli-driven, stream-processing]
 ---
 
 ## Problem
@@ -37,7 +22,7 @@ This manual orchestration reduces overall productivity and prevents developers f
 
 ## Solution
 
-Implement a continuous autonomous loop that handles task selection, execution, and completion without human intervention:
+Implement a continuous autonomous loop that handles task selection, execution, and completion without human intervention. This pattern operationalizes the **ReAct paradigm** (Thought → Action → Observation) as a continuous execution cycle:
 
 1. **Fresh Context Per Iteration**: Each task starts with a clean context to avoid contamination
 2. **Autonomous Task Selection**: Use specialized subagents to pick the next appropriate task
@@ -84,6 +69,7 @@ sequenceDiagram
 ## How to use it
 
 ### Prerequisites
+
 - CLI agent tool (Claude Code, etc.) with autonomous execution capabilities
 - Git repository with TODO.md or similar task file
 - JSON parsing tools (jq) for stream processing
@@ -97,6 +83,7 @@ sequenceDiagram
 5. **Launch Loop**: Start autonomous execution with configured parameters
 
 ### Key Configuration Options
+
 ```bash
 # Example configuration
 MAX_ITERATIONS=50           # Safety limit
@@ -106,6 +93,7 @@ STREAM_JSON=true           # Real-time progress tracking
 ```
 
 ### Safety Considerations
+
 - Always set maximum iteration limits
 - Use version control for rollback capability
 - Monitor execution logs for unexpected behavior
@@ -133,3 +121,5 @@ STREAM_JSON=true           # Real-time progress tracking
 
 - [Original Autonomous Task Processing Script](https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78) - Complete implementation example
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) - CLI agent capabilities
+- [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) (NeurIPS 2022) - Yao et al. — establishes Thought→Action→Observation paradigm foundational to continuous task loops
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - Shinn et al. — episodic memory and self-reflection for continuous improvement

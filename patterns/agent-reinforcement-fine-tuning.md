@@ -49,7 +49,13 @@ Traditional fine-tuning approaches don't work well because they can't train the 
 - **Tool Endpoints**: Host your tools (same as production) that the model calls during training
 - **Grader Endpoint**: Define custom reward logic that evaluates final answers and/or tool call traces
 - **Unique Rollout IDs**: Each training rollout gets a unique ID for state management across tool calls
-- **Compute Multiplier**: Controls exploration breadth (higher = more rollouts per sample)
+
+**Grader Design Best Practices:**
+
+- **Use gradient rewards**: Provide 0-1 floating point scores rather than binary 0/1 for clearer learning signals
+- **Prevent reward hacking**: Evaluate reasoning process, not just final answers; detect "lucky guesses"
+- **Align with domain knowledge**: Measure grader-human consistency (e.g., Cohen's Kappa) before training
+- **Multi-dimensional evaluation**: Consider correctness, format compliance, efficiency, and safety
 
 ```python
 # Agent RFT Training Setup
@@ -140,6 +146,13 @@ job = client.fine_tuning.jobs.create(
 - **Latency**: Fewer tool calls and reasoning tokens (e.g., 50% reduction common)
 - **Sample Efficiency**: Can achieve strong results with as few as 100 quality samples
 
+**Tool Call Optimization Patterns:**
+
+Models naturally learn to optimize tool use through exploration:
+- **Parallelization**: Make independent tool calls simultaneously rather than sequentially
+- **Early termination**: Stop exploration once sufficient information is gathered
+- **Tool selection**: Learn which tools are most effective for specific task types
+
 ```mermaid
 graph TD
     A[Training Sample] --> B[Model Generates Rollout]
@@ -223,5 +236,7 @@ graph TD
 
 - [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [OpenAI Fine-tuning Guide](https://platform.openai.com/docs/guides/fine-tuning)
-- [Cognition Devon Case Study](https://www.cognition-labs.com/)
-- Related patterns: RLAIF, Tool Use Incentivization via Reward Shaping, Inference-Healed Code Review Reward
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., NeurIPS 2022)
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., NeurIPS 2023)
+- [DeepSeekMath: GRPO for Mathematical Reasoning](https://arxiv.org/abs/2402.03300) (Shao et al., 2024)
+- Related patterns: RLAIF, Tool Use Incentivization via Reward Shaping, Inference-Healed Code Review Reward, Memory Reinforcement Learning

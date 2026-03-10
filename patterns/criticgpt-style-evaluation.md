@@ -1,25 +1,11 @@
 ---
-title: CriticGPT-Style Code Review
+title: "CriticGPT-Style Code Review"
 status: validated-in-production
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - OpenAI
-category: Reliability & Eval
-source: 'https://openai.com/research/criticgpt'
-tags:
-  - evaluation
-  - code-review
-  - critique
-  - quality-assurance
-  - bug-detection
-  - gpt-4
-slug: criticgpt-style-evaluation
-id: criticgpt-style-code-review
-summary: >-
-  TODO: Add a concise summary for "CriticGPT-Style Code Review" describing the
-  pattern's purpose and key benefits.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["OpenAI"]
+category: "Reliability & Eval"
+source: "https://openai.com/research/criticgpt"
+tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
 ---
 
 ## Problem
@@ -33,7 +19,7 @@ As AI-generated code becomes more sophisticated, it becomes increasingly difficu
 
 ## Solution
 
-Deploy specialized AI models trained specifically for code critique and evaluation. These models act as automated code reviewers that can:
+Deploy specialized AI models trained specifically for code critique and evaluation. This approach builds on RLAIF (Reinforcement Learning from AI Feedback), which achieves ~100x cost reduction compared to human-only annotation. These models act as automated code reviewers that can:
 
 1. **Identify bugs** that human reviewers might miss
 2. **Detect security vulnerabilities** in generated code
@@ -270,9 +256,20 @@ sequenceDiagram
 - Cannot understand full business context like humans
 - May miss novel vulnerability types
 - Requires integration into existing workflows
+- Risk of evaluator-model collusion in self-critique loops (mitigate with anchor sets and adversarial examples)
+
+## How to use it
+
+- Use for automated code review workflows with high commit volumes
+- Deploy in CI/CD pipelines for pre-commit quality checks
+- Apply to security-sensitive code requiring vulnerability detection
+- Integrate via git webhooks (GitHub, GitLab) for event-driven review
+- Use 3-4 iterations of critique-refinement loops for complex changes
+- Mitigate collapse risks: decouple evaluation/generation prompts, benchmark against human-labeled anchor sets
 
 ## References
 
 - [OpenAI's CriticGPT Announcement (July 2024)](https://openai.com/research/criticgpt)
-- [Using LLMs for Code Review - Microsoft Research](https://www.microsoft.com/en-us/research/)
-- [Automated Code Review with AI - Google Research](https://research.google/)
+- [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073) - RLAIF foundation with 100x cost reduction vs human annotation
+- [Self-Taught Evaluators (Meta AI, 2024)](https://arxiv.org/abs/2408.02666) - Bootstrap critic models from synthetic data
+- [Evaluating LLMs for Code Review (2025)](https://arxiv.org/abs/2505.20206) - GPT-4o: 68.50% classification accuracy with context

@@ -1,27 +1,11 @@
 ---
-title: Iterative Prompt & Skill Refinement
-status: proposed
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Will Larson (Imprint)
-category: Feedback Loops
-source: 'https://lethain.com/agents-iterative-refinement/'
-tags:
-  - refinement
-  - iteration
-  - prompts
-  - skills
-  - feedback
-  - multi-mechanism
-  - continuous-improvement
-  - dashboards
-slug: iterative-prompt-skill-refinement
-id: iterative-prompt-skill-refinement
-summary: >-
-  TODO: Add a concise summary for "Iterative Prompt & Skill Refinement"
-  describing the pattern's purpose and key benefits.
-updated_at: '2026-01-13'
+title: "Iterative Prompt & Skill Refinement"
+status: established
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Will Larson (Imprint)"]
+category: "Feedback Loops"
+source: "https://lethain.com/agents-iterative-refinement/"
+tags: [refinement, iteration, prompts, skills, feedback, multi-mechanism, continuous-improvement, dashboards]
 ---
 
 ## Problem
@@ -30,7 +14,7 @@ Agent usage reveals gaps in prompts, skills, and tools—but how do you systemat
 
 ## Solution
 
-Implement **multiple complementary refinement mechanisms** that work together. No single mechanism catches all issues—you need layered approaches.
+Implement **multiple complementary refinement mechanisms** that work together. No single mechanism catches all issues—you need layered approaches. This approach is grounded in RLHF research showing that human feedback is irreplaceable for alignment, while RLAIF demonstrates AI-assisted feedback enables scale.
 
 **Four key mechanisms:**
 
@@ -104,6 +88,7 @@ workflow_result = {
 **Post-run evals (next step):**
 
 Include subjective eval after each run:
+
 - Was this workflow effective?
 - What would have made it better?
 - Human-in-the-loop to nudge evolution
@@ -138,4 +123,6 @@ Include subjective eval after each run:
 ## References
 
 * [Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (Imprint, 2026)
+* [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al. (arXiv, 2022)
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (NeurIPS, 2023)
 * Related: Dogfooding with Rapid Iteration, Compounding Engineering, Memory Synthesis from Execution Logs

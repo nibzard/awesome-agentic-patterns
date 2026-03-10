@@ -1,30 +1,19 @@
 ---
 title: Specification-Driven Agent Development
 status: proposed
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Jory Pestorious (AI Engineer World's Fair 2025)
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
-source: 'http://jorypestorious.com/blog/ai-engineer-spec/'
-tags:
-  - spec-first
-  - scaffolding
-  - contract
-  - requirements
-slug: specification-driven-agent-development
-id: specification-driven-agent-development
-summary: >-
-  Hand-crafted prompts or loose user stories leave room for ambiguity; agents
-  can wander, over-interpret, or produce code that conflicts with stakeholder
-  intent.
-updated_at: '2026-01-05'
+source: "http://jorypestorious.com/blog/ai-engineer-spec/"
+tags: [spec-first, scaffolding, contract, requirements]
 ---
 
 ## Problem
+
 Hand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.
 
 ## Solution
+
 Adopt a **spec-first workflow** in which a formal specification file (e.g., Markdown, OpenAPI, JSON Schema) is the agent's *primary* input and source of truth.
 
 - **Parse spec** → agent builds an explicit task graph.
@@ -38,8 +27,17 @@ if new_feature_requested:
     agent.sync_with(spec)
 ```
 
+**Core Framework (SPEC/EXPOSURE/TASK DELTA):**
+- **SPEC**: Version-controlled markdown capturing intent and values
+- **EXPOSURE**: What customers experience; spec is permanent, code is temporary
+- **TASK DELTA**: Continuous loop evaluating SPEC ↔ PRODUCT to identify gaps
+
 ## How to use it
-Give the agent a well-structured spec file, then run `claude spec run`.
+
+Write specifications first (Markdown files in git), then let agents scaffold from them. Documentation IS the spec—write it before code.
+
+Use tiered review: AI for patterns, humans for logic. Parallelize via git worktrees or multiple agents coordinating through shared spec files.
+
 Pitfalls: coarse or under-specified requirements still propagate errors.
 
 ## Trade-offs
@@ -48,4 +46,6 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 - **Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.
 
 ## References
-- Talk teaser in the World's Fair meta-description about "shift to specification-driven development."
+
+- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
+- Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents

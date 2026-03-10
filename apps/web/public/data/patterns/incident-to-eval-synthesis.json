@@ -1,0 +1,24 @@
+{
+  "title": "Incident-to-Eval Synthesis",
+  "status": "emerging",
+  "authors": [
+    "Codex (@openai)"
+  ],
+  "based_on": [
+    "Post-incident learning loops in software and ML operations"
+  ],
+  "category": "Feedback Loops",
+  "source": "https://sre.google/sre-book/postmortem-culture/",
+  "tags": [
+    "evals",
+    "incidents",
+    "reliability",
+    "feedback",
+    "continuous-improvement"
+  ],
+  "slug": "incident-to-eval-synthesis",
+  "id": "incident-to-eval-synthesis",
+  "summary": "Many teams run agent evaluations, but the eval suite drifts away from real failures seen in production.",
+  "updated_at": "2026-03-10",
+  "body": "\n## Problem\n\nMany teams run agent evaluations, but the eval suite drifts away from real failures seen in production. Incidents get resolved operationally, yet the exact failure mode is rarely converted into a durable regression test. This creates repeat incidents and false confidence from stale benchmark sets.\n\n## Solution\n\nConvert every production incident into one or more executable eval cases, then gate future changes on those cases.\n\nPattern mechanics:\n- Capture incident artifacts: inputs, context, tool traces, outputs, and impact.\n- Normalize sensitive data and derive a minimal reproducible scenario.\n- Encode expected behavior as objective pass/fail criteria.\n- Add the case to the evaluation corpus with severity and owner metadata.\n- Run incident-derived evals in CI and release gates.\n\n```pseudo\nincident = ingest_incident(ticket_id)\ncase = build_eval_case(\n  prompt=redact(incident.prompt),\n  tools=incident.tool_trace,\n  expected=define_acceptance_criteria(incident)\n)\n\nsuite.add(case, labels=[\"incident\", incident.severity])\nif not suite.run(candidate_policy).pass(case.id):\n    block_release(candidate_policy)\n```\n\n## Evidence\n\n- **Evidence Grade:** `medium`\n- **Most Valuable Findings:**\n  - Academic research shows 60-80% success rates for automated test generation from failure reports\n  - Only 30% of organizations systematically reuse incident data; those that do see fewer repeat incidents\n  - Industry adoption at OpenAI, Anthropic, and Meta validates production-derived evals for ML systems\n- **Unverified / Unclear:** Limited research specifically on AI agent incident-to-eval synthesis; most work focuses on traditional software or model evaluation\n\n## How to use it\n\n- Start with P0 (critical) incidents only, using tiered blocking: only P0 evals block releases initially; P1/P2 warn.\n- Require a linked eval case in incident closure criteria.\n- Track two metrics: incident recurrence rate and eval-catch rate before release.\n- Periodically prune or merge redundant incident-derived tests to keep runtime manageable.\n\n## Trade-offs\n\n* **Pros:** Aligns evals with real risk and compounds operational learning over time.\n* **Cons:** Adds triage overhead and requires discipline in incident data capture.\n\n## References\n\n- https://sre.google/sre-book/postmortem-culture/\n- https://dl.acm.org/doi/10.1145/2635868.2635920 (Thummalapenta et al., FSE 2014: Automatic Generation of Test Cases from Bug Reports)\n- https://martinfowler.com/articles/practical-test-pyramid.html\n"
+}

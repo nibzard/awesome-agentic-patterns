@@ -63,6 +63,12 @@ The project has a unique architecture where pattern documentation drives the ent
 ### Content Guidelines
 - Use Mermaid diagrams in patterns for architectural visualization
 - Pattern files support full Markdown with front-matter
+- Community policy for pattern submissions:
+  - Treat this as a community project, not a promotional channel
+  - Reject promotional, sales, affiliate, or backlink-seeding content
+  - For external contributors, prefer links to `github.com`, `github.io`, or non-vendor neutral references
+  - Allow vendor/product links only when the contribution is truly novel and adds clear value
+  - Require submissions to be materially novel and non-repetitive versus existing patterns
 - **CRITICAL**: Always add blank lines after headers before starting bullet point lists
   - Incorrect: `**Header:**\n- Item 1` (renders inline)
   - Correct: `**Header:**\n\n- Item 1` (renders as proper list)

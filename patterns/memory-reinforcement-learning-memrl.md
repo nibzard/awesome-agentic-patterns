@@ -36,7 +36,7 @@ Standard retrieval assumes "similar implies useful," but that's often wrong. A s
 
 ## Solution
 
-**MemRL** adds learned "utility scores" to episodic memory, so agents learn from experience which memories actually lead to success—without modifying the model.
+**MemRL** transfers reinforcement learning from parameter space to context space: instead of updating model weights, it learns utility scores on episodic memories. The LLM stays frozen; only memory utilities evolve.
 
 **Core idea:** Instead of just retrieving by similarity, rank memories by how well they've worked in the past.
 
@@ -65,6 +65,13 @@ graph LR
     style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
     style F fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
 ```
+
+## Evidence
+
+- **Evidence Grade:** `medium` - Strong theoretical foundation, limited production validation
+- **Key Finding:** MemRL solves the stability-plasticity dilemma by avoiding weight updates entirely (Kirkpatrick et al., 2017)
+- **Related Validation:** Reflexion achieved 91% vs 80% baseline on HumanEval using verbal RL with episodic memory (Shinn et al., 2023)
+- **Unclear:** Production deployment data and long-term utility convergence
 
 ## How to use it
 
@@ -134,4 +141,6 @@ graph LR
 ## References
 
 * [Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](https://arxiv.org/html/2601.03192v1) - Shengtao Zhang, Jiaqian Wang, et al. (2025)
-* Related: Episodic Memory Retrieval & Injection, Memory Synthesis from Execution Logs, Agent Reinforcement Fine-Tuning
+* [Neural Episodic Control](https://arxiv.org/abs/1703.01988) - Pritzel et al. (2017) - Foundation for episodic memory in RL
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (2023) - Demonstrates episodic memory value (91% vs 80% on HumanEval)
+* Related patterns: Episodic Memory Retrieval & Injection (extends), Memory Synthesis from Execution Logs (complements), Agent Reinforcement Fine-Tuning (alternative to)

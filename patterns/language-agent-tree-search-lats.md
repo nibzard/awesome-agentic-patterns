@@ -1,27 +1,11 @@
 ---
-title: Language Agent Tree Search (LATS)
+title: "Language Agent Tree Search (LATS)"
 status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Zhou et al.
-  - University of Illinois
-category: Orchestration & Control
-source: 'https://arxiv.org/abs/2310.04406'
-tags:
-  - search
-  - monte-carlo
-  - tree-search
-  - reasoning
-  - planning
-  - reflection
-  - evaluation
-slug: language-agent-tree-search-lats
-id: language-agent-tree-search-lats
-summary: >-
-  TODO: Add a concise summary for "Language Agent Tree Search (LATS)" describing
-  the pattern's purpose and key benefits.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Zhou et al.", "University of Illinois"]
+category: "Orchestration & Control"
+source: "https://arxiv.org/abs/2310.04406"
+tags: [search, monte-carlo, tree-search, reasoning, planning, reflection, evaluation]
 ---
 
 ## Problem
@@ -38,6 +22,16 @@ Language Agent Tree Search (LATS) combines Monte Carlo Tree Search (MCTS) with l
 4. **Backpropagation** updates value estimates throughout the tree
 
 The agent explores promising branches more deeply while maintaining breadth to avoid getting stuck. This creates a best-of-both-worlds approach combining systematic search with LLM reasoning.
+
+**Selection uses the UCB (Upper Confidence Bound) formula:**
+
+```
+UCB(node) = Q(node) + c × √(ln(parent_visits) / node_visits)
+```
+
+Where Q(node) is the estimated value, c is the exploration constant (typically 1.4), and the logarithmic term balances exploration of less-visited nodes. This principled approach yields better sample efficiency than breadth-first or random exploration.
+
+**Evaluation mechanisms** include: direct confidence scoring (0-1), critique-based evaluation, or multi-aspect scoring. The choice depends on task complexity and required precision.
 
 ## Example
 
@@ -128,12 +122,32 @@ class LATSAgent:
 - Provides interpretable reasoning traces
 
 **Cons:**
-- Higher computational cost due to tree exploration
-- Requires more LLM calls than simple approaches
-- May be overkill for simple tasks
-- Requires careful tuning of exploration parameters
+- Higher computational cost (5-20x more LLM calls than simpler approaches)
+- Inherently sequential—unsuitable for real-time applications
+- Implementation complexity requires correct MCTS and tree state management
+- May be overkill for simple tasks where ReAct or ToT suffice
+
+## How to use it
+
+**When to use LATS:**
+- Complex reasoning tasks requiring strategic planning and multi-step decision making
+- Problems with multiple valid solution paths where exploration matters
+- Mathematical reasoning, algorithm design, or debugging with multiple potential causes
+- Budgets allow for higher computational cost (5-20x more LLM calls than simpler approaches)
+
+**When to use alternatives:**
+- Simple or linear tasks: use ReAct or Chain-of-Thought
+- Real-time response requirements: use single-pass with Reflection Loop
+- Cost-sensitive applications: use Tree-of-Thoughts with limited branching
+
+**Implementation guidance:**
+- Start with fixed iterations (10-25) before tuning exploration constant c
+- Use lower temperature (0.1-0.3) for evaluation, higher (0.7-1.0) for expansion
+- Consider LangGraph for graph infrastructure supporting MCTS-like workflows
 
 ## References
 
-- [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406)
-- [Comparison with ReACT, Reflexion, and Tree of Thoughts](https://www.langchain.com/langgraph)
+- [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406) - Zhou et al., 2023
+- [Monte Carlo Tree Search: A Survey](https://doi.org/10.1109/TCIAIG.2012.2206890) - Browne et al., 2012 (foundational MCTS theory)
+- [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
+- [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023

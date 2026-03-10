@@ -1,14 +1,23 @@
 {
   "title": "LLM Map-Reduce Pattern",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Luca Beurer-Kellner et al. (2025)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Luca Beurer-Kellner et al. (2025)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2506.08837",
-  "tags": ["map-reduce", "sub-agents", "isolation", "untrusted-data"],
+  "tags": [
+    "map-reduce",
+    "sub-agents",
+    "isolation",
+    "untrusted-data"
+  ],
   "slug": "llm-map-reduce-pattern",
   "id": "llm-map-reduce-pattern",
-  "summary": "Injecting a single poisoned document can manipulate global reasoning if all data is processed in one context.",
-  "updated_at": "2026-01-05",
-  "body": "\n## Problem\nInjecting a single poisoned document can manipulate global reasoning if all data is processed in one context.\n\n## Solution\nAdopt a **map-reduce workflow**:\n\n- **Map:** Spawn lightweight, *sandboxed* LLMs—each ingests one untrusted chunk and emits a constrained output (boolean, JSON schema, etc.).  \n- **Reduce:** Aggregate those safe summaries with either deterministic code or a privileged LLM that sees only sanitized fields.\n\n```pseudo\nresults = []\nfor doc in docs:\n    ok = SandboxLLM(\"Is this an invoice? (yes/no)\", doc)\n    results.append(ok)\nfinal = reduce(results)  # no raw docs enter this step\n```\n\n## How to use it\n\nFile triage, product-review summarizers, resume filters—any N-to-1 decision where each item's influence should stay local.\n\n## Trade-offs\n\n* **Pros:** A malicious item can't taint others; scalable parallelism.\n* **Cons:** Requires strict output validation; extra orchestration overhead.\n\n## References\n\n* Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce.\n"
+  "summary": "When many untrusted documents are processed in a single reasoning context, one malicious item can influence global conclusions.",
+  "updated_at": "2026-03-10",
+  "body": "\n## Problem\n\nWhen many untrusted documents are processed in a single reasoning context, one malicious item can influence global conclusions. This creates cross-document contamination where a single poisoned input affects unrelated items and final decisions.\n\n## Solution\n\nAdopt a **map-reduce workflow**:\n\n- **Map:** Spawn lightweight, *sandboxed* LLMs—each ingests one untrusted chunk and emits a constrained output (boolean, JSON schema, enum).\n- **Reduce:** Aggregate validated summaries via deterministic code (count, filter, majority-vote) or a privileged LLM that sees only sanitized fields.\n\nIsolation is the core control: each map worker handles one item with constrained output contracts, so contamination cannot spread laterally. The reducer consumes validated summaries only, which preserves scalability and reduces injection blast radius.\n\n```pseudo\nresults = []\nfor doc in docs:\n    ok = SandboxLLM(\"Is this an invoice? (yes/no)\", doc)\n    results.append(ok)\nfinal = reduce(results)  # no raw docs enter this step\n```\n\n## How to use it\n\nFile triage, document summarization, resume filters, code migration verification—any N-to-1 decision where each item's influence should stay local.\n\nBest fit when: N ≥ 10 items, processing time > 30s/item, items are independent, and aggregation is needed.\n\n## Trade-offs\n\n* **Pros:** A malicious item can't taint others; scalable parallelism; smaller contexts reduce cost.\n* **Cons:** Requires strict output validation; extra orchestration overhead; loses cross-item context.\n\n## References\n\n* Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce.\n* Dean & Ghemawat (2008). MapReduce: Simplified Data Processing on Large Clusters.\n\n- Primary source: https://arxiv.org/abs/2506.08837\n- Foundational MapReduce: https://doi.org/10.1145/1327452.1327492\n"
 }

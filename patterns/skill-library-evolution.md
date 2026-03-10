@@ -36,6 +36,11 @@ Agents frequently solve similar problems across different sessions or workflows.
 
 Agents persist working code implementations as reusable functions in a `skills/` directory. Over time, these implementations evolve into well-documented, tested "skills" that become higher-level capabilities the agent can leverage.
 
+**Skill types:**
+
+- **Atomic skills**: Single-purpose functions (e.g., `analyze_sentiment`) that serve as building blocks
+- **Composite skills**: Multi-step workflows that combine atomic skills into higher-level capabilities
+
 **Evolution path:**
 
 ```mermaid
@@ -120,6 +125,7 @@ metadata:
 # System prompt injection
 AVAILABLE_SKILLS = """
 Available skills (use load_skills tool to read full content):
+
 - pdf-processing: Extract text and tables from PDF documents
 - slack-formatting: Format messages for Slack with proper mrkdwn
 - large-file-handling: Handle files exceeding context window
@@ -268,6 +274,16 @@ def discover_skills():
 - Encourage skill reuse through prompting
 - Periodic skill library review and curation
 - Examples and test cases for each skill
+
+**Anti-patterns to avoid:**
+
+| Anti-Pattern | Consequence | Correct Approach |
+|--------------|-------------|------------------|
+| **Hard-coded values** | Not reusable | Parameterize inputs |
+| **No documentation** | Not discoverable | Add docstrings and examples |
+| **Monolithic skills** | Not composable | Split into atomic units |
+| **No testing** | Unreliable | Add validation tests |
+| **Prompt bloat** | Context overflow | Progressive disclosure |
 
 ## References
 

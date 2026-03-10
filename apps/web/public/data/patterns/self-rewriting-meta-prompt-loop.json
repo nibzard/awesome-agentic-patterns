@@ -1,14 +1,23 @@
 {
   "title": "Self-Rewriting Meta-Prompt Loop",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Noah D. Goodman (Meta-Prompt)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Noah D. Goodman (Meta-Prompt)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving",
-  "tags": ["meta-prompting", "self-improvement", "system-prompt", "reflection"],
+  "tags": [
+    "meta-prompting",
+    "self-improvement",
+    "system-prompt",
+    "reflection"
+  ],
   "slug": "self-rewriting-meta-prompt-loop",
   "id": "self-rewriting-meta-prompt-loop",
-  "summary": "Static system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone.",
-  "updated_at": "2026-01-05",
-  "body": "\n## Problem\nStatic system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone.\n\n## Solution\nLet the agent **rewrite its own system prompt** after each interaction:\n\n1. **Reflect** on the latest dialogue or episode.  \n2. Draft improvements to the instructions (add heuristics, refine tool advice, retire bad rules).  \n3. **Validate** the draft (internal sanity-check or external gate).  \n4. Replace the old system prompt with the revised version; persist in version control.  \n5. Use the new prompt on the next episode, closing the self-improvement loop.\n\n```python\n# pseudo-code\ndialogue = run_episode()\ndelta = LLM(\"Reflect on dialogue and propose prompt edits\", dialogue)\nif passes_guardrails(delta):\n    system_prompt += delta\n    save(system_prompt)\n```\n\n## Trade-offs\n\n**Pros:** rapid adaptation; no human in the loop for minor tweaks.\n**Cons:** risk of drift or jailbreak—needs a strong guardrail step.\n\n## References\n\n* Goodman, *Meta-Prompt: A Simple Self-Improving Language Agent*. ([noahgoodman.substack.com](https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving))\n"
+  "summary": "Static system prompts become stale or overly brittle as an agent encounters new tasks and edge cases.",
+  "updated_at": "2026-03-10",
+  "body": "\n## Problem\n\nStatic system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone.\n\n## Solution\n\nLet the agent **rewrite its own system prompt** after each interaction:\n\n1. **Reflect** on the latest dialogue or episode.  \n2. Draft improvements to the instructions (add heuristics, refine tool advice, retire bad rules).  \n3. **Validate** the draft (internal sanity-check or external gate).  \n4. Replace the old system prompt with the revised version; persist in version control.  \n5. Use the new prompt on the next episode, closing the self-improvement loop.\n\n```python\n# pseudo-code\ndialogue = run_episode()\ndelta = LLM(\"Reflect on dialogue and propose prompt edits\", dialogue)\nif passes_guardrails(delta):\n    system_prompt += delta\n    save(system_prompt)\n```\n\n## Evidence\n\n- **Evidence Grade:** `high` (academic), `low` (direct production implementation)\n- **Key Findings:** Strong academic foundation from Reflexion, APE, Self-Refine, DSPy, and Constitutional AI. Direct autonomous implementations are rare in production due to safety concerns (drift, jailbreak risk). Industry prefers hybrid approaches with guardrails and human oversight.\n- **Best Practice:** Pair with canary rollouts, multi-layer guardrails, and version control integration.\n\n## How to use it\n\n- Best for low-risk domains with high-volume, well-defined workflows (e.g., formatting, style)\n- Requires strong guardrails: structural validation, intent preservation checks, change magnitude limits\n- Include version control integration and rollback capability\n- Consider dual-agent architecture (executor + critic) for safer delta generation\n- Avoid in safety-critical or high-regulation domains without human approval gates\n\n## Trade-offs\n\n**Pros:** Rapid adaptation; data-driven improvements; no training infrastructure required.\n\n**Cons:** Risk of drift or jailbreak; prompt bloat; oscillation and instability.\n\n## References\n\n* Goodman, *Meta-Prompt: A Simple Self-Improving Language Agent*. ([noahgoodman.substack.com](https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving))\n* Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning*. arXiv:2303.11366 (2023)\n* Madaan et al., *Self-Refine: Large Language Models Can Self-Correct*. arXiv:2303.05125 (2023)\n* Khattab et al., *DSPy: Declarative Self-Improving Language Programs*. ([github.com/stanfordnlp/dspy](https://github.com/stanfordnlp/dspy))\n"
 }

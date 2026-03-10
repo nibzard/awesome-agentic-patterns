@@ -1,24 +1,11 @@
 ---
-title: Agent-First Tooling and Logging
-status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Thorsten Ball (Sourcegraph)
-category: Tool Use & Environment
-source: 'https://www.sourcegraph.com'
-tags:
-  - tool-design
-  - logging
-  - machine-readable
-  - observability
-  - agent-environment
-slug: agent-first-tooling-and-logging
-id: agent-first-tooling-and-logging
-summary: >-
-  TODO: Add a concise summary for "Agent-First Tooling and Logging" describing
-  the pattern's purpose and key benefits.
-updated_at: '2026-01-05'
+title: "Agent-First Tooling and Logging"
+status: established
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"]
+category: "Tool Use & Environment"
+source: "https://www.sourcegraph.com"
+tags: [tool-design, logging, machine-readable, observability, agent-environment, mcp, structured-output]
 ---
 
 ## Problem
@@ -30,8 +17,10 @@ Most developer tools, CLIs, and application logs are designed for human consumpt
 Consciously design and adapt tooling and logging to be "agent-first," prioritizing machine-readability over human ergonomics. The environment should cater to the agent's need for clear, structured, and unambiguous information.
 
 - **Unified Logging:** Instead of multiple log streams (client, server, database), consolidate them into a single, unified log. This gives the agent a single source of truth to monitor.
-- **Verbose, Structured Output:** Prefer verbose, structured formats like JSON lines over concise, human-readable text. An agent can parse structured data far more effectively and is not constrained by screen space.
-- **Agent-Aware CLIs:** Design new tools or add flags to existing tools (`--for-agent`) that modify their output to be more explicit and less ambiguous for an AI. Assume the agent, not a human, is the primary consumer.
+- **Verbose, Structured Output:** Prefer verbose, structured formats like JSON lines over concise, human-readable text. An agent can parse structured data far more effectively and is not constrained by screen space. Use schemas like Pydantic (Python) or Zod (TypeScript) for type-safe structured outputs.
+- **Agent-Aware CLIs:** Design new tools or add flags to existing tools (`--for-agent`, `--json`) that modify their output to be more explicit and less ambiguous for an AI. Assume the agent, not a human, is the primary consumer.
+- **Standardized Tool Protocol:** Use the Model Context Protocol (MCP) as the standard interface for agent-tool communication. Introduced in 2024 and donated to the Agent AI Foundation in 2025, MCP provides a universal "USB interface for agents."
+- **Code-First Tool Interface:** For complex workflows, LLMs generate code that calls tools rather than invoking them directly. This provides 10-100x token reduction by keeping intermediate results in the execution environment rather than model context.
 
 This shift in design philosophy acknowledges that as agents perform more development work, the tools they use must adapt to serve them directly. An agent-friendly environment is a prerequisite for reliable and efficient agent performance.
 
@@ -44,7 +33,7 @@ sequenceDiagram
     participant Logger as Unified Logger
     participant System as System Services
 
-    Agent->>CLI: command --for-agent --json
+    Agent->>CLI: command [for-agent] [json]
     CLI->>System: Execute operation
     System->>Logger: Write structured log entry
     Logger->>Agent: JSON log stream
@@ -70,9 +59,16 @@ sequenceDiagram
 - **Cons/Considerations:**
   - May sacrifice human readability and debugging convenience
   - Requires investment in tooling modifications
-  - Teams need to maintain both human and agent interfaces
+  - Teams need to maintain both human and agent interfaces (dual-interface pattern)
   - Learning curve for developers used to human-centric tools
+  - Code-first patterns require additional infrastructure (sandboxed execution)
 
 ## References
 
-- From Thorsten Ball: "What we've seen people now do is well instead of having the client log and having the browser log and having the database log, let's have one unified log because then it's easier for the agent to just look at this log... You can just have like JSON line outputs and whatnot because the agent can understand it much better than a human can... This is not made for human consumption anymore. How can we optimize this for a genetic consumption?"
+- From Thorsten Ball: "What we've seen people now do is well instead of having the client log and having the browser log and having the database log, let's have one unified log because then it's easier for the agent to just look at this log... You can just have like JSON line outputs and whatnot because the agent can understand it much better than a human can... This is not made for human consumption anymore. How can we optimize this for agent consumption?"
+
+- From Kenton Varda: "LLMs are better at writing code to call MCP, than at calling MCP directly."
+
+- Model Context Protocol: https://modelcontextprotocol.io (de facto standard for agent-tool interface, 2024-2025)
+
+- Primary source: https://www.sourcegraph.com

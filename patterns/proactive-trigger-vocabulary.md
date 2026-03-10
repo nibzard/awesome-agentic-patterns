@@ -60,6 +60,15 @@ graph TD
 3. **Priority ordering**: When multiple skills match, which takes precedence
 4. **User visibility**: Triggers documented so users learn the vocabulary
 
+**Proactive activation categories:**
+
+- **Information offering**: Providing relevant information unprompted
+- **Suggestion**: Recommending actions or content
+- **Clarification**: Asking for missing information
+- **Correction**: Fixing user errors or misunderstandings
+
+User acceptance of proactive activation depends on relevance (contextually appropriate), timing (not interrupting flow), and transparency (explaining why the action was taken).
+
 ## How to use it
 
 **Skill documentation format:**
@@ -128,9 +137,15 @@ Combine explicit triggers with semantic fallback:
 2. If no match, use embedding similarity (flexible, slower)
 3. Log unmatched inputs to discover new trigger candidates
 
+This hybrid approach (exact match before semantic) is an industry best practice across chatbot platforms, combining predictability with flexibility.
+
 ## References
 
 * Claude Code CLAUDE.md skill documentation pattern
 * Intent classification in conversational AI
 * Chatbot trigger/response pattern matching
 * Slack workflow triggers
+
+- Pradhan et al. "Proactive Behavior in Conversational AI: A Survey." ACL 2022
+- Yang, Shuo, et al. "Should I Interrupt? Proactive Assistance in Human-AI Collaboration." CHI 2021
+- Primary source: https://github.com/anthropics/claude-code

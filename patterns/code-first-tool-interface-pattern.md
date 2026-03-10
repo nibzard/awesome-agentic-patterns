@@ -30,6 +30,7 @@ updated_at: '2026-01-05'
 Traditional Model Context Protocol (MCP) approaches of directly exposing tools to Large Language Models create significant token waste and complexity issues. We've moved from telling LLMs what to do, to teaching them to write instructions for themselves—it's **turtles writing code all the way down**[^1] for all domains.
 
 ### Token Waste in Multi-Step Operations
+
 Classic MCP forces this inefficient pattern:
 ```
 LLM → tool #1 → large JSON response → LLM context
@@ -41,6 +42,7 @@ LLM → tool #3 → large JSON response → LLM context
 Every intermediate result must ride back through the model's context, burning tokens and adding latency at each step. For complex workflows requiring 5-10 tool calls, this becomes extremely expensive.
 
 ### Fan-Out Inefficiency at Scale
+
 The traditional approach breaks down dramatically with bulk operations:
 
 **Processing 100 emails for personalized outreach:**
@@ -53,6 +55,7 @@ The traditional approach breaks down dramatically with bulk operations:
 **Code Mode alternative:** Simple `for` loop over 100 entries, processing entirely within the sandbox with only final results surfaced to LLM context.
 
 ### Core Interface Limitations
+
 - LLMs struggle to effectively use complex tool interfaces
 - Limited training data on "tool calls" compared to abundant code training
 - Multi-step tool interactions become cumbersome with direct API calls
@@ -96,6 +99,7 @@ Code Mode complements (not replaces) MCP servers by adding an ephemeral executio
 ### Enhanced Capabilities
 
 - **Verification**: Compile-time validation catches errors before execution
+- **Static Analysis**: Code-first patterns enable formal verification (e.g., CaMeL's taint analysis for security-sensitive workflows)
 - **Semantic Caching**: Reuse successful workflows via typed API signatures
 - **Idempotency**: Checkpoint/resume patterns using KV stores for partial failure recovery
 
@@ -226,6 +230,7 @@ for (const contact of contacts) {
 ## Traditional MCP vs Code Mode Comparison
 
 ### Traditional MCP Flow
+
 ```
 User Request → LLM
 ↓
@@ -241,6 +246,7 @@ Final Answer (Context bloated with intermediate data)
 **Cost:** High token usage, multiple round-trips, latency accumulation
 
 ### Code Mode Flow
+
 ```
 User Request → LLM → Generated Code → V8 Isolate
                                     ↓
@@ -257,7 +263,7 @@ User Request → LLM → Generated Code → V8 Isolate
 
 **Pros:**
 
-- **Dramatic token savings** on multi-step workflows (10x+ reduction)
+- **Dramatic token savings** on multi-step workflows (10-100x reduction; Anthropic reports 75x on 10K-row spreadsheets: 150K → 2K tokens)
 - **Dramatic fan-out efficiency** - for loops over 100+ entries vs 100+ tool calls (speed + reliability at scale)
 - **Faster execution** through elimination of round-trips
 - **Enhanced security** - credentials stay in MCP servers, never in LLM
@@ -299,6 +305,8 @@ User Request → LLM → Generated Code → V8 Isolate
 ## References
 
 - [Cloudflare Code Mode Blog Post](https://blog.cloudflare.com/code-mode/) - Original announcement and technical details
+- [Anthropic Engineering: Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Code-Over-API pattern with data processing examples
+- [CaMeL: Code-Augmented Language Model (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837) - Formal verification and taint analysis for code-first tool use
 - [Model Context Protocol](https://modelcontextprotocol.io/) - Background on traditional tool calling approaches
 - [Rafal Wilinski's Code Mode Analysis](https://x.com/rafalwilinski/status/1972362720579035146) - Real-world insights on Code Mode strengths and limitations
 

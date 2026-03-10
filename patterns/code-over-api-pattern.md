@@ -29,6 +29,8 @@ When agents make direct API or tool calls, all intermediate data must flow throu
 
 Instead of making direct tool calls, agents write and execute code that interacts with tools. Data processing, filtering, and transformation happens in the execution environment, with only results flowing back to the model context.
 
+**Core insight**: LLMs are better at writing code to call APIs than at calling APIs directly—due to training data alignment with millions of open-source code repositories.
+
 **Direct API approach (high token cost):**
 
 ```pseudo
@@ -112,12 +114,24 @@ The agent sees the log output and return value, but the full dataset never enter
 
 **Operational requirements:**
 
-- Sandboxed execution environment (containers, VMs, WebAssembly)
+- Sandboxed execution environment (containers, VMs, V8 isolates, WebAssembly)
 - Resource limits (CPU, memory, execution time)
 - Monitoring and logging infrastructure
 - Error handling and recovery mechanisms
 
+**Execution environment options:**
+
+- **V8 isolates**: Millisecond startup, minimal memory, strong isolation (Cloudflare Code Mode)
+- **Containers**: 2-5 second startup, full language flexibility (Modal, Docker)
+- **VMs**: Complete isolation for destructive operations (Cognition/Devon)
+
 ## References
 
 * Anthropic Engineering: Code Execution with MCP (2024)
-* Related: Code-Then-Execute Pattern (focuses on security/formal verification)
+* Cloudflare: Code Mode - V8 isolate-based execution (2025)
+* Beurer-Kellner et al.: Code-Then-Execute security framework (2025)
+* Related: Code-Then-Execute Pattern (focuses on security/formal verification vs token optimization)
+
+- Primary: https://www.anthropic.com/engineering/code-execution-with-mcp
+- Cloudflare: https://blog.cloudflare.com/code-mode/
+- Academic: https://arxiv.org/abs/2506.08837

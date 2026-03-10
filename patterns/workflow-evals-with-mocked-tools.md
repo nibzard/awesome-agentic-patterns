@@ -103,6 +103,15 @@ Implement **workflow evals (simulations)** that test complete agent workflows wi
 7. Report pass/fail with details
 ```
 
+## Evidence
+
+- **Evidence Grade:** `emerging` - Early production adoption, primarily industry-driven
+- **Key Findings:**
+  - Strong production use case: unit tests and linters don't validate prompt-tool integration effectively
+  - Dual evaluation (objective + subjective) is standard across implementations
+  - Non-determinism remains the primary challenge; best used for directional guidance
+- **Unclear:** Optimal mock fidelity requirements for valid evaluation
+
 ## How to use it
 
 **Best for:**
@@ -237,7 +246,7 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 1. **Retry logic**: "At least once in three tries" to reduce flakiness
 2. **Tune prompts**: Make eval prompts more precise and deterministic
-3. **Tune mocks**: Improve mock responses to be more realistic
+3. **Tune mocks**: Improve mock responses to be more realistic; keep synced with real tools
 4. **Code over prompts**: Move complex workflows from prompt-driven to code-driven
 5. **Directional vs blocking**: Use for context rather than CI gates
 
@@ -245,5 +254,7 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 * [Building an internal agent: Evals to validate workflows](https://lethain.com/agents-evals/) - Will Larson (2025)
 * Sierra platform: Simulations approach for agent testing
+* [LangSmith Evaluation Platform](https://smith.langchain.com/) - Tool tracking and custom evaluators
+* [Promptfoo](https://github.com/promptfoo/promptfoo) - Mock API responses and assertion-based testing
 * Related: [Stop Hook Auto-Continue Pattern](stop-hook-auto-continue-pattern.md) - Post-execution testing
 * Related: [Agent Reinforcement Fine-Tuning](agent-reinforcement-fine-tuning.md) - Training on agent workflows

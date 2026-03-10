@@ -1,14 +1,26 @@
 {
   "title": "Rich Feedback Loops > Perfect Prompts",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Thorsten Ball", "Quinn Slack"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Thorsten Ball",
+    "Quinn Slack"
+  ],
   "category": "Feedback Loops",
   "source": "https://www.nibzard.com/ampcode",
-  "tags": ["feedback", "testing", "reliability"],
+  "tags": [
+    "feedback",
+    "testing",
+    "reliability",
+    "user-feedback",
+    "positive-reinforcement",
+    "corrections"
+  ],
   "slug": "rich-feedback-loops",
   "id": "rich-feedback-loops-perfect-prompts",
-  "summary": "## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.",
-  "updated_at": "2026-01-05",
-  "body": "\n## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.\n\n## Solution\nExpose **iterative, machine-readable feedback**—compiler errors, test failures, linter output, screenshots—after every tool call.\nThe agent uses diagnostics to plan the next step, leading to emergent self-debugging.\n\nModern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).\n\n## Example\n```mermaid\nsequenceDiagram\n  Agent->>CLI: go test ./...\n  CLI-->>Agent: FAIL pkg/auth auth_test.go:42 expected 200 got 500\n  Agent->>File: open auth.go\n  Agent->>File: patch route handler\n  Agent->>CLI: go test ./...\n  CLI-->>Agent: PASS 87/87 tests\n```\n\n## References\n\n* Raising An Agent - Episode 1 & 3 discussions on \"give it errors, not bigger prompts.\"\n* [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops\n\n[Source](https://www.nibzard.com/ampcode)\n"
+  "summary": "Polishing a single prompt can't cover every edge case; agents need ground truth to self correct.",
+  "updated_at": "2026-03-10",
+  "body": "\n## Problem\n\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.\n\nAdditionally, agents need to integrate **human feedback** (positive and corrective) to improve session quality over time. Projects that better respond to user feedback have fewer corrections and better outcomes.\n\n## Solution\n\nExpose **iterative, machine-readable feedback**—compiler errors, test failures, linter output, screenshots—after every tool call.\nThe agent uses diagnostics to plan the next step, leading to emergent self-debugging.\n\n**Integrate human feedback patterns:**\n\n- **Recognize positive feedback** to reinforce patterns that work—positive signals are training data, not politeness\n- **Learn from corrections** to avoid repeating mistakes\n- **Adapt based on user communication style** and preferences\n- **Track what works** for specific users over time\n\n**Tool design matters:** Structured outputs (JSON, exit codes, error objects) are more effective than natural language for agent self-correction.\n\n**Evidence from 88 session analysis:**\n\n| Project | Positive | Corrections | Success Rate |\n|---------|----------|-------------|--------------|\n| nibzard-web | 8 | 2 | High (80%) |\n| 2025-intro-swe | 1 | 0 | High (100%) |\n| awesome-agentic-patterns | 1 | 5 | Low (17%) |\n| skills-marketplace | 0 | 2 | Low (0%) |\n\n**Key insight**: Projects with more positive feedback had better outcomes. Reinforcement works—it's training data that teaches the agent what *to* do, whereas corrections only teach what *not* to do.\n\nModern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).\n\n## Example\n\n```mermaid\nsequenceDiagram\n  Agent->>CLI: go test ./...\n  CLI-->>Agent: FAIL pkg/auth auth_test.go:42 expected 200 got 500\n  Agent->>File: open auth.go\n  Agent->>File: patch route handler\n  Agent->>CLI: go test ./...\n  CLI-->>Agent: PASS 87/87 tests\n```\n\n## How to use it\n\n- Use this when agent quality improves only after iterative critique or retries.\n- Start with one objective metric and one feedback loop trigger.\n- Record failure modes so each loop produces reusable learning artifacts.\n\n## Trade-offs\n\n* **Pros:** Turns repeated failures into measurable improvements over time.\n* **Cons:** Can increase runtime and operational cost due to iterative passes.\n\n## References\n\n* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis showing positive feedback correlation with better session outcomes (nibzard-web: 8 positive, 2 corrections vs. awesome-agentic-patterns: 1 positive, 5 corrections)\n* Raising An Agent - Episode 1 & 3 discussions on \"give it errors, not bigger prompts.\"\n* [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops\n* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., 2023) - agents learn from past failures through self-reflection and memory\n* [Self-Refine: LLMs Can Self-Correct Through Self-Feedback](https://arxiv.org/abs/2303.08972) (Madaan et al., 2023) - iterative refinement with self-generated critique\n\n[Source](https://www.nibzard.com/ampcode)\n"
 }

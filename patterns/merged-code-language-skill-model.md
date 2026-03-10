@@ -1,25 +1,11 @@
 ---
-title: Merged Code + Language Skill Model
+title: "Merged Code + Language Skill Model"
 status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Anonymous Speaker (Open Source Agent RL Talk)
-  - Will Brown (Prime Intellect Talk)
-category: Reliability & Eval
-source: 'https://www.youtube.com/watch?v=Xkwok_XXQgw'
-tags:
-  - model-merging
-  - transfer-learning
-  - coding-agent
-  - multilingual
-slug: merged-code-language-skill-model
-id: merged-code-language-skill-model
-summary: >-
-  Decentralized training with model merging—train language and code specialists
-  independently then combine via weight averaging—enabling parallel R&D without
-  massive centralized compute while preserving both skill sets.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
+category: "Reliability & Eval"
+source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
+tags: [model-merging, transfer-learning, coding-agent, multilingual]
 ---
 
 ## Problem
@@ -41,9 +27,11 @@ Adopt a **decentralized training + model merging** approach:
 - Independently fine-tune the same base LLM architecture on code-specific corpora: open-source repositories, coding challenge datasets, and code-comment pairs.
 - Save checkpoint `code-specialist-ckpt.pt`.
 
-**3. Weight Averaging Merge**
-- Use simple arithmetic weight averaging (or Fisher-weighted averaging) to combine `lang-specialist-ckpt.pt` and `code-specialist-ckpt.pt` into `merged-agent-ckpt.pt`.
-- Optionally, follow with a **short fine-tuning** on a mixed dataset (small NL+code tasks) to smooth out any conflicts.
+**3. Merge Techniques**
+- **Simple Weight Averaging:** Arithmetic mean of model weights (Model Soups, NeurIPS 2022).
+- **Task Arithmetic:** Treat fine-tuning as vector operations—add/subtract task vectors: `W_merged = W_base + Σ λ_i * τ_i` where `τ_task = W_finetuned - W_base` (ICLR 2024).
+- **TIES Merging:** Trim top-k% parameters, elect sign direction, merge only non-conflicting parameters to reduce interference (arXiv 2023).
+- **Fisher-weighted:** Weight parameters by Fisher Information Matrix to preserve important updates (Elastic Weight Consolidation, PNAS 2017).
 
 **4. Iterative Merge Rounds**
 - As new specialists (e.g., a "Python Testing Specialist" or "Security Static Analysis Specialist") become available, periodically merge them into the main agent.
@@ -62,8 +50,8 @@ python merge_models.py \
 ## How to use it
 
 - **Architectural Consistency:** Ensure all specialist models share identical architecture (e.g., 1.8 B parameters, same number of layers).
-- **Merging Tools:** Use established scripts (e.g., `transformers`' `merge_models`) or custom code that applies Fisher Information Matrix weighting when averaging to minimize interference.
-- **Post-Merge Validation:** Run a **benchmark suite** covering both NL tasks (e.g., summarization, QA) and code tasks (e.g., code generation, bug fixing).
+- **Merging Tools:** Use MergeKit (Arcee AI) for production-ready merging with Task Arithmetic, TIES, DARE, and SLERP support. Hugging Face Transformers provides built-in averaging utilities.
+- **Post-Merge Validation:** Run a **benchmark suite** covering both NL tasks (e.g., summarization, QA) and code tasks (e.g., code generation, bug fixing) to detect interference.
 
 ## Trade-offs
 
@@ -77,4 +65,7 @@ python merge_models.py \
 ## References
 
 - Based on "model merging works weirdly well" observation from the Open Source Agent RL talk (May 2025) and Will Brown's remarks on decentralized skill acquisition.
-- Cohere's "Command A" whitepaper on merging specialty models.
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
+- Model Soups (Ilharco et al., NeurIPS 2022): https://arxiv.org/abs/2203.05482
+- Task Arithmetic (Ilharco et al., ICLR 2024): https://arxiv.org/abs/2212.04089
+- TIES-Merging (Yadav et al., 2023): https://arxiv.org/abs/2306.01708

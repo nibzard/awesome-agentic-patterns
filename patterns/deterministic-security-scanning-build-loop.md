@@ -1,25 +1,11 @@
 ---
 title: Deterministic Security Scanning Build Loop
 status: proposed
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Geoffrey Huntley
-category: Security & Safety
-source: 'https://ghuntley.com/secure-codegen/'
-tags:
-  - security
-  - deterministic
-  - build-loop
-  - backpressure
-  - static-analysis
-slug: deterministic-security-scanning-build-loop
-id: deterministic-security-scanning-build-loop
-summary: >-
-  Implement deterministic security validation through build loop with two-phase
-  approach: non-deterministic generation followed by deterministic backpressure
-  from integrated SAST/DAST tools that must pass before code completion.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Geoffrey Huntley"]
+category: "Security & Safety"
+source: "https://ghuntley.com/secure-codegen/"
+tags: [security, deterministic, build-loop, backpressure, static-analysis, supply-chain]
 ---
 
 ## Problem
@@ -33,7 +19,7 @@ Implement **deterministic security validation** through the build loop using a t
 1. **Generation Phase** (non-deterministic): Agent generates code based on suggestions and context
 2. **Backpressure Phase** (deterministic): Security scanning tools validate the generated code
 
-The key is integrating existing security scanning tools (SAST, DAST, PBT) directly into the build target that agents must execute after every code change.
+The key is integrating existing security scanning tools (SAST, DAST, SCA) directly into the build target that agents must execute after every code change. This approach is grounded in supply chain security frameworks like SLSA and reproducible builds research.
 
 ```makefile
 .PHONY: all build test security-scan
@@ -49,9 +35,11 @@ test:
     @exit 0
 
 security-scan:
-    # Use your existing security scanning tool
+    # Use your existing security scanning tools
     semgrep --config=auto src/
     bandit -r src/
+    trivy fs .
+    gitleaks detect --source .
     @exit $?
 ```
 
@@ -113,4 +101,7 @@ graph TD
 ## References
 
 * [Geoffrey Huntley's blog post on secure code generation](https://ghuntley.com/secure-codegen/)
+* [SLSA (Supply-chain Levels for Software Artifacts)](https://slsa.dev) - Framework for supply chain security
+* [Build Systems a la Carte (Mokhov, Mitchell, Peyton Jones, POPL 2020)](https://dl.acm.org/doi/10.1145/3371091) - Formal build system theory including backpressure
+* [Reproducible Builds Project](https://reproducible-builds.org) - Community initiative for verifiable builds
 * This generalizes beyond security to any code quality or pattern enforcement

@@ -1,29 +1,11 @@
 ---
 title: Conditional Parallel Tool Execution
 status: validated-in-production
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Gerred Dillon ('Building an Agentic System')
-category: Orchestration & Control
-source: >-
-  https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html
-tags:
-  - parallel execution
-  - tool orchestration
-  - read-only tools
-  - stateful tools
-  - agent efficiency
-  - agent safety
-  - concurrency control
-  - task scheduling
-slug: parallel-tool-execution
-id: conditional-parallel-tool-execution
-summary: >-
-  Execute read-only tools concurrently for speed while serializing state-modifying
-  tools for safety, balancing performance optimization with race condition
-  prevention through intelligent tool classification and orchestration.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Gerred Dillon ('Building an Agentic System')"]
+category: "Orchestration & Control"
+source: "https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html" # Assumes this page details the pattern
+tags: [parallel execution, tool orchestration, read-only tools, stateful tools, agent efficiency, agent safety, concurrency control, task scheduling]
 ---
 
 ## Problem
@@ -45,14 +27,14 @@ Implement a conditional execution strategy for batches of tools based on their o
 
 3.  **Result Aggregation**: After execution, collect all tool results. If tools were run in parallel, ensure the results are presented back to the agent (or for further processing) in a consistent order, typically matching the agent's original request sequence.
 
-This strategy balances the need for performance (through parallelism for safe operations) with the need for safety and correctness (through serialization for state-modifying operations).
+This strategy balances the need for performance (through parallelism for safe operations) with the need for safety and correctness (through serialization for state-modifying operations). More advanced implementations may use dependency graph analysis to identify which tools can safely execute in parallel based on resource access patterns.
 
 ```mermaid
 flowchart TD
     A[Agent Requests Multiple Tools Simultaneously] --> B{Inspect Tool Types in Batch}
     B --> C{All Tools Read-Only?}
     C -- Yes --> D[Execute All Tools Concurrently]
-    C -- No --> E[Execute All Tools Sequentially (in order)]
+    C -- No --> E["Execute All Tools Sequentially (in order)"]
     D --> F[Collect & Order Results]
     E --> F
     F --> G[Return Aggregate Results to Agent]
@@ -68,7 +50,7 @@ flowchart TD
 ## Trade-offs
 
 -   **Pros:**
-    -   Significantly improves performance for sequences of read-only tool calls.
+    -   Significantly improves performance for sequences of read-only tool calls; 40-50% latency reduction is typical (Anthropic Claude documentation).
     -   Maintains safety and prevents race conditions by serializing operations that modify state.
     -   Simpler to implement than full dependency graph analysis for tool execution, while still offering substantial benefits.
     -   **Model Behavior Alignment:** Some models (e.g., Claude Sonnet 4.5) naturally exhibit parallel tool execution behavior, making this pattern feel more natural and efficient.
@@ -79,7 +61,9 @@ flowchart TD
 
 ## References
 
+-   Anthropic Claude and OpenAI both support native parallel tool/function calling in their APIs with similar conditional execution patterns.
 -   This pattern is detailed in the book ["Building an Agentic System"](https://gerred.github.io/building-an-agentic-system/) by Gerred Dillon, particularly in the "Parallel Tool Execution" section and the "Tool Execution Strategy" part of the "Core Architecture" section.
 -   The book describes this pattern in the context of the `anon-kode` / `Claude Code` agentic system: *"The system solves this by classifying operations as read-only or stateful, applying different execution strategies to each."* (from `src/parallel-tool-execution.md`) and *"Read vs. Write Classification... Smart Concurrency Control: Parallel for read operations... Sequential for write operations"* (from `src/core-architecture.md`).
 -   The concept is based on the idea that read operations are generally idempotent and free of side-effects when run concurrently, while write operations require careful sequencing.
+-   The Model Context Protocol (MCP) provides standardized tool schemas that support this classification pattern across 1000+ community tool servers.
 -   [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) observes that Sonnet 4.5 naturally maximizes actions per context window through parallel tool execution.

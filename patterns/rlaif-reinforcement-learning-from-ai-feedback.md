@@ -1,27 +1,11 @@
 ---
-title: RLAIF (Reinforcement Learning from AI Feedback)
+title: "RLAIF (Reinforcement Learning from AI Feedback)"
 status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Anthropic
-  - Google DeepMind
-category: Reliability & Eval
-source: 'https://arxiv.org/abs/2212.08073'
-tags:
-  - rlhf
-  - rlaif
-  - constitutional-ai
-  - synthetic-data
-  - feedback
-  - alignment
-  - evaluation
-slug: rlaif-reinforcement-learning-from-ai-feedback
-id: rlaif-reinforcement-learning-from-ai-feedback
-summary: >-
-  TODO: Add a concise summary for "RLAIF (Reinforcement Learning from AI
-  Feedback)" describing the pattern's purpose and key benefits.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Anthropic", "Google DeepMind"]
+category: "Reliability & Eval"
+source: "https://arxiv.org/abs/2212.08073"
+tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, evaluation]
 ---
 
 ## Problem
@@ -30,14 +14,14 @@ Traditional Reinforcement Learning from Human Feedback (RLHF) requires extensive
 
 ## Solution
 
-RLAIF uses AI models themselves to generate preference feedback and evaluation data, dramatically reducing costs to less than $0.01 per annotation while maintaining or improving quality. The approach involves:
+RLAIF replaces human annotators with a supervisory AI model that generates preference labels, which train a reward model that optimizes the policy via PPO (or similar RL algorithms). The approach involves:
 
 1. **AI-Generated Critiques**: Use a language model to evaluate outputs based on a set of principles or constitution
 2. **Preference Data Generation**: Have the AI model compare pairs of responses and select the better one according to specified criteria
 3. **Synthetic Training Data**: Generate high-quality training examples using the AI's own capabilities
 4. **Constitutional Principles**: Guide the feedback process with explicit rules rather than implicit human preferences
 
-This technique forms the foundation of Constitutional AI and has become a default method in post-training and RLHF literature.
+This technique forms the foundation of Constitutional AI. Most production systems use hybrid approaches combining RLAIF (for scale) with RLHF (for quality validation).
 
 ## Example
 
@@ -98,12 +82,20 @@ class RLAIFAgent:
 
 **Cons:**
 - **Bias Amplification**: May reinforce existing model biases
-- **Limited Novelty**: Cannot provide truly novel insights beyond model's training
-- **Quality Variance**: Feedback quality depends on the critic model's capabilities
+- **Alignment Dependency**: Inherits alignment properties of the supervisory model
+- **Chicken-and-Egg Problem**: Requires a capable supervisory model to train frontier models
 - **Principle Design**: Requires careful crafting of constitutional principles
+
+## How to use it
+
+- Use this when you need scalable feedback for alignment training beyond human annotation capacity
+- Start with a well-aligned supervisory model capable of evaluating your target domain
+- Implement hybrid RLAIF/RLHF for critical applications where human validation is important
+- Use constitutional principles for explicit control over evaluation criteria
 
 ## References
 
 - [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073)
-- [RLHF Book - Constitutional AI & AI Feedback](https://rlhfbook.com/c/13-cai.html)
+- [RLAIF: Scaling Reinforcement Learning from Human Feedback with AI Feedback (Google DeepMind, 2023)](https://arxiv.org/abs/2309.00267)
+- [Self-Taught Evaluators (Meta AI, 2024)](https://arxiv.org/abs/2408.02666)
 - [OpenAI's CriticGPT announcement (July 2024)](https://openai.com/research/criticgpt)

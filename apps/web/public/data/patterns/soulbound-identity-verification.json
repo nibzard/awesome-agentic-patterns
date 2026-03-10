@@ -1,0 +1,26 @@
+{
+  "title": "Soulbound Identity Verification",
+  "status": "emerging",
+  "authors": [
+    "Eiji Motomura (@EijiAC24)"
+  ],
+  "based_on": [
+    "ERC-5192 Soulbound Tokens",
+    "Chitin (example implementation)"
+  ],
+  "category": "Security & Safety",
+  "source": "https://eips.ethereum.org/EIPS/eip-5192",
+  "tags": [
+    "identity",
+    "verification",
+    "trust",
+    "soulbound-token",
+    "blockchain",
+    "agent-identity"
+  ],
+  "slug": "soulbound-identity-verification",
+  "id": "soulbound-identity-verification",
+  "summary": "As autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult.",
+  "updated_at": "2026-03-10",
+  "body": "\n## Problem\n\nAs autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations.\n\n## Solution\n\nBind agent identity and mutable metadata to a non-transferable credential and record identity-bearing state transitions in a tamper-resistant log.\n\n**Pattern flow:**\n\n1. Compute a stable hash of the normalized system prompt/state and commit it at registration.\n2. Issue a non-transferable identity credential (for example an SBT-style token).\n3. Record meaningful changes (prompt updates, operator changes, policy updates) as signed events.\n4. Require verifiers to check both credential validity and state continuity before trusting outputs.\n\n```mermaid\ngraph TD\n    A[Agent State] --> B[Normalize + Hash]\n    B --> C[Non-transferable Identity Credential]\n    C --> D[Verifier Checks Credential]\n    E[Agent B] --> F[Verify Hash + Chronicle]\n    F --> G[Trust Decision]\n```\n\n## Evidence\n\n- **Evidence Grade:** `medium`\n- **Most Valuable Findings:** Non-transferable credentials prevent credential theft and impersonation; hash-based state commitments enable verifiable continuity checks without requiring identity disclosure.\n- **Unverified / Unclear:** Long-term operational costs and scalability across large agent fleets require further production validation.\n\n## When to use\n\n- Before delegating work to another agent.\n- In agent marketplaces or multi-org delegations.\n- For compliance workflows requiring auditable agent-state continuity.\n\n## Trade-offs\n\n- **Pros:** Non-transferability prevents credential delegation and theft; tamper-resistant logging provides auditable state history; enables verification without identity disclosure.\n- **Cons:** Requires external registry and append-only log infrastructure; hash commitments verify state integrity but not semantic correctness; operational overhead for issuing/rotating credentials.\n\n## Known Implementations\n\n- [Chitin](https://chitin.id)\n- [Chitin MCP Server](https://www.npmjs.com/package/chitin-mcp-server)\n- [Chitin Contracts](https://github.com/chitin-id/chitin-contracts)\n\n## How to use it\n\n- Use this when tool access, data exposure, or action authority must be tightly controlled.\n- Start with deny-by-default policy and minimal required privileges.\n- Continuously audit logs for attempted policy bypass and anomalous behavior.\n\n## References\n\n- ERC-5192: Non-Transferable Tokens (Soulbound Tokens) - https://eips.ethereum.org/EIPS/eip-5192\n- Vitalik Buterin on Soulbound Items - https://vitalik.ca/general/2022/01/26/soulbound.html\n"
+}

@@ -41,6 +41,12 @@ Design agent systems to start with low-complexity, high-reliability tasks and pr
 
 **Core principles:**
 
+**Grounded in learning science:**
+
+- Draws from curriculum learning theory and scaffolding research
+- Optimal learning occurs at 70-90% success rate (Zone of Proximal Development)
+- Working memory limits require gradual complexity increase
+
 **Start with proven sweet spots:**
 
 - Low cognitive load tasks with high repetition
@@ -57,6 +63,7 @@ Tier 1 (Deploy immediately):
 - Content categorization
 - Information extraction
 - Template-based generation
+- Working memory: 2-3 items
 
 Tier 2 (Unlock with validation):
 
@@ -64,6 +71,7 @@ Tier 2 (Unlock with validation):
 - Conditional logic with structured outputs
 - Integration with multiple tools
 - Personalization and adaptation
+- Working memory: 4-5 items
 
 Tier 3 (Future unlock):
 
@@ -71,6 +79,7 @@ Tier 3 (Future unlock):
 - Complex reasoning chains
 - Creative problem-solving
 - Novel task generalization
+- Working memory: 7+ items
 ```
 
 **Progressive unlock mechanisms:**
@@ -155,15 +164,14 @@ class TaskComplexity:
 ```yaml
 capability_gates:
   tier1_to_tier2:
-    
-- accuracy_threshold: 0.95
+    - accuracy_threshold: 0.95
     - human_approval_rate: 0.90
     - volume_processed: 1000
     - time_in_production: 30_days
+    - success_rate_target: 0.70-0.90  # ZPD optimal zone
 
   tier2_to_tier3:
-    
-- accuracy_threshold: 0.98
+    - accuracy_threshold: 0.98
     - human_override_rate: 0.05
     - volume_processed: 10000
     - stakeholder_confidence: high
@@ -200,6 +208,7 @@ class AgentCapabilities {
 - Review error patterns and edge cases
 - Gradually expand agent authority
 - Maintain rollback capability
+- If success rate >90%, increase task difficulty; if <70%, decrease it
 
 **Prerequisites:**
 
@@ -240,4 +249,7 @@ class AgentCapabilities {
 - [Vercel: What We Learned Building Agents](https://vercel.com/blog/what-we-learned-building-agents-at-vercel) - "Start with low-cognitive-load automation, then evolve as capabilities mature"
 - [Anthropic: Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - Task complexity and model capability matching
 - [OpenAI: GPT Best Practices](https://platform.openai.com/docs/guides/prompt-engineering) - Matching task complexity to model strengths
+- Bengio et al. ["Curriculum Learning"](https://www.icml.cc/2009/papers/54.pdf) (ICML 2009) - Easy-to-hard training improves generalization
+- Vygotsky, L. S. ["Mind in Society"](https://books.google.com/books?id=c3lAAAAAIAAJ) (1978) - Zone of Proximal Development: optimal learning at 70-90% success rate
+- Wood, Bruner, Ross ["The role of tutoring in problem solving"](https://doi.org/10.1111/j.1469-7610.1976.tb00381.x) (1976) - Scaffolding theory: temporary support that fades with competence
 - Related patterns: [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md), [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md)

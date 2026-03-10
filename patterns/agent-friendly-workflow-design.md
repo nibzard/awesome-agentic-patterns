@@ -1,31 +1,19 @@
 ---
 title: Agent-Friendly Workflow Design
 status: best-practice
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Amjad Masad
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Amjad Masad"]
 category: UX & Collaboration
-source: 'https://www.nibzard.com/silent-revolution'
-tags:
-  - human-agent collaboration
-  - workflow design
-  - agent autonomy
-  - task decomposition
-  - HCI
-slug: agent-friendly-workflow-design
-id: agent-friendly-workflow-design
-summary: >-
-  Consciously design workflows with clear goals, appropriate autonomy, structured
-  I/O, and feedback loops to maximize agent performance by aligning tasks with
-  AI strengths.
-updated_at: '2026-01-05'
+source: "https://www.nibzard.com/silent-revolution"
+tags: [human-agent collaboration, workflow design, agent autonomy, task decomposition, HCI]
 ---
 
 ## Problem
+
 Simply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may struggle or produce suboptimal results. Agents perform best when given some degree of freedom and when the tasks are structured in a way that aligns with their strengths.
 
 ## Solution
+
 Consciously design and adapt workflows, task structures, and human-agent interaction points to be "agent-friendly." This involves:
 
 - **Clear Goal Definition:** Provide clear, high-level goals rather than overly prescriptive, step-by-step instructions for every detail.
@@ -33,10 +21,13 @@ Consciously design and adapt workflows, task structures, and human-agent interac
 - **Structured Input/Output:** Define clear interfaces for how the agent receives information and delivers results.
 - **Iterative Feedback Loops:** Establish mechanisms for the agent to present intermediate work and for humans to provide corrective feedback without stifling the agent.
 - **Tool Provisioning:** Ensure the agent has access to the necessary tools and understanding of how to use them for the given workflow.
+- **Planning-Execution Separation:** Separate planning from execution—never implement before reviewing and approving the plan. This dramatically reduces waste and enables early course correction.
+- **Clear Handoff Protocols:** For multi-agent systems, define explicit handoff criteria, message formats, and context preservation to prevent infinite loops and responsibility confusion.
 
 This approach aims to create a collaborative environment where the agent's capabilities are maximized by a thoughtfully designed process.
 
 ## Example (workflow adaptation)
+
 ```mermaid
 flowchart TD
     A[Traditional Workflow] --> B{Agent-Friendly?}
@@ -55,7 +46,25 @@ flowchart TD
     I --> J[Enhanced Agent Performance]
 ```
 
+## How to use it
+
+- Use this when humans and agents share ownership of work across handoffs.
+- Start with clear interaction contracts for approvals, overrides, and escalation.
+- Capture user feedback in structured form so prompts and workflows can improve.
+- **Start simple:** Begin with a single agent and limited scope; complexity increases exponentially, not linearly, as agents are added.
+- **Design observability from day one:** Complete tracing is mandatory for debugging multi-step agent execution.
+- **Deploy to observe:** Use production as the learning environment—iterate in days rather than perfecting for months before launch.
+
+## Trade-offs
+
+* **Pros:** Creates clearer human-agent handoffs, better operational trust, and enables rapid iteration based on real-world feedback.
+* **Cons:** Needs explicit process design and coordination across teams. Multi-agent systems can become exponentially complex—fewer, well-designed agents often outperform complex architectures.
+
 ## References
+
 - Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
 
 [Source](https://www.nibzard.com/silent-revolution)
+
+- [OpenAI Swarm](https://github.com/openai/swarm) - Lightweight multi-agent orchestration with handoff patterns
+- [Agent Engineering: Deploy to Observe](https://www.anthropic.com/index/agent-engineering) - Production deployment patterns for reliable agent systems

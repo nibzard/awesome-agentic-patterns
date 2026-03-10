@@ -1,27 +1,15 @@
 ---
 title: Lethal Trifecta Threat Model
 status: best-practice
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Simon Willison
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Simon Willison"]
 category: Reliability & Eval
-source: 'https://simonwillison.net/2025/Jun/16/lethal-trifecta/'
-tags:
-  - security
-  - prompt-injection
-  - threat-model
-  - data-exfiltration
-slug: lethal-trifecta-threat-model
-id: lethal-trifecta-threat-model
-summary: >-
-  Combining three agent capabilities—access to private data, exposure to untrusted
-  content, and ability to externally communicate—creates a straightforward path
-  for prompt-injection attackers to steal sensitive information.
-updated_at: '2026-01-05'
+source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
+tags: [security, prompt-injection, threat-model, data-exfiltration]
 ---
 
 ## Problem
+
 Combining three agent capabilities—
 1. **Access to private data**
 2. **Exposure to untrusted content**
@@ -31,6 +19,7 @@ Combining three agent capabilities—
 LLMs cannot reliably distinguish "good" instructions from malicious ones once they appear in the same context window.
 
 ## Solution
+
 Adopt a **Trifecta Threat Model**:  
 
 - **Audit every tool** an agent can call and classify it against the three capabilities.  
@@ -63,4 +52,9 @@ if tool.can_externally_communicate and
 ## References
 
 * Willison, *The Lethal Trifecta for AI Agents* (June 16 2025).
-* "Design Patterns for Securing LLM Agents against Prompt Injections" (June 13 2025).
+* Beurer-Kellner et al., *Design Patterns for Securing LLM Agents against Prompt Injections* (arXiv:2506.08837, June 2025).
+
+- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/
+- Academic source: https://doi.org/10.48550/arXiv.2506.08837
+
+> **Note on terminology**: This pattern describes Simon Willison's prompt injection threat model (private data + untrusted content + external communication), distinct from the AI safety literature's "lethal trifecta" (advanced capabilities + agentic behavior + situational awareness).

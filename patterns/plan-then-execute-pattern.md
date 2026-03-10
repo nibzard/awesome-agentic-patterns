@@ -1,34 +1,27 @@
 ---
 title: Plan-Then-Execute Pattern
-status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Luca Beurer-Kellner et al. (2025)
+status: established
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
-source: 'https://arxiv.org/abs/2506.08837'
-tags:
-  - planning
-  - control-flow-integrity
-  - prompt-injection
-slug: plan-then-execute-pattern
-id: plan-then-execute-pattern
-summary: >-
-  ## Problem
-
-  If tool outputs can alter the *choice* of later actions, injected instructions
-  may redirect the agent toward malicious steps.
-updated_at: '2026-01-05'
+source: "https://arxiv.org/abs/2506.08837"
+tags: [planning, control-flow-integrity, prompt-injection]
 ---
 
 ## Problem
-If tool outputs can alter the *choice* of later actions, injected instructions may redirect the agent toward malicious steps.
+
+When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next. That makes the control flow itself attackable: a malicious intermediate result can redirect the agent into unsafe tools or unauthorized operations.
 
 ## Solution
+
 Split reasoning into two phases:
 
 1. **Plan phase** – LLM generates a *fixed* sequence of tool calls **before** it sees any untrusted data.  
 2. **Execution phase** – Controller runs that exact sequence. Tool outputs may shape *parameters*, but **cannot change which tools run**.
+
+This separates strategic decisions from data-dependent execution. The planner commits to a bounded action graph up front, and the executor enforces that graph deterministically, which preserves flexibility on arguments while protecting control-flow integrity.
+
+**Benefits**: Planning before execution preserves control-flow integrity and makes complex tasks easier to review before execution.
 
 ```pseudo
 plan = LLM.make_plan(prompt)      # frozen list of calls
@@ -64,6 +57,19 @@ The threshold of what requires planning changes with each model generation:
 
 This means simpler tasks that once required planning can now be one-shot with more capable models (e.g., Sonnet 4.5 vs. Opus 4.1).
 
+### LangChain Plan-and-Execute
+
+LangChain implements this pattern with separate planner and executor agents:
+
+```python
+from langchain.experimental.plan_and_execute import PlanAndExecute
+
+agent = PlanAndExecute(
+    planner=planner,    # Generates step-by-step plan
+    executor=executor,  # Executes each step sequentially
+)
+```
+
 ## Trade-offs
 
 * **Pros:** Strong control-flow integrity; moderate flexibility.
@@ -71,7 +77,7 @@ This means simpler tasks that once required planning can now be one-shot with mo
 
 ## References
 
-* Beurer-Kellner et al., §3.1 (2) Plan-Then-Execute.
+* Beurer-Kellner et al. (2025), §3.1 (2) Plan-Then-Execute.
 * Boris Cherny (Anthropic): "Plan mode... you kind of have to understand the limits and where you get in the loop. Plan mode can 2-3x success rates pretty easily if you align on the plan first."
 * Boris Cherny: "The boundary changes with every model... newer models are more intelligent so the boundary of what you need plan mode for got pushed out."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)

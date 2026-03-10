@@ -1,32 +1,19 @@
 ---
 title: Spectrum of Control / Blended Initiative
 status: validated-in-production
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Aman Sanger (Cursor)
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
-source: 'https://www.youtube.com/watch?v=BGgsoIgbT_Y'
-tags:
-  - human-agent-collaboration
-  - autonomy-spectrum
-  - interactive-control
-  - task-delegation
-  - code-editing
-  - ide-integration
-slug: spectrum-of-control-blended-initiative
-id: spectrum-of-control-blended-initiative
-summary: >-
-  Design human-agent interaction supporting autonomy spectrum from tab completion
-  (low) to background agents creating entire PRs (high), enabling seamless switching
-  between direct control and task delegation based on complexity and user familiarity.
-updated_at: '2026-01-05'
+source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
+tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-delegation, code-editing, ide-integration]
 ---
 
 ## Problem
+
 AI agents for tasks like coding can offer various levels of assistance, from simple completions to complex, multi-step operations. A one-size-fits-all approach to agent autonomy doesn't cater to the diverse needs of users or the varying complexity of tasks. Users need to fluidly shift between direct control and delegating tasks to the agent.
 
 ## Solution
+
 Design the human-agent interaction to support a spectrum of control, allowing users to choose the level of agent autonomy appropriate for the current task or their familiarity with the codebase. This involves providing multiple modes or features for interaction:
 
 -   **Low Autonomy (High Human Control):** Simple, inline assistance like tab-completion for code, where the human is primarily driving and the AI augments their input.
@@ -36,7 +23,14 @@ Design the human-agent interaction to support a spectrum of control, allowing us
 
 Users can seamlessly switch between these modes depending on their needs, allowing for a "blended initiative" where both human and AI contribute effectively.
 
+## Evidence
+
+- **Evidence Grade:** `high`
+- **Most Valuable Find:** Concept has strong academic foundations dating to Sheridan-Verplank (1978) establishing Levels of Automation (LOA); Parasuraman et al. (2000) provided widely-cited 4-stage model; universal adoption across major AI coding tools with similar 4-5 level spectrums
+- **Unverified:** Longitudinal studies on optimal control level selection heuristics
+
 ## Example
+
 ```mermaid
 flowchart LR
     subgraph "Human Control"
@@ -58,5 +52,24 @@ flowchart LR
     D --> A
 ```
 
+## How to use it
+
+- Use this when humans and agents share ownership of work across handoffs.
+- Start with clear interaction contracts for approvals, overrides, and escalation.
+- Capture user feedback in structured form so prompts and workflows can improve.
+- Implement mode-switching controls (keyboard shortcuts, UI toggles) for explicit autonomy level selection.
+- Pair with human-in-the-loop approval at higher autonomy levels for high-risk operations.
+
+## Trade-offs
+
+- **Pros:** Creates clearer human-agent handoffs, builds trust through progressive autonomy, enables error containment at lower levels, allows context-appropriate control selection
+- **Cons:** Multiple modes can confuse users if not clearly presented, requires building/maintaining several interaction paths, users may struggle to choose appropriate autonomy level
+
 ## References
+
 - Aman Sanger (Cursor) extensively discusses this spectrum at 0:05:16-0:06:44, detailing different features like tab completion, Command K, Agent for multi-file edits, and Background Agent for entire PRs, describing it as "almost a spectrum."
+- Sheridan, T. B., & Verplank, W. L. (1978). Human and Computer Control of Undersea Teleoperators. https://doi.org/10.1109/THMS.1978.4309360
+- Parasuraman, R., et al. (2000). A Model for Types and Levels of Human Interaction with Automation. https://doi.org/10.1109/3477.866864
+- Horvitz, J. (1999). Principles of mixed-initiative user interfaces. CHI '99. https://doi.org/10.1145/303426.303426
+
+- Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

@@ -205,8 +205,12 @@ cython_debug/
 .cursorindexingignore
 
 node_modules/
-.vercel
+.vercel/
 
 # Pagefind search index (generated during build)
 apps/web/public/pagefind/
 .env*.local
+
+# Claude research loop state/logs
+research/logs/
+research/pattern-research-tracker.json

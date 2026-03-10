@@ -1,28 +1,11 @@
 ---
 title: Stop Hook Auto-Continue Pattern
 status: emerging
-authors:
-  - Nikola Balic (@nibzard)
-based_on:
-  - Boris Cherny (Anthropic)
-  - Claude Code Users
-category: Orchestration & Control
-source: >-
-  https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
-tags:
-  - hooks
-  - automation
-  - testing
-  - determinism
-  - success-criteria
-  - continuous-execution
-slug: stop-hook-auto-continue-pattern
-id: stop-hook-auto-continue-pattern
-summary: >-
-  Use stop hooks to programmatically check success criteria after each agent turn,
-  automatically continuing execution until the task is genuinely complete, enabling
-  true task completion without manual intervention.
-updated_at: '2026-01-05'
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Boris Cherny (Anthropic)", "Reflexion (Shinn et al., NeurIPS 2023)", "Self-Refine (Madaan et al., ICLR 2023)"]
+category: "Orchestration & Control"
+source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
+tags: [hooks, automation, testing, determinism, success-criteria, continuous-execution]
 ---
 
 ## Problem
@@ -58,6 +41,15 @@ define_stop_hook() {
 ```
 
 **Combined with dangerous mode**: In containerized/sandboxed environments, this enables fully autonomous operation until success.
+
+## Evidence
+
+- **Evidence Grade:** `high`
+- **Most Valuable Findings:**
+  - Academic foundations: Reflexion (NeurIPS 2023) and Self-Refine (ICLR 2023) establish the `generate → verify → continue if needed` loop structure
+  - Hook-based execution control formally validated as a security pattern (Beurer-Kellner et al., 2025)
+  - Production implementations: Claude Code, LangGraph, AutoGen, GitHub Agentic Workflows
+- **Unverified / Unclear:** Cost vs. reliability trade-offs lack empirical quantification
 
 ## How to use it
 
@@ -127,3 +119,6 @@ Combine with dangerous mode in containers for autonomous operation:
 * Boris Cherny: "You can define a stop hook that's like, if the tests don't pass, keep going. Essentially you can just make the model keep going until the thing is done."
 * Boris Cherny: "This is insane when you combine it with the SDK and this kind of programmatic usage. This is a stochastic thing, it's non-deterministic, but with scaffolding you can get these deterministic outcomes."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* Shinn et al. (2023). [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366). NeurIPS.
+* Madaan et al. (2023). [Self-Refine: Large Language Models Can Self-Correct with Self-Feedback](https://arxiv.org/abs/2303.08119). ICLR.
+* Beurer-Kellner et al. (2025). [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837).
