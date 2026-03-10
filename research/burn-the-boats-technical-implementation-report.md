@@ -904,7 +904,7 @@ When properly implemented with appropriate safety measures, the pattern can acce
 
 - [Atomix: Timely, Transactional Tool Use for Reliable Agentic Workflows](https://arxiv.org/html/2602.14849v1) (Feb 2026) - Discusses agent frameworks, aborted vs. irreversible effects, and compensation for rollback
 
-- [Infrastructure for AI Agents](https://arxiv.org/abs/2506.XXXXX) (2025) - Commitment devices for AI agents including escrow payments, assurance contracts
+- ⚠️ [Infrastructure for AI Agents](https://arxiv.org/abs/2506.XXXXX) (2025) **INCOMPLETE arXiv ID** - Commitment devices for AI agents including escrow payments, assurance contracts
 
 ### Framework Documentation
 

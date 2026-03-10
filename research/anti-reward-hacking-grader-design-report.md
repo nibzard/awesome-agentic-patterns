@@ -916,14 +916,14 @@ Anthropic proposes two complementary metrics for agent evaluation:
 **Foundational**:
 - [Concrete Problems in AI Safety](https://arxiv.org/abs/1606.06565) (Amodei et al., 2016)
 - [AI Safety via Debate](https://arxiv.org/abs/1805.00899) (Irving et al., 2018)
-- [Defining and Characterizing Reward Hacking](https://arxiv.org/abs/2212.XXXXX) (Skalse et al., NeurIPS 2022)
+- ⚠️ [Defining and Characterizing Reward Hacking](https://arxiv.org/abs/2212.XXXXX) (Skalse et al., NeurIPS 2022) **INCOMPLETE arXiv ID**
 
 **Reward Hacking & Overoptimization**:
 - [Scaling Laws for Reward Model Overoptimization](https://arxiv.org/abs/2210.10760) (Gao et al., ICML 2023)
-- [Reward Model Ensembles Help Mitigate Overoptimization](https://arxiv.org/abs/2312.XXXXX) (Coste et al., ICLR 2024)
-- [RRM: Robust Reward Model Training](https://arxiv.org/abs/2312.XXXXX) (Liu et al., ICLR 2024)
-- [WARM: Weight Averaged Reward Models](https://arxiv.org/abs/2312.XXXXX) (Rame et al., ICML 2024)
-- [ODIN: Disentangled Reward](https://arxiv.org/abs/2312.XXXXX) (Chen et al., ICML 2024)
+- ⚠️ [Reward Model Ensembles Help Mitigate Overoptimization](https://arxiv.org/abs/2312.XXXXX) (Coste et al., ICLR 2024) **INCOMPLETE**
+- ⚠️ [RRM: Robust Reward Model Training](https://arxiv.org/abs/2312.XXXXX) (Liu et al., ICLR 2024) **INCOMPLETE**
+- ⚠️ [WARM: Weight Averaged Reward Models](https://arxiv.org/abs/2312.XXXXX) (Rame et al., ICML 2024) **INCOMPLETE**
+- ⚠️ [ODIN: Disentangled Reward](https://arxiv.org/abs/2312.XXXXX) (Chen et al., ICML 2024) **INCOMPLETE**
 
 **Constitutional AI & RLAIF**:
 - [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) (Anthropic, 2022)
@@ -933,31 +933,31 @@ Anthropic proposes two complementary metrics for agent evaluation:
 **LLM-as-a-Judge**:
 - [LLMs-as-Judges: Comprehensive Survey](https://arxiv.org/abs/2412.05579) (Li et al., 2024)
 - [From Generation to Judgment](https://arxiv.org/abs/2411.16594) (Li et al., 2024)
-- [Judging the Judges: Position Bias](https://arxiv.org/abs/2405.XXXXX) (2024)
+- ⚠️ [Judging the Judges: Position Bias](https://arxiv.org/abs/2405.XXXXX) (2024) **INCOMPLETE**
 - [LLMs Cannot Reliably Judge (Yet?)](https://arxiv.org/abs/2506.09443) (2025)
 - [Adversarial Attacks on LLM-as-a-Judge](https://arxiv.org/abs/2504.18333) (2025)
 - [Benchmarking Adversarial Robustness](https://arxiv.org/abs/2504.07887) (2025)
 
 **Multi-Agent Evaluation**:
 - [The Rise of Agent-as-a-Judge](https://arxiv.org/abs/2508.02994) (Aug 2025)
-- [AgentsCourt](https://arxiv.org/abs/2405.XXXXX) (EMNLP 2024)
-- [Prometheus 2](https://arxiv.org/abs/2405.XXXXX) (EMNLP 2024)
+- ⚠️ [AgentsCourt](https://arxiv.org/abs/2405.XXXXX) (EMNLP 2024) **INCOMPLETE**
+- ⚠️ [Prometheus 2](https://arxiv.org/abs/2405.XXXXX) (EMNLP 2024) **INCOMPLETE**
 - [Project Synapse](https://arxiv.org/abs/2601.08156) (Jan 2026)
-- [UDA: Unsupervised Debiased Alignment](https://arxiv.org/abs/2408.XXXXX) (Aug 2025)
+- ⚠️ [UDA: Unsupervised Debiased Alignment](https://arxiv.org/abs/2408.XXXXX) (Aug 2025) **INCOMPLETE**
 
 **Scalable Oversight**:
-- [Prover-Verifier Games](https://arxiv.org/abs/2409.XXXXX) (OpenAI, 2024)
-- [Training Language Models to Win Debates](https://arxiv.org/abs/2405.XXXXX) (ICLR 2025)
-- [Debate Helps Weak-to-Strong](https://arxiv.org/abs/2401.XXXXX) (AAAI 2025)
-- [Measuring Progress on Scalable Oversight](https://arxiv.org/abs/2206.XXXXX) (Bowman et al., 2022)
+- ⚠️ [Prover-Verifier Games](https://arxiv.org/abs/2409.XXXXX) (OpenAI, 2024) **INCOMPLETE**
+- ⚠️ [Training Language Models to Win Debates](https://arxiv.org/abs/2405.XXXXX) (ICLR 2025) **INCOMPLETE**
+- ⚠️ [Debate Helps Weak-to-Strong](https://arxiv.org/abs/2401.XXXXX) (AAAI 2025) **INCOMPLETE**
+- ⚠️ [Measuring Progress on Scalable Oversight](https://arxiv.org/abs/2206.XXXXX) (Bowman et al., 2022) **INCOMPLETE**
 
 **Calibration & Reliability**:
-- [Comprehensive Analysis with Cohen's Kappa](https://arxiv.org/abs/2406.XXXXX) (2025)
-- [Standardized Metrics for LLM-as-a-Judge](https://arxiv.org/abs/2405.XXXXX) (Frontiers in Data, 2025)
+- ⚠️ [Comprehensive Analysis with Cohen's Kappa](https://arxiv.org/abs/2406.XXXXX) (2025) **INCOMPLETE**
+- ⚠️ [Standardized Metrics for LLM-as-a-Judge](https://arxiv.org/abs/2405.XXXXX) (Frontiers in Data, 2025) **INCOMPLETE**
 
 **Adversarial Attacks & Defenses**:
-- [The Attacker Moves Second](https://arxiv.org/abs/2405.XXXXX) (OpenAI/Anthropic/DeepMind, 2024)
-- [Optimization-based Prompt Injection](https://arxiv.org/abs/2401.XXXXX) (CCS 2024)
+- ⚠️ [The Attacker Moves Second](https://arxiv.org/abs/2405.XXXXX) (OpenAI/Anthropic/DeepMind, 2024) **INCOMPLETE**
+- ⚠️ [Optimization-based Prompt Injection](https://arxiv.org/abs/2401.XXXXX) (CCS 2024) **INCOMPLETE**
 
 ### Industry Resources
 

@@ -68,7 +68,7 @@ The following parallel research tracks are underway:
 #### DARE (Yu et al., 2023)
 - **Paper:** "DARE: Do Anything Required for merging"
 - **Venue:** arXiv preprint
-- **Link:** https://arxiviv.org/abs/2312.06450
+- **Link:** https://arxiv.org/abs/2312.06450
 - **Key Findings:**
   - Drop and REscale approach to model merging
   - Prunes redundant parameters before merging
@@ -212,9 +212,9 @@ The following parallel research tracks are underway:
 
 ### Recent Developments (2024-2025)
 
-#### Model Merging for LLMs (Multiple Authors, 2024)
+#### Model Merging for LLMs (Multiple Authors, 2024) ⚠️ *INCOMPLETE - placeholder arXiv ID*
 - **Survey:** "A Survey on Model Merging for Large Language Models"
-- **Link:** https://arxiviv.org/abs/2403.XXXXX (Needs verification)
+- **Link:** https://arxiv.org/abs/2403.XXXXX (Needs verification)
 - **Key Findings:**
   - Comprehensive survey of merging techniques
   - Categorizes methods: averaging, arithmetic, interpolation
@@ -1896,7 +1896,7 @@ Create a system where:
 
 1. Cohere Command A whitepaper direct link
 2. DARE paper URL: https://arxiv.org/abs/2312.06540 (URL format needs verification)
-3. Model Merging Survey: https://arxiviv.org/abs/2403.XXXXX (placeholder URL)
+3. Model Merging Survey: https://arxiv.org/abs/2403.XXXXX (placeholder URL - needs real arXiv ID)
 4. Production case studies with specific company names and metrics
 5. Specific Hugging Face model IDs demonstrating code+language merges
 6. GitHub repository links for Task Arithmetic and Model Soups implementations
