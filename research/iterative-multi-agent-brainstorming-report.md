@@ -325,10 +325,10 @@ flowchart TD
 - Boris Cherny (via Claude Code capability)
 
 ### Academic Sources
-- AAAI 2024: "Collective Intelligence in Multi-Agent Brainstorming Systems"
-- ACL 2023: "Iterative Consensus Building in Creative AI Ensembles"
-- NeurIPS 2024: "The Emergence of Collective Creativity in Multi-Agent Systems"
-- IJCAI 2023: "Parallel Agent Ideation with Knowledge Fusion"
+- ⚠️ AAAI 2024: "Collective Intelligence in Multi-Agent Brainstorming Systems" **HALLUCINATED**
+- ⚠️ ACL 2023: "Iterative Consensus Building in Creative AI Ensembles" **HALLUCINATED**
+- ⚠️ NeurIPS 2024: "The Emergence of Collective Creativity in Multi-Agent Systems" **HALLUCINATED**
+- ⚠️ IJCAI 2023: "Parallel Agent Ideation with Knowledge Fusion" **HALLUCINATED**
 - ICML 2023: Research on diversity-performance tradeoffs
 
 ### Industry Implementations

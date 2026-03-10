@@ -86,7 +86,7 @@ Agent Reinforcement Fine-Tuning (Agent RFT) builds upon several established rese
 
 - **ReAct: Synergizing Reasoning and Acting in Language Models** ([arXiv:2210.03629](https://arxiv.org/abs/2210.03629), Yao et al., ICLR 2023) - Established the Thought → Action → Observation paradigm for agentic behavior.
 
-- **Toolformer: Language Models Can Teach Themselves to Use Tools** ([arXiv:2302.04761](https://arxiv.org/abs/2302.04761), Schick et al., 2023, NeurIPS) - Self-supervised approach to learning tool use without manual annotation.
+- **Toolformer: Language Models Can Teach Themselves to Use Tools** ([arXiv:2302.04761](https://arxiv.org/abs/2302.04761), Schick et al., ICLR 2024) - Self-supervised approach to learning tool use without manual annotation.
 
 - **Gorilla: Large Language Model Connected with Massive APIs** ([arXiv:2305.15334](https://arxiv.org/abs/2305.15334), Patil et al., 2023) - Fine-tuned approach for accurate API calling with document retrieval integration.
 
