@@ -116,4 +116,3 @@ The agent workflow becomes:
 - OpenAI ChatGPT Plugins manifest specification (`ai-plugin.json`): https://platform.openai.com/docs/plugins/getting-started/plugin-manifest
 - Anthropic Model Context Protocol: Complementary runtime tool protocol: https://modelcontextprotocol.io
 - `robots.txt` (RFC 9309): The original well-known convention file that inspired this pattern: https://www.rfc-editor.org/rfc/rfc9309
-- Agent Gateway: Production implementation using both `agent.json` and `llms.txt` for 37+ service discovery: https://agent-gateway-kappa.vercel.app
