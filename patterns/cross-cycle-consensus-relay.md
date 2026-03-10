@@ -38,36 +38,44 @@ done
 **Relay document structure:**
 
 ```markdown
-# Company Consensus
+# Relay Consensus
 
 ## Last Updated
+
 2026-03-07T03:00:00Z
 
 ## Current Phase
-Building — MVP in progress
+
+Integration and validation in progress
 
 ## What We Did This Cycle
-- Deployed landing page to Railway
-- Wrote community post draft for HN
+
+- Completed the deployment checklist for the worker service
+- Validated the retry path against the staging environment
 
 ## Key Decisions Made
-- Chose open-core + SaaS model (CEO + CFO consensus, Munger approved)
-- Deferred mobile app to Phase 3 (not enough signal yet)
+
+- Standardized on a single relay schema for all cycles
+- Deferred load testing until the integration path is stable
 
 ## Active Projects
-- landing-page: LIVE at https://... — next: add analytics
-- backend-api: IN PROGRESS — next: wire up auth
+
+- worker-service: deployed to staging — next: add latency instrumentation
+- api-integration: in progress — next: finalize auth handoff
 
 ## Metrics
-- Revenue: $0
-- Users: 3
-- MRR: $0
+
+- Successful runs: 42
+- Failed runs: 3
+- Mean cycle time: 11m
 
 ## Next Action
-Wire up Supabase auth to the API — unblocks the paid tier
+
+Finish auth handoff between the scheduler and the API gateway
 
 ## Open Questions
-- Is $49/mo the right price or should we test $29 first?
+
+- Should stalled-cycle detection trigger after 2 repeats or 3?
 ```
 
 **Atomic write protocol:**
@@ -143,7 +151,7 @@ mv memories/.consensus.tmp memories/consensus.md
 - Structured relay prevents context drift across cycles
 - Open questions create forward pressure — cycles don't stall in comfort
 - Convergence rules can be encoded directly in the relay document
-- Human-readable: anyone can inspect the relay and understand the company state
+- Human-readable: anyone can inspect the relay and understand the workflow state
 - Git-friendly: diffs show exactly what changed between cycles
 
 **Cons:**
@@ -162,9 +170,14 @@ mv memories/.consensus.tmp memories/consensus.md
 - Commit the relay to git after each cycle for full audit trail
 - Define what "done" looks like in the relay — open-ended phases create drift
 
+## Known Implementations
+
+- [auto-co framework](https://github.com/NikitaDmitrieff/auto-co-meta) — open-source autonomous loop framework using a relay document across repeated cycles
+
 ## References
 
-- auto-co framework: https://github.com/NikitaDmitrieff/auto-co-meta — open-source autonomous AI company OS using this pattern across 13+ cycles
+- [Anthropic Engineering: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [BabyAGI](https://github.com/yoheinakajima/babyagi) — early task-loop example with persistent task artifacts
 - Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — for checkpointing within a single cycle
 - Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md) — for agents that self-initiate state writes
-- BabyAGI (2023) — early example of task-list relay, though without structured consensus
+- Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — for session handoff artifacts across repeated work cycles
