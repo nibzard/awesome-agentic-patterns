@@ -192,9 +192,7 @@ const jsonContent = JSON.stringify(pattern, null, 2);
         />
         <button class="pack-create" type="button" data-pack-create>Create</button>
       </div>
-      <p class="pack-hint">
-        Saved locally in this browser. Manage and export packs on the Packs page.
-      </p>
+      <p class="pack-hint">Saved locally in this browser for now.</p>
       <span class="pack-feedback" aria-live="polite"></span>
     </div>
   </details>
@@ -380,6 +378,7 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     display: flex;
     gap: var(--spacing-sm);
     flex-wrap: wrap;
+    align-items: flex-start;
     margin-top: var(--spacing-xl);
   }
 
@@ -394,6 +393,7 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     color: var(--color-text);
     font-size: 0.88rem;
     font-weight: 600;
+    white-space: nowrap;
     cursor: pointer;
     transition:
       background-color 0.2s ease,
@@ -418,7 +418,13 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     flex-shrink: 0;
   }
 
-  .pack-details {
+  .pack-details,
+  .citation-details {
+    flex: 0 0 auto;
+  }
+
+  .pack-details[open],
+  .citation-details[open] {
     flex-basis: 100%;
   }
 
@@ -509,10 +515,6 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
   .pack-feedback--error {
     color: var(--color-error);
-  }
-
-  .citation-details {
-    flex-basis: 100%;
   }
 
   .citation-details summary {

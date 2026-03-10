@@ -104,12 +104,8 @@ const summaryFacts = [
   <div class="pattern-page">
     <section class="pattern-hero">
       <div class="pattern-hero-main">
-        <div class="pattern-topline">
-          <span class="section-label">Pattern Reference</span>
-          <a href="/patterns" class="pattern-backlink">Back to catalog</a>
-        </div>
-
         <div class="pattern-meta">
+          <span class="section-label">Pattern Reference</span>
           <span class="pattern-pill pattern-pill--category">{pattern.category}</span>
           <span class="pattern-pill pattern-pill--status">{pattern.status.replace(/-/g, ' ')}</span>
           {pattern.complexity && (
@@ -246,28 +242,12 @@ const summaryFacts = [
     padding: var(--spacing-2xl) 0;
   }
 
-  .pattern-topline {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-  }
-
-  .pattern-backlink {
-    color: var(--color-text-muted);
-    font-weight: 600;
-  }
-
-  .pattern-backlink:hover {
-    color: var(--color-primary);
-  }
-
   .pattern-meta {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin-top: var(--spacing-lg);
+    margin-top: 0;
   }
 
   .pattern-pill {
@@ -583,9 +563,5 @@ const summaryFacts = [
       grid-template-columns: 1fr;
     }
 
-    .pattern-topline {
-      align-items: flex-start;
-      flex-direction: column;
-    }
   }
 </style>
