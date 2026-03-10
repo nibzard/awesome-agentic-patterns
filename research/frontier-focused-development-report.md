@@ -84,7 +84,7 @@ frontier_test:
 
 ### 4. Opinionated Design Research
 
-**Opinionated AI: The Case for Principled Constraints** (Chen et al., AAMAS 2024)
+**Opinionated AI: The Case for Principled Constraints** (Chen et al., AAMAS 2024) ⚠️ *HALLUCINATED - fake arXiv ID, paper not found*
 - **Finding**: Opinionated systems showing higher satisfaction than systems exposing all choices
 - **Validation**: Supports making model choice on behalf of users
 
@@ -488,7 +488,7 @@ Frontier-Focused Development is not an isolated pattern but the **philosophical 
 4. ⚠️ Wang, R., Amershi, D., Caccamo, M., et al. (2023). [The Lifecycle of AI](https://arxiv.org/abs/2304.06425). CHI 2023. **HALLUCINATED - not found**
 5. ⚠️ Tian, M., Lee, K., et al. (2023). [Focused Learning](https://arxiv.org/abs/2310.16424). NeurIPS 2023. **HALLUCINATED - not found**
 6. ⚠️ Ipeirotis, P.G., et al. (2023). [The Cold Start Problem in AI Products](https://arxiv.org/abs/2306.11234). KDD 2023. **HALLUCINATED - not found**
-7. Chen, S.M.H.M.Z.R., et al. (2024). [Opinionated AI](https://arxiv.org/abs/2401.12345). AAMAS 2024.
+7. ⚠️ Chen, S.M.H.M.Z.R., et al. (2024). [Opinionated AI](https://arxiv.org/abs/2401.12345). AAMAS 2024. **HALLUCINATED - fake arXiv ID**
 8. ⚠️ Li, J.J.X., Bernstein, M.S., et al. (2023). [Design Trade-offs in AI Systems](https://arxiv.org/abs/2303.08123). CHI 2023. **HALLUCINATED - not found**
 9. ⚠️ Lu, R.B.B.S.Y., et al. (2024). [Pricing Models for AI Services](https://arxiv.org/abs/2405.06789). ICIS 2024. **HALLUCINATED - not found**
 
