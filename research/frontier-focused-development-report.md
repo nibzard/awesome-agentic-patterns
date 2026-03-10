@@ -67,18 +67,18 @@ frontier_test:
 - **Finding**: Newer models consistently outperform older ones with capability gaps justifying rapid model turnover
 - **Validation**: Supports 6-month obsolescence claims
 
-**The Lifecycle of AI** (Wang et al., CHI 2023)
+**The Lifecycle of AI** (Wang et al., CHI 2023) ⚠️ *HALLUCINATED - paper not found at CHI 2023*
 - **Finding**: AI products require quarterly evolution cycles to remain competitive
 - **Key Quote**: "AI products require quarterly evolution cycles to remain competitive as model capabilities advance"
 - **Validation**: Directly supports 3-month product evolution principle
 
 ### 3. Single-Model Learning Advantages
 
-**Focused Learning** (Tian et al., NeurIPS 2023)
+**Focused Learning** (Tian et al., NeurIPS 2023) ⚠️ *HALLUCINATED - paper not found at NeurIPS 2023*
 - **Finding**: Products focused on a single model show faster learning than multi-model products
 - **Validation**: Supports no-model-selector approach
 
-**The Cold Start Problem in AI Products** (Ipeirotis et al., KDD 2023)
+**The Cold Start Problem in AI Products** (Ipeirotis et al., KDD 2023) ⚠️ *HALLUCINATED - paper not found at KDD 2023*
 - **Finding**: Heterogeneous model usage degrades learning signal quality
 - **Validation**: Single-model enables better learning from usage
 
@@ -88,13 +88,13 @@ frontier_test:
 - **Finding**: Opinionated systems showing higher satisfaction than systems exposing all choices
 - **Validation**: Supports making model choice on behalf of users
 
-**Design Trade-offs in AI Systems** (Li et al., CHI 2023)
+**Design Trade-offs in AI Systems** (Li et al., CHI 2023) ⚠️ *HALLUCINATED - paper not found at CHI 2023*
 - **Finding**: Opinionated systems justified when technical complexity is high and users lack domain expertise
 - **Validation**: Provides framework for when no-selector is appropriate
 
 ### 5. Business Model Research
 
-**Pricing Models for AI Services** (Lu et al., ICIS 2024)
+**Pricing Models for AI Services** (Lu et al., ICIS 2024) ⚠️ *HALLUCINATED - paper not found at ICIS 2024*
 - **Finding**: Subscription models create significant lock-in effects that constrain innovation
 - **Key Quote**: "Subscription models for AI services create significant lock-in effects that constrain innovation as model capabilities evolve"
 - **Validation**: Supports subscription resistance principle
@@ -485,12 +485,12 @@ Frontier-Focused Development is not an isolated pattern but the **philosophical 
 1. Kaplan, J., McCandlish, S., Henighan, T., et al. (2020). [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). NeurIPS 2020.
 2. Wei, J., Tay, Y., Bommasani, R., et al. (2022). [Emergent Abilities of Large Language Models](https://arxiv.org/abs/2206.07682). TMLR 2022.
 3. Sevilla, T., Brand, L., Liu, P.J., et al. (2022). [Measuring Progress in AI](https://arxiv.org/abs/2210.07615).
-4. Wang, R., Amershi, D., Caccamo, M., et al. (2023). [The Lifecycle of AI](https://arxiv.org/abs/2304.06425). CHI 2023.
-5. Tian, M., Lee, K., et al. (2023). [Focused Learning](https://arxiv.org/abs/2310.16424). NeurIPS 2023.
-6. Ipeirotis, P.G., et al. (2023). [The Cold Start Problem in AI Products](https://arxiv.org/abs/2306.11234). KDD 2023.
+4. ⚠️ Wang, R., Amershi, D., Caccamo, M., et al. (2023). [The Lifecycle of AI](https://arxiv.org/abs/2304.06425). CHI 2023. **HALLUCINATED - not found**
+5. ⚠️ Tian, M., Lee, K., et al. (2023). [Focused Learning](https://arxiv.org/abs/2310.16424). NeurIPS 2023. **HALLUCINATED - not found**
+6. ⚠️ Ipeirotis, P.G., et al. (2023). [The Cold Start Problem in AI Products](https://arxiv.org/abs/2306.11234). KDD 2023. **HALLUCINATED - not found**
 7. Chen, S.M.H.M.Z.R., et al. (2024). [Opinionated AI](https://arxiv.org/abs/2401.12345). AAMAS 2024.
-8. Li, J.J.X., Bernstein, M.S., et al. (2023). [Design Trade-offs in AI Systems](https://arxiv.org/abs/2303.08123). CHI 2023.
-9. Lu, R.B.B.S.Y., et al. (2024). [Pricing Models for AI Services](https://arxiv.org/abs/2405.06789). ICIS 2024.
+8. ⚠️ Li, J.J.X., Bernstein, M.S., et al. (2023). [Design Trade-offs in AI Systems](https://arxiv.org/abs/2303.08123). CHI 2023. **HALLUCINATED - not found**
+9. ⚠️ Lu, R.B.B.S.Y., et al. (2024). [Pricing Models for AI Services](https://arxiv.org/abs/2405.06789). ICIS 2024. **HALLUCINATED - not found**
 
 ### Industry Sources
 

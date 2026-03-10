@@ -62,10 +62,10 @@ For complex problems or creative ideation, a single AI agent instance might get 
 
 | Paper | Venue | Key Finding |
 |-------|-------|-------------|
-| "Collective Intelligence in Multi-Agent Brainstorming Systems" | AAAI 2024 | Heterogeneous agents achieved 40% higher creativity scores |
-| "Iterative Consensus Building in Creative AI Ensembles" | ACL 2023 | Multi-round refinement with confidence-weighted voting: 35% novelty improvement |
-| "The Emergence of Collective Creativity in Multi-Agent Systems" | NeurIPS 2024 | Emergent creative behavior in teams with complementary capabilities |
-| "Parallel Agent Ideation with Knowledge Fusion" | IJCAI 2023 | 28% increase in solution diversity vs single-agent |
+| ⚠️ "Collective Intelligence in Multi-Agent Brainstorming Systems" | AAAI 2024 | Heterogeneous agents achieved 40% higher creativity scores **HALLUCINATED** |
+| ⚠️ "Iterative Consensus Building in Creative AI Ensembles" | ACL 2023 | Multi-round refinement with confidence-weighted voting: 35% novelty improvement **HALLUCINATED** |
+| ⚠️ "The Emergence of Collective Creativity in Multi-Agent Systems" | NeurIPS 2024 | Emergent creative behavior in teams with complementary capabilities **HALLUCINATED** |
+| ⚠️ "Parallel Agent Ideation with Knowledge Fusion" | IJCAI 2023 | 28% increase in solution diversity vs single-agent **HALLUCINATED** |
 
 #### 4. Research Gaps Identified
 

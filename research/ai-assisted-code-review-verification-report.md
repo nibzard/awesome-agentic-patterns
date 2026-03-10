@@ -1546,7 +1546,7 @@ This section documents real-world deployments and case studies of AI-assisted co
 #### 6.2.1 Security-Focused Datasets
 
 **SeRe (Security-Related Code Review Dataset)**
-- **Source**: ICSE 2026 (International Conference on Software Engineering)
+- **Source**: ICSE 2026 (International Conference on Software Engineering) ⚠️ **HALLUCINATED - ICSE 2026 has not occurred yet**
 - **Authors**: Zixiao Zhao, Yanjie Jiang, Hui, et al.
 - **Description**: Security-focused code review dataset aligned with real-world review activities
 - **Features**:
@@ -2594,7 +2594,7 @@ The research indicates a fundamental shift toward combining AI's generative capa
 - **GitHub Copilot Adoption** - 20 million developers worldwide
 - **Accenture Deployment** - 12,000 developers, 96% success rate
 - **Mercedes-Benz Deployment** - 2 million lines of code accepted
-- **Atlassian RovoDev** - ICSE 2026 featured deployment
+- **Atlassian RovoDev** - ICSE 2026 featured deployment ⚠️ **HALLUCINATED - ICSE 2026 has not occurred yet**
 
 ### 9.4 Conferences & Workshops
 
