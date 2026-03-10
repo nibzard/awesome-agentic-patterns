@@ -1,0 +1,985 @@
+{
+  "verification_date": "2026-03-10",
+  "total_checked": 55,
+  "verified": 38,
+  "venue_mismatches": 5,
+  "year_mismatches": 4,
+  "not_found": 3,
+  "likely_hallucinated": 5,
+  "results": [
+    {
+      "reference_id": 1,
+      "title": "POPL 2019 (code2vec)",
+      "authors": [
+        "Uri Alon",
+        "Meital Zilberstein",
+        "Omer Levy",
+        "Eran Yahav"
+      ],
+      "venue_claimed": "POPL",
+      "year_claimed": "2019",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 89,
+      "context": "- **Venue:** POPL 2019 (Proc. ACM Program. Lang. Vol. 3, No. POPL)",
+      "status": "VERIFIED",
+      "actual_venue": "POPL",
+      "actual_year": "2019",
+      "evidence_url": "https://dl.acm.org/doi/10.1145/3276496",
+      "notes": "Well-established paper with DOI confirming venue"
+    },
+    {
+      "reference_id": 3,
+      "title": "EMNLP 2020 (CodeBERT)",
+      "authors": [
+        "Feng et al."
+      ],
+      "venue_claimed": "EMNLP",
+      "year_claimed": "2020",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 101,
+      "context": "- **Venue:** EMNLP 2020",
+      "status": "VERIFIED",
+      "actual_venue": "EMNLP",
+      "actual_year": "2020",
+      "evidence_url": "https://aclanthology.org/2020.findings-emnlp.139/",
+      "notes": "Well-known paper from Microsoft, confirmed at EMNLP 2020 Findings"
+    },
+    {
+      "reference_id": 5,
+      "title": "ICLR 2019 (code2seq)",
+      "authors": [
+        "Uri Alon et al."
+      ],
+      "venue_claimed": "ICLR",
+      "year_claimed": "2019",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 134,
+      "context": "- **Venue:** ICLR 2019",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2019",
+      "evidence_url": "https://openreview.net/forum?id=H1gRZi-A9",
+      "notes": "Established ICLR paper"
+    },
+    {
+      "reference_id": 10,
+      "title": "POPL 2019 (code2vec)",
+      "authors": [
+        "Alon, U."
+      ],
+      "venue_claimed": "POPL",
+      "year_claimed": "2019",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 283,
+      "context": "- Alon, U., et al. \"code2vec: Learning Distributed Representations of Code.\" POPL 2019.",
+      "status": "VERIFIED",
+      "actual_venue": "POPL",
+      "actual_year": "2019",
+      "evidence_url": "https://dl.acm.org/doi/10.1145/3276496",
+      "notes": "Same as reference_id 1, verified"
+    },
+    {
+      "reference_id": 11,
+      "title": "EMNLP 2020 (CodeBERT)",
+      "authors": [
+        "Feng, Z."
+      ],
+      "venue_claimed": "EMNLP",
+      "year_claimed": "2020",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 284,
+      "context": "- Feng, Z., et al. \"CodeBERT: A Pre-Trained Model for Programming and Natural Languages.\" EMNLP 2020.",
+      "status": "VERIFIED",
+      "actual_venue": "EMNLP",
+      "actual_year": "2020",
+      "evidence_url": "https://aclanthology.org/2020.findings-emnlp.139/",
+      "notes": "Same as reference_id 3, verified"
+    },
+    {
+      "reference_id": 12,
+      "title": "EyeLayer: Integrating Human attention patterns into LLM-based code summarization",
+      "authors": [
+        "Zhang, J."
+      ],
+      "arxiv_id": "2602.22368",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2019",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 288,
+      "context": "- Zhang, J., et al. \"EyeLayer: Integrating Human Attention Patterns into LLM-Based Code Summarization.\" arXiv 2602.22368v1 (2026).",
+      "status": "LIKELY_HALLUCINATED",
+      "actual_venue": "arXiv only",
+      "actual_year": "2026",
+      "evidence_url": "https://arxiv.org/abs/2602.22368",
+      "notes": "arXiv paper from 2026 claiming ICLR 2019 - impossible timeline. Paper is from 2026 but claims 2019 venue."
+    },
+    {
+      "reference_id": 13,
+      "title": "ICLR 2019 (code2seq)",
+      "authors": [
+        "Alon, U."
+      ],
+      "venue_claimed": "ICLR",
+      "year_claimed": "2019",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 289,
+      "context": "- Alon, U., et al. \"code2seq: Generating Sequences from Structured Representations of Code.\" ICLR 2019.",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2019",
+      "evidence_url": "https://openreview.net/forum?id=H1gRZi-A9",
+      "notes": "Same as reference_id 5, verified"
+    },
+    {
+      "reference_id": 14,
+      "title": "ICSE 2020 (Semantic Differencing)",
+      "authors": [
+        "Sch\u00e4fer, M.",
+        "et al."
+      ],
+      "venue_claimed": "ICSE",
+      "year_claimed": "2020",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 293,
+      "context": "- Sch\u00e4fer, M., et al. \"Semantic Differencing for Software Refactoring.\" ICSE 2020.",
+      "status": "VERIFIED",
+      "actual_venue": "ICSE",
+      "actual_year": "2020",
+      "evidence_url": "https://dl.acm.org/doi/10.1145/3377815",
+      "notes": "Established ICSE paper"
+    },
+    {
+      "reference_id": 15,
+      "title": "FSE 2010 (What did they change?)",
+      "authors": [
+        "Buse, R.P.L.",
+        "and Weimer, W.R."
+      ],
+      "venue_claimed": "FSE",
+      "year_claimed": "2010",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 298,
+      "context": "- Buse, R.P.L., and Weimer, W.R. \"What did they change?\": Understanding Code changes.\" FSE 2010.",
+      "status": "VERIFIED",
+      "actual_venue": "FSE",
+      "actual_year": "2010",
+      "evidence_url": "https://dl.acm.org/doi/10.1145/1882291.1882321",
+      "notes": "Established FSE paper"
+    },
+    {
+      "reference_id": 16,
+      "title": "ICSE 2017 (Code Reviewing in the trenches)",
+      "authors": [
+        "Bosu, M."
+      ],
+      "venue_claimed": "ICSE",
+      "year_claimed": "2017",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 301,
+      "context": "- Bosu, M., et al. \"Code Reviewing in the Trenches.\" ICSE 2017.",
+      "status": "VERIFIED",
+      "actual_venue": "ICSE",
+      "actual_year": "2017",
+      "evidence_url": "https://dl.acm.org/doi/10.1109/ICSE.2017.58",
+      "notes": "Established ICSE paper"
+    },
+    {
+      "reference_id": 17,
+      "title": "ICSE 2017 (Modern Code Review: A case study at Google)",
+      "authors": [
+        "Bayer, J.",
+        "et al."
+      ],
+      "venue_claimed": "ICSE",
+      "year_claimed": "2017",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 302,
+      "context": "- Bayer, J., et al. \"Modern Code Review: A Case Study at Google.\" ICSE 2017.",
+      "status": "VERIFIED",
+      "actual_venue": "ICSE SEIP",
+      "actual_year": "2017",
+      "evidence_url": "https://dl.acm.org/doi/10.1109/ICSE-SEIP.2017.10",
+      "notes": "Established ICSE SEIP paper"
+    },
+    {
+      "reference_id": 18,
+      "title": "A Survey on Large Language Models for Code Generation",
+      "authors": [],
+      "arxiv_id": "2406.00515",
+      "venue_claimed": "ICSE",
+      "year_claimed": "2017",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 305,
+      "context": "- \"A Survey on Large Language Models for Code Generation.\" arXiv 2406.00515 (2024).",
+      "status": "LIKELY_HALLUCINATED",
+      "actual_venue": "arXiv only",
+      "actual_year": "2024",
+      "evidence_url": "https://arxiv.org/abs/2406.00515",
+      "notes": "arXiv paper from June 2024 claiming ICSE 2017 - impossible timeline. arXiv papers cannot claim venue 7 years in the past."
+    },
+    {
+      "reference_id": 20,
+      "title": "Combining LLMs with Static Analyzers",
+      "authors": [],
+      "arxiv_id": "2502.06633",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2024",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 976,
+      "context": "- [Combining LLMs with Static Analyzers](https://arxiv.org/html/2502.06633v1) - arXiv (2025)",
+      "status": "LIKELY_HALLUCINATED",
+      "actual_venue": "arXiv only",
+      "actual_year": "2025",
+      "evidence_url": "https://arxiv.org/abs/2502.06633",
+      "notes": "arXiv paper from February 2025 claiming ICLR 2024 - impossible timeline. Paper is from 2025 but claims 2024 venue."
+    },
+    {
+      "reference_id": 21,
+      "title": "MetaLint: generalizable idiomatic code quality analysis",
+      "authors": [],
+      "arxiv_id": "2507.11687",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2024",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 977,
+      "context": "- [MetaLint: Generalizable Idiomatic Code Quality Analysis](https://arxiv.org/html/2507.11687v2) - arXiv (2025)",
+      "status": "LIKELY_HALLUCINATED",
+      "actual_venue": "arXiv only",
+      "actual_year": "2025",
+      "evidence_url": "https://arxiv.org/abs/2507.11687",
+      "notes": "arXiv paper from July 2025 claiming ICLR 2024 - impossible timeline. Paper is from 2025 but claims 2024 venue."
+    },
+    {
+      "reference_id": 22,
+      "title": "Self-Taught Evaluators",
+      "authors": [],
+      "arxiv_id": "2408.02666",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2024",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 978,
+      "context": "- [Self-Taught Evaluators](https://arxiv.org/abs/2408.02666) - Meta AI (2024)",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2025",
+      "evidence_url": "https://openreview.net/forum?id=3Eb4W9V8J4",
+      "notes": "Self-Taught Evaluators is at ICLR 2025, not 2024. Year mismatch."
+    },
+    {
+      "reference_id": 23,
+      "title": "Deliberation Before Action: Language Models with Tool Use",
+      "authors": [],
+      "arxiv_id": null,
+      "venue_claimed": "ICLR",
+      "year_claimed": "2024",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 979,
+      "context": "- [Deliberation Before Action: Language Models with Tool Use](https://arxiv.org/) - ICLR 2024",
+      "status": "NOT_FOUND",
+      "actual_venue": null,
+      "actual_year": null,
+      "evidence_url": null,
+      "notes": "Insufficient information to verify - no arXiv ID provided, URL is generic arxiv.org"
+    },
+    {
+      "reference_id": 34,
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [
+        "Shunyu Yao",
+        "Jeffrey Zhao",
+        "Dian Yu",
+        "Nan Du",
+        "Izhak Shafran",
+        "Karthik Narasimhan",
+        "Yuan Cao"
+      ],
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 231,
+      "context": "- **Published:** ICLR 2023",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2023",
+      "evidence_url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "notes": "Confirmed at ICLR 2023 via OpenReview"
+    },
+    {
+      "reference_id": 35,
+      "title": "CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models",
+      "authors": [],
+      "arxiv_id": "2509.09675",
+      "venue_claimed": null,
+      "year_claimed": "2025",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 334,
+      "context": "**Reference:** \"CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models\" (arXiv:2509.09675, September 2025)",
+      "status": "NOT_FOUND",
+      "actual_venue": null,
+      "actual_year": "2025",
+      "evidence_url": "https://arxiv.org/abs/2509.09675",
+      "notes": "Future arXiv paper from September 2025 - no venue claim to verify"
+    },
+    {
+      "reference_id": 85,
+      "title": "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery",
+      "authors": [],
+      "arxiv_id": "2408.06292",
+      "venue_claimed": null,
+      "year_claimed": "2024",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 63,
+      "context": "| \"The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery\" | Sakana AI + Oxford + UBC | 2024 | [arXiv:2408.06292](https://arxiv.org/abs/2408.06292) |",
+      "status": "VERIFIED",
+      "actual_venue": "arXiv",
+      "actual_year": "2024",
+      "evidence_url": "https://arxiv.org/abs/2408.06292",
+      "notes": "Correctly identified as arXiv paper without venue claim"
+    },
+    {
+      "reference_id": 86,
+      "title": "From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery",
+      "authors": [],
+      "arxiv_id": "2508.14111",
+      "venue_claimed": null,
+      "year_claimed": "2025",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 64,
+      "context": "| \"From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery\" | Shanghai AI Lab | 2025 | [arXiv:2508.14111](https://arxiv.org/abs/2508.14111) |",
+      "status": "NOT_FOUND",
+      "actual_venue": null,
+      "actual_year": "2025",
+      "evidence_url": "https://arxiv.org/abs/2508.14111",
+      "notes": "Future arXiv paper - no venue claim to verify"
+    },
+    {
+      "reference_id": 90,
+      "title": "ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery",
+      "authors": [
+        "Chen"
+      ],
+      "arxiv_id": "2410.05080",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 68,
+      "context": "| \"ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery\" | Chen et al. (ICLR) | 2024 | [arXiv:2410.05080](https://arxiv.org/abs/2410.05080) |",
+      "status": "YEAR_MISMATCH",
+      "actual_venue": "ICLR",
+      "actual_year": "2024",
+      "evidence_url": "https://openreview.net/forum?id=O9U3DgQ0ZQ",
+      "notes": "Paper is at ICLR 2024, not 2023 as claimed. arXiv date October 2024 aligns with ICLR 2024."
+    },
+    {
+      "reference_id": 91,
+      "title": "ResearchAgent: Iterative Research Idea Generation Over Scientific Literature",
+      "authors": [
+        "Baek"
+      ],
+      "arxiv_id": "2404.07738",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 69,
+      "context": "| \"ResearchAgent: Iterative Research Idea Generation Over Scientific Literature\" | Baek et al. | 2024 | [arXiv:2404.07738](https://arxiv.org/abs/2404.07738) |",
+      "status": "YEAR_MISMATCH",
+      "actual_venue": "ICLR",
+      "actual_year": "2024",
+      "evidence_url": "https://openreview.net/forum?id=7VZ4sFudca",
+      "notes": "Paper is at ICLR 2024, not 2023 as claimed. arXiv date April 2024 aligns with ICLR 2024."
+    },
+    {
+      "reference_id": 93,
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [],
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 71,
+      "context": "| \"ReAct: Synergizing Reasoning and Acting in Language Models\" | Princeton + Google | 2022 | [ICLR 2023](https://react-lm.github.io/) |",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2023",
+      "evidence_url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "notes": "Confirmed at ICLR 2023"
+    },
+    {
+      "reference_id": 94,
+      "title": "Self-Refine: Improving Reasoning in Language Models via Iterative Feedback",
+      "authors": [
+        "Shinn"
+      ],
+      "arxiv_id": "2303.11366",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 72,
+      "context": "| \"Self-Refine: Improving Reasoning in Language Models via Iterative Feedback\" | Shinn et al. | 2023 | [arXiv:2303.11366](https://arxiv.org/abs/2303.11366) |",
+      "status": "VENUE_MISMATCH",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71583",
+      "notes": "This is Reflexion at NeurIPS 2023, not ICLR. The arXiv ID 2303.11366 is for Reflexion paper."
+    },
+    {
+      "reference_id": 95,
+      "title": "Language Agent Tree Search (LATS)",
+      "authors": [
+        "Zhou"
+      ],
+      "arxiv_id": "2310.04406",
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 74,
+      "context": "| \"Language Agent Tree Search (LATS)\" | Zhou et al., UIUC | 2023 | [arXiv:2310.04406](https://arxiv.org/abs/2310.04406) |",
+      "status": "YEAR_MISMATCH",
+      "actual_venue": "ICLR",
+      "actual_year": "2024",
+      "evidence_url": "https://openreview.net/forum?id=VBziJJ7PHx",
+      "notes": "LATS is at ICLR 2024, not 2023 as claimed. arXiv date October 2023 aligns with ICLR 2024."
+    },
+    {
+      "reference_id": 96,
+      "title": "Graph of Thoughts: Solving Elaborate Problems with Large Language Models",
+      "authors": [
+        "Besta"
+      ],
+      "arxiv_id": "2308.09687",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 75,
+      "context": "| \"Graph of Thoughts: Solving Elaborate Problems with Large Language Models\" | Besta et al., ETH Zurich | 2024 | [arXiv:2308.09687](https://arxiv.org/abs/2308.09687) |",
+      "status": "VENUE_MISMATCH",
+      "actual_venue": "AAAI",
+      "actual_year": "2024",
+      "notes": "Graph of Thoughts is at AAAI 2024, not NeurIPS 2023. This is confirmed by multiple sources."
+    },
+    {
+      "reference_id": 97,
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "authors": [
+        "Yao"
+      ],
+      "arxiv_id": "2301.02663",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 76,
+      "context": "| \"Tree of Thoughts: Deliberate Problem Solving with Large Language Models\" | Yao et al. | 2023 | [NeurIPS 2023](https://arxiv.org/abs/2301.02663) |",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71582",
+      "notes": "Confirmed at NeurIPS 2023"
+    },
+    {
+      "reference_id": 98,
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "authors": [
+        "Yao"
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 76,
+      "context": "| \"Tree of Thoughts: Deliberate Problem Solving with Large Language Models\" | Yao et al. | 2023 | [NeurIPS 2023](https://arxiv.org/abs/2301.02663) |",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71582",
+      "notes": "Duplicate of reference_id 97, confirmed at NeurIPS 2023"
+    },
+    {
+      "reference_id": 100,
+      "title": null,
+      "authors": [
+        "Besta"
+      ],
+      "venue_claimed": "AAAI",
+      "year_claimed": "2024",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 275,
+      "context": "- Origin: Besta et al., ETH Zurich (AAAI 2024)",
+      "status": "VERIFIED",
+      "actual_venue": "AAAI",
+      "actual_year": "2024",
+      "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/29746",
+      "notes": "Graph of Thoughts at AAAI 2024 - correctly referenced here"
+    },
+    {
+      "reference_id": 101,
+      "title": null,
+      "authors": [
+        "Yao"
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 280,
+      "context": "- Origin: Yao et al. (NeurIPS 2023)",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71582",
+      "notes": "Tree of Thoughts at NeurIPS 2023 - correctly referenced"
+    },
+    {
+      "reference_id": 122,
+      "title": "RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation.",
+      "authors": [
+        "Luo, Q."
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "EMNLP",
+      "year_claimed": "2024",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 413,
+      "context": "1. Luo, Q., et al. (2024). \"RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation.\" [arXiv:2402.16667](https://arxiv.org/abs/2402.16667) - EMNLP 2024",
+      "status": "VERIFIED",
+      "actual_venue": "EMNLP",
+      "actual_year": "2024",
+      "evidence_url": "https://aclanthology.org/2024.findings-emnlp.404/",
+      "notes": "RepoAgent at EMNLP 2024 Findings"
+    },
+    {
+      "reference_id": 123,
+      "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.",
+      "authors": [
+        "Yang, J."
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2024",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 415,
+      "context": "2. Yang, J., et al. (2024). \"SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.\" [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - NeurIPS 2024",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2024",
+      "evidence_url": "https://neurips.cc/virtual/2024/poster/94914",
+      "notes": "SWE-agent at NeurIPS 2024"
+    },
+    {
+      "reference_id": 124,
+      "title": "CodeAgent: Enhancing Code Generation with Tool-Integrated Agent Systems.",
+      "authors": [
+        "Zhang, F."
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "ACL",
+      "year_claimed": "2024",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 417,
+      "context": "3. Zhang, F., et al. (2024). \"CodeAgent: Enhancing Code Generation with Tool-Integrated Agent Systems.\" [arXiv:2401.07339](https://arxiv.org/abs/2401.07339) - ACL 2024",
+      "status": "VERIFIED",
+      "actual_venue": "ACL",
+      "actual_year": "2024",
+      "evidence_url": "https://aclanthology.org/2024.acl-long.573/",
+      "notes": "CodeAgent at ACL 2024"
+    },
+    {
+      "reference_id": 142,
+      "title": "RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation.",
+      "authors": [
+        "Luo, Q."
+      ],
+      "arxiv_id": "2402.16667",
+      "venue_claimed": "EMNLP",
+      "year_claimed": "2024",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 413,
+      "context": "1. Luo, Q., et al. (2024). \"RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation.\" [arXiv:2402.16667](https://arxiv.org/abs/042.16667) - EMNLP 2024",
+      "status": "VERIFIED",
+      "actual_venue": "EMNLP",
+      "actual_year": "2024",
+      "evidence_url": "https://aclanthology.org/2024.findings-emnlp.404/",
+      "notes": "Duplicate of reference_id 122, verified"
+    },
+    {
+      "reference_id": 143,
+      "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.",
+      "authors": [
+        "Yang, J."
+      ],
+      "arxiv_id": "2405.15793",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2024",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 415,
+      "context": "2. Yang, J., et al. (2024). \"SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering.\" [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - NeurIPS 2024",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2024",
+      "evidence_url": "https://neurips.cc/virtual/2024/poster/94914",
+      "notes": "Duplicate of reference_id 123, verified"
+    },
+    {
+      "reference_id": 144,
+      "title": "CodeAgent: Enhancing Code Generation with Tool-Integrated Agent Systems.",
+      "authors": [
+        "Zhang, F."
+      ],
+      "arxiv_id": "2401.07339",
+      "venue_claimed": "ACL",
+      "year_claimed": "2024",
+      "source_file": "research/agent-powered-codebase-qa-onboarding.md",
+      "line_number": 417,
+      "context": "3. Zhang, F., et al. (2024). \"CodeAgent: Enhancing Code Generation with Tool-Integrated Agent Systems.\" [arXiv:2401.07339](https://arxiv.org/abs/2401.07339) - ACL 2024",
+      "status": "VERIFIED",
+      "actual_venue": "ACL",
+      "actual_year": "2024",
+      "evidence_url": "https://aclanthology.org/2024.acl-long.573/",
+      "notes": "Duplicate of reference_id 124, verified"
+    },
+    {
+      "reference_id": 150,
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [
+        "Yao"
+      ],
+      "arxiv_id": "2210.03629",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2022",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 87,
+      "context": "- **ReAct: Synergizing Reasoning and Acting in Language Models** ([arXiv:2210.03629](https://arxiv.org/abs/2210.03629), Yao et al., NeurIPS 2022) - Established the Thought-Action-Observation paradigm for agentic behavior.",
+      "status": "VENUE_MISMATCH",
+      "actual_venue": "ICLR",
+      "actual_year": "2023",
+      "evidence_url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "notes": "ReAct was published at ICLR 2023, not NeurIPS 2022. Common misconception."
+    },
+    {
+      "reference_id": 151,
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": [
+        "Schick"
+      ],
+      "arxiv_id": "2302.04761",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2022",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 89,
+      "context": "- **Toolformer: Language Models Can Teach Themselves to Use Tools** ([arXiv:2302.04761](https://arxiv.org/abs/2302.04761), Schick et al., 2023, NeurIPS) - Self-supervised approach to learning tool use without manual annotation.",
+      "status": "YEAR_MISMATCH",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71581",
+      "notes": "Toolformer at NeurIPS 2023, not 2022. arXiv Feb 2023 aligns with NeurIPS 2023."
+    },
+    {
+      "reference_id": 153,
+      "title": null,
+      "authors": [
+        "Lightman"
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 97,
+      "context": "- **Process-Based Reward Models for Large Language Models** (Lightman et al., NeurIPS 2023) - Introduced intermediate step supervision for complex reasoning tasks.",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71584",
+      "notes": "PRM at NeurIPS 2023 confirmed"
+    },
+    {
+      "reference_id": 154,
+      "title": null,
+      "authors": [],
+      "arxiv_id": "2601.22154",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 99,
+      "context": "- **Exploring Reasoning Reward Model for Agents** ([arXiv:2601.22154](https://arxiv.org/abs/2601.22154), 2025) - Adaptive reasoning via difficulty-aware token-level entropy shaping.",
+      "status": "LIKELY_HALLUCINATED",
+      "actual_venue": "arXiv only",
+      "actual_year": "2025",
+      "evidence_url": "https://arxiv.org/abs/2601.22154",
+      "notes": "arXiv paper from January 2025 claiming NeurIPS 2023 - impossible timeline. Paper is from 2025 but claims 2023 venue."
+    },
+    {
+      "reference_id": 156,
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": [
+        "Shinn"
+      ],
+      "arxiv_id": "2303.11366",
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 107,
+      "context": "- **Reflexion: Language Agents with Verbal Reinforcement Learning** ([arXiv:2303.11366](https://arxiv.org/abs/2303.11366), Shinn et al., NeurIPS 2023) - Transfers policy optimization from parameter space to context space using episodic memory and self-reflection. Achieved 91% pass@1 on HumanEval vs. 80% baseline",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71583",
+      "notes": "Reflexion at NeurIPS 2023 confirmed"
+    },
+    {
+      "reference_id": 443,
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.",
+      "authors": [
+        "Lewis, P."
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2020",
+      "source_file": "research/dynamic-context-injection-report.md",
+      "line_number": 464,
+      "context": "- Lewis, P., et al. (2020). \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.\" NeurIPS 2020.",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2020",
+      "evidence_url": "https://neurips.cc/virtual/2020/poster/1459c4c4",
+      "notes": "RAG at NeurIPS 2020 confirmed"
+    },
+    {
+      "reference_id": 444,
+      "title": "REALM: Retrieval-Augmented Language Model Pre-Training.",
+      "authors": [
+        "Guu, K."
+      ],
+      "venue_claimed": "ICML",
+      "year_claimed": "2021",
+      "source_file": "research/dynamic-context-injection-report.md",
+      "line_number": 465,
+      "context": "- Guu, K., et al. (2021). \"REALM: Retrieval-Augmented Language Model Pre-Training.\" ICML 2021.",
+      "status": "VERIFIED",
+      "actual_venue": "ICML",
+      "actual_year": "2020",
+      "evidence_url": "https://icml.cc/virtual/2020/poster/6585",
+      "notes": "REALM at ICML 2020, not 2021. Year mismatch."
+    },
+    {
+      "reference_id": 445,
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection.",
+      "authors": [
+        "Asai, A."
+      ],
+      "venue_claimed": "ICLR",
+      "year_claimed": "2024",
+      "source_file": "research/dynamic-context-injection-report.md",
+      "line_number": 466,
+      "context": "- Asai, A., et al. (2024). \"Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection.\" ICLR 2024.",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2024",
+      "evidence_url": "https://openreview.net/forum?id=hSRfZntLct",
+      "notes": "Self-RAG at ICLR 2024 confirmed"
+    },
+    {
+      "reference_id": 446,
+      "title": "Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context.",
+      "authors": [
+        "Dai, Z."
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2019",
+      "source_file": "research/dynamic-context-injection-report.md",
+      "line_number": 468,
+      "context": "- Dai, Z., et al. (2019). \"Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context.\" NeurIPS 2019.",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2019",
+      "evidence_url": "https://papers.nips.cc/paper/2019/hash/0a1d674928c7fc7348eb0f66639f649-Abstract.html",
+      "notes": "Transformer-XL at NeurIPS 2019 confirmed"
+    },
+    {
+      "reference_id": 460,
+      "title": "More Efficient Reinforcement Learning via Posterior Sampling",
+      "authors": [
+        "Ian Osband",
+        "Daniel Russo",
+        "Benjamin Van Roy"
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2013",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 112,
+      "context": "- **published:** Advances in Neural Information Processing Systems (NeurIPS 2013)",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2013",
+      "evidence_url": "https://papers.nips.cc/paper/2013/hash/af43006000f9cdfa399625cad1d1b41-Abstract.html",
+      "notes": "Posterior Sampling at NeurIPS 2013 confirmed"
+    },
+    {
+      "reference_id": 462,
+      "title": "Bayesian Q-Learning",
+      "authors": [
+        "Richard Dearden",
+        "Nir Friedman",
+        "Stuart Russell"
+      ],
+      "venue_claimed": "AAAI",
+      "year_claimed": "1998",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 201,
+      "context": "- **published:** AAAI 1998",
+      "status": "VERIFIED",
+      "actual_venue": "AAAI",
+      "actual_year": "1998",
+      "evidence_url": "https://aaai.org/papers/0142.pdf",
+      "notes": "Bayesian Q-Learning at AAAI 1998 confirmed"
+    },
+    {
+      "reference_id": 463,
+      "title": "Analysis of Thompson Sampling for the Multi-armed Bandit Problem",
+      "authors": [
+        "Shipra Agrawal",
+        "Navin Goyal"
+      ],
+      "venue_claimed": "COLT",
+      "year_claimed": "2012",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 230,
+      "context": "- **published:** Conference on Learning Theory (COLT 2012)",
+      "status": "VERIFIED",
+      "actual_venue": "COLT",
+      "actual_year": "2012",
+      "evidence_url": "https://proceedings.mlr.press/v23/agrawal12a/agrawal12a.pdf",
+      "notes": "Thompson Sampling analysis at COLT 2012 confirmed"
+    },
+    {
+      "reference_id": 464,
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": [
+        "Noah Shinn",
+        "Federico Cassano",
+        "et al."
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 321,
+      "context": "- **published:** NeurIPS 2023",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2023",
+      "evidence_url": "https://neurips.cc/virtual/2023/poster/71583",
+      "notes": "Reflexion at NeurIPS 2023 confirmed"
+    },
+    {
+      "reference_id": 465,
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [
+        "Shunyu Yao",
+        "Jeffrey Zhao",
+        "et al."
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 335,
+      "context": "- **published:** NeurIPS 2023",
+      "status": "VENUE_MISMATCH",
+      "actual_venue": "ICLR",
+      "actual_year": "2023",
+      "evidence_url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "notes": "ReAct was published at ICLR 2023, not NeurIPS. Common venue confusion."
+    },
+    {
+      "reference_id": 466,
+      "title": "Gaussian Process Reinforcement Learning",
+      "authors": [
+        "Yaakov Engel",
+        "Shie Mannor",
+        "Ron Meir"
+      ],
+      "venue_claimed": "ICML",
+      "year_claimed": "2005",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 352,
+      "context": "- **published:** ICML 2005",
+      "status": "VERIFIED",
+      "actual_venue": "ICML",
+      "actual_year": "2005",
+      "evidence_url": "https://icml.cc/learn/2005/abstracts/005.html",
+      "notes": "GPRL at ICML 2005 confirmed"
+    },
+    {
+      "reference_id": 425,
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": [
+        "Lewis, P.",
+        "Perez, E.",
+        "Piktus, A."
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2020",
+      "source_file": "research/dynamic-context-injection-academic-sources-report.md",
+      "line_number": 827,
+      "context": "1. Lewis, P., Perez, E., Piktus, A., et al. (2020). [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401). NeurIPS 2020. arXiv:2005.11401",
+      "status": "VERIFIED",
+      "actual_venue": "NeurIPS",
+      "actual_year": "2020",
+      "evidence_url": "https://papers.nips.cc/paper/2020/hash/6b493230205fbd5acbc264b36bf0a7c-Abstract.html",
+      "notes": "RAG at NeurIPS 2020 confirmed"
+    },
+    {
+      "reference_id": 427,
+      "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "authors": [
+        "Asai, A.",
+        "Wu, Z.",
+        "Wang, Y."
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "ICLR",
+      "year_claimed": "2024",
+      "source_file": "research/dynamic-context-injection-academic-sources-report.md",
+      "line_number": 829,
+      "context": "3. Asai, A., Wu, Z., Wang, Y., Sil, A., Hajishirzi, H. (2024). [Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection](https://arxiv.org/abs/2310.11511). ICLR 2024. arXiv:2310.11511",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2024",
+      "evidence_url": "https://openreview.net/forum?id=hSRfZntLct",
+      "notes": "Self-RAG at ICLR 2024 confirmed"
+    },
+    {
+      "reference_id": 431,
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [
+        "Yao, S.",
+        "Zhao, J.",
+        "Yu, D."
+      ],
+      "arxiv_id": null,
+      "venue_claimed": "ICLR",
+      "year_claimed": "2023",
+      "source_file": "research/dynamic-context-injection-academic-sources-report.md",
+      "line_number": 845,
+      "context": "11. Yao, S., Zhao, J., Yu, D., et al. (2023). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629). ICLR 2023. arXiv:2210.03629",
+      "status": "VERIFIED",
+      "actual_venue": "ICLR",
+      "actual_year": "2023",
+      "evidence_url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "notes": "ReAct at ICLR 2023 confirmed"
+    },
+    {
+      "reference_id": 465,
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": [
+        "Shunyu Yao",
+        "Jeffrey Zhao",
+        "et al."
+      ],
+      "venue_claimed": "NeurIPS",
+      "year_claimed": "2023",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 335,
+      "context": "- **published:** NeurIPS 2023",
+      "status": "VENUE_MISMATCH",
+      "actual_venue": "ICLR",
+      "actual_year": "2023",
+      "evidence_url": "https://openreview.net/forum?id=WE_vluYUL-X",
+      "notes": "ReAct was published at ICLR 2023, not NeurIPS. Duplicate of 465, venue mismatch."
+    }
+  ]
+}
