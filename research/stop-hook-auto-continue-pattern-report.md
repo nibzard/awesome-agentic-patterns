@@ -85,7 +85,7 @@ define_stop_hook() {
 
 ---
 
-#### **ReAct: Synergizing Reasoning and Acting in Language Models** (NeurIPS 2022)
+#### **ReAct: Synergizing Reasoning and Acting in Language Models** (ICLR 2023)
 - **Authors**: Shunyu Yao, Jeffrey Zhao, Dian Yu, et al.
 - **arXiv**: [2210.03629](https://arxiv.org/abs/2210.03629)
 - **Relevance**: Established **Thought -> Action -> Observation** paradigm as foundation for agentic behavior loops.

@@ -170,7 +170,7 @@ class ZoneOfProximalDevelopment:
 |-------|-------|------|------------------|
 | Progressive Neural Networks | arXiv:1606.04671 | 2016 | Capacity expansion without forgetting |
 | Dynamically Expandable Networks | ICML 2017 | 2017 | Automated network expansion |
-| Progressive Growing of GANs | ICML 2018 | 2018 | Layer-wise progressive training |
+| Progressive Growing of GANs | ICLR 2018 | 2018 | Layer-wise progressive training |
 | Curriculum for Reinforcement Learning | ICML 2020 | 2020 | Task sequence design for RL |
 
 **Architecture Pattern:**
@@ -496,7 +496,7 @@ class ProgressiveComplexityRollout:
     - Dynamically expandable network architectures
     - Task-specific capacity allocation
 
-11. **Karras, T., et al. (2018). "Progressive Growing of GANs"**. ICML 2018.
+11. **Karras, T., et al. (2018). "Progressive Growing of GANs"**. ICLR 2018.
     - Layer-wise progressive training
     - Stable training for complex models
 

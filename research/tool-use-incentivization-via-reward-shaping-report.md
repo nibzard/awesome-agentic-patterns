@@ -141,12 +141,12 @@ if parallel_tools_used:
 
 ### Tool-Augmented LLM Research
 
-**ReAct: Synergizing Reasoning and Acting** (Yao et al., NeurIPS 2022) - arXiv:2210.03629
+**ReAct: Synergizing Reasoning and Acting** (Yao et al., ICLR 2023) - arXiv:2210.03629
 
 - Thought → Action → Observation paradigm
 - Base framework for multi-step tool execution and reward modeling
 
-**ToolFormer** (Schick & Schutze, ACL 2023) - arXiv:2302.04761
+**ToolFormer** (Schick & Schutze, ICLR 2024) - arXiv:2302.04761
 
 - Self-supervised approach for learning tool use
 - Shows tool use can be learned without explicit reward signals
@@ -516,9 +516,9 @@ class ToolUseGrader:
 
 5. Chen, Y., et al. (2025). "RM-R1: Reward Modeling as Reasoning." arXiv:2505.02387.
 
-6. Yao, S., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." NeurIPS 2022. arXiv:2210.03629.
+6. Yao, S., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023. arXiv:2210.03629.
 
-7. Schick, T., & Schutze, H. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." ACL 2023. arXiv:2302.04761.
+7. Schick, T., & Schutze, H. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." ICLR 2024. arXiv:2302.04761.
 
 8. Patil, S., et al. (2023). "Gorilla: Large Language Model Connected with Massive APIs." arXiv:2305.15334.
 

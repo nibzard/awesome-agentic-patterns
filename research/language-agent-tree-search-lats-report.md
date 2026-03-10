@@ -331,7 +331,7 @@ Where:
 **Reasoning Foundations:**
 9. Wei et al. (2022). Chain-of-Thought Prompting. NeurIPS. arXiv:2201.11903
 10. Wang et al. (2022). Self-Consistency Improves CoT. NeurIPS. arXiv:2203.11171
-11. Yao et al. (2022). ReAct: Synergizing Reasoning and Acting. NeurIPS. arXiv:2210.03629
+11. Yao et al. (2022). ReAct: Synergizing Reasoning and Acting. ICLR 2023. arXiv:2210.03629
 
 **Meta-Reasoning:**
 12. Google DeepMind (2024). Self-Discover: LLMs Self-Compose Structures. arXiv:2402.03620

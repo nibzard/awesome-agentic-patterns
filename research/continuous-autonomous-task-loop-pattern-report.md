@@ -457,7 +457,7 @@ while iteration < MAX_ITERATIONS and tasks_remaining > 0:
 - [Autonomous Task Processing Script (Gist)](https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78) by Nikola Balic (@nibzard)
 
 ### 11.2 Academic Papers
-- [ReAct: Synergizing Reasoning and Acting (NeurIPS 2022)](https://arxiv.org/abs/2210.03629) - Yao et al.
+- [ReAct: Synergizing Reasoning and Acting (ICLR 2023)](https://arxiv.org/abs/2210.03629) - Yao et al.
 - [Reflexion: Language Agents with Verbal RL (NeurIPS 2023)](https://arxiv.org/abs/2303.11366) - Shinn et al.
 - [Self-Refine: Iterative Feedback (arXiv 2023)](https://arxiv.org/abs/2303.11366) - Shinn et al.
 - [The Landscape of Agentic RL for LLMs (arXiv 2025)](https://arxiv.org/abs/2509.02547)

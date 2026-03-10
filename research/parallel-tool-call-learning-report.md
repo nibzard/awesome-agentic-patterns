@@ -26,11 +26,11 @@ This report documents research on the **Parallel Tool Call Learning** pattern, w
 
 ### Foundational Papers on Tool Use
 
-- **ToolFormer: Language Models Can Teach Themselves to Use Tools** by Schick et al. (ACL, 2023) - [arXiv:2302.04761](https://arxiv.org/abs/2302.04761)
+- **ToolFormer: Language Models Can Teach Themselves to Use Tools** by Schick et al. (ICLR, 2024) - [arXiv:2302.04761](https://arxiv.org/abs/2302.04761)
   - Introduces self-supervised approach for teaching LLMs to use external tools through simple insertion of API calls
   - Relevance: Establishes foundational mechanisms for tool-augmented LLMs that can be extended to parallel execution scenarios
 
-- **ReAct: Synergizing Reasoning and Acting in Language Models** by Yao et al. (NeurIPS, 2022) - [arXiv:2210.03629](https://arxiv.org/abs/2210.03629)
+- **ReAct: Synergizing Reasoning and Acting in Language Models** by Yao et al. (ICLR, 2023) - [arXiv:2210.03629](https://arxiv.org/abs/2210.03629)
   - Introduces reasoning + acting paradigm where LLMs generate traces and task-specific actions
   - Relevance: Base framework for multi-step tool execution; extensions explore parallel action branches
 
@@ -44,7 +44,7 @@ This report documents research on the **Parallel Tool Call Learning** pattern, w
   - Presents compositional reasoning framework where LLMs can orchestrate multiple tools and models
   - Relevance: Explores modular tool orchestration, including concurrent execution of independent tool chains
 
-- **HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace** by Shen et al. (NeurIPS, 2023) - [arXiv:2303.17580](https://arxiv.org/abs/2303.17580)
+- **HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace** by Shen et al. (arXiv, 2023) - [arXiv:2303.17580](https://arxiv.org/abs/2303.17580)
   - Demonstrates LLM as controller orchestrating multiple AI models for complex tasks
   - Relevance: Parallel execution of multiple models; task decomposition and result synthesis provide insights for parallel tool learning
 
@@ -350,10 +350,10 @@ async def investigate_feature(feature_name: str):
 ## References
 
 ### Academic Papers
-- Schick et al. "ToolFormer: Language Models Can Teach Themselves to Use Tools" (ACL, 2023) - https://arxiv.org/abs/2302.04761
-- Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models" (NeurIPS, 2022) - https://arxiv.org/abs/2210.03629
+- Schick et al. "ToolFormer: Language Models Can Teach Themselves to Use Tools" (ICLR, 2024) - https://arxiv.org/abs/2302.04761
+- Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR, 2023) - https://arxiv.org/abs/2210.03629
 - Parcalabescu et al. "Chameleon: Plug-and-Play Compositional Reasoning" (ICLR, 2024) - https://arxiv.org/abs/2304.09842
-- Shen et al. "HuggingGPT" (NeurIPS, 2023) - https://arxiv.org/abs/2303.17580
+- Shen et al. "HuggingGPT" (arXiv, 2023) - https://arxiv.org/abs/2303.17580
 - He et al. "ToolkenGPT" (ICLR, 2024) - https://arxiv.org/abs/2305.14384
 - Wang et al. "Reasoning with Parallel Tools" (arXiv, 2024) - https://arxiv.org/abs/2403.01123
 
