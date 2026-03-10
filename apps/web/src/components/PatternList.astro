@@ -61,11 +61,11 @@ const { patterns, layout = 'grid', emptyMessage = 'No patterns found.' } = Astro
 <style>
   .pattern-list {
     display: grid;
-    gap: var(--spacing-lg);
+    gap: 1rem;
   }
 
   .pattern-list--grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 
   .pattern-list--list {
@@ -79,6 +79,9 @@ const { patterns, layout = 'grid', emptyMessage = 'No patterns found.' } = Astro
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 250, 242, 0.76);
   }
 
   .pattern-list-empty svg {
@@ -93,12 +96,11 @@ const { patterns, layout = 'grid', emptyMessage = 'No patterns found.' } = Astro
 
   .pattern-list-empty-link {
     color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .pattern-list-empty-link:hover {
-    text-decoration: underline;
+    color: var(--color-primary-hover);
   }
 
   @media (max-width: 640px) {

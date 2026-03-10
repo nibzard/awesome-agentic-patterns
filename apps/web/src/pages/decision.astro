@@ -3,43 +3,102 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import questions from '../data/decision-questions.json';
 
 const initialQuestion = questions[0];
+const decisionStats = [
+  { value: `${questions.length}`, label: 'questions' },
+  { value: `${questions.reduce((total, question) => total + question.options.length, 0)}`, label: 'answer paths' },
+  { value: '3', label: 'recommended patterns' },
+];
+const initialProgress = (1 / questions.length) * 100;
 ---
 
 <BaseLayout title="Pattern Decision Tree - Awesome Agentic Patterns">
   <div class="decision-page">
-    <header class="decision-header">
-      <h1>Find the Right Pattern</h1>
-      <p class="decision-subtitle">
-        Answer a few questions to get personalized pattern recommendations for your AI agent
-        project.
-      </p>
-    </header>
+    <section class="decision-hero">
+      <div class="decision-hero-copy">
+        <span class="section-label">Decision Guide</span>
+        <h1>Choose the right pattern before you build the wrong system.</h1>
+        <p class="decision-subtitle">
+          Answer a few focused questions about control, memory, tools, and safety. The guide will
+          point you toward a smaller set of patterns with clear rationale.
+        </p>
+      </div>
 
-    <div id="decision-root">
-      <div class="decision-question">
-        <div class="question-progress">Question 1 of {questions.length}</div>
-        <h2 class="question-title">{initialQuestion.question}</h2>
-        <div class="question-options">
+      <aside class="decision-guide surface-panel">
+        <div class="decision-guide-stats">
           {
-            initialQuestion.options.map((option) => {
-              const answersParam = encodeURIComponent(
-                JSON.stringify([{ questionId: initialQuestion.id, value: option.value }])
-              );
-
-              return (
-                <a href={`/decision?answers=${answersParam}`} class="option-card">
-                  <div class="option-header">
-                    <input type="radio" readonly />
-                    <span class="option-label">{option.label}</span>
-                  </div>
-                  <p class="option-description">{option.description}</p>
-                </a>
-              );
-            })
+            decisionStats.map((stat) => (
+              <div class="decision-guide-stat">
+                <span class="decision-guide-value">{stat.value}</span>
+                <span class="decision-guide-label">{stat.label}</span>
+              </div>
+            ))
           }
         </div>
+
+        <div class="decision-guide-columns">
+          <div>
+            <p class="decision-kicker">What this does</p>
+            <ul class="decision-guide-list">
+              <li>Translates product constraints into a narrower pattern shortlist.</li>
+              <li>Highlights the trade-offs you should care about before implementation.</li>
+              <li>Gives you a direct path back into the full catalog when you need more depth.</li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="decision-kicker">Signals it weighs</p>
+            <ul class="decision-signal-list">
+              <li>Control model</li>
+              <li>Task complexity</li>
+              <li>Memory scope</li>
+              <li>Tool surface</li>
+              <li>Safety bar</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="decision-stage surface-panel">
+      <div id="decision-root">
+        <div class="decision-question">
+          <div class="decision-stage-heading">
+            <div>
+              <p class="decision-stage-kicker">Route builder</p>
+              <p class="decision-stage-copy">
+                Each answer narrows the shortlist and preserves the reasoning behind the recommendation.
+              </p>
+            </div>
+            <div class="decision-progress">
+              <div class="question-progress">Question 1 of {questions.length}</div>
+              <div class="progress-track" aria-hidden="true">
+                <span style={`width: ${initialProgress}%`}></span>
+              </div>
+            </div>
+          </div>
+          <h2 class="question-title">{initialQuestion.question}</h2>
+          <div class="question-options">
+            {
+              initialQuestion.options.map((option) => {
+                const answersParam = encodeURIComponent(
+                  JSON.stringify([{ questionId: initialQuestion.id, value: option.value }])
+                );
+
+                return (
+                  <a href={`/decision?answers=${answersParam}`} class="option-card">
+                    <div class="option-header">
+                      <input type="radio" readonly />
+                      <span class="option-label">{option.label}</span>
+                    </div>
+                    <p class="option-description">{option.description}</p>
+                  </a>
+                );
+              })
+            }
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </BaseLayout>
 
@@ -189,6 +248,19 @@ const initialQuestion = questions[0];
     };
   };
 
+  const renderProgress = (index, total) => {
+    const progress = ((index + 1) / total) * 100;
+
+    return `
+      <div class="decision-progress">
+        <div class="question-progress">Question ${index + 1} of ${total}</div>
+        <div class="progress-track" aria-hidden="true">
+          <span style="width: ${progress}%"></span>
+        </div>
+      </div>
+    `;
+  };
+
   const renderQuestion = (question, answers, index) => {
     const total = questions.length;
     const optionsHtml = question.options
@@ -220,7 +292,15 @@ const initialQuestion = questions[0];
 
     return `
       <div class="decision-question">
-        <div class="question-progress">Question ${index + 1} of ${total}</div>
+        <div class="decision-stage-heading">
+          <div>
+            <p class="decision-stage-kicker">Route builder</p>
+            <p class="decision-stage-copy">
+              Each answer narrows the shortlist and preserves the reasoning behind the recommendation.
+            </p>
+          </div>
+          ${renderProgress(index, total)}
+        </div>
         <h2 class="question-title">${question.question}</h2>
         <div class="question-options">${optionsHtml}</div>
         <div class="decision-nav">${previousLink}<span></span></div>
@@ -287,72 +367,205 @@ const initialQuestion = questions[0];
 
 <style is:global>
   .decision-page {
-    max-width: 800px;
+    max-width: var(--page-max);
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
   }
 
-  .decision-header {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
+  .decision-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: clamp(1rem, 4vw, 2.5rem);
+    padding: var(--spacing-2xl) 0;
   }
 
-  .decision-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+  .decision-hero-copy h1 {
+    margin-top: var(--spacing-md);
+    max-width: 12ch;
+    font-size: clamp(3rem, 7vw, 5rem);
   }
 
   .decision-subtitle {
-    font-size: 1.125rem;
+    margin-top: var(--spacing-lg);
+    max-width: 44rem;
     color: var(--color-text-muted);
+    font-size: 1.08rem;
+    line-height: 1.75;
   }
 
-  .question-progress {
-    text-align: center;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-lg);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  .decision-guide {
+    padding: 1.2rem;
   }
 
-  .question-title {
-    font-size: 1.75rem;
-    font-weight: 600;
+  .decision-guide-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .decision-guide-stat {
+    padding: 1rem 0.95rem;
+    border: 1px solid rgba(182, 164, 143, 0.42);
+    border-radius: var(--radius-md);
+    background: rgba(255, 250, 242, 0.7);
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .decision-guide-value {
+    font-size: clamp(1.55rem, 4vw, 2rem);
+    font-weight: 700;
     color: var(--color-text);
-    text-align: center;
+    line-height: 1;
+  }
+
+  .decision-guide-label {
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .decision-guide-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 1.2rem;
+  }
+
+  .decision-kicker {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .decision-guide-list {
+    margin-top: var(--spacing-md);
+    padding-left: 1.1rem;
+    color: var(--color-text-muted);
+    display: grid;
+    gap: 0.7rem;
+    line-height: 1.7;
+  }
+
+  .decision-signal-list {
+    margin: var(--spacing-md) 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .decision-signal-list li {
+    padding: 0.45rem 0.72rem;
+    border-radius: 999px;
+    border: 1px solid rgba(182, 164, 143, 0.46);
+    background: rgba(255, 250, 242, 0.82);
+    color: var(--color-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .decision-stage {
+    padding: clamp(1.2rem, 2.5vw, 2rem);
+  }
+
+  .decision-stage-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
     margin-bottom: var(--spacing-xl);
   }
 
+  .decision-stage-kicker {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .decision-stage-copy {
+    margin: 0.5rem 0 0;
+    max-width: 34rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .decision-progress {
+    display: grid;
+    gap: 0.75rem;
+    min-width: min(17rem, 100%);
+  }
+
+  .question-progress {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.38rem 0.72rem;
+    border-radius: 999px;
+    background: var(--color-primary-light);
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .progress-track {
+    position: relative;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: rgba(182, 164, 143, 0.28);
+    overflow: hidden;
+  }
+
+  .progress-track span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--color-primary) 0%, #de8b63 100%);
+  }
+
+  .question-title {
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xl);
+    max-width: 16ch;
+  }
+
   .question-options {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--spacing-md);
   }
 
   .option-card {
     display: block;
-    padding: var(--spacing-lg);
-    border: 2px solid var(--color-border);
+    padding: clamp(1rem, 2vw, 1.25rem);
+    border: 1px solid rgba(182, 164, 143, 0.5);
     border-radius: var(--radius-lg);
-    text-decoration: none;
     color: var(--color-text);
-    transition: all 0.2s ease;
+    background: rgba(255, 250, 242, 0.72);
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
     cursor: pointer;
   }
 
   .option-card:hover {
     border-color: var(--color-primary);
-    background-color: var(--color-border);
+    background-color: var(--color-bg-elevated);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
-  }
-
-  .option-card.option-selected {
-    border-color: var(--color-primary);
-    background-color: var(--color-primary-bg);
   }
 
   .option-header {
@@ -366,46 +579,44 @@ const initialQuestion = questions[0];
     width: 20px;
     height: 20px;
     cursor: pointer;
+    accent-color: var(--color-primary);
   }
 
   .option-label {
-    font-size: 1.125rem;
+    font-size: 1.12rem;
     font-weight: 600;
   }
 
   .option-description {
-    font-size: 0.9375rem;
+    font-size: 0.95rem;
     color: var(--color-text-muted);
     margin: 0;
     margin-left: 36px;
+    line-height: 1.65;
   }
 
   .decision-nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: var(--spacing-xl);
   }
 
   .decision-results {
-    padding: var(--spacing-xl);
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    display: grid;
+    gap: var(--spacing-lg);
   }
 
   .results-title {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3rem);
     color: var(--color-text);
-    text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 0;
   }
 
   .results-rationale {
-    margin-bottom: var(--spacing-xl);
     padding: var(--spacing-lg);
-    background-color: var(--color-border);
-    border-radius: var(--radius-md);
+    background-color: rgba(50, 93, 150, 0.08);
+    border-radius: var(--radius-lg);
   }
 
   .results-rationale h3 {
@@ -418,14 +629,13 @@ const initialQuestion = questions[0];
   .results-rationale p {
     font-size: 1rem;
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
   .results-avoid {
-    margin-bottom: var(--spacing-xl);
     padding: var(--spacing-lg);
-    background-color: var(--color-border);
-    border-radius: var(--radius-md);
+    background-color: rgba(194, 67, 49, 0.06);
+    border-radius: var(--radius-lg);
     border-left: 3px solid var(--color-warning);
   }
 
@@ -448,20 +658,19 @@ const initialQuestion = questions[0];
   }
 
   .results-patterns {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-xl);
   }
 
   .result-pattern {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: var(--color-border);
-    border-radius: var(--radius-md);
-    font-weight: 500;
+    padding: 0.95rem 1rem;
+    background-color: rgba(255, 250, 242, 0.72);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(182, 164, 143, 0.48);
+    font-weight: 600;
     color: var(--color-text);
   }
 
@@ -473,55 +682,47 @@ const initialQuestion = questions[0];
   .decision-actions {
     display: flex;
     gap: var(--spacing-md);
-    justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .button {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    border: none;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
+  @media (max-width: 960px) {
+    .decision-hero {
+      grid-template-columns: 1fr;
+    }
 
-  .button--primary {
-    background-color: var(--color-primary);
-    color: white;
-  }
+    .decision-guide-columns {
+      grid-template-columns: 1fr;
+    }
 
-  .button--primary:hover {
-    background-color: var(--color-primary-dark);
-    transform: translateY(-1px);
-  }
-
-  .button--secondary {
-    background-color: var(--color-border);
-    color: var(--color-text);
-  }
-
-  .button--secondary:hover {
-    background-color: var(--color-divider);
+    .decision-stage-heading {
+      flex-direction: column;
+    }
   }
 
   @media (max-width: 640px) {
-    .decision-header h1 {
-      font-size: 2rem;
-    }
-
-    .question-title {
-      font-size: 1.5rem;
+    .decision-page {
+      padding-left: var(--spacing-md);
+      padding-right: var(--spacing-md);
     }
 
     .decision-actions {
       flex-direction: column;
     }
 
+    .decision-guide-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .decision-progress {
+      min-width: 100%;
+    }
+
     .button {
       width: 100%;
+    }
+
+    .question-title {
+      max-width: none;
     }
   }
 </style>

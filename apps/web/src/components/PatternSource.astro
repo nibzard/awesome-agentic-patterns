@@ -58,10 +58,11 @@ const { source } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md);
-    background-color: var(--color-border);
-    border-radius: var(--radius-md);
-    border-left: 3px solid var(--color-primary);
+    padding: 1rem;
+    background: rgba(255, 250, 242, 0.76);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(182, 164, 143, 0.48);
+    box-shadow: var(--shadow-sm);
   }
 
   .pattern-source-header {
@@ -76,10 +77,10 @@ const { source } = Astro.props;
   }
 
   .pattern-source-label {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     color: var(--color-text-muted);
   }
 
@@ -87,14 +88,13 @@ const { source } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    font-size: 0.875rem;
-    color: var(--color-primary);
-    text-decoration: none;
+    font-size: 0.9rem;
+    color: var(--color-text);
     word-break: break-all;
   }
 
   .pattern-source-link:hover {
-    text-decoration: underline;
+    color: var(--color-primary);
   }
 
   .external-link-icon {

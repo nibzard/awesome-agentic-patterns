@@ -63,12 +63,15 @@ const themeScript = `
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0066cc" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#3399ff" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#c24331" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#ec745f" media="(prefers-color-scheme: dark)" />
 
-    <!-- Font Preload (for future custom fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+    />
 
     <!-- Theme Initialization -->
     <script set:html={themeScript} />

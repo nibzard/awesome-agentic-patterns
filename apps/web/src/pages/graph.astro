@@ -56,6 +56,13 @@ const domains = Object.entries(domainMap)
   .map(([domain, count]) => ({ domain, count }))
   .sort((a, b) => b.count - a.count);
 
+const graphOverview = [
+  { value: graphNodes.length, label: 'Patterns' },
+  { value: categories.length, label: 'Categories' },
+  { value: Object.keys(tagMap).length, label: 'Tags' },
+  { value: domains.length, label: 'Domains' },
+];
+
 const positionedNodes = graphNodes.map((node: GraphNode, index: number) => {
   const angle = (index / Math.max(graphNodes.length, 1)) * 2 * Math.PI;
   const radius = 200 + (index % 3) * 50;
@@ -87,14 +94,42 @@ function getCategoryColor(category: string): string {
 
 <BaseLayout title="Pattern Graph - Awesome Agentic Patterns">
   <div class="graph-page">
-    <header class="graph-header">
-      <h1>Pattern Graph</h1>
-      <p class="graph-subtitle">Explore relationships between AI agent design patterns.</p>
-    </header>
+    <section class="graph-hero">
+      <div class="graph-hero-copy">
+        <span class="section-label">Graph Explorer</span>
+        <h1>See how patterns cluster, overlap, and pull on each other.</h1>
+        <p class="graph-subtitle">
+          Switch between shared tags, explicit links, and similarity views to understand which
+          patterns reinforce each other before you decide what to build.
+        </p>
+      </div>
+
+      <aside class="graph-hero-panel surface-panel">
+        <div class="graph-hero-stats">
+          {
+            graphOverview.map((stat) => (
+              <div class="graph-stat">
+                <span class="graph-stat-value">{stat.value}</span>
+                <span class="graph-stat-label">{stat.label}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="graph-hero-notes">
+          <p class="graph-kicker">How to use it</p>
+          <ul>
+            <li>Start with shared tags to see the broadest pattern clusters.</li>
+            <li>Switch to explicit links when you want stronger editorial relationships.</li>
+            <li>Open a node to jump into the full pattern once the cluster looks right.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
 
     <div class="graph-layout">
       <!-- Filters Sidebar -->
-      <aside class="graph-filters">
+      <aside class="graph-filters surface-panel">
         <div class="filter-section">
           <h3 class="filter-title">Connections</h3>
           <div class="filter-options">
@@ -210,7 +245,7 @@ function getCategoryColor(category: string): string {
 
       <!-- Graph Canvas -->
       <div class="graph-canvas-container">
-        <div class="graph-info">
+        <div class="graph-info surface-panel">
           Showing <span id="graph-count">{graphNodes.length}</span> of {graphNodes.length}
           patterns · <span id="graph-edge-count">0</span> connections ·
           <span id="graph-mode-label">Shared tags</span>
@@ -1173,43 +1208,92 @@ function getCategoryColor(category: string): string {
 
 <style>
   .graph-page {
-    max-width: 1600px;
+    max-width: var(--page-max);
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
   }
 
-  .graph-header {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
+  .graph-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: clamp(1rem, 4vw, 2.5rem);
+    padding: var(--spacing-2xl) 0;
   }
 
-  .graph-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+  .graph-hero-copy h1 {
+    margin-top: var(--spacing-md);
+    max-width: 12ch;
+    font-size: clamp(3rem, 7vw, 5rem);
   }
 
   .graph-subtitle {
-    font-size: 1.125rem;
+    margin-top: var(--spacing-lg);
+    max-width: 44rem;
     color: var(--color-text-muted);
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .graph-hero-panel {
+    padding: 1.2rem;
+  }
+
+  .graph-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(182, 164, 143, 0.4);
+  }
+
+  .graph-stat {
+    padding: 0.7rem 0.8rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 250, 242, 0.56);
+  }
+
+  .graph-stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .graph-stat-label,
+  .graph-kicker {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .graph-hero-notes {
+    margin-top: 1rem;
+  }
+
+  .graph-hero-notes ul {
+    margin-top: var(--spacing-md);
+    padding-left: 1.1rem;
+    color: var(--color-text-muted);
+    display: grid;
+    gap: 0.7rem;
+    line-height: 1.7;
   }
 
   .graph-layout {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--spacing-xl);
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
   }
 
   .graph-filters {
     position: sticky;
-    top: 100px;
+    top: 88px;
     max-height: calc(100vh - 120px);
     overflow-y: auto;
-    padding: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-bg);
+    padding: 1.1rem;
   }
 
   .filter-section {
@@ -1221,10 +1305,10 @@ function getCategoryColor(category: string): string {
   }
 
   .filter-title {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.82rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-md);
   }
@@ -1247,17 +1331,23 @@ function getCategoryColor(category: string): string {
     align-items: center;
     gap: var(--spacing-sm);
     cursor: pointer;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-    transition: background-color 0.2s ease;
+    padding: 0.55rem 0.6rem;
+    border-radius: var(--radius-md);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+    border: 1px solid transparent;
   }
 
   .filter-option:hover {
-    background-color: var(--color-border);
+    background-color: rgba(255, 250, 242, 0.72);
+    border-color: rgba(182, 164, 143, 0.45);
   }
 
-  .filter-option input[type='checkbox'] {
+  .filter-option input[type='checkbox'],
+  .filter-option input[type='radio'] {
     cursor: pointer;
+    accent-color: var(--color-primary);
   }
 
   .filter-option span:first-of-type {
@@ -1267,42 +1357,40 @@ function getCategoryColor(category: string): string {
   }
 
   .filter-count {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--color-text-muted);
-    background-color: var(--color-border);
+    background-color: rgba(50, 93, 150, 0.08);
     padding: 2px 6px;
-    border-radius: 10px;
+    border-radius: 999px;
+    font-weight: 700;
   }
 
   .clear-filters {
     display: block;
     width: 100%;
-    padding: var(--spacing-sm);
+    padding: 0.85rem 1rem;
     text-align: center;
     background-color: var(--color-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius-md);
+    color: #fff7ef;
+    border-radius: 999px;
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .clear-filters:hover {
-    background-color: var(--color-primary-dark);
+    background-color: var(--color-primary-hover);
   }
 
   .graph-canvas-container {
     position: relative;
+    min-width: 0;
   }
 
   .graph-info {
     margin-bottom: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: var(--color-border);
-    border-radius: var(--radius-md);
+    padding: 0.95rem 1.1rem;
     font-size: 0.875rem;
     color: var(--color-text-muted);
-    text-align: center;
   }
 
   .graph-svg {
@@ -1324,19 +1412,19 @@ function getCategoryColor(category: string): string {
 
   .graph-search input {
     width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: 0.95rem 1rem;
     padding-right: 36px;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: 999px;
     font-size: 0.875rem;
-    background-color: var(--color-bg);
+    background-color: rgba(255, 250, 242, 0.72);
     color: var(--color-text);
   }
 
   .graph-search input:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
   }
 
   .graph-search input::placeholder {
@@ -1364,11 +1452,15 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-canvas {
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(182, 164, 143, 0.45);
     border-radius: var(--radius-lg);
-    background-color: var(--color-bg);
+    background:
+      radial-gradient(circle at 25% 20%, rgba(194, 67, 49, 0.12), transparent 20%),
+      radial-gradient(circle at 75% 10%, rgba(50, 93, 150, 0.12), transparent 24%),
+      #161210;
     overflow: hidden;
     position: relative;
+    box-shadow: var(--shadow-md);
   }
 
   .graph-controls {
@@ -1384,21 +1476,22 @@ function getCategoryColor(category: string): string {
   .control-btn {
     width: 40px;
     height: 40px;
-    border-radius: 8px;
-    background-color: var(--color-bg);
+    border-radius: 999px;
+    background-color: rgba(20, 17, 14, 0.88);
     border: 1px solid var(--color-border);
-    color: var(--color-text);
+    color: #f8f0e1;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .control-btn:hover {
     background-color: var(--color-primary);
-    color: white;
     transform: scale(1.05);
   }
 
@@ -1438,7 +1531,7 @@ function getCategoryColor(category: string): string {
   }
 
   .node-circle {
-    stroke: white;
+    stroke: rgba(248, 240, 225, 0.9);
     stroke-width: 2;
     transition: all 0.2s ease;
   }
@@ -1450,7 +1543,7 @@ function getCategoryColor(category: string): string {
 
   .node-label {
     font-size: 12px;
-    fill: var(--color-text);
+    fill: rgba(248, 240, 225, 0.88);
     pointer-events: none;
   }
 
@@ -1466,7 +1559,7 @@ function getCategoryColor(category: string): string {
 
   .node-tooltip div {
     padding: var(--spacing-sm);
-    background-color: var(--color-bg);
+    background-color: rgba(255, 250, 242, 0.95);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: 0.875rem;
@@ -1509,10 +1602,10 @@ function getCategoryColor(category: string): string {
     right: 20px;
     width: 320px;
     padding: var(--spacing-lg);
-    background-color: var(--color-bg);
+    background-color: rgba(255, 250, 242, 0.96);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
     z-index: 10;
   }
 
@@ -1569,15 +1662,15 @@ function getCategoryColor(category: string): string {
 
   .detail-badge {
     padding: 2px 8px;
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    background-color: var(--color-border);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    background-color: rgba(50, 93, 150, 0.08);
     color: var(--color-text-muted);
   }
 
   .detail-badge--maturity {
     background-color: var(--color-success);
-    color: white;
+    color: #fff7ef;
   }
 
   .detail-badge--domain {
@@ -1587,37 +1680,39 @@ function getCategoryColor(category: string): string {
   .detail-category,
   .detail-status {
     padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    font-weight: 500;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .detail-category {
-    background-color: var(--color-border);
-    color: var(--color-text);
+    background-color: rgba(50, 93, 150, 0.08);
+    color: var(--color-accent-blue);
   }
 
   .detail-status {
     background-color: var(--status-color);
-    color: white;
+    color: #fff7ef;
   }
 
   .detail-link {
     display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-lg);
+    padding: 0.85rem 1.1rem;
     background-color: var(--color-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    font-weight: 500;
+    color: #fff7ef;
+    border-radius: 999px;
+    font-weight: 600;
     transition: background-color 0.2s ease;
   }
 
   .detail-link:hover {
-    background-color: var(--color-primary-dark);
+    background-color: var(--color-primary-hover);
   }
 
   @media (max-width: 1024px) {
+    .graph-hero,
     .graph-layout {
       grid-template-columns: 1fr;
     }
@@ -1636,11 +1731,11 @@ function getCategoryColor(category: string): string {
 
   @media (max-width: 640px) {
     .graph-page {
-      padding: var(--spacing-md) var(--spacing-sm);
+      padding: var(--spacing-md) var(--spacing-md) var(--spacing-2xl);
     }
 
-    .graph-header h1 {
-      font-size: 1.75rem;
+    .graph-hero-copy h1 {
+      font-size: clamp(2.4rem, 16vw, 4rem);
     }
 
     .graph-subtitle {

@@ -5,18 +5,18 @@ import NewsletterCTA from '../components/NewsletterCTA.astro';
 import type { PatternEntry } from '../types';
 import { getAllPatterns } from '../lib/patterns';
 
-// Load patterns data
 const patterns = (await getAllPatterns()) as PatternEntry[];
 
-// Get new patterns (last 7 days)
 const sevenDaysAgo = new Date();
 sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
 const newPatterns = patterns
-  .filter((p: PatternEntry) => {
-    if (!p.updated_at) return false;
-    const updatedDate = new Date(p.updated_at);
-    return updatedDate >= sevenDaysAgo;
+  .filter((pattern: PatternEntry) => {
+    if (!pattern.updated_at) return false;
+    return new Date(pattern.updated_at) >= sevenDaysAgo;
   })
   .sort((a: PatternEntry, b: PatternEntry) => {
     const dateA = new Date(a.updated_at || 0);
@@ -25,15 +25,10 @@ const newPatterns = patterns
   })
   .slice(0, 5);
 
-// Get recently updated patterns (last 30 days, excluding patterns from last 7 days)
-const thirtyDaysAgo = new Date();
-thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
 const recentlyUpdated = patterns
-  .filter((p: PatternEntry) => {
-    if (!p.updated_at) return false;
-    const updatedDate = new Date(p.updated_at);
-    // Include patterns from 8-30 days ago (exclude last 7 days)
+  .filter((pattern: PatternEntry) => {
+    if (!pattern.updated_at) return false;
+    const updatedDate = new Date(pattern.updated_at);
     return updatedDate >= thirtyDaysAgo && updatedDate < sevenDaysAgo;
   })
   .sort((a: PatternEntry, b: PatternEntry) => {
@@ -43,406 +38,672 @@ const recentlyUpdated = patterns
   })
   .slice(0, 5);
 
-// Get featured patterns (randomly selected)
-let featuredPatterns = [...patterns];
+const patternBySlug = new Map(patterns.map((pattern: PatternEntry) => [pattern.slug, pattern]));
+const curatedSlugs = [
+  'specification-driven-agent-development',
+  'action-selector-pattern',
+  'human-in-loop-approval-framework',
+  'llm-observability',
+];
 
-// Fisher-Yates shuffle for random selection
-for (let i = featuredPatterns.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1));
-  [featuredPatterns[i], featuredPatterns[j]] = [featuredPatterns[j], featuredPatterns[i]];
+const featuredPatterns: PatternEntry[] = curatedSlugs
+  .map((slug) => patternBySlug.get(slug))
+  .filter(Boolean) as PatternEntry[];
+
+const fallbackFeatured = [...patterns].sort((a: PatternEntry, b: PatternEntry) => {
+  const priority = (value: string) => {
+    if (value === 'best-practice' || value === 'validated-in-production') return 3;
+    if (value === 'established') return 2;
+    if (value === 'emerging' || value === 'rapidly-improving') return 1;
+    return 0;
+  };
+
+  const statusDelta = priority(b.status) - priority(a.status);
+  if (statusDelta !== 0) return statusDelta;
+
+  const dateA = new Date(a.updated_at || 0);
+  const dateB = new Date(b.updated_at || 0);
+  return dateB.getTime() - dateA.getTime();
+});
+
+for (const pattern of fallbackFeatured) {
+  if (featuredPatterns.length >= 4) break;
+  if (!featuredPatterns.some((entry) => entry.slug === pattern.slug)) {
+    featuredPatterns.push(pattern);
+  }
 }
 
-featuredPatterns = featuredPatterns.slice(0, 6);
+const totalPatterns = patterns.length;
+const categoryCount = new Set(patterns.map((pattern: PatternEntry) => pattern.category)).size;
+const domainCount = new Set(patterns.flatMap((pattern: PatternEntry) => pattern.domains || []))
+  .size;
+const fieldTestedCount = patterns.filter((pattern: PatternEntry) =>
+  ['validated-in-production', 'best-practice'].includes(pattern.status)
+).length;
+
+const launchPads = [
+  {
+    label: 'Browse',
+    title: 'Start with the catalog',
+    description: 'Scan the full library when you already know the shape of the system you need.',
+    href: '/patterns',
+  },
+  {
+    label: 'Decide',
+    title: 'Use the decision guide',
+    description: 'Answer a few questions and narrow the pattern set before you build.',
+    href: '/decision',
+  },
+  {
+    label: 'Map',
+    title: 'See the pattern graph',
+    description: 'Explore adjacent ideas and dependencies across orchestration, safety, and evals.',
+    href: '/graph',
+  },
+];
+
+const routeCards = [
+  {
+    tone: 'build',
+    label: 'Build',
+    title: 'Choose the architecture before you choose the model',
+    description:
+      'Start with orchestration, context, and interface patterns that define how your agent actually behaves.',
+    href: '/patterns?category=Orchestration%20%26%20Control',
+    meta: 'Orchestration & control',
+  },
+  {
+    tone: 'observe',
+    label: 'Improve',
+    title: 'Instrument the loop and harden the feedback path',
+    description:
+      'Add evals, observability, and review loops early so the system can improve without guesswork.',
+    href: '/patterns?category=Feedback%20Loops',
+    meta: 'Feedback loops & reliability',
+  },
+  {
+    tone: 'defend',
+    label: 'Protect',
+    title: 'Design guardrails as first-class product behavior',
+    description:
+      'Treat safety, permissions, and approval flows as core UX, not compliance afterthoughts.',
+    href: '/patterns?category=Security%20%26%20Safety',
+    meta: 'Security & safety',
+  },
+];
+
+const signalStats = [
+  { value: totalPatterns, label: 'Patterns' },
+  { value: categoryCount, label: 'Categories' },
+  { value: domainCount, label: 'Domains' },
+  { value: fieldTestedCount, label: 'Field-tested' },
+];
+
+const formatDate = (value?: string) =>
+  value
+    ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(value))
+    : '';
 ---
 
-<BaseLayout title="Awesome Agentic Patterns">
-  <div class="home-hero">
-    <h1 class="home-title">Agentic Patterns</h1>
-    <p class="home-subtitle">
-      A curated catalogue of AI agent design patterns to help you build better AI systems.
-    </p>
-    <div class="home-cta">
-      <a href="/patterns" class="button button--primary">Browse Patterns</a>
-    </div>
-  </div>
-
-  <div class="home-section">
-    <h2 class="home-section-title">Featured Patterns</h2>
-    <p class="home-section-description">
-      Explore our hand-picked selection of essential AI agent patterns.
-    </p>
-    {
-      featuredPatterns.length > 0 ? (
-        <div class="home-patterns-grid">
-          {featuredPatterns.map((pattern: PatternEntry) => (
-            <PatternCard
-              title={pattern.title}
-              slug={pattern.slug}
-              summary={pattern.summary}
-              status={pattern.status}
-              category={pattern.category}
-              tags={pattern.tags}
-            />
-          ))}
+<BaseLayout
+  title="Awesome Agentic Patterns"
+  description="An editorial library of AI agent design patterns, trade-offs, and operating models."
+>
+  <section class="home-frame home-hero-frame">
+    <div class="home-hero-grid">
+      <div class="home-hero-copy">
+        <span class="section-label">Operational Pattern Library</span>
+        <h1 class="home-title">Patterns for teams shipping AI agents, not just prompting them.</h1>
+        <p class="home-subtitle">
+          A curated reference for orchestration, safety, memory, evals, and human control. Built
+          to help you choose the operating model before the implementation becomes expensive.
+        </p>
+        <div class="home-hero-actions">
+          <a href="/patterns" class="button button--primary">Browse Patterns</a>
+          <a href="/decision" class="button button--secondary">Find the Right Starting Point</a>
         </div>
-      ) : (
-        <div class="home-patterns-placeholder">
-          <a href="/patterns" class="home-patterns-link">
-            View All Patterns →
+      </div>
+
+      <aside class="home-launchpad surface-panel">
+        <div class="home-launchpad-heading">
+          <p class="home-kicker">Start Here</p>
+          <h2>Three ways into the library.</h2>
+        </div>
+        <div class="home-launchpad-list">
+          {
+            launchPads.map((entry) => (
+              <a href={entry.href} class="home-launchpad-card">
+                <span class="home-launchpad-label">{entry.label}</span>
+                <h3>{entry.title}</h3>
+                <p>{entry.description}</p>
+              </a>
+            ))
+          }
+        </div>
+      </aside>
+    </div>
+
+    <div class="home-stat-strip surface-panel">
+      {
+        signalStats.map((stat) => (
+          <div class="home-stat">
+            <span class="home-stat-value">{stat.value}</span>
+            <span class="home-stat-label">{stat.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="home-frame home-curated-frame">
+    <div class="home-section-heading">
+      <span class="section-label">Curated Core</span>
+      <h2>The patterns that change architecture decisions early.</h2>
+      <p>
+        This library should feel opinionated. These entries are the fastest way to understand how
+        agent systems break, how they recover, and where control needs to stay explicit.
+      </p>
+    </div>
+
+    <div class="home-curated-grid">
+      <div class="home-editorial-note surface-panel">
+        <p class="home-kicker">Editorial Thesis</p>
+        <h3>Reference material should help you make decisions, not just collect examples.</h3>
+        <ul class="home-principles">
+          <li>Bias toward patterns with operational consequences and real trade-offs.</li>
+          <li>Separate architecture, reliability, and safety instead of flattening them into tags.</li>
+          <li>Make it easy to move from exploration to a concrete build path.</li>
+        </ul>
+      </div>
+
+      <div class="home-patterns-grid">
+        {featuredPatterns.map((pattern: PatternEntry) => (
+          <PatternCard
+            title={pattern.title}
+            slug={pattern.slug}
+            summary={pattern.summary}
+            status={pattern.status}
+            category={pattern.category}
+            tags={pattern.tags}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-frame home-routes-frame">
+    <div class="home-section-heading home-section-heading--split">
+      <div>
+        <span class="section-label">Build Paths</span>
+        <h2>Pick a route through the catalog.</h2>
+      </div>
+      <p>
+        The useful split is not “new vs updated.” It is whether you are choosing architecture,
+        improving feedback loops, or hardening a risky system.
+      </p>
+    </div>
+
+    <div class="home-route-grid">
+      {
+        routeCards.map((route) => (
+          <a href={route.href} class={`home-route-card home-route-card--${route.tone}`}>
+            <span class="home-route-label">{route.label}</span>
+            <h3>{route.title}</h3>
+            <p>{route.description}</p>
+            <span class="home-route-meta">{route.meta}</span>
           </a>
-        </div>
-      )
-    }
-  </div>
-
-  <div class="home-section">
-    <h2 class="home-section-title">Quick Start</h2>
-    <div class="home-cards">
-      <a href="/patterns?category=Orchestration%20%26%20Control" class="home-card">
-        <h3>Orchestration & Control</h3>
-        <p>Patterns for managing agent workflows and decision-making processes.</p>
-      </a>
-      <a href="/patterns?category=Feedback%20Loops" class="home-card">
-        <h3>Feedback Loops</h3>
-        <p>Self-improvement and evaluation patterns for AI agents.</p>
-      </a>
-      <a href="/patterns?category=Security%20%26%20Safety" class="home-card">
-        <h3>Security & Safety</h3>
-        <p>Patterns for building secure and reliable AI systems.</p>
-      </a>
+        ))
+      }
     </div>
-  </div>
-
-  <div class="home-section">
-    <NewsletterCTA
-      variant="banner"
-      title="Stay in the Loop"
-      description="Get notified when we add new patterns or publish guides. No spam, just updates."
-      buttonText="Subscribe"
-    />
-  </div>
+  </section>
 
   {
     (newPatterns.length > 0 || recentlyUpdated.length > 0) && (
-      <div class="home-two-column-grid">
-        {newPatterns.length > 0 && (
-          <div class="home-section">
-            <h2 class="home-section-title">
-              <span class="section-badge section-badge--new">New</span>
-              New Patterns
-            </h2>
-            <p class="home-section-description">Freshly added patterns from the last 7 days.</p>
-            <div class="home-patterns-list">
-              {newPatterns.map((pattern: PatternEntry) => (
-                <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
-                  <span class="pattern-badge pattern-badge--new">New</span>
-                  <div class="pattern-info">
-                    <div class="pattern-title">{pattern.title}</div>
-                    <div class="pattern-meta">
-                      <span class="pattern-category">{pattern.category}</span>
-                      {pattern.updated_at && (
-                        <span class="pattern-date">
-                          {new Date(pattern.updated_at).toLocaleDateString()}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
+      <section class="home-frame home-signal-frame">
+        <div class="home-section-heading home-section-heading--split">
+          <div>
+            <span class="section-label">Signal</span>
+            <h2>What changed recently.</h2>
           </div>
-        )}
+          <p>Fresh additions and updates stay useful when they are concise, visible, and scannable.</p>
+        </div>
 
-        {recentlyUpdated.length > 0 && (
-          <div class="home-section">
-            <h2 class="home-section-title">
-              <span class="section-badge section-badge--updated">Updated</span>
-              Recently Updated
-            </h2>
-            <p class="home-section-description">
-              Patterns that have been improved or expanded in the last 30 days.
-            </p>
-            <div class="home-patterns-list">
-              {recentlyUpdated.map((pattern: PatternEntry) => (
-                <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
-                  <span class="pattern-badge pattern-badge--updated">Updated</span>
-                  <div class="pattern-info">
-                    <div class="pattern-title">{pattern.title}</div>
-                    <div class="pattern-meta">
-                      <span class="pattern-category">{pattern.category}</span>
-                      {pattern.updated_at && (
-                        <span class="pattern-date">
-                          {new Date(pattern.updated_at).toLocaleDateString()}
-                        </span>
-                      )}
+        <div class="home-signal-grid">
+          {newPatterns.length > 0 && (
+            <div class="home-signal-panel surface-panel">
+              <div class="home-signal-header">
+                <p class="home-kicker">New</p>
+                <h3>Recently added</h3>
+              </div>
+              <div class="home-patterns-list">
+                {newPatterns.map((pattern: PatternEntry) => (
+                  <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
+                    <div>
+                      <div class="home-pattern-item-title">{pattern.title}</div>
+                      <div class="home-pattern-item-meta">
+                        <span>{pattern.category}</span>
+                        {pattern.updated_at && <span>{formatDate(pattern.updated_at)}</span>}
+                      </div>
                     </div>
-                  </div>
-                </a>
-              ))}
+                    <span class="home-pattern-item-badge">New</span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+
+          {recentlyUpdated.length > 0 && (
+            <div class="home-signal-panel surface-panel">
+              <div class="home-signal-header">
+                <p class="home-kicker">Updated</p>
+                <h3>Expanded and revised</h3>
+              </div>
+              <div class="home-patterns-list">
+                {recentlyUpdated.map((pattern: PatternEntry) => (
+                  <a href={`/patterns/${pattern.slug}`} class="home-pattern-item">
+                    <div>
+                      <div class="home-pattern-item-title">{pattern.title}</div>
+                      <div class="home-pattern-item-meta">
+                        <span>{pattern.category}</span>
+                        {pattern.updated_at && <span>{formatDate(pattern.updated_at)}</span>}
+                      </div>
+                    </div>
+                    <span class="home-pattern-item-badge home-pattern-item-badge--updated">
+                      Updated
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     )
   }
+
+  <section class="home-frame home-dispatch-frame">
+    <div class="home-section-heading home-section-heading--split">
+      <div>
+        <span class="section-label">Dispatch</span>
+        <h2>Follow the library as it matures.</h2>
+      </div>
+      <p>
+        Product teams do not need more vague AI commentary. They need a sharper feed of patterns,
+        changes, and build guidance.
+      </p>
+    </div>
+
+    <NewsletterCTA
+      variant="banner"
+      title="Get practical pattern updates"
+      description="New entries, stronger examples, and design notes whenever the library gets materially better."
+      buttonText="Subscribe"
+    />
+  </section>
 </BaseLayout>
 
 <style>
-  .home-hero {
-    text-align: center;
-    padding: var(--spacing-2xl) var(--spacing-lg);
-    max-width: 800px;
+  .home-frame {
+    max-width: var(--page-max);
     margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
+  .home-hero-frame {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .home-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
   }
 
   .home-title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    line-height: 1.1;
+    margin-top: var(--spacing-md);
+    max-width: 12ch;
+    font-size: clamp(3.2rem, 8vw, 6.4rem);
   }
 
   .home-subtitle {
-    font-size: 1.25rem;
+    margin-top: var(--spacing-lg);
+    max-width: 42rem;
+    font-size: clamp(1.08rem, 2vw, 1.3rem);
+    line-height: 1.75;
     color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xl);
-    line-height: 1.6;
   }
 
-  .home-cta {
+  .home-hero-actions {
+    margin-top: var(--spacing-xl);
     display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
+    gap: var(--spacing-sm);
     flex-wrap: wrap;
   }
 
-  .button {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s ease;
+  .home-launchpad {
+    padding: clamp(1.2rem, 2vw, 1.6rem);
   }
 
-  .button--primary {
-    background-color: var(--color-primary);
-    color: white;
+  .home-launchpad-heading h2 {
+    margin-top: var(--spacing-xs);
+    font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
-  .button--primary:hover {
-    background-color: var(--color-primary-hover);
-  }
-
-  .home-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
-  }
-
-  .home-section-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    text-align: center;
-  }
-
-  .home-section-description {
-    font-size: 1rem;
+  .home-kicker {
+    margin: 0;
     color: var(--color-text-muted);
-    text-align: center;
-    margin-bottom: var(--spacing-xl);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .home-launchpad-list {
+    margin-top: var(--spacing-lg);
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .home-launchpad-card {
+    padding: 1rem 1.05rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 250, 242, 0.72);
+    border: 1px solid rgba(182, 164, 143, 0.42);
+  }
+
+  .home-launchpad-card:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-primary);
+  }
+
+  .home-launchpad-label {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .home-launchpad-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .home-launchpad-card p {
+    margin: 0.55rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .home-stat-strip {
+    margin-top: var(--spacing-xl);
+    padding: 1rem clamp(1rem, 2vw, 1.35rem);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .home-stat {
+    padding: 0.55rem 0.7rem;
+    border-left: 1px solid rgba(182, 164, 143, 0.5);
+  }
+
+  .home-stat:first-child {
+    border-left: none;
+  }
+
+  .home-stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    line-height: 1;
+  }
+
+  .home-stat-label {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .home-section-heading {
+    max-width: 52rem;
+  }
+
+  .home-section-heading h2 {
+    margin-top: var(--spacing-md);
+    font-size: clamp(2.1rem, 5vw, 3.7rem);
+  }
+
+  .home-section-heading p {
+    margin-top: var(--spacing-md);
+    color: var(--color-text-muted);
+    font-size: 1.03rem;
+    line-height: 1.75;
+  }
+
+  .home-section-heading--split {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
+    gap: clamp(1rem, 4vw, 4rem);
+    align-items: end;
+  }
+
+  .home-curated-grid {
+    margin-top: var(--spacing-xl);
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  .home-editorial-note {
+    padding: clamp(1.25rem, 2vw, 1.7rem);
+  }
+
+  .home-editorial-note h3 {
+    margin-top: var(--spacing-sm);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+  }
+
+  .home-principles {
+    margin-top: var(--spacing-lg);
+    padding-left: 1.1rem;
+    color: var(--color-text-muted);
+    display: grid;
+    gap: 0.85rem;
+    line-height: 1.7;
   }
 
   .home-patterns-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
   }
 
-  .home-patterns-placeholder {
-    text-align: center;
-    padding: var(--spacing-xl);
-  }
-
-  .home-patterns-link {
-    color: var(--color-primary);
-    font-size: 1.125rem;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .home-patterns-link:hover {
-    text-decoration: underline;
-  }
-
-  .home-cards {
+  .home-route-grid {
+    margin-top: var(--spacing-xl);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
   }
 
-  .home-two-column-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-md);
-    align-items: start;
-  }
-
-  .home-two-column-grid .home-section {
-    max-width: none;
-    margin: 0;
-  }
-
-  .home-card {
-    padding: var(--spacing-xl);
-    border: 1px solid var(--color-border);
+  .home-route-card {
+    padding: 1.3rem;
     border-radius: var(--radius-lg);
-    background-color: var(--color-bg);
-    text-decoration: none;
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    border: 1px solid rgba(182, 164, 143, 0.48);
+    background: rgba(255, 250, 242, 0.72);
+    box-shadow: var(--shadow-sm);
   }
 
-  .home-card:hover {
-    border-color: var(--color-primary);
+  .home-route-card:hover {
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
   }
 
-  .home-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
+  .home-route-card--build {
+    border-top: 4px solid var(--color-accent-blue);
   }
 
-  .home-card p {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin: 0;
+  .home-route-card--observe {
+    border-top: 4px solid var(--color-accent-moss);
   }
 
-  .home-section-title {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    justify-content: center;
+  .home-route-card--defend {
+    border-top: 4px solid var(--color-primary);
   }
 
-  .section-badge {
-    padding: 4px 8px;
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    font-weight: 600;
+  .home-route-label,
+  .home-route-meta {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
-  .section-badge--new {
-    background-color: #10b981;
-    color: white;
+  .home-route-label {
+    color: var(--color-text-muted);
   }
 
-  .section-badge--updated {
-    background-color: #3b82f6;
-    color: white;
+  .home-route-card h3 {
+    margin-top: var(--spacing-sm);
+    font-size: 1.55rem;
+    line-height: 1.12;
+  }
+
+  .home-route-card p {
+    margin: var(--spacing-md) 0 var(--spacing-xl);
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .home-route-meta {
+    color: var(--color-primary);
+  }
+
+  .home-signal-grid {
+    margin-top: var(--spacing-xl);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .home-signal-panel {
+    padding: 1.3rem;
+  }
+
+  .home-signal-header h3 {
+    margin-top: var(--spacing-xs);
+    font-size: 1.5rem;
   }
 
   .home-patterns-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    display: grid;
+    gap: 0.8rem;
   }
 
   .home-pattern-item {
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: all 0.2s ease;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(182, 164, 143, 0.42);
   }
 
-  .home-pattern-item:hover {
-    border-color: var(--color-primary);
-    transform: translateX(-4px);
+  .home-pattern-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
   }
 
-  .pattern-badge {
-    padding: 4px 8px;
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    flex-shrink: 0;
+  .home-pattern-item-title {
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    line-height: 1.2;
   }
 
-  .pattern-badge--new {
-    background-color: #10b981;
-    color: white;
-  }
-
-  .pattern-badge--updated {
-    background-color: #3b82f6;
-    color: white;
-  }
-
-  .pattern-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .pattern-title {
-    font-weight: 500;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .pattern-meta {
+  .home-pattern-item-meta {
     display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 0.8125rem;
-  }
-
-  .pattern-category {
+    gap: 0.7rem;
+    margin-top: 0.35rem;
     color: var(--color-text-muted);
+    font-size: 0.82rem;
   }
 
-  .pattern-date {
-    color: var(--color-text-muted);
+  .home-pattern-item-badge {
+    flex-shrink: 0;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  @media (max-width: 768px) {
-    .home-title {
-      font-size: 2rem;
-    }
+  .home-pattern-item-badge--updated {
+    background: rgba(50, 93, 150, 0.12);
+    color: var(--color-accent-blue);
+  }
 
-    .home-subtitle {
-      font-size: 1rem;
-    }
+  .home-dispatch-frame {
+    padding-bottom: var(--spacing-3xl);
+  }
 
-    .home-cta {
-      flex-direction: column;
-    }
-
-    .button {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .home-two-column-grid {
+  @media (max-width: 1080px) {
+    .home-hero-grid,
+    .home-curated-grid,
+    .home-section-heading--split {
       grid-template-columns: 1fr;
+    }
+
+    .home-route-grid,
+    .home-patterns-grid,
+    .home-signal-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .home-route-grid,
+    .home-patterns-grid,
+    .home-signal-grid,
+    .home-stat-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .home-stat {
+      border-left: none;
+      border-top: 1px solid rgba(182, 164, 143, 0.5);
+    }
+
+    .home-stat:first-child {
+      border-top: none;
+    }
+
+    .home-title {
+      max-width: none;
+      font-size: clamp(2.6rem, 15vw, 4.2rem);
+    }
+
+    .home-route-card h3 {
+      font-size: 1.35rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .home-pattern-item {
+      align-items: flex-start;
+      flex-direction: column;
     }
   }
 </style>

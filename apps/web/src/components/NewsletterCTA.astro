@@ -120,26 +120,27 @@ const {
 <style>
   .newsletter-cta {
     border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-bg) 100%);
-    border: 1px solid var(--color-primary-light);
+    padding: clamp(1.35rem, 3vw, 2rem);
+    background: rgba(255, 250, 242, 0.76);
+    border: 1px solid rgba(182, 164, 143, 0.48);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(16px);
   }
 
   .newsletter-cta-content {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
   }
 
   .newsletter-cta-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
+    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
     margin-bottom: var(--spacing-sm);
   }
 
   .newsletter-cta-description {
-    font-size: 0.9375rem;
+    font-size: 0.98rem;
     color: var(--color-text-muted);
     margin: 0;
+    line-height: 1.7;
   }
 
   .newsletter-cta-form {
@@ -154,12 +155,12 @@ const {
 
   .newsletter-cta-input {
     flex: 1;
-    min-width: 200px;
-    padding: var(--spacing-sm) var(--spacing-md);
+    min-width: 220px;
+    padding: 0.95rem 1rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: 0.9375rem;
-    background-color: var(--color-bg);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    background-color: var(--color-bg-elevated);
     color: var(--color-text);
     transition:
       border-color 0.2s ease,
@@ -180,20 +181,23 @@ const {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-lg);
+    padding: 0.95rem 1.2rem;
     background-color: var(--color-primary);
-    color: white;
+    color: #fff7ef;
     border: none;
-    border-radius: var(--radius-md);
-    font-size: 0.9375rem;
-    font-weight: 500;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
     white-space: nowrap;
   }
 
   .newsletter-cta-button:hover:not(:disabled) {
     background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
   }
 
   .newsletter-cta-button:disabled {
@@ -221,7 +225,7 @@ const {
 
   .newsletter-cta-message {
     margin-top: var(--spacing-sm);
-    font-size: 0.875rem;
+    font-size: 0.82rem;
     min-height: 1.25rem;
   }
 
@@ -252,20 +256,22 @@ const {
 
   /* Banner variant */
   .newsletter-cta--banner {
-    background: linear-gradient(135deg, var(--color-primary) 0%, #0052a3 100%);
-    border: none;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 32%),
+      linear-gradient(135deg, var(--color-primary) 0%, #7f2c22 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .newsletter-cta--banner .newsletter-cta-title {
-    color: white;
+    color: #fff7ef;
   }
 
   .newsletter-cta--banner .newsletter-cta-description {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 247, 239, 0.88);
   }
 
   .newsletter-cta--banner .newsletter-cta-input {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 247, 239, 0.96);
   }
 
   /* Minimal variant - for footer */
@@ -273,6 +279,8 @@ const {
     padding: 0;
     background: transparent;
     border: none;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
   .newsletter-cta--minimal .newsletter-cta-content {
@@ -284,17 +292,19 @@ const {
   }
 
   .newsletter-cta-invite {
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     color: var(--color-text-muted);
     margin: 0 0 var(--spacing-xs) 0;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .newsletter-cta--minimal .newsletter-cta-input {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 0.8125rem;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.82rem;
     border: 1px solid var(--color-border);
-    background-color: var(--color-bg-alt, var(--color-bg));
+    background-color: var(--color-bg-elevated);
   }
 
   .newsletter-cta--minimal .newsletter-cta-input:focus {
@@ -303,8 +313,8 @@ const {
   }
 
   .newsletter-cta--minimal .newsletter-cta-button {
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: 0.8125rem;
+    padding: 0.7rem 0.95rem;
+    font-size: 0.82rem;
   }
 
   .newsletter-cta--minimal .newsletter-cta-message {
@@ -324,8 +334,27 @@ const {
     }
   }
 
-  /* Dark mode adjustments */
+  :root[data-theme='dark'] .newsletter-cta {
+    background: rgba(31, 25, 20, 0.82);
+    border-color: rgba(88, 71, 58, 0.8);
+  }
+
   :root[data-theme='dark'] .newsletter-cta--banner {
-    background: linear-gradient(135deg, #1a5fb4 0%, #0047b3 100%);
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 32%),
+      linear-gradient(135deg, #c95342 0%, #6f271f 100%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .newsletter-cta {
+      background: rgba(31, 25, 20, 0.82);
+      border-color: rgba(88, 71, 58, 0.8);
+    }
+
+    :root:not([data-theme]) .newsletter-cta--banner {
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 32%),
+        linear-gradient(135deg, #c95342 0%, #6f271f 100%);
+    }
   }
 </style>

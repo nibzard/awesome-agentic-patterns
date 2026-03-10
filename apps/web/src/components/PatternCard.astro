@@ -17,38 +17,50 @@ const {
   tags = [],
 } = Astro.props;
 
-// Status badge colors
 const statusColors: Record<string, string> = {
   proposed: 'var(--color-text-muted)',
-  emerging: 'var(--color-info)',
+  emerging: 'var(--color-accent-blue)',
   established: 'var(--color-primary)',
   'validated-in-production': 'var(--color-success)',
   'best-practice': 'var(--color-success)',
   'experimental-but-awesome': 'var(--color-warning)',
-  'rapidly-improving': 'var(--color-info)',
+  'rapidly-improving': 'var(--color-accent-blue)',
 };
+
+const categoryColors: Record<string, string> = {
+  'Orchestration & Control': 'var(--color-accent-blue)',
+  'Context & Memory': 'var(--color-accent-moss)',
+  'Feedback Loops': 'var(--color-primary)',
+  'Learning & Adaptation': 'var(--color-warning)',
+  'Reliability & Eval': 'var(--color-accent-blue)',
+  'Security & Safety': 'var(--color-primary)',
+  'Tool Use & Environment': 'var(--color-accent-amber)',
+  'UX & Collaboration': 'var(--color-accent-moss)',
+};
+
+const statusLabel = status.replace(/-/g, ' ');
 ---
 
-<article class="pattern-card">
+<article
+  class="pattern-card"
+  style={`--status-color: ${statusColors[status] || 'var(--color-text-muted)'}; --category-color: ${categoryColors[category] || 'var(--color-primary)'}`}
+>
   <a href={`/patterns/${slug}`} class="pattern-card-link">
-    <div class="pattern-card-header">
-      <h3 class="pattern-card-title">{title}</h3>
-      <span
-        class="pattern-card-status"
-        style={`--status-color: ${statusColors[status] || 'var(--color-text-muted)'}`}
-      >
-        {status}
-      </span>
+    <div class="pattern-card-topline">
+      <span class="pattern-card-category">{category}</span>
+      <span class="pattern-card-status">{statusLabel}</span>
     </div>
+
+    <h3 class="pattern-card-title">{title}</h3>
 
     {summary && <p class="pattern-card-summary">{summary}</p>}
 
     <div class="pattern-card-footer">
-      <span class="pattern-card-category">{category}</span>
+      <span class="pattern-card-readmore">Open pattern</span>
       {
         tags.length > 0 && (
           <div class="pattern-card-tags">
-            {tags.slice(0, 3).map((tag) => (
+            {tags.slice(0, 2).map((tag) => (
               <span class="pattern-card-tag">{tag}</span>
             ))}
           </div>
@@ -60,99 +72,114 @@ const statusColors: Record<string, string> = {
 
 <style>
   .pattern-card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-bg);
-    transition:
-      box-shadow 0.2s ease,
-      border-color 0.2s ease;
+    position: relative;
     overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: rgba(255, 250, 242, 0.72);
+    border: 1px solid rgba(182, 164, 143, 0.5);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(12px);
+  }
+
+  .pattern-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--category-color), transparent 78%);
   }
 
   .pattern-card:hover {
-    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    border-color: var(--category-color);
     box-shadow: var(--shadow-md);
   }
 
   .pattern-card-link {
     display: block;
-    padding: var(--spacing-lg);
-    text-decoration: none;
-    color: inherit;
+    padding: 1.35rem;
+    min-height: 100%;
   }
 
-  .pattern-card-header {
+  .pattern-card-topline {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     margin-bottom: var(--spacing-md);
   }
 
-  .pattern-card-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0;
-    line-height: 1.4;
-    flex: 1;
+  .pattern-card-category,
+  .pattern-card-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pattern-card-category {
+    color: var(--category-color);
   }
 
   .pattern-card-status {
-    font-size: 0.75rem;
-    font-weight: 500;
     color: var(--status-color);
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-align: right;
+  }
+
+  .pattern-card-title {
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    line-height: 1.1;
   }
 
   .pattern-card-summary {
-    font-size: 0.875rem;
+    margin: var(--spacing-md) 0 var(--spacing-lg);
     color: var(--color-text-muted);
-    margin: 0 0 var(--spacing-md) 0;
-    line-height: 1.6;
+    font-size: 0.94rem;
+    line-height: 1.65;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
   .pattern-card-footer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-md);
-    font-size: 0.875rem;
+    margin-top: auto;
   }
 
-  .pattern-card-category {
-    color: var(--color-primary);
-    font-weight: 500;
+  .pattern-card-readmore {
+    color: var(--color-text);
+    font-weight: 600;
   }
 
   .pattern-card-tags {
     display: flex;
     gap: var(--spacing-xs);
     flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .pattern-card-tag {
-    font-size: 0.75rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(50, 93, 150, 0.08);
     color: var(--color-text-muted);
-    background-color: var(--color-border);
-    padding: 2px 8px;
-    border-radius: var(--radius-sm);
+    font-size: 0.74rem;
   }
 
   @media (max-width: 640px) {
-    .pattern-card-footer {
+    .pattern-card-footer,
+    .pattern-card-topline {
       flex-direction: column;
       align-items: flex-start;
     }
 
-    .pattern-card-header {
-      flex-direction: column;
+    .pattern-card-tags {
+      justify-content: flex-start;
     }
   }
 </style>

@@ -380,27 +380,33 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     display: flex;
     gap: var(--spacing-sm);
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
   }
 
   .action-button {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-bg);
+    padding: 0.82rem 1rem;
+    background-color: rgba(255, 250, 242, 0.72);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: 999px;
     color: var(--color-text);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.88rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .action-button:hover {
-    background-color: var(--color-border);
-    border-color: var(--color-text-muted);
+    background-color: var(--color-bg-elevated);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
   }
 
   .action-button:focus-visible {
@@ -426,12 +432,13 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
   .pack-panel {
     margin-top: var(--spacing-sm);
-    padding: var(--spacing-md);
+    padding: 1rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background-color: var(--color-bg);
+    border-radius: var(--radius-lg);
+    background-color: rgba(255, 250, 242, 0.76);
     display: grid;
     gap: var(--spacing-sm);
+    box-shadow: var(--shadow-sm);
   }
 
   .pack-row {
@@ -450,23 +457,23 @@ const jsonContent = JSON.stringify(pattern, null, 2);
   .pack-select,
   .pack-input {
     width: 100%;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: 0.7rem 0.85rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    background-color: var(--color-bg);
+    border-radius: 999px;
+    background-color: var(--color-bg-elevated);
     color: var(--color-text);
     font-size: 0.875rem;
   }
 
   .pack-add,
   .pack-create {
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.95rem;
+    border-radius: 999px;
     border: 1px solid var(--color-border);
     background-color: var(--color-primary);
-    color: white;
+    color: #fff7ef;
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
   }
 
@@ -518,12 +525,13 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
   .citation-panel {
     margin-top: var(--spacing-sm);
-    padding: var(--spacing-md);
+    padding: 1rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background-color: var(--color-bg);
+    border-radius: var(--radius-lg);
+    background-color: rgba(255, 250, 242, 0.76);
     display: grid;
     gap: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
   }
 
   .citation-row {
@@ -549,9 +557,9 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
   .citation-text {
     margin: 0;
-    padding: var(--spacing-sm);
-    background-color: var(--color-border);
-    border-radius: var(--radius-sm);
+    padding: 0.9rem;
+    background-color: rgba(50, 93, 150, 0.08);
+    border-radius: var(--radius-md);
     font-size: 0.8125rem;
     color: var(--color-text);
     white-space: pre-wrap;
@@ -563,9 +571,10 @@ const jsonContent = JSON.stringify(pattern, null, 2);
   }
 
   .copy-feedback {
-    font-size: 0.875rem;
+    font-size: 0.82rem;
     color: var(--color-success);
     margin-left: var(--spacing-sm);
+    align-self: center;
   }
 
   @media (max-width: 640px) {

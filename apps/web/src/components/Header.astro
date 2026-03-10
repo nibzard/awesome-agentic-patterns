@@ -64,20 +64,14 @@ const navItems = [
 
     <div class="header-actions">
       <a
-        class="github-badges"
+        class="repo-link"
         href="https://github.com/nibzard/awesome-agentic-patterns"
         target="_blank"
         rel="noreferrer"
-        aria-label="View GitHub stars and forks"
+        aria-label="Open GitHub repository"
       >
-        <img
-          src="https://img.shields.io/github/stars/nibzard/awesome-agentic-patterns?style=social"
-          alt="GitHub stars"
-        />
-        <img
-          src="https://img.shields.io/github/forks/nibzard/awesome-agentic-patterns?style=social"
-          alt="GitHub forks"
-        />
+        <span>GitHub</span>
+        <span aria-hidden="true">↗</span>
       </a>
       <button id="search-toggle" class="search-toggle" aria-label="Search">
         <svg
@@ -437,20 +431,14 @@ const navItems = [
       </nav>
       <div class="mobile-menu-footer">
         <a
-          class="github-badges"
+          class="repo-link repo-link--mobile"
           href="https://github.com/nibzard/awesome-agentic-patterns"
           target="_blank"
           rel="noreferrer"
-          aria-label="View GitHub stars and forks"
+          aria-label="Open GitHub repository"
         >
-          <img
-            src="https://img.shields.io/github/stars/nibzard/awesome-agentic-patterns?style=social"
-            alt="GitHub stars"
-          />
-          <img
-            src="https://img.shields.io/github/forks/nibzard/awesome-agentic-patterns?style=social"
-            alt="GitHub forks"
-          />
+          <span>GitHub</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
@@ -459,15 +447,16 @@ const navItems = [
 
 <style>
   .header {
-    border-bottom: 1px solid var(--color-border);
-    background-color: var(--color-bg);
+    border-bottom: 1px solid rgba(182, 164, 143, 0.45);
+    background: rgba(244, 237, 225, 0.74);
+    backdrop-filter: blur(14px);
     position: sticky;
     top: 0;
     z-index: 100;
   }
 
   .header-container {
-    max-width: 1200px;
+    max-width: var(--page-max);
     margin: 0 auto;
     padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
@@ -480,10 +469,11 @@ const navItems = [
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    font-weight: 600;
-    font-size: 1.125rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.03rem;
+    letter-spacing: -0.03em;
     color: var(--color-text);
-    text-decoration: none;
   }
 
   .logo svg {
@@ -498,17 +488,18 @@ const navItems = [
 
   .nav-list {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-xs);
     list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
   .nav-link {
     color: var(--color-text-muted);
-    text-decoration: none;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-md);
+    padding: 0.65rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     transition:
       color 0.2s ease,
       background-color 0.2s ease;
@@ -516,7 +507,7 @@ const navItems = [
 
   .nav-link:hover {
     color: var(--color-text);
-    background-color: var(--color-border);
+    background-color: rgba(255, 250, 242, 0.8);
   }
 
   .nav-link.active {
@@ -530,36 +521,40 @@ const navItems = [
     gap: var(--spacing-sm);
   }
 
-  .github-badges {
+  .repo-link {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    padding: 2px 6px;
+    gap: 0.45rem;
+    padding: 0.72rem 0.9rem;
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    background-color: var(--color-bg);
+    background-color: rgba(255, 250, 242, 0.78);
+    font-size: 0.82rem;
+    font-weight: 600;
   }
 
-  .github-badges img {
-    height: 20px;
+  .repo-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
   }
 
   .search-toggle {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-border);
+    padding: 0.72rem 0.9rem;
+    background-color: rgba(255, 250, 242, 0.78);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: 999px;
     color: var(--color-text);
     cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
   }
 
   .search-toggle:hover {
-    background-color: var(--color-divider);
+    background-color: var(--color-bg-elevated);
     border-color: var(--color-primary);
   }
 
@@ -594,11 +589,11 @@ const navItems = [
   .search-container {
     position: relative;
     width: 100%;
-    max-width: 600px;
-    background-color: var(--color-bg);
+    max-width: 700px;
+    background-color: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
   }
 
@@ -623,7 +618,7 @@ const navItems = [
   }
 
   .search-close:hover {
-    background-color: var(--color-border);
+    background-color: var(--color-bg-soft);
     color: var(--color-text);
   }
 
@@ -655,7 +650,7 @@ const navItems = [
 
   .search-input-wrapper kbd {
     padding: 4px 8px;
-    background-color: var(--color-border);
+    background-color: var(--color-bg-soft);
     border-radius: var(--radius-sm);
     font-size: 0.75rem;
     color: var(--color-text-muted);
@@ -677,9 +672,9 @@ const navItems = [
   .search-error {
     padding: var(--spacing-xl);
     text-align: center;
-    color: #dc2626;
+    color: var(--color-error);
     font-size: 0.9375rem;
-    background-color: #fef2f2;
+    background-color: var(--color-primary-light);
     border-radius: var(--radius-md);
   }
 
@@ -694,7 +689,7 @@ const navItems = [
 
   .search-result:hover,
   .search-result--selected {
-    background-color: var(--color-border);
+    background-color: var(--color-bg-soft);
     border-left-color: var(--color-primary);
   }
 
@@ -715,7 +710,7 @@ const navItems = [
     gap: var(--spacing-lg);
     padding: var(--spacing-sm);
     border-top: 1px solid var(--color-border);
-    background-color: var(--color-border);
+    background-color: rgba(229, 215, 192, 0.44);
   }
 
   .search-footer span {
@@ -725,7 +720,7 @@ const navItems = [
 
   .search-footer kbd {
     padding: 2px 6px;
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-elevated);
     border-radius: var(--radius-sm);
     font-family: var(--font-mono);
   }
@@ -733,9 +728,9 @@ const navItems = [
   /* Mobile Menu Toggle */
   .mobile-menu-toggle {
     display: none;
-    background: transparent;
+    background: rgba(255, 250, 242, 0.78);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: 999px;
     padding: var(--spacing-sm);
     cursor: pointer;
     width: 44px;
@@ -746,7 +741,7 @@ const navItems = [
   }
 
   .mobile-menu-toggle:hover {
-    background-color: var(--color-border);
+    background-color: var(--color-bg-elevated);
   }
 
   /* Hamburger Icon */
@@ -812,7 +807,7 @@ const navItems = [
     position: relative;
     width: 100%;
     max-width: 400px;
-    background-color: var(--color-bg);
+    background-color: var(--color-bg-elevated);
     border-right: 1px solid var(--color-border);
     height: 100%;
     overflow-y: auto;
@@ -845,16 +840,16 @@ const navItems = [
     align-items: center;
     padding: var(--spacing-md) var(--spacing-lg);
     color: var(--color-text);
-    text-decoration: none;
     border-radius: var(--radius-md);
-    font-size: 1.125rem;
+    font-size: 1rem;
+    font-weight: 600;
     min-height: 48px;
     transition: all 0.2s ease;
   }
 
   .mobile-menu-link:hover,
   .mobile-menu-link:focus {
-    background-color: var(--color-border);
+    background-color: var(--color-bg-soft);
     outline: none;
   }
 
@@ -868,6 +863,21 @@ const navItems = [
     border-top: 1px solid var(--color-border);
     display: flex;
     justify-content: center;
+  }
+
+  .repo-link--mobile {
+    width: 100%;
+    justify-content: center;
+  }
+
+  :root[data-theme='dark'] .header {
+    background: rgba(20, 17, 14, 0.82);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .header {
+      background: rgba(20, 17, 14, 0.82);
+    }
   }
 
   @media (max-width: 768px) {
@@ -887,7 +897,7 @@ const navItems = [
       display: flex;
     }
 
-    .header-actions .github-badges {
+    .header-actions .repo-link {
       display: none;
     }
 

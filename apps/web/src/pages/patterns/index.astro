@@ -11,12 +11,10 @@ import type {
   ComplexityCount,
 } from '../../types';
 
-// Load patterns data
 const patterns = (await getAllPatterns()) as PatternEntry[];
 
-// Get unique values for filters with counts
-const categoryMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
-  acc[p.category] = (acc[p.category] || 0) + 1;
+const categoryMap = patterns.reduce((acc: Record<string, number>, pattern: PatternEntry) => {
+  acc[pattern.category] = (acc[pattern.category] || 0) + 1;
   return acc;
 }, {});
 
@@ -24,8 +22,8 @@ const categories = Object.entries(categoryMap)
   .map(([category, count]) => ({ category, count }))
   .sort((a, b) => b.count - a.count) as CategoryCount[];
 
-const statusMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
-  acc[p.status] = (acc[p.status] || 0) + 1;
+const statusMap = patterns.reduce((acc: Record<string, number>, pattern: PatternEntry) => {
+  acc[pattern.status] = (acc[pattern.status] || 0) + 1;
   return acc;
 }, {});
 
@@ -33,9 +31,9 @@ const statuses = Object.entries(statusMap)
   .map(([status, count]) => ({ status, count }))
   .sort((a, b) => b.count - a.count) as StatusCount[];
 
-const maturityMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
-  if (p.maturity) {
-    acc[p.maturity] = (acc[p.maturity] || 0) + 1;
+const maturityMap = patterns.reduce((acc: Record<string, number>, pattern: PatternEntry) => {
+  if (pattern.maturity) {
+    acc[pattern.maturity] = (acc[pattern.maturity] || 0) + 1;
   }
   return acc;
 }, {});
@@ -44,9 +42,9 @@ const maturities = Object.entries(maturityMap)
   .map(([maturity, count]) => ({ maturity, count }))
   .sort((a, b) => b.count - a.count) as MaturityCount[];
 
-const complexityMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
-  if (p.complexity) {
-    acc[p.complexity] = (acc[p.complexity] || 0) + 1;
+const complexityMap = patterns.reduce((acc: Record<string, number>, pattern: PatternEntry) => {
+  if (pattern.complexity) {
+    acc[pattern.complexity] = (acc[pattern.complexity] || 0) + 1;
   }
   return acc;
 }, {});
@@ -55,8 +53,8 @@ const complexities = Object.entries(complexityMap)
   .map(([complexity, count]) => ({ complexity, count }))
   .sort((a, b) => b.count - a.count) as ComplexityCount[];
 
-const tagMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
-  p.tags.forEach((tag) => {
+const tagMap = patterns.reduce((acc: Record<string, number>, pattern: PatternEntry) => {
+  pattern.tags.forEach((tag) => {
     acc[tag] = (acc[tag] || 0) + 1;
   });
   return acc;
@@ -67,8 +65,8 @@ const tags = Object.entries(tagMap)
   .sort((a, b) => b.count - a.count)
   .slice(0, 20);
 
-const domainMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry) => {
-  (p.domains || []).forEach((domain) => {
+const domainMap = patterns.reduce((acc: Record<string, number>, pattern: PatternEntry) => {
+  (pattern.domains || []).forEach((domain) => {
     acc[domain] = (acc[domain] || 0) + 1;
   });
   return acc;
@@ -77,41 +75,127 @@ const domainMap = patterns.reduce((acc: Record<string, number>, p: PatternEntry)
 const domains = Object.entries(domainMap)
   .map(([domain, count]) => ({ domain, count }))
   .sort((a, b) => b.count - a.count);
+
+const statusPriority = (value: string) => {
+  if (value === 'best-practice' || value === 'validated-in-production') return 3;
+  if (value === 'established') return 2;
+  if (value === 'emerging' || value === 'rapidly-improving') return 1;
+  return 0;
+};
+
+const spotlightPatterns = [...patterns]
+  .sort((a: PatternEntry, b: PatternEntry) => {
+    const statusDelta = statusPriority(b.status) - statusPriority(a.status);
+    if (statusDelta !== 0) return statusDelta;
+
+    const dateA = new Date(a.updated_at || 0);
+    const dateB = new Date(b.updated_at || 0);
+    return dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 3);
+
+const totalPatterns = patterns.length;
+const categoryCount = categories.length;
+const domainCount = domains.length;
+const fieldTestedCount = patterns.filter((pattern: PatternEntry) =>
+  ['validated-in-production', 'best-practice'].includes(pattern.status)
+).length;
+
+const overviewStats = [
+  { value: totalPatterns, label: 'Patterns' },
+  { value: categoryCount, label: 'Categories' },
+  { value: domainCount, label: 'Domains' },
+  { value: fieldTestedCount, label: 'Field-tested' },
+];
+
+const spotlightCategories = categories.slice(0, 5);
 ---
 
-<BaseLayout title="Patterns - Awesome Agentic Patterns">
+<BaseLayout
+  title="Patterns - Awesome Agentic Patterns"
+  description="Browse the operating patterns, safety systems, and feedback loops behind real AI agents."
+>
   <div class="patterns-page">
-    <div class="patterns-header">
-      <h1>Patterns</h1>
-      <p class="patterns-subtitle">
-        Browse our comprehensive collection of AI agent design patterns.
-      </p>
-      <div class="patterns-search">
-        <SearchBox placeholder="Search patterns..." />
+    <section class="patterns-hero">
+      <div class="patterns-hero-copy">
+        <span class="section-label">Catalog</span>
+        <h1>Browse the operating models behind agent systems.</h1>
+        <p class="patterns-subtitle">
+          Search the full library, jump straight to the category you need, or scan a few
+          field-tested entries before you commit to an architecture.
+        </p>
+        <div class="patterns-search-row">
+          <div class="patterns-search">
+            <SearchBox placeholder="Search the library" />
+          </div>
+          <button class="filters-toggle-mobile" id="filters-open" aria-label="Open filters">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 5H17M3 10H17M3 15H17"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"></path>
+            </svg>
+            Filters
+          </button>
+        </div>
+        <div class="patterns-category-jumps">
+          {
+            spotlightCategories.map(({ category, count }) => (
+              <a href={`/patterns?category=${encodeURIComponent(category)}`} class="patterns-chip">
+                <span>{category}</span>
+                <span class="patterns-chip-count">{count}</span>
+              </a>
+            ))
+          }
+        </div>
       </div>
-      <button class="filters-toggle-mobile" id="filters-open" aria-label="Open filters">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3 5H17M3 10H17M3 15H17"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"></path>
-        </svg>
-        Filters
-      </button>
-    </div>
 
-    <div class="patterns-layout">
-      <!-- Filter Sidebar -->
-      <aside class="patterns-filters" id="filters">
+      <aside class="patterns-hero-panel surface-panel">
+        <div class="patterns-hero-panel-stats">
+          {
+            overviewStats.map((stat) => (
+              <div class="patterns-stat">
+                <span class="patterns-stat-value">{stat.value}</span>
+                <span class="patterns-stat-label">{stat.label}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="patterns-spotlight">
+          <p class="patterns-kicker">Quick Starts</p>
+          <h2>Three solid entries if you want signal fast.</h2>
+          <div class="patterns-spotlight-list">
+            {
+              spotlightPatterns.map((pattern: PatternEntry) => (
+                <a href={`/patterns/${pattern.slug}`} class="patterns-spotlight-item">
+                  <div>
+                    <h3>{pattern.title}</h3>
+                    <p>{pattern.category}</p>
+                  </div>
+                  <span>{pattern.status.replace(/-/g, ' ')}</span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="patterns-layout">
+      <aside class="patterns-filters surface-panel" id="filters">
         <div class="patterns-filters-header">
-          <h2 class="patterns-filters-title">Filters</h2>
+          <div>
+            <p class="patterns-kicker">Filter Rail</p>
+            <h2 class="patterns-filters-title">Narrow the library</h2>
+          </div>
           <button class="filters-toggle" id="filters-close" aria-label="Close filters">
             <svg
               width="20"
@@ -152,7 +236,7 @@ const domains = Object.entries(domainMap)
             {
               statuses.map(({ status, count }) => (
                 <a href={`/patterns?status=${status}`} class="filter-option">
-                  <span class="filter-option-label">{status}</span>
+                  <span class="filter-option-label">{status.replace(/-/g, ' ')}</span>
                   <span class="filter-option-count">{count}</span>
                 </a>
               ))
@@ -218,13 +302,20 @@ const domains = Object.entries(domainMap)
           )
         }
 
-        <a href="/patterns" class="clear-filters">Clear Filters</a>
+        <a href="/patterns" class="clear-filters">Reset all filters</a>
       </aside>
 
-      <!-- Pattern Grid -->
       <div class="patterns-content">
-        <div class="patterns-count" id="patterns-count">
-          Showing {patterns.length} pattern{patterns.length === 1 ? '' : 's'}
+        <div class="patterns-toolbar surface-panel">
+          <div>
+            <p class="patterns-kicker">Browse</p>
+            <div class="patterns-count" id="patterns-count">
+              Showing {patterns.length} pattern{patterns.length === 1 ? '' : 's'}
+            </div>
+          </div>
+          <p class="patterns-toolbar-copy">
+            Search globally or use the rail to isolate a category, maturity level, or domain.
+          </p>
         </div>
 
         <div class="patterns-grid" id="patterns-grid">
@@ -254,127 +345,243 @@ const domains = Object.entries(domainMap)
           }
         </div>
 
-        <div class="patterns-empty" id="patterns-empty" hidden>
-          <p>No patterns found.</p>
-          <a href="/patterns" class="button"> Clear Filters </a>
+        <div class="patterns-empty surface-panel" id="patterns-empty" hidden>
+          <p>No patterns matched the current filters.</p>
+          <a href="/patterns" class="button button--primary">Reset the catalog</a>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
   .patterns-page {
-    max-width: 1400px;
+    max-width: var(--page-max);
     margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
   }
 
-  .patterns-header {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
+  .patterns-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: clamp(1.25rem, 4vw, 2.5rem);
+    padding: var(--spacing-2xl) 0;
   }
 
-  .patterns-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+  .patterns-hero-copy h1 {
+    margin-top: var(--spacing-md);
+    max-width: 13ch;
+    font-size: clamp(3rem, 8vw, 5rem);
   }
 
   .patterns-subtitle {
-    font-size: 1.125rem;
+    margin-top: var(--spacing-lg);
+    max-width: 42rem;
     color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xl);
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .patterns-search-row {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
   }
 
   .patterns-search {
-    max-width: 600px;
-    margin: 0 auto;
+    flex: 1;
   }
 
   .filters-toggle-mobile {
     display: none;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-xs);
-    margin: var(--spacing-md) auto 0;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    background-color: var(--color-primary);
-    color: white;
+    gap: 0.45rem;
+    padding: 0.95rem 1.2rem;
+    background: var(--color-primary);
+    color: #fff7ef;
     border: none;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    font-size: 0.875rem;
+    border-radius: 999px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
   }
 
-  .filters-toggle-mobile:hover {
-    background-color: var(--color-primary-hover);
+  .patterns-category-jumps {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .patterns-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgba(182, 164, 143, 0.5);
+    border-radius: 999px;
+    background: rgba(255, 250, 242, 0.7);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .patterns-chip:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .patterns-chip-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.7rem;
+    height: 1.7rem;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    font-size: 0.74rem;
+  }
+
+  .patterns-hero-panel {
+    padding: 1.25rem;
+  }
+
+  .patterns-hero-panel-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(182, 164, 143, 0.4);
+  }
+
+  .patterns-stat {
+    padding: 0.65rem 0.8rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 250, 242, 0.56);
+  }
+
+  .patterns-stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .patterns-stat-label {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .patterns-spotlight {
+    margin-top: 1rem;
+  }
+
+  .patterns-kicker {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .patterns-spotlight h2,
+  .patterns-filters-title {
+    margin-top: var(--spacing-xs);
+    font-size: 1.5rem;
+  }
+
+  .patterns-spotlight-list {
+    margin-top: var(--spacing-md);
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .patterns-spotlight-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(182, 164, 143, 0.42);
+  }
+
+  .patterns-spotlight-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .patterns-spotlight-item h3 {
+    font-size: 1rem;
+    line-height: 1.15;
+  }
+
+  .patterns-spotlight-item p {
+    margin: 0.35rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .patterns-spotlight-item span:last-child {
+    flex-shrink: 0;
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: right;
   }
 
   .patterns-layout {
     display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: var(--spacing-xl);
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
     align-items: start;
   }
 
   .patterns-filters {
     position: sticky;
-    top: 100px;
-    padding: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-bg);
+    top: 88px;
+    padding: 1.2rem;
   }
 
   .patterns-filters-header {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
+    gap: var(--spacing-sm);
     margin-bottom: var(--spacing-lg);
   }
 
   .filters-toggle {
     display: none;
     padding: var(--spacing-xs);
-    background: none;
-    border: none;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
     color: var(--color-text-muted);
     cursor: pointer;
-    border-radius: var(--radius-sm);
-    transition: all 0.2s ease;
   }
 
-  .filters-toggle:hover {
-    background-color: var(--color-border);
-    color: var(--color-text);
-  }
-
-  .patterns-filters-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0;
-  }
-
-  .filter-group {
-    margin-bottom: var(--spacing-lg);
+  .filter-group + .filter-group {
+    margin-top: var(--spacing-lg);
   }
 
   .filter-group-title {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text);
     margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+    font-size: 0.92rem;
   }
 
   .filter-options {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
+    display: grid;
+    gap: 0.45rem;
   }
 
   .filter-option {
@@ -382,19 +589,17 @@ const domains = Object.entries(domainMap)
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-sm);
-    font-size: 0.875rem;
+    padding: 0.58rem 0.7rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
     color: var(--color-text-muted);
-    text-decoration: none;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-    transition:
-      color 0.2s ease,
-      background-color 0.2s ease;
+    font-size: 0.88rem;
   }
 
   .filter-option:hover {
+    border-color: rgba(182, 164, 143, 0.5);
+    background: rgba(255, 250, 242, 0.68);
     color: var(--color-text);
-    background-color: var(--color-border);
   }
 
   .filter-option-label {
@@ -402,47 +607,62 @@ const domains = Object.entries(domainMap)
   }
 
   .filter-option-count {
-    flex-shrink: 0;
-    padding: 2px 6px;
-    background-color: var(--color-border);
-    border-radius: 10px;
-    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.35rem;
+    border-radius: 999px;
+    background: rgba(50, 93, 150, 0.08);
     color: var(--color-text-muted);
-    font-weight: 500;
+    font-size: 0.72rem;
+    font-weight: 700;
   }
 
   .clear-filters {
-    display: inline-block;
-    font-size: 0.875rem;
+    display: inline-flex;
+    margin-top: var(--spacing-lg);
     color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
-    margin-top: var(--spacing-md);
-  }
-
-  .clear-filters:hover {
-    text-decoration: underline;
+    font-weight: 600;
   }
 
   .patterns-content {
     min-width: 0;
   }
 
+  .patterns-toolbar {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: clamp(1rem, 3vw, 3rem);
+    align-items: end;
+    padding: 1.1rem 1.25rem;
+  }
+
   .patterns-count {
-    font-size: 0.875rem;
+    margin-top: var(--spacing-xs);
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+  }
+
+  .patterns-toolbar-copy {
+    margin: 0;
+    max-width: 34rem;
     color: var(--color-text-muted);
-    margin-bottom: var(--spacing-md);
+    line-height: 1.65;
   }
 
   .patterns-grid {
+    margin-top: var(--spacing-lg);
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
   }
 
   .patterns-empty {
-    text-align: center;
+    margin-top: var(--spacing-lg);
     padding: var(--spacing-2xl);
+    text-align: center;
   }
 
   .patterns-empty p {
@@ -450,22 +670,10 @@ const domains = Object.entries(domainMap)
     margin-bottom: var(--spacing-lg);
   }
 
-  .button {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    background-color: var(--color-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-  }
-
-  .button:hover {
-    background-color: var(--color-primary-hover);
-  }
-
-  @media (max-width: 1024px) {
-    .patterns-layout {
+  @media (max-width: 1080px) {
+    .patterns-hero,
+    .patterns-layout,
+    .patterns-toolbar {
       grid-template-columns: 1fr;
     }
 
@@ -474,34 +682,37 @@ const domains = Object.entries(domainMap)
     }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     .patterns-page {
-      padding: var(--spacing-md) var(--spacing-sm);
-    }
-
-    .patterns-header h1 {
-      font-size: 1.75rem;
-    }
-
-    .patterns-subtitle {
-      font-size: 1rem;
+      padding-left: var(--spacing-md);
+      padding-right: var(--spacing-md);
     }
 
     .filters-toggle-mobile {
-      display: flex;
+      display: inline-flex;
+    }
+
+    .patterns-search-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .patterns-hero-panel-stats {
+      grid-template-columns: 1fr 1fr;
     }
 
     .patterns-filters {
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
+      right: auto;
       bottom: 0;
       z-index: 1000;
-      overflow-y: auto;
+      width: min(24rem, 100vw);
       border-radius: 0;
+      overflow-y: auto;
       transform: translateX(-100%);
-      transition: transform 0.3s ease;
+      transition: transform 0.25s ease;
     }
 
     .patterns-filters.open {
@@ -509,17 +720,23 @@ const domains = Object.entries(domainMap)
     }
 
     .filters-toggle {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
     }
+  }
 
-    .patterns-grid {
+  @media (max-width: 560px) {
+    .patterns-hero-copy h1 {
+      font-size: clamp(2.6rem, 16vw, 4rem);
+    }
+
+    .patterns-hero-panel-stats {
       grid-template-columns: 1fr;
     }
 
-    .filter-option {
-      padding: var(--spacing-sm);
+    .patterns-category-jumps {
+      flex-direction: column;
     }
   }
 </style>
@@ -590,7 +807,6 @@ const domains = Object.entries(domainMap)
     emptyEl.hidden = visibleCount > 0;
   }
 
-  // Mobile filter toggle functionality
   const filtersOpen = document.getElementById('filters-open');
   const filtersClose = document.getElementById('filters-close');
   const filtersPanel = document.getElementById('filters');
@@ -605,7 +821,6 @@ const domains = Object.entries(domainMap)
     document.body.style.overflow = '';
   });
 
-  // Close filters when clicking outside
   document.addEventListener('click', (e) => {
     if (
       filtersPanel?.classList.contains('open') &&
