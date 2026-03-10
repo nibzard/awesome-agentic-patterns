@@ -1,7 +1,7 @@
 ---
-title: Multi-Step Analysis Pipeline Orchestration
+title: Artifact-Driven Analysis Pipeline Orchestration
 status: emerging
-authors: ["@shmlkv"]
+authors: ["shmlkv (@shmlkv)"]
 based_on: ["Anthropic Claude Code"]
 category: "Orchestration & Control"
 source: "https://github.com/shmlkv/dna-claude-analysis"
@@ -14,7 +14,9 @@ Complex data analysis tasks often require running many sequential or parallel pr
 
 ## Solution
 
-Use an LLM agent as the orchestration layer for a multi-step analysis pipeline. The agent:
+Use an LLM agent as the orchestration layer for an artifact-driven analysis pipeline. The distinctive move is that each step emits a structured intermediate artifact that the agent can inspect semantically, not just pass through mechanically. This makes the agent useful not only for scheduling steps, but also for integrating report content across steps before producing the final output.
+
+The agent:
 
 1. **Manages a collection of independent analysis scripts** — each script handles one domain and produces a structured intermediate report (e.g., markdown).
 2. **Coordinates execution order** — runs scripts sequentially or in parallel as appropriate, handling failures gracefully.
@@ -38,7 +40,7 @@ Use an LLM agent as the orchestration layer for a multi-step analysis pipeline. 
                                          └──────────────┘
 ```
 
-The agent acts as both the scheduler (deciding what to run and when) and the integrator (combining outputs into a coherent whole). Because the agent understands the content of each report, it can apply domain-specific formatting, highlight anomalies, and produce richer output than a static template could.
+The agent acts as both the scheduler (deciding what to run and when) and the integrator (combining outputs into a coherent whole). Unlike general workflow automation patterns that emphasize execution, recovery, and checkpointing, this pattern centers on semantic aggregation of structured intermediate reports. Because the agent understands the content of each report, it can apply domain-specific formatting, highlight anomalies, and produce richer output than a static template could.
 
 ## How to use it
 
@@ -55,11 +57,11 @@ The agent acts as both the scheduler (deciding what to run and when) and the int
 3. Let the agent execute each script, monitor for errors, and collect outputs
 4. Have the agent read all intermediate reports and generate the final artifact
 
-**Example — Personal genome analysis (17-step pipeline):**
+**Example — Multi-report compliance analysis:**
 
-- 17 Python scripts each analyze a different aspect of raw DNA data (ancestry, health risks, nutrition, pharmacogenomics, etc.)
-- Each script produces a markdown report in `reports/`
-- The agent reads all reports and generates a single-page HTML dashboard with terminal-style visualization
+- Separate scripts analyze logging, access-control, encryption, and retention evidence from the same system snapshot
+- Each script produces a markdown or JSON report in `reports/`
+- The agent reads all reports, cross-references inconsistencies, and generates a single review dashboard with flagged gaps
 
 ## Trade-offs
 
@@ -77,7 +79,12 @@ The agent acts as both the scheduler (deciding what to run and when) and the int
 - **Not suited for massive scale** — works best with tens of steps, not thousands; dedicated workflow engines are better for large DAGs
 - **Requires structured intermediates** — scripts must produce outputs the agent can parse reliably
 
+## Known Implementations
+
+- [dna-claude-analysis](https://github.com/shmlkv/dna-claude-analysis) — contributor example of a multi-step analysis pipeline with agent-generated final reporting
+
 ## References
 
-- [dna-claude-analysis](https://github.com/shmlkv/dna-claude-analysis) — 17-step personal genome analysis pipeline orchestrated by Claude Code
 - [Building Effective Agents — Anthropic](https://www.anthropic.com/engineering/building-effective-agents) (2024)
+- [Multi-Model Orchestration for Complex Edits](multi-model-orchestration-for-complex-edits.md) — related pattern for staged orchestration across specialized steps
+- [Autonomous Workflow Agent Architecture](autonomous-workflow-agent-architecture.md) — related pattern focused on workflow execution, monitoring, and recovery
