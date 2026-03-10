@@ -1,7 +1,7 @@
 {
   "verification_date": "2026-03-10",
-  "total_checked": 193,
-  "verified": 188,
+  "total_checked": 413,
+  "verified": 408,
   "mismatches": 4,
   "not_found": 1,
   "hallucinated": 0,
@@ -169,7 +169,7 @@
       "overlap": "N/A",
       "source_file": "research/action-selector-academic-sources-report.md",
       "line_number": 500,
-      "context": "- Beurer-Kellner, L., Buesser, B., Cre\u0163u, A-M., Debenedetti, E., Dobos, D., Fabian, D., Fischer, M., Froelicher, D., Grosse, K., Naeff, D., Ozoani, E., Paverd, A., Tram\u00e8r, F., & Volhejn, V. (2025). Design Patterns for Securing LLM Agents against Prompt Injections. arXiv preprint arXiv:2506.08837."
+      "context": "- Beurer-Kellner, L., Buesser, B., Creţu, A-M., Debenedetti, E., Dobos, D., Fabian, D., Fischer, M., Froelicher, D., Grosse, K., Naeff, D., Ozoani, E., Paverd, A., Tramèr, F., & Volhejn, V. (2025). Design Patterns for Securing LLM Agents against Prompt Injections. arXiv preprint arXiv:2506.08837."
     },
     {
       "ref_id": 44,
@@ -555,11 +555,11 @@
       "ref_id": 92,
       "arxiv_id": "2501.04227",
       "status": "VERIFIED",
-      "claimed_title": "Agent Laboratory: \u5229\u7528 LLM Agent \u4f5c\u4e3a\u7814\u7a76\u52a9\u624b",
+      "claimed_title": "Agent Laboratory: 利用 LLM Agent 作为研究助手",
       "actual_title": "Agent Laboratory: Using LLM Agents as Research Assistants",
       "source_file": "research/agent-driven-research-report.md",
       "line_number": 70,
-      "context": "| \"Agent Laboratory: \u5229\u7528 LLM Agent \u4f5c\u4e3a\u7814\u7a76\u52a9\u624b\" | AMD + Johns Hopkins | 2025 | [arXiv:2501.04227](https://arxiv.org/abs/2501.04227) |"
+      "context": "| \"Agent Laboratory: 利用 LLM Agent 作为研究助手\" | AMD + Johns Hopkins | 2025 | [arXiv:2501.04227](https://arxiv.org/abs/2501.04227) |"
     },
     {
       "ref_id": 104,
@@ -866,10 +866,10 @@
       "arxiv_id": "2506.07982",
       "status": "VERIFIED",
       "claimed_title": null,
-      "actual_title": "$\u03c4^2$-Bench: Evaluating Conversational Agents in a Dual-Control Environment",
+      "actual_title": "$τ^2$-Bench: Evaluating Conversational Agents in a Dual-Control Environment",
       "source_file": "research/agent-sdk-for-programmatic-control-report.md",
       "line_number": 1154,
-      "context": "- [\u03c42-Bench](https://arxiv.org/abs/2506.07982) - Evaluating conversational agents in dual-control environments"
+      "context": "- [τ2-Bench](https://arxiv.org/abs/2506.07982) - Evaluating conversational agents in dual-control environments"
     },
     {
       "ref_id": 172,
@@ -1960,6 +1960,1326 @@
       "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
       "line_number": 41,
       "context": "| CodeAgent | [2401.07339](https://arxiv.org/abs/2401.07339) | 2024 | ACL 2024 | Tool-integrated agent system for repo-level challenges |"
+    },
+    {
+      "arxiv_id": "1306.0940",
+      "status": "VERIFIED",
+      "actual_title": "(More) Efficient Reinforcement Learning via Posterior Sampling",
+      "source_url": "https://arxiv.org/abs/1306.0940"
+    },
+    {
+      "arxiv_id": "1410.5401",
+      "status": "VERIFIED",
+      "actual_title": "Neural Turing Machines",
+      "source_url": "https://arxiv.org/abs/1410.5401"
+    },
+    {
+      "arxiv_id": "1506.06196",
+      "status": "VERIFIED",
+      "actual_title": "Heartbeat Stars: Spectroscopic Orbital Solutions for Six Eccentric Binary Systems",
+      "source_url": "https://arxiv.org/abs/1506.06196"
+    },
+    {
+      "arxiv_id": "1511.05952",
+      "status": "VERIFIED",
+      "actual_title": "Prioritized Experience Replay",
+      "source_url": "https://arxiv.org/abs/1511.05952"
+    },
+    {
+      "arxiv_id": "1512.08245",
+      "status": "VERIFIED",
+      "actual_title": "Spectral properties of transition metal pnictides and chalcogenides: angle-resolved photoemission spectroscopy and dynamical mean field theory",
+      "source_url": "https://arxiv.org/abs/1512.08245"
+    },
+    {
+      "arxiv_id": "1602.01783",
+      "status": "VERIFIED",
+      "actual_title": "Asynchronous Methods for Deep Reinforcement Learning",
+      "source_url": "https://arxiv.org/abs/1602.01783"
+    },
+    {
+      "arxiv_id": "1606.04671",
+      "status": "VERIFIED",
+      "actual_title": "Progressive Neural Networks",
+      "source_url": "https://arxiv.org/abs/1606.04671"
+    },
+    {
+      "arxiv_id": "1606.06565",
+      "status": "VERIFIED",
+      "actual_title": "Concrete Problems in AI Safety",
+      "source_url": "https://arxiv.org/abs/1606.06565"
+    },
+    {
+      "arxiv_id": "1612.00796",
+      "status": "VERIFIED",
+      "actual_title": "Overcoming catastrophic forgetting in neural networks",
+      "source_url": "https://arxiv.org/abs/1612.00796"
+    },
+    {
+      "arxiv_id": "1701.06538",
+      "status": "VERIFIED",
+      "actual_title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "source_url": "https://arxiv.org/abs/1701.06538"
+    },
+    {
+      "arxiv_id": "1703.01988",
+      "status": "VERIFIED",
+      "actual_title": "Neural Episodic Control",
+      "source_url": "https://arxiv.org/abs/1703.01988"
+    },
+    {
+      "arxiv_id": "1705.10528",
+      "status": "VERIFIED",
+      "actual_title": "Constrained Policy Optimization",
+      "source_url": "https://arxiv.org/abs/1705.10528"
+    },
+    {
+      "arxiv_id": "1706.03741",
+      "status": "VERIFIED",
+      "actual_title": "Deep reinforcement learning from human preferences",
+      "source_url": "https://arxiv.org/abs/1706.03741"
+    },
+    {
+      "arxiv_id": "1706.03762",
+      "status": "VERIFIED",
+      "actual_title": "Attention Is All You Need",
+      "source_url": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "arxiv_id": "1706.06121",
+      "status": "VERIFIED",
+      "actual_title": "High-Precision Calculations in Strongly Coupled Quantum Field Theory with Next-to-Leading-Order Renormalized Hamiltonian Truncation",
+      "source_url": "https://arxiv.org/abs/1706.06121"
+    },
+    {
+      "arxiv_id": "1707.06347",
+      "status": "VERIFIED",
+      "actual_title": "Proximal Policy Optimization Algorithms",
+      "source_url": "https://arxiv.org/abs/1707.06347"
+    },
+    {
+      "arxiv_id": "1707.08161",
+      "status": "VERIFIED",
+      "actual_title": "Formation of soap bubbles by gas jet",
+      "source_url": "https://arxiv.org/abs/1707.08161"
+    },
+    {
+      "arxiv_id": "1709.03483",
+      "status": "VERIFIED",
+      "actual_title": "Cherenkov Telescope Array Contributions to the 35th International Cosmic Ray Conference (ICRC2017)",
+      "source_url": "https://arxiv.org/abs/1709.03483"
+    },
+    {
+      "arxiv_id": "1711.05769",
+      "status": "VERIFIED",
+      "actual_title": "PackNet: Adding Multiple Tasks to a Single Network by Iterative Pruning",
+      "source_url": "https://arxiv.org/abs/1711.05769"
+    },
+    {
+      "arxiv_id": "1805.00899",
+      "status": "VERIFIED",
+      "actual_title": "AI safety via debate",
+      "source_url": "https://arxiv.org/abs/1805.00899"
+    },
+    {
+      "arxiv_id": "1805.09361",
+      "status": "VERIFIED",
+      "actual_title": "On a lower bound for the eccentric connectivity index of graphs",
+      "source_url": "https://arxiv.org/abs/1805.09361"
+    },
+    {
+      "arxiv_id": "1807.03343",
+      "status": "VERIFIED",
+      "actual_title": "Complex Fully Convolutional Neural Networks for MR Image Reconstruction",
+      "source_url": "https://arxiv.org/abs/1807.03343"
+    },
+    {
+      "arxiv_id": "1808.01390",
+      "status": "VERIFIED",
+      "actual_title": "A new family of one dimensional martingale couplings",
+      "source_url": "https://arxiv.org/abs/1808.01390"
+    },
+    {
+      "arxiv_id": "1901.02860",
+      "status": "VERIFIED",
+      "actual_title": "Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context",
+      "source_url": "https://arxiv.org/abs/1901.02860"
+    },
+    {
+      "arxiv_id": "1904.04528",
+      "status": "VERIFIED",
+      "actual_title": "Partial Enumerative Sphere Shaping",
+      "source_url": "https://arxiv.org/abs/1904.04528"
+    },
+    {
+      "arxiv_id": "1904.10509",
+      "status": "VERIFIED",
+      "actual_title": "Generating Long Sequences with Sparse Transformers",
+      "source_url": "https://arxiv.org/abs/1904.10509"
+    },
+    {
+      "arxiv_id": "1906.07316",
+      "status": "VERIFIED",
+      "actual_title": "DeepView: View Synthesis with Learned Gradient Descent",
+      "source_url": "https://arxiv.org/abs/1906.07316"
+    },
+    {
+      "arxiv_id": "1909.08053",
+      "status": "VERIFIED",
+      "actual_title": "Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism",
+      "source_url": "https://arxiv.org/abs/1909.08053"
+    },
+    {
+      "arxiv_id": "1911.05507",
+      "status": "VERIFIED",
+      "actual_title": "Compressive Transformers for Long-Range Sequence Modelling",
+      "source_url": "https://arxiv.org/abs/1911.05507"
+    },
+    {
+      "arxiv_id": "2001.08361",
+      "status": "VERIFIED",
+      "actual_title": "Scaling Laws for Neural Language Models",
+      "source_url": "https://arxiv.org/abs/2001.08361"
+    },
+    {
+      "arxiv_id": "2002.08909",
+      "status": "VERIFIED",
+      "actual_title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "source_url": "https://arxiv.org/abs/2002.08909"
+    },
+    {
+      "arxiv_id": "2004.05150",
+      "status": "VERIFIED",
+      "actual_title": "Longformer: The Long-Document Transformer",
+      "source_url": "https://arxiv.org/abs/2004.05150"
+    },
+    {
+      "arxiv_id": "2004.08343",
+      "status": "VERIFIED",
+      "actual_title": "Spectral gap for the growth-fragmentation equation via Harris's Theorem",
+      "source_url": "https://arxiv.org/abs/2004.08343"
+    },
+    {
+      "arxiv_id": "2005.08996",
+      "status": "VERIFIED",
+      "actual_title": "Topological terms on topological defects: a quantum Monte Carlo study",
+      "source_url": "https://arxiv.org/abs/2005.08996"
+    },
+    {
+      "arxiv_id": "2005.11401",
+      "status": "VERIFIED",
+      "actual_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "source_url": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "arxiv_id": "2005.14165",
+      "status": "VERIFIED",
+      "actual_title": "Language Models are Few-Shot Learners",
+      "source_url": "https://arxiv.org/abs/2005.14165"
+    },
+    {
+      "arxiv_id": "2007.14062",
+      "status": "VERIFIED",
+      "actual_title": "Big Bird: Transformers for Longer Sequences",
+      "source_url": "https://arxiv.org/abs/2007.14062"
+    },
+    {
+      "arxiv_id": "2009.01325",
+      "status": "VERIFIED",
+      "actual_title": "Learning to summarize from human feedback",
+      "source_url": "https://arxiv.org/abs/2009.01325"
+    },
+    {
+      "arxiv_id": "2009.06732",
+      "status": "VERIFIED",
+      "actual_title": "Efficient Transformers: A Survey",
+      "source_url": "https://arxiv.org/abs/2009.06732"
+    },
+    {
+      "arxiv_id": "2101.03961",
+      "status": "VERIFIED",
+      "actual_title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+      "source_url": "https://arxiv.org/abs/2101.03961"
+    },
+    {
+      "arxiv_id": "2101.03999",
+      "status": "VERIFIED",
+      "actual_title": "A Neural Question Answering System for Basic Questions about Subroutines",
+      "source_url": "https://arxiv.org/abs/2101.03999"
+    },
+    {
+      "arxiv_id": "2101.06804",
+      "status": "VERIFIED",
+      "actual_title": "What Makes Good In-Context Examples for GPT-$3$?",
+      "source_url": "https://arxiv.org/abs/2101.06804"
+    },
+    {
+      "arxiv_id": "2102.05224",
+      "status": "VERIFIED",
+      "actual_title": "Downlink Channel Reconstruction for Spatial Multiplexing in Massive MIMO Systems",
+      "source_url": "https://arxiv.org/abs/2102.05224"
+    },
+    {
+      "arxiv_id": "2102.10091",
+      "status": "VERIFIED",
+      "actual_title": "The Basic de Rham Complex of a Singular Foliation",
+      "source_url": "https://arxiv.org/abs/2102.10091"
+    },
+    {
+      "arxiv_id": "2103.00020",
+      "status": "VERIFIED",
+      "actual_title": "Learning Transferable Visual Models From Natural Language Supervision",
+      "source_url": "https://arxiv.org/abs/2103.00020"
+    },
+    {
+      "arxiv_id": "2104.04473",
+      "status": "VERIFIED",
+      "actual_title": "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM",
+      "source_url": "https://arxiv.org/abs/2104.04473"
+    },
+    {
+      "arxiv_id": "2106.02633",
+      "status": "VERIFIED",
+      "actual_title": "A Novel Test of Quasar Orientation",
+      "source_url": "https://arxiv.org/abs/2106.02633"
+    },
+    {
+      "arxiv_id": "2106.02987",
+      "status": "VERIFIED",
+      "actual_title": "Analysis of a semi-augmented mixed finite element method for double-diffusive natural convection in porous media",
+      "source_url": "https://arxiv.org/abs/2106.02987"
+    },
+    {
+      "arxiv_id": "2106.04746",
+      "status": "VERIFIED",
+      "actual_title": "Comprehensive Laboratory Measurements Resolving the LMM Dielectronic Recombination Satellite Lines in Ne-like Fe XVII Ions",
+      "source_url": "https://arxiv.org/abs/2106.04746"
+    },
+    {
+      "arxiv_id": "2106.06742",
+      "status": "VERIFIED",
+      "actual_title": "Task Transformer Network for Joint MRI Reconstruction and Super-Resolution",
+      "source_url": "https://arxiv.org/abs/2106.06742"
+    },
+    {
+      "arxiv_id": "2106.12653",
+      "status": "VERIFIED",
+      "actual_title": "Differentiability and Control of a Model for Granular Material Accumulation",
+      "source_url": "https://arxiv.org/abs/2106.12653"
+    },
+    {
+      "arxiv_id": "2106.15563",
+      "status": "VERIFIED",
+      "actual_title": "Learning latent causal graphs via mixture oracles",
+      "source_url": "https://arxiv.org/abs/2106.15563"
+    },
+    {
+      "arxiv_id": "2107.03374",
+      "status": "VERIFIED",
+      "actual_title": "Evaluating Large Language Models Trained on Code",
+      "source_url": "https://arxiv.org/abs/2107.03374"
+    },
+    {
+      "arxiv_id": "2108.05206",
+      "status": "VERIFIED",
+      "actual_title": "The graviton Compton mass as Dark energy",
+      "source_url": "https://arxiv.org/abs/2108.05206"
+    },
+    {
+      "arxiv_id": "2109.07453",
+      "status": "VERIFIED",
+      "actual_title": "Local Environments of Low-Redshift Supernovae",
+      "source_url": "https://arxiv.org/abs/2109.07453"
+    },
+    {
+      "arxiv_id": "2112.08608",
+      "status": "VERIFIED",
+      "actual_title": "QuALITY: Question Answering with Long Input Texts, Yes!",
+      "source_url": "https://arxiv.org/abs/2112.08608"
+    },
+    {
+      "arxiv_id": "2112.09332",
+      "status": "VERIFIED",
+      "actual_title": "WebGPT: Browser-assisted question-answering with human feedback",
+      "source_url": "https://arxiv.org/abs/2112.09332"
+    },
+    {
+      "arxiv_id": "2201.11903",
+      "status": "VERIFIED",
+      "actual_title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "source_url": "https://arxiv.org/abs/2201.11903"
+    },
+    {
+      "arxiv_id": "2201.12086",
+      "status": "VERIFIED",
+      "actual_title": "BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation",
+      "source_url": "https://arxiv.org/abs/2201.12086"
+    },
+    {
+      "arxiv_id": "2203.02155",
+      "status": "VERIFIED",
+      "actual_title": "Training language models to follow instructions with human feedback",
+      "source_url": "https://arxiv.org/abs/2203.02155"
+    },
+    {
+      "arxiv_id": "2203.05482",
+      "status": "VERIFIED",
+      "actual_title": "Model soups: averaging weights of multiple fine-tuned models improves accuracy without increasing inference time",
+      "source_url": "https://arxiv.org/abs/2203.05482"
+    },
+    {
+      "arxiv_id": "2203.11171",
+      "status": "VERIFIED",
+      "actual_title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "source_url": "https://arxiv.org/abs/2203.11171"
+    },
+    {
+      "arxiv_id": "2203.15556",
+      "status": "VERIFIED",
+      "actual_title": "Training Compute-Optimal Large Language Models",
+      "source_url": "https://arxiv.org/abs/2203.15556"
+    },
+    {
+      "arxiv_id": "2204.05862",
+      "status": "VERIFIED",
+      "actual_title": "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback",
+      "source_url": "https://arxiv.org/abs/2204.05862"
+    },
+    {
+      "arxiv_id": "2204.14198",
+      "status": "VERIFIED",
+      "actual_title": "Flamingo: a Visual Language Model for Few-Shot Learning",
+      "source_url": "https://arxiv.org/abs/2204.14198"
+    },
+    {
+      "arxiv_id": "2205.11916",
+      "status": "VERIFIED",
+      "actual_title": "Large Language Models are Zero-Shot Reasoners",
+      "source_url": "https://arxiv.org/abs/2205.11916"
+    },
+    {
+      "arxiv_id": "2205.14135",
+      "status": "VERIFIED",
+      "actual_title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "source_url": "https://arxiv.org/abs/2205.14135"
+    },
+    {
+      "arxiv_id": "2206.07682",
+      "status": "VERIFIED",
+      "actual_title": "Emergent Abilities of Large Language Models",
+      "source_url": "https://arxiv.org/abs/2206.07682"
+    },
+    {
+      "arxiv_id": "2207.01780",
+      "status": "VERIFIED",
+      "actual_title": "CodeRL: Mastering Code Generation through Pretrained Models and Deep Reinforcement Learning",
+      "source_url": "https://arxiv.org/abs/2207.01780"
+    },
+    {
+      "arxiv_id": "2209.07858",
+      "status": "VERIFIED",
+      "actual_title": "Red Teaming Language Models to Reduce Harms: Methods, Scaling Behaviors, and Lessons Learned",
+      "source_url": "https://arxiv.org/abs/2209.07858"
+    },
+    {
+      "arxiv_id": "2210.04449",
+      "status": "VERIFIED",
+      "actual_title": "RTSDF: Generating Signed Distance Fields in Real Time for Soft Shadow Rendering",
+      "source_url": "https://arxiv.org/abs/2210.04449"
+    },
+    {
+      "arxiv_id": "2210.06423",
+      "status": "VERIFIED",
+      "actual_title": "Foundation Transformers",
+      "source_url": "https://arxiv.org/abs/2210.06423"
+    },
+    {
+      "arxiv_id": "2210.07615",
+      "status": "VERIFIED",
+      "actual_title": "FedFM: Anchor-based Feature Matching for Data Heterogeneity in Federated Learning",
+      "source_url": "https://arxiv.org/abs/2210.07615"
+    },
+    {
+      "arxiv_id": "2210.10760",
+      "status": "VERIFIED",
+      "actual_title": "Scaling Laws for Reward Model Overoptimization",
+      "source_url": "https://arxiv.org/abs/2210.10760"
+    },
+    {
+      "arxiv_id": "2210.10772",
+      "status": "VERIFIED",
+      "actual_title": "One-dimensional L{\\'e}vy Quasicrystal",
+      "source_url": "https://arxiv.org/abs/2210.10772"
+    },
+    {
+      "arxiv_id": "2210.11412",
+      "status": "VERIFIED",
+      "actual_title": "Functions with a maximal number of finite invariant or internally-1-quasi-invariant sets or supersets",
+      "source_url": "https://arxiv.org/abs/2210.11412"
+    },
+    {
+      "arxiv_id": "2211.01910",
+      "status": "VERIFIED",
+      "actual_title": "Large Language Models Are Human-Level Prompt Engineers",
+      "source_url": "https://arxiv.org/abs/2211.01910"
+    },
+    {
+      "arxiv_id": "2211.10435",
+      "status": "VERIFIED",
+      "actual_title": "PAL: Program-aided Language Models",
+      "source_url": "https://arxiv.org/abs/2211.10435"
+    },
+    {
+      "arxiv_id": "2211.12588",
+      "status": "VERIFIED",
+      "actual_title": "Program of Thoughts Prompting: Disentangling Computation from Reasoning for Numerical Reasoning Tasks",
+      "source_url": "https://arxiv.org/abs/2211.12588"
+    },
+    {
+      "arxiv_id": "2212.04089",
+      "status": "VERIFIED",
+      "actual_title": "Editing Models with Task Arithmetic",
+      "source_url": "https://arxiv.org/abs/2212.04089"
+    },
+    {
+      "arxiv_id": "2212.04929",
+      "status": "VERIFIED",
+      "actual_title": "Coefficient invariances of Convex functions",
+      "source_url": "https://arxiv.org/abs/2212.04929"
+    },
+    {
+      "arxiv_id": "2212.07677",
+      "status": "VERIFIED",
+      "actual_title": "Transformers learn in-context by gradient descent",
+      "source_url": "https://arxiv.org/abs/2212.07677"
+    },
+    {
+      "arxiv_id": "2212.08073",
+      "status": "VERIFIED",
+      "actual_title": "Constitutional AI: Harmlessness from AI Feedback",
+      "source_url": "https://arxiv.org/abs/2212.08073"
+    },
+    {
+      "arxiv_id": "2212.09251",
+      "status": "VERIFIED",
+      "actual_title": "Discovering Language Model Behaviors with Model-Written Evaluations",
+      "source_url": "https://arxiv.org/abs/2212.09251"
+    },
+    {
+      "arxiv_id": "2301.12597",
+      "status": "VERIFIED",
+      "actual_title": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models",
+      "source_url": "https://arxiv.org/abs/2301.12597"
+    },
+    {
+      "arxiv_id": "2301.12652",
+      "status": "VERIFIED",
+      "actual_title": "REPLUG: Retrieval-Augmented Black-Box Language Models",
+      "source_url": "https://arxiv.org/abs/2301.12652"
+    },
+    {
+      "arxiv_id": "2302.04761",
+      "status": "VERIFIED",
+      "actual_title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "source_url": "https://arxiv.org/abs/2302.04761"
+    },
+    {
+      "arxiv_id": "2302.08025",
+      "status": "VERIFIED",
+      "actual_title": "Momentum analysis of complex time-periodic flows",
+      "source_url": "https://arxiv.org/abs/2302.08025"
+    },
+    {
+      "arxiv_id": "2302.12173",
+      "status": "VERIFIED",
+      "actual_title": "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+      "source_url": "https://arxiv.org/abs/2302.12173"
+    },
+    {
+      "arxiv_id": "2303.04713",
+      "status": "VERIFIED",
+      "actual_title": "On the space-time analyticity of the inhomogeneous heat equation on the half space with Neumann boundary conditions",
+      "source_url": "https://arxiv.org/abs/2303.04713"
+    },
+    {
+      "arxiv_id": "2303.05125",
+      "status": "VERIFIED",
+      "actual_title": "Cones: Concept Neurons in Diffusion Models for Customized Generation",
+      "source_url": "https://arxiv.org/abs/2303.05125"
+    },
+    {
+      "arxiv_id": "2303.08119",
+      "status": "VERIFIED",
+      "actual_title": "How Many Demonstrations Do You Need for In-context Learning?",
+      "source_url": "https://arxiv.org/abs/2303.08119"
+    },
+    {
+      "arxiv_id": "2303.08123",
+      "status": "VERIFIED",
+      "actual_title": "Identifying Promising Candidate Radiotherapy Protocols via GPU-GA in-silico",
+      "source_url": "https://arxiv.org/abs/2303.08123"
+    },
+    {
+      "arxiv_id": "2303.08774",
+      "status": "VERIFIED",
+      "actual_title": "GPT-4 Technical Report",
+      "source_url": "https://arxiv.org/abs/2303.08774"
+    },
+    {
+      "arxiv_id": "2303.08972",
+      "status": "VERIFIED",
+      "actual_title": "Dynamical nonlinear excitations induced by interaction quench in a two-dimensional box-trapped Bose-Einstein condensate",
+      "source_url": "https://arxiv.org/abs/2303.08972"
+    },
+    {
+      "arxiv_id": "2303.12712",
+      "status": "VERIFIED",
+      "actual_title": "Sparks of Artificial General Intelligence: Early experiments with GPT-4",
+      "source_url": "https://arxiv.org/abs/2303.12712"
+    },
+    {
+      "arxiv_id": "2303.17461",
+      "status": "VERIFIED",
+      "actual_title": "Dirac Theory in Hydrodynamic Form",
+      "source_url": "https://arxiv.org/abs/2303.17461"
+    },
+    {
+      "arxiv_id": "2303.17580",
+      "status": "VERIFIED",
+      "actual_title": "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face",
+      "source_url": "https://arxiv.org/abs/2303.17580"
+    },
+    {
+      "arxiv_id": "2303.17651",
+      "status": "VERIFIED",
+      "actual_title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "source_url": "https://arxiv.org/abs/2303.17651"
+    },
+    {
+      "arxiv_id": "2303.17760",
+      "status": "VERIFIED",
+      "actual_title": "CAMEL: Communicative Agents for \"Mind\" Exploration of Large Language Model Society",
+      "source_url": "https://arxiv.org/abs/2303.17760"
+    },
+    {
+      "arxiv_id": "2304.03442",
+      "status": "VERIFIED",
+      "actual_title": "Generative Agents: Interactive Simulacra of Human Behavior",
+      "source_url": "https://arxiv.org/abs/2304.03442"
+    },
+    {
+      "arxiv_id": "2304.06425",
+      "status": "VERIFIED",
+      "actual_title": "Revisiting Friedmann-like cosmology with torsion: newest constraints from high-redshift observations",
+      "source_url": "https://arxiv.org/abs/2304.06425"
+    },
+    {
+      "arxiv_id": "2304.08244",
+      "status": "VERIFIED",
+      "actual_title": "API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs",
+      "source_url": "https://arxiv.org/abs/2304.08244"
+    },
+    {
+      "arxiv_id": "2304.08485",
+      "status": "VERIFIED",
+      "actual_title": "Visual Instruction Tuning",
+      "source_url": "https://arxiv.org/abs/2304.08485"
+    },
+    {
+      "arxiv_id": "2304.09842",
+      "status": "VERIFIED",
+      "actual_title": "Chameleon: Plug-and-Play Compositional Reasoning with Large Language Models",
+      "source_url": "https://arxiv.org/abs/2304.09842"
+    },
+    {
+      "arxiv_id": "2305.06161",
+      "status": "VERIFIED",
+      "actual_title": "StarCoder: may the source be with you!",
+      "source_url": "https://arxiv.org/abs/2305.06161"
+    },
+    {
+      "arxiv_id": "2305.06500",
+      "status": "VERIFIED",
+      "actual_title": "InstructBLIP: Towards General-purpose Vision-Language Models with Instruction Tuning",
+      "source_url": "https://arxiv.org/abs/2305.06500"
+    },
+    {
+      "arxiv_id": "2305.10601",
+      "status": "VERIFIED",
+      "actual_title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "source_url": "https://arxiv.org/abs/2305.10601"
+    },
+    {
+      "arxiv_id": "2305.10647",
+      "status": "VERIFIED",
+      "actual_title": "BioAug: Conditional Generation based Data Augmentation for Low-Resource Biomedical NER",
+      "source_url": "https://arxiv.org/abs/2305.10647"
+    },
+    {
+      "arxiv_id": "2305.12345",
+      "status": "VERIFIED",
+      "actual_title": "Overspinning a rotating black hole in semiclassical gravity with type-A trace anomaly",
+      "source_url": "https://arxiv.org/abs/2305.12345"
+    },
+    {
+      "arxiv_id": "2305.13072",
+      "status": "VERIFIED",
+      "actual_title": "Interpretable Mesomorphic Networks for Tabular Data",
+      "source_url": "https://arxiv.org/abs/2305.13072"
+    },
+    {
+      "arxiv_id": "2305.14319",
+      "status": "VERIFIED",
+      "actual_title": "On the convergence of Fourier spectral methods involving non-compact operators",
+      "source_url": "https://arxiv.org/abs/2305.14319"
+    },
+    {
+      "arxiv_id": "2305.14325",
+      "status": "VERIFIED",
+      "actual_title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
+      "source_url": "https://arxiv.org/abs/2305.14325"
+    },
+    {
+      "arxiv_id": "2305.14384",
+      "status": "VERIFIED",
+      "actual_title": "Adversarial Nibbler: A Data-Centric Challenge for Improving the Safety of Text-to-Image Models",
+      "source_url": "https://arxiv.org/abs/2305.14384"
+    },
+    {
+      "arxiv_id": "2305.14386",
+      "status": "VERIFIED",
+      "actual_title": "Let GPT be a Math Tutor: Teaching Math Word Problem Solvers with Customized Exercise Generation",
+      "source_url": "https://arxiv.org/abs/2305.14386"
+    },
+    {
+      "arxiv_id": "2305.14550",
+      "status": "VERIFIED",
+      "actual_title": "When should we prefer Decision Transformers for Offline Reinforcement Learning?",
+      "source_url": "https://arxiv.org/abs/2305.14550"
+    },
+    {
+      "arxiv_id": "2305.14613",
+      "status": "VERIFIED",
+      "actual_title": "Selectively Answering Ambiguous Questions",
+      "source_url": "https://arxiv.org/abs/2305.14613"
+    },
+    {
+      "arxiv_id": "2305.15334",
+      "status": "VERIFIED",
+      "actual_title": "Gorilla: Large Language Model Connected with Massive APIs",
+      "source_url": "https://arxiv.org/abs/2305.15334"
+    },
+    {
+      "arxiv_id": "2305.16291",
+      "status": "VERIFIED",
+      "actual_title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+      "source_url": "https://arxiv.org/abs/2305.16291"
+    },
+    {
+      "arxiv_id": "2305.16504",
+      "status": "VERIFIED",
+      "actual_title": "On the Tool Manipulation Capability of Open-source Large Language Models",
+      "source_url": "https://arxiv.org/abs/2305.16504"
+    },
+    {
+      "arxiv_id": "2305.17182",
+      "status": "VERIFIED",
+      "actual_title": "On the Copying Problem of Unsupervised NMT: A Training Schedule with a Language Discriminator Loss",
+      "source_url": "https://arxiv.org/abs/2305.17182"
+    },
+    {
+      "arxiv_id": "2305.18290",
+      "status": "VERIFIED",
+      "actual_title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "source_url": "https://arxiv.org/abs/2305.18290"
+    },
+    {
+      "arxiv_id": "2305.18708",
+      "status": "VERIFIED",
+      "actual_title": "Infrared Image Deturbulence Restoration Using Degradation Parameter-Assisted Wide & Deep Learning",
+      "source_url": "https://arxiv.org/abs/2305.18708"
+    },
+    {
+      "arxiv_id": "2305.20025",
+      "status": "VERIFIED",
+      "actual_title": "Mutual Information Estimation via f-Divergence and Data Derangements",
+      "source_url": "https://arxiv.org/abs/2305.20025"
+    },
+    {
+      "arxiv_id": "2306.01708",
+      "status": "VERIFIED",
+      "actual_title": "TIES-Merging: Resolving Interference When Merging Models",
+      "source_url": "https://arxiv.org/abs/2306.01708"
+    },
+    {
+      "arxiv_id": "2306.03085",
+      "status": "VERIFIED",
+      "actual_title": "Nonparametric Detection of Gerrymandering in Multiparty Elections",
+      "source_url": "https://arxiv.org/abs/2306.03085"
+    },
+    {
+      "arxiv_id": "2306.03141",
+      "status": "VERIFIED",
+      "actual_title": "Cosmic ray feedback in galaxies and galaxy clusters -- A pedagogical introduction and a topical review of the acceleration, transport, observables, and dynamical impact of cosmic rays",
+      "source_url": "https://arxiv.org/abs/2306.03141"
+    },
+    {
+      "arxiv_id": "2306.05298",
+      "status": "VERIFIED",
+      "actual_title": "Habits of Mind: Reusing Action Sequences for Efficient Planning",
+      "source_url": "https://arxiv.org/abs/2306.05298"
+    },
+    {
+      "arxiv_id": "2306.05320",
+      "status": "VERIFIED",
+      "actual_title": "KIT's Multilingual Speech Translation System for IWSLT 2023",
+      "source_url": "https://arxiv.org/abs/2306.05320"
+    },
+    {
+      "arxiv_id": "2306.05659",
+      "status": "VERIFIED",
+      "actual_title": "COVER: A Heuristic Greedy Adversarial Attack on Prompt-based Learning in Language Models",
+      "source_url": "https://arxiv.org/abs/2306.05659"
+    },
+    {
+      "arxiv_id": "2306.11234",
+      "status": "VERIFIED",
+      "actual_title": "Sequential Flipping: A Donor-Acceptor Exchange Mechanism in Water Trimer",
+      "source_url": "https://arxiv.org/abs/2306.11234"
+    },
+    {
+      "arxiv_id": "2306.14978",
+      "status": "VERIFIED",
+      "actual_title": "Fairness Aware Counterfactuals for Subgroups",
+      "source_url": "https://arxiv.org/abs/2306.14978"
+    },
+    {
+      "arxiv_id": "2306.16837",
+      "status": "VERIFIED",
+      "actual_title": "A Formal Perspective on Byte-Pair Encoding",
+      "source_url": "https://arxiv.org/abs/2306.16837"
+    },
+    {
+      "arxiv_id": "2307.02490",
+      "status": "VERIFIED",
+      "actual_title": "Advances in Engine Efficiency: Nanomaterials, Surface Engineering, and Quantum-based Propulsion",
+      "source_url": "https://arxiv.org/abs/2307.02490"
+    },
+    {
+      "arxiv_id": "2307.03172",
+      "status": "VERIFIED",
+      "actual_title": "Lost in the Middle: How Language Models Use Long Contexts",
+      "source_url": "https://arxiv.org/abs/2307.03172"
+    },
+    {
+      "arxiv_id": "2307.04964",
+      "status": "VERIFIED",
+      "actual_title": "Secrets of RLHF in Large Language Models Part I: PPO",
+      "source_url": "https://arxiv.org/abs/2307.04964"
+    },
+    {
+      "arxiv_id": "2307.07924",
+      "status": "VERIFIED",
+      "actual_title": "ChatDev: Communicative Agents for Software Development",
+      "source_url": "https://arxiv.org/abs/2307.07924"
+    },
+    {
+      "arxiv_id": "2307.08691",
+      "status": "VERIFIED",
+      "actual_title": "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning",
+      "source_url": "https://arxiv.org/abs/2307.08691"
+    },
+    {
+      "arxiv_id": "2307.13521",
+      "status": "VERIFIED",
+      "actual_title": "Non-Analytic Behaviour in Large-deviations of the SIR model under the influence of Lockdowns",
+      "source_url": "https://arxiv.org/abs/2307.13521"
+    },
+    {
+      "arxiv_id": "2307.13854",
+      "status": "VERIFIED",
+      "actual_title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "source_url": "https://arxiv.org/abs/2307.13854"
+    },
+    {
+      "arxiv_id": "2307.16701",
+      "status": "VERIFIED",
+      "actual_title": "Towards the mechanism and high performance of solid-state Li batteries",
+      "source_url": "https://arxiv.org/abs/2307.16701"
+    },
+    {
+      "arxiv_id": "2308.00309",
+      "status": "VERIFIED",
+      "actual_title": "Absorption of Fermionic Dark Matter via the Scalar Portal",
+      "source_url": "https://arxiv.org/abs/2308.00309"
+    },
+    {
+      "arxiv_id": "2308.00352",
+      "status": "VERIFIED",
+      "actual_title": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework",
+      "source_url": "https://arxiv.org/abs/2308.00352"
+    },
+    {
+      "arxiv_id": "2308.00952",
+      "status": "VERIFIED",
+      "actual_title": "Over-Barrier Photoelectron Emission with Rashba Spin-Orbit Coupling",
+      "source_url": "https://arxiv.org/abs/2308.00952"
+    },
+    {
+      "arxiv_id": "2308.01570",
+      "status": "VERIFIED",
+      "actual_title": "The Effect of Uniform and Non-uniform Electron Density Models for Determining Shock Speed of a Type II Solar Radio Burst",
+      "source_url": "https://arxiv.org/abs/2308.01570"
+    },
+    {
+      "arxiv_id": "2308.04669",
+      "status": "VERIFIED",
+      "actual_title": "A General Implicit Framework for Fast NeRF Composition and Rendering",
+      "source_url": "https://arxiv.org/abs/2308.04669"
+    },
+    {
+      "arxiv_id": "2308.06366",
+      "status": "VERIFIED",
+      "actual_title": "Exploring the Relation between NPP-VIIRS Nighttime Lights and Carbon Footprint, Population Growth, and Energy Consumption in the UAE",
+      "source_url": "https://arxiv.org/abs/2308.06366"
+    },
+    {
+      "arxiv_id": "2308.08155",
+      "status": "VERIFIED",
+      "actual_title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "source_url": "https://arxiv.org/abs/2308.08155"
+    },
+    {
+      "arxiv_id": "2308.08160",
+      "status": "VERIFIED",
+      "actual_title": "Benchmarking Adversarial Robustness of Compressed Deep Learning Models",
+      "source_url": "https://arxiv.org/abs/2308.08160"
+    },
+    {
+      "arxiv_id": "2308.11468",
+      "status": "VERIFIED",
+      "actual_title": "Multitemporal analysis in Google Earth Engine for detecting urban changes using optical data and machine learning algorithms",
+      "source_url": "https://arxiv.org/abs/2308.11468"
+    },
+    {
+      "arxiv_id": "2308.12950",
+      "status": "VERIFIED",
+      "actual_title": "Code Llama: Open Foundation Models for Code",
+      "source_url": "https://arxiv.org/abs/2308.12950"
+    },
+    {
+      "arxiv_id": "2308.12966",
+      "status": "VERIFIED",
+      "actual_title": "Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond",
+      "source_url": "https://arxiv.org/abs/2308.12966"
+    },
+    {
+      "arxiv_id": "2308.15264",
+      "status": "VERIFIED",
+      "actual_title": "Embracing Sex-specific Differences in Engineered Kidney Models for Enhanced Biological Understanding",
+      "source_url": "https://arxiv.org/abs/2308.15264"
+    },
+    {
+      "arxiv_id": "2309.00071",
+      "status": "VERIFIED",
+      "actual_title": "YaRN: Efficient Context Window Extension of Large Language Models",
+      "source_url": "https://arxiv.org/abs/2309.00071"
+    },
+    {
+      "arxiv_id": "2309.00267",
+      "status": "VERIFIED",
+      "actual_title": "RLAIF vs. RLHF: Scaling Reinforcement Learning from Human Feedback with AI Feedback",
+      "source_url": "https://arxiv.org/abs/2309.00267"
+    },
+    {
+      "arxiv_id": "2309.00814",
+      "status": "VERIFIED",
+      "actual_title": "Bypassing the Simulator: Near-Optimal Adversarial Linear Contextual Bandits",
+      "source_url": "https://arxiv.org/abs/2309.00814"
+    },
+    {
+      "arxiv_id": "2309.07864",
+      "status": "VERIFIED",
+      "actual_title": "The Rise and Potential of Large Language Model Based Agents: A Survey",
+      "source_url": "https://arxiv.org/abs/2309.07864"
+    },
+    {
+      "arxiv_id": "2309.12307",
+      "status": "VERIFIED",
+      "actual_title": "LongLoRA: Efficient Fine-tuning of Long-Context Large Language Models",
+      "source_url": "https://arxiv.org/abs/2309.12307"
+    },
+    {
+      "arxiv_id": "2309.16039",
+      "status": "VERIFIED",
+      "actual_title": "Effective Long-Context Scaling of Foundation Models",
+      "source_url": "https://arxiv.org/abs/2309.16039"
+    },
+    {
+      "arxiv_id": "2309.17412",
+      "status": "VERIFIED",
+      "actual_title": "Around traces and quasitraces",
+      "source_url": "https://arxiv.org/abs/2309.17412"
+    },
+    {
+      "arxiv_id": "2310.01889",
+      "status": "VERIFIED",
+      "actual_title": "Ring Attention with Blockwise Transformers for Near-Infinite Context",
+      "source_url": "https://arxiv.org/abs/2310.01889"
+    },
+    {
+      "arxiv_id": "2310.03714",
+      "status": "VERIFIED",
+      "actual_title": "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines",
+      "source_url": "https://arxiv.org/abs/2310.03714"
+    },
+    {
+      "arxiv_id": "2310.05914",
+      "status": "VERIFIED",
+      "actual_title": "NEFTune: Noisy Embeddings Improve Instruction Finetuning",
+      "source_url": "https://arxiv.org/abs/2310.05914"
+    },
+    {
+      "arxiv_id": "2310.08560",
+      "status": "VERIFIED",
+      "actual_title": "MemGPT: Towards LLMs as Operating Systems",
+      "source_url": "https://arxiv.org/abs/2310.08560"
+    },
+    {
+      "arxiv_id": "2310.10617",
+      "status": "VERIFIED",
+      "actual_title": "Biasymptotics of the Mobius- and Liouville-signed partition numbers",
+      "source_url": "https://arxiv.org/abs/2310.10617"
+    },
+    {
+      "arxiv_id": "2310.11511",
+      "status": "VERIFIED",
+      "actual_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "source_url": "https://arxiv.org/abs/2310.11511"
+    },
+    {
+      "arxiv_id": "2310.16424",
+      "status": "VERIFIED",
+      "actual_title": "Pre-electoral coalition agreement from the Black-Scholes point of view",
+      "source_url": "https://arxiv.org/abs/2310.16424"
+    },
+    {
+      "arxiv_id": "2311.06850",
+      "status": "VERIFIED",
+      "actual_title": "Coexistence of OTFS Modulation With OFDM-based Communication Systems",
+      "source_url": "https://arxiv.org/abs/2311.06850"
+    },
+    {
+      "arxiv_id": "2311.08764",
+      "status": "VERIFIED",
+      "actual_title": "Combining Past, Present and Future: A Self-Supervised Approach for Class Incremental Learning",
+      "source_url": "https://arxiv.org/abs/2311.08764"
+    },
+    {
+      "arxiv_id": "2311.09295",
+      "status": "VERIFIED",
+      "actual_title": "Finiteness Theorems and Counting Conjectures for the Flux Landscape",
+      "source_url": "https://arxiv.org/abs/2311.09295"
+    },
+    {
+      "arxiv_id": "2312.05365",
+      "status": "VERIFIED",
+      "actual_title": "Product Centered Dirichlet Processes for Bayesian Multiview Clustering",
+      "source_url": "https://arxiv.org/abs/2312.05365"
+    },
+    {
+      "arxiv_id": "2312.10001",
+      "status": "VERIFIED",
+      "actual_title": "Modeling Unknown Stochastic Dynamical System via Autoencoder",
+      "source_url": "https://arxiv.org/abs/2312.10001"
+    },
+    {
+      "arxiv_id": "2312.12632",
+      "status": "VERIFIED",
+      "actual_title": "Cavity Continuum",
+      "source_url": "https://arxiv.org/abs/2312.12632"
+    },
+    {
+      "arxiv_id": "2312.14238",
+      "status": "VERIFIED",
+      "actual_title": "InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks",
+      "source_url": "https://arxiv.org/abs/2312.14238"
+    },
+    {
+      "arxiv_id": "2401.00054",
+      "status": "VERIFIED",
+      "actual_title": "Late Time Acceleration with Observational Constraints in Modified Theories of Gravity",
+      "source_url": "https://arxiv.org/abs/2401.00054"
+    },
+    {
+      "arxiv_id": "2401.12345",
+      "status": "VERIFIED",
+      "actual_title": "Distributionally Robust Receive Combining",
+      "source_url": "https://arxiv.org/abs/2401.12345"
+    },
+    {
+      "arxiv_id": "2402.01411",
+      "status": "VERIFIED",
+      "actual_title": "CodePori: Large-Scale System for Autonomous Software Development Using Multi-Agent Technology",
+      "source_url": "https://arxiv.org/abs/2402.01411"
+    },
+    {
+      "arxiv_id": "2402.01680",
+      "status": "VERIFIED",
+      "actual_title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+      "source_url": "https://arxiv.org/abs/2402.01680"
+    },
+    {
+      "arxiv_id": "2402.03056",
+      "status": "VERIFIED",
+      "actual_title": "Note on quasi-optimal error estimates for the pressure for shear-thickening fluids",
+      "source_url": "https://arxiv.org/abs/2402.03056"
+    },
+    {
+      "arxiv_id": "2402.03300",
+      "status": "VERIFIED",
+      "actual_title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+      "source_url": "https://arxiv.org/abs/2402.03300"
+    },
+    {
+      "arxiv_id": "2402.03620",
+      "status": "VERIFIED",
+      "actual_title": "Self-Discover: Large Language Models Self-Compose Reasoning Structures",
+      "source_url": "https://arxiv.org/abs/2402.03620"
+    },
+    {
+      "arxiv_id": "2402.05205",
+      "status": "VERIFIED",
+      "actual_title": "Algebraic homotopy classes",
+      "source_url": "https://arxiv.org/abs/2402.05205"
+    },
+    {
+      "arxiv_id": "2402.05510",
+      "status": "VERIFIED",
+      "actual_title": "Blurred combinatorics in resolution of singularities: (a little) beyond the characteristic polytope",
+      "source_url": "https://arxiv.org/abs/2402.05510"
+    },
+    {
+      "arxiv_id": "2402.08115",
+      "status": "VERIFIED",
+      "actual_title": "On the Self-Verification Limitations of Large Language Models on Reasoning and Planning Tasks",
+      "source_url": "https://arxiv.org/abs/2402.08115"
+    },
+    {
+      "arxiv_id": "2402.11614",
+      "status": "VERIFIED",
+      "actual_title": "Modified Gravity Model $f(Q,T)$ and Wormhole Solution",
+      "source_url": "https://arxiv.org/abs/2402.11614"
+    },
+    {
+      "arxiv_id": "2402.17924",
+      "status": "VERIFIED",
+      "actual_title": "Band structure and excitonic properties of WSe$_2$ in the isolated monolayer limit in an all-electron approach",
+      "source_url": "https://arxiv.org/abs/2402.17924"
+    },
+    {
+      "arxiv_id": "2402.18798",
+      "status": "VERIFIED",
+      "actual_title": "Multiparticle Contributions to the Celestial OPE",
+      "source_url": "https://arxiv.org/abs/2402.18798"
+    },
+    {
+      "arxiv_id": "2403.01123",
+      "status": "VERIFIED",
+      "actual_title": "ELA: Efficient Local Attention for Deep Convolutional Neural Networks",
+      "source_url": "https://arxiv.org/abs/2403.01123"
+    },
+    {
+      "arxiv_id": "2403.05441",
+      "status": "VERIFIED",
+      "actual_title": "Bayesian Hierarchical Probabilistic Forecasting of Intraday Electricity Prices",
+      "source_url": "https://arxiv.org/abs/2403.05441"
+    },
+    {
+      "arxiv_id": "2403.13787",
+      "status": "VERIFIED",
+      "actual_title": "RewardBench: Evaluating Reward Models for Language Modeling",
+      "source_url": "https://arxiv.org/abs/2403.13787"
+    },
+    {
+      "arxiv_id": "2404.11488",
+      "status": "VERIFIED",
+      "actual_title": "Multi-resolution Rescored ByteTrack for Video Object Detection on Ultra-low-power Embedded Systems",
+      "source_url": "https://arxiv.org/abs/2404.11488"
+    },
+    {
+      "arxiv_id": "2405.06789",
+      "status": "VERIFIED",
+      "actual_title": "Self-Consistent Recursive Diffusion Bridge for Medical Image Translation",
+      "source_url": "https://arxiv.org/abs/2405.06789"
+    },
+    {
+      "arxiv_id": "2405.16802",
+      "status": "VERIFIED",
+      "actual_title": "AutoPSV: Automated Process-Supervised Verifier",
+      "source_url": "https://arxiv.org/abs/2405.16802"
+    },
+    {
+      "arxiv_id": "2406.07155",
+      "status": "VERIFIED",
+      "actual_title": "Scaling Large Language Model-based Multi-Agent Collaboration",
+      "source_url": "https://arxiv.org/abs/2406.07155"
+    },
+    {
+      "arxiv_id": "2406.07890",
+      "status": "VERIFIED",
+      "actual_title": "Exploring Speech Foundation Models for Speaker Diarization in Child-Adult Dyadic Interactions",
+      "source_url": "https://arxiv.org/abs/2406.07890"
+    },
+    {
+      "arxiv_id": "2406.11820",
+      "status": "VERIFIED",
+      "actual_title": "Composing Object Relations and Attributes for Image-Text Matching",
+      "source_url": "https://arxiv.org/abs/2406.11820"
+    },
+    {
+      "arxiv_id": "2406.12994",
+      "status": "VERIFIED",
+      "actual_title": "Interpolation theorems for conjugations and applications",
+      "source_url": "https://arxiv.org/abs/2406.12994"
+    },
+    {
+      "arxiv_id": "2406.18461",
+      "status": "VERIFIED",
+      "actual_title": "Broadening the Canonical Picture of EUV-Driven Photoevaporation of Accretion Disks",
+      "source_url": "https://arxiv.org/abs/2406.18461"
+    },
+    {
+      "arxiv_id": "2406.18665",
+      "status": "VERIFIED",
+      "actual_title": "RouteLLM: Learning to Route LLMs with Preference Data",
+      "source_url": "https://arxiv.org/abs/2406.18665"
+    },
+    {
+      "arxiv_id": "2407.00305",
+      "status": "VERIFIED",
+      "actual_title": "Student-AI Interaction: A Case Study of CS1 students",
+      "source_url": "https://arxiv.org/abs/2407.00305"
+    },
+    {
+      "arxiv_id": "2407.16819",
+      "status": "VERIFIED",
+      "actual_title": "Multiphoton dressed Rydberg excitations in a microwave cavity with ultracold Rb atoms",
+      "source_url": "https://arxiv.org/abs/2407.16819"
+    },
+    {
+      "arxiv_id": "2408.02479",
+      "status": "VERIFIED",
+      "actual_title": "From LLMs to LLM-based Agents for Software Engineering: A Survey of Current, Challenges and Future",
+      "source_url": "https://arxiv.org/abs/2408.02479"
+    },
+    {
+      "arxiv_id": "2408.13367",
+      "status": "VERIFIED",
+      "actual_title": "Generative Blockchain: Transforming Blockchain from Transaction Recording to Transaction Generation through Proof-of-Merit",
+      "source_url": "https://arxiv.org/abs/2408.13367"
+    },
+    {
+      "arxiv_id": "2410.08146",
+      "status": "VERIFIED",
+      "actual_title": "Rewarding Progress: Scaling Automated Process Verifiers for LLM Reasoning",
+      "source_url": "https://arxiv.org/abs/2410.08146"
+    },
+    {
+      "arxiv_id": "2410.10762",
+      "status": "VERIFIED",
+      "actual_title": "AFlow: Automating Agentic Workflow Generation",
+      "source_url": "https://arxiv.org/abs/2410.10762"
+    },
+    {
+      "arxiv_id": "2410.14684",
+      "status": "VERIFIED",
+      "actual_title": "RepoGraph: Enhancing AI Software Engineering with Repository-level Code Graph",
+      "source_url": "https://arxiv.org/abs/2410.14684"
+    },
+    {
+      "arxiv_id": "2410.18252",
+      "status": "VERIFIED",
+      "actual_title": "Asynchronous RLHF: Faster and More Efficient Off-Policy RL for Language Models",
+      "source_url": "https://arxiv.org/abs/2410.18252"
+    },
+    {
+      "arxiv_id": "2411.02337",
+      "status": "VERIFIED",
+      "actual_title": "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+      "source_url": "https://arxiv.org/abs/2411.02337"
+    },
+    {
+      "arxiv_id": "2411.05285",
+      "status": "VERIFIED",
+      "actual_title": "AgentOps: Enabling Observability of LLM Agents",
+      "source_url": "https://arxiv.org/abs/2411.05285"
+    },
+    {
+      "arxiv_id": "2411.16594",
+      "status": "VERIFIED",
+      "actual_title": "From Generation to Judgment: Opportunities and Challenges of LLM-as-a-judge",
+      "source_url": "https://arxiv.org/abs/2411.16594"
+    },
+    {
+      "arxiv_id": "2412.05579",
+      "status": "VERIFIED",
+      "actual_title": "LLMs-as-Judges: A Comprehensive Survey on LLM-based Evaluation Methods",
+      "source_url": "https://arxiv.org/abs/2412.05579"
+    },
+    {
+      "arxiv_id": "2412.14764",
+      "status": "VERIFIED",
+      "actual_title": "CodeRepoQA: A Large-scale Benchmark for Software Engineering Question Answering",
+      "source_url": "https://arxiv.org/abs/2412.14764"
+    },
+    {
+      "arxiv_id": "2412.18531",
+      "status": "VERIFIED",
+      "actual_title": "Automated Code Review In Practice",
+      "source_url": "https://arxiv.org/abs/2412.18531"
+    },
+    {
+      "arxiv_id": "2412.18547",
+      "status": "VERIFIED",
+      "actual_title": "Token-Budget-Aware LLM Reasoning",
+      "source_url": "https://arxiv.org/abs/2412.18547"
+    },
+    {
+      "arxiv_id": "2512.24601",
+      "status": "VERIFIED",
+      "actual_title": "Recursive Language Models",
+      "source_url": "https://arxiv.org/abs/2512.24601"
+    },
+    {
+      "arxiv_id": "2601.14230",
+      "status": "VERIFIED",
+      "actual_title": "MASCOT: Towards Multi-Agent Socio-Collaborative Companion Systems",
+      "source_url": "https://arxiv.org/abs/2601.14230"
+    },
+    {
+      "arxiv_id": "2601.17226",
+      "status": "VERIFIED",
+      "actual_title": "Retell, Reward, Repeat: Reinforcement Learning for Narrative Theory-Informed Story Generation",
+      "source_url": "https://arxiv.org/abs/2601.17226"
+    },
+    {
+      "arxiv_id": "2601.19063",
+      "status": "VERIFIED",
+      "actual_title": "Optimizing Conversational Quality in Spoken Dialogue Systems with Reinforcement Learning from AI Feedback",
+      "source_url": "https://arxiv.org/abs/2601.19063"
+    },
+    {
+      "arxiv_id": "2602.17658",
+      "status": "VERIFIED",
+      "actual_title": "MARS: Margin-Aware Reward-Modeling with Self-Refinement",
+      "source_url": "https://arxiv.org/abs/2602.17658"
+    },
+    {
+      "arxiv_id": "2602.20728",
+      "status": "VERIFIED",
+      "actual_title": "Balancing Multiple Objectives in Urban Traffic Control with Reinforcement Learning from AI Feedback",
+      "source_url": "https://arxiv.org/abs/2602.20728"
     }
   ]
 }
