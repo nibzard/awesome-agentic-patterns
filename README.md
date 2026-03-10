@@ -195,6 +195,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md) <span class='updated-badge'>UPDATED</span>
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md) <span class='updated-badge'>UPDATED</span>
 - [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md) <span class='updated-badge'>UPDATED</span>
+- [Lumen](https://github.com/omxyz/lumen) — Vision-first browser agent with self-healing deterministic replay over CDP. Screenshot → model → action loop with action caching, site knowledge, and multi-provider support.
 
 ### <a name="ux-collaboration"></a>UX & Collaboration
 
