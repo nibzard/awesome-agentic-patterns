@@ -692,7 +692,7 @@ Codebase → Static Analysis → AST + Symbol Extraction → Code Graph
 | Paper | arXiv ID | Year | Venue | Key Contribution |
 |-------|----------|------|-------|------------------|
 | **RepoAgent** | 2402.16667 | 2024 | EMNLP 2024 | First framework for automated repository-level documentation |
-| **SWE-agent** | 2405.15793 | 2024 | NeurIPS 2024 | Agent-Computer Interfaces for repo interaction |
+| **SWE-agent** | 2405.15793 | 2024 | arXiv preprint | Agent-Computer Interfaces for repo interaction |
 | **CodeAgent** | 2401.07339 | 2024 | ACL 2024 | Tool-integrated agent for repo-level challenges |
 | **RepoGraph** | 2410.14684 | 2024 | - | Repository-level code graph representation |
 | **Code Graph Model** | 2505.16901 | 2025 | - | Graph-integrated LLM for repo-level tasks |

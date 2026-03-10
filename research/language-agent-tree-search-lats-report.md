@@ -924,7 +924,7 @@ Active research areas include:
 3. [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
 4. [Graph of Thoughts: Solving Elaborate Problems](https://arxiv.org/abs/2308.09687) - Besta et al., AAAI 2024
 5. [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - Shinn et al., NeurIPS 2023
-6. [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) - Yao et al., NeurIPS 2023
+6. [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) - Yao et al., ICLR 2022
 7. [Self-Consistency Improves Chain of Thought](https://arxiv.org/abs/2203.11171) - Wang et al., NeurIPS 2022
 
 ### Frameworks and Tools

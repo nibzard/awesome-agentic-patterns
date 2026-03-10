@@ -679,7 +679,7 @@ Continue this cycle...
     - **arXiv:** 2303.11366
     - **Alternative:** Self-reflection based exploration
 
-12. **Yao, S., Zhao, J., et al. (2022).** ReAct: Synergizing Reasoning and Acting in Language Models. NeurIPS 2023.
+12. **Yao, S., Zhao, J., et al. (2022).** ReAct: Synergizing Reasoning and Acting in Language Models. ICLR 2022.
     - **arXiv:** 2210.03629
     - **Framework:** Thought-Action-Observation pattern
 

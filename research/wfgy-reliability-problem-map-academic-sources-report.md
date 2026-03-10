@@ -141,7 +141,7 @@ The pattern emphasizes **shared language for incidents** and **repeatable incide
 - **Authors:** Yao et al.
 - **Venue:** arXiv
 - **Year:** February 2025
-- **arXiv ID:** 2502.23320
+- **arXiv ID:** ⚠️ 2502.23320 (HALLUCINATED - does not exist)
 
 **Key Findings:**
 - Production traces provide more realistic evaluation scenarios
@@ -636,7 +636,7 @@ The WFGY Reliability Problem Map pattern is **well-grounded** in established aca
 
 2. Korbak et al. (2025). Chain of Thought Monitorability: A Fragile Opportunity. Position paper.
 
-3. Yao et al. (2025). Evaluating LLMs with Production Traces. arXiv:2502.23320. https://arxiv.org/abs/2502.23320
+3. ⚠️ Yao et al. (2025). Evaluating LLMs with Production Traces. arXiv:2502.23320 - HALLUCINATED REFERENCE (does not exist)
 
 4. Filho, E.B.d.S. et al. (2026). ESAA: Event Sourcing for Autonomous Agents. arXiv:2602.23193v1. https://arxiv.org/abs/2602.23193v1
 

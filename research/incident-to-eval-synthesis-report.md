@@ -156,7 +156,7 @@ This pattern is actively being implemented but lacks standardized approaches and
 
 #### **Evaluating LLMs with Production Traces**
 - **Authors:** Yao et al.
-- **Venue:** arXiv:2502.23320 (2025)
+- **Venue:** ⚠️ HALLUCINATED REFERENCE - arXiv:2502.23320 does not exist (flagged 2026-03-10)
 - **URL:** https://arxiv.org/abs/2502.23320
 
 **Key Insights:**
@@ -860,7 +860,7 @@ When implemented well, this pattern creates a positive feedback loop where every
 5. Padhye et al. (2022). Test Oracle Generation for Bug-Induced Regressions. ACM FSE.
 6. Gebru et al. (2021). Datasheets for Datasets. CACM.
 7. Singh et al. (2024). On the Use of Corporate Data for LLM Evaluation. arXiv:2406.12994.
-8. Yao et al. (2025). Evaluating LLMs with Production Traces. arXiv:2502.23320.
+8. ⚠️ Yao et al. (2025). Evaluating LLMs with Production Traces. arXiv:2502.23320 - HALLUCINATED (does not exist)
 9. Chhapru et al. (2024). Self-Taught Evaluators. arXiv:2408.02666.
 10. Ng et al. (2023). Red Teaming Language Models. NeurIPS. arXiv:2309.00814.
 
