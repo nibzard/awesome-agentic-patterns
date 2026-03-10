@@ -17,7 +17,7 @@ This report synthesizes research from academic literature, industry implementati
 - Formal specifications improve LLM code generation quality by 2-3x
 - All major AI coding platforms implement spec-driven workflows
 - Specification formats vary: Markdown, JSON Schema, OpenAPI, YAML
-- Measurable benefits: 72%→94% tool use accuracy, 60% faster code reviews
+- Measurable benefits: 2-3x quality gains in structured generation, 60% faster code reviews
 
 ---
 
@@ -243,7 +243,6 @@ The academic literature strongly supports specification-driven agent development
 | Metric | Value | Source |
 |--------|-------|--------|
 | Success rate improvement | 2-3x | Anthropic Claude Code |
-| Tool use accuracy improvement | 72% → 94% | Parisien et al. (2024) |
 | Complex task success improvement | 68% higher | Chen et al. (2025) |
 | Test coverage (Cursor) | 80%+ unit tests | Cursor AI |
 | SWE-bench resolution (OpenHands) | 72% | OpenHands |
@@ -449,8 +448,7 @@ The fundamental insight is that **code is no longer the differentiator**—clear
 ### Academic Sources
 
 1. **Beurer-Kellner et al. (2025)** - "Design Patterns for Securing LLM Agents" - https://arxiv.org/abs/2506.08837
-2. **Parisien et al. (2024)** - "Deliberation Before Action" (ICLR 2024) - https://arxiv.org/abs/2403.05441
-3. **Lin et al. (2023)** - "Large Language Models as Zero-Shot Planners" (NeurIPS 2023) - https://arxiv.org/abs/2308.06366
+2. **Lin et al. (2023)** - "Large Language Models as Zero-Shot Planners" (NeurIPS 2023) - https://arxiv.org/abs/2308.06366
 
 ### GitHub Repositories
 
@@ -476,7 +474,7 @@ Specification-driven agent development represents a fundamental paradigm shift i
 The pattern is validated by:
 - Strong academic support (2020-2026 research)
 - Widespread industry adoption (all major AI coding platforms)
-- Measurable benefits (2-3x success rate improvements, 72%→94% tool use accuracy)
+- Measurable benefits (2-3x success rate improvements, faster code reviews)
 - Production validation at major companies
 
 The core principle remains: **"Engineering excellence = articulation excellence."**

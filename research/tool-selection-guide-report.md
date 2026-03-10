@@ -1165,7 +1165,6 @@ tools = [
 - ToolFormer: Language Models Can Teach Themselves to Use Tools (Schick et al., 2023): https://arxiv.org/abs/2302.04761
 - ReAct: Synergizing Reasoning and Acting (Yao et al., 2022): https://arxiv.org/abs/2210.03629
 - Design Patterns for Securing LLM Agents (Beurer-Kellner et al., 2025): https://arxiv.org/abs/2506.08837
-- Deliberation Before Action (Parisien et al., 2024): https://arxiv.org/abs/2403.05441
 
 ---
 

@@ -49,4 +49,3 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 
 - Primary source: http://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
 - Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
-- Parisien et al. (2024): "Deliberation Before Action" (ICLR 2024) - https://arxiv.org/abs/2403.05441

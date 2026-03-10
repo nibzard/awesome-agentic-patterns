@@ -16,8 +16,8 @@ The **Discrete Phase Separation** pattern breaks AI agent workflows into isolate
 | Aspect | Finding |
 |--------|---------|
 | **Industry Adoption** | Production-tested by Anthropic Claude Code, GitHub Copilot Workspace, Cursor AI, Microsoft Agent Framework |
-| **Academic Validation** | Supported by multiple papers on plan-then-execute patterns (Beurer-Kellner et al. 2025, Parisien et al. 2024) |
-| **Measurable Benefits** | 2-3x improvement in success rates; 72%→94% tool use accuracy; 68% higher success on complex tasks |
+| **Academic Validation** | Supported by planning and agent-control literature (Beurer-Kellner et al. 2025, Lin et al. 2023, Chen et al. 2025) |
+| **Measurable Benefits** | 2-3x improvement in success rates; 68% higher success on complex tasks; 40% lower token use with hierarchical planning |
 | **Pattern Maturity** | Emerging to Established - strong theoretical and practical validation |
 
 ---
@@ -61,11 +61,6 @@ graph LR
 - **Relevance**: Section 3.1(2) directly documents the "Plan-Then-Execute" pattern as a security measure
 - **Key Finding**: Separating planning from execution prevents untrusted tool outputs from influencing control flow
 - **URL**: https://arxiv.org/abs/2506.08837
-
-**Parisien, C., et al. (2024). "Deliberation Before Action: Language Models with Tool Use." ICLR 2024.**
-- **Key Finding**: Deliberation (planning) before action (execution) improves tool use accuracy from **72% to 94%**
-- **Trade-off**: Planning time adds 35% overhead but reduces error rates by 58%
-- **URL**: https://arxiv.org/abs/2403.05441
 
 **Lin, C., et al. (2023). "Large Language Models as Zero-Shot Planners." NeurIPS 2023.**
 - **Key Finding**: Chain-of-thought prompting improves plan quality by 45%; tree-of-thought approaches further enhance performance by 25%
@@ -539,7 +534,6 @@ state_efficiency = (1 - redundancy) × density × compression
 | Metric | Without Phase Separation | With Phase Separation | Improvement |
 |--------|-------------------------|----------------------|-------------|
 | **Task Success Rate** | 45-65% | 85-95% | 40-70% |
-| **Tool Use Accuracy** | 72% | 94% | +31% |
 | **Complex Task Completion** | Baseline | 68% higher | +68% |
 | **Hallucination Rate** | Baseline | 60% reduction | -60% |
 | **Token Usage** | Baseline | 40% less (hierarchical) | -40% |
@@ -603,10 +597,9 @@ state_efficiency = (1 - redundancy) × density × compression
 
 ### Academic Papers
 1. Beurer-Kellner, M., et al. (2025). Design patterns for securing LLM agents against prompt injections. *arXiv:2506.08837*
-2. Parisien, C., et al. (2024). Deliberation before action: Language models with tool use. *ICLR 2024*
-3. Lin, C., et al. (2023). Large language models as zero-shot planners. *NeurIPS 2023*
-4. Liu, N., et al. (2024). Lost in the middle: How language models use long contexts. *ACL 2024*
-5. Xi, Z., et al. (2023). The rise and potential of large language model based agents: A survey. *arXiv:2309.07864*
+2. Lin, C., et al. (2023). Large language models as zero-shot planners. *NeurIPS 2023*
+3. Liu, N., et al. (2024). Lost in the middle: How language models use long contexts. *ACL 2024*
+4. Xi, Z., et al. (2023). The rise and potential of large language model based agents: A survey. *arXiv:2309.07864*
 
 ### Industry Documentation
 1. [Claude Code Documentation](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)

@@ -15,7 +15,7 @@ The **Plan-Then-Execute** pattern is a fundamental architectural approach in AI 
 - **Performance**: Planning-based agents achieve **40-70% higher success rates** on complex tasks compared to reactive approaches
 - **Security**: Strong control-flow integrity - untrusted outputs cannot influence action selection
 - **Efficiency**: 40% token reduction with hierarchical planning, 55% reduction in unnecessary actions
-- **Quality**: 60% reduction in hallucinations, 58% reduction in error rates
+- **Quality**: 60% reduction in hallucinations
 - **Overhead**: 15-30% latency from planning phase, justified by significant quality improvements
 
 **Pattern Status**: **Established** - validated across multiple academic papers and industry production deployments
@@ -115,20 +115,9 @@ for action in plan:  # Fixed sequence
 
 ---
 
-### Performance Validation
+### Validation Note
 
-**"Deliberation Before Action: Language Models with Tool Use"**
-- **Authors**: C. Parisien et al.
-- **Year**: 2024
-- **Venue**: ICLR 2024
-- **arXiv ID**: 2403.05441
-- **Link**: https://arxiv.org/abs/2403.05441
-
-**Key Findings**:
-- Deliberation (planning) before action (execution) improves tool use accuracy from **72% to 94%** (+31% improvement)
-- Planning time adds 35% overhead but reduces error rates by 58%
-- Best for tasks requiring 3+ tool interactions
-- **Planning reduces hallucination in execution by 60%**
+A previously cited paper, "Deliberation Before Action: Language Models with Tool Use" (Parisien et al., 2024), was removed during validation on March 10, 2026. The arXiv identifier used in earlier drafts (`2403.05441`) resolves to an unrelated electricity-pricing paper, and no matching record was found in arXiv, Crossref, OpenAlex, or DBLP.
 
 ---
 
@@ -203,12 +192,10 @@ for action in plan:  # Fixed sequence
 
 | Metric | Without Planning | With Planning | Source |
 |--------|------------------|--------------|--------|
-| Tool Use Accuracy | 72% | 94% | Parisien et al. 2024 |
 | Task Success Rate | 45-65% | 85-95% | Chen et al. 2025 |
 | Hallucination Rate | Baseline | -60% | Lin et al. 2023 |
 | Token Usage | Baseline | -40% (hierarchical) | Borrelli et al. 2023 |
 | Complex Task Success | Baseline | +68% | Chen et al. 2025 |
-| Error Rate | Baseline | -58% | Parisien et al. 2024 |
 
 ---
 
@@ -618,7 +605,6 @@ class PlanExecutor:
 **2. Reliability**
 - 40-70% improvement in task completion rates
 - 60% reduction in hallucinations
-- 58% reduction in error rates
 - Deterministic execution path
 
 **3. Observability**
@@ -1004,9 +990,7 @@ This pattern has been:
 
 1. Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections". arXiv:2506.08837. https://arxiv.org/abs/2506.08837
 
-2. Parisien et al. (2024). "Deliberation Before Action: Language Models with Tool Use". ICLR 2024. https://arxiv.org/abs/2403.05441
-
-3. Lin et al. (2023). "Large Language Models as Zero-Shot Planners". NeurIPS 2023. https://arxiv.org/abs/2308.06366
+2. Lin et al. (2023). "Large Language Models as Zero-Shot Planners". NeurIPS 2023. https://arxiv.org/abs/2308.06366
 
 4. Borrelli et al. (2023). "Hierarchical Planning with Language Models". arXiv cs.AI.
 

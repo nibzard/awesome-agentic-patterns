@@ -35,16 +35,9 @@ The plan-then-execute pattern builds on several foundational concepts:
   - Tree-of-thout approaches further enhance performance by 25%
   - Planning reduces hallucination in execution by 60%
 
-#### 2. "Deliberation Before Action: Language Models with Tool Use" (2024)
-- **Authors**: Parisien et al.
-- **Venue**: ICLR 2024
-- **Key Findings**:
-  - Deliberation improves tool use accuracy from 72% to 94%
-  - Planning time adds 35% overhead but reduces error rates by 58%
-  - Best for tasks requiring 3+ tool interactions
-  - Planning depth correlates with task complexity requirements
+> Validation note: A previously cited paper, "Deliberation Before Action: Language Models with Tool Use" (Parisien et al., 2024), was removed after validation. The cited arXiv identifier used elsewhere in this repo (`2403.05441`) resolves to an unrelated electricity-pricing paper, and no matching record was found in arXiv, Crossref, OpenAlex, or DBLP.
 
-#### 3. "Hierarchical Planning with Language Models" (2023)
+#### 2. "Hierarchical Planning with Language Models" (2023)
 - **Authors**: Borrelli et al.
 - **Venue**: arXiv cs.AI
 - **Key Findings**:
@@ -53,7 +46,7 @@ The plan-then-execute pattern builds on several foundational concepts:
   - Planning quality improves with environmental feedback integration
   - Critical for long-horizon tasks (>10 steps)
 
-#### 4. "Planning vs Reactivity: A Comparative Study" (2025)
+#### 3. "Planning vs Reactivity: A Comparative Study" (2025)
 - **Authors**: Chen et al.
 - **Venue**: AAAI 2025
 - **Key Findings**:
@@ -315,10 +308,9 @@ The plan-then-execute pattern builds on several foundational concepts:
 
 ### Academic Papers
 1. Lin et al. (2023). "Large Language Models as Zero-Shoot Planners". NeurIPS 2023.
-2. Parisien et al. (2024). "Deliberation Before Action: Language Models with Tool Use". ICLR 2024.
-3. Borrelli et al. (2023). "Hierarchical Planning with Language Models". arXiv:2305.12345.
-4. Chen et al. (2025). "Planning vs Reactivity: A Comparative Study". AAAI 2025.
-5. Wei et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models". NeurIPS 2022.
+2. Borrelli et al. (2023). "Hierarchical Planning with Language Models". arXiv:2305.12345.
+3. Chen et al. (2025). "Planning vs Reactivity: A Comparative Study". AAAI 2025.
+4. Wei et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models". NeurIPS 2022.
 
 ### Industry Reports
 1. OpenAI (2024). "GPT Planner Technical Report".

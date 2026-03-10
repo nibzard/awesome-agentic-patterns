@@ -85,15 +85,6 @@ Tool Use Steering via Prompting guides AI agent tool selection and execution thr
 - Pre-approved action allowlists can be organized hierarchically
 - **Critical security considerations** for tool steering guardrails
 
-#### 6. Deliberation Before Action
-**Authors:** Parisien et al. (2024)
-**URL:** https://arxiv.org/abs/2403.05441
-
-**Key Findings:**
-- 40-70% success rate improvement with deliberation before tool execution
-- Natural language planning improves tool selection
-- **Validates "think hard" prompting** technique for complex decisions
-
 ### Additional Supporting Research
 
 | Paper | Year | Key Contribution |
@@ -741,7 +732,6 @@ For teams deploying AI agents with custom tools or specific workflows, prompt-ba
 3. Patil, et al. (2023). API-Bank: A Benchmark for Tool-Augmented LLMs. [arXiv:2304.08244](https://arxiv.org/abs/2304.08244)
 4. Shen, W., et al. (2024). Small LLMs Are Weak Tool Learners. [arXiv:2401.07324](https://arxiv.org/abs/2401.07324)
 5. Beurer-Kellner, L., et al. (2025). Design Patterns for Securing LLM Agents. [arXiv:2506.08837](https://arxiv.org/abs/2506.08837)
-6. Parisien, et al. (2024). Deliberation Before Action. [arXiv:2403.05441](https://arxiv.org/abs/2403.05441)
 
 ### Industry Platforms
 - OpenAI Function Calling: https://platform.openai.com/docs/guides/function-calling

@@ -2,7 +2,7 @@
 title: Plan-Then-Execute Pattern
 status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Luca Beurer-Kellner et al. (2025)", "C. Parisien et al. (2024)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [planning, control-flow-integrity, prompt-injection]
@@ -21,7 +21,7 @@ Split reasoning into two phases:
 
 This separates strategic decisions from data-dependent execution. The planner commits to a bounded action graph up front, and the executor enforces that graph deterministically, which preserves flexibility on arguments while protecting control-flow integrity.
 
-**Benefits**: Planning before execution improves task completion rates by 40-70% and reduces hallucinations by ~60% (Parisien et al., 2024).
+**Benefits**: Planning before execution preserves control-flow integrity and makes complex tasks easier to review before execution.
 
 ```pseudo
 plan = LLM.make_plan(prompt)      # frozen list of calls
@@ -78,7 +78,6 @@ agent = PlanAndExecute(
 ## References
 
 * Beurer-Kellner et al. (2025), §3.1 (2) Plan-Then-Execute.
-* Parisien et al. (2024), "Deliberation Before Action: Language Models with Tool Use" – planning improves tool use accuracy from 72% to 94%.
 * Boris Cherny (Anthropic): "Plan mode... you kind of have to understand the limits and where you get in the loop. Plan mode can 2-3x success rates pretty easily if you align on the plan first."
 * Boris Cherny: "The boundary changes with every model... newer models are more intelligent so the boundary of what you need plan mode for got pushed out."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)

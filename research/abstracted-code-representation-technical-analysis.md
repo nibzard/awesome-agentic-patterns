@@ -976,7 +976,6 @@ class CodeReviewIntegration:
 - [Combining LLMs with Static Analyzers](https://arxiv.org/html/2502.06633v1) - arXiv (2025)
 - [MetaLint: Generalizable Idiomatic Code Quality Analysis](https://arxiv.org/html/2507.11687v2) - arXiv (2025)
 - [Self-Taught Evaluators](https://arxiv.org/abs/2408.02666) - Meta AI (2024)
-- [Deliberation Before Action: Language Models with Tool Use](https://arxiv.org/) - ICLR 2024
 
 ### Industry Implementations
 - [Aider](https://github.com/Aider-AI/aider) - Tree-sitter repo-map (~29k stars)
