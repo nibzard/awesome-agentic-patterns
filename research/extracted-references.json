@@ -1,6 +1,6 @@
 {
   "extraction_date": "2026-03-10",
-  "total_references": 1073,
+  "total_references": 1083,
   "references": [
     {
       "id": 1,
@@ -2471,14 +2471,14 @@
       "id": 176,
       "title": "AI-Tutoring in Software Engineering Education",
       "authors": [],
-      "arxiv_id": null,
+      "arxiv_id": "2404.02548",
       "doi": null,
-      "venue_claimed": "ICSE",
+      "venue_claimed": "ICSE-SEET",
       "year_claimed": "2024",
       "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
       "line_number": 356,
-      "context": "**2. \"AI-Tutoring in Software Engineering Education\" (ICSE 2024)**",
-      "verification_marker": "needs verification"
+      "context": "**2. \"AI-Tutoring in Software Engineering Education\" (ICSE-SEET 2024; arXiv:2404.02548)**",
+      "verification_marker": null
     },
     {
       "id": 177,
@@ -9350,20 +9350,20 @@
       "authors": [
         "Yu"
       ],
-      "arxiv_id": "2312.06540",
+      "arxiv_id": "2311.03099",
       "doi": null,
       "venue_claimed": null,
       "year_claimed": "2023",
       "source_file": "research/merged-code-language-skill-model-report.md",
       "line_number": 1120,
-      "context": "**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2312.06540 (Note: URL needs verification)",
-      "verification_marker": "needs verification"
+      "context": "**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2311.03099",
+      "verification_marker": null
     },
     {
       "id": 669,
       "title": null,
       "authors": [
-        "Ilharco"
+        "Wortsman"
       ],
       "arxiv_id": null,
       "doi": null,
@@ -9371,8 +9371,8 @@
       "year_claimed": "2022",
       "source_file": "research/merged-code-language-skill-model-report.md",
       "line_number": 1862,
-      "context": "- Model Soups: https://arxiv.org/abs/2203.05482 (Ilharco et al., NeurIPS 2022)",
-      "verification_marker": "needs verification"
+      "context": "- Model Soups: https://arxiv.org/abs/2203.05482 (Wortsman et al., NeurIPS 2022)",
+      "verification_marker": null
     },
     {
       "id": 670,
@@ -10293,7 +10293,7 @@
         "Sutton"
       ],
       "arxiv_id": null,
-      "doi": "10.1016/S0004-3702(99",
+      "doi": "10.1016/S0004-3702(99)00052-1",
       "venue_claimed": null,
       "year_claimed": null,
       "source_file": "research/planner-worker-separation-for-long-running-agents-report.md",
@@ -15273,6 +15273,136 @@
       "source_file": "research/working-memory-via-todos-industry-implementations-report.md",
       "line_number": 895,
       "context": "- [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - NeurIPS 2023",
+      "verification_marker": null
+    },
+    {
+      "id": 1074,
+      "title": null,
+      "authors": [],
+      "arxiv_id": "2305.20050",
+      "doi": null,
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/anti-reward-hacking-grader-design.md",
+      "line_number": 288,
+      "context": "- [Let's Verify Step by Step (OpenAI, 2023)](https://arxiv.org/abs/2305.20050) - Process Reward Models",
+      "verification_marker": null
+    },
+    {
+      "id": 1075,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1111/j.1469-7610.1976.tb00381.x",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/progressive-complexity-escalation.md",
+      "line_number": 239,
+      "context": "- Wood, Bruner, Ross [\"The role of tutoring in problem solving\"](https://doi.org/10.1111/j.1469-7610.1976.tb00381.x) (1976) - Scaffolding theory: temporary support that fades with competence",
+      "verification_marker": null
+    },
+    {
+      "id": 1076,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1145/1327452.1327492",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/llm-map-reduce-pattern.md",
+      "line_number": 49,
+      "context": "- Foundational MapReduce: https://doi.org/10.1145/1327452.1327492",
+      "verification_marker": null
+    },
+    {
+      "id": 1077,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1145/1835449.1835550",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/semantic-context-filtering.md",
+      "line_number": 389,
+      "context": "- Kohlschütter et al., [\"Boilerplate Detection using Shallow Text Features\"](https://doi.org/10.1145/1835449.1835550), SIGIR 2010 - Foundational research showing 40-80% of web content is boilerplate",
+      "verification_marker": null
+    },
+    {
+      "id": 1078,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1145/2166.2168",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/workspace-native-multi-agent-orchestration.md",
+      "line_number": 75,
+      "context": "- Gelernter, D. (1985). [Generative Communication in Linda](https://doi.org/10.1145/2166.2168). ACM TOPLAS.",
+      "verification_marker": null
+    },
+    {
+      "id": 1079,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1145/2635868.2635920",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/incident-to-eval-synthesis.md",
+      "line_number": 63,
+      "context": "- https://dl.acm.org/doi/10.1145/2635868.2635920 (Thummalapenta et al., FSE 2014: Automatic Generation of Test Cases from Bug Reports)",
+      "verification_marker": null
+    },
+    {
+      "id": 1080,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1145/3371091",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/deterministic-security-scanning-build-loop.md",
+      "line_number": 105,
+      "context": "* [Build Systems a la Carte (Mokhov, Mitchell, Peyton Jones, POPL 2020)](https://dl.acm.org/doi/10.1145/3371091) - Formal build system theory including backpressure",
+      "verification_marker": null
+    },
+    {
+      "id": 1081,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.1145/6499.6503",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/workspace-native-multi-agent-orchestration.md",
+      "line_number": 74,
+      "context": "- Nii, H. P. (1986). [Blackboard Systems: A Survey](https://doi.org/10.1145/6499.6503). AI Magazine.",
+      "verification_marker": null
+    },
+    {
+      "id": 1082,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.48550/arXiv.2302.12173",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/zero-trust-agent-mesh.md",
+      "line_number": 70,
+      "context": "- Greshake et al. (2023). \"Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications\" [arXiv:2302.12173](https://doi.org/10.48550/arXiv.2302.12173)",
+      "verification_marker": null
+    },
+    {
+      "id": 1083,
+      "title": null,
+      "authors": [],
+      "arxiv_id": null,
+      "doi": "10.48550/arXiv.2506.08837",
+      "venue_claimed": null,
+      "year_claimed": null,
+      "source_file": "patterns/lethal-trifecta-threat-model.md",
+      "line_number": 58,
+      "context": "- Academic source: https://doi.org/10.48550/arXiv.2506.08837",
       "verification_marker": null
     }
   ]

@@ -66,9 +66,9 @@ The following parallel research tracks are underway:
   - Effective for merging models with conflicting updates
 
 #### DARE (Yu et al., 2023)
-- **Paper:** "DARE: Do Anything Required for merging"
+- **Paper:** "Language Models are Super Mario: Absorbing Abilities from Homologous Models as a Free Lunch"
 - **Venue:** arXiv preprint
-- **Link:** https://arxiv.org/abs/2312.06450
+- **Link:** https://arxiv.org/abs/2311.03099
 - **Key Findings:**
   - Drop and REscale approach to model merging
   - Prunes redundant parameters before merging
@@ -1117,7 +1117,7 @@ Many parameter changes during fine-tuning are redundant. Random dropping followe
 - Can be combined with structured dropping (entire attention heads, MLP blocks)
 - Higher drop rates = more regularization but potential underfitting
 
-**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2312.06540 (Note: URL needs verification)
+**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2311.03099
 
 ---
 
@@ -1859,10 +1859,10 @@ Create a system where:
 - Cohere "Command A" whitepaper (Needs verification - direct link not located)
 
 ### Academic Sources
-- Model Soups: https://arxiv.org/abs/2203.05482 (Ilharco et al., NeurIPS 2022)
+- Model Soups: https://arxiv.org/abs/2203.05482 (Wortsman et al., NeurIPS 2022)
 - Task Arithmetic: https://arxiv.org/abs/2212.04089 (Ilharco et al., ICLR 2024)
 - TIES-Merging: https://arxiv.org/abs/2306.01708 (Yadav et al., 2023)
-- DARE: https://arxiv.org/abs/2312.06540 (Yu et al., 2023)
+- DARE: https://arxiv.org/abs/2311.03099 (Yu et al., 2023)
 - Elastic Weight Consolidation: https://arxiv.org/abs/1612.00796 (Kirkpatrick et al., PNAS 2017)
 - CodeLlama: https://arxiv.org/abs/2308.12950 (Roziere et al., 2023)
 - StarCoder: https://arxiv.org/abs/2305.06161 (Li et al., 2023)
@@ -1895,11 +1895,9 @@ Create a system where:
 ## Items Marked as "Needs Verification"
 
 1. Cohere Command A whitepaper direct link
-2. DARE paper URL: https://arxiv.org/abs/2312.06540 (URL format needs verification)
-3. Model Merging Survey: https://arxiv.org/abs/2403.XXXXX (placeholder URL - needs real arXiv ID)
-4. Production case studies with specific company names and metrics
-5. Specific Hugging Face model IDs demonstrating code+language merges
-6. GitHub repository links for Task Arithmetic and Model Soups implementations
+2. Model Merging Survey: https://arxiv.org/abs/2403.XXXXX (placeholder URL - needs real arXiv ID)
+3. Production case studies with specific company names and metrics
+4. Specific Hugging Face model IDs demonstrating code+language merges
+5. GitHub repository links for Task Arithmetic and Model Soups implementations
 
 ---
-

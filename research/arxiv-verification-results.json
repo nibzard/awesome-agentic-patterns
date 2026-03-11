@@ -1653,13 +1653,13 @@
     },
     {
       "ref_id": 668,
-      "arxiv_id": "2312.06540",
+      "arxiv_id": "2311.03099",
       "status": "VERIFIED",
       "claimed_title": null,
-      "actual_title": "Convergence of the Chambolle-Pock Algorithm in the Absence of Monotonicity",
+      "actual_title": "Language Models are Super Mario: Absorbing Abilities from Homologous Models as a Free Lunch",
       "source_file": "research/merged-code-language-skill-model-report.md",
       "line_number": 1120,
-      "context": "**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2312.06540 (Note: URL needs verification)"
+      "context": "**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2311.03099"
     },
     {
       "ref_id": 18,

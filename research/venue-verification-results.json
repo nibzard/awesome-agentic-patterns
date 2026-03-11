@@ -229,13 +229,13 @@
     },
     {
       "reference_id": 176,
-      "venue_claimed": "ICSE",
+      "venue_claimed": "ICSE-SEET",
       "year_claimed": "2024",
-      "status": "NOT_FOUND",
-      "actual_venue": null,
-      "actual_year": null,
-      "evidence_url": null,
-      "notes": "Could not verify 'AI-Tutoring in Software Engineering Education' by Frankford at ICSE 2024. May need further verification."
+      "status": "VERIFIED",
+      "actual_venue": "ICSE-SEET",
+      "actual_year": "2024",
+      "evidence_url": "https://api.crossref.org/works/10.1145/3639474.3640061",
+      "notes": "AI-Tutoring in Software Engineering Education is in the ICSE-SEET '24 proceedings."
     },
     {
       "reference_id": 181,
