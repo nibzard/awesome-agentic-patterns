@@ -115,9 +115,9 @@ For the newsletter subscription feature to work, you need to configure the follo
 
 ### Optional
 
-- `RESEND_AUDIENCE_ID`: Your Resend audience ID (if using audiences)
-  - Create an audience in the Resend dashboard
-  - Use this to segment subscribers
+- `RESEND_SEGMENT_ID`: Your Resend segment ID for newsletter subscriptions
+  - Create or choose a segment in the Resend dashboard
+  - New and existing subscribers will be added to this segment when configured
 
 ### Setting Environment Variables in Vercel
 
@@ -127,7 +127,11 @@ For the newsletter subscription feature to work, you need to configure the follo
    - Name: `RESEND_API_KEY`
    - Value: `re_xxxxxxxxxxxxx` (your actual API key)
    - Environments: Production, Preview, Development (as needed)
-4. Redeploy your application after adding environment variables
+4. Optional for segment enrollment:
+   - Name: `RESEND_SEGMENT_ID`
+   - Value: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
+   - Environments: Production, Preview, Development (as needed)
+5. Redeploy your application after adding environment variables
 
 ### Getting a Resend API Key
 

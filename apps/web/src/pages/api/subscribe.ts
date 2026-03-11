@@ -29,6 +29,30 @@ function checkRateLimit(ip: string): boolean {
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+async function addContactToSegmentByEmail(
+  email: string,
+  resendApiKey: string,
+  segmentId?: string
+) {
+  if (!segmentId) return;
+
+  const segmentResponse = await fetch(
+    `https://api.resend.com/contacts/${encodeURIComponent(email)}/segments/${segmentId}`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  if (!segmentResponse.ok) {
+    const segmentError = await segmentResponse.json().catch(() => ({}));
+    console.error('Resend segment API error:', segmentError);
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     // Get client IP for rate limiting
@@ -76,8 +100,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Get audience ID from environment (optional, can use default)
-    const audienceId = import.meta.env.RESEND_AUDIENCE_ID;
+    const segmentId = import.meta.env.RESEND_SEGMENT_ID;
 
     // Create or update contact in Resend
     const resendResponse = await fetch('https://api.resend.com/contacts', {
@@ -88,8 +111,8 @@ export const POST: APIRoute = async ({ request }) => {
       },
       body: JSON.stringify({
         email: trimmedEmail,
-        audience_id: audienceId || undefined,
         unsubscribed: false,
+        segments: segmentId ? [{ id: segmentId }] : undefined,
       }),
     });
 
@@ -99,9 +122,11 @@ export const POST: APIRoute = async ({ request }) => {
 
       // Handle specific error cases
       if (resendResponse.status === 422) {
-        // Contact already exists or validation error
+        // Contact already exists. Ensure it is part of the configured newsletter segment.
+        await addContactToSegmentByEmail(trimmedEmail, resendApiKey, segmentId);
+
         return new Response(
-          JSON.stringify({ message: "You're already subscribed! Watch your inbox for updates." }),
+          JSON.stringify({ message: "You're already subscribed and will receive future updates." }),
           { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
       }
@@ -116,7 +141,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     return new Response(
       JSON.stringify({
-        message: 'Thanks for subscribing! Check your inbox to confirm your subscription.',
+        message: 'Thanks for subscribing! You will receive future updates at this address.',
         contactId: data.id,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
