@@ -1,6 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 
-// Pattern status values
 const patternStatus = z.enum([
   'proposed',
   'emerging',
@@ -11,7 +10,6 @@ const patternStatus = z.enum([
   'rapidly-improving',
 ]);
 
-// Pattern category values
 const patternCategory = z.enum([
   'Orchestration & Control',
   'Context & Memory',
@@ -24,21 +22,13 @@ const patternCategory = z.enum([
   'Uncategorized',
 ]);
 
-// Maturity values
 const patternMaturity = z.enum(['early', 'maturing', 'mature']);
-
-// Complexity values
 const patternComplexity = z.enum(['low', 'medium', 'high', 'very-high']);
-
-// Effort values
 const patternEffort = z.enum(['low', 'medium', 'high', 'very-high']);
-
-// Impact values
 const patternImpact = z.enum(['low', 'medium', 'high', 'transformative']);
 
-// Pattern collection schema
-// Note: Patterns are loaded from root patterns/ directory using glob() in pages
-// This avoids symlinks and allows monorepo structure
+// Patterns are loaded from the repository root by page-level loaders, but Astro
+// still needs the schema definition here for type generation and validation.
 const patterns = defineCollection({
   type: 'content',
   schema: z.object({
@@ -70,7 +60,6 @@ const patterns = defineCollection({
   }),
 });
 
-// Guide collection schema
 const guides = defineCollection({
   type: 'content',
   schema: z.object({
@@ -80,7 +69,6 @@ const guides = defineCollection({
   }),
 });
 
-// Pack collection schema
 const packs = defineCollection({
   type: 'content',
   schema: z.object({

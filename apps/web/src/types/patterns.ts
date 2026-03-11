@@ -1,6 +1,6 @@
 /**
  * Shared type definitions for pattern data
- * These types align with the Zod schema in src/content/config.ts
+ * These types align with the Zod schema in src/content.config.ts
  */
 
 /**
