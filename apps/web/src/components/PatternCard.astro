@@ -171,6 +171,36 @@ const statusLabel = status.replace(/-/g, ' ');
     font-size: 0.74rem;
   }
 
+  :root[data-theme='dark'] .pattern-card {
+    background: rgba(36, 29, 24, 0.94);
+    border-color: rgba(104, 84, 69, 0.92);
+  }
+
+  :root[data-theme='dark'] .pattern-card-summary,
+  :root[data-theme='dark'] .pattern-card-tag {
+    color: #d4c9bb;
+  }
+
+  :root[data-theme='dark'] .pattern-card-tag {
+    background: rgba(119, 160, 215, 0.16);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .pattern-card {
+      background: rgba(36, 29, 24, 0.94);
+      border-color: rgba(104, 84, 69, 0.92);
+    }
+
+    :root:not([data-theme]) .pattern-card-summary,
+    :root:not([data-theme]) .pattern-card-tag {
+      color: #d4c9bb;
+    }
+
+    :root:not([data-theme]) .pattern-card-tag {
+      background: rgba(119, 160, 215, 0.16);
+    }
+  }
+
   @media (max-width: 640px) {
     .pattern-card-footer,
     .pattern-card-topline {

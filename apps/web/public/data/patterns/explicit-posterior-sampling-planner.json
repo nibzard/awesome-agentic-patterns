@@ -1,22 +1,11 @@
 {
   "title": "Explicit Posterior-Sampling Planner",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Dilip Arumugam",
-    "Thomas L. Griffiths"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Dilip Arumugam", "Thomas L. Griffiths"],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2504.20997",
-  "tags": [
-    "RL",
-    "PSRL",
-    "exploration",
-    "planning",
-    "decision-making"
-  ],
+  "tags": ["RL", "PSRL", "exploration", "planning", "decision-making"],
   "slug": "explicit-posterior-sampling-planner",
   "id": "explicit-posterior-sampling-planner",
   "summary": "Heuristic planning loops often over exploit the first plausible strategy and under explore alternatives.",

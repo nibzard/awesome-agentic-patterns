@@ -59,9 +59,9 @@ const { source } = Astro.props;
     flex-direction: column;
     gap: var(--spacing-sm);
     padding: 1rem;
-    background: rgba(255, 250, 242, 0.76);
+    background: var(--surface-card);
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(182, 164, 143, 0.48);
+    border: 1px solid var(--surface-border-strong);
     box-shadow: var(--shadow-sm);
   }
 
@@ -81,7 +81,7 @@ const { source } = Astro.props;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
   }
 
   .pattern-source-link {
@@ -99,6 +99,6 @@ const { source } = Astro.props;
 
   .external-link-icon {
     flex-shrink: 0;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
   }
 </style>

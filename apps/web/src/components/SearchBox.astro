@@ -71,7 +71,7 @@ const { placeholder = 'Search patterns...' } = Astro.props;
     padding: 0.95rem 3rem 0.95rem calc(var(--spacing-md) + 24px);
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    background-color: rgba(255, 250, 242, 0.72);
+    background-color: var(--surface-card);
     color: var(--color-text);
     font-size: 0.95rem;
     transition:
@@ -91,7 +91,7 @@ const { placeholder = 'Search patterns...' } = Astro.props;
   }
 
   .search-box-input::placeholder {
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
   }
 
   .search-box-clear {
@@ -100,7 +100,7 @@ const { placeholder = 'Search patterns...' } = Astro.props;
     padding: var(--spacing-xs);
     background: none;
     border: none;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     cursor: pointer;
     border-radius: var(--radius-sm);
     display: flex;
@@ -115,9 +115,9 @@ const { placeholder = 'Search patterns...' } = Astro.props;
 
   .search-box-submit {
     padding: 0.95rem 1.15rem;
-    background-color: rgba(255, 250, 242, 0.72);
+    background-color: var(--surface-card);
     color: var(--color-text);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--surface-border-strong);
     border-radius: 999px;
     font-weight: 600;
     letter-spacing: 0.02em;

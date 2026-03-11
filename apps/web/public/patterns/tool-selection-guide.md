@@ -1,10 +1,13 @@
 ---
 title: Tool Selection Guide
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Analysis of 88 Claude conversation sessions (nibzard-web, skills-marketplace, awesome-agentic-patterns, marginshot, 2025-intro-swe)"]
+authors: ['Nikola Balic (@nibzard)']
+based_on:
+  [
+    'Analysis of 88 Claude conversation sessions (nibzard-web, skills-marketplace, awesome-agentic-patterns, marginshot, 2025-intro-swe)',
+  ]
 category: Orchestration & Control
-source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
+source: 'https://github.com/nibzard/SKILLS-AGENTIC-LESSONS'
 tags: [tools, workflow, best-practices, efficiency, patterns, exploration, modification]
 ---
 
@@ -25,13 +28,13 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
 
 **Tool preference patterns from actual usage data:**
 
-| Task Type | Recommended Tool | Evidence |
-|-----------|-----------------|----------|
-| Codebase exploration | Read → Grep → Glob | Consistent pattern across all projects |
-| Code modification | Edit (not Write) | 3.4:1 Edit:Write ratio in nibzard-web |
-| New file creation | Write | Appropriate use case |
-| Build verification | Bash | 324 uses in nibzard-web, 276 in patterns |
-| Research delegation | Task (with clear subject) | 48 invocations across sessions |
+| Task Type            | Recommended Tool          | Evidence                                 |
+| -------------------- | ------------------------- | ---------------------------------------- |
+| Codebase exploration | Read → Grep → Glob        | Consistent pattern across all projects   |
+| Code modification    | Edit (not Write)          | 3.4:1 Edit:Write ratio in nibzard-web    |
+| New file creation    | Write                     | Appropriate use case                     |
+| Build verification   | Bash                      | 324 uses in nibzard-web, 276 in patterns |
+| Research delegation  | Task (with clear subject) | 48 invocations across sessions           |
 
 **Key selection criteria:**
 
@@ -123,5 +126,5 @@ flowchart TD
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
-* Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Discrete Phase Separation](discrete-phase-separation.md), [Subject Hygiene](subject-hygiene.md)
+- [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+- Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Discrete Phase Separation](discrete-phase-separation.md), [Subject Hygiene](subject-hygiene.md)

@@ -1,21 +1,11 @@
 {
   "title": "Incident-to-Eval Synthesis",
   "status": "emerging",
-  "authors": [
-    "Codex (@openai)"
-  ],
-  "based_on": [
-    "Post-incident learning loops in software and ML operations"
-  ],
+  "authors": ["Codex (@openai)"],
+  "based_on": ["Post-incident learning loops in software and ML operations"],
   "category": "Feedback Loops",
   "source": "https://sre.google/sre-book/postmortem-culture/",
-  "tags": [
-    "evals",
-    "incidents",
-    "reliability",
-    "feedback",
-    "continuous-improvement"
-  ],
+  "tags": ["evals", "incidents", "reliability", "feedback", "continuous-improvement"],
   "slug": "incident-to-eval-synthesis",
   "id": "incident-to-eval-synthesis",
   "summary": "Many teams run agent evaluations, but the eval suite drifts away from real failures seen in production.",

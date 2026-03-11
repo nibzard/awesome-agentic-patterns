@@ -2,12 +2,8 @@
   {
     "title": "Abstracted Code Representation for Review",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Aman Sanger (Cursor, referencing Michael Grinich)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Aman Sanger (Cursor, referencing Michael Grinich)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -29,22 +25,11 @@
   {
     "title": "Action Caching & Replay Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Hyperbrowser Team (@hyperbrowserai)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Hyperbrowser Team (@hyperbrowserai)"],
     "category": "Reliability & Eval",
     "source": "https://github.com/hyperbrowserai/HyperAgent",
-    "tags": [
-      "caching",
-      "replay",
-      "regression-testing",
-      "cost-reduction",
-      "deterministic",
-      "xpath"
-    ],
+    "tags": ["caching", "replay", "regression-testing", "cost-reduction", "deterministic", "xpath"],
     "slug": "action-caching-replay",
     "id": "action-caching-replay-pattern",
     "summary": "LLM based agent execution is expensive (both in costs and latency) and non deterministic.",
@@ -54,20 +39,11 @@
   {
     "title": "Action-Selector Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Luca Beurer-Kellner et al. (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Luca Beurer-Kellner et al. (2025)"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2506.08837",
-    "tags": [
-      "prompt-injection",
-      "control-flow",
-      "safety",
-      "tool-use"
-    ],
+    "tags": ["prompt-injection", "control-flow", "safety", "tool-use"],
     "slug": "action-selector-pattern",
     "id": "action-selector-pattern",
     "summary": "In tool enabled agents, untrusted data from emails, web pages, and API responses is often fed back into the model between steps.",
@@ -77,13 +53,8 @@
   {
     "title": "Adaptive Sandbox Fan-Out Controller",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Labruno (GitHub)",
-      "Swarm Migration Pattern"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Labruno (GitHub)", "Swarm Migration Pattern"],
     "category": "Reliability & Eval",
     "source": "https://github.com/nibzard/labruno-agent",
     "tags": [
@@ -104,12 +75,8 @@
   {
     "title": "Agent Modes by Model Personality",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack)"],
     "category": "Orchestration & Control",
     "source": "https://www.youtube.com/watch?v=4rx36wc9ugw",
     "tags": [
@@ -130,13 +97,8 @@
   {
     "title": "Agent Reinforcement Fine-Tuning (Agent RFT)",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Brown (OpenAI)",
-      "Theo (OpenAI Solutions Architect)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Brown (OpenAI)", "Theo (OpenAI Solutions Architect)"],
     "category": "Learning & Adaptation",
     "source": "https://youtu.be/1s_7RMG4O4U",
     "tags": [
@@ -156,12 +118,8 @@
   {
     "title": "Agent SDK for Programmatic Control",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic (Claude Code SDK example)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic (Claude Code SDK example)"],
     "category": "Tool Use & Environment",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -182,12 +140,8 @@
   {
     "title": "Agent-Assisted Scaffolding",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Lukas Möller (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Lukas Möller (Cursor)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -207,13 +161,8 @@
   {
     "title": "Agent-Driven Research",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Danny Tarlow",
-      "Connie Fan"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Danny Tarlow", "Connie Fan"],
     "category": "Orchestration & Control",
     "source": "https://www.youtube.com/watch?v=u85G2aV_5rQ",
     "tags": [
@@ -232,13 +181,8 @@
   {
     "title": "Agent-First Tooling and Logging",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Thorsten Ball (Sourcegraph)",
-      "Kenton Varda (Cloudflare)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"],
     "category": "Tool Use & Environment",
     "source": "https://www.sourcegraph.com",
     "tags": [
@@ -259,12 +203,8 @@
   {
     "title": "Agent-Friendly Workflow Design",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Amjad Masad"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Amjad Masad"],
     "category": "UX & Collaboration",
     "source": "https://www.nibzard.com/silent-revolution",
     "tags": [
@@ -283,13 +223,8 @@
   {
     "title": "Agent-Powered Codebase Q&A / Onboarding",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Lukas Möller (Cursor)",
-      "Aman Sanger (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"],
     "category": "Context & Memory",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -304,30 +239,17 @@
     "slug": "agent-powered-codebase-qa-onboarding",
     "id": "agent-powered-codebase-qa-onboarding",
     "summary": "Understanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system.",
-    "updated_at": "2026-03-10",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nUnderstanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming."
   },
   {
     "title": "Agentic Search Over Vector Embeddings",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Cat Wu (Anthropic)",
-      "Boris Cherny (Anthropic)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Cat Wu (Anthropic)", "Boris Cherny (Anthropic)"],
     "category": "Tool Use & Environment",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
-    "tags": [
-      "search",
-      "vector-embeddings",
-      "bash",
-      "grep",
-      "RAG",
-      "agentic-RAG",
-      "maintenance"
-    ],
+    "tags": ["search", "vector-embeddings", "bash", "grep", "RAG", "agentic-RAG", "maintenance"],
     "slug": "agentic-search-over-vector-embeddings",
     "id": "agentic-search-over-vector-embeddings",
     "summary": "TODO: Add a concise summary for \"Agentic Search Over Vector Embeddings\" describing the pattern's purpose and key benefits.",
@@ -337,13 +259,8 @@
   {
     "title": "AI Web Search Agent Loop",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Colin Flaherty (Muse)",
-      "Amplify Partners Blog"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Colin Flaherty (Muse)", "Amplify Partners Blog"],
     "category": "Tool Use & Environment",
     "source": "https://www.amplifypartners.com/blog-posts/how-ai-web-search-works",
     "tags": [
@@ -364,14 +281,8 @@
   {
     "title": "AI-Accelerated Learning and Skill Development",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Lukas Möller (Cursor)",
-      "Alex Albert (Anthropic)",
-      "Jacob Jackson (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Lukas Möller (Cursor)", "Alex Albert (Anthropic)", "Jacob Jackson (Cursor)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -393,12 +304,8 @@
   {
     "title": "AI-Assisted Code Review / Verification",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Aman Sanger (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Aman Sanger (Cursor)"],
     "category": "Feedback Loops",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -419,13 +326,8 @@
   {
     "title": "Anti-Reward-Hacking Grader Design",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Rogo Engineering Team",
-      "Will Brown (OpenAI)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Rogo Engineering Team", "Will Brown (OpenAI)"],
     "category": "Reliability & Eval",
     "source": "https://youtu.be/1s_7RMG4O4U",
     "tags": [
@@ -444,12 +346,8 @@
   {
     "title": "Artifact-Driven Analysis Pipeline Orchestration",
     "status": "emerging",
-    "authors": [
-      "shmlkv (@shmlkv)"
-    ],
-    "based_on": [
-      "Anthropic Claude Code"
-    ],
+    "authors": ["shmlkv (@shmlkv)"],
+    "based_on": ["Anthropic Claude Code"],
     "category": "Orchestration & Control",
     "source": "https://github.com/shmlkv/dna-claude-analysis",
     "tags": [
@@ -463,26 +361,17 @@
     "slug": "multi-step-analysis-pipeline-orchestration",
     "id": "artifact-driven-analysis-pipeline-orchestration",
     "summary": "Complex data analysis tasks often require running many sequential or parallel processing steps, each producing intermediate artifacts that feed into subsequent stages.",
-    "updated_at": "2026-03-10",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nComplex data analysis tasks often require running many sequential or parallel processing steps, each producing intermediate artifacts that feed into subsequent stages. Manually coordinating these steps — ensuring correct ordering, aggregating outputs, and producing a final unified result — is tedious and error-prone. Traditional scripting approaches hardcode the pipeline, making it inflexible when steps need to be added, reordered, or debugged."
   },
   {
     "title": "Asynchronous Coding Agent Pipeline",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Brown (Prime Intellect Talk)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Brown (Prime Intellect Talk)"],
     "category": "Reliability & Eval",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "asynchronous",
-      "pipeline",
-      "code-agent",
-      "parallelism"
-    ],
+    "tags": ["asynchronous", "pipeline", "code-agent", "parallelism"],
     "slug": "asynchronous-coding-agent-pipeline",
     "id": "asynchronous-coding-agent-pipeline",
     "summary": "Synchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates compute bubbles and idle resources .",
@@ -492,12 +381,8 @@
   {
     "title": "Autonomous Workflow Agent Architecture",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Together AI Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Together AI Team"],
     "category": "Orchestration & Control",
     "source": "https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks",
     "tags": [
@@ -517,19 +402,11 @@
   {
     "title": "Background Agent with CI Feedback",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Quinn Slack"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Quinn Slack"],
     "category": "Feedback Loops",
     "source": "https://ampcode.com/manual#background",
-    "tags": [
-      "asynchronous",
-      "ci",
-      "feedback"
-    ],
+    "tags": ["asynchronous", "ci", "feedback"],
     "slug": "background-agent-ci",
     "id": "background-agent-with-ci-feedback",
     "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.",
@@ -539,21 +416,11 @@
   {
     "title": "Budget-Aware Model Routing with Hard Cost Caps",
     "status": "established",
-    "authors": [
-      "Codex (@openai)"
-    ],
-    "based_on": [
-      "Multi-model routing practices from production LLM systems"
-    ],
+    "authors": ["Codex (@openai)"],
+    "based_on": ["Multi-model routing practices from production LLM systems"],
     "category": "Orchestration & Control",
     "source": "https://martinfowler.com/articles/llm.html",
-    "tags": [
-      "routing",
-      "cost-control",
-      "multi-model",
-      "orchestration",
-      "reliability"
-    ],
+    "tags": ["routing", "cost-control", "multi-model", "orchestration", "reliability"],
     "slug": "budget-aware-model-routing-with-hard-cost-caps",
     "id": "budget-aware-model-routing-with-hard-cost-caps",
     "summary": "Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.",
@@ -563,12 +430,8 @@
   {
     "title": "Burn the Boats",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack)"],
     "category": "Orchestration & Control",
     "source": "https://www.youtube.com/watch?v=4rx36wc9ugw",
     "tags": [
@@ -589,21 +452,11 @@
   {
     "title": "Canary Rollout and Automatic Rollback for Agent Policy Changes",
     "status": "established",
-    "authors": [
-      "Codex (@openai)"
-    ],
-    "based_on": [
-      "Canary deployment and SRE rollback practices"
-    ],
+    "authors": ["Codex (@openai)"],
+    "based_on": ["Canary deployment and SRE rollback practices"],
     "category": "Reliability & Eval",
     "source": "https://martinfowler.com/bliki/CanaryRelease.html",
-    "tags": [
-      "canary",
-      "rollback",
-      "reliability",
-      "policy",
-      "evaluation"
-    ],
+    "tags": ["canary", "rollback", "reliability", "policy", "evaluation"],
     "slug": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
     "id": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
     "summary": "Agent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds.",
@@ -613,21 +466,11 @@
   {
     "title": "Chain-of-Thought Monitoring & Interruption",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Tanner Jones (Vulcan)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Tanner Jones (Vulcan)"],
     "category": "UX & Collaboration",
     "source": "https://claude.com/blog/building-companies-with-claude-code",
-    "tags": [
-      "monitoring",
-      "intervention",
-      "debugging",
-      "reasoning",
-      "ux"
-    ],
+    "tags": ["monitoring", "intervention", "debugging", "reasoning", "ux"],
     "slug": "chain-of-thought-monitoring-interruption",
     "id": "chain-of-thought-monitoring-interruption",
     "summary": "Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.",
@@ -637,23 +480,11 @@
   {
     "title": "CLI-First Skill Design",
     "status": "emerging",
-    "authors": [
-      "Lucas Carlson"
-    ],
-    "based_on": [
-      "Anthropic (Claude Code)",
-      "Unix Philosophy"
-    ],
+    "authors": ["Lucas Carlson"],
+    "based_on": ["Anthropic (Claude Code)", "Unix Philosophy"],
     "category": "Tool Use & Environment",
     "source": "https://github.com/anthropics/claude-code",
-    "tags": [
-      "cli",
-      "skills",
-      "shell",
-      "dual-use",
-      "composability",
-      "unix-philosophy"
-    ],
+    "tags": ["cli", "skills", "shell", "dual-use", "composability", "unix-philosophy"],
     "slug": "cli-first-skill-design",
     "id": "cli-first-skill-design",
     "summary": "Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.",
@@ -663,20 +494,11 @@
   {
     "title": "CLI-Native Agent Orchestration",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Jory Pestorious"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Jory Pestorious"],
     "category": "Tool Use & Environment",
     "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
-    "tags": [
-      "cli",
-      "automation",
-      "local-dev",
-      "headless"
-    ],
+    "tags": ["cli", "automation", "local-dev", "headless"],
     "slug": "cli-native-agent-orchestration",
     "id": "cli-native-agent-orchestration",
     "summary": "Most agent workflows start in chat UIs that are optimized for one off conversations, not repeatable engineering operations.",
@@ -686,12 +508,8 @@
   {
     "title": "Code Mode MCP Tool Interface Improvement Pattern",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Cloudflare Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Cloudflare Team"],
     "category": "Tool Use & Environment",
     "source": "https://blog.cloudflare.com/code-mode/",
     "tags": [
@@ -713,20 +531,11 @@
   {
     "title": "Code-Over-API Pattern",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team"],
     "category": "Tool Use & Environment",
     "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
-    "tags": [
-      "token-optimization",
-      "code-execution",
-      "data-processing",
-      "mcp"
-    ],
+    "tags": ["token-optimization", "code-execution", "data-processing", "mcp"],
     "slug": "code-over-api-pattern",
     "id": "code-over-api-pattern",
     "summary": "Agents write and execute code that processes data in execution environment instead of making direct API calls, dramatically reducing token consumption by keeping intermediate data out of context window (150K → 2K tokens).",
@@ -736,21 +545,11 @@
   {
     "title": "Code-Then-Execute Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "DeepMind CaMeL (orig.)",
-      "Luca Beurer-Kellner et al. (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"],
     "category": "Tool Use & Environment",
     "source": "https://arxiv.org/abs/2506.08837",
-    "tags": [
-      "dsl",
-      "sandbox",
-      "program-synthesis",
-      "auditability"
-    ],
+    "tags": ["dsl", "sandbox", "program-synthesis", "auditability"],
     "slug": "code-then-execute-pattern",
     "id": "code-then-execute-pattern",
     "summary": "Free form plan and act loops are difficult to audit because critical control decisions stay implicit in natural language reasoning.",
@@ -760,13 +559,8 @@
   {
     "title": "Codebase Optimization for Agents",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack, Tim Culverhouse)",
-      "Raising an Agent Podcast"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack, Tim Culverhouse)", "Raising an Agent Podcast"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=2wjnV6F2arc",
     "tags": [
@@ -789,22 +583,11 @@
   {
     "title": "Coding Agent CI Feedback Loop",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Quinn Slack (Concept)",
-      "Will Brown (Prime Intellect Talk)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Quinn Slack (Concept)", "Will Brown (Prime Intellect Talk)"],
     "category": "Feedback Loops",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "CI",
-      "coding-agent",
-      "asynchronous",
-      "test-driven",
-      "feedback"
-    ],
+    "tags": ["CI", "coding-agent", "asynchronous", "test-driven", "feedback"],
     "slug": "coding-agent-ci-feedback-loop",
     "id": "coding-agent-ci-feedback-loop",
     "summary": "When a coding agent tackles multi file refactors or feature additions, running tests and waiting for test feedback synchronously ties up compute and prevents the agent from working on parallel tasks.",
@@ -814,13 +597,8 @@
   {
     "title": "Compounding Engineering Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Dan Shipper (Every)",
-      "Every Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Dan Shipper (Every)", "Every Engineering Team"],
     "category": "Learning & Adaptation",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -841,12 +619,8 @@
   {
     "title": "Conditional Parallel Tool Execution",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Gerred Dillon ('Building an Agentic System')"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Gerred Dillon ('Building an Agentic System')"],
     "category": "Orchestration & Control",
     "source": "https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html",
     "tags": [
@@ -868,20 +642,11 @@
   {
     "title": "Context Window Anxiety Management",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Cognition AI (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Cognition AI (2025)"],
     "category": "Context & Memory",
     "source": "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)",
-    "tags": [
-      "context-anxiety",
-      "token-management",
-      "premature-completion",
-      "model-behavior"
-    ],
+    "tags": ["context-anxiety", "token-management", "premature-completion", "model-behavior"],
     "slug": "context-window-anxiety-management",
     "id": "context-window-anxiety-management",
     "summary": "Models like Claude Sonnet 4.5 exhibit \"context anxiety\"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains.",
@@ -891,9 +656,7 @@
   {
     "title": "Context Window Auto-Compaction",
     "status": "validated-in-production",
-    "authors": [
-      "Clawdbot Contributors"
-    ],
+    "authors": ["Clawdbot Contributors"],
     "based_on": [
       "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)",
       "Pi Coding Agent (@mariozechner/pi-coding-agent)",
@@ -918,19 +681,11 @@
   {
     "title": "Context-Minimization Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Luca Beurer-Kellner et al. (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Luca Beurer-Kellner et al. (2025)"],
     "category": "Context & Memory",
     "source": "https://arxiv.org/abs/2506.08837",
-    "tags": [
-      "context-hygiene",
-      "taint-removal",
-      "prompt-injection"
-    ],
+    "tags": ["context-hygiene", "taint-removal", "prompt-injection"],
     "slug": "context-minimization-pattern",
     "id": "context-minimization-pattern",
     "summary": "In long agent sessions, raw user text and tool outputs often remain in context long after they are needed.",
@@ -940,12 +695,8 @@
   {
     "title": "Continuous Autonomous Task Loop Pattern",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Internal Practice"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Internal Practice"],
     "category": "Orchestration & Control",
     "source": "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78",
     "tags": [
@@ -965,12 +716,8 @@
   {
     "title": "CriticGPT-Style Code Review",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "OpenAI"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["OpenAI"],
     "category": "Reliability & Eval",
     "source": "https://openai.com/research/criticgpt",
     "tags": [
@@ -990,12 +737,8 @@
   {
     "title": "Cross-Cycle Consensus Relay",
     "status": "emerging",
-    "authors": [
-      "Nikita Dmitrieff (@NikitaDmitrieff)"
-    ],
-    "based_on": [
-      "auto-co autonomous AI company framework"
-    ],
+    "authors": ["Nikita Dmitrieff (@NikitaDmitrieff)"],
+    "based_on": ["auto-co autonomous AI company framework"],
     "category": "Orchestration & Control",
     "source": "https://github.com/NikitaDmitrieff/auto-co-meta",
     "tags": [
@@ -1015,9 +758,7 @@
   {
     "title": "Curated Code Context Window",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Anonymous Speaker (Open Source Agent RL Talk)",
       "Will Brown (Prime Intellect Talk)",
@@ -1025,12 +766,7 @@
     ],
     "category": "Context & Memory",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "context-management",
-      "code-agent",
-      "file-selection",
-      "noise-reduction"
-    ],
+    "tags": ["context-management", "code-agent", "file-selection", "noise-reduction"],
     "slug": "curated-code-context-window",
     "id": "curated-code-context-window",
     "summary": "Loading all source files or dumping entire repositories into the agent's context overwhelms the model, introduces noise, and slows inference.",
@@ -1040,20 +776,11 @@
   {
     "title": "Curated File Context Window",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Internal AI Dev Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Internal AI Dev Team"],
     "category": "Context & Memory",
     "source": "https://docs.anthropic.com/en/docs/claude-code/common-workflows",
-    "tags": [
-      "code-context",
-      "file-scope",
-      "relevance",
-      "memory-management"
-    ],
+    "tags": ["code-context", "file-scope", "relevance", "memory-management"],
     "slug": "curated-file-context-window",
     "id": "curated-file-context-window",
     "summary": "A coding agent often needs to reason about multiple source files, but dumping all files into its prompt: Quickly exceeds token limits or inference budget.",
@@ -1063,13 +790,8 @@
   {
     "title": "Custom Sandboxed Background Agent",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Ramp (Inspect Agent)",
-      "Zach Bruggeman, Jason Quense, Rahul Sengottuvelu (Ramp)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Ramp (Inspect Agent)", "Zach Bruggeman, Jason Quense, Rahul Sengottuvelu (Ramp)"],
     "category": "Orchestration & Control",
     "source": "https://engineering.ramp.com/post/why-we-built-our-background-agent",
     "tags": [
@@ -1090,13 +812,8 @@
   {
     "title": "Democratization of Tooling via Agents",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Jacob Jackson (Cursor)",
-      "Alex Albert (Anthropic)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Jacob Jackson (Cursor)", "Alex Albert (Anthropic)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -1117,12 +834,8 @@
   {
     "title": "Deterministic Security Scanning Build Loop",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Geoffrey Huntley"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Geoffrey Huntley"],
     "category": "Security & Safety",
     "source": "https://ghuntley.com/secure-codegen/",
     "tags": [
@@ -1142,12 +855,8 @@
   {
     "title": "Dev Tooling Assumptions Reset",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=2wjnV6F2arc",
     "tags": [
@@ -1169,21 +878,11 @@
   {
     "title": "Discrete Phase Separation",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Sam Stettner (Ambral)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Sam Stettner (Ambral)"],
     "category": "Orchestration & Control",
     "source": "https://claude.com/blog/building-companies-with-claude-code",
-    "tags": [
-      "orchestration",
-      "planning",
-      "research",
-      "context-management",
-      "multi-model"
-    ],
+    "tags": ["orchestration", "planning", "research", "context-management", "multi-model"],
     "slug": "discrete-phase-separation",
     "id": "discrete-phase-separation",
     "summary": "TODO: Add a concise summary for \"Discrete Phase Separation\" describing the pattern's purpose and key benefits.",
@@ -1193,12 +892,8 @@
   {
     "title": "Disposable Scaffolding Over Durable Features",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Thorsten Ball (Sourcegraph)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Thorsten Ball (Sourcegraph)"],
     "category": "Orchestration & Control",
     "source": "https://www.sourcegraph.com",
     "tags": [
@@ -1217,12 +912,8 @@
   {
     "title": "Distributed Execution with Cloud Workers",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Dexter Horthy (HumanLayer)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Dexter Horthy (HumanLayer)"],
     "category": "Orchestration & Control",
     "source": "https://claude.com/blog/building-companies-with-claude-code",
     "tags": [
@@ -1242,13 +933,8 @@
   {
     "title": "Dogfooding with Rapid Iteration for Agent Improvement",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Lukas Möller (Cursor)",
-      "Aman Sanger (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"],
     "category": "Feedback Loops",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -1268,20 +954,11 @@
   {
     "title": "Dual LLM Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Simon Willison (orig.)",
-      "Luca Beurer-Kellner et al. (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Simon Willison (orig.)", "Luca Beurer-Kellner et al. (2025)"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2506.08837",
-    "tags": [
-      "privilege-separation",
-      "quarantined-llm",
-      "symbolic-variables"
-    ],
+    "tags": ["privilege-separation", "quarantined-llm", "symbolic-variables"],
     "slug": "dual-llm-pattern",
     "id": "dual-llm-pattern",
     "summary": "When the same model both reads untrusted content and controls high privilege tools, a single prompt injection path can convert benign context into privileged actions.",
@@ -1291,23 +968,11 @@
   {
     "title": "Dual-Use Tool Design",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (Anthropic)",
-      "Claude Code Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (Anthropic)", "Claude Code Team"],
     "category": "Tool Use & Environment",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
-    "tags": [
-      "tools",
-      "ux",
-      "slash-commands",
-      "hooks",
-      "human-ai-collaboration",
-      "consistency"
-    ],
+    "tags": ["tools", "ux", "slash-commands", "hooks", "human-ai-collaboration", "consistency"],
     "slug": "dual-use-tool-design",
     "id": "dual-use-tool-design",
     "summary": "TODO: Add a concise summary for \"Dual-Use Tool Design\" describing the pattern's purpose and key benefits.",
@@ -1317,20 +982,11 @@
   {
     "title": "Dynamic Code Injection (On-Demand File Fetch)",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Internal AI Dev Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Internal AI Dev Team"],
     "category": "Tool Use & Environment",
     "source": "https://docs.anthropic.com/en/docs/claude-code/common-workflows",
-    "tags": [
-      "file-injection",
-      "at-mention",
-      "slash-commands",
-      "IDE-integration"
-    ],
+    "tags": ["file-injection", "at-mention", "slash-commands", "IDE-integration"],
     "slug": "dynamic-code-injection-on-demand-file-fetch",
     "id": "dynamic-code-injection-on-demand-file-fetch",
     "summary": "During an interactive coding session, a user or agent may need to inspect or modify files not originally loaded into the main context.",
@@ -1340,12 +996,8 @@
   {
     "title": "Dynamic Context Injection",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (via Claude Code)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (via Claude Code)"],
     "category": "Context & Memory",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -1365,9 +1017,7 @@
   {
     "title": "Economic Value Signaling in Multi-Agent Networks",
     "status": "experimental-but-awesome",
-    "authors": [
-      "Scott Boudreaux (@Scottcjn)"
-    ],
+    "authors": ["Scott Boudreaux (@Scottcjn)"],
     "based_on": [
       "Beacon agent coordination framework (contributor-owned reference implementation)"
     ],
@@ -1390,45 +1040,25 @@
   {
     "title": "Egress Lockdown (No-Exfiltration Channel)",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Simon Willison (observation)",
-      "Multiple vendor incident reports"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Simon Willison (observation)", "Multiple vendor incident reports"],
     "category": "Tool Use & Environment",
     "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
-    "tags": [
-      "network-sandbox",
-      "exfiltration",
-      "outbound-controls",
-      "security"
-    ],
+    "tags": ["network-sandbox", "exfiltration", "outbound-controls", "security"],
     "slug": "egress-lockdown-no-exfiltration-channel",
     "id": "egress-lockdown-no-exfiltration-channel",
     "summary": "Even with private data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data .",
-    "updated_at": "2026-03-10",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nEven with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. This pattern implements the Bell-LaPadula model's \"no write down\" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels."
   },
   {
     "title": "Episodic Memory Retrieval & Injection",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Cursor AI (MCP)",
-      "Windsurf Flows"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Cursor AI (MCP)", "Windsurf Flows"],
     "category": "Context & Memory",
     "source": "https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021",
-    "tags": [
-      "episodic-memory",
-      "vector-db",
-      "retrieval-augmented",
-      "context-hint"
-    ],
+    "tags": ["episodic-memory", "vector-db", "retrieval-augmented", "context-hint"],
     "slug": "episodic-memory-retrieval-injection",
     "id": "episodic-memory-retrieval-injection",
     "summary": "Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures.",
@@ -1438,22 +1068,11 @@
   {
     "title": "Explicit Posterior-Sampling Planner",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Dilip Arumugam",
-      "Thomas L. Griffiths"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Dilip Arumugam", "Thomas L. Griffiths"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2504.20997",
-    "tags": [
-      "RL",
-      "PSRL",
-      "exploration",
-      "planning",
-      "decision-making"
-    ],
+    "tags": ["RL", "PSRL", "exploration", "planning", "decision-making"],
     "slug": "explicit-posterior-sampling-planner",
     "id": "explicit-posterior-sampling-planner",
     "summary": "Heuristic planning loops often over exploit the first plausible strategy and under explore alternatives.",
@@ -1463,21 +1082,11 @@
   {
     "title": "Extended Coherence Work Sessions",
     "status": "rapidly-improving",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Amjad Masad (observation)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Amjad Masad (observation)"],
     "category": "Reliability & Eval",
     "source": "https://www.nibzard.com/silent-revolution",
-    "tags": [
-      "coherence",
-      "long-running tasks",
-      "agent capability",
-      "llm",
-      "complex projects"
-    ],
+    "tags": ["coherence", "long-running tasks", "agent capability", "llm", "complex projects"],
     "slug": "extended-coherence-work-sessions",
     "id": "extended-coherence-work-sessions",
     "summary": "Early AI agents and models often suffered from a short \"coherence window,\" meaning they could only maintain focus and context for a few minutes before their performance degraded significantly (e.g., losing track of instructions, generating irrelevant output).",
@@ -1487,22 +1096,11 @@
   {
     "title": "External Credential Sync",
     "status": "validated-in-production",
-    "authors": [
-      "Clawdbot Contributors"
-    ],
-    "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
-    ],
+    "authors": ["Clawdbot Contributors"],
+    "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
     "category": "Security & Safety",
     "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts",
-    "tags": [
-      "credentials",
-      "oauth",
-      "token-sync",
-      "keychain",
-      "cli-integration",
-      "auth-reuse"
-    ],
+    "tags": ["credentials", "oauth", "token-sync", "keychain", "cli-integration", "auth-reuse"],
     "slug": "external-credential-sync",
     "id": "external-credential-sync",
     "summary": "Users manage AI API credentials across multiple tools—CLIs (Claude Code, Codex CLI), web portals, and local development environments.",
@@ -1512,13 +1110,8 @@
   {
     "title": "Factory over Assistant",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack)",
-      "Raising an Agent Podcast"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"],
     "category": "Orchestration & Control",
     "source": "https://www.youtube.com/watch?v=2wjnV6F2arc",
     "tags": [
@@ -1539,12 +1132,8 @@
   {
     "title": "Failover-Aware Model Fallback",
     "status": "validated-in-production",
-    "authors": [
-      "Clawdbot Contributors"
-    ],
-    "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
-    ],
+    "authors": ["Clawdbot Contributors"],
+    "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
     "category": "Reliability & Eval",
     "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts",
     "tags": [
@@ -1564,12 +1153,8 @@
   {
     "title": "Feature List as Immutable Contract",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team"],
     "category": "Orchestration & Control",
     "source": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
     "tags": [
@@ -1588,20 +1173,11 @@
   {
     "title": "Filesystem-Based Agent State",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team"],
     "category": "Context & Memory",
     "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
-    "tags": [
-      "state-management",
-      "persistence",
-      "resumption",
-      "long-running-tasks"
-    ],
+    "tags": ["state-management", "persistence", "resumption", "long-running-tasks"],
     "slug": "filesystem-based-agent-state",
     "id": "filesystem-based-agent-state",
     "summary": "Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.",
@@ -1611,12 +1187,8 @@
   {
     "title": "Frontier-Focused Development",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack)"],
     "category": "Learning & Adaptation",
     "source": "https://www.youtube.com/watch?v=2wjnV6F2arc",
     "tags": [
@@ -1637,13 +1209,8 @@
   {
     "title": "Graph of Thoughts (GoT)",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Besta et al.",
-      "ETH Zurich"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Besta et al.", "ETH Zurich"],
     "category": "Feedback Loops",
     "source": "https://arxiv.org/abs/2308.09687",
     "tags": [
@@ -1663,9 +1230,7 @@
   {
     "title": "Hook-Based Safety Guard Rails for Autonomous Code Agents",
     "status": "validated-in-production",
-    "authors": [
-      "yurukusa (@yurukusa)"
-    ],
+    "authors": ["yurukusa (@yurukusa)"],
     "based_on": [
       "Claude Code Hooks (Anthropic)",
       "claude-code-ops-starter (https://github.com/yurukusa/claude-code-ops-starter)"
@@ -1691,12 +1256,8 @@
   {
     "title": "Human-in-the-Loop Approval Framework",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Dexter Horthy (HumanLayer)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Dexter Horthy (HumanLayer)"],
     "category": "UX & Collaboration",
     "source": "https://claude.com/blog/building-companies-with-claude-code",
     "tags": [
@@ -1716,12 +1277,8 @@
   {
     "title": "Hybrid LLM/Code Workflow Coordinator",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Larson (Imprint)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Larson (Imprint)"],
     "category": "Orchestration & Control",
     "source": "https://lethain.com/agents-coordinators/",
     "tags": [
@@ -1742,21 +1299,11 @@
   {
     "title": "Incident-to-Eval Synthesis",
     "status": "emerging",
-    "authors": [
-      "Codex (@openai)"
-    ],
-    "based_on": [
-      "Post-incident learning loops in software and ML operations"
-    ],
+    "authors": ["Codex (@openai)"],
+    "based_on": ["Post-incident learning loops in software and ML operations"],
     "category": "Feedback Loops",
     "source": "https://sre.google/sre-book/postmortem-culture/",
-    "tags": [
-      "evals",
-      "incidents",
-      "reliability",
-      "feedback",
-      "continuous-improvement"
-    ],
+    "tags": ["evals", "incidents", "reliability", "feedback", "continuous-improvement"],
     "slug": "incident-to-eval-synthesis",
     "id": "incident-to-eval-synthesis",
     "summary": "Many teams run agent evaluations, but the eval suite drifts away from real failures seen in production.",
@@ -1766,21 +1313,14 @@
   {
     "title": "Inference-Healed Code Review Reward",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Anonymous Speaker (Open Source Agent RL Talk)",
       "Will Brown (Prime Intellect Talk)"
     ],
     "category": "Feedback Loops",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "reward-modeling",
-      "code-review",
-      "inference-healing",
-      "quality-assessment"
-    ],
+    "tags": ["reward-modeling", "code-review", "inference-healing", "quality-assessment"],
     "slug": "inference-healed-code-review-reward",
     "id": "inference-healed-code-review-reward",
     "summary": "Simple reward functions that only check for \"all tests passed\" fail to capture nuanced code quality issues (e.g., performance regressions, style violations, missing edge case handling).",
@@ -1790,9 +1330,7 @@
   {
     "title": "Inference-Time Scaling",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Google DeepMind",
       "OpenAI",
@@ -1822,13 +1360,8 @@
   {
     "title": "Initializer-Maintainer Dual Agent Architecture",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team",
-      "Cursor Engineering (Planner-Worker Architecture)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team", "Cursor Engineering (Planner-Worker Architecture)"],
     "category": "Orchestration & Control",
     "source": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
     "tags": [
@@ -1847,23 +1380,11 @@
   {
     "title": "Intelligent Bash Tool Execution",
     "status": "validated-in-production",
-    "authors": [
-      "Clawdbot Contributors"
-    ],
-    "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
-    ],
+    "authors": ["Clawdbot Contributors"],
+    "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
     "category": "Tool Use & Environment",
     "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts",
-    "tags": [
-      "bash",
-      "shell",
-      "pty",
-      "fallback",
-      "security",
-      "process-management",
-      "sandboxing"
-    ],
+    "tags": ["bash", "shell", "pty", "fallback", "security", "process-management", "sandboxing"],
     "slug": "intelligent-bash-tool-execution",
     "id": "intelligent-bash-tool-execution",
     "summary": "Secure, reliable command execution from agents is complex and error prone: PTY requirements : TTY required CLIs (coding agents, terminal UIs) fail with direct e",
@@ -1873,20 +1394,11 @@
   {
     "title": "Inversion of Control",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Quinn Slack",
-      "Thorsten Ball"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Quinn Slack", "Thorsten Ball"],
     "category": "Orchestration & Control",
     "source": "https://www.nibzard.com/ampcode",
-    "tags": [
-      "orchestration",
-      "autonomy",
-      "control"
-    ],
+    "tags": ["orchestration", "autonomy", "control"],
     "slug": "inversion-of-control",
     "id": "inversion-of-control",
     "summary": "Traditional \"prompt-as-puppeteer\" workflows force humans to spell out every step, limiting scale and creativity.",
@@ -1896,13 +1408,8 @@
   {
     "title": "Isolated VM per RL Rollout",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Sam Pretty (Cognition)",
-      "Devon Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Sam Pretty (Cognition)", "Devon Engineering Team"],
     "category": "Security & Safety",
     "source": "https://youtu.be/1s_7RMG4O4U",
     "tags": [
@@ -1922,12 +1429,8 @@
   {
     "title": "Iterative Multi-Agent Brainstorming",
     "status": "experimental-but-awesome",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (via Claude Code capability)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (via Claude Code capability)"],
     "category": "Orchestration & Control",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -1947,12 +1450,8 @@
   {
     "title": "Iterative Prompt & Skill Refinement",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Larson (Imprint)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Larson (Imprint)"],
     "category": "Feedback Loops",
     "source": "https://lethain.com/agents-iterative-refinement/",
     "tags": [
@@ -1974,22 +1473,11 @@
   {
     "title": "Lane-Based Execution Queueing",
     "status": "validated-in-production",
-    "authors": [
-      "Clawdbot Contributors"
-    ],
-    "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
-    ],
+    "authors": ["Clawdbot Contributors"],
+    "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
     "category": "Orchestration & Control",
     "source": "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts",
-    "tags": [
-      "queueing",
-      "concurrency",
-      "lanes",
-      "isolation",
-      "parallelism",
-      "deadlock-prevention"
-    ],
+    "tags": ["queueing", "concurrency", "lanes", "isolation", "parallelism", "deadlock-prevention"],
     "slug": "lane-based-execution-queueing",
     "id": "lane-based-execution-queueing",
     "summary": "Traditional agent systems serialize all operations through a single execution queue, creating bottlenecks that limit throughput.",
@@ -1999,13 +1487,8 @@
   {
     "title": "Language Agent Tree Search (LATS)",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Zhou et al.",
-      "University of Illinois"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Zhou et al.", "University of Illinois"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2310.04406",
     "tags": [
@@ -2026,13 +1509,8 @@
   {
     "title": "Latent Demand Product Discovery",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (Anthropic)",
-      "Meta Product Teams"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (Anthropic)", "Meta Product Teams"],
     "category": "UX & Collaboration",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -2051,12 +1529,8 @@
   {
     "title": "Layered Configuration Context",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (via Claude Code)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (via Claude Code)"],
     "category": "Context & Memory",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -2075,20 +1549,11 @@
   {
     "title": "Lethal Trifecta Threat Model",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Simon Willison"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Simon Willison"],
     "category": "Reliability & Eval",
     "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
-    "tags": [
-      "security",
-      "prompt-injection",
-      "threat-model",
-      "data-exfiltration"
-    ],
+    "tags": ["security", "prompt-injection", "threat-model", "data-exfiltration"],
     "slug": "lethal-trifecta-threat-model",
     "id": "lethal-trifecta-threat-model",
     "summary": "Combining three agent capabilities— 1.",
@@ -2098,20 +1563,11 @@
   {
     "title": "LLM Map-Reduce Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Luca Beurer-Kellner et al. (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Luca Beurer-Kellner et al. (2025)"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2506.08837",
-    "tags": [
-      "map-reduce",
-      "sub-agents",
-      "isolation",
-      "untrusted-data"
-    ],
+    "tags": ["map-reduce", "sub-agents", "isolation", "untrusted-data"],
     "slug": "llm-map-reduce-pattern",
     "id": "llm-map-reduce-pattern",
     "summary": "When many untrusted documents are processed in a single reasoning context, one malicious item can influence global conclusions.",
@@ -2121,12 +1577,8 @@
   {
     "title": "LLM Observability",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Larson (Imprint)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Larson (Imprint)"],
     "category": "Reliability & Eval",
     "source": "https://lethain.com/agents-logging/",
     "tags": [
@@ -2149,12 +1601,8 @@
   {
     "title": "LLM-Friendly API Design",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Lukas Möller (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Lukas Möller (Cursor)"],
     "category": "Tool Use & Environment",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -2174,9 +1622,7 @@
   {
     "title": "Memory Reinforcement Learning (MemRL)",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian University, MemTensor)"
     ],
@@ -2199,13 +1645,8 @@
   {
     "title": "Memory Synthesis from Execution Logs",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Internal Users",
-      "Claude Code Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Internal Users", "Claude Code Team"],
     "category": "Context & Memory",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -2226,21 +1667,14 @@
   {
     "title": "Merged Code + Language Skill Model",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Anonymous Speaker (Open Source Agent RL Talk)",
       "Will Brown (Prime Intellect Talk)"
     ],
     "category": "Reliability & Eval",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "model-merging",
-      "transfer-learning",
-      "coding-agent",
-      "multilingual"
-    ],
+    "tags": ["model-merging", "transfer-learning", "coding-agent", "multilingual"],
     "slug": "merged-code-language-skill-model",
     "id": "merged-code-language-skill-model",
     "summary": "Building a unified model that excels both at natural language tasks (e.g., summarization, documentation generation) and code generation/reasoning typically requires a massive centralized training run.",
@@ -2250,21 +1684,11 @@
   {
     "title": "Milestone Escrow for Agent Resource Funding",
     "status": "emerging",
-    "authors": [
-      "RioTheGreat-ai (@RioTheGreat-ai)"
-    ],
-    "based_on": [
-      "AgentFund (example implementation)"
-    ],
+    "authors": ["RioTheGreat-ai (@RioTheGreat-ai)"],
+    "based_on": ["AgentFund (example implementation)"],
     "category": "UX & Collaboration",
     "source": "https://github.com/RioTheGreat-ai/agentfund-skill",
-    "tags": [
-      "resource-funding",
-      "escrow",
-      "milestones",
-      "agent-governance",
-      "budget-controls"
-    ],
+    "tags": ["resource-funding", "escrow", "milestones", "agent-governance", "budget-controls"],
     "slug": "agentfund-crowdfunding",
     "id": "milestone-escrow-for-agent-resource-funding",
     "summary": "Autonomous agent teams can need ongoing resources (compute, API spend, tools) over many steps.",
@@ -2274,12 +1698,8 @@
   {
     "title": "Multi-Model Orchestration for Complex Edits",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Aman Sanger (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Aman Sanger (Cursor)"],
     "category": "Orchestration & Control",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -2299,21 +1719,11 @@
   {
     "title": "Multi-Platform Communication Aggregation",
     "status": "emerging",
-    "authors": [
-      "Lucas Carlson"
-    ],
-    "based_on": [
-      "Anthropic (Claude Code)"
-    ],
+    "authors": ["Lucas Carlson"],
+    "based_on": ["Anthropic (Claude Code)"],
     "category": "Tool Use & Environment",
     "source": "https://github.com/anthropics/claude-code",
-    "tags": [
-      "search",
-      "aggregation",
-      "parallel",
-      "communication",
-      "unified-interface"
-    ],
+    "tags": ["search", "aggregation", "parallel", "communication", "unified-interface"],
     "slug": "multi-platform-communication-aggregation",
     "id": "multi-platform-communication-aggregation",
     "summary": "Create unified search interface that queries all communication platforms in parallel and aggregates results into consistent format, enabling single-query cross-platform search with minimal latency through parallel execution.",
@@ -2323,12 +1733,8 @@
   {
     "title": "Multi-Platform Webhook Triggers",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Larson (lethain.com)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Larson (lethain.com)"],
     "category": "Tool Use & Environment",
     "source": "https://lethain.com/agents-triggers/",
     "tags": [
@@ -2350,20 +1756,11 @@
   {
     "title": "No-Token-Limit Magic",
     "status": "experimental-but-awesome",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Thorsten Ball",
-      "Quinn Slack"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Thorsten Ball", "Quinn Slack"],
     "category": "Reliability & Eval",
     "source": "https://www.nibzard.com/ampcode",
-    "tags": [
-      "performance",
-      "cost",
-      "experimentation"
-    ],
+    "tags": ["performance", "cost", "experimentation"],
     "slug": "no-token-limit-magic",
     "id": "no-token-limit-magic",
     "summary": "Teams often optimize token spend too early, forcing prompts and context windows into tight constraints before they understand what high quality behavior looks like.",
@@ -2373,12 +1770,8 @@
   {
     "title": "Non-Custodial Spending Controls",
     "status": "emerging",
-    "authors": [
-      "SAMA-I (@s-a-m-a-i)"
-    ],
-    "based_on": [
-      "Walleted agent execution patterns"
-    ],
+    "authors": ["SAMA-I (@s-a-m-a-i)"],
+    "based_on": ["Walleted agent execution patterns"],
     "category": "Security & Safety",
     "source": "https://policylayer.com",
     "tags": [
@@ -2398,13 +1791,8 @@
   {
     "title": "Opponent Processor / Multi-Agent Debate Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Dan Shipper (Every)",
-      "Reddit Community"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Dan Shipper (Every)", "Reddit Community"],
     "category": "Orchestration & Control",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -2424,20 +1812,11 @@
   {
     "title": "Oracle and Worker Multi-Model Approach",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Sourcegraph Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Sourcegraph Team"],
     "category": "Orchestration & Control",
     "source": "https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ",
-    "tags": [
-      "multi-model",
-      "cost-optimization",
-      "strategic-reasoning",
-      "architecture"
-    ],
+    "tags": ["multi-model", "cost-optimization", "strategic-reasoning", "architecture"],
     "slug": "oracle-and-worker-multi-model",
     "id": "oracle-and-worker-multi-model-approach",
     "summary": "Relying on a single AI model creates a trade off between capability and cost.",
@@ -2447,13 +1826,8 @@
   {
     "title": "Parallel Tool Call Learning",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Sam Pretty (Cognition)",
-      "Will Brown (OpenAI)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Sam Pretty (Cognition)", "Will Brown (OpenAI)"],
     "category": "Orchestration & Control",
     "source": "https://youtu.be/1s_7RMG4O4U",
     "tags": [
@@ -2472,21 +1846,11 @@
   {
     "title": "Patch Steering via Prompted Tool Selection",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (Claude Code Concepts)",
-      "Will Brown (Prime Intellect Talk)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (Claude Code Concepts)", "Will Brown (Prime Intellect Talk)"],
     "category": "Tool Use & Environment",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "patching",
-      "prompt-steering",
-      "tool-selection",
-      "coding-agent"
-    ],
+    "tags": ["patching", "prompt-steering", "tool-selection", "coding-agent"],
     "slug": "patch-steering-via-prompted-tool-selection",
     "id": "patch-steering-via-prompted-tool-selection",
     "summary": "Coding agents with access to multiple patching or refactoring tools (e.g., text based apply patch , AST based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided.",
@@ -2496,21 +1860,11 @@
   {
     "title": "PII Tokenization",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team"],
     "category": "Security & Safety",
     "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
-    "tags": [
-      "privacy",
-      "pii",
-      "security",
-      "mcp",
-      "data-protection"
-    ],
+    "tags": ["privacy", "pii", "security", "mcp", "data-protection"],
     "slug": "pii-tokenization",
     "id": "pii-tokenization",
     "summary": "Implement interception layer in MCP client that automatically tokenizes PII before reaching model and untokenizes for tool calls, enabling agents to orchestrate sensitive workflows without exposing raw data to LLM.",
@@ -2520,43 +1874,25 @@
   {
     "title": "Plan-Then-Execute Pattern",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Luca Beurer-Kellner et al. (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Luca Beurer-Kellner et al. (2025)", "C. Parisien et al. (2024)"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2506.08837",
-    "tags": [
-      "planning",
-      "control-flow-integrity",
-      "prompt-injection"
-    ],
+    "tags": ["planning", "control-flow-integrity", "prompt-injection"],
     "slug": "plan-then-execute-pattern",
     "id": "plan-then-execute-pattern",
     "summary": "When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next.",
-    "updated_at": "2026-03-10",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nWhen planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next. That makes the control flow itself attackable: a malicious intermediate result can redirect the agent into unsafe tools or unauthorized operations."
   },
   {
     "title": "Planner-Worker Separation for Long-Running Agents",
     "status": "emerging",
-    "authors": [
-      "Cursor Team"
-    ],
-    "based_on": [
-      "Cursor Engineering Team"
-    ],
+    "authors": ["Cursor Team"],
+    "based_on": ["Cursor Engineering Team"],
     "category": "Orchestration & Control",
     "source": "https://cursor.com/blog/scaling-agents",
-    "tags": [
-      "multi-agent",
-      "coordination",
-      "long-running",
-      "hierarchical",
-      "parallelism"
-    ],
+    "tags": ["multi-agent", "coordination", "long-running", "hierarchical", "parallelism"],
     "slug": "planner-worker-separation-for-long-running-agents",
     "id": "planner-worker-separation-for-long-running-agents",
     "summary": "Running multiple AI agents in parallel for complex, multi week projects creates significant coordination challenges: Flat structures lead to conflicts, duplicat",
@@ -2566,20 +1902,11 @@
   {
     "title": "Proactive Agent State Externalization",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Cognition AI (2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Cognition AI (2025)"],
     "category": "Context & Memory",
     "source": "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges",
-    "tags": [
-      "state-externalization",
-      "memory-management",
-      "self-documentation",
-      "note-taking"
-    ],
+    "tags": ["state-externalization", "memory-management", "self-documentation", "note-taking"],
     "slug": "proactive-agent-state-externalization",
     "id": "proactive-agent-state-externalization",
     "summary": "Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.",
@@ -2589,21 +1916,11 @@
   {
     "title": "Proactive Trigger Vocabulary",
     "status": "emerging",
-    "authors": [
-      "Lucas Carlson"
-    ],
-    "based_on": [
-      "Anthropic (Claude Code)"
-    ],
+    "authors": ["Lucas Carlson"],
+    "based_on": ["Anthropic (Claude Code)"],
     "category": "UX & Collaboration",
     "source": "https://github.com/anthropics/claude-code",
-    "tags": [
-      "ux",
-      "triggers",
-      "intent-detection",
-      "skill-routing",
-      "natural-language"
-    ],
+    "tags": ["ux", "triggers", "intent-detection", "skill-routing", "natural-language"],
     "slug": "proactive-trigger-vocabulary",
     "id": "proactive-trigger-vocabulary",
     "summary": "TODO: Add a concise summary for \"Proactive Trigger Vocabulary\" describing the pattern's purpose and key benefits.",
@@ -2613,13 +1930,8 @@
   {
     "title": "Progressive Autonomy with Model Evolution",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (Anthropic)",
-      "Claude Code Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (Anthropic)", "Claude Code Team"],
     "category": "Orchestration & Control",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -2639,12 +1951,8 @@
   {
     "title": "Progressive Complexity Escalation",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Vercel AI Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Vercel AI Team"],
     "category": "Orchestration & Control",
     "source": "https://vercel.com/blog/what-we-learned-building-agents-at-vercel",
     "tags": [
@@ -2664,12 +1972,8 @@
   {
     "title": "Progressive Disclosure for Large Files",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Larson (lethain.com)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Larson (lethain.com)"],
     "category": "Context & Memory",
     "source": "https://lethain.com/agents-large-files/",
     "tags": [
@@ -2690,20 +1994,11 @@
   {
     "title": "Progressive Tool Discovery",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team"],
     "category": "Tool Use & Environment",
     "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
-    "tags": [
-      "mcp",
-      "tool-discovery",
-      "context-optimization",
-      "lazy-loading"
-    ],
+    "tags": ["mcp", "tool-discovery", "context-optimization", "lazy-loading"],
     "slug": "progressive-tool-discovery",
     "id": "progressive-tool-discovery",
     "summary": "TODO: Add a concise summary for \"Progressive Tool Discovery\" describing the pattern's purpose and key benefits.",
@@ -2713,12 +2008,8 @@
   {
     "title": "Prompt Caching via Exact Prefix Preservation",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Michael Bolin (OpenAI Codex)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Michael Bolin (OpenAI Codex)"],
     "category": "Context & Memory",
     "source": "https://openai.com/index/unrolling-the-codex-agent-loop/",
     "tags": [
@@ -2739,9 +2030,7 @@
   {
     "title": "Recursive Best-of-N Delegation",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Labruno (GitHub)",
       "Daytona RLM Guide",
@@ -2770,19 +2059,11 @@
   {
     "title": "Reflection Loop",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Shinn et al. (2023)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Shinn et al. (2023)"],
     "category": "Feedback Loops",
     "source": "https://arxiv.org/abs/2303.11366",
-    "tags": [
-      "self-feedback",
-      "iterative-improvement",
-      "evaluation"
-    ],
+    "tags": ["self-feedback", "iterative-improvement", "evaluation"],
     "slug": "reflection",
     "id": "reflection-loop",
     "summary": "Generative models may produce subpar output if they never review or critique their own work.",
@@ -2792,12 +2073,8 @@
   {
     "title": "Reliability Problem Map Checklist for RAG and Agents",
     "status": "proposed",
-    "authors": [
-      "PSBigBig (@onestardao)"
-    ],
-    "based_on": [
-      "WFGY Problem Map (@onestardao)"
-    ],
+    "authors": ["PSBigBig (@onestardao)"],
+    "based_on": ["WFGY Problem Map (@onestardao)"],
     "category": "Reliability & Eval",
     "source": "https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md",
     "tags": [
@@ -2818,13 +2095,8 @@
   {
     "title": "Rich Feedback Loops > Perfect Prompts",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Thorsten Ball",
-      "Quinn Slack"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Thorsten Ball", "Quinn Slack"],
     "category": "Feedback Loops",
     "source": "https://www.nibzard.com/ampcode",
     "tags": [
@@ -2844,13 +2116,8 @@
   {
     "title": "RLAIF (Reinforcement Learning from AI Feedback)",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic",
-      "Google DeepMind"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic", "Google DeepMind"],
     "category": "Reliability & Eval",
     "source": "https://arxiv.org/abs/2212.08073",
     "tags": [
@@ -2871,12 +2138,8 @@
   {
     "title": "Sandboxed Tool Authorization",
     "status": "validated-in-production",
-    "authors": [
-      "Clawdbot Contributors"
-    ],
-    "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
-    ],
+    "authors": ["Clawdbot Contributors"],
+    "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
     "category": "Security & Safety",
     "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts",
     "tags": [
@@ -2896,12 +2159,8 @@
   {
     "title": "Schema Validation Retry with Cross-Step Learning",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Hyperbrowser Team (@hyperbrowserai)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Hyperbrowser Team (@hyperbrowserai)"],
     "category": "Reliability & Eval",
     "source": "https://github.com/hyperbrowserai/HyperAgent",
     "tags": [
@@ -2921,12 +2180,8 @@
   {
     "title": "Seamless Background-to-Foreground Handoff",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Aman Sanger (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Aman Sanger (Cursor)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -2946,22 +2201,11 @@
   {
     "title": "Self-Critique Evaluator Loop",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Meta AI (Self-Taught Evaluators)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Meta AI (Self-Taught Evaluators)"],
     "category": "Feedback Loops",
     "source": "https://arxiv.org/abs/2408.02666",
-    "tags": [
-      "self-critique",
-      "evaluator",
-      "reward-model",
-      "synthetic-data",
-      "reflexion",
-      "rlaif"
-    ],
+    "tags": ["self-critique", "evaluator", "reward-model", "synthetic-data", "reflexion", "rlaif"],
     "slug": "self-critique-evaluator-loop",
     "id": "self-critique-evaluator-loop",
     "summary": "Human labeled preference datasets are expensive to produce, slow to refresh, and quickly stale as base models and domains change.",
@@ -2971,13 +2215,8 @@
   {
     "title": "Self-Discover: LLM Self-Composed Reasoning Structures",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Google DeepMind",
-      "USC"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Google DeepMind", "USC"],
     "category": "Feedback Loops",
     "source": "https://arxiv.org/abs/2402.03620",
     "tags": [
@@ -2997,12 +2236,8 @@
   {
     "title": "Self-Identity Accumulation",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Claude Code Hooks System"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Claude Code Hooks System"],
     "category": "Context & Memory",
     "source": "https://docs.anthropic.com/en/docs/claude-code/hooks",
     "tags": [
@@ -3024,20 +2259,11 @@
   {
     "title": "Self-Rewriting Meta-Prompt Loop",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Noah D. Goodman (Meta-Prompt)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Noah D. Goodman (Meta-Prompt)"],
     "category": "Orchestration & Control",
     "source": "https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving",
-    "tags": [
-      "meta-prompting",
-      "self-improvement",
-      "system-prompt",
-      "reflection"
-    ],
+    "tags": ["meta-prompting", "self-improvement", "system-prompt", "reflection"],
     "slug": "self-rewriting-meta-prompt-loop",
     "id": "self-rewriting-meta-prompt-loop",
     "summary": "Static system prompts become stale or overly brittle as an agent encounters new tasks and edge cases.",
@@ -3047,20 +2273,11 @@
   {
     "title": "Semantic Context Filtering Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Hyperbrowser Team (@hyperbrowserai)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Hyperbrowser Team (@hyperbrowserai)"],
     "category": "Context & Memory",
     "source": "https://github.com/hyperbrowserai/HyperAgent",
-    "tags": [
-      "context-filtering",
-      "token-optimization",
-      "semantic-extraction",
-      "noise-reduction"
-    ],
+    "tags": ["context-filtering", "token-optimization", "semantic-extraction", "noise-reduction"],
     "slug": "semantic-context-filtering",
     "id": "semantic-context-filtering-pattern",
     "summary": "Raw data sources are too verbose and noisy for effective LLM consumption.",
@@ -3070,12 +2287,8 @@
   {
     "title": "Shell Command Contextualization",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (via Claude Code)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (via Claude Code)"],
     "category": "Tool Use & Environment",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -3095,12 +2308,8 @@
   {
     "title": "Shipping as Research",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "AMP (Thorsten Ball, Quinn Slack)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["AMP (Thorsten Ball, Quinn Slack)"],
     "category": "Learning & Adaptation",
     "source": "https://www.youtube.com/watch?v=4rx36wc9ugw",
     "tags": [
@@ -3121,14 +2330,8 @@
   {
     "title": "Skill Library Evolution",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Anthropic Engineering Team",
-      "Will Larson (Imprint)",
-      "Amp (Nicolay)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Anthropic Engineering Team", "Will Larson (Imprint)", "Amp (Nicolay)"],
     "category": "Learning & Adaptation",
     "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
     "tags": [
@@ -3151,13 +2354,8 @@
   {
     "title": "Soulbound Identity Verification",
     "status": "emerging",
-    "authors": [
-      "Eiji Motomura (@EijiAC24)"
-    ],
-    "based_on": [
-      "ERC-5192 Soulbound Tokens",
-      "Chitin (example implementation)"
-    ],
+    "authors": ["Eiji Motomura (@EijiAC24)"],
+    "based_on": ["ERC-5192 Soulbound Tokens", "Chitin (example implementation)"],
     "category": "Security & Safety",
     "source": "https://eips.ethereum.org/EIPS/eip-5192",
     "tags": [
@@ -3177,19 +2375,11 @@
   {
     "title": "Spec-As-Test Feedback Loop",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Jory Pestorious"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Jory Pestorious"],
     "category": "Feedback Loops",
     "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
-    "tags": [
-      "validation",
-      "drift-detection",
-      "continuous-testing"
-    ],
+    "tags": ["validation", "drift-detection", "continuous-testing"],
     "slug": "spec-as-test-feedback-loop",
     "id": "spec-as-test-feedback-loop",
     "summary": "Even in spec first projects, implementations can drift as code evolves and the spec changes (or vice versa).",
@@ -3199,35 +2389,22 @@
   {
     "title": "Specification-Driven Agent Development",
     "status": "proposed",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Jory Pestorious (AI Engineer World's Fair 2025)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Jory Pestorious (AI Engineer World's Fair 2025)"],
     "category": "Orchestration & Control",
     "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
-    "tags": [
-      "spec-first",
-      "scaffolding",
-      "contract",
-      "requirements"
-    ],
+    "tags": ["spec-first", "scaffolding", "contract", "requirements"],
     "slug": "specification-driven-agent-development",
     "id": "specification-driven-agent-development",
     "summary": "Hand crafted prompts or loose user stories leave room for ambiguity; agents can wander, over interpret, or produce code that conflicts with stakeholder intent.",
-    "updated_at": "2026-03-10",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent."
   },
   {
     "title": "Spectrum of Control / Blended Initiative",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Aman Sanger (Cursor)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Aman Sanger (Cursor)"],
     "category": "UX & Collaboration",
     "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
     "tags": [
@@ -3247,9 +2424,7 @@
   {
     "title": "Static Service Manifest for Agents",
     "status": "emerging",
-    "authors": [
-      "Clawdia (@OzorOwn)"
-    ],
+    "authors": ["Clawdia (@OzorOwn)"],
     "based_on": [
       "llms.txt community specification",
       "OpenAI ChatGPT Plugin manifest (ai-plugin.json)"
@@ -3274,9 +2449,7 @@
   {
     "title": "Stop Hook Auto-Continue Pattern",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Boris Cherny (Anthropic)",
       "Reflexion (Shinn et al., NeurIPS 2023)",
@@ -3301,12 +2474,8 @@
   {
     "title": "Structured Output Specification",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Vercel AI Team"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Vercel AI Team"],
     "category": "Reliability & Eval",
     "source": "https://vercel.com/blog/what-we-learned-building-agents-at-vercel",
     "tags": [
@@ -3326,14 +2495,8 @@
   {
     "title": "Sub-Agent Spawning",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Quinn Slack",
-      "Thorsten Ball",
-      "Will Larson (lethain.com)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"],
     "category": "Orchestration & Control",
     "source": "https://www.nibzard.com/ampcode",
     "tags": [
@@ -3355,21 +2518,14 @@
   {
     "title": "Subagent Compilation Checker",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Anonymous Speaker (Open Source Agent RL Talk)",
       "Will Brown (Prime Intellect Talk)"
     ],
     "category": "Reliability & Eval",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "subagent",
-      "compilation",
-      "modularity",
-      "error-isolation"
-    ],
+    "tags": ["subagent", "compilation", "modularity", "error-isolation"],
     "slug": "subagent-compilation-checker",
     "id": "subagent-compilation-checker",
     "summary": "Large coding tasks often involve multiple independent components (e.g., microservices, libraries).",
@@ -3379,22 +2535,11 @@
   {
     "title": "Subject Hygiene for Task Delegation",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"],
     "category": "Orchestration & Control",
     "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
-    "tags": [
-      "subagents",
-      "delegation",
-      "traceability",
-      "naming",
-      "clarity",
-      "anti-pattern"
-    ],
+    "tags": ["subagents", "delegation", "traceability", "naming", "clarity", "anti-pattern"],
     "slug": "subject-hygiene",
     "id": "subject-hygiene-for-task-delegation",
     "summary": "When delegating work to subagents via the Task tool, empty or generic task subjects make conversations: Untraceable : Cannot identify what a subagent was working on Unreferencable : Cannot discuss specific subagent work later Confusing : Multiple subagents with empty subjects are indistinguishable From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point.",
@@ -3404,13 +2549,8 @@
   {
     "title": "Swarm Migration Pattern",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (Anthropic)",
-      "Anthropic Internal Users"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (Anthropic)", "Anthropic Internal Users"],
     "category": "Orchestration & Control",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -3431,13 +2571,8 @@
   {
     "title": "Team-Shared Agent Configuration as Code",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (Anthropic)",
-      "Enterprise Claude Code Users"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (Anthropic)", "Enterprise Claude Code Users"],
     "category": "UX & Collaboration",
     "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
@@ -3457,9 +2592,7 @@
   {
     "title": "Three-Stage Perception Architecture",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Sense-Plan-Act (Robotics)",
       "ReAct Pattern (Yao et al. 2022)",
@@ -3467,14 +2600,7 @@
     ],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2210.03629",
-    "tags": [
-      "architecture",
-      "perception",
-      "processing",
-      "action",
-      "pipeline",
-      "modular-design"
-    ],
+    "tags": ["architecture", "perception", "processing", "action", "pipeline", "modular-design"],
     "slug": "three-stage-perception-architecture",
     "id": "three-stage-perception-architecture",
     "summary": "Complex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action.",
@@ -3484,19 +2610,11 @@
   {
     "title": "Tool Capability Compartmentalization",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Simon Willison (MCP critique)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Simon Willison (MCP critique)"],
     "category": "Orchestration & Control",
     "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
-    "tags": [
-      "capability-segregation",
-      "least-privilege",
-      "tool-permissions"
-    ],
+    "tags": ["capability-segregation", "least-privilege", "tool-permissions"],
     "slug": "tool-capability-compartmentalization",
     "id": "tool-capability-compartmentalization",
     "summary": "Model Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators).",
@@ -3506,12 +2624,8 @@
   {
     "title": "Tool Search Lazy Loading",
     "status": "emerging",
-    "authors": [
-      "Niko"
-    ],
-    "based_on": [
-      "Thariq (@trq212) - Anthropic"
-    ],
+    "authors": ["Niko"],
+    "based_on": ["Thariq (@trq212) - Anthropic"],
     "category": "Context & Memory",
     "source": "https://x.com/trq212/status/2011523109871108570",
     "tags": [
@@ -3534,39 +2648,23 @@
       "Tool descriptions consuming >10% of context window",
       "Multiple MCP servers enabled simultaneously"
     ],
-    "anti_signals": [
-      "Single tool or small tool sets",
-      "Tools always needed in every interaction"
-    ],
-    "prerequisites": [
-      "MCP server implementation",
-      "Search infrastructure for tool metadata"
-    ],
+    "anti_signals": ["Single tool or small tool sets", "Tools always needed in every interaction"],
+    "prerequisites": ["MCP server implementation", "Search infrastructure for tool metadata"],
     "related": [
       "context-minimization-pattern",
       "progressive-tool-discovery",
       "dynamic-context-injection"
     ],
-    "anti_patterns": [
-      "preload-all-tools"
-    ],
-    "tools": [
-      "mcp-servers",
-      "tool-search-api"
-    ],
-    "domains": [
-      "tool-use",
-      "context-optimization"
-    ],
+    "anti_patterns": ["preload-all-tools"],
+    "tools": ["mcp-servers", "tool-search-api"],
+    "domains": ["tool-use", "context-optimization"],
     "updated_at": "2026-01-14",
     "excerpt": "\n## Problem\nAs the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools that consume significant context space. Documented setups with 7+ servers have been documented consuming 67k+ tokens just for tool descriptions. This creates a fundamental scalability issue:\n\n* **Context bloat**: Preloading all tool descriptions consumes tokens that could be used for the actual task\n* **Latency**: More tools means more processing overhead on every request\n* **Discovery challenges**: Agents must scan through many irrelevant tools to find relevant ones\n* **Memory pressure**: Large tool catalogs can exceed practical context limits"
   },
   {
     "title": "Tool Selection Guide",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
     "based_on": [
       "Analysis of 88 Claude conversation sessions (nibzard-web, skills-marketplace, awesome-agentic-patterns, marginshot, 2025-intro-swe)"
     ],
@@ -3590,20 +2688,11 @@
   {
     "title": "Tool Use Incentivization via Reward Shaping",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Brown (Prime Intellect Talk)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Brown (Prime Intellect Talk)"],
     "category": "Feedback Loops",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
-    "tags": [
-      "tool-use",
-      "reward-shaping",
-      "coding-agent",
-      "RL"
-    ],
+    "tags": ["tool-use", "reward-shaping", "coding-agent", "RL"],
     "slug": "tool-use-incentivization-via-reward-shaping",
     "id": "tool-use-incentivization-via-reward-shaping",
     "summary": "Coding agents often underutilize specialized tools (e.g., compilers, linters, test runners) when left to optimize only for final task success.",
@@ -3613,12 +2702,8 @@
   {
     "title": "Tool Use Steering via Prompting",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (via Claude Code examples)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (via Claude Code examples)"],
     "category": "Tool Use & Environment",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -3632,15 +2717,13 @@
     "slug": "tool-use-steering-via-prompting",
     "id": "tool-use-steering-via-prompting",
     "summary": "AI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively.",
-    "updated_at": "2026-03-10",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nAI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simply having tools available doesn't guarantee they will be used appropriately for the task at hand, especially for tools unfamiliar to the base model or specific to a team's workflow."
   },
   {
     "title": "Transitive Vouch-Chain Trust",
     "status": "emerging",
-    "authors": [
-      "The-Nexus-Guard (@The-Nexus-Guard)"
-    ],
+    "authors": ["The-Nexus-Guard (@The-Nexus-Guard)"],
     "based_on": [
       "Isnad methodology (hadith chain of transmission)",
       "PGP Web of Trust",
@@ -3667,19 +2750,11 @@
   {
     "title": "Tree-of-Thought Reasoning",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Yao et al. (2023)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Yao et al. (2023)"],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2305.10601",
-    "tags": [
-      "branching",
-      "deliberate-reasoning",
-      "search"
-    ],
+    "tags": ["branching", "deliberate-reasoning", "search"],
     "slug": "tree-of-thought-reasoning",
     "id": "tree-of-thought-reasoning",
     "summary": "Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.",
@@ -3689,13 +2764,8 @@
   {
     "title": "Variance-Based RL Sample Selection",
     "status": "validated-in-production",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Theo (OpenAI Solutions Architect)",
-      "Prashant (OpenAI RFT Team)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Theo (OpenAI Solutions Architect)", "Prashant (OpenAI RFT Team)"],
     "category": "Learning & Adaptation",
     "source": "https://youtu.be/1s_7RMG4O4U",
     "tags": [
@@ -3714,12 +2784,8 @@
   {
     "title": "Verbose Reasoning Transparency",
     "status": "best-practice",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Boris Cherny (via Claude Code)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Boris Cherny (via Claude Code)"],
     "category": "UX & Collaboration",
     "source": "https://www.nibzard.com/claude-code",
     "tags": [
@@ -3739,13 +2805,8 @@
   {
     "title": "Versioned Constitution Governance",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Hiveism (self-alignment loop)",
-      "Anthropic (Constitutional AI)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Hiveism (self-alignment loop)", "Anthropic (Constitutional AI)"],
     "category": "Reliability & Eval",
     "source": "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web",
     "tags": [
@@ -3766,20 +2827,11 @@
   {
     "title": "Virtual Machine Operator Agent",
     "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Amjad Masad"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Amjad Masad"],
     "category": "Tool Use & Environment",
     "source": "https://www.nibzard.com/silent-revolution",
-    "tags": [
-      "computer operation",
-      "virtual machine",
-      "execution environment",
-      "agent capability"
-    ],
+    "tags": ["computer operation", "virtual machine", "execution environment", "agent capability"],
     "slug": "virtual-machine-operator-agent",
     "id": "virtual-machine-operator-agent",
     "summary": "AI agents need to perform complex tasks beyond simple code generation or text manipulation.",
@@ -3789,15 +2841,8 @@
   {
     "title": "Visual AI Multimodal Integration",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Andrew Ng",
-      "OpenAI",
-      "Anthropic",
-      "Google"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Andrew Ng", "OpenAI", "Anthropic", "Google"],
     "category": "Tool Use & Environment",
     "source": "https://openai.com/research/gpt-4v-system-card",
     "tags": [
@@ -3817,13 +2862,8 @@
   {
     "title": "Workflow Evals with Mocked Tools",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Will Larson (lethain.com)",
-      "Sierra (chat/voice platform)"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Will Larson (lethain.com)", "Sierra (chat/voice platform)"],
     "category": "Reliability & Eval",
     "source": "https://lethain.com/agents-evals/",
     "tags": [
@@ -3844,12 +2884,8 @@
   {
     "title": "Working Memory via TodoWrite",
     "status": "emerging",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Analysis of 88 Claude conversation sessions"
-    ],
+    "authors": ["Nikola Balic (@nibzard)"],
+    "based_on": ["Analysis of 88 Claude conversation sessions"],
     "category": "Context & Memory",
     "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
     "tags": [
@@ -3870,12 +2906,8 @@
   {
     "title": "Workspace-Native Multi-Agent Orchestration",
     "status": "emerging",
-    "authors": [
-      "John Xie (@johnxie)"
-    ],
-    "based_on": [
-      "Taskade AI Agents (example implementation)"
-    ],
+    "authors": ["John Xie (@johnxie)"],
+    "based_on": ["Taskade AI Agents (example implementation)"],
     "category": "Orchestration & Control",
     "source": "https://taskade.com/agents",
     "tags": [
@@ -3898,9 +2930,7 @@
   {
     "title": "Zero-Trust Agent Mesh",
     "status": "established",
-    "authors": [
-      "Imran Siddique (@imran-siddique)"
-    ],
+    "authors": ["Imran Siddique (@imran-siddique)"],
     "based_on": [
       "NIST SP 800-207 (Zero Trust Architecture)",
       "SPIFFE/SPIRE identity concepts",

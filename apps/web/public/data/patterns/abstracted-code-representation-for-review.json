@@ -1,12 +1,8 @@
 {
   "title": "Abstracted Code Representation for Review",
   "status": "proposed",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Aman Sanger (Cursor, referencing Michael Grinich)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Aman Sanger (Cursor, referencing Michael Grinich)"],
   "category": "UX & Collaboration",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

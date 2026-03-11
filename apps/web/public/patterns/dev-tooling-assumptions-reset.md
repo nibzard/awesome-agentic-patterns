@@ -1,11 +1,12 @@
 ---
-title: "Dev Tooling Assumptions Reset"
+title: 'Dev Tooling Assumptions Reset'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
-category: "UX & Collaboration"
-source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
-tags: [dev-tools, assumptions, github, tickets, code-review, tooling, agent-workflows, paradigm-shift]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack)']
+category: 'UX & Collaboration'
+source: 'https://www.youtube.com/watch?v=2wjnV6F2arc'
+tags:
+  [dev-tools, assumptions, github, tickets, code-review, tooling, agent-workflows, paradigm-shift]
 ---
 
 ## Problem
@@ -59,6 +60,7 @@ graph TD
 **The ticket example:**
 
 **Old world (human writes code):**
+
 1. Bug reported
 2. Developer is busy, working on something else
 3. Create ticket for next sprint
@@ -67,6 +69,7 @@ graph TD
 6. Developer fixes bug
 
 **New world (agent writes code):**
+
 1. Bug reported
 2. Send agent immediately to investigate
 3. Agent diagnoses and fixes in same time it would take to create a ticket
@@ -76,25 +79,27 @@ graph TD
 **The code review example:**
 
 GitHub features assume changes are valuable:
+
 - Emoji reactions (❤️ 😃)
 - Assigning reviewers
 - Careful consideration before merging
 
 But when agents write 90% of code:
+
 > "The perceived value of a given change is completely different because you can actually say to the agent, 'You're completely wrong. Ask your agent friend to spin up another chain. Make 10 variations of this.'"
 
 ## How to use it
 
 **Audit your tools for outdated assumptions:**
 
-| Tool Feature | Old Assumption | New Reality | What Changes |
-|--------------|----------------|-------------|--------------|
-| **Linear tickets** | Developers busy, queue work | Unlimited agents | Send immediately, no ticket |
-| **PR reviews** | Humans careful with changes | Changes cheap | Auto-merge with testing |
-| **Emoji reactions** | Social bonding around code | Code is commodity | Remove or repurpose |
-| **Branching** | Careful isolation | Parallel generation | Direct to main or feature flags |
-| **Code ownership** | Humans maintain areas | Agents know everything | Dynamic ownership |
-| **Sprint planning** | Humans have limited capacity | Agents scale infinitely | Continuous flow |
+| Tool Feature        | Old Assumption               | New Reality             | What Changes                    |
+| ------------------- | ---------------------------- | ----------------------- | ------------------------------- |
+| **Linear tickets**  | Developers busy, queue work  | Unlimited agents        | Send immediately, no ticket     |
+| **PR reviews**      | Humans careful with changes  | Changes cheap           | Auto-merge with testing         |
+| **Emoji reactions** | Social bonding around code   | Code is commodity       | Remove or repurpose             |
+| **Branching**       | Careful isolation            | Parallel generation     | Direct to main or feature flags |
+| **Code ownership**  | Humans maintain areas        | Agents know everything  | Dynamic ownership               |
+| **Sprint planning** | Humans have limited capacity | Agents scale infinitely | Continuous flow                 |
 
 **New tooling principles:**
 
@@ -111,6 +116,7 @@ When agents generate code continuously, you don't have discrete changes—you ha
 > "If you have in your words, Quinn, like the primordial soup of agents and code that's always bubbling and brewing and generating new code...I don't think the given tools are going to cut it."
 
 This requires new mental models and new interfaces:
+
 - Not linear tickets, but continuous streams
 - Not PR reviews, but automated quality gates
 - Not sprint planning, but real-time prioritization
@@ -152,5 +158,5 @@ This requires new mental models and new interfaces:
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Factory over Assistant](factory-over-assistant.md), [Codebase Optimization for Agents](codebase-optimization-for-agents.md)
+- [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Factory over Assistant](factory-over-assistant.md), [Codebase Optimization for Agents](codebase-optimization-for-agents.md)

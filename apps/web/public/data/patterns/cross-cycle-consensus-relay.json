@@ -1,12 +1,8 @@
 {
   "title": "Cross-Cycle Consensus Relay",
   "status": "emerging",
-  "authors": [
-    "Nikita Dmitrieff (@NikitaDmitrieff)"
-  ],
-  "based_on": [
-    "auto-co autonomous AI company framework"
-  ],
+  "authors": ["Nikita Dmitrieff (@NikitaDmitrieff)"],
+  "based_on": ["auto-co autonomous AI company framework"],
   "category": "Orchestration & Control",
   "source": "https://github.com/NikitaDmitrieff/auto-co-meta",
   "tags": [

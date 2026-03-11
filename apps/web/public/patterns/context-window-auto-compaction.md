@@ -1,11 +1,24 @@
 ---
-title: "Context Window Auto-Compaction"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)", "Pi Coding Agent (@mariozechner/pi-coding-agent)", "Michael Bolin (OpenAI Codex)"]
-category: "Context & Memory"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts"
-tags: [context-management, compaction, overflow-recovery, token-estimation, transcript-validation, api-compaction]
+title: 'Context Window Auto-Compaction'
+status: 'validated-in-production'
+authors: ['Clawdbot Contributors']
+based_on:
+  [
+    'Clawdbot Implementation (https://github.com/clawdbot/clawdbot)',
+    'Pi Coding Agent (@mariozechner/pi-coding-agent)',
+    'Michael Bolin (OpenAI Codex)',
+  ]
+category: 'Context & Memory'
+source: 'https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts'
+tags:
+  [
+    context-management,
+    compaction,
+    overflow-recovery,
+    token-estimation,
+    transcript-validation,
+    api-compaction,
+  ]
 ---
 
 ## Problem
@@ -58,9 +71,8 @@ async function compactEmbeddedPiSession(params: {
   });
 
   // 3. Model-specific validation
-  const validated = provider === "anthropic"
-    ? validateAnthropicTurns(prior)
-    : validateGeminiTurns(prior);
+  const validated =
+    provider === 'anthropic' ? validateAnthropicTurns(prior) : validateGeminiTurns(prior);
 
   // 4. Compact the session
   const result = await session.compact(customInstructions);
@@ -74,7 +86,7 @@ async function compactEmbeddedPiSession(params: {
     }
     // Sanity check: tokensAfter should be less than tokensBefore
     if (tokensAfter > result.tokensBefore) {
-      tokensAfter = undefined;  // Don't trust the estimate
+      tokensAfter = undefined; // Don't trust the estimate
     }
   } catch {
     tokensAfter = undefined;
@@ -136,6 +148,7 @@ currentMessages = compacted.items;
 ```
 
 This approach has advantages:
+
 - **Preserves latent understanding**: The `encrypted_content` maintains the model's compressed representation of the original conversation
 - **More efficient**: Server-side compaction is faster than client-side summarization
 - **Auto-compaction**: Can trigger automatically when `auto_compact_limit` is exceeded
@@ -149,8 +162,9 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
   const globalLane = resolveGlobalLane(params.lane);
 
   return enqueueCommandInLane(sessionLane, () =>
-    enqueueCommandInLane(globalLane, () =>
-      compactEmbeddedPiSessionDirect(params)  // Core compaction logic
+    enqueueCommandInLane(
+      globalLane,
+      () => compactEmbeddedPiSessionDirect(params) // Core compaction logic
     )
   );
 }

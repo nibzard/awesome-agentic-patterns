@@ -154,11 +154,18 @@ const formatDate = (value?: string) =>
       <div class="home-hero-copy">
         <h1 class="home-title">Patterns for teams shipping AI agents.</h1>
         <p class="home-subtitle">
-          A curated reference for orchestration, safety, memory, evals, and human control. Built
-          to help you choose the operating model before the implementation becomes expensive.
+          A curated reference for orchestration, safety, memory, evals, and human control. Built to
+          help you choose the operating model before the implementation becomes expensive.
         </p>
         <div class="home-hero-actions">
-          <a href="/patterns" class="button button--primary">Browse Patterns</a>
+          <a
+            href="https://github.com/nibzard/awesome-agentic-patterns/issues"
+            class="button button--primary"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Contribute Pattern ↗
+          </a>
           <a href="/decision" class="button button--secondary">Find the Right Starting Point</a>
         </div>
       </div>
@@ -210,22 +217,26 @@ const formatDate = (value?: string) =>
         <h3>Reference material should help you make decisions, not just collect examples.</h3>
         <ul class="home-principles">
           <li>Bias toward patterns with operational consequences and real trade-offs.</li>
-          <li>Separate architecture, reliability, and safety instead of flattening them into tags.</li>
+          <li>
+            Separate architecture, reliability, and safety instead of flattening them into tags.
+          </li>
           <li>Make it easy to move from exploration to a concrete build path.</li>
         </ul>
       </div>
 
       <div class="home-patterns-grid">
-        {featuredPatterns.map((pattern: PatternEntry) => (
-          <PatternCard
-            title={pattern.title}
-            slug={pattern.slug}
-            summary={pattern.summary}
-            status={pattern.status}
-            category={pattern.category}
-            tags={pattern.tags}
-          />
-        ))}
+        {
+          featuredPatterns.map((pattern: PatternEntry) => (
+            <PatternCard
+              title={pattern.title}
+              slug={pattern.slug}
+              summary={pattern.summary}
+              status={pattern.status}
+              category={pattern.category}
+              tags={pattern.tags}
+            />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -264,7 +275,9 @@ const formatDate = (value?: string) =>
             <span class="section-label">Signal</span>
             <h2>What changed recently.</h2>
           </div>
-          <p>Fresh additions and updates stay useful when they are concise, visible, and scannable.</p>
+          <p>
+            Fresh additions and updates stay useful when they are concise, visible, and scannable.
+          </p>
         </div>
 
         <div class="home-signal-grid">
@@ -362,7 +375,7 @@ const formatDate = (value?: string) =>
   .home-title {
     margin-top: var(--spacing-md);
     max-width: 12ch;
-    font-size: clamp(3.2rem, 8vw, 6.4rem);
+    font-size: clamp(2.56rem, 6.4vw, 5.12rem);
   }
 
   .home-subtitle {
@@ -464,7 +477,7 @@ const formatDate = (value?: string) =>
   .home-stat-label {
     display: block;
     margin-top: 0.35rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.82rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -652,6 +665,60 @@ const formatDate = (value?: string) =>
   .home-pattern-item-badge--updated {
     background: rgba(50, 93, 150, 0.12);
     color: var(--color-accent-blue);
+  }
+
+  :root[data-theme='dark'] .home-kicker {
+    color: #d4c9bb;
+  }
+
+  :root[data-theme='dark'] .home-launchpad-card,
+  :root[data-theme='dark'] .home-route-card,
+  :root[data-theme='dark'] .home-stat-strip {
+    background: var(--surface-card);
+    border-color: var(--surface-border-strong);
+  }
+
+  :root[data-theme='dark'] .home-launchpad-card h3,
+  :root[data-theme='dark'] .home-route-card h3 {
+    color: var(--color-text);
+  }
+
+  :root[data-theme='dark'] .home-launchpad-card p,
+  :root[data-theme='dark'] .home-route-card p,
+  :root[data-theme='dark'] .home-route-label {
+    color: var(--text-muted-strong);
+  }
+
+  :root[data-theme='dark'] .home-stat {
+    border-left-color: rgba(104, 84, 69, 0.76);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .home-kicker {
+      color: #d4c9bb;
+    }
+
+    :root:not([data-theme]) .home-launchpad-card,
+    :root:not([data-theme]) .home-route-card,
+    :root:not([data-theme]) .home-stat-strip {
+      background: var(--surface-card);
+      border-color: var(--surface-border-strong);
+    }
+
+    :root:not([data-theme]) .home-launchpad-card h3,
+    :root:not([data-theme]) .home-route-card h3 {
+      color: var(--color-text);
+    }
+
+    :root:not([data-theme]) .home-launchpad-card p,
+    :root:not([data-theme]) .home-route-card p,
+    :root:not([data-theme]) .home-route-label {
+      color: var(--text-muted-strong);
+    }
+
+    :root:not([data-theme]) .home-stat {
+      border-left-color: rgba(104, 84, 69, 0.76);
+    }
   }
 
   .home-dispatch-frame {

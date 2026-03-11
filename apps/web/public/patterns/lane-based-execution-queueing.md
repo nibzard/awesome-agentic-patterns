@@ -1,10 +1,10 @@
 ---
-title: "Lane-Based Execution Queueing"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
-category: "Orchestration & Control"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts"
+title: 'Lane-Based Execution Queueing'
+status: 'validated-in-production'
+authors: ['Clawdbot Contributors']
+based_on: ['Clawdbot Implementation (https://github.com/clawdbot/clawdbot)']
+category: 'Orchestration & Control'
+source: 'https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts'
 tags: [queueing, concurrency, lanes, isolation, parallelism, deadlock-prevention]
 ---
 
@@ -35,8 +35,8 @@ Isolated execution lanes with independent queues and configurable concurrency pe
 ```typescript
 type LaneState = {
   queue: QueueEntry[];
-  active: number;           // Currently running tasks
-  maxConcurrent: number;    // Concurrency limit
+  active: number; // Currently running tasks
+  maxConcurrent: number; // Concurrency limit
   draining: boolean;
 };
 
@@ -50,15 +50,12 @@ function drainLane(lane: string) {
     state.active += 1;
     entry.task().finally(() => {
       state.active -= 1;
-      pump();  // Drain next entry
+      pump(); // Drain next entry
     });
   }
 }
 
-function enqueueCommandInLane<T>(
-  lane: string,
-  task: () => Promise<T>,
-): Promise<T> {
+function enqueueCommandInLane<T>(lane: string, task: () => Promise<T>): Promise<T> {
   return new Promise((resolve, reject) => {
     getLaneState(lane).queue.push({ task, resolve, reject });
     drainLane(lane);
@@ -71,9 +68,7 @@ function enqueueCommandInLane<T>(
 ```typescript
 // Session lane queues a task that itself queues to global lane
 await enqueueCommandInLane(sessionLane, () =>
-  enqueueCommandInLane(globalLane, () =>
-    doBackgroundWork()
-  )
+  enqueueCommandInLane(globalLane, () => doBackgroundWork())
 );
 // Outer promise resolves when inner completes; no circular wait
 ```

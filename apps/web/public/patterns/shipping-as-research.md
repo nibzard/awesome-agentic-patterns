@@ -1,10 +1,10 @@
 ---
-title: "Shipping as Research"
+title: 'Shipping as Research'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
-category: "Learning & Adaptation"
-source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack)']
+category: 'Learning & Adaptation'
+source: 'https://www.youtube.com/watch?v=4rx36wc9ugw'
 tags: [research, experimentation, rapid-iteration, learning, dogfooding, shipping, uncertainty]
 ---
 
@@ -46,17 +46,18 @@ graph TD
 
 **Research mindset vs. Product mindset:**
 
-| Product Mindset | Research Mindset |
-|-----------------|------------------|
-| Ship when polished | Ship to learn |
-| Validate before release | Release to validate |
-| Features must last | Features may die in 3 months |
-| Customer acquisition | Customer learning |
-| Revenue optimization | Insight optimization |
+| Product Mindset         | Research Mindset             |
+| ----------------------- | ---------------------------- |
+| Ship when polished      | Ship to learn                |
+| Validate before release | Release to validate          |
+| Features must last      | Features may die in 3 months |
+| Customer acquisition    | Customer learning            |
+| Revenue optimization    | Insight optimization         |
 
 **Real example from AMP:**
 
 AMP has ripped out multiple features that users loved:
+
 - To-dos
 - Forking
 - Tabs
@@ -92,6 +93,7 @@ shipping_criteria:
 **2. Design for reversibility:**
 
 Build features so they can be easily removed:
+
 - Minimal dependencies
 - Clean interfaces
 - No deep coupling
@@ -100,11 +102,13 @@ Build features so they can be easily removed:
 **3. Communicate the experimental nature:**
 
 Let users know they're part of the research:
+
 > "We're trying this out. We don't know if it'll work. Help us learn."
 
 **4. Measure everything:**
 
 You can't learn without data:
+
 - Usage metrics
 - Success/failure rates
 - User feedback patterns
@@ -170,5 +174,5 @@ If you wait to see what happens before acting, you'll miss the window. The front
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Burn the Boats](burn-the-boats.md), [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)
+- [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Burn the Boats](burn-the-boats.md), [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)

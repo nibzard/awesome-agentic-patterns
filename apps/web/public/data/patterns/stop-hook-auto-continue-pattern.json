@@ -1,9 +1,7 @@
 {
   "title": "Stop Hook Auto-Continue Pattern",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
   "based_on": [
     "Boris Cherny (Anthropic)",
     "Reflexion (Shinn et al., NeurIPS 2023)",

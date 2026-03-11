@@ -1,9 +1,7 @@
 {
   "title": "Memory Reinforcement Learning (MemRL)",
   "status": "proposed",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
   "based_on": [
     "Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian University, MemTensor)"
   ],

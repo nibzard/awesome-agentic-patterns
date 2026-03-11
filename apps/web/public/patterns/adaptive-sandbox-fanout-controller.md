@@ -1,11 +1,12 @@
 ---
-title: "Adaptive Sandbox Fan-Out Controller"
+title: 'Adaptive Sandbox Fan-Out Controller'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Labruno (GitHub)", "Swarm Migration Pattern"]
-category: "Reliability & Eval"
-source: "https://github.com/nibzard/labruno-agent"
-tags: [fan-out, adaptive, parallel-sandboxes, early-stopping, controller, variance, prompt-refinement]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Labruno (GitHub)', 'Swarm Migration Pattern']
+category: 'Reliability & Eval'
+source: 'https://github.com/nibzard/labruno-agent'
+tags:
+  [fan-out, adaptive, parallel-sandboxes, early-stopping, controller, variance, prompt-refinement]
 ---
 
 ## Problem
@@ -20,20 +21,18 @@ Static "N=10 always" policies don't adapt to task difficulty, model variance, or
 
 ## Solution
 
-Add a controller that *adapts fan-out in real time* based on observed signals from early runs.
+Add a controller that _adapts fan-out in real time_ based on observed signals from early runs.
 
 **Core loop:**
 
 1. **Start small:** Launch a small batch (e.g., N=3-5) in parallel
 2. **Early signal sampling:** As soon as the first X runs finish (or after T seconds), compute:
-
    - success rate (exit code / test pass)
    - diversity score (are solutions meaningfully different?)
    - judge confidence / winner margin
    - error clustering (same error everywhere vs varied errors)
 
 3. **Decide next action:**
-
    - **Scale up** if: success rate is good but quality variance is high (you want a better winner)
    - **Stop early** if: judge is confident + tests pass + solutions converge
    - **Refine prompt / spec** if: error clustering is high (everyone fails the same way)
@@ -61,7 +60,7 @@ Use when:
 
 - You're doing "best-of-N codegen + execution" in sandboxes
 - You have cheap objective checks (unit tests, static analysis, schema validation)
-- Latency and cost matter: you want the *minimum N* that achieves reliability
+- Latency and cost matter: you want the _minimum N_ that achieves reliability
 
 Concrete heuristics (example):
 
@@ -86,6 +85,6 @@ Concrete heuristics (example):
 
 ## References
 
-* [Labruno: Scaling number of parallel sandboxes + judging winners (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0)
-* [Labruno (GitHub)](https://github.com/nibzard/labruno-agent)
-* Related patterns: [Swarm Migration Pattern](swarm-migration-pattern.md) (batch tuning, resource caps), [Sub-Agent Spawning](sub-agent-spawning.md) (switch to decomposition when needed)
+- [Labruno: Scaling number of parallel sandboxes + judging winners (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0)
+- [Labruno (GitHub)](https://github.com/nibzard/labruno-agent)
+- Related patterns: [Swarm Migration Pattern](swarm-migration-pattern.md) (batch tuning, resource caps), [Sub-Agent Spawning](sub-agent-spawning.md) (switch to decomposition when needed)

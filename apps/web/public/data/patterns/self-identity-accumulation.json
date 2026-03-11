@@ -1,12 +1,8 @@
 {
   "title": "Self-Identity Accumulation",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Claude Code Hooks System"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Claude Code Hooks System"],
   "category": "Context & Memory",
   "source": "https://docs.anthropic.com/en/docs/claude-code/hooks",
   "tags": [

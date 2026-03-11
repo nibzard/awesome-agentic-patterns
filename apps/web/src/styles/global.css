@@ -15,6 +15,12 @@
   --color-primary-hover: #a83629;
   --color-primary-light: #f2d7d2;
 
+  --surface-card: rgba(255, 250, 242, 0.72);
+  --surface-card-soft: rgba(255, 250, 242, 0.56);
+  --surface-pill: rgba(255, 250, 242, 0.82);
+  --surface-border-strong: rgba(182, 164, 143, 0.48);
+  --text-muted-strong: #655d53;
+
   --color-success: #5d7842;
   --color-warning: #b97823;
   --color-error: #a93b2d;
@@ -63,6 +69,12 @@
   --color-primary-hover: #f18a78;
   --color-primary-light: rgba(236, 116, 95, 0.14);
 
+  --surface-card: rgba(36, 29, 24, 0.94);
+  --surface-card-soft: rgba(40, 32, 26, 0.88);
+  --surface-pill: rgba(44, 35, 29, 0.96);
+  --surface-border-strong: rgba(104, 84, 69, 0.92);
+  --text-muted-strong: #d4c9bb;
+
   --color-success: #8ea76a;
   --color-warning: #d99b42;
   --color-error: #ee8773;
@@ -92,6 +104,12 @@
     --color-primary: #ec745f;
     --color-primary-hover: #f18a78;
     --color-primary-light: rgba(236, 116, 95, 0.14);
+
+    --surface-card: rgba(36, 29, 24, 0.94);
+    --surface-card-soft: rgba(40, 32, 26, 0.88);
+    --surface-pill: rgba(44, 35, 29, 0.96);
+    --surface-border-strong: rgba(104, 84, 69, 0.92);
+    --text-muted-strong: #d4c9bb;
 
     --color-success: #8ea76a;
     --color-warning: #d99b42;
@@ -124,8 +142,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background:
     radial-gradient(circle at top left, rgba(194, 67, 49, 0.14), transparent 24%),
-    radial-gradient(circle at top right, rgba(50, 93, 150, 0.12), transparent 22%),
-    var(--color-bg);
+    radial-gradient(circle at top right, rgba(50, 93, 150, 0.12), transparent 22%), var(--color-bg);
   color: var(--color-text);
 }
 

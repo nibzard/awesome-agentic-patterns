@@ -1,21 +1,11 @@
 {
   "title": "Chain-of-Thought Monitoring & Interruption",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Tanner Jones (Vulcan)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Tanner Jones (Vulcan)"],
   "category": "UX & Collaboration",
   "source": "https://claude.com/blog/building-companies-with-claude-code",
-  "tags": [
-    "monitoring",
-    "intervention",
-    "debugging",
-    "reasoning",
-    "ux"
-  ],
+  "tags": ["monitoring", "intervention", "debugging", "reasoning", "ux"],
   "slug": "chain-of-thought-monitoring-interruption",
   "id": "chain-of-thought-monitoring-interruption",
   "summary": "Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.",

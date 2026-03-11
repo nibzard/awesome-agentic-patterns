@@ -34,8 +34,8 @@ const footerSections = [
     <div class="footer-intro">
       <h2 class="footer-headline">A reference surface for teams building agent products.</h2>
       <p class="footer-copy">
-        Browse patterns, compare trade-offs, and move from first prototype to production-grade
-        agent systems with fewer blind spots.
+        Browse patterns, compare trade-offs, and move from first prototype to production-grade agent
+        systems with fewer blind spots.
       </p>
       <div class="footer-actions">
         <a href="/patterns" class="button button--primary">Browse the Library</a>
@@ -72,8 +72,7 @@ const footerSections = [
 
   <div class="footer-bottom">
     <p class="footer-copyright">
-      &copy; {currentYear} Awesome Agentic Patterns. Built as an open reference for shipping AI
-      agents.
+      &copy; {currentYear} Awesome Agentic Patterns. Built as an open reference for shipping AI agents.
     </p>
   </div>
 </footer>
@@ -82,8 +81,11 @@ const footerSections = [
   .footer {
     margin-top: auto;
     border-top: 1px solid var(--color-divider);
-    background:
-      linear-gradient(180deg, rgba(255, 250, 242, 0.25) 0%, rgba(229, 215, 192, 0.72) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 250, 242, 0.25) 0%,
+      rgba(229, 215, 192, 0.72) 100%
+    );
   }
 
   .footer-container {
@@ -172,6 +174,40 @@ const footerSections = [
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.82rem;
+  }
+
+  :root[data-theme='dark'] .footer {
+    border-top-color: rgba(104, 84, 69, 0.82);
+    background: linear-gradient(180deg, rgba(32, 26, 21, 0.9) 0%, rgba(54, 44, 36, 0.96) 100%);
+  }
+
+  :root[data-theme='dark'] .footer-copy,
+  :root[data-theme='dark'] .footer-inline-link,
+  :root[data-theme='dark'] .footer-section-title,
+  :root[data-theme='dark'] .footer-copyright {
+    color: #d4c9bb;
+  }
+
+  :root[data-theme='dark'] .footer-bottom {
+    border-top-color: rgba(104, 84, 69, 0.76);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .footer {
+      border-top-color: rgba(104, 84, 69, 0.82);
+      background: linear-gradient(180deg, rgba(32, 26, 21, 0.9) 0%, rgba(54, 44, 36, 0.96) 100%);
+    }
+
+    :root:not([data-theme]) .footer-copy,
+    :root:not([data-theme]) .footer-inline-link,
+    :root:not([data-theme]) .footer-section-title,
+    :root:not([data-theme]) .footer-copyright {
+      color: #d4c9bb;
+    }
+
+    :root:not([data-theme]) .footer-bottom {
+      border-top-color: rgba(104, 84, 69, 0.76);
+    }
   }
 
   @media (max-width: 960px) {

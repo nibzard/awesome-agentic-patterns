@@ -1,11 +1,22 @@
 ---
-title: "Codebase Optimization for Agents"
+title: 'Codebase Optimization for Agents'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack, Tim Culverhouse)", "Raising an Agent Podcast"]
-category: "UX & Collaboration"
-source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
-tags: [agent-first, human-dx, regression, optimization, tooling, codebase-design, trade-offs, agent-native, feedback-loops]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack, Tim Culverhouse)', 'Raising an Agent Podcast']
+category: 'UX & Collaboration'
+source: 'https://www.youtube.com/watch?v=2wjnV6F2arc'
+tags:
+  [
+    agent-first,
+    human-dx,
+    regression,
+    optimization,
+    tooling,
+    codebase-design,
+    trade-offs,
+    agent-native,
+    feedback-loops,
+  ]
 ---
 
 ## Problem
@@ -25,6 +36,7 @@ A related problem: even good models struggle without clear feedback loops. When 
 The team built Zveltch (Zig implementation of spelt-check) to make spell-check fast for agents. This actually made the VS Code experience worse for humans. They had a difficult decision: preserve human DX or optimize for agents?
 
 They ultimately chose to optimize for agents, leading to a "snowball effect":
+
 - Agent tooling gets better
 - Humans use agents more
 - Humans use editors less
@@ -53,6 +65,7 @@ graph LR
 **"Welding the agent to the codebase":**
 
 The metaphor of welding means creating tight, automated feedback loops so the agent can:
+
 - Verify its changes work automatically
 - Get clear signals about success/failure
 - Iterate without human intervention
@@ -60,6 +73,7 @@ The metaphor of welding means creating tight, automated feedback loops so the ag
 > "You want to weld the agent to the codebase. You want to make sure that the agent, when you combine it with your codebase, knows exactly how to verify its changes and get feedback and make sure that what it did actually works."
 
 Practical examples:
+
 - **Terminal emulator with screenshot flag**: Added `--capture-to` flag so agent could take screenshots and verify rendering fixes
 - **CLI data-only output**: Created new subcommand that outputs raw data (no UI formatting) so agent can parse results programmatically
 - **Test commands**: Single-command test execution (`pnpm test`) with cached results
@@ -119,6 +133,7 @@ Practical examples:
 The most impactful optimization: build **skills** that encapsulate your codebase's unique operations.
 
 From AMP:
+
 - GCloud skill for log analysis (replaces need for web dashboards)
 - BigQuery skill for data queries
 - Release management skills
@@ -127,6 +142,7 @@ From AMP:
 **5. Agents.md files**
 
 Create `AGENTS.md` or similar documentation that explains:
+
 - How to test the application
 - How to authenticate
 - What feedback mechanisms to use
@@ -134,25 +150,25 @@ Create `AGENTS.md` or similar documentation that explains:
 
 **The "Agent-Native Codebase" Checklist (2026 version of Joel Spolsky's test):**
 
-| Joel's Test (2004) | Agent Test (2026) |
-|-------------------|-------------------|
+| Joel's Test (2004)                      | Agent Test (2026)                          |
+| --------------------------------------- | ------------------------------------------ |
 | Can somebody ship something on day one? | Can an agent ship something in 10 minutes? |
-| One-command dev environment setup | One-command test/verify cycle |
-| Easy to push to production | Easy for agent to deploy and verify |
-| Easy to review code | Easy for agent to self-verify |
-| CI runs tests | CI provides machine-readable feedback |
-| Good documentation | AGENTS.md with workflow instructions |
+| One-command dev environment setup       | One-command test/verify cycle              |
+| Easy to push to production              | Easy for agent to deploy and verify        |
+| Easy to review code                     | Easy for agent to self-verify              |
+| CI runs tests                           | CI provides machine-readable feedback      |
+| Good documentation                      | AGENTS.md with workflow instructions       |
 
 **Decision framework:**
 
 When faced with a choice between human and agent optimization:
 
-| Question | If Yes → | If No → |
-|----------|----------|---------|
-| Do humans use this daily? | Consider hybrid | Optimize for agents |
-| Will agents use this 10x more than humans? | Optimize for agents | Preserve human DX |
-| Is this a core developer workflow? | Hybrid approach | Agent-first |
-| Does this require human judgment? | Human-first | Agent-first |
+| Question                                   | If Yes →            | If No →             |
+| ------------------------------------------ | ------------------- | ------------------- |
+| Do humans use this daily?                  | Consider hybrid     | Optimize for agents |
+| Will agents use this 10x more than humans? | Optimize for agents | Preserve human DX   |
+| Is this a core developer workflow?         | Hybrid approach     | Agent-first         |
+| Does this require human judgment?          | Human-first         | Agent-first         |
 
 **The snowball effect in action:**
 
@@ -201,6 +217,6 @@ Agents excel with simple, reliable, dumb tools. Complex tools designed for human
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Skill Library Evolution](skill-library-evolution.md), [Factory over Assistant](factory-over-assistant.md)
+- [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Skill Library Evolution](skill-library-evolution.md), [Factory over Assistant](factory-over-assistant.md)

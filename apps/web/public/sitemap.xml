@@ -67,7 +67,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings</loc>
@@ -91,7 +91,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</loc>
@@ -243,7 +243,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection</loc>
@@ -423,7 +423,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/plan-then-execute-pattern</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/planner-worker-separation-for-long-running-agents</loc>
@@ -531,7 +531,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/specification-driven-agent-development</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative</loc>
@@ -591,7 +591,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tool-use-steering-via-prompting</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/transitive-vouch-chain-trust</loc>

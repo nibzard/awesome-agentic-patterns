@@ -1,10 +1,10 @@
 ---
-title: "Intelligent Bash Tool Execution"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
-category: "Tool Use & Environment"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts"
+title: 'Intelligent Bash Tool Execution'
+status: 'validated-in-production'
+authors: ['Clawdbot Contributors']
+based_on: ['Clawdbot Implementation (https://github.com/clawdbot/clawdbot)']
+category: 'Tool Use & Environment'
+source: 'https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts'
 tags: [bash, shell, pty, fallback, security, process-management, sandboxing]
 ---
 
@@ -48,7 +48,7 @@ async function runExecProcess(opts: {
 
   if (opts.usePty) {
     try {
-      const { spawn } = await import("@lydell/node-pty");
+      const { spawn } = await import('@lydell/node-pty');
       pty = spawn(shell, [opts.command], {
         cwd: opts.workdir,
         env: opts.env,
@@ -61,7 +61,7 @@ async function runExecProcess(opts: {
       const { child: spawned } = await spawnWithFallback({
         argv: [shell, opts.command],
         options: { cwd: opts.workdir, env: opts.env },
-        fallbacks: [{ label: "no-detach", options: { detached: false } }],
+        fallbacks: [{ label: 'no-detach', options: { detached: false } }],
       });
       child = spawned;
     }
@@ -69,8 +69,8 @@ async function runExecProcess(opts: {
     // Direct exec without PTY
     const { child: spawned } = await spawnWithFallback({
       argv: [shell, opts.command],
-      options: { cwd: opts.workdir, env: opts.env, detached: platform !== "win32" },
-      fallbacks: [{ label: "no-detach", options: { detached: false } }],
+      options: { cwd: opts.workdir, env: opts.env, detached: platform !== 'win32' },
+      fallbacks: [{ label: 'no-detach', options: { detached: false } }],
     });
     child = spawned;
   }
@@ -80,8 +80,8 @@ async function runExecProcess(opts: {
     id: createSessionSlug(),
     command: opts.command,
     pid: child?.pid ?? pty?.pid,
-    aggregated: "",
-    tail: "",
+    aggregated: '',
+    tail: '',
     exited: false,
   };
   addSession(session);
@@ -90,7 +90,7 @@ async function runExecProcess(opts: {
   if (opts.timeoutSec > 0) {
     setTimeout(() => {
       if (!session.exited) {
-        killSession(session);  // SIGTERM then SIGKILL
+        killSession(session); // SIGTERM then SIGKILL
       }
     }, opts.timeoutSec * 1000);
   }
@@ -131,8 +131,8 @@ async function spawnWithFallback(params: {
 ```typescript
 async function executeWithApproval(params: {
   command: string;
-  security: "deny" | "allowlist" | "full";
-  ask: "off" | "on-miss" | "always";
+  security: 'deny' | 'allowlist' | 'full';
+  ask: 'off' | 'on-miss' | 'always';
   agentId: string;
 }): Promise<ExecResult> {
   const approvals = resolveExecApprovals(params.agentId, {
@@ -157,8 +157,8 @@ async function executeWithApproval(params: {
     const approvalId = crypto.randomUUID();
     // Request approval via gateway; wait for decision
     const decision = await requestApproval(approvalId, params.command);
-    if (decision === "deny") {
-      throw new Error("exec denied: user rejected");
+    if (decision === 'deny') {
+      throw new Error('exec denied: user rejected');
     }
   }
 
@@ -194,12 +194,12 @@ function markBackgrounded(session: ProcessSession) {
 
 function killSession(session: ProcessSession) {
   if (session.child) {
-    session.child.kill("SIGTERM");
+    session.child.kill('SIGTERM');
     // Fallback to SIGKILL after grace period
     setTimeout(() => {
       if (!session.exited) {
-        session.child?.kill("SIGKILL");
-        markExited(session, null, "SIGKILL", "failed");
+        session.child?.kill('SIGKILL');
+        markExited(session, null, 'SIGKILL', 'failed');
       }
     }, 1000);
   }

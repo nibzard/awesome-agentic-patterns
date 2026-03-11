@@ -1,20 +1,11 @@
 {
   "title": "Filesystem-Based Agent State",
   "status": "established",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Anthropic Engineering Team"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Anthropic Engineering Team"],
   "category": "Context & Memory",
   "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
-  "tags": [
-    "state-management",
-    "persistence",
-    "resumption",
-    "long-running-tasks"
-  ],
+  "tags": ["state-management", "persistence", "resumption", "long-running-tasks"],
   "slug": "filesystem-based-agent-state",
   "id": "filesystem-based-agent-state",
   "summary": "Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.",

@@ -1,10 +1,10 @@
 ---
 title: Incident-to-Eval Synthesis
 status: emerging
-authors: ["Codex (@openai)"]
-based_on: ["Post-incident learning loops in software and ML operations"]
-category: "Feedback Loops"
-source: "https://sre.google/sre-book/postmortem-culture/"
+authors: ['Codex (@openai)']
+based_on: ['Post-incident learning loops in software and ML operations']
+category: 'Feedback Loops'
+source: 'https://sre.google/sre-book/postmortem-culture/'
 tags: [evals, incidents, reliability, feedback, continuous-improvement]
 ---
 
@@ -17,6 +17,7 @@ Many teams run agent evaluations, but the eval suite drifts away from real failu
 Convert every production incident into one or more executable eval cases, then gate future changes on those cases.
 
 Pattern mechanics:
+
 - Capture incident artifacts: inputs, context, tool traces, outputs, and impact.
 - Normalize sensitive data and derive a minimal reproducible scenario.
 - Encode expected behavior as objective pass/fail criteria.
@@ -45,8 +46,8 @@ if not suite.run(candidate_policy).pass(case.id):
 
 ## Trade-offs
 
-* **Pros:** Aligns evals with real risk and compounds operational learning over time.
-* **Cons:** Adds triage overhead and requires discipline in incident data capture.
+- **Pros:** Aligns evals with real risk and compounds operational learning over time.
+- **Cons:** Adds triage overhead and requires discipline in incident data capture.
 
 ## References
 

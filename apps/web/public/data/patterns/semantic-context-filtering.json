@@ -1,20 +1,11 @@
 {
   "title": "Semantic Context Filtering Pattern",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Hyperbrowser Team (@hyperbrowserai)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Hyperbrowser Team (@hyperbrowserai)"],
   "category": "Context & Memory",
   "source": "https://github.com/hyperbrowserai/HyperAgent",
-  "tags": [
-    "context-filtering",
-    "token-optimization",
-    "semantic-extraction",
-    "noise-reduction"
-  ],
+  "tags": ["context-filtering", "token-optimization", "semantic-extraction", "noise-reduction"],
   "slug": "semantic-context-filtering",
   "id": "semantic-context-filtering-pattern",
   "summary": "Raw data sources are too verbose and noisy for effective LLM consumption.",

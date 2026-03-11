@@ -1249,7 +1249,7 @@ function getCategoryColor(category: string): string {
   .graph-stat {
     padding: 0.7rem 0.8rem;
     border-radius: var(--radius-md);
-    background: rgba(255, 250, 242, 0.56);
+    background: var(--surface-card-soft);
   }
 
   .graph-stat-value {
@@ -1262,7 +1262,7 @@ function getCategoryColor(category: string): string {
   .graph-stat-label,
   .graph-kicker {
     display: block;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -1276,7 +1276,7 @@ function getCategoryColor(category: string): string {
   .graph-hero-notes ul {
     margin-top: var(--spacing-md);
     padding-left: 1.1rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     display: grid;
     gap: 0.7rem;
     line-height: 1.7;
@@ -1309,7 +1309,7 @@ function getCategoryColor(category: string): string {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     margin-bottom: var(--spacing-md);
   }
 
@@ -1322,7 +1322,7 @@ function getCategoryColor(category: string): string {
   .filter-hint {
     margin-top: var(--spacing-sm);
     font-size: 0.75rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     line-height: 1.4;
   }
 
@@ -1340,8 +1340,8 @@ function getCategoryColor(category: string): string {
   }
 
   .filter-option:hover {
-    background-color: rgba(255, 250, 242, 0.72);
-    border-color: rgba(182, 164, 143, 0.45);
+    background-color: var(--surface-card);
+    border-color: var(--surface-border-strong);
   }
 
   .filter-option input[type='checkbox'],
@@ -1358,7 +1358,7 @@ function getCategoryColor(category: string): string {
 
   .filter-count {
     font-size: 0.72rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     background-color: rgba(50, 93, 150, 0.08);
     padding: 2px 6px;
     border-radius: 999px;
@@ -1390,7 +1390,7 @@ function getCategoryColor(category: string): string {
     margin-bottom: var(--spacing-md);
     padding: 0.95rem 1.1rem;
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
   }
 
   .graph-svg {
@@ -1417,7 +1417,7 @@ function getCategoryColor(category: string): string {
     border: 1px solid var(--color-border);
     border-radius: 999px;
     font-size: 0.875rem;
-    background-color: rgba(255, 250, 242, 0.72);
+    background-color: var(--surface-card);
     color: var(--color-text);
   }
 
@@ -1428,7 +1428,7 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-search input::placeholder {
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
   }
 
   .graph-search button {
@@ -1440,7 +1440,7 @@ function getCategoryColor(category: string): string {
     border: none;
     font-size: 1.25rem;
     cursor: pointer;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     padding: 4px;
     display: flex;
     align-items: center;
@@ -1456,8 +1456,7 @@ function getCategoryColor(category: string): string {
     border-radius: var(--radius-lg);
     background:
       radial-gradient(circle at 25% 20%, rgba(194, 67, 49, 0.12), transparent 20%),
-      radial-gradient(circle at 75% 10%, rgba(50, 93, 150, 0.12), transparent 24%),
-      #161210;
+      radial-gradient(circle at 75% 10%, rgba(50, 93, 150, 0.12), transparent 24%), #161210;
     overflow: hidden;
     position: relative;
     box-shadow: var(--shadow-md);
@@ -1559,8 +1558,8 @@ function getCategoryColor(category: string): string {
 
   .node-tooltip div {
     padding: var(--spacing-sm);
-    background-color: rgba(255, 250, 242, 0.95);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface-pill);
+    border: 1px solid var(--surface-border-strong);
     border-radius: var(--radius-md);
     font-size: 0.875rem;
     color: var(--color-text);
@@ -1570,7 +1569,7 @@ function getCategoryColor(category: string): string {
   .tooltip-category {
     display: block;
     font-size: 0.75rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     margin-top: var(--spacing-xs);
   }
 
@@ -1584,7 +1583,7 @@ function getCategoryColor(category: string): string {
   .tooltip-summary {
     display: -webkit-box;
     font-size: 0.75rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     margin-top: var(--spacing-xs);
     line-height: 1.4;
     -webkit-line-clamp: 3;
@@ -1602,8 +1601,8 @@ function getCategoryColor(category: string): string {
     right: 20px;
     width: 320px;
     padding: var(--spacing-lg);
-    background-color: rgba(255, 250, 242, 0.96);
-    border: 1px solid var(--color-border);
+    background-color: var(--surface-pill);
+    border: 1px solid var(--surface-border-strong);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     z-index: 10;
@@ -1618,7 +1617,7 @@ function getCategoryColor(category: string): string {
     border: none;
     background: transparent;
     font-size: 1.5rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1649,7 +1648,7 @@ function getCategoryColor(category: string): string {
 
   .detail-summary {
     margin: 0 0 var(--spacing-md);
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     line-height: 1.6;
   }
 
@@ -1665,7 +1664,7 @@ function getCategoryColor(category: string): string {
     border-radius: 999px;
     font-size: 0.72rem;
     background-color: rgba(50, 93, 150, 0.08);
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
   }
 
   .detail-badge--maturity {

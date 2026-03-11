@@ -1,10 +1,10 @@
 ---
 title: Milestone Escrow for Agent Resource Funding
 status: emerging
-authors: ["RioTheGreat-ai (@RioTheGreat-ai)"]
-based_on: ["AgentFund (example implementation)"]
-category: "UX & Collaboration"
-source: "https://github.com/RioTheGreat-ai/agentfund-skill"
+authors: ['RioTheGreat-ai (@RioTheGreat-ai)']
+based_on: ['AgentFund (example implementation)']
+category: 'UX & Collaboration'
+source: 'https://github.com/RioTheGreat-ai/agentfund-skill'
 tags: [resource-funding, escrow, milestones, agent-governance, budget-controls]
 ---
 

@@ -1,22 +1,11 @@
 {
   "title": "Action Caching & Replay Pattern",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Hyperbrowser Team (@hyperbrowserai)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Hyperbrowser Team (@hyperbrowserai)"],
   "category": "Reliability & Eval",
   "source": "https://github.com/hyperbrowserai/HyperAgent",
-  "tags": [
-    "caching",
-    "replay",
-    "regression-testing",
-    "cost-reduction",
-    "deterministic",
-    "xpath"
-  ],
+  "tags": ["caching", "replay", "regression-testing", "cost-reduction", "deterministic", "xpath"],
   "slug": "action-caching-replay",
   "id": "action-caching-replay-pattern",
   "summary": "LLM based agent execution is expensive (both in costs and latency) and non deterministic.",

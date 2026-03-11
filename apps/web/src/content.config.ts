@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const patternStatus = z.enum([
   'proposed',
@@ -27,10 +28,13 @@ const patternComplexity = z.enum(['low', 'medium', 'high', 'very-high']);
 const patternEffort = z.enum(['low', 'medium', 'high', 'very-high']);
 const patternImpact = z.enum(['low', 'medium', 'high', 'transformative']);
 
-// Patterns are loaded from the repository root by page-level loaders, but Astro
-// still needs the schema definition here for type generation and validation.
+// Patterns live in the monorepo root `patterns/` directory. Point Astro's
+// content layer at that source so collection validation matches runtime data.
 const patterns = defineCollection({
-  type: 'content',
+  loader: glob({
+    pattern: '**/*.md',
+    base: '../../patterns',
+  }),
   schema: z.object({
     title: z.string(),
     id: z.string().optional(),

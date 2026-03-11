@@ -1,12 +1,8 @@
 {
   "title": "Burn the Boats",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "AMP (Thorsten Ball, Quinn Slack)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["AMP (Thorsten Ball, Quinn Slack)"],
   "category": "Orchestration & Control",
   "source": "https://www.youtube.com/watch?v=4rx36wc9ugw",
   "tags": [

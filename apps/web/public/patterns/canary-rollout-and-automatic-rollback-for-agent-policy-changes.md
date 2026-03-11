@@ -1,10 +1,10 @@
 ---
 title: Canary Rollout and Automatic Rollback for Agent Policy Changes
 status: established
-authors: ["Codex (@openai)"]
-based_on: ["Canary deployment and SRE rollback practices"]
-category: "Reliability & Eval"
-source: "https://martinfowler.com/bliki/CanaryRelease.html"
+authors: ['Codex (@openai)']
+based_on: ['Canary deployment and SRE rollback practices']
+category: 'Reliability & Eval'
+source: 'https://martinfowler.com/bliki/CanaryRelease.html'
 tags: [canary, rollback, reliability, policy, evaluation]
 ---
 
@@ -17,12 +17,14 @@ Agent behavior changes frequently through prompt updates, tool policies, routing
 Treat agent policy changes like production releases: ship to a small traffic slice first, monitor leading indicators, and auto-rollback when guardrails are breached.
 
 Core components:
+
 - A traffic splitter that routes a fixed percentage to the new policy.
 - A policy version registry with immutable identifiers.
 - Real-time monitors for quality, latency, failure rate, safety flags, and spend.
 - Rollback automation that restores the previous stable policy without manual intervention.
 
 Recommended stages:
+
 1. `1%` traffic canary for fast anomaly detection.
 2. `5-10%` validation phase with stricter thresholds.
 3. `25-50%` soak period for stability under mixed load.
@@ -49,8 +51,8 @@ if monitors.breach(policy.version):
 
 ## Trade-offs
 
-* **Pros:** Limits blast radius and shortens time-to-recovery.
-* **Cons:** Requires release orchestration, richer telemetry, and clear version hygiene.
+- **Pros:** Limits blast radius and shortens time-to-recovery.
+- **Cons:** Requires release orchestration, richer telemetry, and clear version hygiene.
 
 ## References
 

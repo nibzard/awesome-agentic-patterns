@@ -107,7 +107,6 @@ const overviewStats = [
   { value: domainCount, label: 'Domains' },
   { value: fieldTestedCount, label: 'Field-tested' },
 ];
-
 ---
 
 <BaseLayout
@@ -411,7 +410,7 @@ const overviewStats = [
   .patterns-stat {
     padding: 0.65rem 0.8rem;
     border-radius: var(--radius-md);
-    background: rgba(255, 250, 242, 0.56);
+    background: var(--surface-card-soft);
   }
 
   .patterns-stat-value {
@@ -424,7 +423,7 @@ const overviewStats = [
   .patterns-stat-label {
     display: block;
     margin-top: 0.3rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -436,7 +435,7 @@ const overviewStats = [
 
   .patterns-kicker {
     margin: 0;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -476,7 +475,7 @@ const overviewStats = [
 
   .patterns-spotlight-item p {
     margin: 0.35rem 0 0;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.82rem;
   }
 
@@ -550,7 +549,7 @@ const overviewStats = [
 
   .filter-option:hover {
     border-color: rgba(182, 164, 143, 0.5);
-    background: rgba(255, 250, 242, 0.68);
+    background: var(--surface-card-soft);
     color: var(--color-text);
   }
 
@@ -567,7 +566,7 @@ const overviewStats = [
     padding: 0 0.35rem;
     border-radius: 999px;
     background: rgba(50, 93, 150, 0.08);
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.72rem;
     font-weight: 700;
   }
@@ -686,7 +685,6 @@ const overviewStats = [
     .patterns-hero-panel-stats {
       grid-template-columns: 1fr;
     }
-
   }
 </style>
 

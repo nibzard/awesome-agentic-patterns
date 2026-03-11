@@ -1,9 +1,7 @@
 {
   "title": "Recursive Best-of-N Delegation",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
   "based_on": [
     "Labruno (GitHub)",
     "Daytona RLM Guide",

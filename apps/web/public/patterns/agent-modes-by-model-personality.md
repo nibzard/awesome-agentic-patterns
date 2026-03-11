@@ -1,10 +1,10 @@
 ---
-title: "Agent Modes by Model Personality"
+title: 'Agent Modes by Model Personality'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
-category: "Orchestration & Control"
-source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack)']
+category: 'Orchestration & Control'
+source: 'https://www.youtube.com/watch?v=4rx36wc9ugw'
 tags: [model-personality, interaction-modes, multi-model, ux-design, agent-behavior, opus, gpt-52]
 ---
 
@@ -15,6 +15,7 @@ Different AI models have fundamentally different personalities and working style
 ## Solution
 
 Design **different agent modes** optimized for each model's personality rather than forcing all models into a single interaction pattern. Each mode should have its own:
+
 - UI/UX patterns (font, prompt length guidance)
 - Tool configurations
 - Expectation setting
@@ -24,10 +25,10 @@ Design **different agent modes** optimized for each model's personality rather t
 
 **Model personalities identified:**
 
-| Model | Personality | Working Style | Best For |
-|-------|-------------|---------------|----------|
-| **Claude Opus 4.5** | Trigger happy, interactive | Runs commands, asks questions, rapid feedback loops | Quick back-and-forth, interactive tasks |
-| **GPT-5.2** | Lazy, thorough, deep researcher | Goes off for 45+ minutes, researches extensively, comes back with comprehensive results | Well-scoped problems, big tasks, finding information |
+| Model               | Personality                     | Working Style                                                                           | Best For                                             |
+| ------------------- | ------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| **Claude Opus 4.5** | Trigger happy, interactive      | Runs commands, asks questions, rapid feedback loops                                     | Quick back-and-forth, interactive tasks              |
+| **GPT-5.2**         | Lazy, thorough, deep researcher | Goes off for 45+ minutes, researches extensively, comes back with comprehensive results | Well-scoped problems, big tasks, finding information |
 
 ```mermaid
 graph LR
@@ -58,6 +59,7 @@ graph LR
 **Example from AMP:**
 
 AMP created three distinct modes:
+
 - **Smart Mode**: Opus 4.5 for interactive assistant work
 - **Rush Mode**: Haiku for fast, less smart tasks
 - **Deep Mode**: GPT-5.2 for thorough research and autonomous work
@@ -77,12 +79,14 @@ The team explicitly avoids a "model selector" dropdown and instead presents thes
 **When to use each mode:**
 
 **Smart Mode (Opus-like):**
+
 - Quick configuration tasks
 - Debugging with rapid iteration
 - Tasks requiring frequent human feedback
 - "Set up my .zshrc and reload it" style tasks
 
 **Deep Mode (GPT-5.2-like):**
+
 - Well-scoped problems
 - Big tasks with clear requirements
 - Research and information gathering
@@ -123,6 +127,7 @@ feedback: minimal, batched at end
 > "It's all text boxes and it's really hard to convey like expectations in a text box when it's all just a text box."
 
 The fundamental challenge: Different modes require fundamentally different user expectations, but the UI (a text box) looks identical. Solutions:
+
 - Visual differentiation (fonts, colors)
 - Explicit instructions ("minimum 100 words for Deep mode")
 - Mode-specific guidance in the UI
@@ -133,5 +138,5 @@ The fundamental challenge: Different modes require fundamentally different user 
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Oracle and Worker Multi-Model Approach](oracle-and-worker-multi-model.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)
+- [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Oracle and Worker Multi-Model Approach](oracle-and-worker-multi-model.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)

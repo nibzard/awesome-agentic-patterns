@@ -1,9 +1,7 @@
 {
   "title": "Zero-Trust Agent Mesh",
   "status": "established",
-  "authors": [
-    "Imran Siddique (@imran-siddique)"
-  ],
+  "authors": ["Imran Siddique (@imran-siddique)"],
   "based_on": [
     "NIST SP 800-207 (Zero Trust Architecture)",
     "SPIFFE/SPIRE identity concepts",

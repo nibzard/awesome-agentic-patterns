@@ -112,6 +112,7 @@ For the newsletter subscription feature to work, you need to configure the follo
 - `RESEND_API_KEY`: Your Resend API key for newsletter subscriptions
   - Get your API key from: https://resend.com/api-keys
   - Required for the newsletter subscription form to work
+  - The key must have Contacts access, not a send-only restriction
 
 ### Optional
 

@@ -1,11 +1,21 @@
 ---
-title: "Self-Identity Accumulation"
+title: 'Self-Identity Accumulation'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Claude Code Hooks System"]
-category: "Context & Memory"
-source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
-tags: [self-identity, persona, session-hooks, familiarity, cross-session, profile, soul-document, agent-personality]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Claude Code Hooks System']
+category: 'Context & Memory'
+source: 'https://docs.anthropic.com/en/docs/claude-code/hooks'
+tags:
+  [
+    self-identity,
+    persona,
+    session-hooks,
+    familiarity,
+    cross-session,
+    profile,
+    soul-document,
+    agent-personality,
+  ]
 ---
 
 ## Problem
@@ -17,7 +27,7 @@ AI agents lack continuous memory across sessions. Each conversation starts from 
 - **Shallow relationships**: Agent cannot build deeper understanding of user's needs over time
 - **Generic responses**: Without accumulated context, agents default to generic behaviors
 
-While episodic memory systems store past *experiences*, they don't address the need for an evolving *self-identity*—who the agent is in relation to the user.
+While episodic memory systems store past _experiences_, they don't address the need for an evolving _self-identity_—who the agent is in relation to the user.
 
 ## Solution
 
@@ -186,7 +196,7 @@ This document accumulates familiarity across sessions.
 
 ## References
 
-* Based on my personal bot WHO_AM_I system
-* Related: [Dynamic Context Injection](dynamic-context-injection.md), [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), [Filesystem-Based Agent State](filesystem-based-agent-state.md)
+- Based on my personal bot WHO_AM_I system
+- Related: [Dynamic Context Injection](dynamic-context-injection.md), [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 
-- Add at least one public reference link.
+* Add at least one public reference link.

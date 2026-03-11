@@ -1,12 +1,8 @@
 {
   "title": "Distributed Execution with Cloud Workers",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Dexter Horthy (HumanLayer)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Dexter Horthy (HumanLayer)"],
   "category": "Orchestration & Control",
   "source": "https://claude.com/blog/building-companies-with-claude-code",
   "tags": [

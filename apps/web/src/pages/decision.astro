@@ -5,7 +5,10 @@ import questions from '../data/decision-questions.json';
 const initialQuestion = questions[0];
 const decisionStats = [
   { value: `${questions.length}`, label: 'questions' },
-  { value: `${questions.reduce((total, question) => total + question.options.length, 0)}`, label: 'answer paths' },
+  {
+    value: `${questions.reduce((total, question) => total + question.options.length, 0)}`,
+    label: 'answer paths',
+  },
   { value: '3', label: 'recommended patterns' },
 ];
 const initialProgress = (1 / questions.length) * 100;
@@ -66,7 +69,8 @@ const initialProgress = (1 / questions.length) * 100;
             <div>
               <p class="decision-stage-kicker">Route builder</p>
               <p class="decision-stage-copy">
-                Each answer narrows the shortlist and preserves the reasoning behind the recommendation.
+                Each answer narrows the shortlist and preserves the reasoning behind the
+                recommendation.
               </p>
             </div>
             <div class="decision-progress">
@@ -408,7 +412,7 @@ const initialProgress = (1 / questions.length) * 100;
     padding: 1rem 0.95rem;
     border: 1px solid rgba(182, 164, 143, 0.42);
     border-radius: var(--radius-md);
-    background: rgba(255, 250, 242, 0.7);
+    background: var(--surface-card);
     display: grid;
     gap: 0.2rem;
   }
@@ -421,7 +425,7 @@ const initialProgress = (1 / questions.length) * 100;
   }
 
   .decision-guide-label {
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -436,7 +440,7 @@ const initialProgress = (1 / questions.length) * 100;
 
   .decision-kicker {
     margin: 0;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -446,7 +450,7 @@ const initialProgress = (1 / questions.length) * 100;
   .decision-guide-list {
     margin-top: var(--spacing-md);
     padding-left: 1.1rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     display: grid;
     gap: 0.7rem;
     line-height: 1.7;
@@ -465,7 +469,7 @@ const initialProgress = (1 / questions.length) * 100;
     padding: 0.45rem 0.72rem;
     border-radius: 999px;
     border: 1px solid rgba(182, 164, 143, 0.46);
-    background: rgba(255, 250, 242, 0.82);
+    background: var(--surface-pill);
     color: var(--color-text);
     font-size: 0.82rem;
     font-weight: 600;
@@ -552,7 +556,7 @@ const initialProgress = (1 / questions.length) * 100;
     border: 1px solid rgba(182, 164, 143, 0.5);
     border-radius: var(--radius-lg);
     color: var(--color-text);
-    background: rgba(255, 250, 242, 0.72);
+    background: var(--surface-card);
     box-shadow: var(--shadow-sm);
     transition:
       border-color 0.2s ease,
@@ -589,7 +593,7 @@ const initialProgress = (1 / questions.length) * 100;
 
   .option-description {
     font-size: 0.95rem;
-    color: var(--color-text-muted);
+    color: var(--text-muted-strong);
     margin: 0;
     margin-left: 36px;
     line-height: 1.65;
@@ -667,9 +671,9 @@ const initialProgress = (1 / questions.length) * 100;
     align-items: center;
     gap: var(--spacing-md);
     padding: 0.95rem 1rem;
-    background-color: rgba(255, 250, 242, 0.72);
+    background-color: var(--surface-card);
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(182, 164, 143, 0.48);
+    border: 1px solid var(--surface-border-strong);
     font-weight: 600;
     color: var(--color-text);
   }

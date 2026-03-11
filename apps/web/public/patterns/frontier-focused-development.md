@@ -1,11 +1,12 @@
 ---
-title: "Frontier-Focused Development"
+title: 'Frontier-Focused Development'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
-category: "Learning & Adaptation"
-source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
-tags: [frontier, state-of-the-art, model-selection, product-strategy, learning, innovation, no-selector]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack)']
+category: 'Learning & Adaptation'
+source: 'https://www.youtube.com/watch?v=2wjnV6F2arc'
+tags:
+  [frontier, state-of-the-art, model-selection, product-strategy, learning, innovation, no-selector]
 ---
 
 ## Problem
@@ -53,22 +54,22 @@ graph TD
 
 ```yaml
 frontier_test:
-  question_1: "What will we learn from this?"
-  question_2: "Does this push the frontier?"
-  question_3: "Will this still be valuable in 3 months?"
+  question_1: 'What will we learn from this?'
+  question_2: 'Does this push the frontier?'
+  question_3: 'Will this still be valuable in 3 months?'
 
   if_no_to_any: "Don't build it"
-  if_yes_to_all: "Build it"
+  if_yes_to_all: 'Build it'
 ```
 
 **Model strategy:**
 
-| Approach | Problem | Solution |
-|----------|---------|----------|
-| **Model selector** | Users stuck on old models, no learning | Pick best model per mode, no user choice |
-| **Cost optimization** | Solving problems new models solve | Use frontier, cost will drop over time |
-| **Subscription tie-in** | Locked to one model's roadmap | Pay-as-you-go, switch models anytime |
-| **Multi-model support** | Maintenance nightmare, confusion | Use best model, switch when better emerges |
+| Approach                | Problem                                | Solution                                   |
+| ----------------------- | -------------------------------------- | ------------------------------------------ |
+| **Model selector**      | Users stuck on old models, no learning | Pick best model per mode, no user choice   |
+| **Cost optimization**   | Solving problems new models solve      | Use frontier, cost will drop over time     |
+| **Subscription tie-in** | Locked to one model's roadmap          | Pay-as-you-go, switch models anytime       |
+| **Multi-model support** | Maintenance nightmare, confusion       | Use best model, switch when better emerges |
 
 **Why no model selector?**
 
@@ -82,6 +83,7 @@ frontier_test:
 **The risk of subscription models:**
 
 When you offer a subscription (like Claude Max), you become tied to that model:
+
 - Can't switch if a better model emerges
 - Price changes become user-hostile
 - Roadmap decisions dictated by one company
@@ -129,5 +131,5 @@ When everything is in flux—the models, the software, how we write it—optimiz
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md)
+- [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md)

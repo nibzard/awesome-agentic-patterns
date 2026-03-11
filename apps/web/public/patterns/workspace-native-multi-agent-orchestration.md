@@ -1,11 +1,22 @@
 ---
 title: Workspace-Native Multi-Agent Orchestration
 status: emerging
-authors: ["John Xie (@johnxie)"]
-based_on: ["Taskade AI Agents (example implementation)"]
-category: "Orchestration & Control"
-source: "https://taskade.com/agents"
-tags: [multi-agent, orchestration, workflow-automation, workspace, mcp, knowledge-base, persistent-memory, integrations, collaboration]
+authors: ['John Xie (@johnxie)']
+based_on: ['Taskade AI Agents (example implementation)']
+category: 'Orchestration & Control'
+source: 'https://taskade.com/agents'
+tags:
+  [
+    multi-agent,
+    orchestration,
+    workflow-automation,
+    workspace,
+    mcp,
+    knowledge-base,
+    persistent-memory,
+    integrations,
+    collaboration,
+  ]
 ---
 
 ## Problem

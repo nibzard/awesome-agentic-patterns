@@ -32,7 +32,7 @@ from typing import List, Optional, Set, Tuple
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from build_readme import parse_front_matter
+from pattern_metadata import parse_front_matter
 
 
 class Severity(Enum):

@@ -1,16 +1,17 @@
 ---
 title: Working Memory via TodoWrite
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Analysis of 88 Claude conversation sessions"]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Analysis of 88 Claude conversation sessions']
 category: Context & Memory
-source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
+source: 'https://github.com/nibzard/SKILLS-AGENTIC-LESSONS'
 tags: [context, memory, working-memory, state, todo-tracking, dependencies, session-management]
 ---
 
 ## Problem
 
 During complex multi-step tasks, AI agents lose track of:
+
 - What tasks are pending, in progress, or completed
 - Which tasks are blocked by dependencies
 - Verification steps that need to run
@@ -31,12 +32,12 @@ Use `TodoWrite` (or equivalent state externalization) to maintain explicit worki
 
 **Usage patterns from data:**
 
-| Project | TodoWrite Uses | Session Quality |
-|---------|---------------|-----------------|
-| nibzard-web | 52 | High (8 positive, 2 corrections) |
-| awesome-agentic-patterns | 60 | Medium (1 positive, 5 corrections) |
-| marginshot | 36 | No feedback captured |
-| 2025-intro-swe | 0 | Simple work, no need |
+| Project                  | TodoWrite Uses | Session Quality                    |
+| ------------------------ | -------------- | ---------------------------------- |
+| nibzard-web              | 52             | High (8 positive, 2 corrections)   |
+| awesome-agentic-patterns | 60             | Medium (1 positive, 5 corrections) |
+| marginshot               | 36             | No feedback captured               |
+| 2025-intro-swe           | 0              | Simple work, no need               |
 
 **Key insights:**
 
@@ -132,5 +133,5 @@ stateDiagram-v2
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
-* Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Task List Pattern](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/task-lists)
+- [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+- Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Task List Pattern](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/task-lists)

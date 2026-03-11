@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
 
 const patternsDir = path.join(repoRoot, 'patterns');
+const readmePath = path.join(repoRoot, 'README.md');
 const publicDir = path.join(repoRoot, 'apps', 'web', 'public');
 const dataDir = path.join(publicDir, 'data');
 const dataPatternsDir = path.join(dataDir, 'patterns');
@@ -25,6 +26,33 @@ const ASSET_EXTENSIONS = new Set([
   '.svg',
   '.webp',
 ]);
+
+const README_TOC_START = '<!-- AUTO-GENERATED TOC START -->';
+const README_TOC_END = '<!-- AUTO-GENERATED TOC END -->';
+const README_PATTERNS_START = '<!-- AUTO-GENERATED PATTERNS START -->';
+const README_PATTERNS_END = '<!-- AUTO-GENERATED PATTERNS END -->';
+
+const CATEGORY_ORDER = [
+  'Context & Memory',
+  'Feedback Loops',
+  'Learning & Adaptation',
+  'Orchestration & Control',
+  'Reliability & Eval',
+  'Security & Safety',
+  'Tool Use & Environment',
+  'UX & Collaboration',
+] as const;
+
+const CATEGORY_DESCRIPTIONS: Record<string, string> = {
+  'Context & Memory': 'Sliding-window curation, vector cache, episodic memory',
+  'Feedback Loops': 'Compilers, CI, human review, self-healing retries',
+  'Learning & Adaptation': 'Agent RFT, skill libraries, variance-based RL',
+  'Orchestration & Control': 'Task decomposition, sub-agent spawning, tool routing',
+  'Reliability & Eval': 'Guardrails, eval harnesses, logging, reproducibility',
+  'Security & Safety': 'Isolated VMs, PII tokenization, security scanning',
+  'Tool Use & Environment': 'Shell, browser, DB, Playwright, sandbox tricks',
+  'UX & Collaboration': 'Prompt hand-offs, staged commits, async background agents',
+};
 
 interface ParsedPattern {
   title: string;
@@ -60,6 +88,24 @@ function slugify(value: string): string {
     .trim()
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
+}
+
+function replaceBetweenMarkers(
+  source: string,
+  startMarker: string,
+  endMarker: string,
+  replacement: string
+): string {
+  const startIndex = source.indexOf(startMarker);
+  const endIndex = source.indexOf(endMarker);
+
+  if (startIndex === -1 || endIndex === -1 || endIndex < startIndex) {
+    throw new Error(`Could not find README markers: ${startMarker} ... ${endMarker}`);
+  }
+
+  const before = source.slice(0, startIndex + startMarker.length);
+  const after = source.slice(endIndex);
+  return `${before}\n${replacement}\n${after}`;
 }
 
 function toDateString(value: Date): string {
@@ -154,6 +200,81 @@ function parseAllPatterns(): ParsedPattern[] {
     .filter((file) => file.endsWith('.md') && file !== 'TEMPLATE.md');
 
   return files.map((file) => parsePatternFile(path.join(patternsDir, file)));
+}
+
+function groupPatternsByCategory(patterns: ParsedPattern[]): Array<[string, ParsedPattern[]]> {
+  const grouped = new Map<string, ParsedPattern[]>();
+
+  patterns.forEach((pattern) => {
+    const existing = grouped.get(pattern.category) || [];
+    existing.push(pattern);
+    grouped.set(pattern.category, existing);
+  });
+
+  const orderedCategories = [
+    ...CATEGORY_ORDER.filter((category) => grouped.has(category)),
+    ...Array.from(grouped.keys())
+      .filter((category) => !CATEGORY_ORDER.includes(category as (typeof CATEGORY_ORDER)[number]))
+      .sort((a, b) => a.localeCompare(b)),
+  ];
+
+  return orderedCategories.map((category) => [
+    category,
+    (grouped.get(category) || []).sort((a, b) => a.title.localeCompare(b.title)),
+  ]);
+}
+
+function generateReadmeToc(patterns: ParsedPattern[]): string {
+  const lines = [
+    '|  Category                                              |  What you\'ll find                                         |',
+    '| ------------------------------------------------------ | --------------------------------------------------------- |',
+  ];
+
+  groupPatternsByCategory(patterns).forEach(([category]) => {
+    const anchor = slugify(category);
+    const description = CATEGORY_DESCRIPTIONS[category] || 'Patterns in this category';
+    const categoryCell = `[**${category}**](#${anchor})`;
+    lines.push(`| ${categoryCell.padEnd(53)} | ${description.padEnd(57)} |`);
+  });
+
+  return lines.join('\n');
+}
+
+function generateReadmePatternCatalog(patterns: ParsedPattern[]): string {
+  const sections: string[] = [];
+
+  groupPatternsByCategory(patterns).forEach(([category, categoryPatterns], index) => {
+    if (index > 0) {
+      sections.push('');
+    }
+
+    sections.push(`### <a name="${slugify(category)}"></a>${category}`);
+    sections.push('');
+
+    categoryPatterns.forEach((pattern) => {
+      sections.push(`- [${pattern.title}](patterns/${pattern.slug}.md)`);
+    });
+  });
+
+  return sections.join('\n');
+}
+
+function updateReadme(patterns: ParsedPattern[]): void {
+  const currentReadme = fs.readFileSync(readmePath, 'utf-8');
+  const withToc = replaceBetweenMarkers(
+    currentReadme,
+    README_TOC_START,
+    README_TOC_END,
+    generateReadmeToc(patterns)
+  );
+  const withCatalog = replaceBetweenMarkers(
+    withToc,
+    README_PATTERNS_START,
+    README_PATTERNS_END,
+    `\n${generateReadmePatternCatalog(patterns)}\n`
+  );
+
+  fs.writeFileSync(readmePath, withCatalog);
 }
 
 function generateLlmsTxt(patterns: ParsedPattern[]): string {
@@ -367,7 +488,14 @@ function writeOutputs(patterns: ParsedPattern[]): void {
 }
 
 function main(): void {
+  const args = new Set(process.argv.slice(2));
   const patterns = parseAllPatterns().sort((a, b) => a.title.localeCompare(b.title));
+  updateReadme(patterns);
+
+  if (args.has('--readme-only')) {
+    return;
+  }
+
   copyImageAssets();
   writeOutputs(patterns);
 }

@@ -1,13 +1,8 @@
 {
   "title": "Language Agent Tree Search (LATS)",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Zhou et al.",
-    "University of Illinois"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Zhou et al.", "University of Illinois"],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2310.04406",
   "tags": [

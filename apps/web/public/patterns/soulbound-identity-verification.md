@@ -1,10 +1,10 @@
 ---
 title: Soulbound Identity Verification
 status: emerging
-authors: ["Eiji Motomura (@EijiAC24)"]
-based_on: ["ERC-5192 Soulbound Tokens", "Chitin (example implementation)"]
+authors: ['Eiji Motomura (@EijiAC24)']
+based_on: ['ERC-5192 Soulbound Tokens', 'Chitin (example implementation)']
 category: Security & Safety
-source: "https://eips.ethereum.org/EIPS/eip-5192"
+source: 'https://eips.ethereum.org/EIPS/eip-5192'
 tags: [identity, verification, trust, soulbound-token, blockchain, agent-identity]
 ---
 

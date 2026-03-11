@@ -1,13 +1,8 @@
 {
   "title": "Factory over Assistant",
   "status": "validated-in-production",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "AMP (Thorsten Ball, Quinn Slack)",
-    "Raising an Agent Podcast"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"],
   "category": "Orchestration & Control",
   "source": "https://www.youtube.com/watch?v=2wjnV6F2arc",
   "tags": [

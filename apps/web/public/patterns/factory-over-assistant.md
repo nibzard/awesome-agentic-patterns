@@ -1,11 +1,12 @@
 ---
-title: "Factory over Assistant"
+title: 'Factory over Assistant'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"]
-category: "Orchestration & Control"
-source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
-tags: [parallelism, autonomous-agents, factory, assistant, sidebar, orchestration, asynchronous-work]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack)', 'Raising an Agent Podcast']
+category: 'Orchestration & Control'
+source: 'https://www.youtube.com/watch?v=2wjnV6F2arc'
+tags:
+  [parallelism, autonomous-agents, factory, assistant, sidebar, orchestration, asynchronous-work]
 ---
 
 ## Problem
@@ -17,6 +18,7 @@ The "assistant" model—working one-on-one with an agent in a sidebar, watching 
 Shift from the **assistant model** to the **factory model**: spawn multiple autonomous agents that work in parallel, check on them periodically, and focus your time on higher-level orchestration rather than being the feedback loop.
 
 **The factory mindset:**
+
 - Send off multiple agents to work on different tasks
 - Check in on them periodically (30-60 minutes later)
 - Focus on setting up automated feedback loops (tests, builds, skills)
@@ -56,11 +58,11 @@ graph TD
 
 **The evolution:**
 
-| Stage | Model | Human Role | Agent Behavior |
-|-------|-------|------------|----------------|
-| **Past** | Assistant | Watch everything, provide feedback | Frequent check-ins, interactive |
-| **Present** | Hybrid | Set up automated loops | Mixed interactive and autonomous |
-| **Future** | Factory | Orchestrate and review | Fully autonomous, minimal human contact |
+| Stage       | Model     | Human Role                         | Agent Behavior                          |
+| ----------- | --------- | ---------------------------------- | --------------------------------------- |
+| **Past**    | Assistant | Watch everything, provide feedback | Frequent check-ins, interactive         |
+| **Present** | Hybrid    | Set up automated loops             | Mixed interactive and autonomous        |
+| **Future**  | Factory   | Orchestrate and review             | Fully autonomous, minimal human contact |
 
 **Key insight:** With models like GPT-5.2 that can work autonomously for 45+ minutes, watching them in a sidebar is wasteful. You should be able to spawn 10 such agents and check on them all later.
 
@@ -86,6 +88,7 @@ time_distribution:
 **2. Build automated feedback loops:**
 
 Instead of being the feedback loop yourself, set up:
+
 - Test commands that agents run automatically
 - Build commands that verify correctness
 - Skills that encapsulate common operations
@@ -112,6 +115,7 @@ user → spawn(agent1) + spawn(agent2) + spawn(agent3)
 **Practical example from AMP:**
 
 AMP is killing their VS Code extension because they believe:
+
 - The 1% of developers on the frontier only need to do 20% of their work in an editor
 - They aim to get that to 10% or 1%
 - The sidebar is dead for frontier development
@@ -154,6 +158,6 @@ The factory model is why AMP is killing their VS Code extension. The extension o
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Agent Modes by Model Personality](agent-modes-by-model-personality.md), [Rich Feedback Loops](rich-feedback-loops.md)
+- [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Agent Modes by Model Personality](agent-modes-by-model-personality.md), [Rich Feedback Loops](rich-feedback-loops.md)

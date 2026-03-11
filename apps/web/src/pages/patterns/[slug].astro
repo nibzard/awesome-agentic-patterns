@@ -56,7 +56,12 @@ function renderSection(body: string, sectionName: string): string | null {
 
 const sectionDefinitions = [
   { id: 'problem', label: 'Problem', number: '01', html: renderSection(pattern.body, 'Problem') },
-  { id: 'solution', label: 'Solution', number: '02', html: renderSection(pattern.body, 'Solution') },
+  {
+    id: 'solution',
+    label: 'Solution',
+    number: '02',
+    html: renderSection(pattern.body, 'Solution'),
+  },
   {
     id: 'how-to-use-it',
     label: 'How to use it',
@@ -108,12 +113,16 @@ const summaryFacts = [
           <span class="section-label">Pattern Reference</span>
           <span class="pattern-pill pattern-pill--category">{pattern.category}</span>
           <span class="pattern-pill pattern-pill--status">{pattern.status.replace(/-/g, ' ')}</span>
-          {pattern.complexity && (
-            <span class="pattern-pill pattern-pill--neutral">{pattern.complexity}</span>
-          )}
-          {pattern.maturity && (
-            <span class="pattern-pill pattern-pill--neutral">{pattern.maturity}</span>
-          )}
+          {
+            pattern.complexity && (
+              <span class="pattern-pill pattern-pill--neutral">{pattern.complexity}</span>
+            )
+          }
+          {
+            pattern.maturity && (
+              <span class="pattern-pill pattern-pill--neutral">{pattern.maturity}</span>
+            )
+          }
         </div>
 
         <h1>{pattern.title}</h1>
@@ -130,22 +139,28 @@ const summaryFacts = [
       <aside class="pattern-summary-panel surface-panel">
         <p class="pattern-kicker">At a glance</p>
         <div class="pattern-fact-grid">
-          {summaryFacts.map((fact) => (
-            <div class="pattern-fact">
-              <span class="pattern-fact-label">{fact.label}</span>
-              <span class="pattern-fact-value">{fact.value}</span>
-            </div>
-          ))}
+          {
+            summaryFacts.map((fact) => (
+              <div class="pattern-fact">
+                <span class="pattern-fact-label">{fact.label}</span>
+                <span class="pattern-fact-value">{fact.value}</span>
+              </div>
+            ))
+          }
         </div>
 
-        {pattern.tags.length > 0 && (
-          <div class="pattern-tag-cluster">
-            <p class="pattern-kicker">Tags</p>
-            <div class="pattern-tags">
-              {pattern.tags.map((tag) => <span class="tag">{tag}</span>)}
+        {
+          pattern.tags.length > 0 && (
+            <div class="pattern-tag-cluster">
+              <p class="pattern-kicker">Tags</p>
+              <div class="pattern-tags">
+                {pattern.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
       </aside>
     </section>
 
@@ -154,32 +169,38 @@ const summaryFacts = [
         <div class="pattern-nav surface-panel">
           <p class="pattern-kicker">On this page</p>
           <nav aria-label="Pattern sections">
-            {sectionDefinitions.map((section) => (
-              <a href={`#${section.id}`} class="pattern-nav-link">
-                <span class="pattern-nav-number">{section.number}</span>
-                <span>{section.label}</span>
-              </a>
-            ))}
+            {
+              sectionDefinitions.map((section) => (
+                <a href={`#${section.id}`} class="pattern-nav-link">
+                  <span class="pattern-nav-number">{section.number}</span>
+                  <span>{section.label}</span>
+                </a>
+              ))
+            }
           </nav>
         </div>
 
-        {pattern.source && (
-          <div class="pattern-rail-source">
-            <PatternSource source={pattern.source} />
-          </div>
-        )}
+        {
+          pattern.source && (
+            <div class="pattern-rail-source">
+              <PatternSource source={pattern.source} />
+            </div>
+          )
+        }
       </aside>
 
       <article class="pattern-content">
-        {sectionDefinitions.map((section) => (
-          <section id={section.id} class="pattern-section surface-panel">
-            <div class="pattern-section-header">
-              <span class="pattern-section-number">{section.number}</span>
-              <h2>{section.label}</h2>
-            </div>
-            <div class="pattern-section-body" set:html={section.html || ''} />
-          </section>
-        ))}
+        {
+          sectionDefinitions.map((section) => (
+            <section id={section.id} class="pattern-section surface-panel">
+              <div class="pattern-section-header">
+                <span class="pattern-section-number">{section.number}</span>
+                <h2>{section.label}</h2>
+              </div>
+              <div class="pattern-section-body" set:html={section.html || ''} />
+            </section>
+          ))
+        }
       </article>
     </section>
 
@@ -192,29 +213,31 @@ const summaryFacts = [
       />
     </section>
 
-    {(relatedPatterns.length > 0 || antiPatterns.length > 0) && (
-      <section class="pattern-related-grid">
-        {relatedPatterns.length > 0 && (
-          <section class="pattern-related-panel">
-            <div class="pattern-related-header">
-              <span class="section-label">Next Reads</span>
-              <h2>Related patterns</h2>
-            </div>
-            <PatternList patterns={relatedPatterns} />
-          </section>
-        )}
+    {
+      (relatedPatterns.length > 0 || antiPatterns.length > 0) && (
+        <section class="pattern-related-grid">
+          {relatedPatterns.length > 0 && (
+            <section class="pattern-related-panel">
+              <div class="pattern-related-header">
+                <span class="section-label">Next Reads</span>
+                <h2>Related patterns</h2>
+              </div>
+              <PatternList patterns={relatedPatterns} />
+            </section>
+          )}
 
-        {antiPatterns.length > 0 && (
-          <section class="pattern-related-panel">
-            <div class="pattern-related-header">
-              <span class="section-label">Counterpoint</span>
-              <h2>Anti-patterns</h2>
-            </div>
-            <PatternList patterns={antiPatterns} />
-          </section>
-        )}
-      </section>
-    )}
+          {antiPatterns.length > 0 && (
+            <section class="pattern-related-panel">
+              <div class="pattern-related-header">
+                <span class="section-label">Counterpoint</span>
+                <h2>Anti-patterns</h2>
+              </div>
+              <PatternList patterns={antiPatterns} />
+            </section>
+          )}
+        </section>
+      )
+    }
   </div>
 </BaseLayout>
 
@@ -562,6 +585,5 @@ const summaryFacts = [
     .pattern-fact-grid {
       grid-template-columns: 1fr;
     }
-
   }
 </style>

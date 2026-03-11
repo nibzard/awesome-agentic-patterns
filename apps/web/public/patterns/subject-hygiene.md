@@ -1,10 +1,10 @@
 ---
 title: Subject Hygiene for Task Delegation
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)']
 category: Orchestration & Control
-source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
+source: 'https://github.com/nibzard/SKILLS-AGENTIC-LESSONS'
 tags: [subagents, delegation, traceability, naming, clarity, anti-pattern]
 ---
 
@@ -30,12 +30,14 @@ Enforce clear, specific task subjects for every Task tool invocation. A good sub
 **Examples:**
 
 ❌ **Bad subjects:**
+
 - `""` (empty)
 - `"research"`
 - `"explore"`
 - `"task"`
 
 ✅ **Good subjects:**
+
 - `"Explore newsletter component implementation"`
 - `"Search for dark mode patterns in codebase"`
 - `"Analyze error handling in API routes"`
@@ -76,6 +78,7 @@ flowchart LR
 ```
 
 Examples:
+
 - "Explore + newsletter component + implementation details"
 - "Search + codebase + for dark mode patterns"
 - "Analyze + API routes + error handling approach"
@@ -88,6 +91,7 @@ Prevents "Empty Subject Anti-Pattern" which makes conversations untraceable and 
 **Real-world impact:**
 
 From nibzard-web session with 4 parallel subagents:
+
 - agent-a7911db: "Newsletter component exploration"
 - agent-adeac17: "Modal pattern discovery"
 - agent-a03b9c9: "Search implementation research"
@@ -120,5 +124,5 @@ Clear subjects enabled the main agent to synthesize findings from each subagent 
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
-* Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Parallel Tool Call Learning](parallel-tool-call-learning.md)
+- [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+- Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Parallel Tool Call Learning](parallel-tool-call-learning.md)

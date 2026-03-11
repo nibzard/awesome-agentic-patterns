@@ -1,5 +1,7 @@
 # Migration to Git-Based Pattern Labeling
 
+> Historical note: this document describes the pre-Astro README badge pipeline. The current repo uses `scripts/build-data.ts` for generated outputs and no longer includes `scripts/build_readme.py`.
+
 ## Overview
 
 This repository has migrated from manual tracking files to a fully automated git-based pattern labeling system. This document explains the changes and migration process.

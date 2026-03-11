@@ -1,21 +1,11 @@
 {
   "title": "Planner-Worker Separation for Long-Running Agents",
   "status": "emerging",
-  "authors": [
-    "Cursor Team"
-  ],
-  "based_on": [
-    "Cursor Engineering Team"
-  ],
+  "authors": ["Cursor Team"],
+  "based_on": ["Cursor Engineering Team"],
   "category": "Orchestration & Control",
   "source": "https://cursor.com/blog/scaling-agents",
-  "tags": [
-    "multi-agent",
-    "coordination",
-    "long-running",
-    "hierarchical",
-    "parallelism"
-  ],
+  "tags": ["multi-agent", "coordination", "long-running", "hierarchical", "parallelism"],
   "slug": "planner-worker-separation-for-long-running-agents",
   "id": "planner-worker-separation-for-long-running-agents",
   "summary": "Running multiple AI agents in parallel for complex, multi week projects creates significant coordination challenges: Flat structures lead to conflicts, duplicat",

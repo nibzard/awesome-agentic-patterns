@@ -1,10 +1,10 @@
 ---
-title: "Sandboxed Tool Authorization"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
-category: "Security & Safety"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts"
+title: 'Sandboxed Tool Authorization'
+status: 'validated-in-production'
+authors: ['Clawdbot Contributors']
+based_on: ['Clawdbot Implementation (https://github.com/clawdbot/clawdbot)']
+category: 'Security & Safety'
+source: 'https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts'
 tags: [authorization, policy, allowlist, deny-by-default, pattern-matching, subagent-security]
 ---
 
@@ -36,29 +36,29 @@ Pattern-based policies with deny-by-default and inheritance. Tools are authorize
 
 ```typescript
 type CompiledPattern =
-  | { kind: "all" }           // "*" matches everything
-  | { kind: "exact"; value: string }
-  | { kind: "regex"; value: RegExp };
+  | { kind: 'all' } // "*" matches everything
+  | { kind: 'exact'; value: string }
+  | { kind: 'regex'; value: RegExp };
 
 function compilePattern(pattern: string): CompiledPattern {
   const normalized = normalizeToolName(pattern);
-  if (!normalized) return { kind: "exact", value: "" };
-  if (normalized === "*") return { kind: "all" };
-  if (!normalized.includes("*")) return { kind: "exact", value: normalized };
+  if (!normalized) return { kind: 'exact', value: '' };
+  if (normalized === '*') return { kind: 'all' };
+  if (!normalized.includes('*')) return { kind: 'exact', value: normalized };
   // Convert "fs:*" to /^fs:.*$/ regex
-  const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return {
-    kind: "regex",
-    value: new RegExp(`^${escaped.replaceAll("\\*", ".*")}$`),
+    kind: 'regex',
+    value: new RegExp(`^${escaped.replaceAll('\\*', '.*')}$`),
   };
 }
 
 function matchesAny(name: string, patterns: CompiledPattern[]): boolean {
   const normalized = normalizeToolName(name);
   for (const pattern of patterns) {
-    if (pattern.kind === "all") return true;
-    if (pattern.kind === "exact" && name === pattern.value) return true;
-    if (pattern.kind === "regex" && pattern.value.test(name)) return true;
+    if (pattern.kind === 'all') return true;
+    if (pattern.kind === 'exact' && name === pattern.value) return true;
+    if (pattern.kind === 'regex' && pattern.value.test(name)) return true;
   }
   return false;
 }
@@ -75,7 +75,7 @@ function makeToolPolicyMatcher(policy: ToolPolicy) {
     // Explicit allow required
     if (matchesAny(normalized, allow)) return true;
     // Related tool inheritance
-    if (normalized === "apply_patch" && matchesAny("exec", allow)) return true;
+    if (normalized === 'apply_patch' && matchesAny('exec', allow)) return true;
     return false;
   };
 }
@@ -86,27 +86,27 @@ function makeToolPolicyMatcher(policy: ToolPolicy) {
 ```typescript
 const TOOL_PROFILES: Record<ToolProfileId, ToolProfilePolicy> = {
   minimal: {
-    allow: ["session_status"],  // Bare minimum
+    allow: ['session_status'], // Bare minimum
   },
   coding: {
     allow: [
-      "group:fs",        // read, write, edit, apply_patch
-      "group:runtime",   // exec, process
-      "group:sessions",  // sessions_list, sessions_spawn, etc.
-      "group:memory",    // memory_search, memory_get
-      "image",
+      'group:fs', // read, write, edit, apply_patch
+      'group:runtime', // exec, process
+      'group:sessions', // sessions_list, sessions_spawn, etc.
+      'group:memory', // memory_search, memory_get
+      'image',
     ],
   },
   messaging: {
     allow: [
-      "group:messaging", // message tool
-      "sessions_list",
-      "sessions_history",
-      "sessions_send",
-      "session_status",
+      'group:messaging', // message tool
+      'sessions_list',
+      'sessions_history',
+      'sessions_send',
+      'session_status',
     ],
   },
-  full: {},  // Empty policy = allow all
+  full: {}, // Empty policy = allow all
 };
 ```
 
@@ -114,12 +114,12 @@ const TOOL_PROFILES: Record<ToolProfileId, ToolProfilePolicy> = {
 
 ```typescript
 const TOOL_GROUPS: Record<string, string[]> = {
-  "group:memory": ["memory_search", "memory_get"],
-  "group:web": ["web_search", "web_fetch"],
-  "group:fs": ["read", "write", "edit", "apply_patch"],
-  "group:runtime": ["exec", "process"],
-  "group:sessions": ["sessions_list", "sessions_history", "sessions_send", "sessions_spawn"],
-  "group:clawdbot": ["browser", "canvas", "nodes", "cron", "message", "gateway", /* ... */],
+  'group:memory': ['memory_search', 'memory_get'],
+  'group:web': ['web_search', 'web_fetch'],
+  'group:fs': ['read', 'write', 'edit', 'apply_patch'],
+  'group:runtime': ['exec', 'process'],
+  'group:sessions': ['sessions_list', 'sessions_history', 'sessions_send', 'sessions_spawn'],
+  'group:clawdbot': ['browser', 'canvas', 'nodes', 'cron', 'message', 'gateway' /* ... */],
 };
 ```
 
@@ -128,25 +128,25 @@ const TOOL_GROUPS: Record<string, string[]> = {
 ```typescript
 const DEFAULT_SUBAGENT_TOOL_DENY = [
   // Session management - main agent orchestrates
-  "sessions_list",
-  "sessions_history",
-  "sessions_send",
-  "sessions_spawn",
+  'sessions_list',
+  'sessions_history',
+  'sessions_send',
+  'sessions_spawn',
   // System admin - dangerous from subagent
-  "gateway",
-  "agents_list",
+  'gateway',
+  'agents_list',
   // Status/scheduling - main agent coordinates
-  "session_status",
-  "cron",
+  'session_status',
+  'cron',
 ];
 
 function resolveSubagentToolPolicy(config?: Config): ToolPolicy {
   const configured = config?.tools?.subagents?.tools;
   const deny = [
-    ...DEFAULT_SUBAGENT_TOOL_DENY,      // Base restrictions
-    ...(configured?.deny ?? []),        // Additional restrictions
+    ...DEFAULT_SUBAGENT_TOOL_DENY, // Base restrictions
+    ...(configured?.deny ?? []), // Additional restrictions
   ];
-  const allow = configured?.allow;       // Optional allowlist
+  const allow = configured?.allow; // Optional allowlist
   return { allow, deny };
 }
 ```

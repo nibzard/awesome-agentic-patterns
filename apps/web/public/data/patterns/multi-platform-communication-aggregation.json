@@ -1,21 +1,11 @@
 {
   "title": "Multi-Platform Communication Aggregation",
   "status": "emerging",
-  "authors": [
-    "Lucas Carlson"
-  ],
-  "based_on": [
-    "Anthropic (Claude Code)"
-  ],
+  "authors": ["Lucas Carlson"],
+  "based_on": ["Anthropic (Claude Code)"],
   "category": "Tool Use & Environment",
   "source": "https://github.com/anthropics/claude-code",
-  "tags": [
-    "search",
-    "aggregation",
-    "parallel",
-    "communication",
-    "unified-interface"
-  ],
+  "tags": ["search", "aggregation", "parallel", "communication", "unified-interface"],
   "slug": "multi-platform-communication-aggregation",
   "id": "multi-platform-communication-aggregation",
   "summary": "Create unified search interface that queries all communication platforms in parallel and aggregates results into consistent format, enabling single-query cross-platform search with minimal latency through parallel execution.",

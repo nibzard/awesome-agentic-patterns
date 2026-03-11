@@ -95,7 +95,13 @@ const navItems = [
         aria-label="Open GitHub repository"
       >
         <span>GitHub</span>
-        {githubStarCount && <span class="repo-link-count" aria-label={`${githubStarCount} GitHub stars`}>{githubStarCount}</span>}
+        {
+          githubStarCount && (
+            <span class="repo-link-count" aria-label={`${githubStarCount} GitHub stars`}>
+              {githubStarCount}
+            </span>
+          )
+        }
         <span aria-hidden="true">↗</span>
       </a>
       <button id="search-toggle" class="search-toggle" aria-label="Search">
@@ -343,7 +349,8 @@ const navItems = [
 
       // Close search modal
       function closeSearch() {
-        const focusTarget = lastSearchTrigger instanceof HTMLElement ? lastSearchTrigger : searchToggle;
+        const focusTarget =
+          lastSearchTrigger instanceof HTMLElement ? lastSearchTrigger : searchToggle;
 
         if (focusTarget instanceof HTMLElement) {
           focusTarget.focus();
@@ -485,7 +492,13 @@ const navItems = [
           aria-label="Open GitHub repository"
         >
           <span>GitHub</span>
-          {githubStarCount && <span class="repo-link-count" aria-label={`${githubStarCount} GitHub stars`}>{githubStarCount}</span>}
+          {
+            githubStarCount && (
+              <span class="repo-link-count" aria-label={`${githubStarCount} GitHub stars`}>
+                {githubStarCount}
+              </span>
+            )
+          }
           <span aria-hidden="true">↗</span>
         </a>
       </div>

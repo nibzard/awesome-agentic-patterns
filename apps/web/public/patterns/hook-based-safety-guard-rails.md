@@ -1,11 +1,25 @@
 ---
-title: "Hook-Based Safety Guard Rails for Autonomous Code Agents"
-status: "validated-in-production"
-authors: ["yurukusa (@yurukusa)"]
-based_on: ["Claude Code Hooks (Anthropic)", "claude-code-ops-starter (https://github.com/yurukusa/claude-code-ops-starter)"]
-category: "Security & Safety"
-source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
-tags: [hooks, guard-rails, safety, autonomous-operation, destructive-command-blocking, context-monitoring, pre-tool-use, post-tool-use]
+title: 'Hook-Based Safety Guard Rails for Autonomous Code Agents'
+status: 'validated-in-production'
+authors: ['yurukusa (@yurukusa)']
+based_on:
+  [
+    'Claude Code Hooks (Anthropic)',
+    'claude-code-ops-starter (https://github.com/yurukusa/claude-code-ops-starter)',
+  ]
+category: 'Security & Safety'
+source: 'https://docs.anthropic.com/en/docs/claude-code/hooks'
+tags:
+  [
+    hooks,
+    guard-rails,
+    safety,
+    autonomous-operation,
+    destructive-command-blocking,
+    context-monitoring,
+    pre-tool-use,
+    post-tool-use,
+  ]
 ---
 
 ## Problem

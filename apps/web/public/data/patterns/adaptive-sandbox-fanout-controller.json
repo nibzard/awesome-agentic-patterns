@@ -1,13 +1,8 @@
 {
   "title": "Adaptive Sandbox Fan-Out Controller",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Labruno (GitHub)",
-    "Swarm Migration Pattern"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Labruno (GitHub)", "Swarm Migration Pattern"],
   "category": "Reliability & Eval",
   "source": "https://github.com/nibzard/labruno-agent",
   "tags": [

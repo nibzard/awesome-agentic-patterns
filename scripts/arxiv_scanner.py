@@ -665,7 +665,7 @@ def export_markdown_report(papers: List[Dict[str, Any]], output_file: str):
 
 def load_existing_patterns(patterns_dir: Path) -> List[Dict]:
     """Load existing patterns to check for duplicates."""
-    from build_readme import parse_front_matter
+    from pattern_metadata import parse_front_matter
 
     patterns = []
     for file in patterns_dir.glob("*.md"):

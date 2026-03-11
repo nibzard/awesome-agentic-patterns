@@ -1,13 +1,8 @@
 {
   "title": "Self-Discover: LLM Self-Composed Reasoning Structures",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Google DeepMind",
-    "USC"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Google DeepMind", "USC"],
   "category": "Feedback Loops",
   "source": "https://arxiv.org/abs/2402.03620",
   "tags": [

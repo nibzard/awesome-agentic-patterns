@@ -45,11 +45,7 @@ function getServerEnv(name: string): string | undefined {
   return typeof buildValue === 'string' && buildValue.trim() ? buildValue.trim() : undefined;
 }
 
-async function addContactToSegmentByEmail(
-  email: string,
-  resendApiKey: string,
-  segmentId?: string
-) {
+async function addContactToSegmentByEmail(email: string, resendApiKey: string, segmentId?: string) {
   if (!segmentId) return;
 
   const segmentResponse = await fetch(
@@ -156,7 +152,8 @@ export const POST: APIRoute = async ({ request }) => {
       if (resendResponse.status === 401 && errorName === 'restricted_api_key') {
         return jsonResponse(
           {
-            error: 'Newsletter service is misconfigured. The Resend API key does not have Contacts access.',
+            error:
+              'Newsletter service is misconfigured. The Resend API key does not have Contacts access.',
           },
           503
         );

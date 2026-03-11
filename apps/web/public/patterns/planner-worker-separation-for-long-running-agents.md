@@ -1,10 +1,10 @@
 ---
 title: Planner-Worker Separation for Long-Running Agents
 status: emerging
-authors: ["Cursor Team"]
-based_on: ["Cursor Engineering Team"]
+authors: ['Cursor Team']
+based_on: ['Cursor Engineering Team']
 category: Orchestration & Control
-source: "https://cursor.com/blog/scaling-agents"
+source: 'https://cursor.com/blog/scaling-agents'
 tags: [multi-agent, coordination, long-running, hierarchical, parallelism]
 ---
 
@@ -113,5 +113,5 @@ graph TD
 
 ## References
 
-* [Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Cursor blog post on running hundreds of concurrent agents for weeks at a time
-* [Browser source code on GitHub](https://github.com/getcursor/browser) - 1M+ lines of agent-generated code
+- [Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Cursor blog post on running hundreds of concurrent agents for weeks at a time
+- [Browser source code on GitHub](https://github.com/getcursor/browser) - 1M+ lines of agent-generated code

@@ -1,10 +1,10 @@
 ---
-title: "Failover-Aware Model Fallback"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
-category: "Reliability & Eval"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts"
+title: 'Failover-Aware Model Fallback'
+status: 'validated-in-production'
+authors: ['Clawdbot Contributors']
+based_on: ['Clawdbot Implementation (https://github.com/clawdbot/clawdbot)']
+category: 'Reliability & Eval'
+source: 'https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts'
 tags: [fallback, reliability, error-classification, multi-model, failover, resilience]
 ---
 
@@ -37,13 +37,7 @@ Semantic error classification with intelligent fallback chains. Each failure is 
 **Implementation sketch:**
 
 ```typescript
-type FailoverReason =
-  | "timeout"
-  | "rate_limit"
-  | "auth"
-  | "billing"
-  | "format"
-  | "context_overflow";
+type FailoverReason = 'timeout' | 'rate_limit' | 'auth' | 'billing' | 'format' | 'context_overflow';
 
 type ModelCandidate = {
   provider: string;
@@ -62,31 +56,32 @@ async function runWithModelFallback<T>(params: {
       return { result, provider: candidate.provider, model: candidate.model, attempts };
     } catch (err) {
       const reason = classifyFailoverReason(err);
-      if (reason === "auth" || reason === "billing") {
-        throw err;  // Retry won't help
+      if (reason === 'auth' || reason === 'billing') {
+        throw err; // Retry won't help
       }
       if (isUserAbort(err)) {
-        throw err;  // User canceled; don't fallback
+        throw err; // User canceled; don't fallback
       }
       attempts.push({ provider: candidate.provider, model: candidate.model, error: err, reason });
       // Continue to next candidate
     }
   }
 
-  throw new Error(`All models failed: ${attempts.map(a => a.error).join(" | ")}`);
+  throw new Error(`All models failed: ${attempts.map((a) => a.error).join(' | ')}`);
 }
 
 function classifyFailoverReason(err: unknown): FailoverReason | null {
   const status = getStatusCode(err);
-  if (status === 402) return "billing";
-  if (status === 429) return "rate_limit";
-  if (status === 401 || status === 403) return "auth";
-  if (status === 408) return "timeout";
+  if (status === 402) return 'billing';
+  if (status === 429) return 'rate_limit';
+  if (status === 401 || status === 403) return 'auth';
+  if (status === 408) return 'timeout';
 
   const message = getErrorMessage(err).toLowerCase();
-  if (message.includes("timeout") || message.includes("timed out")) return "timeout";
-  if (message.includes("rate limit") || message.includes("too many requests")) return "rate_limit";
-  if (message.includes("context window") || message.includes("context length")) return "context_overflow";
+  if (message.includes('timeout') || message.includes('timed out')) return 'timeout';
+  if (message.includes('rate limit') || message.includes('too many requests')) return 'rate_limit';
+  if (message.includes('context window') || message.includes('context length'))
+    return 'context_overflow';
 
   return null;
 }
@@ -98,9 +93,9 @@ function classifyFailoverReason(err: unknown): FailoverReason | null {
 function isUserAbort(err: unknown): boolean {
   // Only treat explicit AbortError names as user aborts
   // Message-based checks (e.g., "aborted") can mask timeouts
-  if (!err || typeof err !== "object") return false;
-  const name = "name" in err ? String(err.name) : "";
-  return name === "AbortError" && !isTimeoutError(err);
+  if (!err || typeof err !== 'object') return false;
+  const name = 'name' in err ? String(err.name) : '';
+  return name === 'AbortError' && !isTimeoutError(err);
 }
 ```
 
@@ -110,10 +105,10 @@ function isUserAbort(err: unknown): boolean {
 agents:
   defaults:
     model:
-      primary: "anthropic/claude-sonnet-4-20250514"
+      primary: 'anthropic/claude-sonnet-4-20250514'
       fallbacks:
-        - "openai/gpt-4o"
-        - "google/gemini-2.0-flash"
+        - 'openai/gpt-4o'
+        - 'google/gemini-2.0-flash'
 ```
 
 ## How to use it

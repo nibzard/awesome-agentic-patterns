@@ -1,8 +1,8 @@
 ---
 title: AI Web Search Agent Loop
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Colin Flaherty (Muse)", "Amplify Partners Blog"]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Colin Flaherty (Muse)', 'Amplify Partners Blog']
 category: Tool Use & Environment
 source: https://www.amplifypartners.com/blog-posts/how-ai-web-search-works
 tags: [web-search, serp-api, citations, parallel-agents, query-translation, operators, grounding]
@@ -111,4 +111,4 @@ Models should emulate human search behavior:
 
 ## References
 
-* [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works)
+- [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works)

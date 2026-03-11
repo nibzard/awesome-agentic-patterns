@@ -1,19 +1,11 @@
 {
   "title": "Context-Minimization Pattern",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Luca Beurer-Kellner et al. (2025)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Luca Beurer-Kellner et al. (2025)"],
   "category": "Context & Memory",
   "source": "https://arxiv.org/abs/2506.08837",
-  "tags": [
-    "context-hygiene",
-    "taint-removal",
-    "prompt-injection"
-  ],
+  "tags": ["context-hygiene", "taint-removal", "prompt-injection"],
   "slug": "context-minimization-pattern",
   "id": "context-minimization-pattern",
   "summary": "In long agent sessions, raw user text and tool outputs often remain in context long after they are needed.",

@@ -1,12 +1,8 @@
 {
   "title": "Working Memory via TodoWrite",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Analysis of 88 Claude conversation sessions"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Analysis of 88 Claude conversation sessions"],
   "category": "Context & Memory",
   "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
   "tags": [

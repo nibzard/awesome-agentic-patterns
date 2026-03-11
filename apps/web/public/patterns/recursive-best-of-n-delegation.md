@@ -1,10 +1,10 @@
 ---
-title: "Recursive Best-of-N Delegation"
+title: 'Recursive Best-of-N Delegation'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models paper"]
-category: "Orchestration & Control"
-source: "https://github.com/nibzard/labruno-agent"
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Labruno (GitHub)', 'Daytona RLM Guide', 'Recursive Language Models paper']
+category: 'Orchestration & Control'
+source: 'https://github.com/nibzard/labruno-agent'
 tags: [recursion, best-of-n, parallel-sandboxes, judge, delegation, rlms, selection, sub-agents]
 ---
 
@@ -14,13 +14,13 @@ Recursive delegation (parent agent -> sub-agents -> sub-sub-agents) is great for
 
 - A single weak sub-agent result can poison the parent's next steps (wrong assumption, missed file, bad patch)
 - Errors compound up the tree: "one bad leaf" can derail the whole rollout
-- Pure recursion also underuses parallelism when a node is uncertain: you really want multiple shots *right where the ambiguity is*
+- Pure recursion also underuses parallelism when a node is uncertain: you really want multiple shots _right where the ambiguity is_
 
-Meanwhile, "best-of-N" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the *same* problem instead of decomposing it.
+Meanwhile, "best-of-N" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the _same_ problem instead of decomposing it.
 
 ## Solution
 
-At *each node* in a recursive agent tree, run **best-of-N** for the current subtask before expanding further:
+At _each node_ in a recursive agent tree, run **best-of-N** for the current subtask before expanding further:
 
 1. **Decompose:** Parent turns task into sub-tasks (like normal recursive delegation)
 2. **Parallel candidates per subtask:** For each subtask, spawn **K candidate workers** in isolated sandboxes (K=2-5 typical)
@@ -61,7 +61,7 @@ flowchart TD
 
 Best for tasks where:
 
-- Subtasks are *shardable*, but each shard can be tricky (ambiguous API use, repo-specific conventions)
+- Subtasks are _shardable_, but each shard can be tricky (ambiguous API use, repo-specific conventions)
 - You can score outputs cheaply (unit tests, type checks, lint, golden files)
 - "One wrong move" is costly (migration diffs, security-sensitive changes, large refactors)
 
@@ -87,8 +87,8 @@ Practical defaults:
 
 ## References
 
-* [Labruno: Parallel sandboxes + LLM judge selects best implementation (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0)
-* [Labruno (GitHub)](https://github.com/nibzard/labruno-agent)
-* [Daytona RLM Guide: Recursive delegation with sandboxed execution](https://www.daytona.io/docs/en/recursive-language-models/)
-* [Recursive Language Models (arXiv 2512.24601): Recursion as inference-time scaling for long context](https://arxiv.org/abs/2512.24601)
-* Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)
+- [Labruno: Parallel sandboxes + LLM judge selects best implementation (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0)
+- [Labruno (GitHub)](https://github.com/nibzard/labruno-agent)
+- [Daytona RLM Guide: Recursive delegation with sandboxed execution](https://www.daytona.io/docs/en/recursive-language-models/)
+- [Recursive Language Models (arXiv 2512.24601): Recursion as inference-time scaling for long context](https://arxiv.org/abs/2512.24601)
+- Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)

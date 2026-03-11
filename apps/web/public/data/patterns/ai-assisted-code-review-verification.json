@@ -1,12 +1,8 @@
 {
   "title": "AI-Assisted Code Review / Verification",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Aman Sanger (Cursor)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Aman Sanger (Cursor)"],
   "category": "Feedback Loops",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

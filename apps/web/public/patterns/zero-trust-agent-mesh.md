@@ -1,10 +1,15 @@
 ---
 title: Zero-Trust Agent Mesh
 status: emerging
-authors: ["Imran Siddique (@imran-siddique)"]
-based_on: ["NIST SP 800-207 (Zero Trust Architecture)", "SPIFFE/SPIRE identity concepts", "AgentMesh (example implementation)"]
-category: "Security & Safety"
-source: "https://www.nist.gov/publications/zero-trust-architecture"
+authors: ['Imran Siddique (@imran-siddique)']
+based_on:
+  [
+    'NIST SP 800-207 (Zero Trust Architecture)',
+    'SPIFFE/SPIRE identity concepts',
+    'AgentMesh (example implementation)',
+  ]
+category: 'Security & Safety'
+source: 'https://www.nist.gov/publications/zero-trust-architecture'
 tags: [zero-trust, identity, delegation, multi-agent, cryptography, ed25519, governance]
 ---
 

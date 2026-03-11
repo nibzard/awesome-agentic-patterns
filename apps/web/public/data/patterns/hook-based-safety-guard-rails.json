@@ -1,9 +1,7 @@
 {
   "title": "Hook-Based Safety Guard Rails for Autonomous Code Agents",
   "status": "validated-in-production",
-  "authors": [
-    "yurukusa (@yurukusa)"
-  ],
+  "authors": ["yurukusa (@yurukusa)"],
   "based_on": [
     "Claude Code Hooks (Anthropic)",
     "claude-code-ops-starter (https://github.com/yurukusa/claude-code-ops-starter)"

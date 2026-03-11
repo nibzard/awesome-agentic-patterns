@@ -1,21 +1,11 @@
 {
   "title": "Budget-Aware Model Routing with Hard Cost Caps",
   "status": "established",
-  "authors": [
-    "Codex (@openai)"
-  ],
-  "based_on": [
-    "Multi-model routing practices from production LLM systems"
-  ],
+  "authors": ["Codex (@openai)"],
+  "based_on": ["Multi-model routing practices from production LLM systems"],
   "category": "Orchestration & Control",
   "source": "https://martinfowler.com/articles/llm.html",
-  "tags": [
-    "routing",
-    "cost-control",
-    "multi-model",
-    "orchestration",
-    "reliability"
-  ],
+  "tags": ["routing", "cost-control", "multi-model", "orchestration", "reliability"],
   "slug": "budget-aware-model-routing-with-hard-cost-caps",
   "id": "budget-aware-model-routing-with-hard-cost-caps",
   "summary": "Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.",

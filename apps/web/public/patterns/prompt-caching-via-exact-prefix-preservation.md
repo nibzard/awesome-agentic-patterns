@@ -1,11 +1,20 @@
 ---
-title: "Prompt Caching via Exact Prefix Preservation"
+title: 'Prompt Caching via Exact Prefix Preservation'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Michael Bolin (OpenAI Codex)"]
-category: "Context & Memory"
-source: "https://openai.com/index/unrolling-the-codex-agent-loop/"
-tags: [prompt-caching, exact-prefix, performance, stateless, zero-data-retention, message-ordering, optimization]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Michael Bolin (OpenAI Codex)']
+category: 'Context & Memory'
+source: 'https://openai.com/index/unrolling-the-codex-agent-loop/'
+tags:
+  [
+    prompt-caching,
+    exact-prefix,
+    performance,
+    stateless,
+    zero-data-retention,
+    message-ordering,
+    optimization,
+  ]
 ---
 
 ## Problem
@@ -138,15 +147,16 @@ graph TD
 
 **Handling configuration changes:**
 
-| Change Type | What NOT to do | What TO do |
-|-------------|----------------|------------|
-| Sandbox/approval mode | Modify permission message | Insert new `role=developer` message |
-| Working directory | Modify environment message | Insert new `role=user` message |
-| Tool list | Change mid-conversation | Avoid if possible; breaks cache |
+| Change Type           | What NOT to do             | What TO do                          |
+| --------------------- | -------------------------- | ----------------------------------- |
+| Sandbox/approval mode | Modify permission message  | Insert new `role=developer` message |
+| Working directory     | Modify environment message | Insert new `role=user` message      |
+| Tool list             | Change mid-conversation    | Avoid if possible; breaks cache     |
 
 **MCP server considerations:**
 
 MCP servers can emit `notifications/tools/list_changed` to indicate tool list changes. **Avoid honoring this mid-conversation** as it breaks cache hits. Instead:
+
 - Delay tool refresh until conversation boundary
 - Or accept the cache miss as necessary trade-off
 
@@ -158,7 +168,7 @@ function buildPrompt(state: ConversationState): Prompt {
 
   // Static prefix (cached)
   items.push({ role: 'system', content: state.systemMessage });
-  items.push({ type: 'tools', tools: state.tools });  // Consistent order!
+  items.push({ type: 'tools', tools: state.tools }); // Consistent order!
   items.push({ role: 'developer', content: state.instructions });
 
   // Variable content (appended)
@@ -167,10 +177,7 @@ function buildPrompt(state: ConversationState): Prompt {
   return { items };
 }
 
-function handleConfigChange(
-  state: ConversationState,
-  newConfig: SandboxConfig
-): ConversationState {
+function handleConfigChange(state: ConversationState, newConfig: SandboxConfig): ConversationState {
   // DON'T: Modify existing permission message
   // DO: Insert new message
   return {
@@ -205,7 +212,7 @@ function handleConfigChange(
 
 ## References
 
-* [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/)
-* [Prompt Caching Documentation | OpenAI](https://platform.openai.com/docs/guides/prompt-caching)
-* [Codex CLI | GitHub](https://github.com/openai/codex)
-* Related: [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)
+- [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/)
+- [Prompt Caching Documentation | OpenAI](https://platform.openai.com/docs/guides/prompt-caching)
+- [Codex CLI | GitHub](https://github.com/openai/codex)
+- Related: [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)

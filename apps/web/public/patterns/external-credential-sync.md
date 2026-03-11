@@ -1,10 +1,10 @@
 ---
-title: "External Credential Sync"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
-category: "Security & Safety"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts"
+title: 'External Credential Sync'
+status: 'validated-in-production'
+authors: ['Clawdbot Contributors']
+based_on: ['Clawdbot Implementation (https://github.com/clawdbot/clawdbot)']
+category: 'Security & Safety'
+source: 'https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts'
 tags: [credentials, oauth, token-sync, keychain, cli-integration, auth-reuse]
 ---
 
@@ -34,13 +34,13 @@ Cross-credential-source synchronization with near-expiry detection, type-aware u
 **Implementation sketch:**
 
 ```typescript
-const EXTERNAL_CLI_NEAR_EXPIRY_MS = 24 * 60 * 60 * 1000;  // 24 hours
-const EXTERNAL_CLI_SYNC_TTL_MS = 5 * 60 * 1000;             // 5 minutes cache
+const EXTERNAL_CLI_NEAR_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+const EXTERNAL_CLI_SYNC_TTL_MS = 5 * 60 * 1000; // 5 minutes cache
 
 function isExternalProfileFresh(cred: Credential, now: number): boolean {
-  if (cred.type !== "oauth" && cred.type !== "token") return false;
-  if (!["anthropic", "openai-codex", "qwen-portal"].includes(cred.provider)) return false;
-  if (typeof cred.expires !== "number") return true;  // No expiry = assume fresh
+  if (cred.type !== 'oauth' && cred.type !== 'token') return false;
+  if (!['anthropic', 'openai-codex', 'qwen-portal'].includes(cred.provider)) return false;
+  if (typeof cred.expires !== 'number') return true; // No expiry = assume fresh
   return cred.expires > now + EXTERNAL_CLI_NEAR_EXPIRY_MS;
 }
 
@@ -49,7 +49,7 @@ function syncExternalCliCredentials(store: CredentialStore): boolean {
   const now = Date.now();
 
   // Sync from Claude Code CLI
-  const existingClaude = store.profiles["claude-cli"];
+  const existingClaude = store.profiles['claude-cli'];
   const shouldSyncClaude = !existingClaude || !isExternalProfileFresh(existingClaude, now);
 
   if (shouldSyncClaude) {
@@ -58,11 +58,11 @@ function syncExternalCliCredentials(store: CredentialStore): boolean {
     });
     if (claudeCreds) {
       // Upgrade token->oauth if CLI now has OAuth
-      const shouldUpgrade = existingClaude?.type === "token" && claudeCreds.type === "oauth";
+      const shouldUpgrade = existingClaude?.type === 'token' && claudeCreds.type === 'oauth';
       const isMoreRecent = claudeCreds.expires > (existingClaude?.expires ?? 0);
 
       if (shouldUpgrade || isMoreRecent) {
-        store.profiles["claude-cli"] = claudeCreds;
+        store.profiles['claude-cli'] = claudeCreds;
         mutated = true;
       }
     }
@@ -76,12 +76,15 @@ function syncExternalCliCredentials(store: CredentialStore): boolean {
 **Duplicate detection for Codex CLI:**
 
 ```typescript
-function findDuplicateCodexProfile(store: CredentialStore, creds: OAuthCredential): string | undefined {
+function findDuplicateCodexProfile(
+  store: CredentialStore,
+  creds: OAuthCredential
+): string | undefined {
   for (const [profileId, profile] of Object.entries(store.profiles)) {
-    if (profileId === "codex-cli") continue;
-    if (profile.provider !== "openai-codex") continue;
+    if (profileId === 'codex-cli') continue;
+    if (profile.provider !== 'openai-codex') continue;
     if (profile.access === creds.access && profile.refresh === creds.refresh) {
-      return profileId;  // Same credentials exist under different profile
+      return profileId; // Same credentials exist under different profile
     }
   }
   return undefined;
@@ -92,12 +95,12 @@ function findDuplicateCodexProfile(store: CredentialStore, creds: OAuthCredentia
 
 ```typescript
 // Prefer OAuth over token-only (enables auto-refresh)
-if (existing?.type === "token" && claudeCreds.type === "oauth") {
+if (existing?.type === 'token' && claudeCreds.type === 'oauth') {
   store.profiles[CLAUDE_CLI_PROFILE_ID] = claudeCreds;
   mutated = true;
 }
 // Never downgrade OAuth to token
-if (existing?.type === "oauth" && claudeCreds.type === "token") {
+if (existing?.type === 'oauth' && claudeCreds.type === 'token') {
   // Skip update; preserve OAuth capability
 }
 ```

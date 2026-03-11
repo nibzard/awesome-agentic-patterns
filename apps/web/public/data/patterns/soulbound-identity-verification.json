@@ -1,23 +1,11 @@
 {
   "title": "Soulbound Identity Verification",
   "status": "emerging",
-  "authors": [
-    "Eiji Motomura (@EijiAC24)"
-  ],
-  "based_on": [
-    "ERC-5192 Soulbound Tokens",
-    "Chitin (example implementation)"
-  ],
+  "authors": ["Eiji Motomura (@EijiAC24)"],
+  "based_on": ["ERC-5192 Soulbound Tokens", "Chitin (example implementation)"],
   "category": "Security & Safety",
   "source": "https://eips.ethereum.org/EIPS/eip-5192",
-  "tags": [
-    "identity",
-    "verification",
-    "trust",
-    "soulbound-token",
-    "blockchain",
-    "agent-identity"
-  ],
+  "tags": ["identity", "verification", "trust", "soulbound-token", "blockchain", "agent-identity"],
   "slug": "soulbound-identity-verification",
   "id": "soulbound-identity-verification",
   "summary": "As autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult.",

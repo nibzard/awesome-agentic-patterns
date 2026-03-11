@@ -1,10 +1,10 @@
 ---
-title: "Reliability Problem Map Checklist for RAG and Agents"
+title: 'Reliability Problem Map Checklist for RAG and Agents'
 status: proposed
-authors: ["PSBigBig (@onestardao)"]
-based_on: ["WFGY Problem Map (@onestardao)"]
-category: "Reliability & Eval"
-source: "https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md"
+authors: ['PSBigBig (@onestardao)']
+based_on: ['WFGY Problem Map (@onestardao)']
+category: 'Reliability & Eval'
+source: 'https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md'
 tags: [reliability, evaluation, rag, agents, debugging, failure-modes, checklist]
 ---
 

@@ -1,10 +1,10 @@
 ---
-title: "Non-Custodial Spending Controls"
-status: "emerging"
-authors: ["SAMA-I (@s-a-m-a-i)"]
-based_on: ["Walleted agent execution patterns"]
-category: "Security & Safety"
-source: "https://policylayer.com"
+title: 'Non-Custodial Spending Controls'
+status: 'emerging'
+authors: ['SAMA-I (@s-a-m-a-i)']
+based_on: ['Walleted agent execution patterns']
+category: 'Security & Safety'
+source: 'https://policylayer.com'
 tags: [wallet-controls, spend-limits, policy-enforcement, non-custodial, AI-agents, safety]
 ---
 

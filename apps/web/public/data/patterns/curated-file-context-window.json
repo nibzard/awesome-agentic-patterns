@@ -1,20 +1,11 @@
 {
   "title": "Curated File Context Window",
   "status": "best-practice",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Internal AI Dev Team"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Internal AI Dev Team"],
   "category": "Context & Memory",
   "source": "https://docs.anthropic.com/en/docs/claude-code/common-workflows",
-  "tags": [
-    "code-context",
-    "file-scope",
-    "relevance",
-    "memory-management"
-  ],
+  "tags": ["code-context", "file-scope", "relevance", "memory-management"],
   "slug": "curated-file-context-window",
   "id": "curated-file-context-window",
   "summary": "A coding agent often needs to reason about multiple source files, but dumping all files into its prompt: Quickly exceeds token limits or inference budget.",

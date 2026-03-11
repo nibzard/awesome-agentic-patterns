@@ -1,11 +1,12 @@
 ---
-title: "Burn the Boats"
+title: 'Burn the Boats'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
-category: "Orchestration & Control"
-source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
-tags: [feature-killing, forced-evolution, courage, focus, self-destruct, obsolescence, product-strategy]
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['AMP (Thorsten Ball, Quinn Slack)']
+category: 'Orchestration & Control'
+source: 'https://www.youtube.com/watch?v=4rx36wc9ugw'
+tags:
+  [feature-killing, forced-evolution, courage, focus, self-destruct, obsolescence, product-strategy]
 ---
 
 ## Problem
@@ -51,6 +52,7 @@ AMP announced they're killing their VS Code extension (and Cursor support) in ~6
 > "It's just a focus thing for us. We can't do that without taking our eye off the thing that you all think is 100 times more important."
 
 If you keep the old feature around:
+
 - Users will keep using it
 - You'll feel pressure to maintain it
 - Your team splits attention between old and new
@@ -72,11 +74,11 @@ If you keep the old feature around:
 
 ```yaml
 feature_kill_plan:
-  feature: "VS Code Extension"
-  deadline: "~60 days from announcement"
-  message: "Will self-destruct in approximately 60 days"
-  migration_path: "Use AMP CLI instead"
-  rationale: "Sidebar is dead, long live the factory"
+  feature: 'VS Code Extension'
+  deadline: '~60 days from announcement'
+  message: 'Will self-destruct in approximately 60 days'
+  migration_path: 'Use AMP CLI instead'
+  rationale: 'Sidebar is dead, long live the factory'
 ```
 
 **2. Give users migration guidance:**
@@ -142,5 +144,5 @@ Burning boats is part of this mindset: nothing is sacred, everything must be re-
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Factory over Assistant](factory-over-assistant.md)
+- [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+- Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Factory over Assistant](factory-over-assistant.md)

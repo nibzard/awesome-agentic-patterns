@@ -1,9 +1,7 @@
 {
   "title": "Static Service Manifest for Agents",
   "status": "emerging",
-  "authors": [
-    "Clawdia (@OzorOwn)"
-  ],
+  "authors": ["Clawdia (@OzorOwn)"],
   "based_on": [
     "llms.txt community specification",
     "OpenAI ChatGPT Plugin manifest (ai-plugin.json)"

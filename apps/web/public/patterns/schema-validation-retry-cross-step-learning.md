@@ -1,10 +1,10 @@
 ---
-title: "Schema Validation Retry with Cross-Step Learning"
+title: 'Schema Validation Retry with Cross-Step Learning'
 status: emerging
-authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
-category: "Reliability & Eval"
-source: "https://github.com/hyperbrowserai/HyperAgent"
+authors: ['Nikola Balic (@nibzard)']
+based_on: ['Hyperbrowser Team (@hyperbrowserai)']
+category: 'Reliability & Eval'
+source: 'https://github.com/hyperbrowserai/HyperAgent'
 tags: [retry, validation, cross-step-learning, structured-output, zod, error-accumulation]
 ---
 
@@ -35,7 +35,7 @@ for (let attempt = 0; attempt < maxAttempts; attempt++) {
   const result = await ctx.llm.invokeStructured({ schema, options }, msgs);
 
   if (result.parsed) {
-    return result.parsed;  // Success - exit retry loop
+    return result.parsed; // Success - exit retry loop
   }
 
   // Extract detailed Zod validation error
@@ -45,21 +45,21 @@ for (let attempt = 0; attempt < maxAttempts; attempt++) {
   ctx.schemaErrors?.push({
     stepIndex: currStep,
     error: validationError,
-    rawResponse: result.rawText || "",
+    rawResponse: result.rawText || '',
   });
 
   // Append error feedback for retry
   msgs = [
     ...msgs,
-    { role: "assistant", content: result.rawText },
-    { role: "user", content: `Validation errors:\n${validationError}\nPlease fix.` },
+    { role: 'assistant', content: result.rawText },
+    { role: 'user', content: `Validation errors:\n${validationError}\nPlease fix.` },
   ];
 }
 
 // If all attempts fail, throw with accumulated error context
 throw new SchemaValidationError(`Failed after ${maxAttempts} attempts`, {
   stepIndex: currStep,
-  errors: ctx.schemaErrors?.slice(-3)  // Last 3 errors
+  errors: ctx.schemaErrors?.slice(-3), // Last 3 errors
 });
 ```
 
@@ -71,22 +71,22 @@ The agent maintains a rolling window of recent schema errors and includes them i
 interface AgentContext {
   schemaErrors: Array<{
     stepIndex: number;
-    error: string;          // Zod validation error
-    rawResponse: string;    // What the LLM actually output
+    error: string; // Zod validation error
+    rawResponse: string; // What the LLM actually output
     timestamp: number;
   }>;
 }
 
 // Before each step, append recent errors to guide the LLM
 const recentErrors = ctx.schemaErrors
-  .slice(-3)  // Keep only last 3 to avoid context bloat
-  .map(e => `Step ${e.stepIndex}: ${e.error}`)
+  .slice(-3) // Keep only last 3 to avoid context bloat
+  .map((e) => `Step ${e.stepIndex}: ${e.error}`)
   .join('\n');
 
 if (recentErrors) {
   msgs.push({
-    role: "system",
-    content: `Recent schema validation errors to avoid:\n${recentErrors}`
+    role: 'system',
+    content: `Recent schema validation errors to avoid:\n${recentErrors}`,
   });
 }
 ```
@@ -104,14 +104,14 @@ function getZodError(rawText: string): string {
     if (!result.success) {
       // Format Zod error clearly
       return result.error.issues
-        .map(issue => {
+        .map((issue) => {
           const path = issue.path.join('.');
           return `${path}: ${issue.message} (received: ${JSON.stringify(issue.received)})`;
         })
         .join('\n');
     }
   } catch {
-    return "Failed to parse as JSON";
+    return 'Failed to parse as JSON';
   }
 }
 ```
@@ -165,14 +165,14 @@ import { z } from 'zod';
 
 const ActionSchema = z.object({
   type: z.enum(['click', 'fill', 'wait', 'scroll']),
-  elementId: z.string().min(1, "elementId is required"),
+  elementId: z.string().min(1, 'elementId is required'),
   arguments: z.array(z.string()).optional(),
   confidence: z.number().min(0).max(1),
 });
 
 const StepOutputSchema = z.object({
   action: ActionSchema,
-  reasoning: z.string().max(500, "Keep reasoning concise"),
+  reasoning: z.string().max(500, 'Keep reasoning concise'),
 });
 ```
 
@@ -192,7 +192,7 @@ async function invokeWithRetry<T>(
 
     if (result.parsed) {
       // Success - clear errors for this step
-      ctx.recentErrors = ctx.recentErrors.filter(e => e.stepIndex !== stepIndex);
+      ctx.recentErrors = ctx.recentErrors.filter((e) => e.stepIndex !== stepIndex);
       return result.parsed;
     }
 
@@ -211,8 +211,8 @@ async function invokeWithRetry<T>(
     // Append feedback for retry
     messages = [
       ...messages,
-      { role: "assistant", content: result.rawText },
-      { role: "user", content: `Validation failed:\n${error}\nPlease fix and try again.` },
+      { role: 'assistant', content: result.rawText },
+      { role: 'user', content: `Validation failed:\n${error}\nPlease fix and try again.` },
     ];
   }
 
@@ -225,26 +225,22 @@ async function invokeWithRetry<T>(
 Before each step, inject recent errors to prevent repeating mistakes:
 
 ```typescript
-function prepareMessagesForStep(
-  ctx: AgentContext,
-  stepIndex: number,
-  task: string
-): Message[] {
+function prepareMessagesForStep(ctx: AgentContext, stepIndex: number, task: string): Message[] {
   const messages = [
-    { role: "system", content: systemPrompt },
-    { role: "user", content: task },
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: task },
   ];
 
   // Add error history
   const recentErrors = ctx.schemaErrors
-    .slice(-3)  // Last 3 errors
-    .filter(e => e.stepIndex < stepIndex)  // Only from previous steps
-    .map(e => `Step ${e.stepIndex}: ${e.error}`)
+    .slice(-3) // Last 3 errors
+    .filter((e) => e.stepIndex < stepIndex) // Only from previous steps
+    .map((e) => `Step ${e.stepIndex}: ${e.error}`)
     .join('\n');
 
   if (recentErrors) {
     messages.push({
-      role: "system",
+      role: 'system',
       content: `Avoid these previous errors:\n${recentErrors}`,
     });
   }
@@ -258,8 +254,8 @@ function prepareMessagesForStep(
 ```typescript
 interface AgentConfig {
   maxValidationAttempts: number;
-  errorHistorySize: number;      // How many errors to keep
-  crossStepErrorCount: number;   // How many to inject per step
+  errorHistorySize: number; // How many errors to keep
+  crossStepErrorCount: number; // How many to inject per step
 }
 
 const context: AgentContext = {

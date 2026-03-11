@@ -1,13 +1,8 @@
 {
   "title": "Democratization of Tooling via Agents",
   "status": "emerging",
-  "authors": [
-    "Nikola Balic (@nibzard)"
-  ],
-  "based_on": [
-    "Jacob Jackson (Cursor)",
-    "Alex Albert (Anthropic)"
-  ],
+  "authors": ["Nikola Balic (@nibzard)"],
+  "based_on": ["Jacob Jackson (Cursor)", "Alex Albert (Anthropic)"],
   "category": "UX & Collaboration",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [
