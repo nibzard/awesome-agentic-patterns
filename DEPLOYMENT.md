@@ -4,7 +4,7 @@ This document provides instructions for deploying the Awesome Agentic Patterns d
 
 ## Recommended Workflow: Automatic Deployment
 
-**The simplest way to deploy is to push to main:**
+`main` is the canonical production branch. Pushes to `main` should be the normal release path.
 
 ```bash
 git add .
@@ -12,9 +12,7 @@ git commit -m "Your changes"
 git push
 ```
 
-Vercel will automatically build and deploy the site.
-
-**That's it!** No manual build or deployment commands needed.
+Vercel will automatically build and deploy the site when the project is configured with `main` as the production branch.
 
 ---
 
@@ -53,7 +51,7 @@ bun run build  # Builds to apps/web/dist/
 
 ### Option 1: Vercel (Recommended)
 
-**Default workflow**: Just push to main branch:
+**Default workflow**: merge to `main`, then push `main`:
 
 ```bash
 git add .
@@ -62,18 +60,16 @@ git push
 ```
 
 **What happens automatically:**
-1. Vercel webhook triggers on push to main
+1. Vercel Git deployment triggers on push to `main`
 2. Installs dependencies using bun
-3. Runs `bun run build` in apps/web directory
+3. Runs the configured build command from `vercel.json`
 4. Deploys the production build
-5. Site live at: https://agentic-patterns.com
+5. Site goes live at: https://agentic-patterns.com
 
 **Setup requirements:**
 - Connect your GitHub repository to Vercel
-- Configure build settings:
-  - Root directory: `apps/web`
-  - Build command: `bun run build`
-  - Output directory: `dist`
+- Set the Vercel Production Branch to `main`
+- Keep `vercel.json` aligned with that branch policy
 
 ### Option 2: Manual Vercel Deployment
 

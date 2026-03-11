@@ -4,8 +4,8 @@
   "buildCommand": "cd apps/web && bun run build && rm -rf ../../.vercel/output && mkdir -p ../../.vercel && mv .vercel/output ../../.vercel/output",
   "git": {
     "deploymentEnabled": {
-      "spec-modern-redesign": true,
-      "main": false
+      "main": true,
+      "spec-modern-redesign": false
     }
   }
 }
