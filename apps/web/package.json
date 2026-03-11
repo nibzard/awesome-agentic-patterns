@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && pagefind --site dist && mkdir -p .vercel/output/static && rm -rf .vercel/output/static/pagefind && cp -R dist/pagefind .vercel/output/static/pagefind",
     "preview": "astro preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

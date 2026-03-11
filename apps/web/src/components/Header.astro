@@ -6,6 +6,31 @@ interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
+const repoUrl = 'https://github.com/nibzard/awesome-agentic-patterns';
+
+let githubStarCount: string | null = null;
+
+try {
+  const response = await fetch('https://api.github.com/repos/nibzard/awesome-agentic-patterns', {
+    headers: {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'awesome-agentic-patterns-site',
+    },
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    const count = Number(data?.stargazers_count);
+    if (Number.isFinite(count)) {
+      githubStarCount = new Intl.NumberFormat('en-US', {
+        notation: count >= 1000 ? 'compact' : 'standard',
+        maximumFractionDigits: 1,
+      }).format(count);
+    }
+  }
+} catch {
+  githubStarCount = null;
+}
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -64,12 +89,13 @@ const navItems = [
     <div class="header-actions">
       <a
         class="repo-link"
-        href="https://github.com/nibzard/awesome-agentic-patterns"
+        href={repoUrl}
         target="_blank"
         rel="noreferrer"
         aria-label="Open GitHub repository"
       >
         <span>GitHub</span>
+        {githubStarCount && <span class="repo-link-count" aria-label={`${githubStarCount} GitHub stars`}>{githubStarCount}</span>}
         <span aria-hidden="true">↗</span>
       </a>
       <button id="search-toggle" class="search-toggle" aria-label="Search">
@@ -114,7 +140,16 @@ const navItems = [
     </button>
 
     <!-- Search Modal -->
-    <div id="search-modal" class="search-modal" hidden aria-hidden="true">
+    <div
+      id="search-modal"
+      class="search-modal"
+      hidden
+      inert
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search patterns"
+    >
       <div class="search-backdrop"></div>
       <div class="search-container">
         <button type="button" class="search-close" aria-label="Close search">
@@ -189,12 +224,20 @@ const navItems = [
       let currentQuery = '';
       let currentResults = [];
       let selectedIndex = 0;
+      let lastSearchTrigger = null;
 
       const searchModal = document.getElementById('search-modal');
       const searchInput = document.getElementById('search-input');
       const searchResults = document.getElementById('search-results');
       const searchToggle = document.getElementById('search-toggle');
       const searchClose = document.querySelector('.search-close');
+
+      function setSearchOpenState(isOpen) {
+        searchModal.hidden = !isOpen;
+        searchModal.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        searchModal.toggleAttribute('inert', !isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
 
       // Load Pagefind index
       async function loadSearchIndex() {
@@ -275,7 +318,7 @@ const navItems = [
             class="search-result ${index === selectedIndex ? 'search-result--selected' : ''}"
             data-index="${index}"
             role="option"
-            aria-selected={index === selectedIndex ? 'true' : 'false'}
+            aria-selected="${index === selectedIndex ? 'true' : 'false'}"
           >
             <div class="search-result-title">${result.meta?.title || 'Untitled'}</div>
             <div class="search-result-excerpt">${result.meta?.excerpt || ''}</div>
@@ -292,26 +335,31 @@ const navItems = [
       }
 
       // Open search modal
-      function openSearch() {
-        searchModal.hidden = false;
-        searchModal.setAttribute('aria-hidden', 'false');
+      function openSearch(trigger = document.activeElement) {
+        lastSearchTrigger = trigger instanceof HTMLElement ? trigger : searchToggle;
+        setSearchOpenState(true);
         searchInput.focus();
-        document.body.style.overflow = 'hidden';
       }
 
       // Close search modal
       function closeSearch() {
-        searchModal.hidden = true;
-        searchModal.setAttribute('aria-hidden', 'true');
+        const focusTarget = lastSearchTrigger instanceof HTMLElement ? lastSearchTrigger : searchToggle;
+
+        if (focusTarget instanceof HTMLElement) {
+          focusTarget.focus();
+        } else if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
+
+        setSearchOpenState(false);
         searchInput.value = '';
         searchResults.innerHTML = '';
         currentQuery = '';
         currentResults = [];
-        document.body.style.overflow = '';
       }
 
       // Event listeners
-      searchToggle?.addEventListener('click', openSearch);
+      searchToggle?.addEventListener('click', () => openSearch(searchToggle));
 
       searchModal?.querySelector('.search-backdrop')?.addEventListener('click', closeSearch);
       searchClose?.addEventListener('click', closeSearch);
@@ -340,13 +388,13 @@ const navItems = [
       document.addEventListener('keydown', (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
           e.preventDefault();
-          openSearch();
+          openSearch(document.activeElement);
         }
       });
 
       // Delegate click events for dynamic results
       searchResults?.addEventListener('click', (e) => {
-        const result = e.target.closest('.search-result');
+        const result = e.target instanceof Element ? e.target.closest('.search-result') : null;
         if (result) {
           window.location.href = result.href;
         }
@@ -431,12 +479,13 @@ const navItems = [
       <div class="mobile-menu-footer">
         <a
           class="repo-link repo-link--mobile"
-          href="https://github.com/nibzard/awesome-agentic-patterns"
+          href={repoUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Open GitHub repository"
         >
           <span>GitHub</span>
+          {githubStarCount && <span class="repo-link-count" aria-label={`${githubStarCount} GitHub stars`}>{githubStarCount}</span>}
           <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -532,6 +581,20 @@ const navItems = [
     font-weight: 600;
   }
 
+  .repo-link-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    padding: 0.12rem 0.42rem;
+    border-radius: 999px;
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
   .repo-link:hover {
     border-color: var(--color-primary);
     color: var(--color-primary);
@@ -559,6 +622,48 @@ const navItems = [
 
   .search-toggle svg {
     color: var(--color-text-muted);
+  }
+
+  :root[data-theme='dark'] .repo-link,
+  :root[data-theme='dark'] .search-toggle,
+  :root[data-theme='dark'] .mobile-menu-toggle {
+    background-color: rgba(36, 29, 24, 0.94);
+    border-color: rgba(104, 84, 69, 0.92);
+    color: #f3e9db;
+  }
+
+  :root[data-theme='dark'] .repo-link:hover,
+  :root[data-theme='dark'] .search-toggle:hover,
+  :root[data-theme='dark'] .mobile-menu-toggle:hover {
+    background-color: rgba(47, 38, 31, 0.98);
+    border-color: var(--color-primary);
+    color: #fff7ef;
+  }
+
+  :root[data-theme='dark'] .search-toggle svg {
+    color: #d4c9bb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .repo-link,
+    :root:not([data-theme]) .search-toggle,
+    :root:not([data-theme]) .mobile-menu-toggle {
+      background-color: rgba(36, 29, 24, 0.94);
+      border-color: rgba(104, 84, 69, 0.92);
+      color: #f3e9db;
+    }
+
+    :root:not([data-theme]) .repo-link:hover,
+    :root:not([data-theme]) .search-toggle:hover,
+    :root:not([data-theme]) .mobile-menu-toggle:hover {
+      background-color: rgba(47, 38, 31, 0.98);
+      border-color: var(--color-primary);
+      color: #fff7ef;
+    }
+
+    :root:not([data-theme]) .search-toggle svg {
+      color: #d4c9bb;
+    }
   }
 
   .search-modal {

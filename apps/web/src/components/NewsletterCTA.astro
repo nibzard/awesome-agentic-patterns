@@ -23,7 +23,7 @@ const {
   </div>
   <form
     class="newsletter-cta-form"
-    id="newsletter-form"
+    data-newsletter-form
     data-nonce={Math.random().toString(36).substring(7)}
   >
     {variant === 'minimal' && <p class="newsletter-cta-invite">Get new patterns in your inbox</p>}
@@ -64,25 +64,33 @@ const {
 </div>
 
 <script>
-  const form = document.getElementById('newsletter-form') as HTMLFormElement;
-  const input = form?.querySelector('input[type="email"]') as HTMLInputElement;
-  const button = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
-  const buttonText = button?.querySelector('.newsletter-cta-button-text') as HTMLElement;
-  const spinner = button?.querySelector('.newsletter-cta-spinner') as SVGElement;
-  const messageContainer = form?.querySelector('.newsletter-cta-message') as HTMLElement;
+  async function parseJsonSafely(response: Response) {
+    try {
+      return await response.json();
+    } catch {
+      return {};
+    }
+  }
 
-  if (form) {
+  document.querySelectorAll('[data-newsletter-form]').forEach((formElement) => {
+    const form = formElement as HTMLFormElement;
+    const input = form.querySelector('input[type="email"]') as HTMLInputElement | null;
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const buttonText = button?.querySelector('.newsletter-cta-button-text') as HTMLElement | null;
+    const spinner = button?.querySelector('.newsletter-cta-spinner') as SVGElement | null;
+    const messageContainer = form.querySelector('.newsletter-cta-message') as HTMLElement | null;
+    const defaultButtonText = buttonText?.textContent?.trim() || 'Subscribe';
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const email = input?.value.trim();
-      if (!email || !button || !messageContainer) return;
+      if (!email || !button || !buttonText || !messageContainer) return;
 
-      // Reset states
       messageContainer.textContent = '';
       messageContainer.className = 'newsletter-cta-message';
       button.disabled = true;
-      buttonText?.textContent === 'Subscribe' && (buttonText.textContent = 'Subscribing...');
+      buttonText.textContent = 'Subscribing...';
       spinner?.classList.add('spinner-spinning');
 
       try {
@@ -92,10 +100,10 @@ const {
           body: JSON.stringify({ email }),
         });
 
-        const data = await response.json();
+        const data = await parseJsonSafely(response);
 
         if (response.ok) {
-          messageContainer.textContent = data.message || 'Thanks for subscribing!';
+          messageContainer.textContent = data.message || 'Thanks for subscribing.';
           messageContainer.classList.add('newsletter-cta-message--success');
           input.value = '';
           buttonText.textContent = 'Subscribed';
@@ -103,18 +111,18 @@ const {
           messageContainer.textContent = data.error || 'Something went wrong. Please try again.';
           messageContainer.classList.add('newsletter-cta-message--error');
           button.disabled = false;
-          buttonText.textContent = 'Subscribe';
+          buttonText.textContent = defaultButtonText;
         }
-      } catch (error) {
+      } catch {
         messageContainer.textContent = 'Network error. Please check your connection and try again.';
         messageContainer.classList.add('newsletter-cta-message--error');
         button.disabled = false;
-        buttonText.textContent = 'Subscribe';
+        buttonText.textContent = defaultButtonText;
       } finally {
         spinner?.classList.remove('spinner-spinning');
       }
     });
-  }
+  });
 </script>
 
 <style>
