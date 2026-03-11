@@ -108,7 +108,6 @@ const overviewStats = [
   { value: fieldTestedCount, label: 'Field-tested' },
 ];
 
-const spotlightCategories = categories.slice(0, 5);
 ---
 
 <BaseLayout
@@ -144,16 +143,6 @@ const spotlightCategories = categories.slice(0, 5);
             </svg>
             Filters
           </button>
-        </div>
-        <div class="patterns-category-jumps">
-          {
-            spotlightCategories.map(({ category, count }) => (
-              <a href={`/patterns?category=${encodeURIComponent(category)}`} class="patterns-chip">
-                <span>{category}</span>
-                <span class="patterns-chip-count">{count}</span>
-              </a>
-            ))
-          }
         </div>
       </div>
 
@@ -405,43 +394,6 @@ const spotlightCategories = categories.slice(0, 5);
     border-radius: 999px;
     font-weight: 600;
     cursor: pointer;
-  }
-
-  .patterns-category-jumps {
-    margin-top: var(--spacing-lg);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-  }
-
-  .patterns-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0.7rem 0.9rem;
-    border: 1px solid rgba(182, 164, 143, 0.5);
-    border-radius: 999px;
-    background: rgba(255, 250, 242, 0.7);
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-
-  .patterns-chip:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
-
-  .patterns-chip-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.7rem;
-    height: 1.7rem;
-    padding: 0 0.4rem;
-    border-radius: 999px;
-    background: var(--color-primary-light);
-    color: var(--color-primary);
-    font-size: 0.74rem;
   }
 
   .patterns-hero-panel {
@@ -735,9 +687,6 @@ const spotlightCategories = categories.slice(0, 5);
       grid-template-columns: 1fr;
     }
 
-    .patterns-category-jumps {
-      flex-direction: column;
-    }
   }
 </style>
 

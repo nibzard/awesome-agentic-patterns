@@ -1,67 +1,70 @@
 ---
-title: 'Git-Based Pattern Labeling'
-description: 'How the automated git-based pattern labeling system works.'
+title: 'How Freshness Labels Work'
+description: 'What NEW and UPDATED mean on the site, and how freshness is derived from pattern metadata.'
 order: 3
 ---
 
 ## Overview
 
-This repository uses a fully automated git-based pattern labeling system. Pattern labels (NEW and UPDATED) are determined directly from git commit history.
+The site uses freshness labels to help readers spot entries that were added recently or updated materially. These labels are meant to answer a simple question:
 
-## Labeling Logic
+Which patterns should I look at first if I want recent signal?
 
-### NEW Badges (🆕)
+## What the Labels Mean
 
-Patterns **created** within the last **7 days** receive a NEW badge.
+### `NEW`
 
-- Based on first git commit that added the file
-- Automatically expires after 7 days
+Use this when a pattern has been added recently enough that it should stand out as a new entry in the catalog.
 
-### UPDATED Badges (🔄)
+### `UPDATED`
 
-Patterns **created > 7 days ago** but **modified** within last **14 days** receive an UPDATED badge.
+Use this when an existing pattern has been revised recently enough that returning readers should know it changed.
 
-- Based on last git commit that modified the file
-- Automatically expires after 14 days
-- NEW takes precedence over UPDATED
+`NEW` should take precedence over `UPDATED`.
 
-## Migration from Manual System
+## Where Freshness Comes From
 
-### Before (Manual)
+Freshness in the current site is driven by pattern metadata, especially `updated_at`, with a fallback to the file modification date when `updated_at` is missing.
 
-- Used `.new-patterns-tracker.txt` and `.updated-patterns-tracker.txt` files
-- Required manual maintenance and updates
-- Prone to inconsistencies and errors
+That means:
 
-### After (Git-Based)
-
-- Uses git commit history as the source of truth
-- Fully automated with zero manual maintenance
-- Consistent and accurate labeling
+- if you materially revise a pattern, update `updated_at`
+- if a pattern does not specify `updated_at`, generated data will fall back to the markdown file's modification time
 
 ## For Contributors
 
-Nothing changes for contributors! The system automatically:
+You do not need a separate tracking file for freshness labels.
 
-- Detects when you add new patterns (NEW label for 7 days)
-- Detects when you modify existing patterns (UPDATED label for 14 days)
-- Handles all labeling based on your git commits
+When you update a pattern:
 
-Just commit your work as usual - the labeling happens automatically.
+1. Edit the markdown file in `patterns/`
+2. Update `updated_at` if the content changed materially
+3. Run validation and rebuild generated data
 
-## Configuration
-
-To adjust timeframes, edit `scripts/git_pattern_dates.py`:
-
-```python
-NEW_PATTERN_DAYS = 7      # NEW badge duration
-UPDATED_PATTERN_DAYS = 14 # UPDATED badge duration
+```bash
+bun run validate:patterns
+bun run build:data
 ```
 
-## Advantages
+## Recommended Contributor Rule
 
-1. **Zero Maintenance**: No manual tracking files
-2. **Accurate**: Git history is the source of truth
-3. **Automatic**: Labels appear and expire automatically
-4. **Consistent**: No human error in labeling
-5. **Intuitive**: Time-based logic is easy to understand
+Update `updated_at` when any of these change:
+
+- the pattern summary or core thesis
+- the implementation guidance
+- trade-offs, safety notes, or limitations
+- references or examples that materially change how the pattern should be read
+
+Do not update it for trivial formatting or typo-only edits.
+
+## Why This Is Better Than Manual Tracking
+
+- Freshness stays attached to the pattern itself
+- The site can derive recent updates automatically during data generation
+- Contributors only need to maintain one source of truth: the pattern file
+
+## Related Files
+
+- [SCHEMA.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/SCHEMA.md)
+- [CONTRIBUTING.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/CONTRIBUTING.md)
+- [scripts/build-data.ts](https://github.com/nibzard/awesome-agentic-patterns/blob/main/scripts/build-data.ts)

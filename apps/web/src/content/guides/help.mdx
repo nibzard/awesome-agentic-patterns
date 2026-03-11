@@ -1,126 +1,166 @@
 ---
-title: 'Developer Setup Guide'
-description: 'Get up and running with the awesome-agentic-patterns project locally.'
+title: 'Local Development'
+description: 'Set up the site locally, validate patterns, and work with the current Bun-based workflow.'
 order: 2
 ---
 
-## Quick Start
+## Overview
 
-This guide will help you set up the awesome-agentic-patterns project for local development.
+This repository is now Bun-first and Astro-first. The main workflow is:
+
+1. Install dependencies with Bun
+2. Run the web app locally
+3. Validate pattern content before you ship changes
+4. Rebuild generated data when source pattern files change
 
 ## Prerequisites
 
-- Python 3.x
+- Bun
 - Git
-- A code editor (VS Code recommended)
+- A code editor
 
-## Step 1: Clone the Repository
+## Clone and Install
 
 ```bash
 git clone https://github.com/nibzard/awesome-agentic-patterns.git
 cd awesome-agentic-patterns
-```
-
-## Step 2: Set Up the Environment
-
-```bash
-# Create virtual environment
-python3 -m venv venv
-
-# Activate virtual environment
-# On Linux/macOS:
-source venv/bin/activate
-# On Windows:
-# venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-## Step 3: Web App Setup (New Astro Site)
-
-The project now includes a modern Astro-based web app in `apps/web/`:
-
-```bash
-# Navigate to web app
-cd apps/web
-
-# Install dependencies (requires Bun)
 bun install
+```
 
-# Run development server
+## Core Commands
+
+Run these from the repository root unless noted otherwise.
+
+```bash
+# Start the Astro app locally
+bun run dev
+
+# Build generated data and the production site
+bun run build
+
+# Validate frontmatter and required fields
+bun run validate:patterns
+
+# Run stricter content validation
+bun run validate:patterns:content
+
+# Rebuild generated JSON, feeds, and static exports without a full site build
+bun run build:data
+```
+
+The local site is available at `http://localhost:4321`.
+
+## What Lives Where
+
+```text
+awesome-agentic-patterns/
+├── patterns/                # Source-of-truth markdown entries
+├── apps/
+│   └── web/
+│       ├── src/
+│       │   ├── components/  # Shared UI
+│       │   ├── content/     # Guides and packs content collections
+│       │   ├── layouts/     # Page shells
+│       │   └── pages/       # Astro routes
+│       └── public/
+│           └── data/        # Generated pattern and graph data
+├── scripts/                 # Data generation and validation scripts
+└── README.md                # Project overview and generated catalog sections
+```
+
+## Adding or Editing Patterns
+
+1. Start from [TEMPLATE.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/TEMPLATE.md) or [patterns/TEMPLATE.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/patterns/TEMPLATE.md).
+2. Add or update the markdown file in `patterns/`.
+3. Make sure frontmatter is complete:
+   - `title`
+   - `status`
+   - `authors`
+   - `category`
+   - `source`
+   - `tags`
+   - `updated_at` when the content changed materially
+4. Run:
+
+```bash
+bun run validate:patterns
+bun run validate:patterns:content
+bun run build:data
+```
+
+5. Preview the site with `bun run dev` and check the pattern page in the browser.
+
+## Editing Guides and Site Copy
+
+- Guides live in `apps/web/src/content/guides/`
+- Shared UI lives in `apps/web/src/components/`
+- Browse and detail pages live in `apps/web/src/pages/`
+
+If you only changed guides or page copy, `bun run dev` is usually enough. If you changed pattern source files, regenerate data with `bun run build:data`.
+
+## Build Outputs
+
+The production site build goes to `apps/web/dist/`.
+
+Generated public data for the site lives under `apps/web/public/data/`.
+
+## Common Tasks
+
+### Work on the design or UI
+
+```bash
 bun run dev
 ```
 
-The site will be available at `http://localhost:4321/`
+Edit files in `apps/web/src/`.
 
-## Step 4: MkDocs Setup (Legacy Documentation Site)
-
-The original MkDocs documentation site is still available:
+### Validate a pattern submission
 
 ```bash
-# From project root (with venv activated)
-make site_link      # Link README to docs
-make site_preview   # Start MkDocs dev server at http://localhost:8000
+bun run validate:patterns
+bun run validate:patterns:content
 ```
 
-## Project Structure
-
-```
-awesome-agentic-patterns/
-├── patterns/              # Pattern markdown files (source of truth)
-├── apps/
-│   └── web/              # New Astro web application
-│       ├── src/
-│       │   ├── pages/    # Astro pages
-│       │   ├── components/ # React/Astro components
-│       │   └── content/  # Content collections (packs, guides)
-│       └── public/       # Static assets (patterns.json, graph.json)
-├── scripts/              # Automation scripts
-├── docs/                 # MkDocs source (legacy)
-└── site/                 # MkDocs build output (legacy)
-```
-
-## Adding Patterns
-
-1. Create a new file in `patterns/` using `patterns/TEMPLATE.md`
-2. Add required front-matter (title, status, authors, category, source, tags)
-3. Run `python scripts/build_readme.py` to regenerate README
-4. Commit your changes
-
-## Building the Web App
+### Refresh generated catalog data
 
 ```bash
-cd apps/web
+bun run build:data
+```
+
+### Produce a production build
+
+```bash
 bun run build
 ```
 
-The built files will be in `apps/web/dist/`.
-
-## Next Steps
-
-- Read the [Pattern Selection Guide](/guides/pattern-selection)
-- Explore related patterns from the main catalog
-- Check [CONTRIBUTING.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/CONTRIBUTING.md) for contribution guidelines
-
 ## Troubleshooting
 
-### MkDocs command not found
+### `bun` not found
 
-Make sure your virtual environment is activated:
+Install Bun, then verify:
 
 ```bash
-source venv/bin/activate  # Linux/macOS
+bun --version
 ```
 
-### Port already in use
-
-Kill the process using the port or use a different port:
+### Port 4321 already in use
 
 ```bash
-# For Astro (port 4321)
-bun run dev --port 4322
+bun run dev -- --port 4322
+```
 
-# For MkDocs (port 8000)
-mkdocs serve -a 0.0.0.0:8001
+### Pattern data looks stale
+
+Rebuild generated data from the root:
+
+```bash
+bun run build:data
+```
+
+### Validation fails on `updated_at`
+
+Use `YYYY-MM-DD` format, for example:
+
+```yaml
+updated_at: "2026-03-11"
 ```

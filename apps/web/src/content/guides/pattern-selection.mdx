@@ -1,114 +1,173 @@
 ---
 title: 'Choosing the Right Patterns'
-description: 'Learn how to select and combine AI agent design patterns for your specific use case.'
+description: 'A practical guide to narrowing the catalog, assembling a small starting stack, and avoiding unnecessary pattern sprawl.'
 order: 1
 ---
 
-## Introduction
+## Start with the Failure Mode
 
-Choosing the right AI agent design patterns is crucial for building effective, reliable, and maintainable systems. This guide will help you navigate the pattern catalogue and make informed decisions about which patterns to use.
+Do not start by asking which pattern is popular. Start by asking what is most likely to break first.
 
-## Start with Your Use Case
+Usually that is one of five things:
 
-Before diving into patterns, clearly define your use case:
+1. Control: the agent acts too freely or too opaquely
+2. Memory: the agent forgets what matters or carries the wrong context forward
+3. Tool use: the agent has too much access or uses tools unreliably
+4. Reliability: the system fails silently, drifts, or becomes hard to debug
+5. Throughput: the workflow is too slow, too serial, or too expensive
 
-1. **What type of agent are you building?**
-   - Fully autonomous agent
-   - Human-assisted agent
-   - Workflow automation
-   - Coding assistant
-   - Research assistant
+Once you know the failure mode, the catalog becomes much easier to narrow.
 
-2. **What's the complexity level?**
-   - Simple, well-defined tasks
-   - Moderately complex with some decision points
-   - Highly complex requiring planning and reasoning
+## Use the Three Discovery Surfaces
 
-3. **What are your constraints?**
-   - Safety requirements
-   - Performance needs
-   - Resource limitations
-   - Integration requirements
+The site now has three useful ways to narrow the library:
 
-## Use the Decision Tree
+- Use the [Decision Guide](/decision) when you want a fast shortlist
+- Use [Browse Patterns](/patterns) when you want to compare trade-offs directly
+- Use the [Pattern Graph](/graph) when you want to see what tends to cluster together
 
-Our interactive [Decision Tree](/decision) can help you find relevant patterns based on your answers to key questions. It's a great starting point for discovering patterns that match your use case.
+The best workflow is:
 
-## Core Patterns to Consider
+1. Start with `/decision`
+2. Open 3-6 candidate patterns in `/patterns`
+3. Use `/graph` to spot adjacent patterns worth considering
+4. Commit to a small stack for v1
 
-### For Most Agents
+## Match the Pattern to the Problem
 
-These patterns are foundational and apply to almost any AI agent:
+### If control is the main risk
 
-- **Reflection**: Enables self-correction and improvement
-- **LLM Observability**: Provides visibility into agent behavior
-- **Specification-Driven Development**: Ensures clear goals and requirements
+Start with patterns that make agent behavior legible and bounded:
 
-### For Coding Agents
+- [Specification-Driven Agent Development](/patterns/specification-driven-agent-development)
+- [Plan-Then-Execute Pattern](/patterns/plan-then-execute-pattern)
+- [Human-in-Loop Approval Framework](/patterns/human-in-loop-approval-framework)
+- [Spectrum of Control / Blended Initiative](/patterns/spectrum-of-control-blended-initiative)
 
-If you're building a coding assistant or developer tool:
+Use these when the problem is not raw capability but confidence in who decides what and when.
 
-- **Code-Then-Execute Pattern**: Separates code generation from execution
-- **Human-in-Loop Approval**: Adds safety for code modifications
-- **Asynchronous Coding Agent Pipeline**: Enables parallel work
+### If memory is the main risk
 
-### For Autonomous Agents
+Start with patterns that control context and persistence:
 
-For agents that operate independently:
+- [Working Memory via TodoWrite](/patterns/working-memory-via-todos)
+- [Curated File Context Window](/patterns/curated-file-context-window)
+- [Curated Code Context Window](/patterns/curated-code-context-window)
+- [Episodic Memory Retrieval & Injection](/patterns/episodic-memory-retrieval-injection)
+- [Memory Synthesis from Execution Logs](/patterns/memory-synthesis-from-execution-logs)
 
-- **Continuous Autonomous Task Loop**: Manages ongoing operation
-- **Episodic Memory**: Enables learning from past experiences
-- **Progressive Autonomy**: Gradually increases agent independence
+Use these when the agent either forgets important state or drowns in too much irrelevant context.
 
-### For Safety-Critical Applications
+### If tool use is the main risk
 
-When mistakes could cause serious damage:
+Start with patterns that make execution safer and more predictable:
 
-- **Anti-Reward Hacking Grader Design**: Prevents gaming of reward systems
-- **Egress Lockdown**: Controls data exfiltration
-- **Deterministic Security Scanning**: Catches security issues early
+- [Code-Then-Execute Pattern](/patterns/code-then-execute-pattern)
+- [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization)
+- [Tool Capability Compartmentalization](/patterns/tool-capability-compartmentalization)
+- [Action-Selector Pattern](/patterns/action-selector-pattern)
+- [Tool Selection Guide](/patterns/tool-selection-guide)
 
-## Combining Patterns
+Use these when the biggest problem is not reasoning quality but unsafe or messy interaction with the outside world.
 
-Patterns work best in combination. Consider these synergies:
+### If reliability is the main risk
 
-### **Coding Agent Stack**
+Start with patterns that improve observability, evaluation, and recovery:
 
-- Specification-Driven Development
-- Code-Then-Execute
-- Human-in-Loop Approval
-- LLM Observability
+- [LLM Observability](/patterns/llm-observability)
+- [Reflection Loop](/patterns/reflection)
+- [Workflow Evals with Mocked Tools](/patterns/workflow-evals-with-mocked-tools)
+- [Schema Validation Retry with Cross-Step Learning](/patterns/schema-validation-retry-cross-step-learning)
+- [Deterministic Security Scanning Build Loop](/patterns/deterministic-security-scanning-build-loop)
 
-### **Autonomous Research Agent**
+Use these when the system appears to work until it suddenly does not, or when debugging costs more than building.
 
-- Continuous Autonomous Task Loop
-- Reflection
-- Episodic Memory
-- Tool Use Incentivization
+### If throughput or scale is the main risk
 
-### **Safety-First System**
+Start with orchestration patterns that reduce idle time and improve routing:
 
-- Anti-Reward Hacking
-- Egress Lockdown
-- Human-in-Loop Approval
-- Deterministic Security Scanning
+- [Asynchronous Coding Agent Pipeline](/patterns/asynchronous-coding-agent-pipeline)
+- [Parallel Tool Execution](/patterns/parallel-tool-execution)
+- [Budget-Aware Model Routing with Hard Cost Caps](/patterns/budget-aware-model-routing-with-hard-cost-caps)
+- [Planner-Worker Separation for Long-Running Agents](/patterns/planner-worker-separation-for-long-running-agents)
+- [Workspace-Native Multi-Agent Orchestration](/patterns/workspace-native-multi-agent-orchestration)
 
-## Iterative Approach
+Use these when the system already works in principle but cannot ship efficiently.
 
-Don't try to implement everything at once:
+## Good Starting Stacks
 
-1. **Start Simple**: Begin with 2-3 core patterns
-2. **Test Thoroughly**: Validate that patterns work together
-3. **Add Gradually**: Introduce additional patterns as needed
-4. **Measure Impact**: Evaluate each pattern's contribution
+Start with 2-4 patterns, not 8-12.
 
-## Learn from Others
+### Minimum viable coding-agent stack
 
-Build small pattern sets around a concrete use case so you can test how combinations behave before scaling them up.
+- [Specification-Driven Agent Development](/patterns/specification-driven-agent-development)
+- [Code-Then-Execute Pattern](/patterns/code-then-execute-pattern)
+- [Human-in-Loop Approval Framework](/patterns/human-in-loop-approval-framework)
+- [LLM Observability](/patterns/llm-observability)
+
+This is a good default when code quality and control matter more than autonomy theater.
+
+### Minimum viable autonomous stack
+
+- [Continuous Autonomous Task Loop Pattern](/patterns/continuous-autonomous-task-loop-pattern)
+- [Reflection Loop](/patterns/reflection)
+- [Episodic Memory Retrieval & Injection](/patterns/episodic-memory-retrieval-injection)
+- [Progressive Autonomy with Model Evolution](/patterns/progressive-autonomy-with-model-evolution)
+
+This is a good default when the agent needs to operate beyond a single request-response cycle.
+
+### Safety-first stack
+
+- [Human-in-Loop Approval Framework](/patterns/human-in-loop-approval-framework)
+- [Egress Lockdown (No-Exfiltration Channel)](/patterns/egress-lockdown-no-exfiltration-channel)
+- [Deterministic Security Scanning Build Loop](/patterns/deterministic-security-scanning-build-loop)
+- [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design)
+
+This is a good default when the cost of a bad action is much higher than the cost of slower execution.
+
+## What Not to Add Too Early
+
+Teams usually over-add patterns in the first version. Common mistakes:
+
+- adding long-term memory before the agent can reliably complete one session
+- adding multiple orchestration layers before a single-agent path is stable
+- adding autonomy before observability and approval boundaries exist
+- adding too many tools before tool selection and authorization are explicit
+- adding evaluator loops without a clear success criterion
+
+If you cannot explain why a pattern reduces a current failure mode, leave it out of v1.
+
+## A Practical Selection Workflow
+
+Use this sequence when you are unsure where to start:
+
+1. Write down the primary task and the most expensive failure mode.
+2. Use the [Decision Guide](/decision) to narrow to a short list.
+3. Open the candidate patterns and compare:
+   - control model
+   - memory requirements
+   - tool surface
+   - safety bar
+   - operational cost
+4. Use the [Pattern Graph](/graph) to find adjacent patterns worth adding later, not immediately.
+5. Pick 2-4 patterns for the first version.
+6. Add more only after you can explain what the previous stack still fails to solve.
+
+## A Useful Rule of Thumb
+
+If you are building your first production version, bias toward:
+
+- explicit control over autonomy
+- narrow tool access
+- simple memory
+- strong observability
+- short, testable workflows
+
+Most systems need fewer clever patterns and more operational clarity.
 
 ## Next Steps
 
-- Use the [Decision Tree](/decision) to find patterns
-- Build a shortlist of complementary patterns for your specific use case
-- Explore the [Pattern Graph](/graph) to see relationships
-- Read individual pattern documentation for details
+- Start with the [Decision Guide](/decision)
+- Browse the full catalog in [Patterns](/patterns)
+- Use the [Pattern Graph](/graph) to see neighboring ideas
+- Read the detail pages for the 2-4 patterns you plan to combine
