@@ -62,10 +62,10 @@ For complex problems or creative ideation, a single AI agent instance might get 
 
 | Paper | Venue | Key Finding |
 |-------|-------|-------------|
-| "Collective Intelligence in Multi-Agent Brainstorming Systems" | AAAI 2024 | Heterogeneous agents achieved 40% higher creativity scores |
-| "Iterative Consensus Building in Creative AI Ensembles" | ACL 2023 | Multi-round refinement with confidence-weighted voting: 35% novelty improvement |
-| "The Emergence of Collective Creativity in Multi-Agent Systems" | NeurIPS 2024 | Emergent creative behavior in teams with complementary capabilities |
-| "Parallel Agent Ideation with Knowledge Fusion" | IJCAI 2023 | 28% increase in solution diversity vs single-agent |
+| ⚠️ "Collective Intelligence in Multi-Agent Brainstorming Systems" | AAAI 2024 | Heterogeneous agents achieved 40% higher creativity scores **HALLUCINATED** |
+| ⚠️ "Iterative Consensus Building in Creative AI Ensembles" | ACL 2023 | Multi-round refinement with confidence-weighted voting: 35% novelty improvement **HALLUCINATED** |
+| ⚠️ "The Emergence of Collective Creativity in Multi-Agent Systems" | NeurIPS 2024 | Emergent creative behavior in teams with complementary capabilities **HALLUCINATED** |
+| ⚠️ "Parallel Agent Ideation with Knowledge Fusion" | IJCAI 2023 | 28% increase in solution diversity vs single-agent **HALLUCINATED** |
 
 #### 4. Research Gaps Identified
 
@@ -325,10 +325,10 @@ flowchart TD
 - Boris Cherny (via Claude Code capability)
 
 ### Academic Sources
-- AAAI 2024: "Collective Intelligence in Multi-Agent Brainstorming Systems"
-- ACL 2023: "Iterative Consensus Building in Creative AI Ensembles"
-- NeurIPS 2024: "The Emergence of Collective Creativity in Multi-Agent Systems"
-- IJCAI 2023: "Parallel Agent Ideation with Knowledge Fusion"
+- ⚠️ AAAI 2024: "Collective Intelligence in Multi-Agent Brainstorming Systems" **HALLUCINATED**
+- ⚠️ ACL 2023: "Iterative Consensus Building in Creative AI Ensembles" **HALLUCINATED**
+- ⚠️ NeurIPS 2024: "The Emergence of Collective Creativity in Multi-Agent Systems" **HALLUCINATED**
+- ⚠️ IJCAI 2023: "Parallel Agent Ideation with Knowledge Fusion" **HALLUCINATED**
 - ICML 2023: Research on diversity-performance tradeoffs
 
 ### Industry Implementations

@@ -607,7 +607,7 @@ Industry adoption shows that ToT is more commonly embedded within frameworks rat
 
 8. Shinn, N., Cassano, F., et al. (2023). Reflexion: Language Agents with Verbal Reinforcement Learning. NeurIPS 2023. arXiv:2303.11366
 
-9. Yao, S., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. NeurIPS 2023. arXiv:2210.03629
+9. Yao, S., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. ICLR 2023. arXiv:2210.03629
 
 ### Open Source Implementations
 10. Graph of Thoughts - https://github.com/spcl/graph-of-thoughts

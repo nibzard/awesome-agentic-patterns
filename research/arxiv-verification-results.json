@@ -1,0 +1,3285 @@
+{
+  "verification_date": "2026-03-10",
+  "total_checked": 413,
+  "verified": 408,
+  "mismatches": 4,
+  "not_found": 1,
+  "hallucinated": 0,
+  "results": [
+    {
+      "ref_id": 12,
+      "arxiv_id": "2602.22368",
+      "status": "VERIFIED",
+      "claimed_title": "EyeLayer: Integrating Human Attention Patterns into LLM-Based Code Summarization.",
+      "actual_title": "EyeLayer: Integrating Human Attention Patterns into LLM-Based Code Summarization",
+      "overlap": "89%",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 288,
+      "context": "- Zhang, J., et al. \"EyeLayer: Integrating Human Attention Patterns into LLM-Based Code Summarization.\" arXiv 2602.22368v1 (2026)."
+    },
+    {
+      "ref_id": 20,
+      "arxiv_id": "2502.06633",
+      "status": "VERIFIED",
+      "claimed_title": "Combining LLMs with Static Analyzers",
+      "actual_title": "Combining Large Language Models with Static Analyzers for Code Review Generation",
+      "overlap": "80%",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 976,
+      "context": "- [Combining LLMs with Static Analyzers](https://arxiv.org/html/2502.06633v1) - arXiv (2025)"
+    },
+    {
+      "ref_id": 21,
+      "arxiv_id": "2507.11687",
+      "status": "VERIFIED",
+      "claimed_title": "MetaLint: Generalizable Idiomatic Code Quality Analysis",
+      "actual_title": "MetaLint: Generalizable Idiomatic Code Quality Analysis through Instruction-Following and Easy-to-Hard Generalization",
+      "overlap": "100%",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 977,
+      "context": "- [MetaLint: Generalizable Idiomatic Code Quality Analysis](https://arxiv.org/html/2507.11687v2) - arXiv (2025)"
+    },
+    {
+      "ref_id": 24,
+      "arxiv_id": "2511.03690",
+      "status": "TITLE_MISMATCH",
+      "claimed_title": "https://arxiv.org/html/2511.03690v1 (November 2025)",
+      "actual_title": "The OpenHands Software Agent SDK: A Composable and Extensible Foundation for Production Agents",
+      "overlap": "0%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 335,
+      "context": "**Paper:** https://arxiv.org/html/2511.03690v1 (November 2025)"
+    },
+    {
+      "ref_id": 26,
+      "arxiv_id": "2508.02694",
+      "status": "VERIFIED",
+      "claimed_title": "\"Efficient Agents: Building Effective Agents While Reducing Cost\"",
+      "actual_title": "Efficient Agents: Building Effective Agents While Reducing Cost",
+      "overlap": "88%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 494,
+      "context": "**DOI/Link:** arXiv:2508.02694"
+    },
+    {
+      "ref_id": 27,
+      "arxiv_id": "2511.02734",
+      "status": "VERIFIED",
+      "claimed_title": "\"CostBench: Evaluating Multi-Turn Cost-Optimal Planning and Adaptation in Dynamic Environments for LLM Tool-Use Agents\"",
+      "actual_title": "CostBench: Evaluating Multi-Turn Cost-Optimal Planning and Adaptation in Dynamic Environments for LLM Tool-Use Agents",
+      "overlap": "93%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 506,
+      "context": "**DOI/Link:** arXiv:2511.02734"
+    },
+    {
+      "ref_id": 28,
+      "arxiv_id": "2510.03285",
+      "status": "VERIFIED",
+      "claimed_title": "\"WAREX: Web Agent Reliability Evaluation on Existing Benchmarks\"",
+      "actual_title": "WAREX: Web Agent Reliability Evaluation on Existing Benchmarks",
+      "overlap": "88%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 563,
+      "context": "**DOI/Link:** arXiv:2510.03285"
+    },
+    {
+      "ref_id": 29,
+      "arxiv_id": "2509.17360",
+      "status": "VERIFIED",
+      "claimed_title": "Semantic-Aware Cross-Region Caching for Agentic LLM Tool Access",
+      "actual_title": "Cortex: Achieving Low-Latency, Cost-Efficient Remote Data Access For LLM via Semantic-Aware Knowledge Caching",
+      "overlap": "50%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 597,
+      "context": "**Paper:** \"Semantic-Aware Cross-Region Caching for Agentic LLM Tool Access\" (arXiv 2509.17360v1)"
+    },
+    {
+      "ref_id": 30,
+      "arxiv_id": "2506.14852",
+      "status": "TITLE_MISMATCH",
+      "claimed_title": "Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching",
+      "actual_title": "Agentic Plan Caching: Test-Time Memory for Fast and Cost-Efficient LLM Agents",
+      "overlap": "44%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 607,
+      "context": "**Paper:** \"Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching\" (arXiv 2506.14852)"
+    },
+    {
+      "ref_id": 31,
+      "arxiv_id": "2503.23908",
+      "status": "TITLE_MISMATCH",
+      "claimed_title": "MAER-Nav (arXiv:2503.23908)",
+      "actual_title": "MAER-Nav: Bidirectional Motion Learning Through Mirror-Augmented Experience Replay for Robot Navigation",
+      "overlap": "0%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 909,
+      "context": "- [MAER-Nav (arXiv:2503.23908)](https://arxiv.org/abs/2503.23908) - Mirror-augmented experience replay"
+    },
+    {
+      "ref_id": 32,
+      "arxiv_id": "2506.04133",
+      "status": "VERIFIED",
+      "claimed_title": "TRiSM for Agentic AI (arXiv:2506.04133)",
+      "actual_title": "TRiSM for Agentic AI: A Review of Trust, Risk, and Security Management in LLM-based Agentic Multi-Agent Systems",
+      "overlap": "60%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 923,
+      "context": "- [TRiSM for Agentic AI (arXiv:2506.04133)](https://arxiv.org/abs/2506.04133) - Trust, Risk, and Security Management"
+    },
+    {
+      "ref_id": 33,
+      "arxiv_id": "2508.02121",
+      "status": "TITLE_MISMATCH",
+      "claimed_title": "AgentOps Survey (arXiv:2508.02121)",
+      "actual_title": "A Survey on AgentOps: Categorization, Challenges, and Future Directions",
+      "overlap": "33%",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 924,
+      "context": "- [AgentOps Survey (arXiv:2508.02121)](https://arxiv.org/abs/2508.02121) - Agent System Operations framework"
+    },
+    {
+      "ref_id": 36,
+      "arxiv_id": "2509.09675",
+      "status": "VERIFIED",
+      "claimed_title": "CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models",
+      "actual_title": "CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models",
+      "overlap": "91%",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 334,
+      "context": "**Reference:** \"CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models\" (arXiv:2509.09675, September 2025)"
+    },
+    {
+      "ref_id": 37,
+      "arxiv_id": "2505.16918",
+      "status": "VERIFIED",
+      "claimed_title": "Scalable and Interpretable Contextual Bandits: A Literature Review",
+      "actual_title": "Scalable and Interpretable Contextual Bandits: A Literature Review and Retail Offer Prototype",
+      "overlap": "100%",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 356,
+      "context": "**Paper:** \"Scalable and Interpretable Contextual Bandits: A Literature Review\" (arXiv:2505.16918, May 2025)"
+    },
+    {
+      "ref_id": 38,
+      "arxiv_id": "2506.08837",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Design Patterns for Securing LLM Agents against Prompt Injections",
+      "overlap": "N/A",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 500,
+      "context": "- Beurer-Kellner, L., Buesser, B., Creţu, A-M., Debenedetti, E., Dobos, D., Fabian, D., Fischer, M., Froelicher, D., Grosse, K., Naeff, D., Ozoani, E., Paverd, A., Tramèr, F., & Volhejn, V. (2025). Design Patterns for Securing LLM Agents against Prompt Injections. arXiv preprint arXiv:2506.08837."
+    },
+    {
+      "ref_id": 44,
+      "arxiv_id": "2504.19793",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Prompt Injection Attack to Tool Selection in LLM Agents",
+      "overlap": "N/A",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 508,
+      "context": "6. Anonymous. (2025). Prompt Injection Attack to Tool Selection in LLM Agents. arXiv:2504.19793."
+    },
+    {
+      "ref_id": 45,
+      "arxiv_id": "2502.13141",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "UniGuardian: A Unified Defense for Detecting Prompt Injection, Backdoor Attacks and Adversarial Attacks in Large Language Models",
+      "overlap": "N/A",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 509,
+      "context": "7. Lin, H., Lao, Y., Geng, T., et al. (2025). UniGuardian: A Unified Defense for Detecting Prompt Injection, Backdoor Attacks and Adversarial Attacks in Large Language Models. arXiv:2502.13141."
+    },
+    {
+      "ref_id": 47,
+      "arxiv_id": "2506.06444",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Saffron-1: Safety Inference Scaling",
+      "overlap": "N/A",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 511,
+      "context": "9. Qiu, R., Li, G., Wei, T., et al. (2025). Saffron-1: Safety Inference Scaling. arXiv:2506.06444."
+    },
+    {
+      "ref_id": 52,
+      "arxiv_id": "2505.03867",
+      "status": "VERIFIED",
+      "claimed_title": "Scratch Copilot: Supporting Youth Creative Coding with AI",
+      "actual_title": "Scratch Copilot: Supporting Youth Creative Coding with AI",
+      "overlap": "88%",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 618,
+      "context": "- \"Scratch Copilot: Supporting Youth Creative Coding with AI\" (2025). arXiv:2505.03867v1"
+    },
+    {
+      "ref_id": 54,
+      "arxiv_id": "2510.09721",
+      "status": "VERIFIED",
+      "claimed_title": "Comprehensive Survey on Code Generation Benchmarks & Solutions",
+      "actual_title": "A Comprehensive Survey on Benchmarks and Solutions in Software Engineering of LLM-Empowered Agentic System",
+      "overlap": "62%",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 620,
+      "context": "- \"Comprehensive Survey on Code Generation Benchmarks & Solutions\" (2025). arXiv:2510.09721v2"
+    },
+    {
+      "ref_id": 55,
+      "arxiv_id": "2509.03310",
+      "status": "VERIFIED",
+      "claimed_title": "App.build Framework",
+      "actual_title": "app.build: A Production Framework for Scaling Agentic Prompt-to-App Generation with Environment Scaffolding",
+      "overlap": "50%",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 621,
+      "context": "- \"App.build Framework\" (2026). SANER 2026 Industrial - arXiv:2509.03310v2"
+    },
+    {
+      "ref_id": 57,
+      "arxiv_id": "2505.00753",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey",
+      "overlap": "N/A",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 790,
+      "context": "- LLM-HAS Survey (arXiv:2505.00753): Identifies reliability, complexity, and safety challenges with fully autonomous scaffolding"
+    },
+    {
+      "ref_id": 58,
+      "arxiv_id": "2601.22290",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "The Six Sigma Agent: Achieving Enterprise-Grade Reliability in LLM Systems Through Consensus-Driven Decomposed Execution",
+      "overlap": "N/A",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 791,
+      "context": "- Six Sigma Agent (arXiv:2601.22290): 95% of enterprise AI implementations fail without appropriate oversight"
+    },
+    {
+      "ref_id": 59,
+      "arxiv_id": "2602.12443",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "SHAPR: A Solo Human-Centred and AI-Assisted Practice Framework for Research Software Development",
+      "overlap": "N/A",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 792,
+      "context": "- SHAPR Framework (arXiv:2602.12443): Provides structured human-AI collaboration patterns"
+    },
+    {
+      "ref_id": 60,
+      "arxiv_id": "2602.23193",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "ESAA: Event Sourcing for Autonomous Agents in LLM-Based Software Engineering",
+      "overlap": "N/A",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 798,
+      "context": "**Key Insight (ESAA, arXiv:2602.23193):**"
+    },
+    {
+      "ref_id": 61,
+      "arxiv_id": "2602.21697",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "EditFlow: Benchmarking and Optimizing Code Edit Recommendation Systems via Reconstruction of Developer Flows",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 809,
+      "context": "**Key Insight (EditFlow, arXiv:2602.21697):**"
+    },
+    {
+      "ref_id": 62,
+      "arxiv_id": "2602.23320",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "ParamMem: Augmenting Language Agents with Parametric Reflective Memory",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 820,
+      "context": "**Key Insight (ParamMem, arXiv:2602.23320):**"
+    },
+    {
+      "ref_id": 63,
+      "arxiv_id": "2508.08053",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AdaptFlow: Adaptive Workflow Optimization via Meta-Learning",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 859,
+      "context": "5. AdaptFlow (arXiv:2508.08053v1) - Adaptive workflow optimization"
+    },
+    {
+      "ref_id": 65,
+      "arxiv_id": "2602.22518",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "RepoMod-Bench: A Benchmark for Code Repository Modernization via Implementation-Agnostic Testing",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 863,
+      "context": "9. RepoMod-Bench (arXiv:2602.22518v1) - Repository modernization"
+    },
+    {
+      "ref_id": 66,
+      "arxiv_id": "2602.22480",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "VeRO: An Evaluation Harness for Agents to Optimize Agents",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 864,
+      "context": "10. VeRO (arXiv:2602.22480v1) - Agent optimization framework"
+    },
+    {
+      "ref_id": 67,
+      "arxiv_id": "2602.05762",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "RocqSmith: Can Automatic Optimization Forge Better Proof Agents?",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 91,
+      "context": "| RocqSmith: Can Automatic Optimization Forge Better Proof Agents? | Andrei Kozyrev et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.05762v1) | Automatic agent optimization methods for formal verification settings |"
+    },
+    {
+      "ref_id": 68,
+      "arxiv_id": "2602.13878",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Testing BDI-based Multi-Agent Systems using Discrete Event Simulation",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 92,
+      "context": "| Testing BDI-based Multi-Agent Systems using Discrete Event Simulation | Martina Baiardi et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.13878v1) | Simulation-based testing environments for agent codebase validation |"
+    },
+    {
+      "ref_id": 69,
+      "arxiv_id": "2501.00642",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Enabling New HDLs with Agents",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 93,
+      "context": "| Enabling New HDLs with Agents | Mark Zakharov et al. | arXiv (2024-12) | [Link](https://arxiv.org/abs/2501.00642v1) | HDLAgent optimizes LLMs for hardware description languages |"
+    },
+    {
+      "ref_id": 70,
+      "arxiv_id": "2602.22456",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Automating the Detection of Requirement Dependencies Using Large Language Models",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 102,
+      "context": "| Automating the Detection of Requirement Dependencies Using Large Language Models | Ikram Darif et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.22456v1) | LLM-based automated requirement analysis |"
+    },
+    {
+      "ref_id": 71,
+      "arxiv_id": "2602.23047",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "CL4SE: A Context Learning Benchmark For Software Engineering Tasks",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 103,
+      "context": "| CL4SE: A Context Learning Benchmark For Software Engineering Tasks | Haichuan Hu et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23047v1) | Context engineering benchmark for SE tasks |"
+    },
+    {
+      "ref_id": 72,
+      "arxiv_id": "2602.20979",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Toward an Agentic Infused Software Ecosystem",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 109,
+      "context": "| Toward an Agentic Infused Software Ecosystem | Mark Marron | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.20979v1) | Argues for rethinking software ecosystem for AI agents |"
+    },
+    {
+      "ref_id": 73,
+      "arxiv_id": "2602.23335",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Understanding Usage and Engagement in AI-Powered Scientific Research Tools: The Asta Interaction Dataset",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 110,
+      "context": "| Understanding Usage and Engagement in AI-Powered Scientific Research Tools | Dany Haddad et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23335v1) | Real-world AI tool usage patterns in research |"
+    },
+    {
+      "ref_id": 74,
+      "arxiv_id": "2602.23329",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "LLM Novice Uplift on Dual-Use, In Silico Biology Tasks",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 111,
+      "context": "| LLM Novice Uplift on Dual-Use, In Silico Biology Tasks | Chen Bo Calvin Zhang et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23329v1) | Studies how LLMs uplift novice user performance |"
+    },
+    {
+      "ref_id": 75,
+      "arxiv_id": "2602.21127",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "\"Are You Sure?\": An Empirical Study of Human Perception Vulnerability in LLM-Driven Agentic Systems",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 112,
+      "context": "| \"Are You Sure?\": An Empirical Study of Human Perception Vulnerability in LLM-Driven Agentic Systems | Xinfeng Li et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.21127v1) | Trust and perception issues in agent systems |"
+    },
+    {
+      "ref_id": 76,
+      "arxiv_id": "2602.21889",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "2-Step Agent: A Framework for the Interaction of a Decision Maker with AI Decision Support",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 113,
+      "context": "| 2-Step Agent: A Framework for the Interaction of a Decision Maker with AI Decision Support | Otto Nyberg et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.21889v1) | Framework for human-AI decision-making interaction |"
+    },
+    {
+      "ref_id": 77,
+      "arxiv_id": "2602.23005",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Managing Uncertainty in LLM-based Multi-Agent System Operation",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 119,
+      "context": "| Managing Uncertainty in LLM-based Multi-Agent System Operation | Man Zhang et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23005v1) | System-level risk management in multi-agent systems |"
+    },
+    {
+      "ref_id": 78,
+      "arxiv_id": "2602.23258",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AgentDropoutV2: Optimizing Information Flow in Multi-Agent Systems via Test-Time Rectify-or-Reject Pruning",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 120,
+      "context": "| AgentDropoutV2: Optimizing Information Flow in Multi-Agent Systems | Yutong Wang et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23258v1) | Test-time pruning for multi-agent optimization |"
+    },
+    {
+      "ref_id": 79,
+      "arxiv_id": "2602.23330",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Toward Expert Investment Teams:A Multi-Agent LLM System with Fine-Grained Trading Tasks",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 121,
+      "context": "| Toward Expert Investment Teams: A Multi-Agent LLM System with Fine-Grained Trading Tasks | Kunihiro Miyazaki et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23330v1) | Multi-agent systems with specialized roles |"
+    },
+    {
+      "ref_id": 80,
+      "arxiv_id": "2602.23093",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Three AI-agents walk into a bar . . . . `Lord of the Flies' tribalism emerges among smart AI-Agents",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 122,
+      "context": "| Three AI-agents walk into a bar... 'Lord of the Flies' tribalism emerges among smart AI-Agents | Dhwanil M. Mori, Neil F. Johnson | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23093v1) | Emergent behaviors in multi-agent resource competition |"
+    },
+    {
+      "ref_id": 81,
+      "arxiv_id": "2602.23271",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Evaluating Stochasticity in Deep Research Agents",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 123,
+      "context": "| Evaluating Stochasticity in Deep Research Agents | Haotian Zhai et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23271v1) | Evaluation framework for research agents |"
+    },
+    {
+      "ref_id": 82,
+      "arxiv_id": "2602.23220",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "STELLAR: Storage Tuning Engine Leveraging LLM Autonomous Reasoning for High Performance Parallel File Systems",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 129,
+      "context": "| STELLAR: Storage Tuning Engine Leveraging LLM Autonomous Reasoning | Chris Egersdoerfer et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.23220v1) | LLM agents for autonomous system tuning |"
+    },
+    {
+      "ref_id": 83,
+      "arxiv_id": "2602.22546",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Requesting Expert Reasoning: Augmenting LLM Agents with Learned Collaborative Intervention",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 130,
+      "context": "| Requesting Expert Reasoning: Augmenting LLM Agents with Learned Collaborative Intervention | Zhiming Wang et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.22546v1) | Collaborative intervention for specialized domains |"
+    },
+    {
+      "ref_id": 84,
+      "arxiv_id": "2602.22764",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Evaluating and Improving Automated Repository-Level Rust Issue Resolution with LLM-based Agents",
+      "source_file": "research/agent-codebase-optimization-academic-survey-report.md",
+      "line_number": 133,
+      "context": "| Evaluating and Improving Automated Repository-Level Rust Issue Resolution with LLM-based Agents | Jiahong Xiang et al. | arXiv (2026-02) | [Link](https://arxiv.org/abs/2602.22764v1) | Repository-level issue resolution automation |"
+    },
+    {
+      "ref_id": 86,
+      "arxiv_id": "2508.14111",
+      "status": "VERIFIED",
+      "claimed_title": "From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery",
+      "actual_title": "From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 64,
+      "context": "| \"From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery\" | Shanghai AI Lab | 2025 | [arXiv:2508.14111](https://arxiv.org/abs/2508.14111) |"
+    },
+    {
+      "ref_id": 87,
+      "arxiv_id": "2509.06733",
+      "status": "VERIFIED",
+      "claimed_title": "Reinforcement Learning Foundations for Deep Research Systems: A Survey",
+      "actual_title": "Reinforcement Learning Foundations for Deep Research Systems: A Survey",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 65,
+      "context": "| \"Reinforcement Learning Foundations for Deep Research Systems: A Survey\" | - | 2025 | [arXiv:2509.06733](https://arxiv.org/abs/2509.06733) |"
+    },
+    {
+      "ref_id": 88,
+      "arxiv_id": "2508.12752",
+      "status": "VERIFIED",
+      "claimed_title": "Deep Research: A Survey of Autonomous Research Agents",
+      "actual_title": "Deep Research: A Survey of Autonomous Research Agents",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 66,
+      "context": "| \"Deep Research: A Survey of Autonomous Research Agents\" | - | 2025 | [arXiv:2508.12752](https://arxiv.org/abs/2508.12752) |"
+    },
+    {
+      "ref_id": 89,
+      "arxiv_id": "2510.24701",
+      "status": "VERIFIED",
+      "claimed_title": "Tongyi DeepResearch: A New Era of Open-Source AI Researchers",
+      "actual_title": "Tongyi DeepResearch Technical Report",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 67,
+      "context": "| \"Tongyi DeepResearch: A New Era of Open-Source AI Researchers\" | Alibaba Tongyi Lab | 2025 | [arXiv:2510.24701](https://arxiv.org/abs/2510.24701) |"
+    },
+    {
+      "ref_id": 92,
+      "arxiv_id": "2501.04227",
+      "status": "VERIFIED",
+      "claimed_title": "Agent Laboratory: 利用 LLM Agent 作为研究助手",
+      "actual_title": "Agent Laboratory: Using LLM Agents as Research Assistants",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 70,
+      "context": "| \"Agent Laboratory: 利用 LLM Agent 作为研究助手\" | AMD + Johns Hopkins | 2025 | [arXiv:2501.04227](https://arxiv.org/abs/2501.04227) |"
+    },
+    {
+      "ref_id": 104,
+      "arxiv_id": "2501.06322",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Multi-Agent Collaboration Mechanisms: A Survey of LLMs",
+      "source_file": "research/agent-first-tooling-and-logging-academic-sources-report.md",
+      "line_number": 348,
+      "context": "- **Link**: https://arxiv.org/abs/2501.06322"
+    },
+    {
+      "ref_id": 107,
+      "arxiv_id": "2506.18096",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Deep Research Agents: A Systematic Examination And Roadmap",
+      "source_file": "research/agent-first-tooling-and-logging-report.md",
+      "line_number": 37,
+      "context": "| arXiv:2506.18096 | Deep Research Agents |  | June 2025 |"
+    },
+    {
+      "ref_id": 108,
+      "arxiv_id": "2505.18705",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AI-Researcher: Autonomous Scientific Innovation",
+      "source_file": "research/agent-first-tooling-and-logging-report.md",
+      "line_number": 38,
+      "context": "| arXiv:2505.18705 | AI-Researcher |  | May 2025 |"
+    },
+    {
+      "ref_id": 111,
+      "arxiv_id": "2506.09420",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "A Call for Collaborative Intelligence: Why Human-Agent Systems Should Precede AI Autonomy",
+      "source_file": "research/agent-friendly-workflow-design-academic-sources-report.md",
+      "line_number": 39,
+      "context": "- **Authors**: [Author details from arXiv:2506.09420]"
+    },
+    {
+      "ref_id": 116,
+      "arxiv_id": "2512.04107",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Rethinking AI Evaluation in Education: The TEACH-AI Framework and Benchmark for Generative AI Assistants",
+      "source_file": "research/agent-friendly-workflow-design-academic-sources-report.md",
+      "line_number": 350,
+      "context": "- **Link**: https://arxiv.org/html/2512.04107v1"
+    },
+    {
+      "ref_id": 117,
+      "arxiv_id": "2508.03923",
+      "status": "VERIFIED",
+      "claimed_title": "CoAct-1: Computer-using Agents",
+      "actual_title": "CoAct-1: Computer-using Multi-Agent System with Coding Actions",
+      "source_file": "research/agent-friendly-workflow-design-academic-sources-report.md",
+      "line_number": 849,
+      "context": "- [CoAct-1: Computer-using Agents](https://arxiv.org/abs/2508.03923) (arXiv:2508.03923, August 2025)"
+    },
+    {
+      "ref_id": 118,
+      "arxiv_id": "2503.08275",
+      "status": "VERIFIED",
+      "claimed_title": "Heterogeneous Recursive Planning",
+      "actual_title": "Beyond Outlining: Heterogeneous Recursive Planning for Adaptive Long-form Writing with Language Models",
+      "source_file": "research/agent-friendly-workflow-design-academic-sources-report.md",
+      "line_number": 850,
+      "context": "- [Heterogeneous Recursive Planning](https://arxiv.org/abs/2503.08275) (arXiv:2503.08275, March 2025)"
+    },
+    {
+      "ref_id": 124,
+      "arxiv_id": "2509.11942",
+      "status": "VERIFIED",
+      "claimed_title": "2509.11942",
+      "actual_title": "VisDocSketcher: Towards Scalable Visual Documentation with Agentic Systems",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 33,
+      "context": "| VisDocSketcher | [2509.11942](https://arxiv.org/abs/2509.11942) | 2025 | - | Visual documentation generation with agentic systems |"
+    },
+    {
+      "ref_id": 129,
+      "arxiv_id": "2507.23370",
+      "status": "VERIFIED",
+      "claimed_title": "2507.23370",
+      "actual_title": "Trae Agent: An LLM-based Agent for Software Engineering with Test-time Scaling",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 42,
+      "context": "| Trae Agent | [2507.23370](https://arxiv.org/abs/2507.23370) | 2025 | - | Ensemble reasoning for repository-level issue resolution |"
+    },
+    {
+      "ref_id": 130,
+      "arxiv_id": "2505.21577",
+      "status": "VERIFIED",
+      "claimed_title": "2505.21577",
+      "actual_title": "RepoMaster: Autonomous Exploration and Understanding of GitHub Repositories for Complex Task Solving",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 43,
+      "context": "| RepoMaster | [2505.21577](https://arxiv.org/abs/2505.21577) | 2025 | - | Autonomous exploration and understanding |"
+    },
+    {
+      "ref_id": 131,
+      "arxiv_id": "2501.03447",
+      "status": "VERIFIED",
+      "claimed_title": "2501.03447",
+      "actual_title": "CoReQA: Uncovering Potentials of Language Models in Code Repository Question Answering",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 49,
+      "context": "| CoreQA | [2501.03447](https://arxiv.org/abs/2501.03447) | 2025 | Mining LLM potential in code repository QA |"
+    },
+    {
+      "ref_id": 135,
+      "arxiv_id": "2505.16901",
+      "status": "VERIFIED",
+      "claimed_title": "2505.16901",
+      "actual_title": "Code Graph Model (CGM): A Graph-Integrated Large Language Model for Repository-Level Software Engineering Tasks",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 58,
+      "context": "| Code Graph Model (CGM) | [2505.16901](https://arxiv.org/abs/2505.16901) | 2025 | Graph-integrated LLM for repository-level tasks |"
+    },
+    {
+      "ref_id": 136,
+      "arxiv_id": "2503.22424",
+      "status": "VERIFIED",
+      "claimed_title": "2503.22424",
+      "actual_title": "Issue Localization via LLM-Driven Iterative Code Graph Searching",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 59,
+      "context": "| CoSIL | [2503.22424](https://arxiv.org/abs/2503.22424) | 2025 | LLM-driven code repository graph searching |"
+    },
+    {
+      "ref_id": 139,
+      "arxiv_id": "2506.10484",
+      "status": "VERIFIED",
+      "claimed_title": "2506.10484",
+      "actual_title": "EXPEREPAIR: Dual-Memory Enhanced LLM-based Repository-Level Program Repair",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 72,
+      "context": "| ExpeRepair | [2506.10484](https://arxiv.org/abs/2506.10484) | 2025 | Dual-memory enhanced repository-level program repair |"
+    },
+    {
+      "ref_id": 141,
+      "arxiv_id": "2508.00083",
+      "status": "VERIFIED",
+      "claimed_title": "2508.00083",
+      "actual_title": "A Survey on Code Generation with LLM-based Agents",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 74,
+      "context": "| Code Generation Survey | [2508.00083](https://arxiv.org/abs/2508.00083) | 2025 | Systematic survey of LLM-based code generation agents |"
+    },
+    {
+      "ref_id": 154,
+      "arxiv_id": "2601.22154",
+      "status": "VERIFIED",
+      "claimed_title": "arXiv:2601.22154",
+      "actual_title": "Exploring Reasoning Reward Model for Agents",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 99,
+      "context": "- **Exploring Reasoning Reward Model for Agents** ([arXiv:2601.22154](https://arxiv.org/abs/2601.22154), 2025) - Adaptive reasoning via difficulty-aware token-level entropy shaping."
+    },
+    {
+      "ref_id": 155,
+      "arxiv_id": "2505.02387",
+      "status": "VERIFIED",
+      "claimed_title": "arXiv:2505.02387",
+      "actual_title": "RM-R1: Reward Modeling as Reasoning",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 101,
+      "context": "- **RM-R1: Reward Modeling as Reasoning** ([arXiv:2505.02387](https://arxiv.org/abs/2505.02387), Chen et al., 2025) - Formulates reward modeling itself as a reasoning task."
+    },
+    {
+      "ref_id": 157,
+      "arxiv_id": "2509.02547",
+      "status": "VERIFIED",
+      "claimed_title": "arXiv:2509.02547",
+      "actual_title": "The Landscape of Agentic Reinforcement Learning for LLMs: A Survey",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 113,
+      "context": "- **The Landscape of Agentic Reinforcement Learning for LLMs: A Survey** ([arXiv:2509.02547](https://arxiv.org/abs/2509.02547), 2025) - Framework for \"Agentic RL\" distinguishing it from conventional LLM-RL through POMDPs and temporally extended decision-making."
+    },
+    {
+      "ref_id": 158,
+      "arxiv_id": "2507.21046",
+      "status": "VERIFIED",
+      "claimed_title": "arXiv:2507.21046",
+      "actual_title": "A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve on the Path to Artificial Super Intelligence",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 117,
+      "context": "- **A Survey of Self-Evolving Agents** ([arXiv:2507.21046](https://arxiv.org/abs/2507.21046), 2025) - Covers \"What to evolve\", \"When to evolve\", \"How to evolve\" with focus on self-improvement."
+    },
+    {
+      "ref_id": 159,
+      "arxiv_id": "2601.03192",
+      "status": "VERIFIED",
+      "claimed_title": "arXiv:2601.03192",
+      "actual_title": "MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory",
+      "source_file": "research/agent-reinforcement-fine-tuning-report.md",
+      "line_number": 123,
+      "context": "- **Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory** ([arXiv:2601.03192](https://arxiv.org/html/2601.03192v1), Zhang et al., 2025) - MemRL adds learned utility scores to episodic memory for value-aware retrieval without model modification."
+    },
+    {
+      "ref_id": 160,
+      "arxiv_id": "2512.04367",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AgentBay: A Hybrid Interaction Sandbox for Seamless Human-AI Intervention in Agentic Systems",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 899,
+      "context": "- **arXiv:2512.04367**"
+    },
+    {
+      "ref_id": 161,
+      "arxiv_id": "2508.10146",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Agentic AI Frameworks: Architectures, Protocols, and Design Challenges",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 914,
+      "context": "- **arXiv:2508.10146**"
+    },
+    {
+      "ref_id": 162,
+      "arxiv_id": "2505.02279",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "A survey of agent interoperability protocols: Model Context Protocol (MCP), Agent Communication Protocol (ACP), Agent-to-Agent Protocol (A2A), and Agent Network Protocol (ANP)",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 921,
+      "context": "- **arXiv:2505.02279**"
+    },
+    {
+      "ref_id": 164,
+      "arxiv_id": "2511.21689",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "ToolOrchestra: Elevating Intelligence via Efficient Model and Tool Orchestration",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 939,
+      "context": "- **arXiv:2511.21689v1**"
+    },
+    {
+      "ref_id": 165,
+      "arxiv_id": "2504.00914",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "On the Robustness of Agentic Function Calling",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 946,
+      "context": "- **arXiv:2504.00914v1**"
+    },
+    {
+      "ref_id": 166,
+      "arxiv_id": "2503.11069",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "API Agents vs. GUI Agents: Divergence and Convergence",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 1008,
+      "context": "- **arXiv:2503.11069v1**"
+    },
+    {
+      "ref_id": 167,
+      "arxiv_id": "2507.21504",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Evaluation and Benchmarking of LLM Agents: A Survey",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 1015,
+      "context": "- **arXiv:2507.21504v1**"
+    },
+    {
+      "ref_id": 168,
+      "arxiv_id": "2509.22237",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "FeatBench: Towards More Realistic Evaluation of Feature-level Code Generation",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 1022,
+      "context": "- **arXiv:2509.22237v1**"
+    },
+    {
+      "ref_id": 169,
+      "arxiv_id": "2502.16789",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AlphaAgent: LLM-Driven Alpha Mining with Regularized Exploration to Counteract Alpha Decay",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 1043,
+      "context": "- **arXiv:2502.16789v2**"
+    },
+    {
+      "ref_id": 170,
+      "arxiv_id": "2504.02623",
+      "status": "VERIFIED",
+      "claimed_title": "Multi-Mission Tool Bench (MMTB)",
+      "actual_title": "Multi-Mission Tool Bench: Assessing the Robustness of LLM based Agents through Related and Dynamic Missions",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 1153,
+      "context": "- [Multi-Mission Tool Bench (MMTB)](https://arxiv.org/abs/2504.02623) - Assessing robustness through related and dynamic missions"
+    },
+    {
+      "ref_id": 171,
+      "arxiv_id": "2506.07982",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "$τ^2$-Bench: Evaluating Conversational Agents in a Dual-Control Environment",
+      "source_file": "research/agent-sdk-for-programmatic-control-report.md",
+      "line_number": 1154,
+      "context": "- [τ2-Bench](https://arxiv.org/abs/2506.07982) - Evaluating conversational agents in dual-control environments"
+    },
+    {
+      "ref_id": 172,
+      "arxiv_id": "2505.00749",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Coral Protocol: Open Infrastructure Connecting The Internet of Agents",
+      "source_file": "research/agentfund-crowdfunding-report.md",
+      "line_number": 19,
+      "context": "- **Coral Protocol**: Academic foundation (arXiv:2505.00749v2) for trustless multi-agent escrow on Solana with ~400ms settlement"
+    },
+    {
+      "ref_id": 173,
+      "arxiv_id": "2501.09136",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Agentic Retrieval-Augmented Generation: A Survey on Agentic RAG",
+      "source_file": "research/agentic-search-over-vector-embeddings-report.md",
+      "line_number": 396,
+      "context": "- arXiv:2501.09136"
+    },
+    {
+      "ref_id": 174,
+      "arxiv_id": "2507.10562",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "SAMEP: A Secure Protocol for Persistent Context Sharing Across AI Agents",
+      "source_file": "research/agentic-search-over-vector-embeddings-report.md",
+      "line_number": 400,
+      "context": "- arXiv:2507.10562v1"
+    },
+    {
+      "ref_id": 175,
+      "arxiv_id": "2601.20245",
+      "status": "VERIFIED",
+      "claimed_title": "How AI Impacts Skill Formation",
+      "actual_title": "How AI Impacts Skill Formation",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 348,
+      "context": "**1. \"How AI Impacts Skill Formation\" (arXiv:2601.20245, January 2026)**"
+    },
+    {
+      "ref_id": 178,
+      "arxiv_id": "2506.10051",
+      "status": "VERIFIED",
+      "claimed_title": "GitHub Copilot Effects on Computing Students",
+      "actual_title": "The Effects of GitHub Copilot on Computing Students' Programming Effectiveness, Efficiency, and Processes in Brownfield Programming Tasks",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 385,
+      "context": "**5. \"GitHub Copilot Effects on Computing Students\" (arXiv:2506.10051)**"
+    },
+    {
+      "ref_id": 179,
+      "arxiv_id": "2502.05826",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "MindCraft: Revolutionizing Education through AI-Powered Personalized Learning and Mentorship for Rural India",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 426,
+      "context": "**10. MindCraft: AI-Powered Education Platform (arXiv:2502.05826, February 2025)**"
+    },
+    {
+      "ref_id": 180,
+      "arxiv_id": "2508.03174",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "InqEduAgent: Adaptive AI Learning Partners with Gaussian Process Augmentation",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 455,
+      "context": "- Identified in: InqEduAgent (arXiv:2508.03174v3, September 2025)"
+    },
+    {
+      "ref_id": 183,
+      "arxiv_id": "2511.04144",
+      "status": "VERIFIED",
+      "claimed_title": "Scaffolding Metacognition in Programming Education",
+      "actual_title": "Scaffolding Metacognition in Programming Education: Understanding Student-AI Interactions and Design Implications",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 548,
+      "context": "12. \"Scaffolding Metacognition in Programming Education\" - arXiv:2511.04144 (November 2025)"
+    },
+    {
+      "ref_id": 184,
+      "arxiv_id": "2509.20353",
+      "status": "VERIFIED",
+      "claimed_title": "GitHub Copilot in a Public Sector Agile Organization: A Mixed-Methods Study of Developer Activity and Perceived Productivity",
+      "actual_title": "Developer Productivity With and Without GitHub Copilot: A Longitudinal Mixed-Methods Case Study",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 882,
+      "context": "**Source:** \"GitHub Copilot in a Public Sector Agile Organization: A Mixed-Methods Study of Developer Activity and Perceived Productivity\" (arXiv:2509.20353)"
+    },
+    {
+      "ref_id": 185,
+      "arxiv_id": "2511.04427",
+      "status": "VERIFIED",
+      "claimed_title": "Does AI-Assisted Coding Deliver? Causal effects of adopting the Cursor agentic IDE on development velocity and software quality",
+      "actual_title": "Speed at the Cost of Quality: How Cursor AI Increases Short-Term Velocity and Long-Term Complexity in Open-Source Projects",
+      "source_file": "research/ai-accelerated-learning-and-skill-development-report.md",
+      "line_number": 916,
+      "context": "**Source:** arXiv paper - \"Does AI-Assisted Coding Deliver? Causal effects of adopting the Cursor agentic IDE on development velocity and software quality\" (arXiv:2511.04427v2)"
+    },
+    {
+      "ref_id": 186,
+      "arxiv_id": "2507.19115",
+      "status": "VERIFIED",
+      "claimed_title": "Automated Code Review at Ericsson",
+      "actual_title": "Automated Code Review Using Large Language Models at Ericsson: An Experience Report",
+      "source_file": "research/ai-assisted-code-review-verification-implementation-patterns.md",
+      "line_number": 402,
+      "context": "- [Automated Code Review at Ericsson](https://arxiv.org/html/2507.19115v2) - arXiv Experience Report (2025)"
+    },
+    {
+      "ref_id": 202,
+      "arxiv_id": "2505.20206",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Evaluating Large Language Models for Code Review",
+      "source_file": "research/ai-assisted-code-review-verification-report.md",
+      "line_number": 301,
+      "context": "- **Link:** https://arxiv.org/abs/2505.20206"
+    },
+    {
+      "ref_id": 240,
+      "arxiv_id": "2509.21500",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Chasing the Tail: Effective Rubric-based Reward Modeling for Large Language Model Post-Training",
+      "source_file": "research/anti-reward-hacking-grader-design-report.md",
+      "line_number": 754,
+      "context": "- arXiv: https://arxiv.org/abs/2509.21500"
+    },
+    {
+      "ref_id": 241,
+      "arxiv_id": "2506.09443",
+      "status": "VERIFIED",
+      "claimed_title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+      "actual_title": "LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge",
+      "source_file": "research/anti-reward-hacking-grader-design-report.md",
+      "line_number": 768,
+      "context": "15. **\"LLMs Cannot Reliably Judge (Yet?): A Comprehensive Assessment on the Robustness of LLM-as-a-Judge\"** (arXiv 2506.09443, 2025)"
+    },
+    {
+      "ref_id": 242,
+      "arxiv_id": "2504.18333",
+      "status": "VERIFIED",
+      "claimed_title": "Adversarial Attacks on LLM-as-a-Judge Systems",
+      "actual_title": "Adversarial Attacks on LLM-as-a-Judge Systems: Insights from Prompt Injections",
+      "source_file": "research/anti-reward-hacking-grader-design-report.md",
+      "line_number": 772,
+      "context": "16. **\"Adversarial Attacks on LLM-as-a-Judge Systems\"** (arXiv 2504.18333v1, 2025)"
+    },
+    {
+      "ref_id": 243,
+      "arxiv_id": "2504.07887",
+      "status": "VERIFIED",
+      "claimed_title": "Benchmarking Adversarial Robustness to Bias Elicitation in Large Language Models",
+      "actual_title": "Benchmarking Adversarial Robustness to Bias Elicitation in Large Language Models: Scalable Automated Assessment with LLM-as-a-Judge",
+      "source_file": "research/anti-reward-hacking-grader-design-report.md",
+      "line_number": 776,
+      "context": "17. **\"Benchmarking Adversarial Robustness to Bias Elicitation in Large Language Models\"** (arXiv 2504.07887, 2025)"
+    },
+    {
+      "ref_id": 244,
+      "arxiv_id": "2508.02994",
+      "status": "VERIFIED",
+      "claimed_title": "The Rise of Agent-as-a-Judge Evaluation for LLMs",
+      "actual_title": "When AIs Judge AIs: The Rise of Agent-as-a-Judge Evaluation for LLMs",
+      "source_file": "research/anti-reward-hacking-grader-design-report.md",
+      "line_number": 782,
+      "context": "18. **\"The Rise of Agent-as-a-Judge Evaluation for LLMs\"** (arXiv:2508.02994, Aug 2025)"
+    },
+    {
+      "ref_id": 247,
+      "arxiv_id": "2601.08156",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Project Synapse: A Hierarchical Multi-Agent Framework with Hybrid Memory for Autonomous Resolution of Last-Mile Delivery Disruptions",
+      "source_file": "research/anti-reward-hacking-grader-design-report.md",
+      "line_number": 794,
+      "context": "21. **Project Synapse: Hierarchical Multi-Agent Framework** (arXiv:2601.08156v1, Jan 2026)"
+    },
+    {
+      "ref_id": 264,
+      "arxiv_id": "2510.05145",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "FlashResearch: Real-time Agent Orchestration for Efficient Deep Research",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 36,
+      "context": "**FlashResearch: Real-time Agent Orchestration for Efficient Deep Research** (arXiv:2510.05145, October 2025)"
+    },
+    {
+      "ref_id": 265,
+      "arxiv_id": "2510.08521",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "FlowSearch: Advancing deep research with dynamic structured knowledge flow",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 47,
+      "context": "**FlowSearch: Multi-Agent Architecture** (arXiv:2510.08521, October 2025)"
+    },
+    {
+      "ref_id": 266,
+      "arxiv_id": "2507.01663",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AsyncFlow: An Asynchronous Streaming RL Framework for Efficient LLM Post-Training",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 66,
+      "context": "**AsyncFlow: An Asynchronous Streaming RL Framework for Efficient LLM Post-Training** (arXiv:2507.01663, 2025)"
+    },
+    {
+      "ref_id": 267,
+      "arxiv_id": "2505.24298",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AReaL: A Large-Scale Asynchronous Reinforcement Learning System for Language Reasoning",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 77,
+      "context": "**AREAL: A Large-Scale Asynchronous Reinforcement Learning System for Language Reasoning** (arXiv:2505.24298, 2025)"
+    },
+    {
+      "ref_id": 269,
+      "arxiv_id": "2505.24034",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "LlamaRL: A Distributed Asynchronous Reinforcement Learning Framework for Efficient Large-scale LLM Training",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 93,
+      "context": "**LlamaRL: A Distributed Asynchronous Reinforcement Learning Framework for Efficient Large-scale LLM Training** (arXiv:2505.24034, 2025)"
+    },
+    {
+      "ref_id": 270,
+      "arxiv_id": "2504.04104",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "SpecPipe: Accelerating Pipeline Parallelism-based LLM Inference with Speculative Decoding",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 102,
+      "context": "**SpecPipe: Accelerating Pipeline Parallelism-based LLM Inference with Speculative Decoding** (arXiv:2504.04104v2, 2025)"
+    },
+    {
+      "ref_id": 271,
+      "arxiv_id": "2509.08309",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Hetis: Serving LLMs in Heterogeneous GPU Clusters with Fine-grained and Dynamic Parallelism",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 112,
+      "context": "**Hetis: Serving LLMs in Heterogeneous GPU Clusters with Fine-grained and Dynamic Parallelism** (arXiv:2509.08309v1, SC '25)"
+    },
+    {
+      "ref_id": 272,
+      "arxiv_id": "2502.15524",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "HydraServe: Minimizing Cold Start Latency for Serverless LLM Serving in Public Clouds",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 120,
+      "context": "**HydraServe: Minimizing Cold Start Latency for Serverless LLM Serving** (arXiv:2502.15524v2, 2025)"
+    },
+    {
+      "ref_id": 273,
+      "arxiv_id": "2509.24381",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "RServe: Overlapping Encoding and Prefill for Efficient LMM Inference",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 128,
+      "context": "**Overlapping Encoding and Prefill for Efficient LLM Inference** (arXiv:2509.24381, 2025)"
+    },
+    {
+      "ref_id": 274,
+      "arxiv_id": "2510.20171",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Collective Communication for 100k+ GPUs",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 136,
+      "context": "**NCCLX: Collective Communication for 100k+ GPUs** (arXiv:2510.20171v3, Meta)"
+    },
+    {
+      "ref_id": 275,
+      "arxiv_id": "2510.16156",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AsyncVoice Agent: Real-Time Explanation for LLM Planning and Reasoning",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 147,
+      "context": "**AsyncVoice Agent: Real-Time Explanation for LLM** (arXiv:2510.16156v1, October 2025)"
+    },
+    {
+      "ref_id": 276,
+      "arxiv_id": "2507.09138",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "HedraRAG: Coordinating LLM Generation and Database Retrieval in Heterogeneous RAG Serving",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 155,
+      "context": "**HedraRAG: Coordinating LLM Generation and Database** (arXiv:2507.09138v1, July 2025)"
+    },
+    {
+      "ref_id": 277,
+      "arxiv_id": "2503.21904",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AssistPDA: An Online Video Surveillance Assistant for Video Anomaly Prediction, Detection, and Analysis",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 162,
+      "context": "**VITA-Audio: Fast Interleaved Cross-Modal Token Generation** (arXiv:2503.21904v1, May 2025)"
+    },
+    {
+      "ref_id": 278,
+      "arxiv_id": "2510.18509",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "VAPU: System for Autonomous Legacy Code Modernization",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 170,
+      "context": "**VAPU: System for Autonomous Legacy Code Modernization** (arXiv:2510.18509v1, October 2025)"
+    },
+    {
+      "ref_id": 279,
+      "arxiv_id": "2510.08263",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Co-TAP: Three-Layer Agent Interaction Protocol Technical Report",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 179,
+      "context": "**Co-TAP: Three-Layer Agent Interaction Protocol** (arXiv:2510.08263v1, October 2025)"
+    },
+    {
+      "ref_id": 280,
+      "arxiv_id": "2504.02051",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Self-Resource Allocation in Multi-Agent LLM Systems",
+      "source_file": "research/asynchronous-coding-agent-pipeline-report.md",
+      "line_number": 188,
+      "context": "**Self-Resource Allocation in Multi-Agent LLM Systems** (arXiv:2504.02051, April 2025)"
+    },
+    {
+      "ref_id": 283,
+      "arxiv_id": "2601.12560",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Agentic Artificial Intelligence (AI): Architectures, Taxonomies, and Evaluation of Large Language Model Agents",
+      "source_file": "research/autonomous-workflow-agent-architecture-report.md",
+      "line_number": 202,
+      "context": "**Agentic AI Survey** (arXiv 2601.12560v1, 2025)"
+    },
+    {
+      "ref_id": 286,
+      "arxiv_id": "2503.13657",
+      "status": "VERIFIED",
+      "claimed_title": "Why Do Multi-Agent LLM Systems Fail?",
+      "actual_title": "Why Do Multi-Agent LLM Systems Fail?",
+      "source_file": "research/autonomous-workflow-agent-architecture-report.md",
+      "line_number": 379,
+      "context": "- [Why Do Multi-Agent LLM Systems Fail?](https://arxiv.org/abs/2503.13657) (2025)"
+    },
+    {
+      "ref_id": 287,
+      "arxiv_id": "2505.05428",
+      "status": "VERIFIED",
+      "claimed_title": "Empowering Scientific Workflows with Federated Agents",
+      "actual_title": "Empowering Scientific Workflows with Federated Agents",
+      "source_file": "research/autonomous-workflow-agent-architecture-report.md",
+      "line_number": 380,
+      "context": "- [Empowering Scientific Workflows with Federated Agents](https://arxiv.org/html/2505.05428v1) (2025)"
+    },
+    {
+      "ref_id": 288,
+      "arxiv_id": "2507.15003",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "The Rise of AI Teammates in Software Engineering (SE) 3.0: How Autonomous Coding Agents Are Reshaping Software Engineering",
+      "source_file": "research/background-agent-ci-report.md",
+      "line_number": 220,
+      "context": "- **arXiv ID**: arXiv:2507.15003"
+    },
+    {
+      "ref_id": 289,
+      "arxiv_id": "2510.11838",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Lingxi: Repository-Level Issue Resolution Framework Enhanced by Procedural Knowledge Guided Scaling",
+      "source_file": "research/background-agent-ci-report.md",
+      "line_number": 226,
+      "context": "- **arXiv ID**: arXiv:2510.11838"
+    },
+    {
+      "ref_id": 290,
+      "arxiv_id": "2505.19443",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Vibe Coding vs. Agentic Coding: Fundamentals and Practical Implications of Agentic AI",
+      "source_file": "research/background-agent-ci-report.md",
+      "line_number": 241,
+      "context": "- **arXiv ID**: arXiv:2505.19443, July 2025"
+    },
+    {
+      "ref_id": 291,
+      "arxiv_id": "2507.04067",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "HAWK: A Hierarchical Workflow Framework for Multi-Agent Collaboration",
+      "source_file": "research/background-agent-ci-report.md",
+      "line_number": 264,
+      "context": "- **arXiv ID**: arXiv:2507.04067v1, July 2025"
+    },
+    {
+      "ref_id": 293,
+      "arxiv_id": "2510.21413",
+      "status": "VERIFIED",
+      "claimed_title": "Context Engineering for AI Agents in Open-Source Software",
+      "actual_title": "Context Engineering for AI Agents in Open-Source Software",
+      "source_file": "research/background-agent-ci-report.md",
+      "line_number": 482,
+      "context": "- [Context Engineering for AI Agents in Open-Source Software](https://arxiv.org/abs/2510.21413) - October 2025"
+    },
+    {
+      "ref_id": 294,
+      "arxiv_id": "2510.25445",
+      "status": "VERIFIED",
+      "claimed_title": "Agentic AI: A Comprehensive Survey of Architectures",
+      "actual_title": "Agentic AI: A Comprehensive Survey of Architectures, Applications, and Future Directions",
+      "source_file": "research/background-agent-ci-report.md",
+      "line_number": 484,
+      "context": "- [Agentic AI: A Comprehensive Survey of Architectures](https://arxiv.org/html/2510.25445)"
+    },
+    {
+      "ref_id": 295,
+      "arxiv_id": "2511.17006",
+      "status": "VERIFIED",
+      "claimed_title": "arXiv:2511.17006v1 (November 2025)",
+      "actual_title": "Budget-Aware Tool-Use Enables Effective Agent Scaling",
+      "source_file": "research/budget-aware-model-routing-industry-implementations-report.md",
+      "line_number": 532,
+      "context": "**Paper:** arXiv:2511.17006v1 (November 2025)"
+    },
+    {
+      "ref_id": 296,
+      "arxiv_id": "2510.08439",
+      "status": "VERIFIED",
+      "claimed_title": "xRouter Paper",
+      "actual_title": "xRouter: Training Cost-Aware LLMs Orchestration System via Reinforcement Learning",
+      "source_file": "research/budget-aware-model-routing-industry-implementations-report.md",
+      "line_number": 658,
+      "context": "- [xRouter Paper](https://arxiv.org/html/2510.08439v1)"
+    },
+    {
+      "ref_id": 297,
+      "arxiv_id": "2502.11133",
+      "status": "VERIFIED",
+      "claimed_title": "Router-R1 Paper",
+      "actual_title": "MasRouter: Learning to Route LLMs for Multi-Agent Systems",
+      "source_file": "research/budget-aware-model-routing-industry-implementations-report.md",
+      "line_number": 659,
+      "context": "- [Router-R1 Paper](https://arxiv.org/abs/2502.11133)"
+    },
+    {
+      "ref_id": 298,
+      "arxiv_id": "2502.00409",
+      "status": "VERIFIED",
+      "claimed_title": "Implementing Routing Strategies in LLM Systems",
+      "actual_title": "Doing More with Less: A Survey on Routing Strategies for Resource Optimisation in Large Language Model-Based Systems",
+      "source_file": "research/budget-aware-model-routing-industry-implementations-report.md",
+      "line_number": 660,
+      "context": "- [Implementing Routing Strategies in LLM Systems](https://arxiv.org/abs/2502.00409)"
+    },
+    {
+      "ref_id": 299,
+      "arxiv_id": "2601.19402",
+      "status": "VERIFIED",
+      "claimed_title": "2601.19402",
+      "actual_title": "PROTEUS: SLA-Aware Routing via Lagrangian RL for Multi-LLM Serving Systems",
+      "source_file": "research/budget-aware-model-routing-with-hard-cost-caps-report.md",
+      "line_number": 35,
+      "context": "**arXiv**: [2601.19402](https://arxiv.org/html/2601.19402v3)"
+    },
+    {
+      "ref_id": 304,
+      "arxiv_id": "2507.15844",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Hierarchical Budget Policy Optimization for Adaptive Reasoning",
+      "source_file": "research/budget-aware-model-routing-with-hard-cost-caps-report.md",
+      "line_number": 133,
+      "context": "**Published**: July 2024 (arXiv:2507.15844)"
+    },
+    {
+      "ref_id": 308,
+      "arxiv_id": "2501.10114",
+      "status": "VERIFIED",
+      "claimed_title": "Infrastructure for AI Agents.",
+      "actual_title": "Infrastructure for AI Agents",
+      "source_file": "research/burn-the-boats-commitment-strategy-report.md",
+      "line_number": 392,
+      "context": "5. **Chan, L., et al. (2025)**. \"Infrastructure for AI Agents.\" *arXiv:2501.10114*."
+    },
+    {
+      "ref_id": 309,
+      "arxiv_id": "2509.01063",
+      "status": "VERIFIED",
+      "claimed_title": "An Economy of AI Agents",
+      "actual_title": "An Economy of AI Agents",
+      "source_file": "research/burn-the-boats-commitment-strategy-report.md",
+      "line_number": 418,
+      "context": "15. **\"An Economy of AI Agents\" (2025)**. *arXiv:2509.01063*. Discusses source code commitment and program equilibrium."
+    },
+    {
+      "ref_id": 310,
+      "arxiv_id": "2512.04123",
+      "status": "VERIFIED",
+      "claimed_title": "Measuring Agents in Production - arXiv",
+      "actual_title": "Measuring Agents in Production",
+      "source_file": "research/burn-the-boats-report.md",
+      "line_number": 546,
+      "context": "- [Measuring Agents in Production - arXiv](https://arxiv.org/html/2512.04123v1) - UC Berkeley study (306 practitioners, 20 case studies)"
+    },
+    {
+      "ref_id": 311,
+      "arxiv_id": "2602.14849",
+      "status": "VERIFIED",
+      "claimed_title": "Atomix: Timely, Transactional Tool Use for Reliable Agentic Workflows",
+      "actual_title": "Atomix: Timely, Transactional Tool Use for Reliable Agentic Workflows",
+      "source_file": "research/burn-the-boats-technical-implementation-report.md",
+      "line_number": 905,
+      "context": "- [Atomix: Timely, Transactional Tool Use for Reliable Agentic Workflows](https://arxiv.org/html/2602.14849v1) (Feb 2026) - Discusses agent frameworks, aborted vs. irreversible effects, and compensation for rollback"
+    },
+    {
+      "ref_id": 312,
+      "arxiv_id": "2508.03858",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "MI9: An Integrated Runtime Governance Framework for Agentic AI",
+      "source_file": "research/canary-rollout-and-automatic-rollback-for-agent-policy-changes-report.md",
+      "line_number": 166,
+      "context": "1. **MI9 - Runtime Governance Framework** ([arXiv](https://arxiv.org/html/2508.03858v3))"
+    },
+    {
+      "ref_id": 313,
+      "arxiv_id": "2512.03180",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "AGENTSAFE: A Unified Framework for Ethical Assurance and Governance in Agentic AI",
+      "source_file": "research/canary-rollout-and-automatic-rollback-for-agent-policy-changes-report.md",
+      "line_number": 170,
+      "context": "2. **AGENTSAFE - Ethical Assurance Framework** ([arXiv](https://arxiv.org/html/2512.03180v1))"
+    },
+    {
+      "ref_id": 314,
+      "arxiv_id": "2507.06134",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "OpenAgentSafety: A Comprehensive Framework for Evaluating Real-World AI Agent Safety",
+      "source_file": "research/canary-rollout-and-automatic-rollback-for-agent-policy-changes-report.md",
+      "line_number": 174,
+      "context": "3. **OpenAgentSafety** ([arXiv](https://arxiv.org/html/2507.06134v1))"
+    },
+    {
+      "ref_id": 315,
+      "arxiv_id": "2507.09820",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Measuring What Matters: A Framework for Evaluating Safety Risks in Real-World LLM Applications",
+      "source_file": "research/canary-rollout-and-automatic-rollback-for-agent-policy-changes-report.md",
+      "line_number": 512,
+      "context": "2. **Safety Risk Evaluation Framework** - [arXiv](https://arxiv.org/html/2507.09820v1) (July 2025)"
+    },
+    {
+      "ref_id": 316,
+      "arxiv_id": "2510.11713",
+      "status": "VERIFIED",
+      "claimed_title": "Are Large Reasoning Models Interruptible?",
+      "actual_title": "Are Large Reasoning Models Interruptible?",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 71,
+      "context": "#### **\"Are Large Reasoning Models Interruptible?\"** (arXiv:2510.11713, October 2025)"
+    },
+    {
+      "ref_id": 317,
+      "arxiv_id": "2503.24370",
+      "status": "VERIFIED",
+      "claimed_title": "Effectively Controlling Reasoning Models through Thinking Intervention",
+      "actual_title": "Effectively Controlling Reasoning Models through Thinking Intervention",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 75,
+      "context": "#### **\"Effectively Controlling Reasoning Models through Thinking Intervention\"** (arXiv:2503.24370, March 2025)"
+    },
+    {
+      "ref_id": 318,
+      "arxiv_id": "2506.07240",
+      "status": "VERIFIED",
+      "claimed_title": "Overclocking LLM Reasoning: Monitoring and Controlling Thinking Path Lengths",
+      "actual_title": "Overclocking LLM Reasoning: Monitoring and Controlling Thinking Path Lengths in LLMs",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 86,
+      "context": "#### **\"Overclocking LLM Reasoning: Monitoring and Controlling Thinking Path Lengths\"** (arXiv:2506.07240, June 2025)"
+    },
+    {
+      "ref_id": 319,
+      "arxiv_id": "2505.23575",
+      "status": "VERIFIED",
+      "claimed_title": "CoT Red-Handed: Stress Testing Chain-of-Thought Monitoring",
+      "actual_title": "CoT Red-Handed: Stress Testing Chain-of-Thought Monitoring",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 95,
+      "context": "#### **\"CoT Red-Handed: Stress Testing Chain-of-Thought Monitoring\"** (arXiv:2505.23575, May 2025)"
+    },
+    {
+      "ref_id": 320,
+      "arxiv_id": "2504.15895",
+      "status": "VERIFIED",
+      "claimed_title": "Dynamic Early Exit in Reasoning Models",
+      "actual_title": "Dynamic Early Exit in Reasoning Models",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 119,
+      "context": "#### **\"Dynamic Early Exit in Reasoning Models\"** (arXiv:2504.15895, April 2025)"
+    },
+    {
+      "ref_id": 321,
+      "arxiv_id": "2505.04881",
+      "status": "VERIFIED",
+      "claimed_title": "ConCISE: Confidence-guided Compression",
+      "actual_title": "ConCISE: Confidence-guided Compression in Step-by-step Efficient Reasoning",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 127,
+      "context": "#### **\"ConCISE: Confidence-guided Compression\"** (arXiv:2505.04881, May 2025)"
+    },
+    {
+      "ref_id": 322,
+      "arxiv_id": "2510.08146",
+      "status": "VERIFIED",
+      "claimed_title": "Sequence-Level Entropy as Confidence Signal",
+      "actual_title": "Think Just Enough: Sequence-Level Entropy as a Confidence Signal for LLM Reasoning",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 135,
+      "context": "#### **\"Sequence-Level Entropy as Confidence Signal\"** (arXiv:2510.08146, October 2025)"
+    },
+    {
+      "ref_id": 323,
+      "arxiv_id": "2510.19476",
+      "status": "VERIFIED",
+      "claimed_title": "A Concrete Roadmap towards Safety Cases based on CoT Monitoring",
+      "actual_title": "A Concrete Roadmap towards Safety Cases based on Chain-of-Thought Monitoring",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 144,
+      "context": "#### **\"A Concrete Roadmap towards Safety Cases based on CoT Monitoring\"** (arXiv:2510.19476, October 2025)"
+    },
+    {
+      "ref_id": 324,
+      "arxiv_id": "2506.04909",
+      "status": "VERIFIED",
+      "claimed_title": "When Thinking LLMs Lie: Unveiling Strategic Deception",
+      "actual_title": "When Thinking LLMs Lie: Unveiling the Strategic Deception in Representations of Reasoning Models",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 154,
+      "context": "#### **\"When Thinking LLMs Lie: Unveiling Strategic Deception\"** (arXiv:2506.04909, June 2025)"
+    },
+    {
+      "ref_id": 325,
+      "arxiv_id": "2504.16828",
+      "status": "VERIFIED",
+      "claimed_title": "Process Reward Models That Think",
+      "actual_title": "Process Reward Models That Think",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 168,
+      "context": "#### **\"Process Reward Models That Think\"** (arXiv:2504.16828, April 2025)"
+    },
+    {
+      "ref_id": 327,
+      "arxiv_id": "2602.08354",
+      "status": "VERIFIED",
+      "claimed_title": "Does Your Reasoning Model Implicitly Know When to Stop Thinking?",
+      "actual_title": "Does Your Reasoning Model Implicitly Know When to Stop Thinking?",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 189,
+      "context": "#### **\"Does Your Reasoning Model Implicitly Know When to Stop Thinking?\"** (arXiv:2602.08354, February 2026)"
+    },
+    {
+      "ref_id": 329,
+      "arxiv_id": "2510.10103",
+      "status": "VERIFIED",
+      "claimed_title": "Adaptive Early-Stopping for Chain-of-Thought Reasoning",
+      "actual_title": "Stop When Enough: Adaptive Early-Stopping for Chain-of-Thought Reasoning",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 837,
+      "context": "- [Adaptive Early-Stopping for Chain-of-Thought Reasoning](https://arxiv.org/abs/2510.10103) (arXiv:2510.10103, October 2025)"
+    },
+    {
+      "ref_id": 331,
+      "arxiv_id": "2503.04472",
+      "status": "VERIFIED",
+      "claimed_title": "DAST: Difficulty-adaptive Slow-thinking",
+      "actual_title": "DAST: Difficulty-Adaptive Slow-Thinking for Large Reasoning Models",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 848,
+      "context": "- [DAST: Difficulty-adaptive Slow-thinking](https://arxiv.org/abs/2503.04472) (arXiv:2503.04472, March 2025)"
+    },
+    {
+      "ref_id": 332,
+      "arxiv_id": "2503.04697",
+      "status": "VERIFIED",
+      "claimed_title": "L1: Controlling How Long A Reasoning Model Thinks",
+      "actual_title": "L1: Controlling How Long A Reasoning Model Thinks With Reinforcement Learning",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 849,
+      "context": "- [L1: Controlling How Long A Reasoning Model Thinks](https://arxiv.org/abs/2503.04697) (arXiv:2503.04697, 2025)"
+    },
+    {
+      "ref_id": 333,
+      "arxiv_id": "2502.19613",
+      "status": "VERIFIED",
+      "claimed_title": "Self-Rewarding Correction for Mathematical Reasoning",
+      "actual_title": "Self-rewarding correction for mathematical reasoning",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 850,
+      "context": "- [Self-Rewarding Correction for Mathematical Reasoning](https://arxiv.org/abs/2502.19613) (arXiv:2502.19613, March 2025)"
+    },
+    {
+      "ref_id": 334,
+      "arxiv_id": "2503.16419",
+      "status": "VERIFIED",
+      "claimed_title": "Stop Overthinking: A Survey",
+      "actual_title": "Stop Overthinking: A Survey on Efficient Reasoning for Large Language Models",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 851,
+      "context": "- [Stop Overthinking: A Survey](https://arxiv.org/abs/2503.16419) (arXiv:2503.16419, March 2025)"
+    },
+    {
+      "ref_id": 335,
+      "arxiv_id": "2502.18600",
+      "status": "VERIFIED",
+      "claimed_title": "Chain of Draft: Thinking Faster by Writing Less",
+      "actual_title": "Chain of Draft: Thinking Faster by Writing Less",
+      "source_file": "research/chain-of-thought-monitoring-interruption-report.md",
+      "line_number": 852,
+      "context": "- [Chain of Draft: Thinking Faster by Writing Less](https://arxiv.org/pdf/2502.18600) (arXiv:2502.18600, 2025)"
+    },
+    {
+      "ref_id": 457,
+      "arxiv_id": "2504.20997",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Toward Efficient Exploration by Large Language Model Agents",
+      "source_file": "research/explicit-posterior-sampling-planner-academic-sources-report.md",
+      "line_number": 33,
+      "context": "- **Source:** https://arxiv.org/abs/2504.20997"
+    },
+    {
+      "ref_id": 542,
+      "arxiv_id": "2502.23320",
+      "status": "NOT_FOUND",
+      "claimed_title": null,
+      "actual_title": "Article not found",
+      "source_file": "research/incident-to-eval-synthesis-report.md",
+      "line_number": 159,
+      "context": "- **Venue:** arXiv:2502.23320 (2025)"
+    },
+    {
+      "ref_id": 675,
+      "arxiv_id": "2503.12434",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "A Survey on the Optimization of Large Language Model-based Agents",
+      "source_file": "research/multi-model-orchestration-for-complex-edits-report.md",
+      "line_number": 316,
+      "context": "**Source:** arXiv preprint arXiv:2503.12434"
+    },
+    {
+      "ref_id": 676,
+      "arxiv_id": "2503.23037",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Agentic Large Language Models, a survey",
+      "source_file": "research/multi-model-orchestration-for-complex-edits-report.md",
+      "line_number": 335,
+      "context": "**Source:** arXiv preprint arXiv:2503.23037"
+    },
+    {
+      "ref_id": 668,
+      "arxiv_id": "2312.06540",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Convergence of the Chambolle-Pock Algorithm in the Absence of Monotonicity",
+      "source_file": "research/merged-code-language-skill-model-report.md",
+      "line_number": 1120,
+      "context": "**Source:** DARE (Yu et al., 2023) - https://arxiv.org/abs/2312.06540 (Note: URL needs verification)"
+    },
+    {
+      "ref_id": 18,
+      "arxiv_id": "2406.00515",
+      "status": "VERIFIED",
+      "claimed_title": "A Survey on Large Language Models for Code Generation.",
+      "actual_title": "A Survey on Large Language Models for Code Generation",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 305,
+      "context": "- \"A Survey on Large Language Models for Code Generation.\" arXiv 2406.00515 (2024)."
+    },
+    {
+      "ref_id": 19,
+      "arxiv_id": "2408.16498",
+      "status": "VERIFIED",
+      "claimed_title": "A Survey on Evaluating Large Language Models in Code Generation Tasks.",
+      "actual_title": "A Survey on Evaluating Large Language Models in Code Generation Tasks",
+      "source_file": "research/abstracted-code-representation-for-review-report.md",
+      "line_number": 306,
+      "context": "- \"A Survey on Evaluating Large Language Models in Code Generation Tasks.\" arXiv 2408.16498 (2024)."
+    },
+    {
+      "ref_id": 22,
+      "arxiv_id": "2408.02666",
+      "status": "VERIFIED",
+      "claimed_title": "Self-Taught Evaluators",
+      "actual_title": "Self-Taught Evaluators",
+      "source_file": "research/abstracted-code-representation-technical-analysis.md",
+      "line_number": 978,
+      "context": "- [Self-Taught Evaluators](https://arxiv.org/abs/2408.02666) - Meta AI (2024)"
+    },
+    {
+      "ref_id": 25,
+      "arxiv_id": "2305.05176",
+      "status": "VERIFIED",
+      "claimed_title": "\"FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance\"",
+      "actual_title": "FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance",
+      "source_file": "research/action-caching-replay-report.md",
+      "line_number": 482,
+      "context": "**DOI/Link:** arXiv:2305.05176"
+    },
+    {
+      "ref_id": 39,
+      "arxiv_id": "2401.07324",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Small LLMs Are Weak Tool Learners: A Multi-LLM Agent",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 503,
+      "context": "1. Shen, W., Li, C., Chen, H., et al. (2024). Small LLMs Are Weak Tool Learners: A Multi-LLM Agent. arXiv:2401.07324."
+    },
+    {
+      "ref_id": 40,
+      "arxiv_id": "2402.11651",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Learning From Failure: Integrating Negative Examples when Fine-tuning Large Language Models as Agents",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 504,
+      "context": "2. Wang, R., et al. (2024). Learning From Failure: Integrating Negative Examples when Fine-tuning Large Language Models as Agents. arXiv:2402.11651."
+    },
+    {
+      "ref_id": 41,
+      "arxiv_id": "2410.05451",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "SecAlign: Defending Against Prompt Injection with Preference Optimization",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 505,
+      "context": "3. Chen, S., Zharmagambetov, A., Mahloujifar, S., et al. (2024). SecAlign: Defending Against Prompt Injection with Preference Optimization. arXiv:2410.05451."
+    },
+    {
+      "ref_id": 42,
+      "arxiv_id": "2402.06363",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "StruQ: Defending Against Prompt Injection with Structured Queries",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 506,
+      "context": "4. Chen, S., et al. (2024). StruQ: Defending Against Prompt Injection with Structured Queries. arXiv:2402.06363."
+    },
+    {
+      "ref_id": 43,
+      "arxiv_id": "2403.04957",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Automatic and Universal Prompt Injection Attacks against Large Language Models",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 507,
+      "context": "5. Liu, X., Yu, Z., Zhang, Y., et al. (2024). Automatic and Universal Prompt Injection Attacks against Large Language Models. arXiv:2403.04957."
+    },
+    {
+      "ref_id": 46,
+      "arxiv_id": "2408.17003",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Safety Layers in Aligned Large Language Models: The Key to LLM Security",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 510,
+      "context": "8. Li, S., Yao, L., Zhang, L., et al. (2024). Safety Layers in Aligned Large Language Models: The Key to LLM Security. arXiv:2408.17003."
+    },
+    {
+      "ref_id": 48,
+      "arxiv_id": "2210.03629",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "source_file": "research/action-selector-academic-sources-report.md",
+      "line_number": 512,
+      "context": "10. Yao, S., Zhao, J., Yu, D., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. arXiv:2210.03629."
+    },
+    {
+      "ref_id": 49,
+      "arxiv_id": "2108.07732",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "Program Synthesis with Large Language Models",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 40,
+      "context": "| Program synthesis with large language models | Austin et al. | 2021 | arXiv:2108.07732 - Foundational work for LLM-based code generation |"
+    },
+    {
+      "ref_id": 50,
+      "arxiv_id": "2203.13474",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "CodeGen: An Open Large Language Model for Code with Multi-Turn Program Synthesis",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 41,
+      "context": "| CodeGen: Multi-Turn Program Synthesis | Nijkamp et al. | 2023 | arXiv:2203.13474 - Open-source LLM family for program synthesis |"
+    },
+    {
+      "ref_id": 51,
+      "arxiv_id": "2402.13521",
+      "status": "VERIFIED",
+      "claimed_title": "Test-Driven Development for Code Generation",
+      "actual_title": "Test-Driven Development for Code Generation",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 85,
+      "context": "- \"Test-Driven Development for Code Generation\" (arXiv:2402.13521)"
+    },
+    {
+      "ref_id": 53,
+      "arxiv_id": "2404.07387",
+      "status": "VERIFIED",
+      "claimed_title": "Biscuit: Scaffolding LLM-Generated Code",
+      "actual_title": "BISCUIT: Scaffolding LLM-Generated Code with Ephemeral UIs in Computational Notebooks",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 619,
+      "context": "- \"Biscuit: Scaffolding LLM-Generated Code\" (2024). arXiv:2404.07387v1"
+    },
+    {
+      "ref_id": 56,
+      "arxiv_id": "2401.13138",
+      "status": "VERIFIED",
+      "claimed_title": "Monitoring AI Agent Deployment",
+      "actual_title": "Visibility into AI Agents",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 622,
+      "context": "- \"Monitoring AI Agent Deployment\" - arXiv:2401.13138v1"
+    },
+    {
+      "ref_id": 64,
+      "arxiv_id": "2402.10178",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "TDAG: A Multi-Agent Framework based on Dynamic Task Decomposition and Agent Generation",
+      "source_file": "research/agent-assisted-scaffolding-report.md",
+      "line_number": 861,
+      "context": "7. TDAG (arXiv:2402.10178) - Dynamic task decomposition"
+    },
+    {
+      "ref_id": 85,
+      "arxiv_id": "2408.06292",
+      "status": "VERIFIED",
+      "claimed_title": "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery",
+      "actual_title": "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 63,
+      "context": "| \"The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery\" | Sakana AI + Oxford + UBC | 2024 | [arXiv:2408.06292](https://arxiv.org/abs/2408.06292) |"
+    },
+    {
+      "ref_id": 90,
+      "arxiv_id": "2410.05080",
+      "status": "VERIFIED",
+      "claimed_title": "ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery",
+      "actual_title": "ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 68,
+      "context": "| \"ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery\" | Chen et al. (ICLR) | 2024 | [arXiv:2410.05080](https://arxiv.org/abs/2410.05080) |"
+    },
+    {
+      "ref_id": 91,
+      "arxiv_id": "2404.07738",
+      "status": "VERIFIED",
+      "claimed_title": "ResearchAgent: Iterative Research Idea Generation Over Scientific Literature",
+      "actual_title": "ResearchAgent: Iterative Research Idea Generation over Scientific Literature with Large Language Models",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 69,
+      "context": "| \"ResearchAgent: Iterative Research Idea Generation Over Scientific Literature\" | Baek et al. | 2024 | [arXiv:2404.07738](https://arxiv.org/abs/2404.07738) |"
+    },
+    {
+      "ref_id": 94,
+      "arxiv_id": "2303.11366",
+      "status": "VERIFIED",
+      "claimed_title": "Self-Refine: Improving Reasoning in Language Models via Iterative Feedback",
+      "actual_title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 72,
+      "context": "| \"Self-Refine: Improving Reasoning in Language Models via Iterative Feedback\" | Shinn et al. | 2023 | [arXiv:2303.11366](https://arxiv.org/abs/2303.11366) |"
+    },
+    {
+      "ref_id": 95,
+      "arxiv_id": "2310.04406",
+      "status": "VERIFIED",
+      "claimed_title": "Language Agent Tree Search (LATS)",
+      "actual_title": "Language Agent Tree Search Unifies Reasoning Acting and Planning in Language Models",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 74,
+      "context": "| \"Language Agent Tree Search (LATS)\" | Zhou et al., UIUC | 2023 | [arXiv:2310.04406](https://arxiv.org/abs/2310.04406) |"
+    },
+    {
+      "ref_id": 96,
+      "arxiv_id": "2308.09687",
+      "status": "VERIFIED",
+      "claimed_title": "Graph of Thoughts: Solving Elaborate Problems with Large Language Models",
+      "actual_title": "Graph of Thoughts: Solving Elaborate Problems with Large Language Models",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 75,
+      "context": "| \"Graph of Thoughts: Solving Elaborate Problems with Large Language Models\" | Besta et al., ETH Zurich | 2024 | [arXiv:2308.09687](https://arxiv.org/abs/2308.09687) |"
+    },
+    {
+      "ref_id": 97,
+      "arxiv_id": "2301.02663",
+      "status": "VERIFIED",
+      "claimed_title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "actual_title": "On the Characterization of Alternating Groups by Codegrees",
+      "source_file": "research/agent-driven-research-report.md",
+      "line_number": 76,
+      "context": "| \"Tree of Thoughts: Deliberate Problem Solving with Large Language Models\" | Yao et al. | 2023 | [NeurIPS 2023](https://arxiv.org/abs/2301.02663) |"
+    },
+    {
+      "ref_id": 103,
+      "arxiv_id": "2401.06201",
+      "status": "VERIFIED",
+      "claimed_title": null,
+      "actual_title": "EASYTOOL: Enhancing LLM-based Agents with Concise Tool Instruction",
+      "source_file": "research/agent-first-tooling-and-logging-academic-sources-report.md",
+      "line_number": 200,
+      "context": "- **Link**: https://arxiv.org/abs/2401.06201"
+    },
+    {
+      "ref_id": 120,
+      "arxiv_id": "2412.05950",
+      "status": "VERIFIED",
+      "claimed_title": "A Practical Guide for Production-Grade Agentic AI Workflows",
+      "actual_title": "Quantitative particle approximation of nonlinear stochastic Fokker-Planck equations with singular kernel",
+      "source_file": "research/agent-friendly-workflow-design-report.md",
+      "line_number": 609,
+      "context": "- [A Practical Guide for Production-Grade Agentic AI Workflows](https://arxiv.org/abs/2412.05950) (arXiv, Dec 2025)"
+    },
+    {
+      "ref_id": 121,
+      "arxiv_id": "2410.12345",
+      "status": "VERIFIED",
+      "claimed_title": "Handoff vs Supervisor Patterns",
+      "actual_title": "A Data-driven Contact Estimation Method for Wheeled-Biped Robots",
+      "source_file": "research/agent-friendly-workflow-design-report.md",
+      "line_number": 626,
+      "context": "- [Handoff vs Supervisor Patterns](https://arxiv.org/abs/2410.12345) (arXiv, Oct 2024)"
+    },
+    {
+      "ref_id": 122,
+      "arxiv_id": "2402.16667",
+      "status": "VERIFIED",
+      "claimed_title": "2402.16667",
+      "actual_title": "RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 32,
+      "context": "| RepoAgent | [2402.16667](https://arxiv.org/abs/2402.16667) | 2024 | EMNLP 2024 | First framework for automated repository-level code documentation |"
+    },
+    {
+      "ref_id": 125,
+      "arxiv_id": "2405.15793",
+      "status": "VERIFIED",
+      "claimed_title": "2405.15793",
+      "actual_title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 40,
+      "context": "| SWE-agent | [2405.15793](https://arxiv.org/abs/2405.15793) | 2024 | NeurIPS 2024 | Agent-Computer Interfaces (ACI) for repository interaction |"
+    },
+    {
+      "ref_id": 127,
+      "arxiv_id": "2401.07339",
+      "status": "VERIFIED",
+      "claimed_title": "2401.07339",
+      "actual_title": "CodeAgent: Enhancing Code Generation with Tool-Integrated Agent Systems for Real-World Repo-level Coding Challenges",
+      "source_file": "research/agent-powered-codebase-qa-onboarding-report.md",
+      "line_number": 41,
+      "context": "| CodeAgent | [2401.07339](https://arxiv.org/abs/2401.07339) | 2024 | ACL 2024 | Tool-integrated agent system for repo-level challenges |"
+    },
+    {
+      "arxiv_id": "1306.0940",
+      "status": "VERIFIED",
+      "actual_title": "(More) Efficient Reinforcement Learning via Posterior Sampling",
+      "source_url": "https://arxiv.org/abs/1306.0940"
+    },
+    {
+      "arxiv_id": "1410.5401",
+      "status": "VERIFIED",
+      "actual_title": "Neural Turing Machines",
+      "source_url": "https://arxiv.org/abs/1410.5401"
+    },
+    {
+      "arxiv_id": "1506.06196",
+      "status": "VERIFIED",
+      "actual_title": "Heartbeat Stars: Spectroscopic Orbital Solutions for Six Eccentric Binary Systems",
+      "source_url": "https://arxiv.org/abs/1506.06196"
+    },
+    {
+      "arxiv_id": "1511.05952",
+      "status": "VERIFIED",
+      "actual_title": "Prioritized Experience Replay",
+      "source_url": "https://arxiv.org/abs/1511.05952"
+    },
+    {
+      "arxiv_id": "1512.08245",
+      "status": "VERIFIED",
+      "actual_title": "Spectral properties of transition metal pnictides and chalcogenides: angle-resolved photoemission spectroscopy and dynamical mean field theory",
+      "source_url": "https://arxiv.org/abs/1512.08245"
+    },
+    {
+      "arxiv_id": "1602.01783",
+      "status": "VERIFIED",
+      "actual_title": "Asynchronous Methods for Deep Reinforcement Learning",
+      "source_url": "https://arxiv.org/abs/1602.01783"
+    },
+    {
+      "arxiv_id": "1606.04671",
+      "status": "VERIFIED",
+      "actual_title": "Progressive Neural Networks",
+      "source_url": "https://arxiv.org/abs/1606.04671"
+    },
+    {
+      "arxiv_id": "1606.06565",
+      "status": "VERIFIED",
+      "actual_title": "Concrete Problems in AI Safety",
+      "source_url": "https://arxiv.org/abs/1606.06565"
+    },
+    {
+      "arxiv_id": "1612.00796",
+      "status": "VERIFIED",
+      "actual_title": "Overcoming catastrophic forgetting in neural networks",
+      "source_url": "https://arxiv.org/abs/1612.00796"
+    },
+    {
+      "arxiv_id": "1701.06538",
+      "status": "VERIFIED",
+      "actual_title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "source_url": "https://arxiv.org/abs/1701.06538"
+    },
+    {
+      "arxiv_id": "1703.01988",
+      "status": "VERIFIED",
+      "actual_title": "Neural Episodic Control",
+      "source_url": "https://arxiv.org/abs/1703.01988"
+    },
+    {
+      "arxiv_id": "1705.10528",
+      "status": "VERIFIED",
+      "actual_title": "Constrained Policy Optimization",
+      "source_url": "https://arxiv.org/abs/1705.10528"
+    },
+    {
+      "arxiv_id": "1706.03741",
+      "status": "VERIFIED",
+      "actual_title": "Deep reinforcement learning from human preferences",
+      "source_url": "https://arxiv.org/abs/1706.03741"
+    },
+    {
+      "arxiv_id": "1706.03762",
+      "status": "VERIFIED",
+      "actual_title": "Attention Is All You Need",
+      "source_url": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "arxiv_id": "1706.06121",
+      "status": "VERIFIED",
+      "actual_title": "High-Precision Calculations in Strongly Coupled Quantum Field Theory with Next-to-Leading-Order Renormalized Hamiltonian Truncation",
+      "source_url": "https://arxiv.org/abs/1706.06121"
+    },
+    {
+      "arxiv_id": "1707.06347",
+      "status": "VERIFIED",
+      "actual_title": "Proximal Policy Optimization Algorithms",
+      "source_url": "https://arxiv.org/abs/1707.06347"
+    },
+    {
+      "arxiv_id": "1707.08161",
+      "status": "VERIFIED",
+      "actual_title": "Formation of soap bubbles by gas jet",
+      "source_url": "https://arxiv.org/abs/1707.08161"
+    },
+    {
+      "arxiv_id": "1709.03483",
+      "status": "VERIFIED",
+      "actual_title": "Cherenkov Telescope Array Contributions to the 35th International Cosmic Ray Conference (ICRC2017)",
+      "source_url": "https://arxiv.org/abs/1709.03483"
+    },
+    {
+      "arxiv_id": "1711.05769",
+      "status": "VERIFIED",
+      "actual_title": "PackNet: Adding Multiple Tasks to a Single Network by Iterative Pruning",
+      "source_url": "https://arxiv.org/abs/1711.05769"
+    },
+    {
+      "arxiv_id": "1805.00899",
+      "status": "VERIFIED",
+      "actual_title": "AI safety via debate",
+      "source_url": "https://arxiv.org/abs/1805.00899"
+    },
+    {
+      "arxiv_id": "1805.09361",
+      "status": "VERIFIED",
+      "actual_title": "On a lower bound for the eccentric connectivity index of graphs",
+      "source_url": "https://arxiv.org/abs/1805.09361"
+    },
+    {
+      "arxiv_id": "1807.03343",
+      "status": "VERIFIED",
+      "actual_title": "Complex Fully Convolutional Neural Networks for MR Image Reconstruction",
+      "source_url": "https://arxiv.org/abs/1807.03343"
+    },
+    {
+      "arxiv_id": "1808.01390",
+      "status": "VERIFIED",
+      "actual_title": "A new family of one dimensional martingale couplings",
+      "source_url": "https://arxiv.org/abs/1808.01390"
+    },
+    {
+      "arxiv_id": "1901.02860",
+      "status": "VERIFIED",
+      "actual_title": "Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context",
+      "source_url": "https://arxiv.org/abs/1901.02860"
+    },
+    {
+      "arxiv_id": "1904.04528",
+      "status": "VERIFIED",
+      "actual_title": "Partial Enumerative Sphere Shaping",
+      "source_url": "https://arxiv.org/abs/1904.04528"
+    },
+    {
+      "arxiv_id": "1904.10509",
+      "status": "VERIFIED",
+      "actual_title": "Generating Long Sequences with Sparse Transformers",
+      "source_url": "https://arxiv.org/abs/1904.10509"
+    },
+    {
+      "arxiv_id": "1906.07316",
+      "status": "VERIFIED",
+      "actual_title": "DeepView: View Synthesis with Learned Gradient Descent",
+      "source_url": "https://arxiv.org/abs/1906.07316"
+    },
+    {
+      "arxiv_id": "1909.08053",
+      "status": "VERIFIED",
+      "actual_title": "Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism",
+      "source_url": "https://arxiv.org/abs/1909.08053"
+    },
+    {
+      "arxiv_id": "1911.05507",
+      "status": "VERIFIED",
+      "actual_title": "Compressive Transformers for Long-Range Sequence Modelling",
+      "source_url": "https://arxiv.org/abs/1911.05507"
+    },
+    {
+      "arxiv_id": "2001.08361",
+      "status": "VERIFIED",
+      "actual_title": "Scaling Laws for Neural Language Models",
+      "source_url": "https://arxiv.org/abs/2001.08361"
+    },
+    {
+      "arxiv_id": "2002.08909",
+      "status": "VERIFIED",
+      "actual_title": "REALM: Retrieval-Augmented Language Model Pre-Training",
+      "source_url": "https://arxiv.org/abs/2002.08909"
+    },
+    {
+      "arxiv_id": "2004.05150",
+      "status": "VERIFIED",
+      "actual_title": "Longformer: The Long-Document Transformer",
+      "source_url": "https://arxiv.org/abs/2004.05150"
+    },
+    {
+      "arxiv_id": "2004.08343",
+      "status": "VERIFIED",
+      "actual_title": "Spectral gap for the growth-fragmentation equation via Harris's Theorem",
+      "source_url": "https://arxiv.org/abs/2004.08343"
+    },
+    {
+      "arxiv_id": "2005.08996",
+      "status": "VERIFIED",
+      "actual_title": "Topological terms on topological defects: a quantum Monte Carlo study",
+      "source_url": "https://arxiv.org/abs/2005.08996"
+    },
+    {
+      "arxiv_id": "2005.11401",
+      "status": "VERIFIED",
+      "actual_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "source_url": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "arxiv_id": "2005.14165",
+      "status": "VERIFIED",
+      "actual_title": "Language Models are Few-Shot Learners",
+      "source_url": "https://arxiv.org/abs/2005.14165"
+    },
+    {
+      "arxiv_id": "2007.14062",
+      "status": "VERIFIED",
+      "actual_title": "Big Bird: Transformers for Longer Sequences",
+      "source_url": "https://arxiv.org/abs/2007.14062"
+    },
+    {
+      "arxiv_id": "2009.01325",
+      "status": "VERIFIED",
+      "actual_title": "Learning to summarize from human feedback",
+      "source_url": "https://arxiv.org/abs/2009.01325"
+    },
+    {
+      "arxiv_id": "2009.06732",
+      "status": "VERIFIED",
+      "actual_title": "Efficient Transformers: A Survey",
+      "source_url": "https://arxiv.org/abs/2009.06732"
+    },
+    {
+      "arxiv_id": "2101.03961",
+      "status": "VERIFIED",
+      "actual_title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+      "source_url": "https://arxiv.org/abs/2101.03961"
+    },
+    {
+      "arxiv_id": "2101.03999",
+      "status": "VERIFIED",
+      "actual_title": "A Neural Question Answering System for Basic Questions about Subroutines",
+      "source_url": "https://arxiv.org/abs/2101.03999"
+    },
+    {
+      "arxiv_id": "2101.06804",
+      "status": "VERIFIED",
+      "actual_title": "What Makes Good In-Context Examples for GPT-$3$?",
+      "source_url": "https://arxiv.org/abs/2101.06804"
+    },
+    {
+      "arxiv_id": "2102.05224",
+      "status": "VERIFIED",
+      "actual_title": "Downlink Channel Reconstruction for Spatial Multiplexing in Massive MIMO Systems",
+      "source_url": "https://arxiv.org/abs/2102.05224"
+    },
+    {
+      "arxiv_id": "2102.10091",
+      "status": "VERIFIED",
+      "actual_title": "The Basic de Rham Complex of a Singular Foliation",
+      "source_url": "https://arxiv.org/abs/2102.10091"
+    },
+    {
+      "arxiv_id": "2103.00020",
+      "status": "VERIFIED",
+      "actual_title": "Learning Transferable Visual Models From Natural Language Supervision",
+      "source_url": "https://arxiv.org/abs/2103.00020"
+    },
+    {
+      "arxiv_id": "2104.04473",
+      "status": "VERIFIED",
+      "actual_title": "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM",
+      "source_url": "https://arxiv.org/abs/2104.04473"
+    },
+    {
+      "arxiv_id": "2106.02633",
+      "status": "VERIFIED",
+      "actual_title": "A Novel Test of Quasar Orientation",
+      "source_url": "https://arxiv.org/abs/2106.02633"
+    },
+    {
+      "arxiv_id": "2106.02987",
+      "status": "VERIFIED",
+      "actual_title": "Analysis of a semi-augmented mixed finite element method for double-diffusive natural convection in porous media",
+      "source_url": "https://arxiv.org/abs/2106.02987"
+    },
+    {
+      "arxiv_id": "2106.04746",
+      "status": "VERIFIED",
+      "actual_title": "Comprehensive Laboratory Measurements Resolving the LMM Dielectronic Recombination Satellite Lines in Ne-like Fe XVII Ions",
+      "source_url": "https://arxiv.org/abs/2106.04746"
+    },
+    {
+      "arxiv_id": "2106.06742",
+      "status": "VERIFIED",
+      "actual_title": "Task Transformer Network for Joint MRI Reconstruction and Super-Resolution",
+      "source_url": "https://arxiv.org/abs/2106.06742"
+    },
+    {
+      "arxiv_id": "2106.12653",
+      "status": "VERIFIED",
+      "actual_title": "Differentiability and Control of a Model for Granular Material Accumulation",
+      "source_url": "https://arxiv.org/abs/2106.12653"
+    },
+    {
+      "arxiv_id": "2106.15563",
+      "status": "VERIFIED",
+      "actual_title": "Learning latent causal graphs via mixture oracles",
+      "source_url": "https://arxiv.org/abs/2106.15563"
+    },
+    {
+      "arxiv_id": "2107.03374",
+      "status": "VERIFIED",
+      "actual_title": "Evaluating Large Language Models Trained on Code",
+      "source_url": "https://arxiv.org/abs/2107.03374"
+    },
+    {
+      "arxiv_id": "2108.05206",
+      "status": "VERIFIED",
+      "actual_title": "The graviton Compton mass as Dark energy",
+      "source_url": "https://arxiv.org/abs/2108.05206"
+    },
+    {
+      "arxiv_id": "2109.07453",
+      "status": "VERIFIED",
+      "actual_title": "Local Environments of Low-Redshift Supernovae",
+      "source_url": "https://arxiv.org/abs/2109.07453"
+    },
+    {
+      "arxiv_id": "2112.08608",
+      "status": "VERIFIED",
+      "actual_title": "QuALITY: Question Answering with Long Input Texts, Yes!",
+      "source_url": "https://arxiv.org/abs/2112.08608"
+    },
+    {
+      "arxiv_id": "2112.09332",
+      "status": "VERIFIED",
+      "actual_title": "WebGPT: Browser-assisted question-answering with human feedback",
+      "source_url": "https://arxiv.org/abs/2112.09332"
+    },
+    {
+      "arxiv_id": "2201.11903",
+      "status": "VERIFIED",
+      "actual_title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "source_url": "https://arxiv.org/abs/2201.11903"
+    },
+    {
+      "arxiv_id": "2201.12086",
+      "status": "VERIFIED",
+      "actual_title": "BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation",
+      "source_url": "https://arxiv.org/abs/2201.12086"
+    },
+    {
+      "arxiv_id": "2203.02155",
+      "status": "VERIFIED",
+      "actual_title": "Training language models to follow instructions with human feedback",
+      "source_url": "https://arxiv.org/abs/2203.02155"
+    },
+    {
+      "arxiv_id": "2203.05482",
+      "status": "VERIFIED",
+      "actual_title": "Model soups: averaging weights of multiple fine-tuned models improves accuracy without increasing inference time",
+      "source_url": "https://arxiv.org/abs/2203.05482"
+    },
+    {
+      "arxiv_id": "2203.11171",
+      "status": "VERIFIED",
+      "actual_title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "source_url": "https://arxiv.org/abs/2203.11171"
+    },
+    {
+      "arxiv_id": "2203.15556",
+      "status": "VERIFIED",
+      "actual_title": "Training Compute-Optimal Large Language Models",
+      "source_url": "https://arxiv.org/abs/2203.15556"
+    },
+    {
+      "arxiv_id": "2204.05862",
+      "status": "VERIFIED",
+      "actual_title": "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback",
+      "source_url": "https://arxiv.org/abs/2204.05862"
+    },
+    {
+      "arxiv_id": "2204.14198",
+      "status": "VERIFIED",
+      "actual_title": "Flamingo: a Visual Language Model for Few-Shot Learning",
+      "source_url": "https://arxiv.org/abs/2204.14198"
+    },
+    {
+      "arxiv_id": "2205.11916",
+      "status": "VERIFIED",
+      "actual_title": "Large Language Models are Zero-Shot Reasoners",
+      "source_url": "https://arxiv.org/abs/2205.11916"
+    },
+    {
+      "arxiv_id": "2205.14135",
+      "status": "VERIFIED",
+      "actual_title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+      "source_url": "https://arxiv.org/abs/2205.14135"
+    },
+    {
+      "arxiv_id": "2206.07682",
+      "status": "VERIFIED",
+      "actual_title": "Emergent Abilities of Large Language Models",
+      "source_url": "https://arxiv.org/abs/2206.07682"
+    },
+    {
+      "arxiv_id": "2207.01780",
+      "status": "VERIFIED",
+      "actual_title": "CodeRL: Mastering Code Generation through Pretrained Models and Deep Reinforcement Learning",
+      "source_url": "https://arxiv.org/abs/2207.01780"
+    },
+    {
+      "arxiv_id": "2209.07858",
+      "status": "VERIFIED",
+      "actual_title": "Red Teaming Language Models to Reduce Harms: Methods, Scaling Behaviors, and Lessons Learned",
+      "source_url": "https://arxiv.org/abs/2209.07858"
+    },
+    {
+      "arxiv_id": "2210.04449",
+      "status": "VERIFIED",
+      "actual_title": "RTSDF: Generating Signed Distance Fields in Real Time for Soft Shadow Rendering",
+      "source_url": "https://arxiv.org/abs/2210.04449"
+    },
+    {
+      "arxiv_id": "2210.06423",
+      "status": "VERIFIED",
+      "actual_title": "Foundation Transformers",
+      "source_url": "https://arxiv.org/abs/2210.06423"
+    },
+    {
+      "arxiv_id": "2210.07615",
+      "status": "VERIFIED",
+      "actual_title": "FedFM: Anchor-based Feature Matching for Data Heterogeneity in Federated Learning",
+      "source_url": "https://arxiv.org/abs/2210.07615"
+    },
+    {
+      "arxiv_id": "2210.10760",
+      "status": "VERIFIED",
+      "actual_title": "Scaling Laws for Reward Model Overoptimization",
+      "source_url": "https://arxiv.org/abs/2210.10760"
+    },
+    {
+      "arxiv_id": "2210.10772",
+      "status": "VERIFIED",
+      "actual_title": "One-dimensional L{\\'e}vy Quasicrystal",
+      "source_url": "https://arxiv.org/abs/2210.10772"
+    },
+    {
+      "arxiv_id": "2210.11412",
+      "status": "VERIFIED",
+      "actual_title": "Functions with a maximal number of finite invariant or internally-1-quasi-invariant sets or supersets",
+      "source_url": "https://arxiv.org/abs/2210.11412"
+    },
+    {
+      "arxiv_id": "2211.01910",
+      "status": "VERIFIED",
+      "actual_title": "Large Language Models Are Human-Level Prompt Engineers",
+      "source_url": "https://arxiv.org/abs/2211.01910"
+    },
+    {
+      "arxiv_id": "2211.10435",
+      "status": "VERIFIED",
+      "actual_title": "PAL: Program-aided Language Models",
+      "source_url": "https://arxiv.org/abs/2211.10435"
+    },
+    {
+      "arxiv_id": "2211.12588",
+      "status": "VERIFIED",
+      "actual_title": "Program of Thoughts Prompting: Disentangling Computation from Reasoning for Numerical Reasoning Tasks",
+      "source_url": "https://arxiv.org/abs/2211.12588"
+    },
+    {
+      "arxiv_id": "2212.04089",
+      "status": "VERIFIED",
+      "actual_title": "Editing Models with Task Arithmetic",
+      "source_url": "https://arxiv.org/abs/2212.04089"
+    },
+    {
+      "arxiv_id": "2212.04929",
+      "status": "VERIFIED",
+      "actual_title": "Coefficient invariances of Convex functions",
+      "source_url": "https://arxiv.org/abs/2212.04929"
+    },
+    {
+      "arxiv_id": "2212.07677",
+      "status": "VERIFIED",
+      "actual_title": "Transformers learn in-context by gradient descent",
+      "source_url": "https://arxiv.org/abs/2212.07677"
+    },
+    {
+      "arxiv_id": "2212.08073",
+      "status": "VERIFIED",
+      "actual_title": "Constitutional AI: Harmlessness from AI Feedback",
+      "source_url": "https://arxiv.org/abs/2212.08073"
+    },
+    {
+      "arxiv_id": "2212.09251",
+      "status": "VERIFIED",
+      "actual_title": "Discovering Language Model Behaviors with Model-Written Evaluations",
+      "source_url": "https://arxiv.org/abs/2212.09251"
+    },
+    {
+      "arxiv_id": "2301.12597",
+      "status": "VERIFIED",
+      "actual_title": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models",
+      "source_url": "https://arxiv.org/abs/2301.12597"
+    },
+    {
+      "arxiv_id": "2301.12652",
+      "status": "VERIFIED",
+      "actual_title": "REPLUG: Retrieval-Augmented Black-Box Language Models",
+      "source_url": "https://arxiv.org/abs/2301.12652"
+    },
+    {
+      "arxiv_id": "2302.04761",
+      "status": "VERIFIED",
+      "actual_title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "source_url": "https://arxiv.org/abs/2302.04761"
+    },
+    {
+      "arxiv_id": "2302.08025",
+      "status": "VERIFIED",
+      "actual_title": "Momentum analysis of complex time-periodic flows",
+      "source_url": "https://arxiv.org/abs/2302.08025"
+    },
+    {
+      "arxiv_id": "2302.12173",
+      "status": "VERIFIED",
+      "actual_title": "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+      "source_url": "https://arxiv.org/abs/2302.12173"
+    },
+    {
+      "arxiv_id": "2303.04713",
+      "status": "VERIFIED",
+      "actual_title": "On the space-time analyticity of the inhomogeneous heat equation on the half space with Neumann boundary conditions",
+      "source_url": "https://arxiv.org/abs/2303.04713"
+    },
+    {
+      "arxiv_id": "2303.05125",
+      "status": "VERIFIED",
+      "actual_title": "Cones: Concept Neurons in Diffusion Models for Customized Generation",
+      "source_url": "https://arxiv.org/abs/2303.05125"
+    },
+    {
+      "arxiv_id": "2303.08119",
+      "status": "VERIFIED",
+      "actual_title": "How Many Demonstrations Do You Need for In-context Learning?",
+      "source_url": "https://arxiv.org/abs/2303.08119"
+    },
+    {
+      "arxiv_id": "2303.08123",
+      "status": "VERIFIED",
+      "actual_title": "Identifying Promising Candidate Radiotherapy Protocols via GPU-GA in-silico",
+      "source_url": "https://arxiv.org/abs/2303.08123"
+    },
+    {
+      "arxiv_id": "2303.08774",
+      "status": "VERIFIED",
+      "actual_title": "GPT-4 Technical Report",
+      "source_url": "https://arxiv.org/abs/2303.08774"
+    },
+    {
+      "arxiv_id": "2303.08972",
+      "status": "VERIFIED",
+      "actual_title": "Dynamical nonlinear excitations induced by interaction quench in a two-dimensional box-trapped Bose-Einstein condensate",
+      "source_url": "https://arxiv.org/abs/2303.08972"
+    },
+    {
+      "arxiv_id": "2303.12712",
+      "status": "VERIFIED",
+      "actual_title": "Sparks of Artificial General Intelligence: Early experiments with GPT-4",
+      "source_url": "https://arxiv.org/abs/2303.12712"
+    },
+    {
+      "arxiv_id": "2303.17461",
+      "status": "VERIFIED",
+      "actual_title": "Dirac Theory in Hydrodynamic Form",
+      "source_url": "https://arxiv.org/abs/2303.17461"
+    },
+    {
+      "arxiv_id": "2303.17580",
+      "status": "VERIFIED",
+      "actual_title": "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face",
+      "source_url": "https://arxiv.org/abs/2303.17580"
+    },
+    {
+      "arxiv_id": "2303.17651",
+      "status": "VERIFIED",
+      "actual_title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "source_url": "https://arxiv.org/abs/2303.17651"
+    },
+    {
+      "arxiv_id": "2303.17760",
+      "status": "VERIFIED",
+      "actual_title": "CAMEL: Communicative Agents for \"Mind\" Exploration of Large Language Model Society",
+      "source_url": "https://arxiv.org/abs/2303.17760"
+    },
+    {
+      "arxiv_id": "2304.03442",
+      "status": "VERIFIED",
+      "actual_title": "Generative Agents: Interactive Simulacra of Human Behavior",
+      "source_url": "https://arxiv.org/abs/2304.03442"
+    },
+    {
+      "arxiv_id": "2304.06425",
+      "status": "VERIFIED",
+      "actual_title": "Revisiting Friedmann-like cosmology with torsion: newest constraints from high-redshift observations",
+      "source_url": "https://arxiv.org/abs/2304.06425"
+    },
+    {
+      "arxiv_id": "2304.08244",
+      "status": "VERIFIED",
+      "actual_title": "API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs",
+      "source_url": "https://arxiv.org/abs/2304.08244"
+    },
+    {
+      "arxiv_id": "2304.08485",
+      "status": "VERIFIED",
+      "actual_title": "Visual Instruction Tuning",
+      "source_url": "https://arxiv.org/abs/2304.08485"
+    },
+    {
+      "arxiv_id": "2304.09842",
+      "status": "VERIFIED",
+      "actual_title": "Chameleon: Plug-and-Play Compositional Reasoning with Large Language Models",
+      "source_url": "https://arxiv.org/abs/2304.09842"
+    },
+    {
+      "arxiv_id": "2305.06161",
+      "status": "VERIFIED",
+      "actual_title": "StarCoder: may the source be with you!",
+      "source_url": "https://arxiv.org/abs/2305.06161"
+    },
+    {
+      "arxiv_id": "2305.06500",
+      "status": "VERIFIED",
+      "actual_title": "InstructBLIP: Towards General-purpose Vision-Language Models with Instruction Tuning",
+      "source_url": "https://arxiv.org/abs/2305.06500"
+    },
+    {
+      "arxiv_id": "2305.10601",
+      "status": "VERIFIED",
+      "actual_title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "source_url": "https://arxiv.org/abs/2305.10601"
+    },
+    {
+      "arxiv_id": "2305.10647",
+      "status": "VERIFIED",
+      "actual_title": "BioAug: Conditional Generation based Data Augmentation for Low-Resource Biomedical NER",
+      "source_url": "https://arxiv.org/abs/2305.10647"
+    },
+    {
+      "arxiv_id": "2305.12345",
+      "status": "VERIFIED",
+      "actual_title": "Overspinning a rotating black hole in semiclassical gravity with type-A trace anomaly",
+      "source_url": "https://arxiv.org/abs/2305.12345"
+    },
+    {
+      "arxiv_id": "2305.13072",
+      "status": "VERIFIED",
+      "actual_title": "Interpretable Mesomorphic Networks for Tabular Data",
+      "source_url": "https://arxiv.org/abs/2305.13072"
+    },
+    {
+      "arxiv_id": "2305.14319",
+      "status": "VERIFIED",
+      "actual_title": "On the convergence of Fourier spectral methods involving non-compact operators",
+      "source_url": "https://arxiv.org/abs/2305.14319"
+    },
+    {
+      "arxiv_id": "2305.14325",
+      "status": "VERIFIED",
+      "actual_title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
+      "source_url": "https://arxiv.org/abs/2305.14325"
+    },
+    {
+      "arxiv_id": "2305.14384",
+      "status": "VERIFIED",
+      "actual_title": "Adversarial Nibbler: A Data-Centric Challenge for Improving the Safety of Text-to-Image Models",
+      "source_url": "https://arxiv.org/abs/2305.14384"
+    },
+    {
+      "arxiv_id": "2305.14386",
+      "status": "VERIFIED",
+      "actual_title": "Let GPT be a Math Tutor: Teaching Math Word Problem Solvers with Customized Exercise Generation",
+      "source_url": "https://arxiv.org/abs/2305.14386"
+    },
+    {
+      "arxiv_id": "2305.14550",
+      "status": "VERIFIED",
+      "actual_title": "When should we prefer Decision Transformers for Offline Reinforcement Learning?",
+      "source_url": "https://arxiv.org/abs/2305.14550"
+    },
+    {
+      "arxiv_id": "2305.14613",
+      "status": "VERIFIED",
+      "actual_title": "Selectively Answering Ambiguous Questions",
+      "source_url": "https://arxiv.org/abs/2305.14613"
+    },
+    {
+      "arxiv_id": "2305.15334",
+      "status": "VERIFIED",
+      "actual_title": "Gorilla: Large Language Model Connected with Massive APIs",
+      "source_url": "https://arxiv.org/abs/2305.15334"
+    },
+    {
+      "arxiv_id": "2305.16291",
+      "status": "VERIFIED",
+      "actual_title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+      "source_url": "https://arxiv.org/abs/2305.16291"
+    },
+    {
+      "arxiv_id": "2305.16504",
+      "status": "VERIFIED",
+      "actual_title": "On the Tool Manipulation Capability of Open-source Large Language Models",
+      "source_url": "https://arxiv.org/abs/2305.16504"
+    },
+    {
+      "arxiv_id": "2305.17182",
+      "status": "VERIFIED",
+      "actual_title": "On the Copying Problem of Unsupervised NMT: A Training Schedule with a Language Discriminator Loss",
+      "source_url": "https://arxiv.org/abs/2305.17182"
+    },
+    {
+      "arxiv_id": "2305.18290",
+      "status": "VERIFIED",
+      "actual_title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "source_url": "https://arxiv.org/abs/2305.18290"
+    },
+    {
+      "arxiv_id": "2305.18708",
+      "status": "VERIFIED",
+      "actual_title": "Infrared Image Deturbulence Restoration Using Degradation Parameter-Assisted Wide & Deep Learning",
+      "source_url": "https://arxiv.org/abs/2305.18708"
+    },
+    {
+      "arxiv_id": "2305.20025",
+      "status": "VERIFIED",
+      "actual_title": "Mutual Information Estimation via f-Divergence and Data Derangements",
+      "source_url": "https://arxiv.org/abs/2305.20025"
+    },
+    {
+      "arxiv_id": "2306.01708",
+      "status": "VERIFIED",
+      "actual_title": "TIES-Merging: Resolving Interference When Merging Models",
+      "source_url": "https://arxiv.org/abs/2306.01708"
+    },
+    {
+      "arxiv_id": "2306.03085",
+      "status": "VERIFIED",
+      "actual_title": "Nonparametric Detection of Gerrymandering in Multiparty Elections",
+      "source_url": "https://arxiv.org/abs/2306.03085"
+    },
+    {
+      "arxiv_id": "2306.03141",
+      "status": "VERIFIED",
+      "actual_title": "Cosmic ray feedback in galaxies and galaxy clusters -- A pedagogical introduction and a topical review of the acceleration, transport, observables, and dynamical impact of cosmic rays",
+      "source_url": "https://arxiv.org/abs/2306.03141"
+    },
+    {
+      "arxiv_id": "2306.05298",
+      "status": "VERIFIED",
+      "actual_title": "Habits of Mind: Reusing Action Sequences for Efficient Planning",
+      "source_url": "https://arxiv.org/abs/2306.05298"
+    },
+    {
+      "arxiv_id": "2306.05320",
+      "status": "VERIFIED",
+      "actual_title": "KIT's Multilingual Speech Translation System for IWSLT 2023",
+      "source_url": "https://arxiv.org/abs/2306.05320"
+    },
+    {
+      "arxiv_id": "2306.05659",
+      "status": "VERIFIED",
+      "actual_title": "COVER: A Heuristic Greedy Adversarial Attack on Prompt-based Learning in Language Models",
+      "source_url": "https://arxiv.org/abs/2306.05659"
+    },
+    {
+      "arxiv_id": "2306.11234",
+      "status": "VERIFIED",
+      "actual_title": "Sequential Flipping: A Donor-Acceptor Exchange Mechanism in Water Trimer",
+      "source_url": "https://arxiv.org/abs/2306.11234"
+    },
+    {
+      "arxiv_id": "2306.14978",
+      "status": "VERIFIED",
+      "actual_title": "Fairness Aware Counterfactuals for Subgroups",
+      "source_url": "https://arxiv.org/abs/2306.14978"
+    },
+    {
+      "arxiv_id": "2306.16837",
+      "status": "VERIFIED",
+      "actual_title": "A Formal Perspective on Byte-Pair Encoding",
+      "source_url": "https://arxiv.org/abs/2306.16837"
+    },
+    {
+      "arxiv_id": "2307.02490",
+      "status": "VERIFIED",
+      "actual_title": "Advances in Engine Efficiency: Nanomaterials, Surface Engineering, and Quantum-based Propulsion",
+      "source_url": "https://arxiv.org/abs/2307.02490"
+    },
+    {
+      "arxiv_id": "2307.03172",
+      "status": "VERIFIED",
+      "actual_title": "Lost in the Middle: How Language Models Use Long Contexts",
+      "source_url": "https://arxiv.org/abs/2307.03172"
+    },
+    {
+      "arxiv_id": "2307.04964",
+      "status": "VERIFIED",
+      "actual_title": "Secrets of RLHF in Large Language Models Part I: PPO",
+      "source_url": "https://arxiv.org/abs/2307.04964"
+    },
+    {
+      "arxiv_id": "2307.07924",
+      "status": "VERIFIED",
+      "actual_title": "ChatDev: Communicative Agents for Software Development",
+      "source_url": "https://arxiv.org/abs/2307.07924"
+    },
+    {
+      "arxiv_id": "2307.08691",
+      "status": "VERIFIED",
+      "actual_title": "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning",
+      "source_url": "https://arxiv.org/abs/2307.08691"
+    },
+    {
+      "arxiv_id": "2307.13521",
+      "status": "VERIFIED",
+      "actual_title": "Non-Analytic Behaviour in Large-deviations of the SIR model under the influence of Lockdowns",
+      "source_url": "https://arxiv.org/abs/2307.13521"
+    },
+    {
+      "arxiv_id": "2307.13854",
+      "status": "VERIFIED",
+      "actual_title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "source_url": "https://arxiv.org/abs/2307.13854"
+    },
+    {
+      "arxiv_id": "2307.16701",
+      "status": "VERIFIED",
+      "actual_title": "Towards the mechanism and high performance of solid-state Li batteries",
+      "source_url": "https://arxiv.org/abs/2307.16701"
+    },
+    {
+      "arxiv_id": "2308.00309",
+      "status": "VERIFIED",
+      "actual_title": "Absorption of Fermionic Dark Matter via the Scalar Portal",
+      "source_url": "https://arxiv.org/abs/2308.00309"
+    },
+    {
+      "arxiv_id": "2308.00352",
+      "status": "VERIFIED",
+      "actual_title": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework",
+      "source_url": "https://arxiv.org/abs/2308.00352"
+    },
+    {
+      "arxiv_id": "2308.00952",
+      "status": "VERIFIED",
+      "actual_title": "Over-Barrier Photoelectron Emission with Rashba Spin-Orbit Coupling",
+      "source_url": "https://arxiv.org/abs/2308.00952"
+    },
+    {
+      "arxiv_id": "2308.01570",
+      "status": "VERIFIED",
+      "actual_title": "The Effect of Uniform and Non-uniform Electron Density Models for Determining Shock Speed of a Type II Solar Radio Burst",
+      "source_url": "https://arxiv.org/abs/2308.01570"
+    },
+    {
+      "arxiv_id": "2308.04669",
+      "status": "VERIFIED",
+      "actual_title": "A General Implicit Framework for Fast NeRF Composition and Rendering",
+      "source_url": "https://arxiv.org/abs/2308.04669"
+    },
+    {
+      "arxiv_id": "2308.06366",
+      "status": "VERIFIED",
+      "actual_title": "Exploring the Relation between NPP-VIIRS Nighttime Lights and Carbon Footprint, Population Growth, and Energy Consumption in the UAE",
+      "source_url": "https://arxiv.org/abs/2308.06366"
+    },
+    {
+      "arxiv_id": "2308.08155",
+      "status": "VERIFIED",
+      "actual_title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "source_url": "https://arxiv.org/abs/2308.08155"
+    },
+    {
+      "arxiv_id": "2308.08160",
+      "status": "VERIFIED",
+      "actual_title": "Benchmarking Adversarial Robustness of Compressed Deep Learning Models",
+      "source_url": "https://arxiv.org/abs/2308.08160"
+    },
+    {
+      "arxiv_id": "2308.11468",
+      "status": "VERIFIED",
+      "actual_title": "Multitemporal analysis in Google Earth Engine for detecting urban changes using optical data and machine learning algorithms",
+      "source_url": "https://arxiv.org/abs/2308.11468"
+    },
+    {
+      "arxiv_id": "2308.12950",
+      "status": "VERIFIED",
+      "actual_title": "Code Llama: Open Foundation Models for Code",
+      "source_url": "https://arxiv.org/abs/2308.12950"
+    },
+    {
+      "arxiv_id": "2308.12966",
+      "status": "VERIFIED",
+      "actual_title": "Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond",
+      "source_url": "https://arxiv.org/abs/2308.12966"
+    },
+    {
+      "arxiv_id": "2308.15264",
+      "status": "VERIFIED",
+      "actual_title": "Embracing Sex-specific Differences in Engineered Kidney Models for Enhanced Biological Understanding",
+      "source_url": "https://arxiv.org/abs/2308.15264"
+    },
+    {
+      "arxiv_id": "2309.00071",
+      "status": "VERIFIED",
+      "actual_title": "YaRN: Efficient Context Window Extension of Large Language Models",
+      "source_url": "https://arxiv.org/abs/2309.00071"
+    },
+    {
+      "arxiv_id": "2309.00267",
+      "status": "VERIFIED",
+      "actual_title": "RLAIF vs. RLHF: Scaling Reinforcement Learning from Human Feedback with AI Feedback",
+      "source_url": "https://arxiv.org/abs/2309.00267"
+    },
+    {
+      "arxiv_id": "2309.00814",
+      "status": "VERIFIED",
+      "actual_title": "Bypassing the Simulator: Near-Optimal Adversarial Linear Contextual Bandits",
+      "source_url": "https://arxiv.org/abs/2309.00814"
+    },
+    {
+      "arxiv_id": "2309.07864",
+      "status": "VERIFIED",
+      "actual_title": "The Rise and Potential of Large Language Model Based Agents: A Survey",
+      "source_url": "https://arxiv.org/abs/2309.07864"
+    },
+    {
+      "arxiv_id": "2309.12307",
+      "status": "VERIFIED",
+      "actual_title": "LongLoRA: Efficient Fine-tuning of Long-Context Large Language Models",
+      "source_url": "https://arxiv.org/abs/2309.12307"
+    },
+    {
+      "arxiv_id": "2309.16039",
+      "status": "VERIFIED",
+      "actual_title": "Effective Long-Context Scaling of Foundation Models",
+      "source_url": "https://arxiv.org/abs/2309.16039"
+    },
+    {
+      "arxiv_id": "2309.17412",
+      "status": "VERIFIED",
+      "actual_title": "Around traces and quasitraces",
+      "source_url": "https://arxiv.org/abs/2309.17412"
+    },
+    {
+      "arxiv_id": "2310.01889",
+      "status": "VERIFIED",
+      "actual_title": "Ring Attention with Blockwise Transformers for Near-Infinite Context",
+      "source_url": "https://arxiv.org/abs/2310.01889"
+    },
+    {
+      "arxiv_id": "2310.03714",
+      "status": "VERIFIED",
+      "actual_title": "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines",
+      "source_url": "https://arxiv.org/abs/2310.03714"
+    },
+    {
+      "arxiv_id": "2310.05914",
+      "status": "VERIFIED",
+      "actual_title": "NEFTune: Noisy Embeddings Improve Instruction Finetuning",
+      "source_url": "https://arxiv.org/abs/2310.05914"
+    },
+    {
+      "arxiv_id": "2310.08560",
+      "status": "VERIFIED",
+      "actual_title": "MemGPT: Towards LLMs as Operating Systems",
+      "source_url": "https://arxiv.org/abs/2310.08560"
+    },
+    {
+      "arxiv_id": "2310.10617",
+      "status": "VERIFIED",
+      "actual_title": "Biasymptotics of the Mobius- and Liouville-signed partition numbers",
+      "source_url": "https://arxiv.org/abs/2310.10617"
+    },
+    {
+      "arxiv_id": "2310.11511",
+      "status": "VERIFIED",
+      "actual_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+      "source_url": "https://arxiv.org/abs/2310.11511"
+    },
+    {
+      "arxiv_id": "2310.16424",
+      "status": "VERIFIED",
+      "actual_title": "Pre-electoral coalition agreement from the Black-Scholes point of view",
+      "source_url": "https://arxiv.org/abs/2310.16424"
+    },
+    {
+      "arxiv_id": "2311.06850",
+      "status": "VERIFIED",
+      "actual_title": "Coexistence of OTFS Modulation With OFDM-based Communication Systems",
+      "source_url": "https://arxiv.org/abs/2311.06850"
+    },
+    {
+      "arxiv_id": "2311.08764",
+      "status": "VERIFIED",
+      "actual_title": "Combining Past, Present and Future: A Self-Supervised Approach for Class Incremental Learning",
+      "source_url": "https://arxiv.org/abs/2311.08764"
+    },
+    {
+      "arxiv_id": "2311.09295",
+      "status": "VERIFIED",
+      "actual_title": "Finiteness Theorems and Counting Conjectures for the Flux Landscape",
+      "source_url": "https://arxiv.org/abs/2311.09295"
+    },
+    {
+      "arxiv_id": "2312.05365",
+      "status": "VERIFIED",
+      "actual_title": "Product Centered Dirichlet Processes for Bayesian Multiview Clustering",
+      "source_url": "https://arxiv.org/abs/2312.05365"
+    },
+    {
+      "arxiv_id": "2312.10001",
+      "status": "VERIFIED",
+      "actual_title": "Modeling Unknown Stochastic Dynamical System via Autoencoder",
+      "source_url": "https://arxiv.org/abs/2312.10001"
+    },
+    {
+      "arxiv_id": "2312.12632",
+      "status": "VERIFIED",
+      "actual_title": "Cavity Continuum",
+      "source_url": "https://arxiv.org/abs/2312.12632"
+    },
+    {
+      "arxiv_id": "2312.14238",
+      "status": "VERIFIED",
+      "actual_title": "InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks",
+      "source_url": "https://arxiv.org/abs/2312.14238"
+    },
+    {
+      "arxiv_id": "2401.00054",
+      "status": "VERIFIED",
+      "actual_title": "Late Time Acceleration with Observational Constraints in Modified Theories of Gravity",
+      "source_url": "https://arxiv.org/abs/2401.00054"
+    },
+    {
+      "arxiv_id": "2401.12345",
+      "status": "VERIFIED",
+      "actual_title": "Distributionally Robust Receive Combining",
+      "source_url": "https://arxiv.org/abs/2401.12345"
+    },
+    {
+      "arxiv_id": "2402.01411",
+      "status": "VERIFIED",
+      "actual_title": "CodePori: Large-Scale System for Autonomous Software Development Using Multi-Agent Technology",
+      "source_url": "https://arxiv.org/abs/2402.01411"
+    },
+    {
+      "arxiv_id": "2402.01680",
+      "status": "VERIFIED",
+      "actual_title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+      "source_url": "https://arxiv.org/abs/2402.01680"
+    },
+    {
+      "arxiv_id": "2402.03056",
+      "status": "VERIFIED",
+      "actual_title": "Note on quasi-optimal error estimates for the pressure for shear-thickening fluids",
+      "source_url": "https://arxiv.org/abs/2402.03056"
+    },
+    {
+      "arxiv_id": "2402.03300",
+      "status": "VERIFIED",
+      "actual_title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+      "source_url": "https://arxiv.org/abs/2402.03300"
+    },
+    {
+      "arxiv_id": "2402.03620",
+      "status": "VERIFIED",
+      "actual_title": "Self-Discover: Large Language Models Self-Compose Reasoning Structures",
+      "source_url": "https://arxiv.org/abs/2402.03620"
+    },
+    {
+      "arxiv_id": "2402.05205",
+      "status": "VERIFIED",
+      "actual_title": "Algebraic homotopy classes",
+      "source_url": "https://arxiv.org/abs/2402.05205"
+    },
+    {
+      "arxiv_id": "2402.05510",
+      "status": "VERIFIED",
+      "actual_title": "Blurred combinatorics in resolution of singularities: (a little) beyond the characteristic polytope",
+      "source_url": "https://arxiv.org/abs/2402.05510"
+    },
+    {
+      "arxiv_id": "2402.08115",
+      "status": "VERIFIED",
+      "actual_title": "On the Self-Verification Limitations of Large Language Models on Reasoning and Planning Tasks",
+      "source_url": "https://arxiv.org/abs/2402.08115"
+    },
+    {
+      "arxiv_id": "2402.11614",
+      "status": "VERIFIED",
+      "actual_title": "Modified Gravity Model $f(Q,T)$ and Wormhole Solution",
+      "source_url": "https://arxiv.org/abs/2402.11614"
+    },
+    {
+      "arxiv_id": "2402.17924",
+      "status": "VERIFIED",
+      "actual_title": "Band structure and excitonic properties of WSe$_2$ in the isolated monolayer limit in an all-electron approach",
+      "source_url": "https://arxiv.org/abs/2402.17924"
+    },
+    {
+      "arxiv_id": "2402.18798",
+      "status": "VERIFIED",
+      "actual_title": "Multiparticle Contributions to the Celestial OPE",
+      "source_url": "https://arxiv.org/abs/2402.18798"
+    },
+    {
+      "arxiv_id": "2403.01123",
+      "status": "VERIFIED",
+      "actual_title": "ELA: Efficient Local Attention for Deep Convolutional Neural Networks",
+      "source_url": "https://arxiv.org/abs/2403.01123"
+    },
+    {
+      "arxiv_id": "2403.05441",
+      "status": "VERIFIED",
+      "actual_title": "Bayesian Hierarchical Probabilistic Forecasting of Intraday Electricity Prices",
+      "source_url": "https://arxiv.org/abs/2403.05441"
+    },
+    {
+      "arxiv_id": "2403.13787",
+      "status": "VERIFIED",
+      "actual_title": "RewardBench: Evaluating Reward Models for Language Modeling",
+      "source_url": "https://arxiv.org/abs/2403.13787"
+    },
+    {
+      "arxiv_id": "2404.11488",
+      "status": "VERIFIED",
+      "actual_title": "Multi-resolution Rescored ByteTrack for Video Object Detection on Ultra-low-power Embedded Systems",
+      "source_url": "https://arxiv.org/abs/2404.11488"
+    },
+    {
+      "arxiv_id": "2405.06789",
+      "status": "VERIFIED",
+      "actual_title": "Self-Consistent Recursive Diffusion Bridge for Medical Image Translation",
+      "source_url": "https://arxiv.org/abs/2405.06789"
+    },
+    {
+      "arxiv_id": "2405.16802",
+      "status": "VERIFIED",
+      "actual_title": "AutoPSV: Automated Process-Supervised Verifier",
+      "source_url": "https://arxiv.org/abs/2405.16802"
+    },
+    {
+      "arxiv_id": "2406.07155",
+      "status": "VERIFIED",
+      "actual_title": "Scaling Large Language Model-based Multi-Agent Collaboration",
+      "source_url": "https://arxiv.org/abs/2406.07155"
+    },
+    {
+      "arxiv_id": "2406.07890",
+      "status": "VERIFIED",
+      "actual_title": "Exploring Speech Foundation Models for Speaker Diarization in Child-Adult Dyadic Interactions",
+      "source_url": "https://arxiv.org/abs/2406.07890"
+    },
+    {
+      "arxiv_id": "2406.11820",
+      "status": "VERIFIED",
+      "actual_title": "Composing Object Relations and Attributes for Image-Text Matching",
+      "source_url": "https://arxiv.org/abs/2406.11820"
+    },
+    {
+      "arxiv_id": "2406.12994",
+      "status": "VERIFIED",
+      "actual_title": "Interpolation theorems for conjugations and applications",
+      "source_url": "https://arxiv.org/abs/2406.12994"
+    },
+    {
+      "arxiv_id": "2406.18461",
+      "status": "VERIFIED",
+      "actual_title": "Broadening the Canonical Picture of EUV-Driven Photoevaporation of Accretion Disks",
+      "source_url": "https://arxiv.org/abs/2406.18461"
+    },
+    {
+      "arxiv_id": "2406.18665",
+      "status": "VERIFIED",
+      "actual_title": "RouteLLM: Learning to Route LLMs with Preference Data",
+      "source_url": "https://arxiv.org/abs/2406.18665"
+    },
+    {
+      "arxiv_id": "2407.00305",
+      "status": "VERIFIED",
+      "actual_title": "Student-AI Interaction: A Case Study of CS1 students",
+      "source_url": "https://arxiv.org/abs/2407.00305"
+    },
+    {
+      "arxiv_id": "2407.16819",
+      "status": "VERIFIED",
+      "actual_title": "Multiphoton dressed Rydberg excitations in a microwave cavity with ultracold Rb atoms",
+      "source_url": "https://arxiv.org/abs/2407.16819"
+    },
+    {
+      "arxiv_id": "2408.02479",
+      "status": "VERIFIED",
+      "actual_title": "From LLMs to LLM-based Agents for Software Engineering: A Survey of Current, Challenges and Future",
+      "source_url": "https://arxiv.org/abs/2408.02479"
+    },
+    {
+      "arxiv_id": "2408.13367",
+      "status": "VERIFIED",
+      "actual_title": "Generative Blockchain: Transforming Blockchain from Transaction Recording to Transaction Generation through Proof-of-Merit",
+      "source_url": "https://arxiv.org/abs/2408.13367"
+    },
+    {
+      "arxiv_id": "2410.08146",
+      "status": "VERIFIED",
+      "actual_title": "Rewarding Progress: Scaling Automated Process Verifiers for LLM Reasoning",
+      "source_url": "https://arxiv.org/abs/2410.08146"
+    },
+    {
+      "arxiv_id": "2410.10762",
+      "status": "VERIFIED",
+      "actual_title": "AFlow: Automating Agentic Workflow Generation",
+      "source_url": "https://arxiv.org/abs/2410.10762"
+    },
+    {
+      "arxiv_id": "2410.14684",
+      "status": "VERIFIED",
+      "actual_title": "RepoGraph: Enhancing AI Software Engineering with Repository-level Code Graph",
+      "source_url": "https://arxiv.org/abs/2410.14684"
+    },
+    {
+      "arxiv_id": "2410.18252",
+      "status": "VERIFIED",
+      "actual_title": "Asynchronous RLHF: Faster and More Efficient Off-Policy RL for Language Models",
+      "source_url": "https://arxiv.org/abs/2410.18252"
+    },
+    {
+      "arxiv_id": "2411.02337",
+      "status": "VERIFIED",
+      "actual_title": "WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning",
+      "source_url": "https://arxiv.org/abs/2411.02337"
+    },
+    {
+      "arxiv_id": "2411.05285",
+      "status": "VERIFIED",
+      "actual_title": "AgentOps: Enabling Observability of LLM Agents",
+      "source_url": "https://arxiv.org/abs/2411.05285"
+    },
+    {
+      "arxiv_id": "2411.16594",
+      "status": "VERIFIED",
+      "actual_title": "From Generation to Judgment: Opportunities and Challenges of LLM-as-a-judge",
+      "source_url": "https://arxiv.org/abs/2411.16594"
+    },
+    {
+      "arxiv_id": "2412.05579",
+      "status": "VERIFIED",
+      "actual_title": "LLMs-as-Judges: A Comprehensive Survey on LLM-based Evaluation Methods",
+      "source_url": "https://arxiv.org/abs/2412.05579"
+    },
+    {
+      "arxiv_id": "2412.14764",
+      "status": "VERIFIED",
+      "actual_title": "CodeRepoQA: A Large-scale Benchmark for Software Engineering Question Answering",
+      "source_url": "https://arxiv.org/abs/2412.14764"
+    },
+    {
+      "arxiv_id": "2412.18531",
+      "status": "VERIFIED",
+      "actual_title": "Automated Code Review In Practice",
+      "source_url": "https://arxiv.org/abs/2412.18531"
+    },
+    {
+      "arxiv_id": "2412.18547",
+      "status": "VERIFIED",
+      "actual_title": "Token-Budget-Aware LLM Reasoning",
+      "source_url": "https://arxiv.org/abs/2412.18547"
+    },
+    {
+      "arxiv_id": "2512.24601",
+      "status": "VERIFIED",
+      "actual_title": "Recursive Language Models",
+      "source_url": "https://arxiv.org/abs/2512.24601"
+    },
+    {
+      "arxiv_id": "2601.14230",
+      "status": "VERIFIED",
+      "actual_title": "MASCOT: Towards Multi-Agent Socio-Collaborative Companion Systems",
+      "source_url": "https://arxiv.org/abs/2601.14230"
+    },
+    {
+      "arxiv_id": "2601.17226",
+      "status": "VERIFIED",
+      "actual_title": "Retell, Reward, Repeat: Reinforcement Learning for Narrative Theory-Informed Story Generation",
+      "source_url": "https://arxiv.org/abs/2601.17226"
+    },
+    {
+      "arxiv_id": "2601.19063",
+      "status": "VERIFIED",
+      "actual_title": "Optimizing Conversational Quality in Spoken Dialogue Systems with Reinforcement Learning from AI Feedback",
+      "source_url": "https://arxiv.org/abs/2601.19063"
+    },
+    {
+      "arxiv_id": "2602.17658",
+      "status": "VERIFIED",
+      "actual_title": "MARS: Margin-Aware Reward-Modeling with Self-Refinement",
+      "source_url": "https://arxiv.org/abs/2602.17658"
+    },
+    {
+      "arxiv_id": "2602.20728",
+      "status": "VERIFIED",
+      "actual_title": "Balancing Multiple Objectives in Urban Traffic Control with Reinforcement Learning from AI Feedback",
+      "source_url": "https://arxiv.org/abs/2602.20728"
+    }
+  ]
+}

@@ -49,5 +49,5 @@ sequenceDiagram
 - Lukas Möller (Cursor) at 0:03:58: "...when initially getting started with a codebase that one might not be too knowledgeable about, that's using kind of the QA features a lot, using a lot of search... doing research in a codebase and figuring out how certain things interact with each other."
 - Aman Sanger (Cursor) at 0:05:50: "...as you got to places where you're really unfamiliar, like Lucas was describing when you're kind of coming into a new codebase, it's just there's this massive step function that you get from using these models."
 - Luo, Q., et al. (2024). "RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation." [arXiv:2402.16667](https://arxiv.org/abs/2402.16667) - EMNLP 2024
-- Yang, J., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - NeurIPS 2024
+- Yang, J., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - arXiv preprint
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

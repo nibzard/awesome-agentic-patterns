@@ -425,7 +425,7 @@ This report compiles academic research on **LLM Observability** - the practice o
 - **Authors**: Yao et al.
 - **Venue**: arXiv
 - **Year**: February 2025
-- **arXiv ID**: 2502.23320
+- **arXiv ID**: ⚠️ 2502.23320 (HALLUCINATED - does not exist)
 - **URL**: https://arxiv.org/abs/2502.23320
 - **Key Findings**:
   - Production traces provide more realistic evaluation scenarios
@@ -1532,7 +1532,7 @@ LLM Observability has strong relationships with multiple patterns across differe
 
 **Production Monitoring:**
 - [On the Use of Corporate Data for LLM Evaluation](https://arxiv.org/abs/2406.12994) (arXiv:2406.12994, June 2024)
-- [Evaluating LLMs with Production Traces](https://arxiv.org/abs/2502.23320) (arXiv:2502.23320, February 2025)
+- ⚠️ [Evaluating LLMs with Production Traces](https://arxiv.org/abs/2502.23320) - HALLUCINATED (arXiv:2502.23320 does not exist)
 - [AgentOps: Categorization and Challenges](https://arxiv.org/) (arXiv, August 2025)
 
 **Multi-Agent Systems:**

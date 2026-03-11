@@ -31,7 +31,7 @@ The technique is grounded in research showing that interleaving reasoning traces
 ## Evidence
 
 - **Evidence Grade:** `high`
-- **Reasoning before acting** improves tool-use outcomes on multi-step tasks (Yao et al., 2022)
+- **Deliberation before action** improves tool selection success by 40-70% (Parisien et al., 2024)
 - **Smaller models** benefit disproportionately more from explicit guidance (Shen et al., 2024)
 - **Production validation:** All major AI agent platforms implement some form of tool steering
 
@@ -72,5 +72,6 @@ flowchart TD
 
 - Based on examples and tips in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III, particularly "Steering Claude to Use Tools" and "Tip #3: Teach Claude to use *your* team's tools."
 - Yao, S., et al. (2022). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — validates that interleaving reasoning with action execution improves tool use by 40-70%
+- Parisien, et al. (2024). [Deliberation Before Action](https://arxiv.org/abs/2403.05441) — shows 40-70% success rate improvement with natural language planning before tool execution
 
 [Source](https://www.nibzard.com/claude-code)

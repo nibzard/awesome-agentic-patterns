@@ -331,7 +331,7 @@ Where:
 **Reasoning Foundations:**
 9. Wei et al. (2022). Chain-of-Thought Prompting. NeurIPS. arXiv:2201.11903
 10. Wang et al. (2022). Self-Consistency Improves CoT. NeurIPS. arXiv:2203.11171
-11. Yao et al. (2022). ReAct: Synergizing Reasoning and Acting. NeurIPS. arXiv:2210.03629
+11. Yao et al. (2022). ReAct: Synergizing Reasoning and Acting. ICLR 2023. arXiv:2210.03629
 
 **Meta-Reasoning:**
 12. Google DeepMind (2024). Self-Discover: LLMs Self-Compose Structures. arXiv:2402.03620
@@ -924,7 +924,7 @@ Active research areas include:
 3. [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
 4. [Graph of Thoughts: Solving Elaborate Problems](https://arxiv.org/abs/2308.09687) - Besta et al., AAAI 2024
 5. [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - Shinn et al., NeurIPS 2023
-6. [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) - Yao et al., NeurIPS 2023
+6. [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) - Yao et al., ICLR 2023
 7. [Self-Consistency Improves Chain of Thought](https://arxiv.org/abs/2203.11171) - Wang et al., NeurIPS 2022
 
 ### Frameworks and Tools

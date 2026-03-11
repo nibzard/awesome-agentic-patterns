@@ -2244,7 +2244,7 @@ async def search_codebase(query: str) -> list[str]:
 | Paper | arXiv | Venue/Year |
 |-------|-------|------------|
 | RepoAgent: Repository-Level Documentation | 2402.16667 | EMNLP 2024 |
-| SWE-agent: Agent-Computer Interfaces | 2405.15793 | NeurIPS 2024 |
+| SWE-agent: Agent-Computer Interfaces | 2405.15793 | arXiv preprint |
 | Agentic RAG Survey | 2501.09136 | - |
 | Design Patterns for Securing LLM Agents | 2506.08837 | - |
 | ReAct: Reasoning and Acting | 2210.03629 | ICLR 2023 |

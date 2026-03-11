@@ -72,7 +72,7 @@ The pattern addresses a common problem: RAG pipelines and agent systems fail in 
 #### RAG System Reliability
 - **"Agentic Retrieval-Augmented Generation: A Survey"** (arXiv:2501.09136, 2025): Comprehensive survey of RAG reliability and failure modes
 - **Microsoft Azure AI Search**: Agentic retrieval documentation identifying key failure domains
-- **"Evaluating LLMs with Production Traces"** (arXiv:2502.23320, 2025): Validates production trace analysis
+- ⚠️ **"Evaluating LLMs with Production Traces"** (arXiv:2502.23320, 2025): HALLUCINATED REFERENCE - does not exist
 
 #### Agent System Debugging and Observability
 - **LLM Observability Research** (25+ papers, 2022-2026): CoT monitoring, process supervision, behavioral analysis
@@ -369,7 +369,7 @@ The WFGY Reliability Problem Map pattern serves as a **foundational triage syste
 
 ### Academic References
 - "Agentic Retrieval-Augmented Generation: A Survey" (arXiv:2501.09136, 2025)
-- "Evaluating LLMs with Production Traces" (arXiv:2502.23320, 2025)
+- ⚠️ "Evaluating LLMs with Production Traces" (arXiv:2502.23320, 2025) - HALLUCINATED
 - "ESAA: Event Sourcing for Autonomous Agents" (arXiv:2602.23193v1, 2026)
 - Google SRE Postmortem Culture (2016)
 - CriticGPT (OpenAI, 2024)

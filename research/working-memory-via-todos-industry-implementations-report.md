@@ -891,7 +891,7 @@ for task in get_tasks():
 - [Reflection Industry Implementations Report](/home/agent/awesome-agentic-patterns/research/reflection-industry-implementations-report.md)
 
 ### Academic Foundations
-- [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) - NeurIPS 2022
+- [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) - ICLR 2023
 - [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - NeurIPS 2023
 - [Self-Refine: Improving Reasoning](https://arxiv.org/abs/2303.11366) - Shinn et al. 2023
 

@@ -34,7 +34,7 @@ A team of agents is researching the following aspects in parallel:
 
 ### Foundational Papers on Tool-Augmented LLMs
 
-### [ToolFormer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) by Schick et al. (ACL, 2023)
+### [ToolFormer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) by Schick et al. (ICLR, 2024)
 
 **Key Findings:**
 - Introduces self-supervised approach for teaching LLMs to use external tools through simple insertion of API calls
@@ -46,7 +46,7 @@ A team of agents is researching the following aspects in parallel:
 - The tool insertion API could support batch operations for concurrent tool calls
 - Self-supervised learning approach could be adapted to discover parallel execution patterns
 
-### [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) by Yao et al. (NeurIPS, 2022)
+### [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) by Yao et al. (ICLR, 2023)
 
 **Key Findings:**
 - Introduces reasoning + acting paradigm where LLMs generate traces and task-specific actions
@@ -84,7 +84,7 @@ A team of agents is researching the following aspects in parallel:
 - The compositional approach naturally supports parallel execution of independent modules
 - Provides architecture for dynamic tool selection and concurrent invocation
 
-### [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](https://arxiv.org/abs/2303.17580) by Shen et al. (NeurIPS, 2023)
+### [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace](https://arxiv.org/abs/2303.17580) by Shen et al. (arXiv preprint, 2023)
 
 **Key Findings:**
 - Demonstrates LLM as controller orchestrating multiple AI models for complex tasks
