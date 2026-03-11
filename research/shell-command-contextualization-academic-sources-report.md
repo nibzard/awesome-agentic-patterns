@@ -833,7 +833,7 @@ This report compiles academic research on the **Shell Command Contextualization*
 **Tool Learning:**
 9. Xu, Y., Jiang, F., et al. (2023). [ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world Tools](https://arxiv.org/abs/2307.16701). EMNLP 2023. arXiv:2307.16701
 10. Patil, S.G., Zhang, T., et al. (2023). [Gorilla: Large Language Model Connected with Massive APIs](https://arxiv.org/abs/2305.15334). NeurIPS 2023. arXiv:2305.15334
-11. Shen, Y., Song, K., et al. (2023). [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face](https://arxiv.org/abs/2303.17580). ICML 2024 (TMLR). arXiv:2303.17580
+11. Shen, Y., Song, K., et al. (2023). [HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face](https://arxiv.org/abs/2303.17580). arXiv preprint. arXiv:2303.17580
 
 **Surveys & Taxonomies:**
 12. Liu, Q., Yao, Y., et al. (2024). [A Taxonomy of Tool Learning for Large Language Models](https://arxiv.org/abs/2401.00054). arXiv:2401.00054

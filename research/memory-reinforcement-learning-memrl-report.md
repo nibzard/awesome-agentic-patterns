@@ -705,7 +705,7 @@ graph TB
 
 5. Pritzel, A., Uria, B., Srinivasan, S., et al. (2017). "Neural Episodic Control." arXiv:1703.01988.
 
-6. Schaul, T., Quan, J., Antonoglou, I., Silver, D. (2016). "Prioritized Experience Replay." ICLR 2017. arXiv:1511.05952.
+6. Schaul, T., Quan, J., Antonoglou, I., Silver, D. (2016). "Prioritized Experience Replay." ICLR 2016. arXiv:1511.05952.
 
 7. Graves, A., Wayne, G., Reynolds, M., et al. (2016). "Hybrid Computing Using a Neural Network with Dynamic External Memory." Nature. DOI: 10.1038/nature20101
 

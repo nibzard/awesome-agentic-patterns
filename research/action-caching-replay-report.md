@@ -332,7 +332,7 @@ context.tracing.stop(path="trace.zip")
 #### 3. OpenHands Software Agent SDK
 
 **Repository:** https://github.com/OpenHandsOpenSource/openhands-sdk
-**Paper:** https://arxiv.org/html/2511.03690v1 (November 2025)
+**Paper:** "The OpenHands Software Agent SDK: A Composable and Extensible Foundation for Production Agents" (arXiv:2511.03690, November 2025)
 
 **Implementation:**
 - **Event-sourced state model** for deterministic replay
@@ -922,7 +922,7 @@ Action caching and replay in AI agent systems draws from multiple research areas
 - [A Plan Reuse Mechanism for LLM-Driven Agent (ICT Research)](https://crad.ict.ac.cn/en/article/doi/10.7544/issn1000-1239.202440380) - Semantic caching for agents
 - [TRiSM for Agentic AI (arXiv:2506.04133)](https://arxiv.org/abs/2506.04133) - Trust, Risk, and Security Management
 - [AgentOps Survey (arXiv:2508.02121)](https://arxiv.org/abs/2508.02121) - Agent System Operations framework
-- [OpenHands SDK Paper (arXiv:2511.03690v1)](https://arxiv.org/html/2511.03690v1) - Event-sourced state model
+- [The OpenHands Software Agent SDK: A Composable and Extensible Foundation for Production Agents](https://arxiv.org/abs/2511.03690) - Event-sourced state model
 
 ### Production Case Studies
 

@@ -430,15 +430,15 @@ This report surveys academic literature on **reward shaping techniques specifica
 
 ### Tool-Augmented LLMs
 
-13. Yao, S., Zhao, J., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." *NeurIPS 2022* (arXiv:2210.03629).
+13. Yao, S., Zhao, J., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR 2023* (arXiv:2210.03629).
 
-14. Schick, T., & Schutze, H. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." *ACL 2023* (arXiv:2302.04761).
+14. Schick, T., & Schutze, H. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." *ICLR 2024* (arXiv:2302.04761).
 
 15. Patil, S., et al. (2023). "Gorilla: Large Language Model Connected with Massive APIs." *arXiv:2305.15334*.
 
 16. Parcalabescu, L., et al. (2024). "Chameleon: Plug-and-Play Compositional Reasoning with Large Language Models." *ICLR 2024* (arXiv:2304.09842).
 
-17. Shen, Y., et al. (2023). "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace." *NeurIPS 2023* (arXiv:2303.17580).
+17. Shen, Y., et al. (2023). "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in HuggingFace." *arXiv preprint* (arXiv:2303.17580).
 
 18. Yan, Z., et al. (2023). "API-Bank: A Benchmark for Tool-Augmented LLMs." *EMNLP 2023* (arXiv:2304.08244).
 

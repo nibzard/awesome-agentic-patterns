@@ -353,7 +353,7 @@ A comprehensive analysis of recent academic literature reveals a rapidly evolvin
 - **Pattern Identified**: Three AI interaction patterns that better preserve skill development (requires further investigation)
 - **Needs verification**: Specific interaction pattern details not fully described in abstract
 
-**2. "AI-Tutoring in Software Engineering Education" (ICSE 2024)**
+**2. "AI-Tutoring in Software Engineering Education" (ICSE-SEET 2024; arXiv:2404.02548)**
 
 - **Authors**: Frankford, Sauerwein, Bassner, Krusche, & Breu
 - **Study**: Exploratory case study integrating GPT-3.5-Turbo as AI-Tutor in Artemis (Automatic Programming Assessment System)

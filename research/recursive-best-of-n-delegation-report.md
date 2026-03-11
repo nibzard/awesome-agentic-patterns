@@ -1426,7 +1426,7 @@ flowchart TD
 
 **Multi-Agent and Delegation:**
 
-9. Yao et al. (2022). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629). NeurIPS 2023. arXiv:2210.03629
+9. Yao et al. (2022). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) ICLR 2023. arXiv:2210.03629
 
 **Posterior Sampling and Bayesian Methods:**
 

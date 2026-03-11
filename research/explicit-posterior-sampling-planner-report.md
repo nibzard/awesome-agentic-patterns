@@ -401,7 +401,7 @@ class BayesianAgent:
 
 ### LLM Agents
 8. Shinn, N., et al. (2023). Reflexion: Language Agents with Verbal Reinforcement Learning. NeurIPS. arXiv:2303.11366
-9. Yao, S., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. NeurIPS. arXiv:2210.03629
+9. Yao, S., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. ICLR 2023. arXiv:2210.03629
 
 ### Industry
 10. Vowpal Wabbit: Microsoft's contextual bandit library

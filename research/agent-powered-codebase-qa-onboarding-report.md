@@ -37,7 +37,7 @@ This report compiles research from academic literature (arXiv), industry sources
 
 | Paper | arXiv ID | Year | Venue | Key Contribution |
 |-------|----------|------|-------|------------------|
-| SWE-agent | [2405.15793](https://arxiv.org/abs/2405.15793) | 2024 | NeurIPS 2024 | Agent-Computer Interfaces (ACI) for repository interaction |
+| SWE-agent | [2405.15793](https://arxiv.org/abs/2405.15793) | 2024 | arXiv preprint | Agent-Computer Interfaces (ACI) for repository interaction |
 | CodeAgent | [2401.07339](https://arxiv.org/abs/2401.07339) | 2024 | ACL 2024 | Tool-integrated agent system for repo-level challenges |
 | Trae Agent | [2507.23370](https://arxiv.org/abs/2507.23370) | 2025 | - | Ensemble reasoning for repository-level issue resolution |
 | RepoMaster | [2505.21577](https://arxiv.org/abs/2505.21577) | 2025 | - | Autonomous exploration and understanding |

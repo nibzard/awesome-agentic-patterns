@@ -825,7 +825,7 @@ The fundamental computational constraint:
 
 **Foundational RAG Papers:**
 1. Lewis, P., Perez, E., Piktus, A., et al. (2020). [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401). NeurIPS 2020. arXiv:2005.11401
-2. Guu, K., Lee, K., Chang, T., et al. (2021). [REALM: Retrieval-Augmented Language Model Pre-Training](https://arxiv.org/abs/2002.08909). ICML 2021. arXiv:2002.08909
+2. Guu, K., Lee, K., Chang, T., et al. (2021). [REALM: Retrieval-Augmented Language Model Pre-Training](https://arxiv.org/abs/2002.08909). ICML 2020. arXiv:2002.08909
 3. Asai, A., Wu, Z., Wang, Y., Sil, A., Hajishirzi, H. (2024). [Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection](https://arxiv.org/abs/2310.11511). ICLR 2024. arXiv:2310.11511
 
 **Context Management:**

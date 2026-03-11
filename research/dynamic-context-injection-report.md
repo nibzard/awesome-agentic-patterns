@@ -462,7 +462,7 @@ sequenceDiagram
 ### 10.1 Academic Sources
 
 - Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." NeurIPS 2020.
-- Guu, K., et al. (2021). "REALM: Retrieval-Augmented Language Model Pre-Training." ICML 2021.
+- Guu, K., et al. (2021). "REALM: Retrieval-Augmented Language Model Pre-Training." ICML 2020.
 - Asai, A., et al. (2024). "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection." ICLR 2024.
 - Packer, C., et al. (2023). "MemGPT: Towards LLMs as Operating Systems."
 - Dai, Z., et al. (2019). "Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context." NeurIPS 2019.

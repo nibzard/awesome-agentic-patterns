@@ -107,19 +107,19 @@ Based on comprehensive research across related patterns and multi-agent system l
 
 #### Multi-Agent Collaborative Creativity and Parallel Execution
 
-**"Collective Intelligence in Multi-Agent Brainstorming Systems" (AAAI 2024)**
+**"Collective Intelligence in Multi-Agent Brainstorming Systems" (AAAI 2024)** ⚠️ **HALLUCINATED - paper not found**
 - **Key Finding:** Heterogeneous agents achieved 40% higher creativity scores
 - **Relevance:** Demonstrates performance benefits of parallel multi-agent systems for complex problem-solving
 
-**"Iterative Consensus Building in Creative AI Ensembles" (ACL 2023)**
+**"Iterative Consensus Building in Creative AI Ensembles" (ACL 2023)** ⚠️ **HALLUCINATED - paper not found**
 - **Key Finding:** Multi-round refinement with confidence-weighted voting: 35% novelty improvement
 - **Relevance:** Framework for coordinating multiple agents and synthesizing results
 
-**"The Emergence of Collective Creativity in Multi-Agent Systems" (NeurIPS 2024)**
+**"The Emergence of Collective Creativity in Multi-Agent Systems" (NeurIPS 2024)** ⚠️ **HALLUCINATED - paper not found**
 - **Key Finding:** Emergent creative behavior in teams with complementary capabilities
 - **Relevance:** Theoretical foundation for swarm behavior in multi-agent systems
 
-**"Parallel Agent Ideation with Knowledge Fusion" (IJCAI 2023)**
+**"Parallel Agent Ideation with Knowledge Fusion" (IJCAI 2023)** ⚠️ **HALLUCINATED - paper not found**
 - **Key Finding:** 28% increase in solution diversity vs single-agent
 - **Relevance:** Quantifies benefits of parallel agent execution
 
