@@ -32,7 +32,7 @@ const patternImpact = z.enum(['low', 'medium', 'high', 'transformative']);
 // content layer at that source so collection validation matches runtime data.
 const patterns = defineCollection({
   loader: glob({
-    pattern: '**/*.md',
+    pattern: ['**/*.md', '!**/TEMPLATE.md'],
     base: '../../patterns',
   }),
   schema: z.object({
