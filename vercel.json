@@ -1,7 +1,8 @@
 {
   "framework": null,
-  "installCommand": "cd apps/web && bun install",
-  "buildCommand": "cd apps/web && bun run build && rm -rf ../../.vercel/output && mkdir -p ../../.vercel && mv .vercel/output ../../.vercel/output",
+  "installCommand": "bun install",
+  "buildCommand": "bun run build",
+  "outputDirectory": "apps/web/dist",
   "git": {
     "deploymentEnabled": {
       "main": true,
