@@ -10,7 +10,6 @@ summary: "Dynamically load tools via search instead of preloading all available 
 slug: "tool-search-lazy-loading"
 maturity: "maturing"
 complexity: "medium"
-effort: "days"
 impact: "high"
 signals: ["MCP servers with 20+ tools", "Tool descriptions consuming >10% of context window", "Multiple MCP servers enabled simultaneously"]
 anti_signals: ["Single tool or small tool sets", "Tools always needed in every interaction"]
