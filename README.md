@@ -63,6 +63,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="context-memory"></a>Context & Memory
 
+- [GNAP](https://github.com/farol-team/gnap) — Git-Native Agent Protocol: coordinate AI agent teams with 4 JSON files in a git repo. No server, no database, just git push/pull. MIT.
 - [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md)
 - [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
 - [Context Window Auto-Compaction](patterns/context-window-auto-compaction.md)
