@@ -69,5 +69,5 @@ sequenceDiagram
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections" [arXiv:2506.08837](https://doi.org/10.48550/arXiv.2506.08837)
 - Greshake et al. (2023). "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications" [arXiv:2302.12173](https://doi.org/10.48550/arXiv.2302.12173)
 - [SPIFFE/SPIRE](https://spiffe.io/)
-- [AgentMesh (example implementation)](https://github.com/imran-siddique/agent-mesh)
+- [AgentMesh (example implementation)](https://github.com/microsoft/agent-governance-toolkit)
 - [A2A Protocol](https://github.com/a2aproject/A2A)
