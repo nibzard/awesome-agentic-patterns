@@ -637,7 +637,7 @@ interface IERC5192 {
 #### 5. AgentMesh
 
 **Type**: Open Source Implementation
-**Repository**: https://github.com/imran-siddique/agent-mesh
+**Repository**: https://github.com/microsoft/agent-governance-toolkit
 **Status**: Open Source / Development
 **Based On**: NIST SP 800-207 (Zero Trust Architecture), SPIFFE/SPIRE concepts
 
@@ -664,7 +664,7 @@ interface IERC5192 {
 **Production Status**: Open source, reference implementation
 
 **Links**:
-- Repository: https://github.com/imran-siddique/agent-mesh
+- Repository: https://github.com/microsoft/agent-governance-toolkit
 
 ---
 
