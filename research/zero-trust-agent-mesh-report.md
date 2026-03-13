@@ -242,7 +242,7 @@ Apply zero-trust principles to inter-agent communication:
 
 #### AgentMesh (Reference Implementation)
 
-**Repository:** https://github.com/imran-siddique/agent-mesh
+**Repository:** https://github.com/microsoft/agent-governance-toolkit
 **Status:** Development
 **Key Features:**
 ```python
@@ -697,7 +697,7 @@ Zero-Trust + Sub-Agent Spawning + Subject Hygiene
 ### Primary Sources
 - [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/publications/detail/sp/800-207/final)
 - [SPIFFE/SPIRE](https://spiffe.io/)
-- [AgentMesh Implementation](https://github.com/imran-siddique/agent-mesh)
+- [AgentMesh Implementation](https://github.com/microsoft/agent-governance-toolkit)
 - [A2A Protocol](https://github.com/a2aproject/A2A)
 
 ### Academic Papers
