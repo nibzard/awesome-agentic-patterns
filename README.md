@@ -147,6 +147,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Progressive Autonomy with Model Evolution](patterns/progressive-autonomy-with-model-evolution.md)
 - [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md)
 - [Recursive Best-of-N Delegation](patterns/recursive-best-of-n-delegation.md)
+- [Runtime Budget Guardrails](patterns/runtime-budget-guardrails.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md)
