@@ -292,3 +292,5 @@ Apache‑2.0. See [`LICENSE`](https://github.com/nibzard/awesome-agentic-pattern
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=nibzard/awesome-agentic-patterns&type=date&legend=top-left)](https://www.star-history.com/#nibzard/awesome-agentic-patterns&type=date&legend=top-left)
+
+- [widemem-ai](https://github.com/remete618/widemem-ai) - Next-gen AI memory layer with importance scoring, temporal decay, hierarchical memory, and YMYL prioritization.
