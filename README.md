@@ -183,6 +183,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="security-safety"></a>Security & Safety
 
+- [Agent Immune System](patterns/agent-immune-system.md)
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
 - [External Credential Sync](patterns/external-credential-sync.md)
 - [Hook-Based Safety Guard Rails for Autonomous Code Agents](patterns/hook-based-safety-guard-rails.md)
