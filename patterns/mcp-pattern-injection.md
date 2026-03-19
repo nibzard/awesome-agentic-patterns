@@ -1,6 +1,6 @@
 ---
 title: MCP Pattern Injection
-status: validated-in-production
+status: emerging
 authors: ["Rajath Bharadwaj (@Rajathbharadwaj)"]
 based_on: ["Claude Desktop MCP", "Cursor MCP Integration"]
 category: Tool Use & Environment
@@ -17,7 +17,7 @@ AI coding assistants lack domain-specific knowledge about framework best practic
 Use **MCP (Model Context Protocol) servers** to inject production patterns directly into the AI assistant's context:
 
 1. Create an MCP server that exposes domain patterns as tools and resources
-2. Structure patterns with clear signatures, descriptions, and code snippets  
+2. Structure patterns with clear signatures, descriptions, and code snippets
 3. Configure Claude Desktop or Cursor to connect to the MCP server
 4. The AI can now "call" patterns on-demand, getting current best practices
 
@@ -38,7 +38,7 @@ The key insight: MCP servers act as **live documentation** that the AI can query
 
 ## Trade-offs
 
-**Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.  
+**Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.
 **Cons:** Requires MCP server setup; adds latency for tool calls; patterns must be maintained.
 
 ## How to use it
@@ -55,3 +55,4 @@ The key insight: MCP servers act as **live documentation** that the AI can query
 - LangGraph Patterns MCP (reference impl): https://github.com/Rajathbharadwaj/langgraph-patterns-mcp
 - Claude Desktop MCP Integration: https://docs.anthropic.com/en/docs/claude-code/mcp
 - Cursor MCP Support: https://docs.cursor.com/context/model-context-protocol
+- OpenAI Codex Docs Skill: https://github.com/openai/codex/commit/01e2c3b8d9975ee649910309d7b796100c7714ec — Pattern used for injecting OpenAI documentation as a codex skill
