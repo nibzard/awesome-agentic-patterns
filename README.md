@@ -122,6 +122,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
 - [Cross-Cycle Consensus Relay](patterns/cross-cycle-consensus-relay.md)
 - [Custom Sandboxed Background Agent](patterns/custom-sandboxed-background-agent.md)
+- [Declarative Multi-Agent Topology Definition](patterns/declarative-multi-agent-topology-definition.md)
 - [Discrete Phase Separation](patterns/discrete-phase-separation.md)
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md)
 - [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md)
