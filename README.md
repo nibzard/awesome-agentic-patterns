@@ -193,6 +193,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Soulbound Identity Verification](patterns/soulbound-identity-verification.md)
 - [Transitive Vouch-Chain Trust](patterns/transitive-vouch-chain-trust.md)
 - [Zero-Trust Agent Mesh](patterns/zero-trust-agent-mesh.md)
+- [Black-Box Skill Invocation](patterns/black-box-skill-invocation.md)
 
 ### <a name="tool-use-environment"></a>Tool Use & Environment
 
