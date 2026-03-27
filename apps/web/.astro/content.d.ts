@@ -195,9 +195,7 @@ declare module 'astro:content' {
 }>;
 "patterns": Record<string, {
   id: string;
-  render(): Render[".md"];
-  slug: string;
-  body: string;
+  body?: string;
   collection: "patterns";
   data: InferEntrySchema<"patterns">;
   rendered?: RenderedContent;
