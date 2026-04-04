@@ -210,6 +210,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [Intelligent Bash Tool Execution](patterns/intelligent-bash-tool-execution.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
+- [MCP Tool Aggregation Pattern](patterns/mcp-tool-aggregation-pattern.md)
 - [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md)
 - [Multi-Platform Webhook Triggers](patterns/multi-platform-webhook-triggers.md)
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)
