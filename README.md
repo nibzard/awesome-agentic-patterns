@@ -219,6 +219,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Tool Use Steering via Prompting](patterns/tool-use-steering-via-prompting.md)
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 - [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md)
+- [guardian-agent-prompts](https://github.com/milkomida77/guardian-agent-prompts) - Production implementation of multi-agent orchestration patterns with 49 specialized Claude Code agents, anti-duplication task registry, 5-step quality gates, and heartbeat monitoring.
 
 ### <a name="ux-collaboration"></a>UX & Collaboration
 
