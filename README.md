@@ -196,6 +196,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="tool-use-environment"></a>Tool Use & Environment
 
+- [Agent-Native Outbound Orchestration](patterns/agent-native-outbound-orchestration.md)
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md)
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md)
@@ -209,6 +210,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [Intelligent Bash Tool Execution](patterns/intelligent-bash-tool-execution.md)
+- [Intent Signal Pipeline](patterns/intent-signal-pipeline.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
 - [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md)
 - [Multi-Platform Webhook Triggers](patterns/multi-platform-webhook-triggers.md)
