@@ -265,6 +265,12 @@ The `llms.txt` file can be provided to LLMs as context to improve pattern recomm
 
 ---
 
+## Marketplaces & Platforms
+
+- [RemoteOpenClaw](https://remoteopenclaw.com) - Open marketplace for discovering, sharing, and distributing AI agent skills and personas built on the open-source [OpenClaw](https://github.com/openclaw) standard.
+
+---
+
 ## Contributing in 3 steps
 
 1. **Fork & branch** → `git checkout -b add-my-pattern`
