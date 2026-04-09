@@ -209,6 +209,9 @@ node_modules/
 
 # Pagefind search index (generated during build)
 apps/web/public/pagefind/
+
+# GitHub star count (fetched by build-data.ts)
+apps/web/src/data/github-stars.json
 .env*.local
 
 # Claude research loop state/logs

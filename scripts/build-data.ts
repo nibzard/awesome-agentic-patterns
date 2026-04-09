@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execSync } from 'node:child_process';
 import matter from 'gray-matter';
 import RSS from 'rss';
 import { create } from 'xmlbuilder2';
@@ -498,6 +499,38 @@ function main(): void {
 
   copyImageAssets();
   writeOutputs(patterns);
+  fetchGithubStars();
+}
+
+function fetchGithubStars(): void {
+  const dataDir = path.join(repoRoot, 'apps', 'web', 'src', 'data');
+  const outputPath = path.join(dataDir, 'github-stars.json');
+
+  try {
+    const result = execSync(
+      'gh api repos/nibzard/awesome-agentic-patterns --jq .stargazers_count',
+      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
+    ).trim();
+
+    const count = Number(result);
+    if (!Number.isFinite(count)) {
+      console.warn(`[build-data] Invalid star count: ${result}`);
+      return;
+    }
+
+    const formatted = new Intl.NumberFormat('en-US', {
+      notation: count >= 1000 ? 'compact' : 'standard',
+      maximumFractionDigits: 1,
+    }).format(count);
+
+    fs.writeFileSync(outputPath, JSON.stringify({ count, formatted }));
+    console.log(`[build-data] GitHub stars: ${formatted}`);
+  } catch (err) {
+    console.warn('[build-data] Could not fetch GitHub stars:', err instanceof Error ? err.message : err);
+    if (fs.existsSync(outputPath)) {
+      console.warn('[build-data] Using cached value');
+    }
+  }
 }
 
 main();
