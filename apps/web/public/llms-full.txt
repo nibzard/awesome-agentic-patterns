@@ -5417,6 +5417,227 @@ graph TD
 
 ---
 
+## Deterministic Threat Rule Scanning
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** eeee2345 (@eeee2345)
+**Source:** https://github.com/panguard-ai/agent-threat-rules
+
+## Problem
+
+AI agents that invoke external tools (MCP servers, function calls, skill files) are exposed to a class of attacks where malicious content is embedded in tool descriptions, responses, or skill definitions. These attacks include prompt injection via tool output, data exfiltration through encoded parameters, privilege escalation via hidden instructions, and tool poisoning through manipulated descriptions.
+
+LLM-based detection alone is unreliable for these threats: adversaries can craft payloads that exploit the same reasoning flexibility that makes LLMs useful. Security requires a deterministic baseline that cannot be bypassed by clever prompt engineering.
+
+## Solution
+
+Maintain a library of deterministic regex-based rules, each targeting a specific threat pattern observed in real-world agent attacks. These rules run against tool descriptions, tool call arguments, tool responses, and skill definition files before the agent processes them.
+
+Each rule specifies:
+- A threat category (e.g., prompt injection, data exfiltration, privilege escalation)
+- One or more regex patterns matching known attack signatures
+- Severity level and recommended action (block, warn, log)
+- Test cases for both true positives and false positives
+
+```pseudo
+function scan(content, rules):
+    findings = []
+    for rule in rules:
+        for pattern in rule.patterns:
+            matches = regex_match(pattern, content)
+            if matches:
+                findings.append({
+                    rule_id: rule.id,
+                    severity: rule.severity,
+                    match: matches[0],
+                    action: rule.action
+                })
+    return findings
+
+// Integration point: intercept before agent processes tool output
+function on_tool_response(tool_name, response):
+    findings = scan(response, threat_rules)
+    critical = findings.filter(f => f.severity == "CRITICAL")
+    if critical:
+        block_and_alert(tool_name, critical)
+    return response
+```
+
+The scanning layer sits between the agent and its tools, inspecting content at well-defined interception points:
+
+```mermaid
+graph TD
+    A[External Tool / MCP Server] --> B[Tool Response]
+    B --> C[Threat Rule Scanner]
+    C --> D{Matches Found?}
+    D -->|CRITICAL| E[Block + Alert]
+    D -->|HIGH/MEDIUM| F[Warn + Log]
+    D -->|None| G[Pass to Agent]
+    H[Skill Definition File] --> C
+    I[Tool Description] --> C
+```
+
+The key insight is layered defense: deterministic rules catch known patterns with near-perfect precision, while LLM-based review handles novel or ambiguous threats as a second layer. The deterministic layer provides a floor of protection that does not degrade with adversarial prompt engineering.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - A regex-based rule library achieved 62.7% recall and 99.7% precision on the PINT prompt injection benchmark, demonstrating that deterministic rules reliably catch known patterns with very few false positives.
+  - Scanning 36,394 MCP server tool definitions with deterministic rules identified 182 CRITICAL and 1,124 HIGH severity findings, indicating measurable threat prevalence in real tool ecosystems.
+  - Layering deterministic scanning before LLM-based review reduces cost and latency: regex runs in microseconds per rule, reserving expensive LLM calls for ambiguous cases only.
+- **Unverified / Unclear:**
+  - Recall on novel attack patterns not yet captured by rules is unknown; the 62.7% figure reflects coverage of known patterns only.
+  - Effectiveness against adversarial evasion techniques (e.g., encoding variations, Unicode obfuscation) has not been systematically benchmarked.
+
+## How to use it
+
+1. **Choose interception points** based on your agent framework:
+   - Tool descriptions (scan when tools are registered)
+   - Tool call arguments (scan before execution)
+   - Tool responses (scan before agent processes output)
+   - Skill/plugin definition files (scan at install time)
+
+2. **Start with high-confidence rules** targeting well-documented attack patterns:
+   - Base64-encoded payloads in tool responses
+   - Hidden instructions using Unicode or whitespace tricks
+   - Cross-tool data exfiltration patterns
+   - Privilege escalation via `sudo`, `chmod`, or role manipulation
+
+3. **Integrate into your agent pipeline** as a synchronous check:
+   - Block on CRITICAL findings (known dangerous patterns)
+   - Warn on HIGH findings (suspicious but may be legitimate)
+   - Log everything for post-incident analysis
+
+4. **Evolve rules continuously** as new attack techniques emerge. Each rule should include test cases to prevent false positives from regressing precision.
+
+## Trade-offs
+
+- **Pros:**
+  - Deterministic and auditable: every detection decision is traceable to a specific rule
+  - Near-zero latency compared to LLM-based security review
+  - Cannot be bypassed by prompt injection (rules run outside the LLM context)
+  - Rules are composable and independently testable
+  - Complements LLM-based detection as part of a layered defense
+
+- **Cons:**
+  - Regex rules only catch known patterns; novel attacks require rule updates
+  - Recall is inherently limited by the rule library's coverage
+  - May produce false positives on legitimate content that resembles attack patterns
+  - Requires ongoing maintenance as the threat landscape evolves
+  - Pattern matching cannot understand semantic intent (e.g., distinguishing a legitimate base64 string from an exfiltration payload)
+
+## References
+
+- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 76 deterministic detection rules covering prompt injection, tool poisoning, data exfiltration, and privilege escalation
+- [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing agent-specific security risks
+- [PINT Benchmark](https://arxiv.org/abs/2312.10997) — Prompt injection benchmark for evaluating detection systems
+
+---
+
+## Deterministic Zero-LLM Orchestration
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Alex Chernysh (@chernistry)
+**Source:** https://arxiv.org/abs/2405.15103
+
+## Problem
+
+Multi-agent coding systems typically spend LLM tokens on coordination -- deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed. When the LLM is also the router, you get unpredictable task assignments and fragile orchestration that breaks when the model changes.
+
+## Solution
+
+Keep the orchestrator as **deterministic code** that spends zero LLM tokens on coordination. The LLM budget goes entirely to the agents doing actual work.
+
+```
+Goal → Decompose (deterministic) → Assign to parallel agents → Verify (tests) → Commit
+```
+
+The orchestrator handles:
+
+- Task decomposition via rule-based planning (file heuristics, dependency graphs, or convention-based splits)
+- Agent assignment and parallel spawning
+- Result verification through test execution
+- Git operations (branching, merging, committing)
+
+Agents handle:
+
+- Code generation
+- Problem solving
+- Implementation decisions
+
+```pseudo
+// Deterministic planner: split goal by file/module convention
+function plan(goal):
+    files = affected_files(goal)           // e.g. parse goal for file patterns
+    tasks = []
+    for file_group in partition(files):
+        tasks.append({
+            agent: select_agent(file_group),  // rule-based, not LLM
+            scope: file_group,
+            tests: find_tests(file_group)
+        })
+    return tasks
+
+// Parallel execution with test-gated merge
+function orchestrate(goal):
+    tasks = plan(goal)
+    results = parallel_execute(tasks)  // each agent in own worktree
+    for result in results:
+        if not run_tests(result.scope):
+            reject(result)
+    merge(results)
+```
+
+Key design choices:
+
+- **No LLM router** -- task-to-agent mapping is code, not prompts
+- **Test-driven verification** -- run tests after each agent completes; reject regressions
+- **Workspace isolation** -- each agent works in its own branch or worktree to avoid conflicts
+- **Circuit breaker** -- halt on test regression, no silent failures
+
+## How to use it
+
+1. **Define a deterministic planner** that decomposes goals into tasks using project conventions. Common strategies:
+   - File-path heuristics: split tasks by directory or module boundary
+   - Dependency graph: identify independent subgraphs for parallel work
+   - Convention-based: one task per test suite, API endpoint, or feature flag
+
+2. **Assign agents by capability**, not by LLM reasoning. Map task types to agent backends:
+   - Code generation tasks → your strongest coding model
+   - Documentation tasks → a cheaper or faster model
+   - Review tasks → a separate model for independent evaluation
+
+3. **Isolate agent workspaces.** Give each agent its own git worktree or branch so parallel work never conflicts. Merge only after verification passes.
+
+4. **Gate every merge on tests.** Run the relevant test suite after each agent completes. If tests fail, reject the result and optionally retry with the failure as context.
+
+5. **Set a budget.** Track token spend per agent and enforce caps to prevent runaway costs on stuck tasks.
+
+## Trade-offs
+
+- **Pros:**
+  - Predictable coordination cost (zero LLM tokens on orchestration)
+  - Deterministic behavior -- same goal produces same task breakdown
+  - Faster iteration -- no waiting for an LLM to decide what to do next
+  - Supports heterogeneous agents (Claude Code, Codex CLI, Gemini CLI, or any agent CLI)
+
+- **Cons:**
+  - Rigid decomposition -- can't handle ambiguous goals that need LLM judgment to split
+  - Requires well-defined project structure for rule-based planning to work
+  - Less adaptive than LLM-routed orchestration for novel or ill-specified task types
+  - Planner must be maintained as the project evolves
+
+## References
+
+- [Plan-Then-Execute Pattern](plan-then-execute-pattern.md) -- the general planning phase approach this pattern builds on
+- [Sub-Agent Spawning](sub-agent-spawning.md) -- the general multi-agent delegation pattern
+- [Bernstein](https://github.com/chernistry/bernstein) -- open-source implementation of this pattern with parallel agent orchestration and test-gated merging
+
+---
+
 ## Dev Tooling Assumptions Reset
 
 **Status:** emerging
@@ -11303,6 +11524,63 @@ Development environments, complex coding tasks, architectural decisions, debuggi
 
 ---
 
+## Output Verification Loop
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** John Weston (@JohnnyTarrr)
+**Source:** https://github.com/veroq-ai/shield
+
+## Problem
+
+LLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged.
+
+## Solution
+
+Insert a verification step between generation and action. The step works in three phases:
+
+1. **Claim extraction** -- decompose the LLM output into individual, atomic claims.
+2. **Evidence retrieval** -- for each claim, retrieve supporting or contradicting evidence from authoritative sources (APIs, knowledge bases, RAG stores).
+3. **Scoring** -- assign a per-claim trust score based on evidence alignment and return an aggregate confidence for the full output.
+
+The agent (or orchestrator) uses the scores to decide whether to proceed, retry with a corrected prompt, or escalate to a human.
+
+```pseudo
+output = agent.generate(prompt)
+result = verify(output, context)
+
+if result.trust_score >= threshold:
+    proceed(output)
+else:
+    retry_with_feedback(result.flagged_claims)
+```
+
+In multi-agent systems, run verification at each hand-off between agents so errors don't propagate through the pipeline. Verification receipts (signed, timestamped results) provide an audit trail for compliance.
+
+## How to use it
+
+- Place a verification call after any agent step that produces factual claims others will depend on.
+- Set a trust-score threshold appropriate to the domain (higher for medical/financial, lower for exploratory research).
+- In a swarm or multi-agent pipeline, verify at every agent boundary rather than only at the final output.
+- Store verification receipts when you need a compliance audit trail.
+
+### Known implementations
+
+- [VeroQ Shield](https://github.com/veroq-ai/shield) -- claim-level verification with evidence chains, Python and TypeScript SDKs. Self-hosted Docker option for air-gapped deployments.
+
+## Trade-offs
+
+- **Pros:** Catches factual errors that reflection loops miss; provides quantified confidence rather than binary pass/fail; audit trail via receipts; composable across multi-agent pipelines.
+- **Cons:** Adds latency per verification call; evidence quality bounds verification quality; requires an evidence source relevant to the domain.
+
+## References
+
+- [VeroQ Shield -- LLM output verification](https://github.com/veroq-ai/shield)
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.11366) -- related but lacks external evidence grounding
+- [FacTool: Factuality Detection in Generative AI](https://arxiv.org/abs/2307.13528) -- academic approach to claim-level verification
+
+---
+
 ## Parallel Tool Call Learning
 
 **Status:** emerging
@@ -15570,6 +15848,145 @@ If you wait to see what happens before acting, you'll miss the window. The front
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-007-0061-3) - Kohavi, Henne, Sommerfield (2007)
 * Related: [Burn the Boats](burn-the-boats.md), [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)
+
+---
+
+## Signal-Driven Agent Activation
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Nicolas Finet (@nifinet)
+**Source:** https://jorypestorious.com/blog/ai-engineer-spec/
+
+# Signal-Driven Agent Activation
+
+## Problem
+
+Most agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.
+
+In domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.
+
+Polling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met.
+
+## Solution
+
+Decouple agent activation from user commands by introducing a **signal layer** between external data sources and agent workflows.
+
+The pattern has three components:
+
+### 1. Signal Collector
+
+A background process that monitors external sources and emits structured events:
+
+```bash
+# Generic signal collector outputting JSON events
+$ signal-watch --source webhook --filter "event=page_visit AND page=/pricing" \
+  | jq '{type: "intent", source: "web", entity: .visitor_id, score: .engagement}'
+
+{"type":"intent","source":"web","entity":"acme-corp","score":82}
+```
+
+Signal sources can be webhooks, RSS feeds, API polling, log tails, or message queues. The collector normalizes them into a common event schema.
+
+### 2. Activation Rules
+
+A declarative rule set that maps signals to workflows:
+
+```yaml
+rules:
+  - signal: intent
+    condition: "score >= 70"
+    action: enrich-and-engage
+    cooldown: 24h
+
+  - signal: anomaly
+    condition: "severity == 'critical'"
+    action: investigate-and-alert
+    cooldown: 0
+
+  - signal: drift
+    condition: "delta > 0.05"
+    action: retrain-pipeline
+    cooldown: 7d
+```
+
+Rules include **cooldown periods** to prevent repeated activation on the same entity, and **condition filters** to set activation thresholds.
+
+### 3. Workflow Dispatch
+
+When a rule fires, the agent receives the signal payload as context and executes a predefined workflow:
+
+```bash
+# Agent receives signal context and acts autonomously
+$ agent run enrich-and-engage \
+    --context '{"entity":"acme-corp","score":82,"source":"web"}' \
+    --output json
+
+{"status":"completed","actions_taken":["enriched_profile","sent_email"],"entity":"acme-corp"}
+```
+
+The agent has full autonomy within the workflow scope but cannot exceed it — activation rules act as guardrails.
+
+```
+┌─────────────┐     ┌──────────────┐     ┌───────────────┐
+│   External   │────▶│   Signal     │────▶│  Activation   │
+│   Sources    │     │  Collector   │     │    Rules      │
+└─────────────┘     └──────────────┘     └───────┬───────┘
+                                                  │
+                                                  ▼
+                                         ┌───────────────┐
+                                         │    Agent       │
+                                         │   Workflow     │
+                                         └───────────────┘
+```
+
+## Evidence
+
+- **Event-driven architectures** are well-established in distributed systems (AWS EventBridge, Kafka). This pattern applies the same principle to agent activation.
+- **Security orchestration (SOAR)** platforms like Splunk SOAR and Palo Alto XSOAR use signal-driven playbook activation as their core mechanism.
+- **Sales engagement platforms** increasingly use intent signals (6sense, Bombora) to trigger automated sequences, validating the signal-to-action pipeline in production.
+
+## How to use it
+
+**Start with one signal source and one workflow.** Example use cases:
+
+- **DevOps**: Monitor deployment logs → detect anomalies → trigger rollback investigation
+- **Security**: Watch CVE feeds → match against dependency list → open remediation PRs
+- **Sales**: Track intent signals → enrich matching accounts → initiate outreach
+- **Finance**: Monitor price feeds → detect threshold crossings → execute hedging strategy
+
+**Prerequisites:**
+- A CLI-first skill set (see: CLI-First Skill Design)
+- At least one structured signal source
+- Defined activation thresholds per signal type
+
+**Key considerations:**
+- Start with high-confidence signals (low false-positive rate) to build trust
+- Log every activation with signal context for auditability
+- Set conservative cooldowns initially — tighten as you validate
+- Implement a kill switch to pause all signal-driven activation
+
+## Trade-offs
+
+**Advantages:**
+- Agents act at the right moment without human triage
+- Scales to signal volumes no human team can monitor
+- Composable — new signal sources and workflows plug in independently
+- Auditable — every action traces back to a specific signal event
+
+**Drawbacks:**
+- False positives trigger unnecessary workflows (noisy signals waste resources)
+- Requires upfront investment in signal normalization
+- Debugging chains (signal → rule → workflow) is harder than debugging direct commands
+- Risk of runaway activation if cooldowns and rate limits aren't enforced
+- Cold-start problem: rules need tuning before they're useful
+
+## References
+
+- [Event-Driven Architecture (Martin Fowler)](https://martinfowler.com/articles/201701-event-driven.html)
+- [SOAR Playbook Activation (Gartner)](https://www.gartner.com/en/information-technology/glossary/security-orchestration-automation-response-soar)
+- [CLI-First Skill Design (this catalogue)](cli-first-skill-design.md)
+- [CLI-Native Agent Orchestration (this catalogue)](cli-native-agent-orchestration.md)
 
 ---
 

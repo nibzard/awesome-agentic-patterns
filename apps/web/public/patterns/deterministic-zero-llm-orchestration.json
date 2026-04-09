@@ -1,0 +1,26 @@
+{
+  "title": "Deterministic Zero-LLM Orchestration",
+  "status": "emerging",
+  "authors": [
+    "Alex Chernysh (@chernistry)"
+  ],
+  "based_on": [
+    "Plan-Then-Execute Pattern",
+    "Bernstein (chernistry)"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://arxiv.org/abs/2405.15103",
+  "tags": [
+    "orchestration",
+    "multi-agent",
+    "parallel-execution",
+    "deterministic",
+    "test-driven",
+    "zero-llm-overhead"
+  ],
+  "slug": "deterministic-zero-llm-orchestration",
+  "id": "deterministic-zero-llm-orchestration",
+  "summary": "Multi agent coding systems typically spend LLM tokens on coordination deciding which agent works on what, routing tasks, merging results.",
+  "updated_at": "2026-04-09",
+  "body": "\n## Problem\n\nMulti-agent coding systems typically spend LLM tokens on coordination -- deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed. When the LLM is also the router, you get unpredictable task assignments and fragile orchestration that breaks when the model changes.\n\n## Solution\n\nKeep the orchestrator as **deterministic code** that spends zero LLM tokens on coordination. The LLM budget goes entirely to the agents doing actual work.\n\n```\nGoal → Decompose (deterministic) → Assign to parallel agents → Verify (tests) → Commit\n```\n\nThe orchestrator handles:\n\n- Task decomposition via rule-based planning (file heuristics, dependency graphs, or convention-based splits)\n- Agent assignment and parallel spawning\n- Result verification through test execution\n- Git operations (branching, merging, committing)\n\nAgents handle:\n\n- Code generation\n- Problem solving\n- Implementation decisions\n\n```pseudo\n// Deterministic planner: split goal by file/module convention\nfunction plan(goal):\n    files = affected_files(goal)           // e.g. parse goal for file patterns\n    tasks = []\n    for file_group in partition(files):\n        tasks.append({\n            agent: select_agent(file_group),  // rule-based, not LLM\n            scope: file_group,\n            tests: find_tests(file_group)\n        })\n    return tasks\n\n// Parallel execution with test-gated merge\nfunction orchestrate(goal):\n    tasks = plan(goal)\n    results = parallel_execute(tasks)  // each agent in own worktree\n    for result in results:\n        if not run_tests(result.scope):\n            reject(result)\n    merge(results)\n```\n\nKey design choices:\n\n- **No LLM router** -- task-to-agent mapping is code, not prompts\n- **Test-driven verification** -- run tests after each agent completes; reject regressions\n- **Workspace isolation** -- each agent works in its own branch or worktree to avoid conflicts\n- **Circuit breaker** -- halt on test regression, no silent failures\n\n## How to use it\n\n1. **Define a deterministic planner** that decomposes goals into tasks using project conventions. Common strategies:\n   - File-path heuristics: split tasks by directory or module boundary\n   - Dependency graph: identify independent subgraphs for parallel work\n   - Convention-based: one task per test suite, API endpoint, or feature flag\n\n2. **Assign agents by capability**, not by LLM reasoning. Map task types to agent backends:\n   - Code generation tasks → your strongest coding model\n   - Documentation tasks → a cheaper or faster model\n   - Review tasks → a separate model for independent evaluation\n\n3. **Isolate agent workspaces.** Give each agent its own git worktree or branch so parallel work never conflicts. Merge only after verification passes.\n\n4. **Gate every merge on tests.** Run the relevant test suite after each agent completes. If tests fail, reject the result and optionally retry with the failure as context.\n\n5. **Set a budget.** Track token spend per agent and enforce caps to prevent runaway costs on stuck tasks.\n\n## Trade-offs\n\n- **Pros:**\n  - Predictable coordination cost (zero LLM tokens on orchestration)\n  - Deterministic behavior -- same goal produces same task breakdown\n  - Faster iteration -- no waiting for an LLM to decide what to do next\n  - Supports heterogeneous agents (Claude Code, Codex CLI, Gemini CLI, or any agent CLI)\n\n- **Cons:**\n  - Rigid decomposition -- can't handle ambiguous goals that need LLM judgment to split\n  - Requires well-defined project structure for rule-based planning to work\n  - Less adaptive than LLM-routed orchestration for novel or ill-specified task types\n  - Planner must be maintained as the project evolves\n\n## References\n\n- [Plan-Then-Execute Pattern](plan-then-execute-pattern.md) -- the general planning phase approach this pattern builds on\n- [Sub-Agent Spawning](sub-agent-spawning.md) -- the general multi-agent delegation pattern\n- [Bernstein](https://github.com/chernistry/bernstein) -- open-source implementation of this pattern with parallel agent orchestration and test-gated merging\n"
+}

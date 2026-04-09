@@ -214,6 +214,14 @@
     <lastmod>2026-04-09</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/dev-tooling-assumptions-reset</loc>
     <lastmod>2026-04-09</lastmod>
   </url>
@@ -426,6 +434,10 @@
     <lastmod>2026-04-09</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/output-verification-loop</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/parallel-tool-call-learning</loc>
     <lastmod>2026-01-05</lastmod>
   </url>
@@ -539,6 +551,10 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/shipping-as-research</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/signal-driven-agent-activation</loc>
     <lastmod>2026-04-09</lastmod>
   </url>
   <url>

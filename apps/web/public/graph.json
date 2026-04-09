@@ -774,6 +774,40 @@
       "summary": "Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area."
     },
     {
+      "id": "deterministic-threat-rule-scanning",
+      "title": "Deterministic Threat Rule Scanning",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "deterministic-threat-rule-scanning",
+      "tags": [
+        "security",
+        "threat-detection",
+        "regex",
+        "deterministic",
+        "prompt-injection",
+        "tool-poisoning",
+        "mcp",
+        "agent-safety"
+      ],
+      "summary": "Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions."
+    },
+    {
+      "id": "deterministic-zero-llm-orchestration",
+      "title": "Deterministic Zero-LLM Orchestration",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "deterministic-zero-llm-orchestration",
+      "tags": [
+        "orchestration",
+        "multi-agent",
+        "parallel-execution",
+        "deterministic",
+        "test-driven",
+        "zero-llm-overhead"
+      ],
+      "summary": "Multi agent coding systems typically spend LLM tokens on coordination deciding which agent works on what, routing tasks, merging results."
+    },
+    {
       "id": "dev-tooling-assumptions-reset",
       "title": "Dev Tooling Assumptions Reset",
       "category": "UX & Collaboration",
@@ -1603,6 +1637,21 @@
       "summary": "Relying on a single AI model creates a trade off between capability and cost."
     },
     {
+      "id": "output-verification-loop",
+      "title": "Output Verification Loop",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "output-verification-loop",
+      "tags": [
+        "verification",
+        "hallucination-detection",
+        "trust-scores",
+        "fact-checking",
+        "multi-agent"
+      ],
+      "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result."
+    },
+    {
       "id": "parallel-tool-call-learning",
       "title": "Parallel Tool Call Learning",
       "category": "Orchestration & Control",
@@ -2057,6 +2106,21 @@
         "uncertainty"
       ],
       "summary": "In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind."
+    },
+    {
+      "id": "signal-driven-agent-activation",
+      "title": "Signal-Driven Agent Activation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "signal-driven-agent-activation",
+      "tags": [
+        "signals",
+        "event-driven",
+        "automation",
+        "orchestration",
+        "reactive"
+      ],
+      "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts."
     },
     {
       "id": "skill-library-evolution",
@@ -2547,6 +2611,16 @@
     {
       "source": "denial-tracking-permission-escalation",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "output-verification-loop",
+      "target": "reflection-loop",
+      "type": "related"
+    },
+    {
+      "source": "output-verification-loop",
+      "target": "self-critique-evaluator-loop",
       "type": "related"
     },
     {

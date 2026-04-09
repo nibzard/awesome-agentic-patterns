@@ -1194,7 +1194,7 @@
     "summary": "Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.",
     "maturity": "maturing",
     "complexity": "low",
-    "effort": "hours",
+    "effort": "low",
     "impact": "high",
     "signals": [
       "Agent runs in non-interactive or background mode",
@@ -1246,6 +1246,60 @@
     "summary": "Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area.",
     "updated_at": "2026-04-09",
     "excerpt": "\n## Problem\nNon-deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism - code is either secure or not secure, with no grey area. These approaches are merely suggestions to the LLM that may or may not be followed consistently."
+  },
+  {
+    "title": "Deterministic Threat Rule Scanning",
+    "status": "emerging",
+    "authors": [
+      "eeee2345 (@eeee2345)"
+    ],
+    "based_on": [
+      "Agent Threat Rules (open-source rule library)",
+      "OWASP Agentic Top 10"
+    ],
+    "category": "Security & Safety",
+    "source": "https://github.com/panguard-ai/agent-threat-rules",
+    "tags": [
+      "security",
+      "threat-detection",
+      "regex",
+      "deterministic",
+      "prompt-injection",
+      "tool-poisoning",
+      "mcp",
+      "agent-safety"
+    ],
+    "slug": "deterministic-threat-rule-scanning",
+    "id": "deterministic-threat-rule-scanning",
+    "summary": "Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nAI agents that invoke external tools (MCP servers, function calls, skill files) are exposed to a class of attacks where malicious content is embedded in tool descriptions, responses, or skill definitions. These attacks include prompt injection via tool output, data exfiltration through encoded parameters, privilege escalation via hidden instructions, and tool poisoning through manipulated descriptions.\n\nLLM-based detection alone is unreliable for these threats: adversaries can craft payloads that exploit the same reasoning flexibility that makes LLMs useful. Security requires a deterministic baseline that cannot be bypassed by clever prompt engineering."
+  },
+  {
+    "title": "Deterministic Zero-LLM Orchestration",
+    "status": "emerging",
+    "authors": [
+      "Alex Chernysh (@chernistry)"
+    ],
+    "based_on": [
+      "Plan-Then-Execute Pattern",
+      "Bernstein (chernistry)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://arxiv.org/abs/2405.15103",
+    "tags": [
+      "orchestration",
+      "multi-agent",
+      "parallel-execution",
+      "deterministic",
+      "test-driven",
+      "zero-llm-overhead"
+    ],
+    "slug": "deterministic-zero-llm-orchestration",
+    "id": "deterministic-zero-llm-orchestration",
+    "summary": "Multi agent coding systems typically spend LLM tokens on coordination deciding which agent works on what, routing tasks, merging results.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nMulti-agent coding systems typically spend LLM tokens on coordination -- deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed. When the LLM is also the router, you get unpredictable task assignments and fragile orchestration that breaks when the model changes."
   },
   {
     "title": "Dev Tooling Assumptions Reset",
@@ -2578,6 +2632,46 @@
     "excerpt": "\n## Problem\nRelying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems."
   },
   {
+    "title": "Output Verification Loop",
+    "status": "emerging",
+    "authors": [
+      "John Weston (@JohnnyTarrr)"
+    ],
+    "based_on": [
+      "VeroQ Shield (veroq-ai)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/veroq-ai/shield",
+    "tags": [
+      "verification",
+      "hallucination-detection",
+      "trust-scores",
+      "fact-checking",
+      "multi-agent"
+    ],
+    "slug": "output-verification-loop",
+    "id": "output-verification-loop",
+    "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "Agent output feeds into decisions or downstream agents",
+      "Hallucination risk is non-trivial",
+      "Compliance requires an audit trail"
+    ],
+    "anti_signals": [
+      "Output is purely creative with no factual claims",
+      "Latency budget under 500ms"
+    ],
+    "related": [
+      "reflection-loop",
+      "self-critique-evaluator-loop"
+    ],
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nLLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged."
+  },
+  {
     "title": "Parallel Tool Call Learning",
     "status": "emerging",
     "authors": [
@@ -3306,6 +3400,27 @@
     "summary": "In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind.",
     "updated_at": "2026-04-09",
     "excerpt": "\n## Problem\nIn the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.\n\n**Expert intuition is unreliable**: Research across major technology companies shows that 80-90% of product ideas fail to improve key metrics, even when experts are confident they will work (Kohavi et al., 2007). Real-world experimentation beats theoretical analysis."
+  },
+  {
+    "title": "Signal-Driven Agent Activation",
+    "status": "emerging",
+    "authors": [
+      "Nicolas Finet (@nifinet)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://jorypestorious.com/blog/ai-engineer-spec/",
+    "tags": [
+      "signals",
+      "event-driven",
+      "automation",
+      "orchestration",
+      "reactive"
+    ],
+    "slug": "signal-driven-agent-activation",
+    "id": "signal-driven-agent-activation",
+    "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nMost agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.\n\nIn domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.\n\nPolling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met."
   },
   {
     "title": "Skill Library Evolution",
