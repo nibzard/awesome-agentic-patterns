@@ -1,11 +1,21 @@
 {
   "title": "Canary Rollout and Automatic Rollback for Agent Policy Changes",
   "status": "established",
-  "authors": ["Codex (@openai)"],
-  "based_on": ["Canary deployment and SRE rollback practices"],
+  "authors": [
+    "Codex (@openai)"
+  ],
+  "based_on": [
+    "Canary deployment and SRE rollback practices"
+  ],
   "category": "Reliability & Eval",
   "source": "https://martinfowler.com/bliki/CanaryRelease.html",
-  "tags": ["canary", "rollback", "reliability", "policy", "evaluation"],
+  "tags": [
+    "canary",
+    "rollback",
+    "reliability",
+    "policy",
+    "evaluation"
+  ],
   "slug": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
   "id": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
   "summary": "Agent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds.",

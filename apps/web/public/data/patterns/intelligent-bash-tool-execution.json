@@ -1,11 +1,23 @@
 {
   "title": "Intelligent Bash Tool Execution",
   "status": "validated-in-production",
-  "authors": ["Clawdbot Contributors"],
-  "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
+  "authors": [
+    "Clawdbot Contributors"
+  ],
+  "based_on": [
+    "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts",
-  "tags": ["bash", "shell", "pty", "fallback", "security", "process-management", "sandboxing"],
+  "tags": [
+    "bash",
+    "shell",
+    "pty",
+    "fallback",
+    "security",
+    "process-management",
+    "sandboxing"
+  ],
   "slug": "intelligent-bash-tool-execution",
   "id": "intelligent-bash-tool-execution",
   "summary": "Secure, reliable command execution from agents is complex and error prone: PTY requirements : TTY required CLIs (coding agents, terminal UIs) fail with direct e",

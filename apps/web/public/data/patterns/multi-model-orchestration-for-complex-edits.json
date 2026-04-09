@@ -1,8 +1,12 @@
 {
   "title": "Multi-Model Orchestration for Complex Edits",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Aman Sanger (Cursor)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Aman Sanger (Cursor)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

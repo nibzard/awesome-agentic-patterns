@@ -1,8 +1,12 @@
 {
   "title": "Workspace-Native Multi-Agent Orchestration",
   "status": "emerging",
-  "authors": ["John Xie (@johnxie)"],
-  "based_on": ["Taskade AI Agents (example implementation)"],
+  "authors": [
+    "John Xie (@johnxie)"
+  ],
+  "based_on": [
+    "Taskade AI Agents (example implementation)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://taskade.com/agents",
   "tags": [

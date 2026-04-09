@@ -4739,6 +4739,56 @@ mv memories/.consensus.tmp memories/consensus.md
 
 ---
 
+## Cryptographic Governance Audit Trail
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** jagmarques (@jagmarques)
+**Source:** https://github.com/jagmarques/asqav-sdk
+
+## Problem
+
+When AI agents execute tool calls autonomously, there is no tamper-evident record of what happened. Traditional logging is mutable - logs can be altered after the fact. In regulated environments (finance, healthcare, EU AI Act), teams need to prove exactly what an agent did, when, and whether it operated within policy. Without cryptographic guarantees, audit trails have no legal or compliance weight.
+
+## Solution
+
+Sign every agent action with a post-quantum digital signature (ML-DSA) at the point of execution. Each tool call produces a signed receipt containing the action, parameters, result hash, timestamp, and policy evaluation outcome. These receipts form an append-only chain that is tamper-evident by construction.
+
+The governance layer operates as middleware that wraps the agent tool-calling interface:
+
+1. **Pre-execution**: Check the tool call against a policy file (allowed tools, rate limits, data access rules)
+2. **Execution**: Run the tool call normally
+3. **Post-execution**: Sign the action receipt with ML-DSA and append to the audit trail
+
+## Evidence
+
+- **Evidence Grade:** medium
+- **Most Valuable Findings:**
+  - SCITT architecture (IETF RFC 9334) validates the append-only signed receipt pattern for supply chain integrity
+  - OWASP Agentic Top 10 lists lack of audit trail as a top vulnerability for agent systems
+- **Unverified / Unclear:** Long-term storage and verification overhead at scale needs more production data
+
+## How to use it
+
+- Apply to any agent framework that supports tool-calling middleware (LangChain, CrewAI, MCP, etc.)
+- Define policies in YAML specifying which tools are allowed, rate limits, and data access rules
+- Store signed receipts locally or export to a compliance system
+- Use for EU AI Act Article 12 (record-keeping) and SOC2 audit evidence
+
+## Trade-offs
+
+- **Pros:** Tamper-evident audit trail, policy enforcement before execution, quantum-safe signatures, framework-agnostic
+- **Cons:** Adds latency to each tool call (signing overhead), requires key management, receipt storage grows linearly with agent activity
+
+## References
+
+- [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation
+- [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture
+- [OWASP Agentic Top 10](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks
+- [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard
+
+---
+
 ## Curated Code Context Window
 
 **Status:** validated-in-production
@@ -5032,6 +5082,109 @@ flowchart TD
 
 ---
 
+## Declarative Multi-Agent Topology Definition
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Nadav Naveh (@nadavnaveh)
+**Source:** https://github.com/agentopology/agentopology
+
+## Problem
+
+Multi-agent systems today are wired imperatively: each framework has its own SDK, config format, and orchestration primitives. This creates several problems:
+
+- **Vendor lock-in**: A supervisor topology built for one framework must be rewritten from scratch to run on another.
+- **Implicit topology**: The agent graph — who talks to whom, what gates block progress, which flows fan out — is buried in code rather than visible at a glance.
+- **No single source of truth**: When the topology lives across scattered config files, prompts, and glue code, refactoring or auditing the system requires reading everything.
+- **Repeated scaffolding work**: Teams re-implement the same patterns (pipeline, fan-out, debate, human-in-the-loop gate) in every new project and every new framework.
+
+## Solution
+
+Define the entire multi-agent topology in a single declarative file using a purpose-built grammar. The file describes **what** the system looks like — agents, flows, gates, hooks, group chats — and a compiler generates **how** it runs on each target platform.
+
+**Core primitives:**
+
+1. **Agents**: Name, model, role, tools, and constraints.
+2. **Flows**: Directed edges between agents — pipelines, fan-out, fan-in, cycles.
+3. **Gates**: Approval checkpoints (human, automated, or conditional) positioned between flow steps.
+4. **Hooks**: Lifecycle callbacks (pre-run, post-run, on-error) attached to agents or flows.
+5. **Group chats**: Multi-agent conversation protocols with turn-taking rules.
+
+```
+topology code-review {
+  agent reviewer {
+    model "claude-sonnet"
+    role "Review pull requests for correctness and style"
+    tools [grep, read_file]
+  }
+
+  agent security {
+    model "claude-sonnet"
+    role "Check for security vulnerabilities"
+    tools [grep, semgrep]
+  }
+
+  agent summarizer {
+    model "claude-haiku"
+    role "Produce a concise review summary"
+  }
+
+  flow fan-out {
+    start -> [reviewer, security]  // parallel
+    [reviewer, security] -> summarizer  // fan-in
+  }
+
+  gate human-approval {
+    after summarizer
+    type human
+    prompt "Approve this review before posting?"
+  }
+}
+```
+
+A compiler parses the topology into an AST and emits platform-specific output — config files for CLI agents, runnable code for SDK targets, or visual diagrams for documentation.
+
+```mermaid
+graph TD
+  A[".at topology file"] --> B[Parser / AST]
+  B --> C1[Platform A config]
+  B --> C2[Platform B config]
+  B --> C3[Platform C config]
+  B --> D[Visual diagram]
+```
+
+## How to use it
+
+- **Start with a common pattern**: Pipeline, fan-out/fan-in, or supervisor are good first topologies. Express the agent graph declaratively before writing any imperative glue.
+- **Compile to your target**: Use a binding/compiler to emit the platform-specific configuration or code. If your framework is not yet supported, the AST is a clean compilation target.
+- **Enforce gates declaratively**: Rather than sprinkling approval logic throughout your code, declare gates at specific flow positions. The compiler maps them to each platform's strongest enforcement mechanism.
+- **Version the topology**: The declarative file is small, diffable, and reviewable. Check it into version control alongside your code.
+- **Visualize before running**: Generate a diagram from the topology to verify the agent graph matches your intent before deploying.
+
+## Trade-offs
+
+**Pros:**
+
+- **Portability**: One topology definition works across multiple frameworks — switch platforms without rewriting orchestration logic.
+- **Readability**: The full agent graph is visible in one file, making review and onboarding faster.
+- **Pattern reuse**: Common multi-agent patterns (pipeline, debate, supervisor) become composable building blocks rather than bespoke code.
+- **Auditability**: Gates, permissions, and flows are explicit and diffable in version control.
+
+**Cons:**
+
+- **Abstraction cost**: A declarative layer cannot expose every platform-specific feature; escape hatches or extensions are needed for advanced cases.
+- **Grammar learning curve**: Teams must learn a new syntax, though the goal is to keep it minimal and readable.
+- **Compiler fidelity**: Each binding must faithfully map declarative primitives to platform capabilities, which varies across targets.
+- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing.
+
+## References
+
+- [AgenTopology](https://github.com/agentopology/agentopology) — Open-source reference implementation: parser, validator, CLI, visualizer, and bindings for multiple platform targets. Apache-2.0.
+- Jennings, N. R. (2001). "An agent-based approach for building complex software systems". Communications of the ACM. — Foundational work on multi-agent system architectures and coordination patterns.
+- Wooldridge, M. (2009). *An Introduction to MultiAgent Systems*. Wiley. — Textbook covering agent communication languages, interaction protocols, and organizational structures.
+
+---
+
 ## Democratization of Tooling via Agents
 
 **Status:** emerging
@@ -5076,6 +5229,84 @@ A sales team member uses an AI agent to create a custom dashboard that pulls dat
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
 - MetaGPT: Multi-agent system assigning PM, engineer, architect roles to agents, making full SDLC accessible through simple prompts—https://arxiv.org/abs/2308.00309
+
+---
+
+## Denial Tracking & Permission Escalation
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** Murilo Scigliano (@muriloscigliano)
+**Source:** https://github.com/muriloscigliano/ai-playbook
+
+## Problem
+
+When agents run in non-interactive contexts (background jobs, CI/CD pipelines, headless mode), every permission prompt is typically auto-denied. If the agent keeps attempting the same blocked tool, it wastes its iteration budget retrying an action that will never succeed. This leads to silent failures, stalled tasks, and burned compute with no progress.
+
+Even in interactive mode, a user who repeatedly denies a specific tool creates the same loop: the agent tries, gets denied, tries again with a slightly different argument, and gets denied again.
+
+## Solution
+
+Maintain a per-tool denial counter scoped to the current conversation. After a configurable threshold of denials (typically 3), escalate instead of retrying:
+
+- **Interactive mode:** Prompt the user for blanket permission ("Bash has been denied 3 times. Allow all Bash for this session?").
+- **Non-interactive mode:** Switch to a fallback strategy (use a different tool, skip the step, or abort with a clear error).
+
+```pseudo
+class DenialTracker:
+    counts: Map<string, number>   // tool_name -> denial count
+    threshold: number = 3
+
+    on_denial(tool_name):
+        counts[tool_name] = (counts[tool_name] || 0) + 1
+        if counts[tool_name] >= threshold:
+            return ESCALATE
+        return RETRY_DIFFERENT
+
+    on_allow(tool_name):
+        counts.delete(tool_name)   // reset on success
+```
+
+When escalation triggers and the user grants blanket permission, add the tool to `alwaysAllowRules` for the remainder of the session and reset the counter.
+
+```mermaid
+graph TD
+    A[Tool Denied] --> B[Increment Counter]
+    B --> C{Counter >= Threshold?}
+    C -- No --> D[Retry with Different Approach]
+    C -- Yes --> E{Interactive?}
+    E -- Yes --> F[Prompt: Allow all for session?]
+    E -- No --> G[Switch to Fallback Strategy]
+    F -- Granted --> H[Add to alwaysAllow & Reset]
+    F -- Denied --> G
+    H --> I[Continue Execution]
+    G --> J[Skip / Use Alternative / Abort]
+```
+
+## How to use it
+
+- **Per-conversation tracking:** Denial counters reset at session start. No state persists across conversations.
+- **Subagent isolation:** Subagents maintain their own local denial tracking since their state writes may be no-ops in the parent.
+- **Configurable thresholds:** Different tools may warrant different thresholds. Shell access might escalate after 2 denials; file reads after 5.
+- **Combine with permission tiers:** Pair with a multi-layer permission system so that escalation grants the minimum viable scope (e.g., allow Bash but only for read-only commands).
+
+**When to apply:**
+
+- Background or headless agent runners where prompts are auto-denied
+- CI/CD agents that need certain tools to complete their task
+- Long-running interactive sessions where approval fatigue is likely
+
+## Trade-offs
+
+- **Pros:** Prevents wasted iteration loops; surfaces the real blocker early; reduces approval fatigue in interactive mode; trivial to implement (a counter and a branch).
+- **Cons:** Blanket session permissions widen the attack surface after escalation; threshold tuning requires experimentation; fallback strategies must be defined per tool, adding configuration overhead.
+
+## References
+
+- [AI Agent Patterns Playbook — Pattern 70: Denial Tracking](https://github.com/muriloscigliano/ai-playbook) — production-hardened pattern catalogue covering 78 agent engineering patterns
+- Related: [Human-in-the-Loop Approval Framework](/patterns/human-in-loop-approval-framework) — complementary pattern for initial approval gates
+- Related: [Hook-Based Safety Guard Rails](/patterns/hook-based-safety-guard-rails) — external interceptors that can enforce denial policies
+- Related: [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization) — scoped permissions that limit what escalation can grant
 
 ---
 
@@ -9975,6 +10206,63 @@ The aim is to create interfaces that are robust and intuitive for LLMs to intera
 
 ---
 
+## MCP Pattern Injection
+
+**Status:** validated-in-production
+**Category:** Tool Use & Environment
+**Authors:** Rajath Bharadwaj (@Rajathbharadwaj)
+**Source:** https://github.com/Rajathbharadwaj/langgraph-patterns-mcp
+
+## Problem
+
+AI coding assistants lack domain-specific knowledge about framework best practices. When building LangGraph agents, developers must repeatedly explain patterns, copy-paste from docs, or watch the AI reinvent suboptimal solutions. The assistant's training data is often outdated relative to fast-moving frameworks.
+
+## Solution
+
+Use **MCP (Model Context Protocol) servers** to inject production patterns directly into the AI assistant's context:
+
+1. Create an MCP server that exposes domain patterns as tools and resources
+2. Structure patterns with clear signatures, descriptions, and code snippets  
+3. Configure Claude Desktop or Cursor to connect to the MCP server
+4. The AI can now "call" patterns on-demand, getting current best practices
+
+```typescript
+// Example: MCP tool that returns a LangGraph pattern
+server.tool("get_pattern", { name: z.string() }, async ({ name }) => {
+  const pattern = PATTERNS[name];
+  return {
+    content: [{
+      type: "text",
+      text: `## ${pattern.title}\n\n${pattern.description}\n\n\`\`\`python\n${pattern.code}\n\`\`\``
+    }]
+  };
+});
+```
+
+The key insight: MCP servers act as **live documentation** that the AI can query, rather than static context that burns tokens.
+
+## Trade-offs
+
+**Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.  
+**Cons:** Requires MCP server setup; adds latency for tool calls; patterns must be maintained.
+
+## How to use it
+
+- Build MCP servers for any framework your team uses heavily (LangGraph, FastAPI, React patterns)
+- Keep patterns small and focused—one pattern per tool call
+- Include "when to use" and "when NOT to use" guidance in pattern descriptions
+- Version your patterns alongside your codebase
+- Use `npx` for easy distribution: `npx your-patterns-mcp`
+
+## References
+
+- Model Context Protocol: https://modelcontextprotocol.io/
+- LangGraph Patterns MCP (reference impl): https://github.com/Rajathbharadwaj/langgraph-patterns-mcp
+- Claude Desktop MCP Integration: https://docs.anthropic.com/en/docs/claude-code/mcp
+- Cursor MCP Support: https://docs.cursor.com/context/model-context-protocol
+
+---
+
 ## Memory Reinforcement Learning (MemRL)
 
 **Status:** proposed
@@ -13853,6 +14141,140 @@ const context: AgentContext = {
 - [Zod Validation Documentation](https://zod.dev/) - Schema validation library
 - [Self-Refine: Improving Reasoning via Iterative Feedback](https://arxiv.org/abs/2303.11366) - ICLR 2024, Shinn et al.
 - Related patterns: [Structured Output Specification](structured-output-specification.md), [Action Caching & Replay](action-caching-replay.md)
+
+---
+
+## Schema-Guided Graph Retrieval for Multi-Hop Reasoning
+
+**Status:** emerging
+**Category:** Context & Memory
+**Authors:** Nikola Balic (@nibzard)
+**Source:** https://github.com/TencentCloudADP/youtu-graphrag
+
+## Problem
+
+Complex QA over private or domain-specific corpora often needs more structure than flat chunk retrieval, but naive GraphRAG systems still fail in predictable ways:
+
+- **Retrieval is too broad:** entity, relation, keyword, and summary nodes all compete during search, so evidence gets noisy.
+- **Question decomposition is disconnected from storage:** the planner breaks a query into sub-questions without knowing which entity types or relations actually exist in the graph.
+- **Domain transfer is expensive:** each new corpus needs hand-tuned ontology work or brittle prompt rewrites.
+- **Large graphs become hard to navigate:** even when the graph is correct, retrieval quality drops as the system lacks higher-level abstractions for routing.
+
+The core issue is misalignment. Construction, retrieval, and reasoning each use different assumptions about the domain, so the graph accumulates structure that the retriever cannot reliably exploit.
+
+## Solution
+
+Treat the schema as the control surface for the entire GraphRAG pipeline, not just an extraction hint.
+
+The same schema should guide:
+
+1. **Graph construction:** define seed entity types, relations, and attributes that bound extraction.
+2. **Schema evolution:** let the extraction stage propose high-confidence additions when new domains require new types.
+3. **Hierarchical graph organization:** build higher-level keyword or community layers so retrieval can move across abstractions, not only raw triples.
+4. **Query decomposition:** prompt an agent with the same schema to produce focused sub-questions plus the node, relation, and attribute types likely involved.
+5. **Typed retrieval:** filter or bias retrieval toward those schema types before scoring and aggregating evidence.
+6. **Parallel evidence gathering:** run the decomposed sub-questions concurrently, then merge triples and chunk evidence for final reasoning.
+
+```text
+schema = load_seed_schema()
+
+graph = build_graph(
+  documents,
+  schema=schema,
+  allow_schema_evolution=true
+)
+
+graph = add_keyword_and_community_layers(graph)
+
+plan = decompose_question(
+  question,
+  schema=schema
+)
+# returns:
+# {
+#   sub_questions: [...],
+#   involved_types: { nodes: [...], relations: [...], attributes: [...] }
+# }
+
+evidence = parallel_map(plan.sub_questions, sub_q =>
+  retrieve(
+    graph,
+    query=sub_q,
+    type_filter=plan.involved_types
+  )
+)
+
+answer = reason_over(merge(evidence))
+```
+
+```mermaid
+graph TD
+    A[Seed Schema] --> B[Graph Construction]
+    B --> C[Schema Evolution]
+    C --> D[Hierarchical Graph]
+    A --> E[Query Decomposition]
+    D --> F[Typed Retrieval]
+    E --> F
+    F --> G[Parallel Sub-question Search]
+    G --> H[Evidence Merge + Reasoning]
+```
+
+The distinctive move is not "use a graph" by itself. It is **reusing one schema across ingestion, planning, and retrieval** so the system can ask better sub-questions, search a narrower part of the graph, and adapt to new domains without redesigning the whole stack.
+
+## Evidence
+
+- **Evidence Grade:** `mixed`
+- **Most Valuable Findings:** the repository contains concrete implementations of schema-guided decomposition, schema-type-aware retrieval, parallel sub-question execution, and schema evolution during extraction.
+- **Most Valuable Findings:** the project reports better cost/accuracy trade-offs than its chosen baselines and presents the pattern as production-oriented for domain transfer.
+- **Unverified / Unclear:** generality across domains, the exact contribution of each subsystem, and whether the reported gains hold outside the project's evaluation setup.
+
+## How to use it
+
+Use this pattern when:
+
+- you need multi-hop reasoning over private or domain-specific knowledge;
+- flat chunk retrieval produces too much irrelevant context;
+- your domain has a stable enough ontology to define useful types up front;
+- you want a GraphRAG system that can expand into adjacent domains without rebuilding everything.
+
+Implementation guidance:
+
+1. Start with a **small seed schema**. Define only the entity, relation, and attribute types that materially improve retrieval quality.
+2. Store `schema_type` on extracted nodes and relations so the retriever can use it later.
+3. Have the decomposer return both **sub-questions** and **involved schema types**. Without the second output, decomposition does not help retrieval much.
+4. Apply typed filtering or typed ranking before global semantic search. This is where most of the precision gain comes from.
+5. Add keyword/community layers only after the base graph works. They help large graphs, but they are not a substitute for good schema design.
+6. Put strict thresholds around schema evolution. Otherwise the graph will drift into ontology sprawl.
+7. Evaluate separately for:
+   - retrieval precision/recall,
+   - answer accuracy,
+   - token cost,
+   - latency added by decomposition and graph traversal.
+
+## Trade-offs
+
+**Pros:**
+
+- Improves retrieval precision by narrowing search to relevant schema types.
+- Makes multi-hop questions easier to answer through explicit sub-question planning.
+- Creates a cleaner domain-transfer path than fully hand-crafted ontologies.
+- Produces more interpretable reasoning traces than flat dense retrieval alone.
+- Supports combining low-level evidence with higher-level community summaries.
+
+**Cons:**
+
+- Requires upfront schema design and ongoing governance.
+- Bad schema choices can hide relevant evidence instead of improving search.
+- Schema evolution can introduce noisy or overlapping types if left unchecked.
+- More moving parts than simple vector search: extraction, graph maintenance, decomposition, typed retrieval, and aggregation.
+- Parallel sub-question retrieval improves coverage but increases orchestration complexity and latency variance.
+
+## References
+
+- [Youtu-GraphRAG repository](https://github.com/TencentCloudADP/youtu-graphrag)
+- [Youtu-GraphRAG paper entry on arXiv](https://arxiv.org/abs/2508.19855)
+- Related: [Agentic Search Over Vector Embeddings](agentic-search-over-vector-embeddings.md)
+- Related: [Agent-Driven Research](agent-driven-research.md)
 
 ---
 
@@ -18830,5 +19252,5 @@ sequenceDiagram
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections" [arXiv:2506.08837](https://doi.org/10.48550/arXiv.2506.08837)
 - Greshake et al. (2023). "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications" [arXiv:2302.12173](https://doi.org/10.48550/arXiv.2302.12173)
 - [SPIFFE/SPIRE](https://spiffe.io/)
-- [AgentMesh (example implementation)](https://github.com/imran-siddique/agent-mesh)
+- [AgentMesh (example implementation)](https://github.com/microsoft/agent-governance-toolkit)
 - [A2A Protocol](https://github.com/a2aproject/A2A)

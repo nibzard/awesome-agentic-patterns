@@ -1,8 +1,12 @@
 {
   "title": "Seamless Background-to-Foreground Handoff",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Aman Sanger (Cursor)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Aman Sanger (Cursor)"
+  ],
   "category": "UX & Collaboration",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

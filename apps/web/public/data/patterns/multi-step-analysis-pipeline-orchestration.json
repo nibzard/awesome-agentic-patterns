@@ -1,8 +1,12 @@
 {
   "title": "Artifact-Driven Analysis Pipeline Orchestration",
   "status": "emerging",
-  "authors": ["shmlkv (@shmlkv)"],
-  "based_on": ["Anthropic Claude Code"],
+  "authors": [
+    "shmlkv (@shmlkv)"
+  ],
+  "based_on": [
+    "Anthropic Claude Code"
+  ],
   "category": "Orchestration & Control",
   "source": "https://github.com/shmlkv/dna-claude-analysis",
   "tags": [

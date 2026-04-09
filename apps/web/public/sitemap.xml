@@ -182,6 +182,10 @@
     <lastmod>2026-03-10</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/curated-code-context-window</loc>
     <lastmod>2026-03-10</lastmod>
   </url>
@@ -194,8 +198,16 @@
     <lastmod>2026-03-10</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition</loc>
+    <lastmod>2026-03-20</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents</loc>
     <lastmod>2026-03-10</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/denial-tracking-permission-escalation</loc>
+    <lastmod>2026-04-03</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop</loc>
@@ -366,6 +378,10 @@
     <lastmod>2026-03-10</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/mcp-pattern-injection</loc>
+    <lastmod>2026-03-19</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</loc>
     <lastmod>2026-01-13</lastmod>
   </url>
@@ -484,6 +500,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/schema-validation-retry-cross-step-learning</loc>
     <lastmod>2026-03-10</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/schema-guided-graph-retrieval</loc>
+    <lastmod>2026-03-27</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/seamless-background-to-foreground-handoff</loc>
@@ -635,6 +655,6 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/zero-trust-agent-mesh</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-20</lastmod>
   </url>
 </urlset>

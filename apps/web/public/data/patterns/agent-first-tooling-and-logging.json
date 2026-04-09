@@ -1,8 +1,13 @@
 {
   "title": "Agent-First Tooling and Logging",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Thorsten Ball (Sourcegraph)",
+    "Kenton Varda (Cloudflare)"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://www.sourcegraph.com",
   "tags": [

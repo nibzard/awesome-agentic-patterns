@@ -1,11 +1,22 @@
 {
   "title": "Lane-Based Execution Queueing",
   "status": "validated-in-production",
-  "authors": ["Clawdbot Contributors"],
-  "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
+  "authors": [
+    "Clawdbot Contributors"
+  ],
+  "based_on": [
+    "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts",
-  "tags": ["queueing", "concurrency", "lanes", "isolation", "parallelism", "deadlock-prevention"],
+  "tags": [
+    "queueing",
+    "concurrency",
+    "lanes",
+    "isolation",
+    "parallelism",
+    "deadlock-prevention"
+  ],
   "slug": "lane-based-execution-queueing",
   "id": "lane-based-execution-queueing",
   "summary": "Traditional agent systems serialize all operations through a single execution queue, creating bottlenecks that limit throughput.",

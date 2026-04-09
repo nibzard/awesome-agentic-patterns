@@ -1,7 +1,9 @@
 {
   "title": "Three-Stage Perception Architecture",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
   "based_on": [
     "Sense-Plan-Act (Robotics)",
     "ReAct Pattern (Yao et al. 2022)",
@@ -9,7 +11,14 @@
   ],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2210.03629",
-  "tags": ["architecture", "perception", "processing", "action", "pipeline", "modular-design"],
+  "tags": [
+    "architecture",
+    "perception",
+    "processing",
+    "action",
+    "pipeline",
+    "modular-design"
+  ],
   "slug": "three-stage-perception-architecture",
   "id": "three-stage-perception-architecture",
   "summary": "Complex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action.",

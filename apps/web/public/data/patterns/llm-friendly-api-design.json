@@ -1,8 +1,12 @@
 {
   "title": "LLM-Friendly API Design",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Lukas Möller (Cursor)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Lukas Möller (Cursor)"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://www.youtube.com/watch?v=BGgsoIgbT_Y",
   "tags": [

@@ -1,8 +1,12 @@
 {
   "title": "Prompt Caching via Exact Prefix Preservation",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Michael Bolin (OpenAI Codex)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Michael Bolin (OpenAI Codex)"
+  ],
   "category": "Context & Memory",
   "source": "https://openai.com/index/unrolling-the-codex-agent-loop/",
   "tags": [

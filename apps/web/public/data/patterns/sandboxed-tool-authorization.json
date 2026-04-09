@@ -1,8 +1,12 @@
 {
   "title": "Sandboxed Tool Authorization",
   "status": "validated-in-production",
-  "authors": ["Clawdbot Contributors"],
-  "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
+  "authors": [
+    "Clawdbot Contributors"
+  ],
+  "based_on": [
+    "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+  ],
   "category": "Security & Safety",
   "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts",
   "tags": [

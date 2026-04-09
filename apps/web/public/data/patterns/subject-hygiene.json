@@ -1,11 +1,22 @@
 {
   "title": "Subject Hygiene for Task Delegation",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
-  "tags": ["subagents", "delegation", "traceability", "naming", "clarity", "anti-pattern"],
+  "tags": [
+    "subagents",
+    "delegation",
+    "traceability",
+    "naming",
+    "clarity",
+    "anti-pattern"
+  ],
   "slug": "subject-hygiene",
   "id": "subject-hygiene-for-task-delegation",
   "summary": "When delegating work to subagents via the Task tool, empty or generic task subjects make conversations: Untraceable : Cannot identify what a subagent was working on Unreferencable : Cannot discuss specific subagent work later Confusing : Multiple subagents with empty subjects are indistinguishable From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point.",

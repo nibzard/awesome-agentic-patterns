@@ -1,8 +1,13 @@
 {
   "title": "Progressive Autonomy with Model Evolution",
   "status": "best-practice",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Boris Cherny (Anthropic)", "Claude Code Team"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (Anthropic)",
+    "Claude Code Team"
+  ],
   "category": "Orchestration & Control",
   "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
   "tags": [
