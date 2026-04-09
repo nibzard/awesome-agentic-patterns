@@ -1,8 +1,13 @@
 {
   "title": "Custom Sandboxed Background Agent",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Ramp (Inspect Agent)", "Zach Bruggeman, Jason Quense, Rahul Sengottuvelu (Ramp)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Ramp (Inspect Agent)",
+    "Zach Bruggeman, Jason Quense, Rahul Sengottuvelu (Ramp)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://engineering.ramp.com/post/why-we-built-our-background-agent",
   "tags": [

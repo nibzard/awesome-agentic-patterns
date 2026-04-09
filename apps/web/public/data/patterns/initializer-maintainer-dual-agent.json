@@ -1,8 +1,13 @@
 {
   "title": "Initializer-Maintainer Dual Agent Architecture",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Anthropic Engineering Team", "Cursor Engineering (Planner-Worker Architecture)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team",
+    "Cursor Engineering (Planner-Worker Architecture)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
   "tags": [

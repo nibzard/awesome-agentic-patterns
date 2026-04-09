@@ -1,8 +1,13 @@
 {
   "title": "Rich Feedback Loops > Perfect Prompts",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Thorsten Ball", "Quinn Slack"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Thorsten Ball",
+    "Quinn Slack"
+  ],
   "category": "Feedback Loops",
   "source": "https://www.nibzard.com/ampcode",
   "tags": [

@@ -1,7 +1,9 @@
 {
   "title": "Transitive Vouch-Chain Trust",
   "status": "emerging",
-  "authors": ["The-Nexus-Guard (@The-Nexus-Guard)"],
+  "authors": [
+    "The-Nexus-Guard (@The-Nexus-Guard)"
+  ],
   "based_on": [
     "Isnad methodology (hadith chain of transmission)",
     "PGP Web of Trust",

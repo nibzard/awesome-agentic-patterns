@@ -1,8 +1,13 @@
 {
   "title": "AI Web Search Agent Loop",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Colin Flaherty (Muse)", "Amplify Partners Blog"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Colin Flaherty (Muse)",
+    "Amplify Partners Blog"
+  ],
   "category": "Tool Use & Environment",
   "source": "https://www.amplifypartners.com/blog-posts/how-ai-web-search-works",
   "tags": [

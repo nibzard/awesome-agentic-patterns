@@ -1,11 +1,23 @@
 {
   "title": "Reliability Problem Map Checklist for RAG and Agents",
   "status": "proposed",
-  "authors": ["PSBigBig (@onestardao)"],
-  "based_on": ["WFGY Problem Map (@onestardao)"],
+  "authors": [
+    "PSBigBig (@onestardao)"
+  ],
+  "based_on": [
+    "WFGY Problem Map (@onestardao)"
+  ],
   "category": "Reliability & Eval",
   "source": "https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md",
-  "tags": ["reliability", "evaluation", "rag", "agents", "debugging", "failure-modes", "checklist"],
+  "tags": [
+    "reliability",
+    "evaluation",
+    "rag",
+    "agents",
+    "debugging",
+    "failure-modes",
+    "checklist"
+  ],
   "slug": "wfgy-reliability-problem-map",
   "id": "reliability-problem-map-checklist-for-rag-and-agents",
   "summary": "RAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.",

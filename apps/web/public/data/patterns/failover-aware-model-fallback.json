@@ -1,8 +1,12 @@
 {
   "title": "Failover-Aware Model Fallback",
   "status": "validated-in-production",
-  "authors": ["Clawdbot Contributors"],
-  "based_on": ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"],
+  "authors": [
+    "Clawdbot Contributors"
+  ],
+  "based_on": [
+    "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+  ],
   "category": "Reliability & Eval",
   "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts",
   "tags": [

@@ -1,11 +1,20 @@
 {
   "title": "Plan-Then-Execute Pattern",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Luca Beurer-Kellner et al. (2025)", "C. Parisien et al. (2024)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Luca Beurer-Kellner et al. (2025)",
+    "C. Parisien et al. (2024)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://arxiv.org/abs/2506.08837",
-  "tags": ["planning", "control-flow-integrity", "prompt-injection"],
+  "tags": [
+    "planning",
+    "control-flow-integrity",
+    "prompt-injection"
+  ],
   "slug": "plan-then-execute-pattern",
   "id": "plan-then-execute-pattern",
   "summary": "When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next.",

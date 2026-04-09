@@ -1,8 +1,12 @@
 {
   "title": "Economic Value Signaling in Multi-Agent Networks",
   "status": "experimental-but-awesome",
-  "authors": ["Scott Boudreaux (@Scottcjn)"],
-  "based_on": ["Beacon agent coordination framework (contributor-owned reference implementation)"],
+  "authors": [
+    "Scott Boudreaux (@Scottcjn)"
+  ],
+  "based_on": [
+    "Beacon agent coordination framework (contributor-owned reference implementation)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://github.com/Scottcjn/beacon-skill",
   "tags": [

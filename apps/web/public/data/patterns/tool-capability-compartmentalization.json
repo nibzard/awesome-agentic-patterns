@@ -1,11 +1,19 @@
 {
   "title": "Tool Capability Compartmentalization",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Simon Willison (MCP critique)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Simon Willison (MCP critique)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
-  "tags": ["capability-segregation", "least-privilege", "tool-permissions"],
+  "tags": [
+    "capability-segregation",
+    "least-privilege",
+    "tool-permissions"
+  ],
   "slug": "tool-capability-compartmentalization",
   "id": "tool-capability-compartmentalization",
   "summary": "Model Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators).",

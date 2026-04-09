@@ -1,0 +1,27 @@
+{
+  "title": "Cryptographic Governance Audit Trail",
+  "status": "emerging",
+  "authors": [
+    "jagmarques (@jagmarques)"
+  ],
+  "based_on": [
+    "SCITT (Supply Chain Integrity, Transparency and Trust)",
+    "OWASP Agentic Top 10"
+  ],
+  "category": "Security & Safety",
+  "source": "https://datatracker.ietf.org/wg/scitt/about/",
+  "tags": [
+    "governance",
+    "audit-trail",
+    "compliance",
+    "cryptographic-signing",
+    "policy-enforcement",
+    "eu-ai-act",
+    "owasp"
+  ],
+  "slug": "cryptographic-governance-audit-trail",
+  "id": "cryptographic-governance-audit-trail",
+  "summary": "When AI agents execute tool calls autonomously, there is no tamper evident record of what happened.",
+  "updated_at": "2026-04-09",
+  "body": "\n## Problem\n\nWhen AI agents execute tool calls autonomously, there is no tamper-evident record of what happened. Traditional logging is mutable - logs can be altered after the fact. In regulated environments (finance, healthcare, EU AI Act), teams need to prove exactly what an agent did, when, and whether it operated within policy. Without cryptographic guarantees, audit trails have no legal or compliance weight.\n\n## Solution\n\nSign every agent action with a post-quantum digital signature (ML-DSA) at the point of execution. Each tool call produces a signed receipt containing the action, parameters, result hash, timestamp, and policy evaluation outcome. These receipts form an append-only chain that is tamper-evident by construction.\n\nThe governance layer operates as middleware that wraps the agent tool-calling interface:\n\n1. **Pre-execution**: Check the tool call against a policy file (allowed tools, rate limits, data access rules)\n2. **Execution**: Run the tool call normally\n3. **Post-execution**: Sign the action receipt with ML-DSA and append to the audit trail\n\n## Evidence\n\n- **Evidence Grade:** medium\n- **Most Valuable Findings:**\n  - SCITT architecture (IETF RFC 9334) validates the append-only signed receipt pattern for supply chain integrity\n  - OWASP Agentic Top 10 lists lack of audit trail as a top vulnerability for agent systems\n- **Unverified / Unclear:** Long-term storage and verification overhead at scale needs more production data\n\n## How to use it\n\n- Apply to any agent framework that supports tool-calling middleware (LangChain, CrewAI, MCP, etc.)\n- Define policies in YAML specifying which tools are allowed, rate limits, and data access rules\n- Store signed receipts locally or export to a compliance system\n- Use for EU AI Act Article 12 (record-keeping) and SOC2 audit evidence\n\n## Trade-offs\n\n- **Pros:** Tamper-evident audit trail, policy enforcement before execution, quantum-safe signatures, framework-agnostic\n- **Cons:** Adds latency to each tool call (signing overhead), requires key management, receipt storage grows linearly with agent activity\n\n## References\n\n- [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation (contributor's project)\n- [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture\n- [OWASP Agentic Top 10](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks\n- [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard\n"
+}

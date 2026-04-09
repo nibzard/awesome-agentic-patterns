@@ -1,8 +1,12 @@
 {
   "title": "Conditional Parallel Tool Execution",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Gerred Dillon ('Building an Agentic System')"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Gerred Dillon ('Building an Agentic System')"
+  ],
   "category": "Orchestration & Control",
   "source": "https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html",
   "tags": [

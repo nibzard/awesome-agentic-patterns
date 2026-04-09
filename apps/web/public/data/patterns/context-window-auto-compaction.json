@@ -1,7 +1,9 @@
 {
   "title": "Context Window Auto-Compaction",
   "status": "validated-in-production",
-  "authors": ["Clawdbot Contributors"],
+  "authors": [
+    "Clawdbot Contributors"
+  ],
   "based_on": [
     "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)",
     "Pi Coding Agent (@mariozechner/pi-coding-agent)",

@@ -1,8 +1,12 @@
 {
   "title": "Continuous Autonomous Task Loop Pattern",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Internal Practice"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Internal Practice"
+  ],
   "category": "Orchestration & Control",
   "source": "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78",
   "tags": [

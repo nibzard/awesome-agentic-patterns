@@ -1,8 +1,12 @@
 {
   "title": "Schema Validation Retry with Cross-Step Learning",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Hyperbrowser Team (@hyperbrowserai)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Hyperbrowser Team (@hyperbrowserai)"
+  ],
   "category": "Reliability & Eval",
   "source": "https://github.com/hyperbrowserai/HyperAgent",
   "tags": [
