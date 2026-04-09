@@ -1,8 +1,13 @@
 {
   "title": "Versioned Constitution Governance",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Hiveism (self-alignment loop)", "Anthropic (Constitutional AI)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Hiveism (self-alignment loop)",
+    "Anthropic (Constitutional AI)"
+  ],
   "category": "Reliability & Eval",
   "source": "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web",
   "tags": [
@@ -17,6 +22,6 @@
   "slug": "versioned-constitution-governance",
   "id": "versioned-constitution-governance",
   "summary": "When agents can modify policy/constitution text, safety regressions can be introduced gradually and go unnoticed.",
-  "updated_at": "2026-03-10",
+  "updated_at": "2026-04-09",
   "body": "\n## Problem\n\nWhen agents can modify policy/constitution text, safety regressions can be introduced gradually and go unnoticed. Without versioning, signatures, and policy review gates, teams cannot prove who changed what, why it changed, or whether critical safeguards were weakened.\n\n## Solution\n\nStore the constitution in a **version-controlled, signed repository**:\n\n- YAML/TOML rules live in Git for automated rule enforcement; natural language principles guide LLM-based evaluation.\n- Each commit is signed (e.g., Sigstore); CI runs automated policy checks.\n- Only commits signed by approved reviewers or automated tests are merged.\n- The agent can *propose* changes, but a gatekeeper merges them.\n- Use semantic versioning: MAJOR for core safety principle changes, MINOR for additions, PATCH for clarifications.\n\nCombine policy-as-code with release discipline: every constitutional change is diffable, reviewable, and test-gated before activation. This gives governance history, rollback capability, and auditable control over alignment policy evolution.\n\n## How to use it\n\n- Require `git commit -S` or similar.  \n- Run diff-based linting to flag deletions of critical rules.  \n- Expose constitution `HEAD` as read-only context in every agent episode.\n\n## Trade-offs\n\n* **Pros:** Strong auditability, safer policy evolution, and fast rollback of bad constitutional changes.\n* **Cons:** Slower policy iteration and extra operational burden for signing, review, and CI checks.\n\n## References\n\n- Anthropic, *Constitutional AI: Harmlessness from AI Feedback* (arXiv:2212.08073, 2022)\n- Hiveism, *Self-Alignment by Constitutional AI*\n- OpenAI, *Model Spec*\n\n- Primary source: https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web\n"
 }

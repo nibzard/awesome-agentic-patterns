@@ -13,8 +13,6 @@ tags:
   - reactive
 ---
 
-# Signal-Driven Agent Activation
-
 ## Problem
 
 Most agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.
