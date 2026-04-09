@@ -165,6 +165,10 @@ URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
 Cross-Cycle Consensus Relay: Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles.
 URL: https://agentic-patterns.com/patterns/cross-cycle-consensus-relay
 
+### cryptographic-governance-audit-trail
+Cryptographic Governance Audit Trail: When AI agents execute tool calls autonomously, there is no tamper evident record of what happened.
+URL: https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail
+
 ### curated-code-context-window
 Curated Code Context Window: Loading all source files or dumping entire repositories into the agent's context overwhelms the model, introduces noise, and slows inference.
 URL: https://agentic-patterns.com/patterns/curated-code-context-window
@@ -177,13 +181,25 @@ URL: https://agentic-patterns.com/patterns/curated-file-context-window
 Custom Sandboxed Background Agent: Off the shelf coding agents (e.g., Devin, Claude Code, Cursor) are either: Too generic Not deeply integrated with company specific dev environments, tools, and
 URL: https://agentic-patterns.com/patterns/custom-sandboxed-background-agent
 
+### declarative-multi-agent-topology-definition
+Declarative Multi-Agent Topology Definition: Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework.
+URL: https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition
+
 ### democratization-of-tooling-via-agents
 Democratization of Tooling via Agents: Many individuals in non software engineering roles (e.g., sales, marketing, operations, communications) could benefit from custom software tools, scripts, or da
 URL: https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents
 
+### denial-tracking-permission-escalation
+Denial Tracking & Permission Escalation: Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.
+URL: https://agentic-patterns.com/patterns/denial-tracking-permission-escalation
+
 ### deterministic-security-scanning-build-loop
 Deterministic Security Scanning Build Loop: Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area.
 URL: https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop
+
+### deterministic-threat-rule-scanning
+Deterministic Threat Rule Scanning: Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.
+URL: https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning
 
 ### dev-tooling-assumptions-reset
 Dev Tooling Assumptions Reset: Traditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense.
@@ -350,6 +366,10 @@ URL: https://agentic-patterns.com/patterns/llm-observability
 LLM-Friendly API Design: For AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters.
 URL: https://agentic-patterns.com/patterns/llm-friendly-api-design
 
+### mcp-pattern-injection
+MCP Pattern Injection: AI coding assistants lack domain specific knowledge about framework best practices.
+URL: https://agentic-patterns.com/patterns/mcp-pattern-injection
+
 ### memory-reinforcement-learning-memrl
 Memory Reinforcement Learning (MemRL): TODO: Add a concise summary for "Memory Reinforcement Learning (MemRL)" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl
@@ -469,6 +489,10 @@ URL: https://agentic-patterns.com/patterns/sandboxed-tool-authorization
 ### schema-validation-retry-cross-step-learning
 Schema Validation Retry with Cross-Step Learning: LLMs don't always produce valid structured output matching the expected schema.
 URL: https://agentic-patterns.com/patterns/schema-validation-retry-cross-step-learning
+
+### schema-guided-graph-retrieval
+Schema-Guided Graph Retrieval for Multi-Hop Reasoning: Use one shared domain schema to align graph construction, schema evolution, query decomposition, and typed retrieval so multi-hop reasoning over private knowledge stays precise as domains change.
+URL: https://agentic-patterns.com/patterns/schema-guided-graph-retrieval
 
 ### seamless-background-to-foreground-handoff
 Seamless Background-to-Foreground Handoff: While background agents can handle long running, complex tasks autonomously, they might not achieve 100% correctness or perfectly match the user's nuanced intent.

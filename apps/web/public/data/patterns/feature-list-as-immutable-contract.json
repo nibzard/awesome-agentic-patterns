@@ -1,8 +1,12 @@
 {
   "title": "Feature List as Immutable Contract",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Anthropic Engineering Team"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team"
+  ],
   "category": "Orchestration & Control",
   "source": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
   "tags": [

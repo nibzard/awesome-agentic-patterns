@@ -1,11 +1,19 @@
 {
   "title": "Background Agent with CI Feedback",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Quinn Slack"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Quinn Slack"
+  ],
   "category": "Feedback Loops",
   "source": "https://ampcode.com/manual#background",
-  "tags": ["asynchronous", "ci", "feedback"],
+  "tags": [
+    "asynchronous",
+    "ci",
+    "feedback"
+  ],
   "slug": "background-agent-ci",
   "id": "background-agent-with-ci-feedback",
   "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.",

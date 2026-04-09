@@ -77,6 +77,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Proactive Agent State Externalization](patterns/proactive-agent-state-externalization.md)
 - [Progressive Disclosure for Large Files](patterns/progressive-disclosure-large-files.md)
 - [Prompt Caching via Exact Prefix Preservation](patterns/prompt-caching-via-exact-prefix-preservation.md)
+- [Schema-Guided Graph Retrieval for Multi-Hop Reasoning](patterns/schema-guided-graph-retrieval.md)
 - [Self-Identity Accumulation](patterns/self-identity-accumulation.md)
 - [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md)
 - [Tool Search Lazy Loading](patterns/tool-search-lazy-loading.md)
@@ -122,6 +123,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
 - [Cross-Cycle Consensus Relay](patterns/cross-cycle-consensus-relay.md)
 - [Custom Sandboxed Background Agent](patterns/custom-sandboxed-background-agent.md)
+- [Declarative Multi-Agent Topology Definition](patterns/declarative-multi-agent-topology-definition.md)
 - [Discrete Phase Separation](patterns/discrete-phase-separation.md)
 - [Disposable Scaffolding Over Durable Features](patterns/disposable-scaffolding-over-durable-features.md)
 - [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md)
@@ -183,7 +185,10 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="security-safety"></a>Security & Safety
 
+- [Cryptographic Governance Audit Trail](patterns/cryptographic-governance-audit-trail.md)
+- [Denial Tracking & Permission Escalation](patterns/denial-tracking-permission-escalation.md)
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
+- [Deterministic Threat Rule Scanning](patterns/deterministic-threat-rule-scanning.md)
 - [External Credential Sync](patterns/external-credential-sync.md)
 - [Hook-Based Safety Guard Rails for Autonomous Code Agents](patterns/hook-based-safety-guard-rails.md)
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
@@ -210,6 +215,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [Intelligent Bash Tool Execution](patterns/intelligent-bash-tool-execution.md)
 - [LLM-Friendly API Design](patterns/llm-friendly-api-design.md)
+- [MCP Pattern Injection](patterns/mcp-pattern-injection.md)
 - [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md)
 - [Multi-Platform Webhook Triggers](patterns/multi-platform-webhook-triggers.md)
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)

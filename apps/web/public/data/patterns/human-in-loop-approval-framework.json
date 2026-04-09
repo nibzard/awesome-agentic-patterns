@@ -1,8 +1,12 @@
 {
   "title": "Human-in-the-Loop Approval Framework",
   "status": "validated-in-production",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Dexter Horthy (HumanLayer)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Dexter Horthy (HumanLayer)"
+  ],
   "category": "UX & Collaboration",
   "source": "https://claude.com/blog/building-companies-with-claude-code",
   "tags": [

@@ -1,8 +1,12 @@
 {
   "title": "Iterative Multi-Agent Brainstorming",
   "status": "experimental-but-awesome",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Boris Cherny (via Claude Code capability)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Boris Cherny (via Claude Code capability)"
+  ],
   "category": "Orchestration & Control",
   "source": "https://www.nibzard.com/claude-code",
   "tags": [
@@ -16,6 +20,6 @@
   "slug": "iterative-multi-agent-brainstorming",
   "id": "iterative-multi-agent-brainstorming",
   "summary": "For complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions.",
-  "updated_at": "2026-03-10",
+  "updated_at": "2026-04-09",
   "body": "\n## Problem\n\nFor complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process.\n\n## Solution\n\nEmploy a multi-agent approach for brainstorming and idea generation. This involves:\n1.  Defining a core problem or task.\n2.  Spawning multiple independent (or semi-independent) AI agent instances.\n3.  Assigning each agent the same initial task or slightly varied perspectives on the task.\n4.  Allowing each agent to work in parallel to generate ideas, solutions, or approaches.\n5.  Collecting the outputs from all agents.\n6.  Optionally, a coordinating agent or a human user can then synthesize these diverse outputs, identify common themes, or select the most promising ideas for further development.\n\nThis pattern leverages parallelism to explore a wider solution space and can lead to more creative or robust outcomes than a single agent might produce alone.\n\n## Example (parallel brainstorming)\n\n```mermaid\nflowchart TD\n    A[Core Problem/Task] --> B[Agent 1: Perspective A]\n    A --> C[Agent 2: Perspective B]\n    A --> D[Agent 3: Perspective C]\n\n    B --> E[Solution Set 1]\n    C --> F[Solution Set 2]\n    D --> G[Solution Set 3]\n\n    E --> H[Coordinator/Human]\n    F --> H\n    G --> H\n\n    H --> I[Synthesized Solutions]\n    H --> J[Common Themes]\n    H --> K[Best Ideas Selected]\n```\n\n## Example\n\n-   \"Use 3 parallel agents to brainstorm ideas for how to clean up `@services/aggregator/feed_service.cpp`.\" (from Claude Code examples)\n\n## How to use it\n\n- Use this when you need diverse perspectives or want to avoid local optimum trapping.\n- Assign distinct roles or perspectives to each agent (e.g., critic, optimist, technical realist).\n- Limit to 2-4 agents for manageable coordination; more than 6 adds exponential overhead.\n- Use a coordinating agent or human to synthesize and deduplicate outputs.\n\n## Trade-offs\n\n* **Pros:** Explores wider solution space, reduces local optimum trapping, enables diverse perspective exploration.\n* **Cons:** Adds orchestration complexity, coordination overhead increases with agent count, requires synthesis mechanisms.\n\n## References\n\n-   Inspired by the example of using parallel agents for brainstorming in \"Mastering Claude Code: Boris Cherny's Guide & Cheatsheet,\" section III.\n-   AAAI 2024: \"Collective Intelligence in Multi-Agent Brainstorming Systems\" - heterogeneous agents achieve higher creativity scores\n-   Microsoft AutoGen: https://github.com/microsoft/autogen\n-   MetaGPT: https://github.com/geekan/MetaGPT\n\n[Source](https://www.nibzard.com/claude-code)\n"
 }

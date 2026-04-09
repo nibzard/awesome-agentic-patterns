@@ -2,9 +2,9 @@
 title: "Deterministic Threat Rule Scanning"
 status: emerging
 authors: ["eeee2345 (@eeee2345)"]
-based_on: ["Agent Threat Rules (open-source rule library)", "OWASP Agentic Top 10"]
+based_on: ["OWASP Agentic Top 10", "Agent Threat Rules (panguard-ai)"]
 category: "Security & Safety"
-source: "https://github.com/panguard-ai/agent-threat-rules"
+source: "https://arxiv.org/abs/2312.10997"
 tags: [security, threat-detection, regex, deterministic, prompt-injection, tool-poisoning, mcp, agent-safety]
 summary: >-
   Apply deterministic regex rules as a first-pass security layer to detect known
@@ -73,8 +73,8 @@ The key insight is layered defense: deterministic rules catch known patterns wit
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - A regex-based rule library achieved 62.7% recall and 99.7% precision on the PINT prompt injection benchmark, demonstrating that deterministic rules reliably catch known patterns with very few false positives.
-  - Scanning 36,394 MCP server tool definitions with deterministic rules identified 182 CRITICAL and 1,124 HIGH severity findings, indicating measurable threat prevalence in real tool ecosystems.
+  - A regex-based rule library achieved 62.7% recall and 99.7% precision on the PINT prompt injection benchmark (as reported by the rule library's own evaluation), demonstrating that deterministic rules reliably catch known patterns with very few false positives.
+  - Scanning 36,394 MCP server tool definitions with deterministic rules identified 182 CRITICAL and 1,124 HIGH severity findings (as reported by the same project), indicating measurable threat prevalence in real tool ecosystems.
   - Layering deterministic scanning before LLM-based review reduces cost and latency: regex runs in microseconds per rule, reserving expensive LLM calls for ambiguous cases only.
 - **Unverified / Unclear:**
   - Recall on novel attack patterns not yet captured by rules is unknown; the 62.7% figure reflects coverage of known patterns only.
@@ -119,6 +119,6 @@ The key insight is layered defense: deterministic rules catch known patterns wit
 
 ## References
 
-- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 76 deterministic detection rules covering prompt injection, tool poisoning, data exfiltration, and privilege escalation
 - [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing agent-specific security risks
 - [PINT Benchmark](https://arxiv.org/abs/2312.10997) — Prompt injection benchmark for evaluating detection systems
+- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 76 deterministic detection rules covering prompt injection, tool poisoning, data exfiltration, and privilege escalation
