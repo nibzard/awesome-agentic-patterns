@@ -197,6 +197,10 @@ URL: https://agentic-patterns.com/patterns/denial-tracking-permission-escalation
 Deterministic Security Scanning Build Loop: Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area.
 URL: https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop
 
+### deterministic-threat-rule-scanning
+Deterministic Threat Rule Scanning: Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.
+URL: https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning
+
 ### dev-tooling-assumptions-reset
 Dev Tooling Assumptions Reset: Traditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense.
 URL: https://agentic-patterns.com/patterns/dev-tooling-assumptions-reset
@@ -410,6 +414,10 @@ URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
 Oracle and Worker Multi-Model Approach: Relying on a single AI model creates a trade off between capability and cost.
 URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
 
+### output-verification-loop
+Output Verification Loop: Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.
+URL: https://agentic-patterns.com/patterns/output-verification-loop
+
 ### parallel-tool-call-learning
 Parallel Tool Call Learning: TODO: Add a concise summary for "Parallel Tool Call Learning" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/parallel-tool-call-learning
@@ -526,6 +534,10 @@ URL: https://agentic-patterns.com/patterns/shell-command-contextualization
 Shipping as Research: In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind.
 URL: https://agentic-patterns.com/patterns/shipping-as-research
 
+### signal-driven-agent-activation
+Signal-Driven Agent Activation: Most agent workflows are command driven : a user types a prompt, the agent acts.
+URL: https://agentic-patterns.com/patterns/signal-driven-agent-activation
+
 ### skill-library-evolution
 Skill Library Evolution: Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.
 URL: https://agentic-patterns.com/patterns/skill-library-evolution
@@ -609,6 +621,10 @@ URL: https://agentic-patterns.com/patterns/transitive-vouch-chain-trust
 ### tree-of-thought-reasoning
 Tree-of-Thought Reasoning: Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.
 URL: https://agentic-patterns.com/patterns/tree-of-thought-reasoning
+
+### unified-tool-gateway
+Unified Tool Gateway: Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers.
+URL: https://agentic-patterns.com/patterns/unified-tool-gateway
 
 ### variance-based-rl-sample-selection
 Variance-Based RL Sample Selection: Not all training samples are equally valuable for reinforcement learning.

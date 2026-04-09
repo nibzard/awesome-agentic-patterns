@@ -214,6 +214,10 @@
     <lastmod>2026-04-09</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/dev-tooling-assumptions-reset</loc>
     <lastmod>2026-04-09</lastmod>
   </url>
@@ -426,6 +430,10 @@
     <lastmod>2026-04-09</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/output-verification-loop</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/parallel-tool-call-learning</loc>
     <lastmod>2026-01-05</lastmod>
   </url>
@@ -542,6 +550,10 @@
     <lastmod>2026-04-09</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/signal-driven-agent-activation</loc>
+    <lastmod>2026-04-09</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/skill-library-evolution</loc>
     <lastmod>2026-01-13</lastmod>
   </url>
@@ -624,6 +636,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/tree-of-thought-reasoning</loc>
     <lastmod>2026-01-05</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/unified-tool-gateway</loc>
+    <lastmod>2026-03-31</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/variance-based-rl-sample-selection</loc>
