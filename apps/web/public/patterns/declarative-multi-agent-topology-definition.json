@@ -1,0 +1,29 @@
+{
+  "title": "Declarative Multi-Agent Topology Definition",
+  "status": "emerging",
+  "authors": [
+    "Nadav Naveh (@nadavnaveh)"
+  ],
+  "based_on": [
+    "AgenTopology (reference implementation)"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://github.com/agentopology/agentopology",
+  "tags": [
+    "multi-agent",
+    "topology",
+    "declarative",
+    "orchestration",
+    "scaffolding",
+    "pipeline",
+    "fan-out",
+    "supervisor",
+    "gate",
+    "cross-platform"
+  ],
+  "slug": "declarative-multi-agent-topology-definition",
+  "id": "declarative-multi-agent-topology-definition",
+  "summary": "Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework.",
+  "updated_at": "2026-04-09",
+  "body": "\n## Problem\n\nMulti-agent systems today are wired imperatively: each framework has its own SDK, config format, and orchestration primitives. This creates several problems:\n\n- **Vendor lock-in**: A supervisor topology built for one framework must be rewritten from scratch to run on another.\n- **Implicit topology**: The agent graph — who talks to whom, what gates block progress, which flows fan out — is buried in code rather than visible at a glance.\n- **No single source of truth**: When the topology lives across scattered config files, prompts, and glue code, refactoring or auditing the system requires reading everything.\n- **Repeated scaffolding work**: Teams re-implement the same patterns (pipeline, fan-out, debate, human-in-the-loop gate) in every new project and every new framework.\n\n## Solution\n\nDefine the entire multi-agent topology in a single declarative file using a purpose-built grammar. The file describes **what** the system looks like — agents, flows, gates, hooks, group chats — and a compiler generates **how** it runs on each target platform.\n\n**Core primitives:**\n\n1. **Agents**: Name, model, role, tools, and constraints.\n2. **Flows**: Directed edges between agents — pipelines, fan-out, fan-in, cycles.\n3. **Gates**: Approval checkpoints (human, automated, or conditional) positioned between flow steps.\n4. **Hooks**: Lifecycle callbacks (pre-run, post-run, on-error) attached to agents or flows.\n5. **Group chats**: Multi-agent conversation protocols with turn-taking rules.\n\n```\ntopology code-review {\n  agent reviewer {\n    model \"claude-sonnet\"\n    role \"Review pull requests for correctness and style\"\n    tools [grep, read_file]\n  }\n\n  agent security {\n    model \"claude-sonnet\"\n    role \"Check for security vulnerabilities\"\n    tools [grep, semgrep]\n  }\n\n  agent summarizer {\n    model \"claude-haiku\"\n    role \"Produce a concise review summary\"\n  }\n\n  flow fan-out {\n    start -> [reviewer, security]  // parallel\n    [reviewer, security] -> summarizer  // fan-in\n  }\n\n  gate human-approval {\n    after summarizer\n    type human\n    prompt \"Approve this review before posting?\"\n  }\n}\n```\n\nA compiler parses the topology into an AST and emits platform-specific output — config files for CLI agents, runnable code for SDK targets, or visual diagrams for documentation.\n\n```mermaid\ngraph TD\n  A[\".at topology file\"] --> B[Parser / AST]\n  B --> C1[Platform A config]\n  B --> C2[Platform B config]\n  B --> C3[Platform C config]\n  B --> D[Visual diagram]\n```\n\n## How to use it\n\n- **Start with a common pattern**: Pipeline, fan-out/fan-in, or supervisor are good first topologies. Express the agent graph declaratively before writing any imperative glue.\n- **Compile to your target**: Use a binding/compiler to emit the platform-specific configuration or code. If your framework is not yet supported, the AST is a clean compilation target.\n- **Enforce gates declaratively**: Rather than sprinkling approval logic throughout your code, declare gates at specific flow positions. The compiler maps them to each platform's strongest enforcement mechanism.\n- **Version the topology**: The declarative file is small, diffable, and reviewable. Check it into version control alongside your code.\n- **Visualize before running**: Generate a diagram from the topology to verify the agent graph matches your intent before deploying.\n\n## Trade-offs\n\n**Pros:**\n\n- **Portability**: One topology definition works across multiple frameworks — switch platforms without rewriting orchestration logic.\n- **Readability**: The full agent graph is visible in one file, making review and onboarding faster.\n- **Pattern reuse**: Common multi-agent patterns (pipeline, debate, supervisor) become composable building blocks rather than bespoke code.\n- **Auditability**: Gates, permissions, and flows are explicit and diffable in version control.\n\n**Cons:**\n\n- **Abstraction cost**: A declarative layer cannot expose every platform-specific feature; escape hatches or extensions are needed for advanced cases.\n- **Grammar learning curve**: Teams must learn a new syntax, though the goal is to keep it minimal and readable.\n- **Compiler fidelity**: Each binding must faithfully map declarative primitives to platform capabilities, which varies across targets.\n- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing.\n\n## References\n\n- [AgenTopology](https://github.com/agentopology/agentopology) — Open-source reference implementation: parser, validator, CLI, visualizer, and bindings for multiple platform targets. Apache-2.0.\n- Jennings, N. R. (2001). \"An agent-based approach for building complex software systems\". Communications of the ACM. — Foundational work on multi-agent system architectures and coordination patterns.\n- Wooldridge, M. (2009). *An Introduction to MultiAgent Systems*. Wiley. — Textbook covering agent communication languages, interaction protocols, and organizational structures.\n"
+}

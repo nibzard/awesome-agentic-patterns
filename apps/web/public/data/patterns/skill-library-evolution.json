@@ -1,8 +1,14 @@
 {
   "title": "Skill Library Evolution",
   "status": "established",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Anthropic Engineering Team", "Will Larson (Imprint)", "Amp (Nicolay)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Anthropic Engineering Team",
+    "Will Larson (Imprint)",
+    "Amp (Nicolay)"
+  ],
   "category": "Learning & Adaptation",
   "source": "https://www.anthropic.com/engineering/code-execution-with-mcp",
   "tags": [
