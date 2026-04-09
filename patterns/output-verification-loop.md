@@ -16,7 +16,7 @@ summary: >-
   evidence sources, and returning per-claim trust scores before acting on
   the result.
 complexity: low
-effort: hours
+effort: low
 impact: high
 signals: ["Agent output feeds into decisions or downstream agents", "Hallucination risk is non-trivial", "Compliance requires an audit trail"]
 anti_signals: ["Output is purely creative with no factual claims", "Latency budget under 500ms"]
