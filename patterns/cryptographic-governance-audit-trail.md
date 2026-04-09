@@ -4,7 +4,7 @@ status: emerging
 authors: ["jagmarques (@jagmarques)"]
 based_on: ["SCITT (Supply Chain Integrity, Transparency and Trust)", "OWASP Agentic Top 10"]
 category: "Security & Safety"
-source: "https://github.com/jagmarques/asqav-sdk"
+source: "https://datatracker.ietf.org/wg/scitt/about/"
 tags: [governance, audit-trail, compliance, cryptographic-signing, policy-enforcement, eu-ai-act, owasp]
 ---
 
@@ -44,7 +44,7 @@ The governance layer operates as middleware that wraps the agent tool-calling in
 
 ## References
 
-- [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation
+- [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation (contributor's project)
 - [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture
 - [OWASP Agentic Top 10](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks
 - [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard
