@@ -2,9 +2,9 @@
 title: Output Verification Loop
 status: emerging
 authors: ["John Weston (@JohnnyTarrr)"]
-based_on: ["VeroQ Shield (veroq-ai)"]
+based_on: ["Chern et al. (FacTool, 2023)", "VeroQ Shield (veroq-ai)"]
 category: "Reliability & Eval"
-source: "https://github.com/veroq-ai/shield"
+source: "https://arxiv.org/abs/2307.13528"
 tags:
   - verification
   - hallucination-detection
@@ -58,7 +58,7 @@ In multi-agent systems, run verification at each hand-off between agents so erro
 
 ### Known implementations
 
-- [VeroQ Shield](https://github.com/veroq-ai/shield) -- claim-level verification with evidence chains, Python and TypeScript SDKs. Self-hosted Docker option for air-gapped deployments.
+- [VeroQ Shield](https://github.com/veroq-ai/shield) -- open-source claim-level verification library with evidence chains.
 
 ## Trade-offs
 
@@ -67,6 +67,6 @@ In multi-agent systems, run verification at each hand-off between agents so erro
 
 ## References
 
-- [VeroQ Shield -- LLM output verification](https://github.com/veroq-ai/shield)
-- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.11366) -- related but lacks external evidence grounding
 - [FacTool: Factuality Detection in Generative AI](https://arxiv.org/abs/2307.13528) -- academic approach to claim-level verification
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.11366) -- related but lacks external evidence grounding
+- [VeroQ Shield](https://github.com/veroq-ai/shield) -- open-source implementation of claim-level verification

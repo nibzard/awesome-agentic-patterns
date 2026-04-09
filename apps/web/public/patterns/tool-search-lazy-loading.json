@@ -22,7 +22,6 @@
   "summary": "Dynamically load tools via search instead of preloading all available tools to reduce context usage",
   "maturity": "maturing",
   "complexity": "medium",
-  "effort": "days",
   "impact": "high",
   "signals": [
     "MCP servers with 20+ tools",

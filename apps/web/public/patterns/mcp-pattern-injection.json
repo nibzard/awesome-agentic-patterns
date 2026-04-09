@@ -1,0 +1,25 @@
+{
+  "title": "MCP Pattern Injection",
+  "status": "validated-in-production",
+  "authors": [
+    "Rajath Bharadwaj (@Rajathbharadwaj)"
+  ],
+  "based_on": [
+    "Claude Desktop MCP",
+    "Cursor MCP Integration"
+  ],
+  "category": "Tool Use & Environment",
+  "source": "https://github.com/Rajathbharadwaj/langgraph-patterns-mcp",
+  "tags": [
+    "mcp",
+    "code-patterns",
+    "tool-injection",
+    "context-enhancement",
+    "langgraph"
+  ],
+  "slug": "mcp-pattern-injection",
+  "id": "mcp-pattern-injection",
+  "summary": "AI coding assistants lack domain specific knowledge about framework best practices.",
+  "updated_at": "2026-04-09",
+  "body": "\n## Problem\n\nAI coding assistants lack domain-specific knowledge about framework best practices. When building LangGraph agents, developers must repeatedly explain patterns, copy-paste from docs, or watch the AI reinvent suboptimal solutions. The assistant's training data is often outdated relative to fast-moving frameworks.\n\n## Solution\n\nUse **MCP (Model Context Protocol) servers** to inject production patterns directly into the AI assistant's context:\n\n1. Create an MCP server that exposes domain patterns as tools and resources\n2. Structure patterns with clear signatures, descriptions, and code snippets  \n3. Configure Claude Desktop or Cursor to connect to the MCP server\n4. The AI can now \"call\" patterns on-demand, getting current best practices\n\n```typescript\n// Example: MCP tool that returns a LangGraph pattern\nserver.tool(\"get_pattern\", { name: z.string() }, async ({ name }) => {\n  const pattern = PATTERNS[name];\n  return {\n    content: [{\n      type: \"text\",\n      text: `## ${pattern.title}\\n\\n${pattern.description}\\n\\n\\`\\`\\`python\\n${pattern.code}\\n\\`\\`\\``\n    }]\n  };\n});\n```\n\nThe key insight: MCP servers act as **live documentation** that the AI can query, rather than static context that burns tokens.\n\n## Trade-offs\n\n**Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.  \n**Cons:** Requires MCP server setup; adds latency for tool calls; patterns must be maintained.\n\n## How to use it\n\n- Build MCP servers for any framework your team uses heavily (LangGraph, FastAPI, React patterns)\n- Keep patterns small and focused—one pattern per tool call\n- Include \"when to use\" and \"when NOT to use\" guidance in pattern descriptions\n- Version your patterns alongside your codebase\n- Use `npx` for easy distribution: `npx your-patterns-mcp`\n\n## References\n\n- Model Context Protocol: https://modelcontextprotocol.io/\n- LangGraph Patterns MCP (reference impl): https://github.com/Rajathbharadwaj/langgraph-patterns-mcp\n- Claude Desktop MCP Integration: https://docs.anthropic.com/en/docs/claude-code/mcp\n- Cursor MCP Support: https://docs.cursor.com/context/model-context-protocol\n"
+}
