@@ -1,8 +1,12 @@
 {
   "title": "Progressive Disclosure for Large Files",
   "status": "emerging",
-  "authors": ["Nikola Balic (@nibzard)"],
-  "based_on": ["Will Larson (lethain.com)"],
+  "authors": [
+    "Nikola Balic (@nibzard)"
+  ],
+  "based_on": [
+    "Will Larson (lethain.com)"
+  ],
   "category": "Context & Memory",
   "source": "https://lethain.com/agents-large-files/",
   "tags": [
