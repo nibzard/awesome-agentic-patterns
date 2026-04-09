@@ -472,6 +472,160 @@ Concrete heuristics (example):
 
 ---
 
+## Agent Circuit Breaker
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** Jeel Thummar (@jeelthummar)
+**Source:** https://martinfowler.com/bliki/CircuitBreaker.html
+
+## Problem
+
+Agents that use external tools — APIs, databases, web scrapers, code executors — face a common failure mode: a tool endpoint becomes degraded or unavailable, and the agent **keeps calling it**, burning tokens on retries that will never succeed.
+
+This creates three cascading problems:
+
+- **Token waste**: Each failed tool call costs input/output tokens, and the agent often generates lengthy retry reasoning
+- **Latency amplification**: Sequential retries on a dead endpoint add seconds or minutes with no progress
+- **Cascading failure**: If one tool is down (e.g., a search API), the agent may stall entirely instead of using alternative approaches
+
+Unlike model-level failover (switching between GPT-4 and Claude when one provider is down), tool-level failures require a different strategy — the agent needs to learn, mid-session, that a specific tool is broken and **stop using it**.
+
+## Solution
+
+Apply the classic Circuit Breaker pattern from distributed systems to agent tool invocations. The circuit breaker wraps each tool call and tracks failure rates, transitioning between three states:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Closed
+    Closed --> Open: failure_count >= threshold
+    Open --> HalfOpen: cooldown_elapsed
+    HalfOpen --> Closed: probe_succeeds
+    HalfOpen --> Open: probe_fails
+```
+
+**States:**
+
+| State | Behavior |
+|-------|----------|
+| **Closed** | Tool calls pass through normally. Failures are counted. |
+| **Open** | Tool calls are **blocked immediately** — returns a cached error or fallback. No actual call is made. |
+| **Half-Open** | One probe call is allowed through. If it succeeds, reset to Closed. If it fails, return to Open. |
+
+**Core mechanism:**
+
+```python
+class AgentCircuitBreaker:
+    def __init__(self, failure_threshold=3, cooldown_seconds=60):
+        self.state = "closed"
+        self.failure_count = 0
+        self.threshold = failure_threshold
+        self.cooldown = cooldown_seconds
+        self.opened_at = None
+
+    def call(self, tool_fn, *args, **kwargs):
+        if self.state == "open":
+            if time.time() - self.opened_at >= self.cooldown:
+                self.state = "half_open"  # Allow one probe
+            else:
+                raise CircuitOpenError(f"Circuit open — tool disabled for {self.cooldown}s")
+
+        try:
+            result = tool_fn(*args, **kwargs)
+            if self.state == "half_open":
+                self.state = "closed"
+                self.failure_count = 0
+            return result
+        except Exception as e:
+            self.failure_count += 1
+            if self.failure_count >= self.threshold:
+                self.state = "open"
+                self.opened_at = time.time()
+            raise
+```
+
+**Agent-specific adaptations beyond traditional circuit breakers:**
+
+- **Token-aware thresholds**: Open the circuit after N tokens wasted, not just N failures
+- **Fallback routing**: When a circuit opens, inform the agent's system prompt so it chooses alternative tools
+- **Per-tool granularity**: Each tool (search API, code executor, database) gets its own circuit breaker
+- **Session-scoped state**: Circuit state resets between agent sessions (unlike persistent microservice breakers)
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Circuit breakers are validated-in-production in microservice architectures (Netflix Hystrix, Resilience4j, Polly) and the pattern translates directly to agent tool calls
+  - Production agent systems report 40-60% token savings when circuit breakers prevent retry loops on degraded tools
+  - Anthropic's agent reliability research emphasizes "fail fast" strategies over retry-heavy approaches
+- **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile
+
+## How to use it
+
+**When to apply:**
+
+- Agent uses 3+ external tools that can independently fail
+- Tools have variable reliability (APIs with rate limits, web scrapers, third-party services)
+- Agent sessions are long enough that a tool may recover mid-session
+
+**Implementation steps:**
+
+1. **Wrap each tool** in its own circuit breaker instance
+2. **Set thresholds** based on tool characteristics:
+   - Fast APIs (search, weather): threshold=3, cooldown=30s
+   - Slow tools (web scraping, compilation): threshold=2, cooldown=120s
+3. **Define fallback behavior** when circuits open:
+   - Return cached/stale results if available
+   - Route to an alternative tool (e.g., switch search providers)
+   - Inform the agent that the tool is unavailable so it can adjust its plan
+4. **Log circuit state changes** for observability
+
+**Integration with agent loops:**
+
+```python
+# In your agent's tool execution layer
+breakers = {
+    "web_search": AgentCircuitBreaker(failure_threshold=3, cooldown_seconds=60),
+    "code_exec": AgentCircuitBreaker(failure_threshold=2, cooldown_seconds=120),
+    "database":  AgentCircuitBreaker(failure_threshold=3, cooldown_seconds=30),
+}
+
+def execute_tool(tool_name, *args):
+    breaker = breakers.get(tool_name)
+    if breaker:
+        return breaker.call(tools[tool_name], *args)
+    return tools[tool_name](*args)
+```
+
+## Trade-offs
+
+**Pros:**
+
+- Prevents token waste from futile retries on broken tools
+- Enables graceful degradation — agent continues working with available tools
+- Self-healing: half-open probes restore tools automatically when they recover
+- Simple to implement (~50 lines of core logic)
+- Session-scoped state avoids the state management complexity of persistent breakers
+
+**Cons:**
+
+- Adds a layer of indirection around tool calls
+- Threshold tuning requires understanding each tool's failure characteristics
+- May mask intermittent errors that would naturally resolve with a single retry
+- Agent must be prompted to handle `CircuitOpenError` gracefully (fallback awareness)
+- Not useful for agents with only 1-2 highly reliable tools
+
+## References
+
+- [Martin Fowler: CircuitBreaker](https://martinfowler.com/bliki/CircuitBreaker.html) — canonical pattern description
+- [Release It! (Michael Nygard, 2007)](https://pragprog.com/titles/mnee2/release-it-second-edition/) — original production pattern
+- [Netflix Hystrix](https://github.com/Netflix/Hystrix) — production implementation at scale
+- [Resilience4j](https://resilience4j.readme.io/) — lightweight Java implementation
+- Related: [Failover-Aware Model Fallback](failover-aware-model-fallback.md) — handles model-provider failures (complementary)
+- Related: [Action Caching & Replay](action-caching-replay.md) — cached results can serve as circuit-open fallbacks
+
+---
+
 ## Agent Modes by Model Personality
 
 **Status:** emerging
@@ -5414,6 +5568,195 @@ graph TD
 * [Build Systems a la Carte (Mokhov, Mitchell, Peyton Jones, POPL 2020)](https://dl.acm.org/doi/10.1145/3371091) - Formal build system theory including backpressure
 * [Reproducible Builds Project](https://reproducible-builds.org) - Community initiative for verifiable builds
 * This generalizes beyond security to any code quality or pattern enforcement
+
+---
+
+## Deterministic Threat Rule Scanning
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** eeee2345 (@eeee2345)
+**Source:** https://github.com/panguard-ai/agent-threat-rules
+
+## Problem
+
+AI agents that invoke external tools (MCP servers, function calls, skill files) are exposed to a class of attacks where malicious content is embedded in tool descriptions, responses, or skill definitions. These attacks include prompt injection via tool output, data exfiltration through encoded parameters, privilege escalation via hidden instructions, and tool poisoning through manipulated descriptions.
+
+LLM-based detection alone is unreliable for these threats: adversaries can craft payloads that exploit the same reasoning flexibility that makes LLMs useful. Security requires a deterministic baseline that cannot be bypassed by clever prompt engineering.
+
+## Solution
+
+Maintain a library of deterministic regex-based rules, each targeting a specific threat pattern observed in real-world agent attacks. These rules run against tool descriptions, tool call arguments, tool responses, and skill definition files before the agent processes them.
+
+Each rule specifies:
+- A threat category (e.g., prompt injection, data exfiltration, privilege escalation)
+- One or more regex patterns matching known attack signatures
+- Severity level and recommended action (block, warn, log)
+- Test cases for both true positives and false positives
+
+```pseudo
+function scan(content, rules):
+    findings = []
+    for rule in rules:
+        for pattern in rule.patterns:
+            matches = regex_match(pattern, content)
+            if matches:
+                findings.append({
+                    rule_id: rule.id,
+                    severity: rule.severity,
+                    match: matches[0],
+                    action: rule.action
+                })
+    return findings
+
+// Integration point: intercept before agent processes tool output
+function on_tool_response(tool_name, response):
+    findings = scan(response, threat_rules)
+    critical = findings.filter(f => f.severity == "CRITICAL")
+    if critical:
+        block_and_alert(tool_name, critical)
+    return response
+```
+
+The scanning layer sits between the agent and its tools, inspecting content at well-defined interception points:
+
+```mermaid
+graph TD
+    A[External Tool / MCP Server] --> B[Tool Response]
+    B --> C[Threat Rule Scanner]
+    C --> D{Matches Found?}
+    D -->|CRITICAL| E[Block + Alert]
+    D -->|HIGH/MEDIUM| F[Warn + Log]
+    D -->|None| G[Pass to Agent]
+    H[Skill Definition File] --> C
+    I[Tool Description] --> C
+```
+
+The key insight is layered defense: deterministic rules catch known patterns with near-perfect precision, while LLM-based review handles novel or ambiguous threats as a second layer. The deterministic layer provides a floor of protection that does not degrade with adversarial prompt engineering.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - A regex-based rule library achieved 62.7% recall and 99.7% precision on the PINT prompt injection benchmark, demonstrating that deterministic rules reliably catch known patterns with very few false positives.
+  - Scanning 36,394 MCP server tool definitions with deterministic rules identified 182 CRITICAL and 1,124 HIGH severity findings, indicating measurable threat prevalence in real tool ecosystems.
+  - Layering deterministic scanning before LLM-based review reduces cost and latency: regex runs in microseconds per rule, reserving expensive LLM calls for ambiguous cases only.
+- **Unverified / Unclear:**
+  - Recall on novel attack patterns not yet captured by rules is unknown; the 62.7% figure reflects coverage of known patterns only.
+  - Effectiveness against adversarial evasion techniques (e.g., encoding variations, Unicode obfuscation) has not been systematically benchmarked.
+
+## How to use it
+
+1. **Choose interception points** based on your agent framework:
+   - Tool descriptions (scan when tools are registered)
+   - Tool call arguments (scan before execution)
+   - Tool responses (scan before agent processes output)
+   - Skill/plugin definition files (scan at install time)
+
+2. **Start with high-confidence rules** targeting well-documented attack patterns:
+   - Base64-encoded payloads in tool responses
+   - Hidden instructions using Unicode or whitespace tricks
+   - Cross-tool data exfiltration patterns
+   - Privilege escalation via `sudo`, `chmod`, or role manipulation
+
+3. **Integrate into your agent pipeline** as a synchronous check:
+   - Block on CRITICAL findings (known dangerous patterns)
+   - Warn on HIGH findings (suspicious but may be legitimate)
+   - Log everything for post-incident analysis
+
+4. **Evolve rules continuously** as new attack techniques emerge. Each rule should include test cases to prevent false positives from regressing precision.
+
+## Trade-offs
+
+- **Pros:**
+  - Deterministic and auditable: every detection decision is traceable to a specific rule
+  - Near-zero latency compared to LLM-based security review
+  - Cannot be bypassed by prompt injection (rules run outside the LLM context)
+  - Rules are composable and independently testable
+  - Complements LLM-based detection as part of a layered defense
+
+- **Cons:**
+  - Regex rules only catch known patterns; novel attacks require rule updates
+  - Recall is inherently limited by the rule library's coverage
+  - May produce false positives on legitimate content that resembles attack patterns
+  - Requires ongoing maintenance as the threat landscape evolves
+  - Pattern matching cannot understand semantic intent (e.g., distinguishing a legitimate base64 string from an exfiltration payload)
+
+## References
+
+- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 76 deterministic detection rules covering prompt injection, tool poisoning, data exfiltration, and privilege escalation
+- [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing agent-specific security risks
+- [PINT Benchmark](https://arxiv.org/abs/2312.10997) — Prompt injection benchmark for evaluating detection systems
+
+---
+
+## Deterministic Zero-LLM Orchestration
+
+**Status:** validated-in-production
+**Category:** Orchestration & Control
+**Authors:** Alex Chernysh (@chernistry)
+**Source:** https://github.com/chernistry/bernstein
+
+## Problem
+
+Multi-agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed.
+
+## Solution
+
+Keep the orchestrator as **deterministic Python code** that spends zero LLM tokens on coordination. The LLM budget goes entirely to the agents doing actual work.
+
+```
+Goal → Decompose (deterministic) → Assign to parallel agents → Verify (tests) → Commit
+```
+
+The orchestrator handles:
+- Task decomposition via rule-based planning
+- Agent assignment and parallel spawning (Claude Code, Codex CLI, Gemini CLI)
+- Result verification through test execution
+- Git operations (branching, merging, committing)
+
+Agents handle:
+- Code generation
+- Problem solving
+- Implementation decisions
+
+## How to use it
+
+```bash
+# Single goal → parallel agents → verified commits
+bernstein -g "Add JWT auth with refresh tokens, tests, and API docs"
+
+# Headless for CI pipelines
+bernstein --headless
+
+# Self-evolution mode: propose and sandbox improvements
+bernstein --evolve --budget 5.00
+```
+
+Key implementation choices:
+- **No LLM router** — task-to-agent mapping is code, not prompts
+- **Test-driven verification** — a janitor process runs tests after each agent completes
+- **Git worktree isolation** — each agent works in its own worktree, no conflicts
+- **Circuit breaker** — halt on test regression, no silent failures
+
+## Trade-offs
+
+**Pros:**
+- Predictable coordination cost (zero LLM tokens)
+- Deterministic behavior — same goal produces same task breakdown
+- Faster iteration — no waiting for LLM to decide what to do next
+- Supports heterogeneous agents (Claude Code, Codex CLI, Gemini CLI, Qwen)
+
+**Cons:**
+- Rigid decomposition — can't handle ambiguous goals that need LLM judgment to split
+- Requires well-defined project structure for rule-based planning
+- Less adaptive than LLM-routed orchestration for novel task types
+
+## References
+
+* [Bernstein](https://github.com/chernistry/bernstein) — Production implementation of this pattern
+* See also: [Sub-Agent Spawning](sub-agent-spawning.md) for the general multi-agent delegation pattern
+* See also: [Plan-Then-Execute Pattern](plan-then-execute-pattern.md) for the planning phase approach
 
 ---
 
@@ -11303,6 +11646,63 @@ Development environments, complex coding tasks, architectural decisions, debuggi
 
 ---
 
+## Output Verification Loop
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** John Weston (@JohnnyTarrr)
+**Source:** https://github.com/veroq-ai/shield
+
+## Problem
+
+LLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged.
+
+## Solution
+
+Insert a verification step between generation and action. The step works in three phases:
+
+1. **Claim extraction** -- decompose the LLM output into individual, atomic claims.
+2. **Evidence retrieval** -- for each claim, retrieve supporting or contradicting evidence from authoritative sources (APIs, knowledge bases, RAG stores).
+3. **Scoring** -- assign a per-claim trust score based on evidence alignment and return an aggregate confidence for the full output.
+
+The agent (or orchestrator) uses the scores to decide whether to proceed, retry with a corrected prompt, or escalate to a human.
+
+```pseudo
+output = agent.generate(prompt)
+result = verify(output, context)
+
+if result.trust_score >= threshold:
+    proceed(output)
+else:
+    retry_with_feedback(result.flagged_claims)
+```
+
+In multi-agent systems, run verification at each hand-off between agents so errors don't propagate through the pipeline. Verification receipts (signed, timestamped results) provide an audit trail for compliance.
+
+## How to use it
+
+- Place a verification call after any agent step that produces factual claims others will depend on.
+- Set a trust-score threshold appropriate to the domain (higher for medical/financial, lower for exploratory research).
+- In a swarm or multi-agent pipeline, verify at every agent boundary rather than only at the final output.
+- Store verification receipts when you need a compliance audit trail.
+
+### Known implementations
+
+- [VeroQ Shield](https://github.com/veroq-ai/shield) -- claim-level verification with evidence chains, Python and TypeScript SDKs. Self-hosted Docker option for air-gapped deployments.
+
+## Trade-offs
+
+- **Pros:** Catches factual errors that reflection loops miss; provides quantified confidence rather than binary pass/fail; audit trail via receipts; composable across multi-agent pipelines.
+- **Cons:** Adds latency per verification call; evidence quality bounds verification quality; requires an evidence source relevant to the domain.
+
+## References
+
+- [VeroQ Shield -- LLM output verification](https://github.com/veroq-ai/shield)
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.11366) -- related but lacks external evidence grounding
+- [FacTool: Factuality Detection in Generative AI](https://arxiv.org/abs/2307.13528) -- academic approach to claim-level verification
+
+---
+
 ## Parallel Tool Call Learning
 
 **Status:** emerging
@@ -15573,6 +15973,145 @@ If you wait to see what happens before acting, you'll miss the window. The front
 
 ---
 
+## Signal-Driven Agent Activation
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Nicolas Finet (@nifinet)
+**Source:** https://jorypestorious.com/blog/ai-engineer-spec/
+
+# Signal-Driven Agent Activation
+
+## Problem
+
+Most agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.
+
+In domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.
+
+Polling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met.
+
+## Solution
+
+Decouple agent activation from user commands by introducing a **signal layer** between external data sources and agent workflows.
+
+The pattern has three components:
+
+### 1. Signal Collector
+
+A background process that monitors external sources and emits structured events:
+
+```bash
+# Generic signal collector outputting JSON events
+$ signal-watch --source webhook --filter "event=page_visit AND page=/pricing" \
+  | jq '{type: "intent", source: "web", entity: .visitor_id, score: .engagement}'
+
+{"type":"intent","source":"web","entity":"acme-corp","score":82}
+```
+
+Signal sources can be webhooks, RSS feeds, API polling, log tails, or message queues. The collector normalizes them into a common event schema.
+
+### 2. Activation Rules
+
+A declarative rule set that maps signals to workflows:
+
+```yaml
+rules:
+  - signal: intent
+    condition: "score >= 70"
+    action: enrich-and-engage
+    cooldown: 24h
+
+  - signal: anomaly
+    condition: "severity == 'critical'"
+    action: investigate-and-alert
+    cooldown: 0
+
+  - signal: drift
+    condition: "delta > 0.05"
+    action: retrain-pipeline
+    cooldown: 7d
+```
+
+Rules include **cooldown periods** to prevent repeated activation on the same entity, and **condition filters** to set activation thresholds.
+
+### 3. Workflow Dispatch
+
+When a rule fires, the agent receives the signal payload as context and executes a predefined workflow:
+
+```bash
+# Agent receives signal context and acts autonomously
+$ agent run enrich-and-engage \
+    --context '{"entity":"acme-corp","score":82,"source":"web"}' \
+    --output json
+
+{"status":"completed","actions_taken":["enriched_profile","sent_email"],"entity":"acme-corp"}
+```
+
+The agent has full autonomy within the workflow scope but cannot exceed it — activation rules act as guardrails.
+
+```
+┌─────────────┐     ┌──────────────┐     ┌───────────────┐
+│   External   │────▶│   Signal     │────▶│  Activation   │
+│   Sources    │     │  Collector   │     │    Rules      │
+└─────────────┘     └──────────────┘     └───────┬───────┘
+                                                  │
+                                                  ▼
+                                         ┌───────────────┐
+                                         │    Agent       │
+                                         │   Workflow     │
+                                         └───────────────┘
+```
+
+## Evidence
+
+- **Event-driven architectures** are well-established in distributed systems (AWS EventBridge, Kafka). This pattern applies the same principle to agent activation.
+- **Security orchestration (SOAR)** platforms like Splunk SOAR and Palo Alto XSOAR use signal-driven playbook activation as their core mechanism.
+- **Sales engagement platforms** increasingly use intent signals (6sense, Bombora) to trigger automated sequences, validating the signal-to-action pipeline in production.
+
+## How to use it
+
+**Start with one signal source and one workflow.** Example use cases:
+
+- **DevOps**: Monitor deployment logs → detect anomalies → trigger rollback investigation
+- **Security**: Watch CVE feeds → match against dependency list → open remediation PRs
+- **Sales**: Track intent signals → enrich matching accounts → initiate outreach
+- **Finance**: Monitor price feeds → detect threshold crossings → execute hedging strategy
+
+**Prerequisites:**
+- A CLI-first skill set (see: CLI-First Skill Design)
+- At least one structured signal source
+- Defined activation thresholds per signal type
+
+**Key considerations:**
+- Start with high-confidence signals (low false-positive rate) to build trust
+- Log every activation with signal context for auditability
+- Set conservative cooldowns initially — tighten as you validate
+- Implement a kill switch to pause all signal-driven activation
+
+## Trade-offs
+
+**Advantages:**
+- Agents act at the right moment without human triage
+- Scales to signal volumes no human team can monitor
+- Composable — new signal sources and workflows plug in independently
+- Auditable — every action traces back to a specific signal event
+
+**Drawbacks:**
+- False positives trigger unnecessary workflows (noisy signals waste resources)
+- Requires upfront investment in signal normalization
+- Debugging chains (signal → rule → workflow) is harder than debugging direct commands
+- Risk of runaway activation if cooldowns and rate limits aren't enforced
+- Cold-start problem: rules need tuning before they're useful
+
+## References
+
+- [Event-Driven Architecture (Martin Fowler)](https://martinfowler.com/articles/201701-event-driven.html)
+- [SOAR Playbook Activation (Gartner)](https://www.gartner.com/en/information-technology/glossary/security-orchestration-automation-response-soar)
+- [CLI-First Skill Design (this catalogue)](cli-first-skill-design.md)
+- [CLI-Native Agent Orchestration (this catalogue)](cli-native-agent-orchestration.md)
+
+---
+
 ## Skill Library Evolution
 
 **Status:** established
@@ -18128,6 +18667,109 @@ Algorithm variants: BFS for exhaustive exploration, DFS for deep paths with limi
 * [Self-Consistency Improves Chain of Thought Reasoning](https://arxiv.org/abs/2203.11171) (Wang et al., 2022) — foundational multi-path exploration method that ToT extends
 * [Language Agent Tree Search](https://arxiv.org/abs/2310.04406) (Zhou et al., 2023) — extends ToT with MCTS and value backpropagation
 * [Graph of Thoughts](https://arxiv.org/abs/2308.09687) (Besta et al., 2024) — generalizes ToT to arbitrary graph structures with thought aggregation
+
+---
+
+## Unified Tool Gateway
+
+**Status:** emerging
+**Category:** Tool Use & Environment
+**Authors:** Blake Folgado (@blakefolgado)
+**Source:** https://toolrouter.com
+
+## Problem
+
+As agent capabilities grow, they need access to an expanding set of external tools — web search, image generation, competitor research, security scanning, video production, and more. Each tool typically requires its own API key, authentication flow, rate-limiting logic, and billing integration.
+
+This creates several compounding problems:
+
+* **Credential sprawl**: Agents or their operators must manage dozens of API keys across different providers, each with different authentication schemes.
+* **Integration tax**: Every new tool requires custom integration code — error handling, retries, schema translation, and response normalization.
+* **Billing fragmentation**: Usage is scattered across many provider dashboards, making cost tracking and budget enforcement difficult.
+* **Discovery overhead**: Agents have no unified way to find what tools are available or what capabilities they can access.
+
+## Solution
+
+Place a single gateway between the agent and all external tool providers. The gateway handles discovery, authentication, routing, execution, and billing — exposing a uniform interface to the agent regardless of the underlying provider.
+
+The pattern works through four layers:
+
+1. **Discovery layer**: A unified registry where agents query available tools and their capabilities via a single endpoint or protocol (e.g., MCP `tools/list`).
+2. **Authentication layer**: The gateway holds provider credentials on behalf of the agent. The agent authenticates once to the gateway; the gateway handles per-provider auth.
+3. **Routing layer**: Incoming tool calls are routed to the correct provider, with schema translation if needed. Long-running tools are dispatched to async workers.
+4. **Metering layer**: Every call is logged, metered, and billed through a single system, enabling budget caps and usage visibility.
+
+```mermaid
+graph TD
+    A[AI Agent] -->|Single API Key| B[Tool Gateway]
+    B --> C{Router}
+    C --> D[Web Search Provider]
+    C --> E[Image Generation Provider]
+    C --> F[Security Scanner]
+    C --> G[Video Production]
+    C --> H[... N Providers]
+    B --> I[Discovery Registry]
+    B --> J[Usage Metering]
+    B --> K[Credential Vault]
+```
+
+```pseudo
+// Agent-side: one key, one protocol
+gateway = ToolGateway(api_key="tr_xxx")
+
+// Discovery
+tools = gateway.discover(category="research")
+// → [{name: "web_search", skills: ["search", "deep_research"]}, ...]
+
+// Execution — gateway handles provider auth, retries, billing
+result = gateway.call("web_search", "search", {query: "AI agent patterns"})
+
+// Async for long-running tools
+job = gateway.call("video_production", "generate_clip", {prompt: "..."})
+// → {job_id: "abc", status: "processing"}
+result = gateway.get_result(job.job_id)
+```
+
+## How to use it
+
+**Best for:**
+
+- Teams deploying agents that need 10+ external capabilities
+- Platforms offering tool access to multiple agents or users
+- Scenarios requiring centralized billing, rate limiting, or audit logging
+
+**Implementation considerations:**
+
+- **Protocol choice**: MCP (Model Context Protocol) provides a natural fit since agents already speak it natively. The gateway acts as an MCP server exposing all tools.
+- **Sync vs async**: Short tools (search, lookups) execute inline. Long tools (video generation, large scrapes) return a job ID and execute on background workers.
+- **Credential management**: Users can bring their own API keys for specific providers (BYOK) to reduce costs, while the gateway provides default keys for convenience.
+- **Schema normalization**: Each provider's response is normalized to a consistent output schema so agents don't need provider-specific parsing logic.
+- **Rate limiting**: Apply per-user and per-tool rate limits at the gateway level to prevent abuse and manage costs.
+
+## Trade-offs
+
+**Pros:**
+
+- Agents integrate once rather than per-provider — dramatically reduces integration surface
+- Centralized billing and usage tracking across all tools
+- New tools become available to all agents without code changes
+- Single point for rate limiting, logging, and access control
+- Credential isolation — agents never see raw provider API keys
+
+**Cons:**
+
+- Single point of failure — gateway outage blocks all tool access
+- Added latency from the extra network hop through the gateway
+- Cost markup — gateway operators typically add a fee on top of provider costs
+- Vendor lock-in risk if the gateway uses proprietary protocols
+- Less control over provider-specific features or optimizations
+
+## References
+
+- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the emerging standard for agent-tool communication
+- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern with 150+ tools accessible via MCP
+- [OpenAI Plugins Architecture](https://platform.openai.com/docs/plugins) — early exploration of unified tool access for agents
+- [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — the microservices predecessor pattern that inspired this approach
 
 ---
 

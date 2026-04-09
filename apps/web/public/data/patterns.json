@@ -102,6 +102,64 @@
     "excerpt": "\n## Problem\nParallel sandboxes are intoxicating: you can spawn 10... 100... 1000 runs. But two things break quickly:\n\n1. **Diminishing returns:** After some N, you're mostly paying for redundant failures or near-duplicate solutions\n2. **Prompt fragility:** If the prompt is underspecified, scaling N just scales errors (lots of sandboxes fail fast)\n3. **Resource risk:** Unbounded fan-out can overwhelm budgets, rate limits, or queues\n4. **Oscillation risk:** Poorly tuned thresholds can cause scale-up/scale-down thrashing as the controller oscillates between decisions\n\nStatic \"N=10 always\" policies don't adapt to task difficulty, model variance, or observed failure rates. Most implementations use static caps rather than true signal-driven adaptation."
   },
   {
+    "title": "Agent Circuit Breaker",
+    "status": "emerging",
+    "authors": [
+      "Jeel Thummar (@jeelthummar)"
+    ],
+    "based_on": [
+      "Michael Nygard (Release It!, 2007)",
+      "Netflix Hystrix Team"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://martinfowler.com/bliki/CircuitBreaker.html",
+    "tags": [
+      "circuit-breaker",
+      "fault-tolerance",
+      "tool-reliability",
+      "graceful-degradation",
+      "resilience"
+    ],
+    "slug": "agent-circuit-breaker",
+    "id": "agent-circuit-breaker",
+    "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
+    "maturity": "maturing",
+    "complexity": "medium",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "Agent calls external APIs or tools that can fail",
+      "Retries burn tokens without progress",
+      "Multiple tool providers available for fallback"
+    ],
+    "anti_signals": [
+      "All tools are local and deterministic",
+      "Single-shot agent with no retry logic"
+    ],
+    "prerequisites": [
+      "Tool abstraction layer",
+      "Failure tracking mechanism"
+    ],
+    "related": [
+      "failover-aware-model-fallback",
+      "action-caching-replay"
+    ],
+    "anti_patterns": [
+      "infinite-retry-loop"
+    ],
+    "tools": [
+      "api-clients",
+      "tool-executors"
+    ],
+    "domains": [
+      "coding",
+      "ops",
+      "research"
+    ],
+    "updated_at": "2026-03-26",
+    "excerpt": "\n## Problem\nAgents that use external tools — APIs, databases, web scrapers, code executors — face a common failure mode: a tool endpoint becomes degraded or unavailable, and the agent **keeps calling it**, burning tokens on retries that will never succeed.\n\nThis creates three cascading problems:\n\n- **Token waste**: Each failed tool call costs input/output tokens, and the agent often generates lengthy retry reasoning\n- **Latency amplification**: Sequential retries on a dead endpoint add seconds or minutes with no progress\n- **Cascading failure**: If one tool is down (e.g., a search API), the agent may stall entirely instead of using alternative approaches\n\nUnlike model-level failover (switching between GPT-4 and Claude when one provider is down), tool-level failures require a different strategy — the agent needs to learn, mid-session, that a specific tool is broken and **stop using it**."
+  },
+  {
     "title": "Agent Modes by Model Personality",
     "status": "emerging",
     "authors": [
@@ -1194,7 +1252,7 @@
     "summary": "Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.",
     "maturity": "maturing",
     "complexity": "low",
-    "effort": "hours",
+    "effort": "low",
     "impact": "high",
     "signals": [
       "Agent runs in non-interactive or background mode",
@@ -1246,6 +1304,57 @@
     "summary": "Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area.",
     "updated_at": "2026-04-09",
     "excerpt": "\n## Problem\nNon-deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism - code is either secure or not secure, with no grey area. These approaches are merely suggestions to the LLM that may or may not be followed consistently."
+  },
+  {
+    "title": "Deterministic Threat Rule Scanning",
+    "status": "emerging",
+    "authors": [
+      "eeee2345 (@eeee2345)"
+    ],
+    "based_on": [
+      "Agent Threat Rules (open-source rule library)",
+      "OWASP Agentic Top 10"
+    ],
+    "category": "Security & Safety",
+    "source": "https://github.com/panguard-ai/agent-threat-rules",
+    "tags": [
+      "security",
+      "threat-detection",
+      "regex",
+      "deterministic",
+      "prompt-injection",
+      "tool-poisoning",
+      "mcp",
+      "agent-safety"
+    ],
+    "slug": "deterministic-threat-rule-scanning",
+    "id": "deterministic-threat-rule-scanning",
+    "summary": "Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nAI agents that invoke external tools (MCP servers, function calls, skill files) are exposed to a class of attacks where malicious content is embedded in tool descriptions, responses, or skill definitions. These attacks include prompt injection via tool output, data exfiltration through encoded parameters, privilege escalation via hidden instructions, and tool poisoning through manipulated descriptions.\n\nLLM-based detection alone is unreliable for these threats: adversaries can craft payloads that exploit the same reasoning flexibility that makes LLMs useful. Security requires a deterministic baseline that cannot be bypassed by clever prompt engineering."
+  },
+  {
+    "title": "Deterministic Zero-LLM Orchestration",
+    "status": "validated-in-production",
+    "authors": [
+      "Alex Chernysh (@chernistry)"
+    ],
+    "based_on": [],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/chernistry/bernstein",
+    "tags": [
+      "orchestration",
+      "multi-agent",
+      "parallel-execution",
+      "deterministic",
+      "test-driven",
+      "zero-llm-overhead"
+    ],
+    "slug": "deterministic-zero-llm-orchestration",
+    "id": "deterministic-zero-llm-orchestration",
+    "summary": "Multi agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nMulti-agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed."
   },
   {
     "title": "Dev Tooling Assumptions Reset",
@@ -2578,6 +2687,46 @@
     "excerpt": "\n## Problem\nRelying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems."
   },
   {
+    "title": "Output Verification Loop",
+    "status": "emerging",
+    "authors": [
+      "John Weston (@JohnnyTarrr)"
+    ],
+    "based_on": [
+      "VeroQ Shield (veroq-ai)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/veroq-ai/shield",
+    "tags": [
+      "verification",
+      "hallucination-detection",
+      "trust-scores",
+      "fact-checking",
+      "multi-agent"
+    ],
+    "slug": "output-verification-loop",
+    "id": "output-verification-loop",
+    "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "Agent output feeds into decisions or downstream agents",
+      "Hallucination risk is non-trivial",
+      "Compliance requires an audit trail"
+    ],
+    "anti_signals": [
+      "Output is purely creative with no factual claims",
+      "Latency budget under 500ms"
+    ],
+    "related": [
+      "reflection-loop",
+      "self-critique-evaluator-loop"
+    ],
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nLLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged."
+  },
+  {
     "title": "Parallel Tool Call Learning",
     "status": "emerging",
     "authors": [
@@ -3308,6 +3457,27 @@
     "excerpt": "\n## Problem\nIn the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.\n\n**Expert intuition is unreliable**: Research across major technology companies shows that 80-90% of product ideas fail to improve key metrics, even when experts are confident they will work (Kohavi et al., 2007). Real-world experimentation beats theoretical analysis."
   },
   {
+    "title": "Signal-Driven Agent Activation",
+    "status": "emerging",
+    "authors": [
+      "Nicolas Finet (@nifinet)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://jorypestorious.com/blog/ai-engineer-spec/",
+    "tags": [
+      "signals",
+      "event-driven",
+      "automation",
+      "orchestration",
+      "reactive"
+    ],
+    "slug": "signal-driven-agent-activation",
+    "id": "signal-driven-agent-activation",
+    "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nMost agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.\n\nIn domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.\n\nPolling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met."
+  },
+  {
     "title": "Skill Library Evolution",
     "status": "established",
     "authors": [
@@ -3873,6 +4043,68 @@
     "summary": "Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nLinear reasoning commits early to one path and can fail silently when intermediate assumptions are wrong. On complex planning or synthesis tasks, this causes premature convergence, weak recovery from mistakes, and missed alternatives that a broader search would discover."
+  },
+  {
+    "title": "Unified Tool Gateway",
+    "status": "emerging",
+    "authors": [
+      "Blake Folgado (@blakefolgado)"
+    ],
+    "based_on": [
+      "ToolRouter (toolrouter.com)"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://toolrouter.com",
+    "tags": [
+      "tool-gateway",
+      "mcp",
+      "tool-aggregation",
+      "agent-tooling",
+      "api-gateway",
+      "tool-routing"
+    ],
+    "slug": "unified-tool-gateway",
+    "id": "unified-tool-gateway",
+    "summary": "Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers.",
+    "maturity": "maturing",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "Agent needs 10+ external tools or APIs",
+      "Managing multiple API keys across providers",
+      "Usage-based billing required across tools",
+      "Teams sharing tool access with centralized controls"
+    ],
+    "anti_signals": [
+      "Single-provider tool usage",
+      "Agents that only need 1-2 tools",
+      "Fully offline or air-gapped environments"
+    ],
+    "prerequisites": [
+      "MCP or tool-use capable agent",
+      "Network access to external APIs"
+    ],
+    "related": [
+      "progressive-tool-discovery",
+      "tool-search-lazy-loading",
+      "tool-capability-compartmentalization"
+    ],
+    "anti_patterns": [
+      "direct-api-integration-per-tool"
+    ],
+    "tools": [
+      "mcp-servers",
+      "api-gateway",
+      "tool-registry"
+    ],
+    "domains": [
+      "tool-use",
+      "infrastructure",
+      "ops"
+    ],
+    "updated_at": "2026-03-31",
+    "excerpt": "\n## Problem\nAs agent capabilities grow, they need access to an expanding set of external tools — web search, image generation, competitor research, security scanning, video production, and more. Each tool typically requires its own API key, authentication flow, rate-limiting logic, and billing integration.\n\nThis creates several compounding problems:\n\n* **Credential sprawl**: Agents or their operators must manage dozens of API keys across different providers, each with different authentication schemes.\n* **Integration tax**: Every new tool requires custom integration code — error handling, retries, schema translation, and response normalization.\n* **Billing fragmentation**: Usage is scattered across many provider dashboards, making cost tracking and budget enforcement difficult.\n* **Discovery overhead**: Agents have no unified way to find what tools are available or what capabilities they can access."
   },
   {
     "title": "Variance-Based RL Sample Selection",
