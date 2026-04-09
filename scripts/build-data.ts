@@ -529,6 +529,9 @@ function fetchGithubStars(): void {
     console.warn('[build-data] Could not fetch GitHub stars:', err instanceof Error ? err.message : err);
     if (fs.existsSync(outputPath)) {
       console.warn('[build-data] Using cached value');
+    } else {
+      fs.writeFileSync(outputPath, JSON.stringify({ count: 0, formatted: '' }));
+      console.warn('[build-data] Wrote placeholder github-stars.json');
     }
   }
 }
