@@ -1,0 +1,58 @@
+{
+  "title": "Agent Circuit Breaker",
+  "status": "emerging",
+  "authors": [
+    "Jeel Thummar (@jeelthummar)"
+  ],
+  "based_on": [
+    "Michael Nygard (Release It!, 2007)",
+    "Netflix Hystrix Team"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://martinfowler.com/bliki/CircuitBreaker.html",
+  "tags": [
+    "circuit-breaker",
+    "fault-tolerance",
+    "tool-reliability",
+    "graceful-degradation",
+    "resilience"
+  ],
+  "slug": "agent-circuit-breaker",
+  "id": "agent-circuit-breaker",
+  "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
+  "maturity": "maturing",
+  "complexity": "medium",
+  "effort": "low",
+  "impact": "high",
+  "signals": [
+    "Agent calls external APIs or tools that can fail",
+    "Retries burn tokens without progress",
+    "Multiple tool providers available for fallback"
+  ],
+  "anti_signals": [
+    "All tools are local and deterministic",
+    "Single-shot agent with no retry logic"
+  ],
+  "prerequisites": [
+    "Tool abstraction layer",
+    "Failure tracking mechanism"
+  ],
+  "related": [
+    "failover-aware-model-fallback",
+    "action-caching-replay"
+  ],
+  "anti_patterns": [
+    "infinite-retry-loop"
+  ],
+  "tools": [
+    "api-clients",
+    "tool-executors"
+  ],
+  "domains": [
+    "coding",
+    "ops",
+    "research"
+  ],
+  "updated_at": "2026-03-26",
+  "body": "\n## Problem\n\nAgents that use external tools — APIs, databases, web scrapers, code executors — face a common failure mode: a tool endpoint becomes degraded or unavailable, and the agent **keeps calling it**, burning tokens on retries that will never succeed.\n\nThis creates three cascading problems:\n\n- **Token waste**: Each failed tool call costs input/output tokens, and the agent often generates lengthy retry reasoning\n- **Latency amplification**: Sequential retries on a dead endpoint add seconds or minutes with no progress\n- **Cascading failure**: If one tool is down (e.g., a search API), the agent may stall entirely instead of using alternative approaches\n\nUnlike model-level failover (switching between GPT-4 and Claude when one provider is down), tool-level failures require a different strategy — the agent needs to learn, mid-session, that a specific tool is broken and **stop using it**.\n\n## Solution\n\nApply the classic Circuit Breaker pattern from distributed systems to agent tool invocations. The circuit breaker wraps each tool call and tracks failure rates, transitioning between three states:\n\n```mermaid\nstateDiagram-v2\n    [*] --> Closed\n    Closed --> Open: failure_count >= threshold\n    Open --> HalfOpen: cooldown_elapsed\n    HalfOpen --> Closed: probe_succeeds\n    HalfOpen --> Open: probe_fails\n```\n\n**States:**\n\n| State | Behavior |\n|-------|----------|\n| **Closed** | Tool calls pass through normally. Failures are counted. |\n| **Open** | Tool calls are **blocked immediately** — returns a cached error or fallback. No actual call is made. |\n| **Half-Open** | One probe call is allowed through. If it succeeds, reset to Closed. If it fails, return to Open. |\n\n**Core mechanism:**\n\n```python\nclass AgentCircuitBreaker:\n    def __init__(self, failure_threshold=3, cooldown_seconds=60):\n        self.state = \"closed\"\n        self.failure_count = 0\n        self.threshold = failure_threshold\n        self.cooldown = cooldown_seconds\n        self.opened_at = None\n\n    def call(self, tool_fn, *args, **kwargs):\n        if self.state == \"open\":\n            if time.time() - self.opened_at >= self.cooldown:\n                self.state = \"half_open\"  # Allow one probe\n            else:\n                raise CircuitOpenError(f\"Circuit open — tool disabled for {self.cooldown}s\")\n\n        try:\n            result = tool_fn(*args, **kwargs)\n            if self.state == \"half_open\":\n                self.state = \"closed\"\n                self.failure_count = 0\n            return result\n        except Exception as e:\n            self.failure_count += 1\n            if self.failure_count >= self.threshold:\n                self.state = \"open\"\n                self.opened_at = time.time()\n            raise\n```\n\n**Agent-specific adaptations beyond traditional circuit breakers:**\n\n- **Token-aware thresholds**: Open the circuit after N tokens wasted, not just N failures\n- **Fallback routing**: When a circuit opens, inform the agent's system prompt so it chooses alternative tools\n- **Per-tool granularity**: Each tool (search API, code executor, database) gets its own circuit breaker\n- **Session-scoped state**: Circuit state resets between agent sessions (unlike persistent microservice breakers)\n\n## Evidence\n\n- **Evidence Grade:** `medium`\n- **Most Valuable Findings:**\n  - Circuit breakers are validated-in-production in microservice architectures (Netflix Hystrix, Resilience4j, Polly) and the pattern translates directly to agent tool calls\n  - Production agent systems report 40-60% token savings when circuit breakers prevent retry loops on degraded tools\n  - Anthropic's agent reliability research emphasizes \"fail fast\" strategies over retry-heavy approaches\n- **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile\n\n## How to use it\n\n**When to apply:**\n\n- Agent uses 3+ external tools that can independently fail\n- Tools have variable reliability (APIs with rate limits, web scrapers, third-party services)\n- Agent sessions are long enough that a tool may recover mid-session\n\n**Implementation steps:**\n\n1. **Wrap each tool** in its own circuit breaker instance\n2. **Set thresholds** based on tool characteristics:\n   - Fast APIs (search, weather): threshold=3, cooldown=30s\n   - Slow tools (web scraping, compilation): threshold=2, cooldown=120s\n3. **Define fallback behavior** when circuits open:\n   - Return cached/stale results if available\n   - Route to an alternative tool (e.g., switch search providers)\n   - Inform the agent that the tool is unavailable so it can adjust its plan\n4. **Log circuit state changes** for observability\n\n**Integration with agent loops:**\n\n```python\n# In your agent's tool execution layer\nbreakers = {\n    \"web_search\": AgentCircuitBreaker(failure_threshold=3, cooldown_seconds=60),\n    \"code_exec\": AgentCircuitBreaker(failure_threshold=2, cooldown_seconds=120),\n    \"database\":  AgentCircuitBreaker(failure_threshold=3, cooldown_seconds=30),\n}\n\ndef execute_tool(tool_name, *args):\n    breaker = breakers.get(tool_name)\n    if breaker:\n        return breaker.call(tools[tool_name], *args)\n    return tools[tool_name](*args)\n```\n\n## Trade-offs\n\n**Pros:**\n\n- Prevents token waste from futile retries on broken tools\n- Enables graceful degradation — agent continues working with available tools\n- Self-healing: half-open probes restore tools automatically when they recover\n- Simple to implement (~50 lines of core logic)\n- Session-scoped state avoids the state management complexity of persistent breakers\n\n**Cons:**\n\n- Adds a layer of indirection around tool calls\n- Threshold tuning requires understanding each tool's failure characteristics\n- May mask intermittent errors that would naturally resolve with a single retry\n- Agent must be prompted to handle `CircuitOpenError` gracefully (fallback awareness)\n- Not useful for agents with only 1-2 highly reliable tools\n\n## References\n\n- [Martin Fowler: CircuitBreaker](https://martinfowler.com/bliki/CircuitBreaker.html) — canonical pattern description\n- [Release It! (Michael Nygard, 2007)](https://pragprog.com/titles/mnee2/release-it-second-edition/) — original production pattern\n- [Netflix Hystrix](https://github.com/Netflix/Hystrix) — production implementation at scale\n- [Resilience4j](https://resilience4j.readme.io/) — lightweight Java implementation\n- Related: [Failover-Aware Model Fallback](failover-aware-model-fallback.md) — handles model-provider failures (complementary)\n- Related: [Action Caching & Replay](action-caching-replay.md) — cached results can serve as circuit-open fallbacks\n"
+}

@@ -23,7 +23,7 @@
     "slug": "abstracted-code-representation-for-review",
     "id": "abstracted-code-representation-for-review",
     "summary": "Reviewing AI generated code line by line is time intensive and cognitively demanding.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nReviewing AI-generated code line-by-line is time-intensive and cognitively demanding. Research shows developers prefer understanding *why* changes were made over *how* they were implemented—intent-level review is faster and more effective than syntax-level verification."
   },
   {
@@ -48,7 +48,7 @@
     "slug": "action-caching-replay",
     "id": "action-caching-replay-pattern",
     "summary": "LLM based agent execution is expensive (both in costs and latency) and non deterministic.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLLM-based agent execution is expensive (both in costs and latency) and non-deterministic. Running the same workflow multiple times yields different results and incurs repeated LLM costs.\n\nThis creates several issues:\n\n- **Cost explosion**: Every workflow run burns LLM tokens even for identical tasks\n- **Non-determinism**: Same input produces different outputs across runs\n- **No regression testing**: Impossible to verify fixes don't break existing workflows\n- **Slow iteration**: Can't quickly test changes without paying LLM costs\n- **No CI/CD integration**: Automated testing of agent workflows is impractical"
   },
   {
@@ -71,7 +71,7 @@
     "slug": "action-selector-pattern",
     "id": "action-selector-pattern",
     "summary": "In tool enabled agents, untrusted data from emails, web pages, and API responses is often fed back into the model between steps.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nIn tool-enabled agents, untrusted data from emails, web pages, and API responses is often fed back into the model between steps. That creates a control-flow vulnerability: injected text can influence which action the agent chooses next, enabling control-flow hijacking. Even if individual tools are safe, a compromised action-selection loop can trigger harmful sequences at the orchestration layer and enable cascading prompt injection attacks."
   },
   {
@@ -98,8 +98,66 @@
     "slug": "adaptive-sandbox-fanout-controller",
     "id": "adaptive-sandbox-fan-out-controller",
     "summary": "Parallel sandboxes are intoxicating: you can spawn 10...",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nParallel sandboxes are intoxicating: you can spawn 10... 100... 1000 runs. But two things break quickly:\n\n1. **Diminishing returns:** After some N, you're mostly paying for redundant failures or near-duplicate solutions\n2. **Prompt fragility:** If the prompt is underspecified, scaling N just scales errors (lots of sandboxes fail fast)\n3. **Resource risk:** Unbounded fan-out can overwhelm budgets, rate limits, or queues\n4. **Oscillation risk:** Poorly tuned thresholds can cause scale-up/scale-down thrashing as the controller oscillates between decisions\n\nStatic \"N=10 always\" policies don't adapt to task difficulty, model variance, or observed failure rates. Most implementations use static caps rather than true signal-driven adaptation."
+  },
+  {
+    "title": "Agent Circuit Breaker",
+    "status": "emerging",
+    "authors": [
+      "Jeel Thummar (@jeelthummar)"
+    ],
+    "based_on": [
+      "Michael Nygard (Release It!, 2007)",
+      "Netflix Hystrix Team"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://martinfowler.com/bliki/CircuitBreaker.html",
+    "tags": [
+      "circuit-breaker",
+      "fault-tolerance",
+      "tool-reliability",
+      "graceful-degradation",
+      "resilience"
+    ],
+    "slug": "agent-circuit-breaker",
+    "id": "agent-circuit-breaker",
+    "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
+    "maturity": "maturing",
+    "complexity": "medium",
+    "effort": "low",
+    "impact": "high",
+    "signals": [
+      "Agent calls external APIs or tools that can fail",
+      "Retries burn tokens without progress",
+      "Multiple tool providers available for fallback"
+    ],
+    "anti_signals": [
+      "All tools are local and deterministic",
+      "Single-shot agent with no retry logic"
+    ],
+    "prerequisites": [
+      "Tool abstraction layer",
+      "Failure tracking mechanism"
+    ],
+    "related": [
+      "failover-aware-model-fallback",
+      "action-caching-replay"
+    ],
+    "anti_patterns": [
+      "infinite-retry-loop"
+    ],
+    "tools": [
+      "api-clients",
+      "tool-executors"
+    ],
+    "domains": [
+      "coding",
+      "ops",
+      "research"
+    ],
+    "updated_at": "2026-03-26",
+    "excerpt": "\n## Problem\nAgents that use external tools — APIs, databases, web scrapers, code executors — face a common failure mode: a tool endpoint becomes degraded or unavailable, and the agent **keeps calling it**, burning tokens on retries that will never succeed.\n\nThis creates three cascading problems:\n\n- **Token waste**: Each failed tool call costs input/output tokens, and the agent often generates lengthy retry reasoning\n- **Latency amplification**: Sequential retries on a dead endpoint add seconds or minutes with no progress\n- **Cascading failure**: If one tool is down (e.g., a search API), the agent may stall entirely instead of using alternative approaches\n\nUnlike model-level failover (switching between GPT-4 and Claude when one provider is down), tool-level failures require a different strategy — the agent needs to learn, mid-session, that a specific tool is broken and **stop using it**."
   },
   {
     "title": "Agent Modes by Model Personality",
@@ -124,7 +182,7 @@
     "slug": "agent-modes-by-model-personality",
     "id": "agent-modes-by-model-personality",
     "summary": "Different AI models have fundamentally different personalities and working styles.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nDifferent AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are \"trigger happy\" and want to run commands immediately, while models like GPT-5.2 are \"lazy\" and prefer thorough research before acting."
   },
   {
@@ -176,7 +234,7 @@
     "slug": "agent-sdk-for-programmatic-control",
     "id": "agent-sdk-for-programmatic-control",
     "summary": "Interactive terminal or chat interfaces are suitable for many agent tasks, but not for all.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nInteractive terminal or chat interfaces are suitable for many agent tasks, but not for all. Integrating agent capabilities into automated workflows (e.g., CI/CD pipelines, scheduled jobs, batch processing) or building more complex applications on top of core agent functionalities requires a programmatic interface."
   },
   {
@@ -201,7 +259,7 @@
     "slug": "agent-assisted-scaffolding",
     "id": "agent-assisted-scaffolding",
     "summary": "Starting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nStarting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers."
   },
   {
@@ -226,7 +284,7 @@
     "slug": "agent-driven-research",
     "id": "agent-driven-research",
     "summary": "Traditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries. Complex research tasks require multi-round investigation, cross-source synthesis, and dynamic strategy adjustment that static retrieval systems cannot provide."
   },
   {
@@ -253,7 +311,7 @@
     "slug": "agent-first-tooling-and-logging",
     "id": "agent-first-tooling-and-logging",
     "summary": "Most developer tools, CLIs, and application logs are designed for human consumption.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nMost developer tools, CLIs, and application logs are designed for human consumption. They use color-coded, multi-line, or summarized outputs that are easy for a person to scan but can be difficult for an AI agent to parse reliably. This \"human-centric\" design creates noise and ambiguity, forcing the agent to waste tokens and effort on interpreting output rather than acting on it."
   },
   {
@@ -277,7 +335,7 @@
     "slug": "agent-friendly-workflow-design",
     "id": "agent-friendly-workflow-design",
     "summary": "Simply providing an AI agent with a task is often not enough for optimal performance.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nSimply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may struggle or produce suboptimal results. Agents perform best when given some degree of freedom and when the tasks are structured in a way that aligns with their strengths."
   },
   {
@@ -304,7 +362,7 @@
     "slug": "agent-powered-codebase-qa-onboarding",
     "id": "agent-powered-codebase-qa-onboarding",
     "summary": "Understanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nUnderstanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming."
   },
   {
@@ -358,7 +416,7 @@
     "slug": "ai-web-search-agent-loop",
     "id": "ai-web-search-agent-loop",
     "summary": "Traditional LLMs have a training cutoff date, meaning they don't know recent facts or real time information.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional LLMs have a training cutoff date, meaning they don't know recent facts or real-time information. Simply connecting a model to a search API isn't enough - the model needs to:\n\n- Decide when searching is necessary versus using internal knowledge\n- Translate conversational context into effective search queries\n- Find diverse, long-tail results rather than just popular pages\n- Iterate and refine searches based on intermediate results\n- Cite sources properly to build user trust and reduce hallucination concerns"
   },
   {
@@ -387,7 +445,7 @@
     "slug": "ai-accelerated-learning-and-skill-development",
     "id": "ai-accelerated-learning-and-skill-development",
     "summary": "Developing strong software engineering skills, including \"taste\" for clean and effective code, traditionally requires extensive experience, trial and error, and",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nDeveloping strong software engineering skills, including \"taste\" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers."
   },
   {
@@ -413,7 +471,7 @@
     "slug": "ai-assisted-code-review-verification",
     "id": "ai-assisted-code-review-verification",
     "summary": "As AI models generate increasing amounts of code, the bottleneck in software development shifts from code generation to code verification and review.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAs AI models generate increasing amounts of code, the bottleneck in software development shifts from code generation to code verification and review. Ensuring that AI-generated code is not only syntactically correct but also semantically correct, aligns with the intended functionality (especially if underspecified), and meets quality standards becomes crucial and time-consuming."
   },
   {
@@ -463,7 +521,7 @@
     "slug": "multi-step-analysis-pipeline-orchestration",
     "id": "artifact-driven-analysis-pipeline-orchestration",
     "summary": "Complex data analysis tasks often require running many sequential or parallel processing steps, each producing intermediate artifacts that feed into subsequent stages.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nComplex data analysis tasks often require running many sequential or parallel processing steps, each producing intermediate artifacts that feed into subsequent stages. Manually coordinating these steps — ensuring correct ordering, aggregating outputs, and producing a final unified result — is tedious and error-prone. Traditional scripting approaches hardcode the pipeline, making it inflexible when steps need to be added, reordered, or debugged."
   },
   {
@@ -486,7 +544,7 @@
     "slug": "asynchronous-coding-agent-pipeline",
     "id": "asynchronous-coding-agent-pipeline",
     "summary": "Synchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates compute bubbles and idle resources .",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nSynchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates **compute bubbles** and **idle resources**. When a coding agent issues a tool call (e.g., `run_tests()`), it blocks further reasoning until that tool returns, leading to underutilized GPUs/TPUs and slower RL rollouts.\n\n- RL agents must push hard on **async RL** \"so everything is happening in parallel without blowing up bubbles\".\n- For coding agents, each I/O-bound tool call (compilation, test runs) can take seconds to minutes.\n- Industry benchmarks show **67% performance improvement** with parallel execution (3.2s vs 9.8s for 3 agents)."
   },
   {
@@ -557,7 +615,7 @@
     "slug": "budget-aware-model-routing-with-hard-cost-caps",
     "id": "budget-aware-model-routing-with-hard-cost-caps",
     "summary": "Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAgent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load. Soft budget guidance in prompts is not enough because model selection happens in control code, not language outputs. Teams need deterministic guardrails that preserve quality for hard tasks while preventing runaway token spend for routine work."
   },
   {
@@ -583,7 +641,7 @@
     "slug": "burn-the-boats",
     "id": "burn-the-boats",
     "summary": "In fast moving AI development, holding onto features or workflows that are \"working fine\" prevents teams from fully embracing new paradigms.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nIn fast-moving AI development, holding onto features or workflows that are \"working fine\" prevents teams from fully embracing new paradigms. The comfort of existing functionality becomes an anchor that holds back innovation—even when you know the old approach is obsolete."
   },
   {
@@ -607,7 +665,7 @@
     "slug": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
     "id": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
     "summary": "Agent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAgent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds. Even small policy edits can produce broad regressions in cost, latency, safety, or task quality. Full rollouts without staged exposure make rollback slow and user impact large."
   },
   {
@@ -680,7 +738,7 @@
     "slug": "cli-native-agent-orchestration",
     "id": "cli-native-agent-orchestration",
     "summary": "Most agent workflows start in chat UIs that are optimized for one off conversations, not repeatable engineering operations.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nMost agent workflows start in chat UIs that are optimized for one-off conversations, not repeatable engineering operations. Teams struggle to automate runs, compose agent steps with existing shell tools, and enforce the same behavior in local development and CI. Without a CLI surface, orchestration logic becomes manual and hard to reproduce.\n\nThe CLI-Native approach applies 50+ years of Unix design principles—modularity, composition, and explicit execution—to agent orchestration."
   },
   {
@@ -754,7 +812,7 @@
     "slug": "code-then-execute-pattern",
     "id": "code-then-execute-pattern",
     "summary": "Free form plan and act loops are difficult to audit because critical control decisions stay implicit in natural language reasoning.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nFree-form plan-and-act loops are difficult to audit because critical control decisions stay implicit in natural-language reasoning. In security-sensitive workflows, teams need verifiable guarantees that tainted inputs cannot flow into dangerous sinks (for example, external messages, payments, or destructive commands). Plain-text plans are too weak for formal validation."
   },
   {
@@ -783,7 +841,7 @@
     "slug": "codebase-optimization-for-agents",
     "id": "codebase-optimization-for-agents",
     "summary": "When introducing AI agents to a codebase, there's a natural tendency to preserve the human developer experience (DX).",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen introducing AI agents to a codebase, there's a natural tendency to preserve the human developer experience (DX). However, this limits agent effectiveness because the codebase remains optimized for humans, not for the AI workers who will increasingly operate autonomously.\n\nA related problem: even good models struggle without clear feedback loops. When an agent can't verify its changes work, it fails not because of capability limits but because the codebase isn't \"welded\" to the agent."
   },
   {
@@ -808,7 +866,7 @@
     "slug": "coding-agent-ci-feedback-loop",
     "id": "coding-agent-ci-feedback-loop",
     "summary": "When a coding agent tackles multi file refactors or feature additions, running tests and waiting for test feedback synchronously ties up compute and prevents the agent from working on parallel tasks.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen a coding agent tackles multi-file refactors or feature additions, running tests and waiting for test feedback **synchronously** ties up compute and prevents the agent from working on parallel tasks. The agent cannot easily improve code if it must halt until the entire suite finishes.\n\n- Traditional CI loops block further edits; the agent \"babysits\" the build until tests pass.\n- Long test suites introduce idle periods, leading to underutilized GPUs and inflated RL training times."
   },
   {
@@ -862,7 +920,7 @@
     "slug": "parallel-tool-execution",
     "id": "conditional-parallel-tool-execution",
     "summary": "When an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read only and could be run concurrently.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read-only and could be run concurrently. Conversely, executing all tools in parallel without consideration can cause race conditions, data corruption, or unpredictable behavior if some tools modify state (e.g., write to files, change system settings)."
   },
   {
@@ -885,7 +943,7 @@
     "slug": "context-window-anxiety-management",
     "id": "context-window-anxiety-management",
     "summary": "Models like Claude Sonnet 4.5 exhibit \"context anxiety\"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nModels like Claude Sonnet 4.5 exhibit \"context anxiety\"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. This leads to:\n\n- Premature task completion and shortcuts\n- Incomplete work despite having adequate context\n- Underestimation of remaining token capacity (consistently incorrect estimates)\n- Self-imposed pressure to \"wrap up\" rather than continue working"
   },
   {
@@ -912,7 +970,7 @@
     "slug": "context-window-auto-compaction",
     "id": "context-window-auto-compaction",
     "summary": "Context overflow is a silent killer of agent reliability.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nContext overflow is a silent killer of agent reliability. When accumulated conversation history exceeds the model's context window:\n\n- **API errors**: Requests fail with `context_length_exceeded` or similar errors\n- **Manual intervention**: Operators must truncate transcripts, losing valuable context\n- **Retry complexity**: Detecting overflow and retrying with compaction is error-prone\n\nAgents need automatic compaction that preserves essential information while staying within token limits, with model-specific validation and reserve token floors to prevent immediate re-overflow."
   },
   {
@@ -934,7 +992,7 @@
     "slug": "context-minimization-pattern",
     "id": "context-minimization-pattern",
     "summary": "In long agent sessions, raw user text and tool outputs often remain in context long after they are needed.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nIn long agent sessions, raw user text and tool outputs often remain in-context long after they are needed. If those tokens include adversarial instructions, they can silently bias later reasoning steps, even when the current step is unrelated. This creates delayed prompt-injection risk and unnecessary context bloat."
   },
   {
@@ -959,7 +1017,7 @@
     "slug": "continuous-autonomous-task-loop-pattern",
     "id": "continuous-autonomous-task-loop-pattern",
     "summary": "Traditional development workflows require constant human intervention for task management: Manual Task Selection : Developers spend time deciding what to work o",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional development workflows require constant human intervention for task management:\n\n- **Manual Task Selection**: Developers spend time deciding what to work on next from todo lists\n- **Context Switching Overhead**: Moving between different types of tasks interrupts flow state\n- **Rate Limit Interruptions**: API rate limits break development momentum and require manual waiting\n- **Repetitive Git Operations**: Each task completion requires manual staging, committing, and status checking\n- **Error Recovery**: Failed tasks need manual diagnosis and restart\n\nThis manual orchestration reduces overall productivity and prevents developers from focusing on higher-level problem solving."
   },
   {
@@ -984,7 +1042,7 @@
     "slug": "criticgpt-style-evaluation",
     "id": "criticgpt-style-code-review",
     "summary": "As AI generated code becomes more sophisticated, it becomes increasingly difficult for human reviewers to catch subtle bugs, security issues, or quality problems.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAs AI-generated code becomes more sophisticated, it becomes increasingly difficult for human reviewers to catch subtle bugs, security issues, or quality problems. Traditional code review processes may miss issues in AI-generated code because:\n\n- The volume of generated code can overwhelm human reviewers\n- Subtle bugs may appear correct at first glance\n- Security vulnerabilities may be non-obvious\n- Style and best practice violations may be inconsistent"
   },
   {
@@ -1009,7 +1067,7 @@
     "slug": "cross-cycle-consensus-relay",
     "id": "cross-cycle-consensus-relay",
     "summary": "Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAutonomous multi-agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles. In-memory state is lost on crash or restart. Generic checkpoint files don't encode the *structured reasoning* — what was decided, why, and what comes next — that agents need to make good decisions in subsequent cycles.\n\nWithout a structured relay mechanism, autonomous loops suffer from:\n- **Drift**: each cycle restarts without awareness of prior decisions\n- **Repetition**: agents re-debate already-settled questions\n- **Stalls**: no convergence signal — agents loop indefinitely without shipping"
   },
   {
@@ -1061,7 +1119,7 @@
     "slug": "curated-code-context-window",
     "id": "curated-code-context-window",
     "summary": "Loading all source files or dumping entire repositories into the agent's context overwhelms the model, introduces noise, and slows inference.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLoading **all source files** or dumping entire repositories into the agent's context overwhelms the model, introduces noise, and slows inference. Coding agents need to focus on **only the most relevant modules** to efficiently reason about changes or generate new functionality.\n\n- Including every file biases the agent with irrelevant code; it \"loses coherence\" over large contexts.\n- Large contexts inflate token usage, slowing down multi-turn RL training."
   },
   {
@@ -1084,7 +1142,7 @@
     "slug": "curated-file-context-window",
     "id": "curated-file-context-window",
     "summary": "A coding agent often needs to reason about multiple source files, but dumping all files into its prompt: Quickly exceeds token limits or inference budget.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nA coding agent often needs to reason about multiple source files, but dumping **all** files into its prompt:\n\n- Quickly exceeds token limits or inference budget.\n- Introduces noise: unrelated files (e.g., tests for other modules, assets, docs) distract the agent.\n- Makes the agent's output slower and less focused on the immediate coding task."
   },
   {
@@ -1111,7 +1169,7 @@
     "slug": "custom-sandboxed-background-agent",
     "id": "custom-sandboxed-background-agent",
     "summary": "Off the shelf coding agents (e.g., Devin, Claude Code, Cursor) are either: Too generic Not deeply integrated with company specific dev environments, tools, and ",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nOff-the-shelf coding agents (e.g., Devin, Claude Code, Cursor) are either:\n\n- **Too generic** - Not deeply integrated with company-specific dev environments, tools, and workflows\n- **Vendor-locked** - Tightly coupled to one model provider, limiting flexibility and creating dependency\n- **Limited context** - Cannot access internal infrastructure, private repos, or company-specific tooling\n\nCompanies need coding agents that:\n\n- Work within their specific development environment\n- Can iterate with closed feedback loops (compiler, linter, tests)\n- Provide real-time visibility into agent progress\n- Are model-agnostic to switch providers as needed"
   },
   {
@@ -1140,7 +1198,7 @@
     "slug": "declarative-multi-agent-topology-definition",
     "id": "declarative-multi-agent-topology-definition",
     "summary": "Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-20",
     "excerpt": "\n## Problem\nMulti-agent systems today are wired imperatively: each framework has its own SDK, config format, and orchestration primitives. This creates several problems:\n\n- **Vendor lock-in**: A supervisor topology built for one framework must be rewritten from scratch to run on another.\n- **Implicit topology**: The agent graph — who talks to whom, what gates block progress, which flows fan out — is buried in code rather than visible at a glance.\n- **No single source of truth**: When the topology lives across scattered config files, prompts, and glue code, refactoring or auditing the system requires reading everything.\n- **Repeated scaffolding work**: Teams re-implement the same patterns (pipeline, fan-out, debate, human-in-the-loop gate) in every new project and every new framework."
   },
   {
@@ -1167,7 +1225,7 @@
     "slug": "democratization-of-tooling-via-agents",
     "id": "democratization-of-tooling-via-agents",
     "summary": "Many individuals in non software engineering roles (e.g., sales, marketing, operations, communications) could benefit from custom software tools, scripts, or da",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nMany individuals in non-software engineering roles (e.g., sales, marketing, operations, communications) could benefit from custom software tools, scripts, or dashboards tailored to their specific workflows, but lack the traditional programming skills to build them."
   },
   {
@@ -1194,7 +1252,7 @@
     "summary": "Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.",
     "maturity": "maturing",
     "complexity": "low",
-    "effort": "hours",
+    "effort": "low",
     "impact": "high",
     "signals": [
       "Agent runs in non-interactive or background mode",
@@ -1244,8 +1302,59 @@
     "slug": "deterministic-security-scanning-build-loop",
     "id": "deterministic-security-scanning-build-loop",
     "summary": "Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nNon-deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism - code is either secure or not secure, with no grey area. These approaches are merely suggestions to the LLM that may or may not be followed consistently."
+  },
+  {
+    "title": "Deterministic Threat Rule Scanning",
+    "status": "emerging",
+    "authors": [
+      "eeee2345 (@eeee2345)"
+    ],
+    "based_on": [
+      "Agent Threat Rules (open-source rule library)",
+      "OWASP Agentic Top 10"
+    ],
+    "category": "Security & Safety",
+    "source": "https://github.com/panguard-ai/agent-threat-rules",
+    "tags": [
+      "security",
+      "threat-detection",
+      "regex",
+      "deterministic",
+      "prompt-injection",
+      "tool-poisoning",
+      "mcp",
+      "agent-safety"
+    ],
+    "slug": "deterministic-threat-rule-scanning",
+    "id": "deterministic-threat-rule-scanning",
+    "summary": "Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nAI agents that invoke external tools (MCP servers, function calls, skill files) are exposed to a class of attacks where malicious content is embedded in tool descriptions, responses, or skill definitions. These attacks include prompt injection via tool output, data exfiltration through encoded parameters, privilege escalation via hidden instructions, and tool poisoning through manipulated descriptions.\n\nLLM-based detection alone is unreliable for these threats: adversaries can craft payloads that exploit the same reasoning flexibility that makes LLMs useful. Security requires a deterministic baseline that cannot be bypassed by clever prompt engineering."
+  },
+  {
+    "title": "Deterministic Zero-LLM Orchestration",
+    "status": "validated-in-production",
+    "authors": [
+      "Alex Chernysh (@chernistry)"
+    ],
+    "based_on": [],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/chernistry/bernstein",
+    "tags": [
+      "orchestration",
+      "multi-agent",
+      "parallel-execution",
+      "deterministic",
+      "test-driven",
+      "zero-llm-overhead"
+    ],
+    "slug": "deterministic-zero-llm-orchestration",
+    "id": "deterministic-zero-llm-orchestration",
+    "summary": "Multi agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nMulti-agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed."
   },
   {
     "title": "Dev Tooling Assumptions Reset",
@@ -1271,7 +1380,7 @@
     "slug": "dev-tooling-assumptions-reset",
     "id": "dev-tooling-assumptions-reset",
     "summary": "Traditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense. When agents write most code, these tools create bottlenecks and friction. Academic research confirms this is a paradigm shift requiring ecosystem-level rethinking, not incremental adjustments."
   },
   {
@@ -1319,7 +1428,7 @@
     "slug": "disposable-scaffolding-over-durable-features",
     "id": "disposable-scaffolding-over-durable-features",
     "summary": "In a field where foundation models improve dramatically every few months, investing significant engineering effort into building complex, durable features around the model is extremely risky.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nIn a field where foundation models improve dramatically every few months, investing significant engineering effort into building complex, durable features *around* the model is extremely risky. A feature that takes three months to build, such as a sophisticated context compression or a custom tool-chain for code editing, could be rendered obsolete overnight by the next model generation that performs the task natively."
   },
   {
@@ -1393,7 +1502,7 @@
     "slug": "dual-llm-pattern",
     "id": "dual-llm-pattern",
     "summary": "When the same model both reads untrusted content and controls high privilege tools, a single prompt injection path can convert benign context into privileged actions.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen the same model both reads untrusted content and controls high-privilege tools, a single prompt-injection path can convert benign context into privileged actions. This coupling collapses trust boundaries and makes it hard to reason about where dangerous behavior originated."
   },
   {
@@ -1442,7 +1551,7 @@
     "slug": "dynamic-code-injection-on-demand-file-fetch",
     "id": "dynamic-code-injection-on-demand-file-fetch",
     "summary": "During an interactive coding session, a user or agent may need to inspect or modify files not originally loaded into the main context.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nDuring an interactive coding session, a user or agent may need to inspect or modify files **not originally loaded** into the main context. Manually copying/pasting entire files into the prompt is:\n\n- Tedious and error-prone.\n- Wastes tokens on boilerplate (e.g., large config files).\n- Interrupts workflow momentum when switching between the editor and chat."
   },
   {
@@ -1467,7 +1576,7 @@
     "slug": "dynamic-context-injection",
     "id": "dynamic-context-injection",
     "summary": "While layered configuration files provide good baseline context, agents often need specific pieces of information (e.g., contents of a particular file, output of a script, predefined complex prompt) on demand during an interactive session.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhile layered configuration files provide good baseline context, agents often need specific pieces of information (e.g., contents of a particular file, output of a script, predefined complex prompt) on-demand during an interactive session. Constantly editing static context files or pasting large chunks of text into prompts is inefficient."
   },
   {
@@ -1492,7 +1601,7 @@
     "slug": "economic-value-signaling-multi-agent",
     "id": "economic-value-signaling-in-multi-agent-networks",
     "summary": "In multi agent systems with many autonomous agents running concurrently, task prioritization becomes difficult.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nIn multi-agent systems with many autonomous agents running concurrently, task prioritization becomes difficult. Agents have no natural mechanism to signal urgency, quality, or importance of work requests. Standard message queues treat all inter-agent messages as equal, leading to:\n\n- Priority inversion: low-value tasks blocking high-value ones\n- No natural incentive for agents to accept tasks from unknown peers\n- Coordination overhead increases linearly with agent count\n- Discovery: agents cannot find peers with complementary capabilities"
   },
   {
@@ -1516,7 +1625,7 @@
     "slug": "egress-lockdown-no-exfiltration-channel",
     "id": "egress-lockdown-no-exfiltration-channel",
     "summary": "Even with private data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data .",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nEven with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. This pattern implements the Bell-LaPadula model's \"no write down\" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels."
   },
   {
@@ -1540,7 +1649,7 @@
     "slug": "episodic-memory-retrieval-injection",
     "id": "episodic-memory-retrieval-injection",
     "summary": "Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nStateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures. Over multi-session workflows this leads to redundant work, inconsistent behavior, and shallow planning because each turn lacks durable historical context."
   },
   {
@@ -1565,7 +1674,7 @@
     "slug": "explicit-posterior-sampling-planner",
     "id": "explicit-posterior-sampling-planner",
     "summary": "Heuristic planning loops often over exploit the first plausible strategy and under explore alternatives.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nHeuristic planning loops often over-exploit the first plausible strategy and under-explore alternatives. In uncertain environments, this drives repeated dead ends, unstable learning, and high token/API spend with little information gain."
   },
   {
@@ -1589,7 +1698,7 @@
     "slug": "extended-coherence-work-sessions",
     "id": "extended-coherence-work-sessions",
     "summary": "Early AI agents and models often suffered from a short \"coherence window,\" meaning they could only maintain focus and context for a few minutes before their performance degraded significantly (e.g., losing track of instructions, generating irrelevant output).",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nEarly AI agents and models often suffered from a short \"coherence window,\" meaning they could only maintain focus and context for a few minutes before their performance degraded significantly (e.g., losing track of instructions, generating irrelevant output). This limited their utility for complex, multi-stage tasks that require sustained effort over hours."
   },
   {
@@ -1614,7 +1723,7 @@
     "slug": "external-credential-sync",
     "id": "external-credential-sync",
     "summary": "Users manage AI API credentials across multiple tools—CLIs (Claude Code, Codex CLI), web portals, and local development environments.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nUsers manage AI API credentials across multiple tools—CLIs (Claude Code, Codex CLI), web portals, and local development environments. Manually re-entering credentials for each tool is friction-prone and leads to:\n\n- **Stale tokens**: OAuth refresh tokens expire, causing authentication failures\n- **Inconsistent state**: Credentials updated in one tool don't propagate to others\n- **Token-only drift**: Some tools support OAuth refresh; others store static tokens that expire\n\nAgents need automatic credential synchronization to reduce authentication friction while maintaining security (no plaintext storage, proper expiry handling)."
   },
   {
@@ -1641,7 +1750,7 @@
     "slug": "factory-over-assistant",
     "id": "factory-over-assistant",
     "summary": "The \"assistant\" model—working one on one with an agent in a sidebar, watching it work, ping ponging back and forth—limits productivity and scalability.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nThe \"assistant\" model—working one-on-one with an agent in a sidebar, watching it work, ping-ponging back and forth—limits productivity and scalability. As models become more autonomous and capable, the human becomes the bottleneck as the feedback loop. You can only run one agent at a time when you're watching it in a sidebar."
   },
   {
@@ -1666,7 +1775,7 @@
     "slug": "failover-aware-model-fallback",
     "id": "failover-aware-model-fallback",
     "summary": "AI model requests fail for varied and often opaque reasons.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI model requests fail for varied and often opaque reasons. Simple retry logic fails to distinguish between:\n\n- **Transient failures** (timeouts, rate limits) that benefit from retry with backoff\n- **Semantic failures** (auth errors, billing issues) where retry is futile\n- **User aborts** where retry wastes resources and frustrates users\n\nAgents using multiple models or providers need intelligent fallback strategies that respect failure semantics, avoid retry loops, and provide clear diagnostics."
   },
   {
@@ -1739,7 +1848,7 @@
     "slug": "frontier-focused-development",
     "id": "frontier-focused-development",
     "summary": "AI capabilities advance rapidly along predictable scaling laws—products optimized for today's models become obsolete in months.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI capabilities advance rapidly along predictable scaling laws—products optimized for today's models become obsolete in months. Many teams waste time solving problems that frontier models already solve, or build products tied to specific models that won't stay competitive."
   },
   {
@@ -1765,7 +1874,7 @@
     "slug": "graph-of-thoughts",
     "id": "graph-of-thoughts-got",
     "summary": "Linear reasoning approaches like Chain of Thought (CoT) and even tree based methods like Tree of Thoughts (ToT) have limitations when dealing with problems that require complex interdependencies between reasoning steps.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLinear reasoning approaches like Chain-of-Thought (CoT) and even tree-based methods like Tree-of-Thoughts (ToT) have limitations when dealing with problems that require complex interdependencies between reasoning steps. Many real-world problems involve reasoning paths that merge, split, and recombine in ways that don't fit neatly into linear or tree structures. These problems need a more flexible approach that can represent arbitrary relationships between thoughts."
   },
   {
@@ -1793,7 +1902,7 @@
     "slug": "hook-based-safety-guard-rails",
     "id": "hook-based-safety-guard-rails-for-autonomous-code-agents",
     "summary": "Autonomous code agents running unattended can execute destructive commands ( rm rf , git reset hard ), exhaust their context window without saving state, leak secrets via git push , or silently produce syntax errors that cascade into later failures.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAutonomous code agents running unattended can execute destructive commands (`rm -rf`, `git reset --hard`), exhaust their context window without saving state, leak secrets via `git push`, or silently produce syntax errors that cascade into later failures.\n\nThese failures share a pattern: the agent took an action that a simple automated check would have caught. The agent itself can't reliably self-police because it operates within the same context that produces the mistakes."
   },
   {
@@ -1868,7 +1977,7 @@
     "slug": "incident-to-eval-synthesis",
     "id": "incident-to-eval-synthesis",
     "summary": "Many teams run agent evaluations, but the eval suite drifts away from real failures seen in production.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nMany teams run agent evaluations, but the eval suite drifts away from real failures seen in production. Incidents get resolved operationally, yet the exact failure mode is rarely converted into a durable regression test. This creates repeat incidents and false confidence from stale benchmark sets."
   },
   {
@@ -1892,7 +2001,7 @@
     "slug": "inference-healed-code-review-reward",
     "id": "inference-healed-code-review-reward",
     "summary": "Simple reward functions that only check for \"all tests passed\" fail to capture nuanced code quality issues (e.g., performance regressions, style violations, missing edge case handling).",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nSimple reward functions that only check for \"all tests passed\" fail to capture nuanced code quality issues (e.g., performance regressions, style violations, missing edge-case handling). A single binary signal at the end cannot guide the agent to produce maintainable, high-quality code.\n\n- Verifying **only** final correctness misses suboptimal commits (e.g., a patch that removes error handling but still passes tests).\n- Reward models that produce a single scalar lack **explainability** to tell the agent which aspect of the code needs improvement."
   },
   {
@@ -1924,7 +2033,7 @@
     "slug": "inference-time-scaling",
     "id": "inference-time-scaling",
     "summary": "Traditional language models are limited by their training time capabilities.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional language models are limited by their training-time capabilities. Once trained, their performance is essentially fixed, regardless of how much compute is available at inference time. This means that for particularly challenging problems, we cannot simply \"think harder\" by allocating more computational resources to find better solutions. This limitation becomes especially apparent in complex reasoning tasks where more deliberation could lead to better outcomes."
   },
   {
@@ -1949,7 +2058,7 @@
     "slug": "initializer-maintainer-dual-agent",
     "id": "initializer-maintainer-dual-agent-architecture",
     "summary": "Long running agent projects face distinct failure modes at different lifecycle stages: Project initialization requires comprehensive setup: environment configur",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLong-running agent projects face distinct failure modes at different lifecycle stages:\n\n- **Project initialization** requires comprehensive setup: environment configuration, feature specification, test infrastructure, and progress tracking systems\n- **Incremental development** requires reading prior context, selecting the next task, implementing, and verifying—repeatedly across many sessions\n- Single-agent approaches either over-engineer each session (wasting setup time) or under-invest in foundations (leading to drift and confusion)\n- Session boundaries create context loss, causing agents to restart from scratch or lose track of project state"
   },
   {
@@ -1975,7 +2084,7 @@
     "slug": "intelligent-bash-tool-execution",
     "id": "intelligent-bash-tool-execution",
     "summary": "Secure, reliable command execution from agents is complex and error prone: PTY requirements : TTY required CLIs (coding agents, terminal UIs) fail with direct e",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nSecure, reliable command execution from agents is complex and error-prone:\n\n- **PTY requirements**: TTY-required CLIs (coding agents, terminal UIs) fail with direct exec\n- **Platform differences**: Linux and macOS behave differently for detached processes, signal handling\n- **Security concerns**: Arbitrary command execution needs approval workflows, elevated mode detection\n- **Background management**: Long-running processes need tracking, output aggregation, and cleanup\n\nAgents need a multi-mode execution strategy that adapts to the command's requirements while maintaining security and reliability."
   },
   {
@@ -2049,7 +2158,7 @@
     "slug": "iterative-multi-agent-brainstorming",
     "id": "iterative-multi-agent-brainstorming",
     "summary": "For complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nFor complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process."
   },
   {
@@ -2076,7 +2185,7 @@
     "slug": "iterative-prompt-skill-refinement",
     "id": "iterative-prompt-skill-refinement",
     "summary": "Agent usage reveals gaps in prompts, skills, and tools—but how do you systematically improve them?",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAgent usage reveals gaps in prompts, skills, and tools—but how do you systematically improve them? When a workflow fails or behaves sub-optimally, you need multiple mechanisms to capture feedback and iterate. Single approaches aren't enough; you need a **multi-pronged refinement strategy**."
   },
   {
@@ -2101,7 +2210,7 @@
     "slug": "lane-based-execution-queueing",
     "id": "lane-based-execution-queueing",
     "summary": "Traditional agent systems serialize all operations through a single execution queue, creating bottlenecks that limit throughput.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional agent systems serialize all operations through a single execution queue, creating bottlenecks that limit throughput. Concurrent execution is desirable but risky:\n\n- **Interleaving hazards**: Multiple commands writing to stdin/stdout simultaneously corrupt user-facing output\n- **Race conditions**: Shared state access without proper synchronization causes data corruption\n- **Deadlock risks**: Naive concurrent queuing can create circular dependencies between operations\n\nAgentic systems need parallelism to remain responsive (e.g., background tasks shouldn't block user interactions), but must preserve isolation guarantees."
   },
   {
@@ -2128,7 +2237,7 @@
     "slug": "language-agent-tree-search-lats",
     "id": "language-agent-tree-search-lats",
     "summary": "Current language agents often struggle with complex reasoning tasks that require exploration of multiple solution paths.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nCurrent language agents often struggle with complex reasoning tasks that require exploration of multiple solution paths. Simple linear approaches like ReACT or basic reflection patterns can get stuck in local optima or fail to consider alternative strategies. This is particularly problematic for tasks requiring strategic planning, mathematical reasoning, or multi-step problem solving where early decisions significantly impact later outcomes."
   },
   {
@@ -2177,7 +2286,7 @@
     "slug": "layered-configuration-context",
     "id": "layered-configuration-context",
     "summary": "AI agents require relevant context to perform effectively.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents require relevant context to perform effectively. Providing this context manually in every prompt is cumbersome, and a one-size-fits-all global context is often too broad or too narrow. Different projects, users, and organizational policies may require different baseline information for the agent."
   },
   {
@@ -2200,7 +2309,7 @@
     "slug": "lethal-trifecta-threat-model",
     "id": "lethal-trifecta-threat-model",
     "summary": "Combining three agent capabilities— 1.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nCombining three agent capabilities—\n1. **Access to private data**\n2. **Exposure to untrusted content**\n3. **Ability to externally communicate**\n\n—creates a straightforward path for prompt-injection attackers to steal sensitive information.  \nLLMs cannot reliably distinguish \"good\" instructions from malicious ones once they appear in the same context window."
   },
   {
@@ -2223,7 +2332,7 @@
     "slug": "llm-map-reduce-pattern",
     "id": "llm-map-reduce-pattern",
     "summary": "When many untrusted documents are processed in a single reasoning context, one malicious item can influence global conclusions.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen many untrusted documents are processed in a single reasoning context, one malicious item can influence global conclusions. This creates cross-document contamination where a single poisoned input affects unrelated items and final decisions."
   },
   {
@@ -2276,7 +2385,7 @@
     "slug": "llm-friendly-api-design",
     "id": "llm-friendly-api-design",
     "summary": "For AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nFor AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters. APIs designed solely for human consumption might be ambiguous or overly complex for an LLM to use correctly without extensive fine-tuning or elaborate prompting."
   },
   {
@@ -2301,7 +2410,7 @@
     "slug": "mcp-pattern-injection",
     "id": "mcp-pattern-injection",
     "summary": "AI coding assistants lack domain specific knowledge about framework best practices.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-19",
     "excerpt": "\n## Problem\nAI coding assistants lack domain-specific knowledge about framework best practices. When building LangGraph agents, developers must repeatedly explain patterns, copy-paste from docs, or watch the AI reinvent suboptimal solutions. The assistant's training data is often outdated relative to fast-moving frameworks."
   },
   {
@@ -2377,7 +2486,7 @@
     "slug": "merged-code-language-skill-model",
     "id": "merged-code-language-skill-model",
     "summary": "Building a unified model that excels both at natural language tasks (e.g., summarization, documentation generation) and code generation/reasoning typically requires a massive centralized training run.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nBuilding a **unified model** that excels both at **natural language tasks** (e.g., summarization, documentation generation) and **code generation/reasoning** typically requires a massive centralized training run. This is:\n\n- **Compute-Intensive:** Training from scratch on both code and language corpora demands enormous resources.\n- **Susceptible to Interference:** When mixing code and NL tasks in one pipeline, the model may forget earlier skills."
   },
   {
@@ -2401,7 +2510,7 @@
     "slug": "agentfund-crowdfunding",
     "id": "milestone-escrow-for-agent-resource-funding",
     "summary": "Autonomous agent teams can need ongoing resources (compute, API spend, tools) over many steps.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAutonomous agent teams can need ongoing resources (compute, API spend, tools) over many steps. Without a funding model that enforces guardrails, they either require heavy human intervention or risk budget runaway."
   },
   {
@@ -2426,7 +2535,7 @@
     "slug": "multi-model-orchestration-for-complex-edits",
     "id": "multi-model-orchestration-for-complex-edits",
     "summary": "A single large language model, even if powerful, may not be optimally suited for all sub tasks involved in a complex operation like multi file code editing.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nA single large language model, even if powerful, may not be optimally suited for all sub-tasks involved in a complex operation like multi-file code editing. Tasks such as understanding broad context, generating precise code, and applying edits might benefit from specialized model capabilities."
   },
   {
@@ -2500,7 +2609,7 @@
     "slug": "no-token-limit-magic",
     "id": "no-token-limit-magic",
     "summary": "Teams often optimize token spend too early, forcing prompts and context windows into tight constraints before they understand what high quality behavior looks like.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTeams often optimize token spend too early, forcing prompts and context windows into tight constraints before they understand what high-quality behavior looks like. Early compression hides failure modes, reduces reasoning depth, and can lock in mediocre workflows that are cheap but unreliable."
   },
   {
@@ -2525,7 +2634,7 @@
     "slug": "non-custodial-spending-controls",
     "id": "non-custodial-spending-controls",
     "summary": "AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. This is a specific instance of the \"lethal trifecta\" threat model: combining wallet access with untrusted inputs and external communication creates exploitation paths."
   },
   {
@@ -2574,8 +2683,48 @@
     "slug": "oracle-and-worker-multi-model",
     "id": "oracle-and-worker-multi-model-approach",
     "summary": "Relying on a single AI model creates a trade off between capability and cost.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nRelying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems."
+  },
+  {
+    "title": "Output Verification Loop",
+    "status": "emerging",
+    "authors": [
+      "John Weston (@JohnnyTarrr)"
+    ],
+    "based_on": [
+      "VeroQ Shield (veroq-ai)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/veroq-ai/shield",
+    "tags": [
+      "verification",
+      "hallucination-detection",
+      "trust-scores",
+      "fact-checking",
+      "multi-agent"
+    ],
+    "slug": "output-verification-loop",
+    "id": "output-verification-loop",
+    "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.",
+    "complexity": "low",
+    "effort": "low",
+    "impact": "high",
+    "signals": [
+      "Agent output feeds into decisions or downstream agents",
+      "Hallucination risk is non-trivial",
+      "Compliance requires an audit trail"
+    ],
+    "anti_signals": [
+      "Output is purely creative with no factual claims",
+      "Latency budget under 500ms"
+    ],
+    "related": [
+      "reflection-loop",
+      "self-critique-evaluator-loop"
+    ],
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nLLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged."
   },
   {
     "title": "Parallel Tool Call Learning",
@@ -2623,7 +2772,7 @@
     "slug": "patch-steering-via-prompted-tool-selection",
     "id": "patch-steering-via-prompted-tool-selection",
     "summary": "Coding agents with access to multiple patching or refactoring tools (e.g., text based apply patch , AST based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nCoding agents with access to multiple patching or refactoring tools (e.g., text-based `apply_patch`, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:\n\n- **Unnecessary Complexity:** Agent might use a generic text-replace tool instead of a specialized AST-aware refactoring tool.\n- **Inconsistent Results:** Without explicit instructions, the agent's tool selection can vary unpredictably, hampering reproducibility.\n- **Safety Risks:** Text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors."
   },
   {
@@ -2670,7 +2819,7 @@
     "slug": "plan-then-execute-pattern",
     "id": "plan-then-execute-pattern",
     "summary": "When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nWhen planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next. That makes the control flow itself attackable: a malicious intermediate result can redirect the agent into unsafe tools or unauthorized operations."
   },
   {
@@ -2694,7 +2843,7 @@
     "slug": "planner-worker-separation-for-long-running-agents",
     "id": "planner-worker-separation-for-long-running-agents",
     "summary": "Running multiple AI agents in parallel for complex, multi week projects creates significant coordination challenges: Flat structures lead to conflicts, duplicat",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nRunning multiple AI agents in parallel for complex, multi-week projects creates significant coordination challenges:\n\n- **Flat structures** lead to conflicts, duplicated work, and agents stepping on each other\n- **Dynamic coordination** through shared files with locking becomes a bottleneck - most agents spend time waiting rather than working\n- **Equal status** agents become risk-averse, avoiding difficult tasks and making only small, safe changes instead of tackling end-to-end implementation\n- **No agent takes ownership** of hard problems or overall project direction"
   },
   {
@@ -2894,7 +3043,7 @@
     "slug": "prompt-caching-via-exact-prefix-preservation",
     "id": "prompt-caching-via-exact-prefix-preservation",
     "summary": "Long running agent conversations with many tool calls can suffer from quadratic performance degradation : Growing JSON payloads : Each iteration sends the entir",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLong-running agent conversations with many tool calls can suffer from **quadratic performance degradation**:\n\n- **Growing JSON payloads**: Each iteration sends the entire conversation history to the API\n- **Expensive re-computation**: Without caching, the model re-processes the same static content repeatedly\n- **ZDR constraints**: Zero Data Retention (ZDR) policies prevent server-side state, ruling out `previous_response_id` optimization\n- **Configuration changes**: Mid-conversation changes (sandbox, tools, working directory) can break cache efficiency\n\nAs conversations grow, inference costs and latency increase quadratically without proper caching strategies."
   },
   {
@@ -2925,7 +3074,7 @@
     "slug": "recursive-best-of-n-delegation",
     "id": "recursive-best-of-n-delegation",
     "summary": "Recursive delegation (parent agent → sub agents → sub sub agents) decomposes big tasks, but has a failure mode: A single weak sub agent result can poison the parent's next steps (wrong assumption, missed file, bad patch) Errors compound up the tree: \"one bad leaf\" can derail the whole rollout Pure recursion underuses parallelism when a node is uncertain: you want multiple shots right where the ambiguity is Meanwhile, \"best of N\" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the same problem instead of decomposing it.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nRecursive delegation (parent agent → sub-agents → sub-sub-agents) decomposes big tasks, but has a failure mode:\n\n- A single weak sub-agent result can poison the parent's next steps (wrong assumption, missed file, bad patch)\n- Errors compound up the tree: \"one bad leaf\" can derail the whole rollout\n- Pure recursion underuses parallelism when a node is uncertain: you want multiple shots *right where the ambiguity is*\n\nMeanwhile, \"best-of-N\" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the *same* problem instead of decomposing it. The pattern applies parallelism only where uncertainty exists—at the subtask level—while maintaining structured decomposition."
   },
   {
@@ -2973,7 +3122,7 @@
     "slug": "wfgy-reliability-problem-map",
     "id": "reliability-problem-map-checklist-for-rag-and-agents",
     "summary": "RAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nRAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.\n\nTeams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.\n\nThis pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths. Research shows structured incident data correlates with better reliability outcomes (ACM SIGOPS 2022, IEEE ISSRE 2019)."
   },
   {
@@ -2999,7 +3148,7 @@
     "slug": "rich-feedback-loops",
     "id": "rich-feedback-loops-perfect-prompts",
     "summary": "Polishing a single prompt can't cover every edge case; agents need ground truth to self correct.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.\n\nAdditionally, agents need to integrate **human feedback** (positive and corrective) to improve session quality over time. Projects that better respond to user feedback have fewer corrections and better outcomes."
   },
   {
@@ -3026,7 +3175,7 @@
     "slug": "rlaif-reinforcement-learning-from-ai-feedback",
     "id": "rlaif-reinforcement-learning-from-ai-feedback",
     "summary": "Traditional Reinforcement Learning from Human Feedback (RLHF) requires extensive human annotation for preference data, which is expensive (often $1+ per annotation), time consuming, and difficult to scale.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTraditional Reinforcement Learning from Human Feedback (RLHF) requires extensive human annotation for preference data, which is expensive (often $1+ per annotation), time-consuming, and difficult to scale. This creates a bottleneck in training aligned AI systems, especially when dealing with complex or specialized domains where human expertise is scarce or costly."
   },
   {
@@ -3051,7 +3200,7 @@
     "slug": "sandboxed-tool-authorization",
     "id": "sandboxed-tool-authorization",
     "summary": "Tool authorization needs flexibility but also security.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nTool authorization needs flexibility but also security. Static allowlists don't scale across:\n\n- **Multiple environments**: Development (permissive) vs. production (restrictive)\n- **Different agent roles**: Coding agents need filesystem access; messaging agents shouldn't\n- **Hierarchical delegation**: Subagents should inherit restrictions from parents but with additional constraints\n- **Plugin ecosystems**: External tools need dynamic inclusion without manual allowlist updates\n\nAgents need a policy system that supports pattern matching, deny-by-default semantics, and hierarchical inheritance."
   },
   {
@@ -3076,7 +3225,7 @@
     "slug": "schema-validation-retry-cross-step-learning",
     "id": "schema-validation-retry-with-cross-step-learning",
     "summary": "LLMs don't always produce valid structured output matching the expected schema.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLLMs don't always produce valid structured output matching the expected schema. Single-attempt validation leads to task failures even when retry would succeed.\n\nThe issues compound in multi-step workflows:\n\n- **Schema violations**: LLM generates JSON that doesn't match the expected Zod/JSON Schema\n- **One-and-done failure**: Single failed attempt terminates the entire workflow\n- **No learning from mistakes**: Each step repeats the same errors independently\n- **Wasted tokens**: Failed responses still consume context and cost money\n- **Fragile workflows**: Flaky LLM outputs make agents unreliable"
   },
   {
@@ -3129,7 +3278,7 @@
     "slug": "seamless-background-to-foreground-handoff",
     "id": "seamless-background-to-foreground-handoff",
     "summary": "While background agents can handle long running, complex tasks autonomously, they might not achieve 100% correctness or perfectly match the user's nuanced intent.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhile background agents can handle long-running, complex tasks autonomously, they might not achieve 100% correctness or perfectly match the user's nuanced intent. If an agent completes 90% of a task in the background but the remaining 10% requires human finesse, a clunky handoff process can negate the benefits of automation."
   },
   {
@@ -3154,7 +3303,7 @@
     "slug": "self-critique-evaluator-loop",
     "id": "self-critique-evaluator-loop",
     "summary": "Human labeled preference datasets are expensive to produce, slow to refresh, and quickly stale as base models and domains change.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nHuman-labeled preference datasets are expensive to produce, slow to refresh, and quickly stale as base models and domains change. Teams need scalable evaluation signals that can keep pace with model evolution without waiting on large annotation cycles. Risk of evaluator collapse and bias amplification must be mitigated."
   },
   {
@@ -3180,7 +3329,7 @@
     "slug": "self-discover-reasoning-structures",
     "id": "self-discover-llm-self-composed-reasoning-structures",
     "summary": "Different reasoning tasks require different thinking strategies.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nDifferent reasoning tasks require different thinking strategies. While techniques like Chain-of-Thought (CoT) work well for some problems, they may be suboptimal for others. Current approaches typically use fixed reasoning patterns regardless of the specific problem at hand, leading to inefficient problem-solving and suboptimal performance on diverse tasks."
   },
   {
@@ -3207,7 +3356,7 @@
     "slug": "self-identity-accumulation",
     "id": "self-identity-accumulation",
     "summary": "AI agents lack continuous memory across sessions.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents lack continuous memory across sessions. Each conversation starts from zero, causing:\n\n- **Lost familiarity**: The agent doesn't remember user preferences, goals, or working patterns\n- **Repetitive explanations**: Users must re-explain context and preferences each session\n- **Shallow relationships**: Agent cannot build deeper understanding of user's needs over time\n- **Generic responses**: Without accumulated context, agents default to generic behaviors\n\nWhile episodic memory systems store past *experiences*, they don't address the need for an evolving *self-identity*—who the agent is in relation to the user."
   },
   {
@@ -3230,7 +3379,7 @@
     "slug": "self-rewriting-meta-prompt-loop",
     "id": "self-rewriting-meta-prompt-loop",
     "summary": "Static system prompts become stale or overly brittle as an agent encounters new tasks and edge cases.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nStatic system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone."
   },
   {
@@ -3253,7 +3402,7 @@
     "slug": "semantic-context-filtering",
     "id": "semantic-context-filtering-pattern",
     "summary": "Raw data sources are too verbose and noisy for effective LLM consumption.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nRaw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.\n\nResearch on boilerplate detection shows that **40-80% of web page content** is typically navigation, footers, ads, and other boilerplate that should be filtered before semantic processing (Kohlschütter et al., SIGIR 2010).\n\nThis creates several problems:\n\n- **Token explosion**: Raw data exceeds context limits or becomes prohibitively expensive\n- **Poor signal-to-noise**: LLM wastes reasoning capacity on irrelevant details\n- **Slower inference**: More tokens = slower generation and higher costs\n- **Confused reasoning**: Noise leads to hallucinations or wrong conclusions\n\nThe issue appears across domains:\n\n- **Web scraping**: Full HTML DOM includes scripts, styles, tracking iframes\n- **API responses**: JSON with nested metadata, internal fields, debug info\n- **Document processing**: Headers, footers, navigation, boilerplate text\n- **Code analysis**: Comments, whitespace, boilerplate code"
   },
   {
@@ -3278,7 +3427,7 @@
     "slug": "shell-command-contextualization",
     "id": "shell-command-contextualization",
     "summary": "When an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these commands as context for its subsequent reasoning or actions.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these commands as context for its subsequent reasoning or actions. Manually copying and pasting command output into the prompt is tedious and error-prone."
   },
   {
@@ -3304,8 +3453,29 @@
     "slug": "shipping-as-research",
     "id": "shipping-as-research",
     "summary": "In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nIn the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.\n\n**Expert intuition is unreliable**: Research across major technology companies shows that 80-90% of product ideas fail to improve key metrics, even when experts are confident they will work (Kohavi et al., 2007). Real-world experimentation beats theoretical analysis."
+  },
+  {
+    "title": "Signal-Driven Agent Activation",
+    "status": "emerging",
+    "authors": [
+      "Nicolas Finet (@nifinet)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://jorypestorious.com/blog/ai-engineer-spec/",
+    "tags": [
+      "signals",
+      "event-driven",
+      "automation",
+      "orchestration",
+      "reactive"
+    ],
+    "slug": "signal-driven-agent-activation",
+    "id": "signal-driven-agent-activation",
+    "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts.",
+    "updated_at": "2026-04-09",
+    "excerpt": "\n## Problem\nMost agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.\n\nIn domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.\n\nPolling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met."
   },
   {
     "title": "Skill Library Evolution",
@@ -3360,7 +3530,7 @@
     "slug": "soulbound-identity-verification",
     "id": "soulbound-identity-verification",
     "summary": "As autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAs autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations."
   },
   {
@@ -3382,7 +3552,7 @@
     "slug": "spec-as-test-feedback-loop",
     "id": "spec-as-test-feedback-loop",
     "summary": "Even in spec first projects, implementations can drift as code evolves and the spec changes (or vice versa).",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nEven in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust."
   },
   {
@@ -3405,7 +3575,7 @@
     "slug": "specification-driven-agent-development",
     "id": "specification-driven-agent-development",
     "summary": "Hand crafted prompts or loose user stories leave room for ambiguity; agents can wander, over interpret, or produce code that conflicts with stakeholder intent.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent."
   },
   {
@@ -3430,7 +3600,7 @@
     "slug": "spectrum-of-control-blended-initiative",
     "id": "spectrum-of-control-blended-initiative",
     "summary": "AI agents for tasks like coding can offer various levels of assistance, from simple completions to complex, multi step operations.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents for tasks like coding can offer various levels of assistance, from simple completions to complex, multi-step operations. A one-size-fits-all approach to agent autonomy doesn't cater to the diverse needs of users or the varying complexity of tasks. Users need to fluidly shift between direct control and delegating tasks to the agent."
   },
   {
@@ -3457,7 +3627,7 @@
     "slug": "static-service-manifest-for-agents",
     "id": "static-service-manifest-for-agents",
     "summary": "Before an agent can use an API, it needs to know what the API offers.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nBefore an agent can use an API, it needs to know what the API offers. Today, agents typically learn about available services through hardcoded tool lists in their system prompt, runtime exploration of tool catalogs, or human-written documentation that must be parsed and interpreted. None of these scale well when agents need to interact with unfamiliar platforms that expose many services. The agent either wastes context window on a full catalog it may not need, or has no way to learn about the platform at all without human intervention."
   },
   {
@@ -3484,7 +3654,7 @@
     "slug": "stop-hook-auto-continue-pattern",
     "id": "stop-hook-auto-continue-pattern",
     "summary": "Agents complete their turn and return control to the user even when the task isn't truly done.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAgents complete their turn and return control to the user even when the task isn't truly done. Common scenarios:\n\n- Code compiles but tests fail\n- Changes made but quality checks haven't passed\n- Feature implemented but integration tests broken\n- Migrations run but verification steps not completed\n\nWithout intervention, the user must manually check and re-prompt the agent, creating friction."
   },
   {
@@ -3538,7 +3708,7 @@
     "slug": "sub-agent-spawning",
     "id": "sub-agent-spawning",
     "summary": "Large multi file tasks blow out the main agent's context window and reasoning budget.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLarge multi-file tasks blow out the main agent's context window and reasoning budget. You need a way to delegate work to specialized agents with isolated contexts and tools."
   },
   {
@@ -3562,7 +3732,7 @@
     "slug": "subagent-compilation-checker",
     "id": "subagent-compilation-checker",
     "summary": "Large coding tasks often involve multiple independent components (e.g., microservices, libraries).",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nLarge coding tasks often involve multiple independent components (e.g., microservices, libraries). Having the **main agent** handle compilation and error checking for every component in-context:\n\n- **Blows Up Context Length:** Including entire build logs or bytecode in the prompt is impractical.\n- **Slows Down Inference:** Sending full build commands and parsing verbose output in-context uses excessive tokens.\n\nAdditionally, when the agent's single \"compile-and-run\" step fails, it's hard to pinpoint which submodule caused the error without a more granular approach."
   },
   {
@@ -3587,7 +3757,7 @@
     "slug": "subject-hygiene",
     "id": "subject-hygiene-for-task-delegation",
     "summary": "When delegating work to subagents via the Task tool, empty or generic task subjects make conversations: Untraceable : Cannot identify what a subagent was working on Unreferencable : Cannot discuss specific subagent work later Confusing : Multiple subagents with empty subjects are indistinguishable From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen delegating work to subagents via the Task tool, empty or generic task subjects make conversations:\n\n- **Untraceable**: Cannot identify what a subagent was working on\n- **Unreferencable**: Cannot discuss specific subagent work later\n- **Confusing**: Multiple subagents with empty subjects are indistinguishable\n\nFrom 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point. This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce)."
   },
   {
@@ -3667,7 +3837,7 @@
     "slug": "three-stage-perception-architecture",
     "id": "three-stage-perception-architecture",
     "summary": "Complex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nComplex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action. Without a clear separation of concerns, agents can become monolithic and difficult to debug, extend, or optimize. Additionally, mixing perception, processing, and action logic makes it hard to swap out components or scale different parts of the system independently."
   },
   {
@@ -3689,7 +3859,7 @@
     "slug": "tool-capability-compartmentalization",
     "id": "tool-capability-compartmentalization",
     "summary": "Model Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators).",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nModel Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private-data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators). This creates the \"lethal trifecta\"—malicious input can trigger chains that read sensitive data, exfiltrate it, and modify systems in one operation."
   },
   {
@@ -3772,7 +3942,7 @@
     "slug": "tool-selection-guide",
     "id": "tool-selection-guide",
     "summary": "AI agents often struggle to select the optimal tool for a given task, leading to inefficient workflows.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents often struggle to select the optimal tool for a given task, leading to inefficient workflows. Common anti-patterns include:\n\n- Using `Write` when `Edit` would be more appropriate\n- Launching subagents for simple exploration tasks\n- Skipping build verification after code changes\n- Performing sequential exploration when parallel would be faster\n\nThese ineff compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections."
   },
   {
@@ -3795,7 +3965,7 @@
     "slug": "tool-use-incentivization-via-reward-shaping",
     "id": "tool-use-incentivization-via-reward-shaping",
     "summary": "Coding agents often underutilize specialized tools (e.g., compilers, linters, test runners) when left to optimize only for final task success.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nCoding agents often underutilize specialized tools (e.g., compilers, linters, test runners) when left to optimize only for final task success. They default to \"thinking\" tokens—generating internal chain-of-thought—instead of invoking external tools, which can slow down development and lead to suboptimal code outputs.\n\n- Models like R1 \"use their think tokens\" almost exclusively rather than calling tools unless explicitly rewarded for tool use.\n- Without intermediate incentives, the agent has no incentive to write code, compile, or run tests until the very end.\n- Sparse final rewards provide insufficient signal for learning optimal tool-use patterns across multi-step episodes."
   },
   {
@@ -3820,7 +3990,7 @@
     "slug": "tool-use-steering-via-prompting",
     "id": "tool-use-steering-via-prompting",
     "summary": "AI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nAI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simply having tools available doesn't guarantee they will be used appropriately for the task at hand, especially for tools unfamiliar to the base model or specific to a team's workflow."
   },
   {
@@ -3849,7 +4019,7 @@
     "slug": "transitive-vouch-chain-trust",
     "id": "transitive-vouch-chain-trust",
     "summary": "When autonomous agents interact without a central authority, trust decisions are binary: either you trust an agent completely or you do not trust it at all.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen autonomous agents interact without a central authority, trust decisions are binary: either you trust an agent completely or you do not trust it at all. There is no mechanism to derive partial, evidence-based trust from indirect relationships.\n\nTraditional approaches fail in different ways:\n- **Central registries** create single points of failure and require all agents to trust the same authority.\n- **Self-asserted identity** (claiming \"I am X\") provides no verification — any agent can claim any identity.\n- **Binary web-of-trust** (PGP model) only answers \"is this key valid?\" but not \"how much should I trust this agent's competence or intent?\"\n\nAgents need a way to build trust networks where trust propagates through verified relationships, decays with distance, and remains auditable end-to-end."
   },
   {
@@ -3875,6 +4045,69 @@
     "excerpt": "\n## Problem\nLinear reasoning commits early to one path and can fail silently when intermediate assumptions are wrong. On complex planning or synthesis tasks, this causes premature convergence, weak recovery from mistakes, and missed alternatives that a broader search would discover."
   },
   {
+    "title": "Unified Tool Gateway",
+    "status": "emerging",
+    "authors": [
+      "Blake Folgado (@blakefolgado)"
+    ],
+    "based_on": [
+      "API Gateway Pattern (microservices.io)",
+      "Model Context Protocol"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://microservices.io/patterns/apigateway.html",
+    "tags": [
+      "tool-gateway",
+      "mcp",
+      "tool-aggregation",
+      "agent-tooling",
+      "api-gateway",
+      "tool-routing"
+    ],
+    "slug": "unified-tool-gateway",
+    "id": "unified-tool-gateway",
+    "summary": "Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers.",
+    "maturity": "maturing",
+    "complexity": "medium",
+    "effort": "medium",
+    "impact": "high",
+    "signals": [
+      "Agent needs 10+ external tools or APIs",
+      "Managing multiple API keys across providers",
+      "Usage-based billing required across tools",
+      "Teams sharing tool access with centralized controls"
+    ],
+    "anti_signals": [
+      "Single-provider tool usage",
+      "Agents that only need 1-2 tools",
+      "Fully offline or air-gapped environments"
+    ],
+    "prerequisites": [
+      "MCP or tool-use capable agent",
+      "Network access to external APIs"
+    ],
+    "related": [
+      "progressive-tool-discovery",
+      "tool-search-lazy-loading",
+      "tool-capability-compartmentalization"
+    ],
+    "anti_patterns": [
+      "direct-api-integration-per-tool"
+    ],
+    "tools": [
+      "mcp-servers",
+      "api-gateway",
+      "tool-registry"
+    ],
+    "domains": [
+      "tool-use",
+      "infrastructure",
+      "ops"
+    ],
+    "updated_at": "2026-03-31",
+    "excerpt": "\n## Problem\nAs agent capabilities grow, they need access to an expanding set of external tools — web search, image generation, competitor research, security scanning, video production, and more. Each tool typically requires its own API key, authentication flow, rate-limiting logic, and billing integration.\n\nThis creates several compounding problems:\n\n* **Credential sprawl**: Agents or their operators must manage dozens of API keys across different providers, each with different authentication schemes.\n* **Integration tax**: Every new tool requires custom integration code — error handling, retries, schema translation, and response normalization.\n* **Billing fragmentation**: Usage is scattered across many provider dashboards, making cost tracking and budget enforcement difficult.\n* **Discovery overhead**: Agents have no unified way to find what tools are available or what capabilities they can access."
+  },
+  {
     "title": "Variance-Based RL Sample Selection",
     "status": "validated-in-production",
     "authors": [
@@ -3896,7 +4129,7 @@
     "slug": "variance-based-rl-sample-selection",
     "id": "variance-based-rl-sample-selection",
     "summary": "Not all training samples are equally valuable for reinforcement learning.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nNot all training samples are equally valuable for reinforcement learning. This pattern builds on **Prioritized Experience Replay** (Schaul et al., 2016), which introduced TD-error-based sample prioritization for value learning.\n\n- **Zero-variance samples**: Model gets same score every time (always correct or always wrong) → no learning signal\n- **Wasted compute**: Training on samples where the model has no uncertainty wastes expensive RL exploration\n- **Poor data utilization**: With limited training budgets, you want to maximize learning from each sample\n- **Unclear training potential**: Hard to know if your dataset will support effective RL training\n\nWhen Theo ran baseline evaluations on the FinQA benchmark, he discovered that ~85% of samples had zero variance (model always got them right or always wrong), meaning only ~15% of samples could actually contribute to learning."
   },
   {
@@ -3921,7 +4154,7 @@
     "slug": "verbose-reasoning-transparency",
     "id": "verbose-reasoning-transparency",
     "summary": "AI agents, especially those using complex models or multiple tools, can sometimes behave like \"black boxes.\" Users may not understand why an agent made a particular decision, chose a specific tool, or generated a certain output.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents, especially those using complex models or multiple tools, can sometimes behave like \"black boxes.\" Users may not understand why an agent made a particular decision, chose a specific tool, or generated a certain output. This lack of transparency can hinder debugging, trust, and the ability to effectively guide the agent."
   },
   {
@@ -3948,7 +4181,7 @@
     "slug": "versioned-constitution-governance",
     "id": "versioned-constitution-governance",
     "summary": "When agents can modify policy/constitution text, safety regressions can be introduced gradually and go unnoticed.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nWhen agents can modify policy/constitution text, safety regressions can be introduced gradually and go unnoticed. Without versioning, signatures, and policy review gates, teams cannot prove who changed what, why it changed, or whether critical safeguards were weakened."
   },
   {
@@ -3971,7 +4204,7 @@
     "slug": "virtual-machine-operator-agent",
     "id": "virtual-machine-operator-agent",
     "summary": "AI agents need to perform complex tasks beyond simple code generation or text manipulation.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nAI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage system resources, install software, and operate various applications."
   },
   {
@@ -3999,7 +4232,7 @@
     "slug": "visual-ai-multimodal-integration",
     "id": "visual-ai-multimodal-integration",
     "summary": "Many real world tasks require understanding and processing visual information alongside text.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nMany real-world tasks require understanding and processing visual information alongside text. Traditional text-only agents miss critical information present in images, videos, diagrams, and visual interfaces. This limitation prevents agents from helping with tasks like analyzing screenshots, debugging UI issues, understanding charts, processing security footage, or working with visual documentation."
   },
   {
@@ -4052,7 +4285,7 @@
     "slug": "working-memory-via-todos",
     "id": "working-memory-via-todowrite",
     "summary": "During complex multi step tasks, AI agents lose track of: What tasks are pending, in progress, or completed Which tasks are blocked by dependencies Verification",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nDuring complex multi-step tasks, AI agents lose track of:\n- What tasks are pending, in progress, or completed\n- Which tasks are blocked by dependencies\n- Verification steps that need to run\n- Next actions after context switches\n\nThis leads to redundant work, forgotten tasks, and confused users."
   },
   {
@@ -4080,7 +4313,7 @@
     "slug": "workspace-native-multi-agent-orchestration",
     "id": "workspace-native-multi-agent-orchestration",
     "summary": "Many teams struggle to run agentic workflows because their agent tooling is separate from their day to day collaboration environment.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-10",
     "excerpt": "\n## Problem\nMany teams struggle to run agentic workflows because their agent tooling is separate from their day-to-day collaboration environment. The result is fragmented context, brittle integrations, and high setup overhead.\n\nCommon pain points include:\n\n- Agents are difficult to create and version for non-engineering users.\n- Context, memory, and knowledge sources are spread across ad hoc systems.\n- Multi-agent workflows require custom glue for routing, event triggers, and state transfer.\n- Integrating agents with operational tools (issue trackers, docs, chat, CRM) is expensive."
   },
   {
@@ -4108,7 +4341,7 @@
     "slug": "zero-trust-agent-mesh",
     "id": "zero-trust-agent-mesh",
     "summary": "In multi agent systems, trust boundaries are often implicit: agents communicate by convention without verifiable identity, and delegation chains are hard to audit.",
-    "updated_at": "2026-04-09",
+    "updated_at": "2026-03-20",
     "excerpt": "\n## Problem\nIn multi-agent systems, trust boundaries are often implicit: agents communicate by convention without verifiable identity, and delegation chains are hard to audit. This enables impersonation, privilege confusion, and unverifiable task delegation."
   }
 ]

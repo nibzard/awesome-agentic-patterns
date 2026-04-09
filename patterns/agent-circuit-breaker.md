@@ -4,12 +4,12 @@ status: emerging
 authors: ["Jeel Thummar (@jeelthummar)"]
 based_on: ["Michael Nygard (Release It!, 2007)", "Netflix Hystrix Team"]
 category: "Reliability & Eval"
-source: "https://github.com/Jeel3011/agent-circuit-breaker-impl"
+source: "https://martinfowler.com/bliki/CircuitBreaker.html"
 tags: [circuit-breaker, fault-tolerance, tool-reliability, graceful-degradation, resilience]
 summary: "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints"
 maturity: "maturing"
 complexity: "medium"
-effort: "hours"
+effort: low
 impact: "high"
 signals: ["Agent calls external APIs or tools that can fail", "Retries burn tokens without progress", "Multiple tool providers available for fallback"]
 anti_signals: ["All tools are local and deterministic", "Single-shot agent with no retry logic"]

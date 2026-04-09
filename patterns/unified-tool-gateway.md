@@ -2,15 +2,15 @@
 title: Unified Tool Gateway
 status: emerging
 authors: ["Blake Folgado (@blakefolgado)"]
-based_on: ["ToolRouter (toolrouter.com)"]
+based_on: ["API Gateway Pattern (microservices.io)", "Model Context Protocol"]
 category: "Tool Use & Environment"
-source: "https://toolrouter.com"
+source: "https://microservices.io/patterns/apigateway.html"
 tags: [tool-gateway, mcp, tool-aggregation, agent-tooling, api-gateway, tool-routing]
 summary: "Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers."
 slug: "unified-tool-gateway"
 maturity: "maturing"
 complexity: "medium"
-effort: "days"
+effort: medium
 impact: "high"
 signals: ["Agent needs 10+ external tools or APIs", "Managing multiple API keys across providers", "Usage-based billing required across tools", "Teams sharing tool access with centralized controls"]
 anti_signals: ["Single-provider tool usage", "Agents that only need 1-2 tools", "Fully offline or air-gapped environments"]
@@ -111,7 +111,7 @@ result = gateway.get_result(job.job_id)
 
 ## References
 
-- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the emerging standard for agent-tool communication
-- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern with 150+ tools accessible via MCP
-- [OpenAI Plugins Architecture](https://platform.openai.com/docs/plugins) — early exploration of unified tool access for agents
 - [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — the microservices predecessor pattern that inspired this approach
+- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the emerging standard for agent-tool communication
+- [OpenAI Plugins Architecture](https://platform.openai.com/docs/plugins) — early exploration of unified tool access for agents
+- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern with 150+ tools accessible via MCP

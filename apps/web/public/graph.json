@@ -66,6 +66,27 @@
       "summary": "Parallel sandboxes are intoxicating: you can spawn 10..."
     },
     {
+      "id": "agent-circuit-breaker",
+      "title": "Agent Circuit Breaker",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "agent-circuit-breaker",
+      "tags": [
+        "circuit-breaker",
+        "fault-tolerance",
+        "tool-reliability",
+        "graceful-degradation",
+        "resilience"
+      ],
+      "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
+      "maturity": "maturing",
+      "domains": [
+        "coding",
+        "ops",
+        "research"
+      ]
+    },
+    {
       "id": "agent-modes-by-model-personality",
       "title": "Agent Modes by Model Personality",
       "category": "Orchestration & Control",
@@ -772,6 +793,40 @@
         "supply-chain"
       ],
       "summary": "Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area."
+    },
+    {
+      "id": "deterministic-threat-rule-scanning",
+      "title": "Deterministic Threat Rule Scanning",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "deterministic-threat-rule-scanning",
+      "tags": [
+        "security",
+        "threat-detection",
+        "regex",
+        "deterministic",
+        "prompt-injection",
+        "tool-poisoning",
+        "mcp",
+        "agent-safety"
+      ],
+      "summary": "Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions."
+    },
+    {
+      "id": "deterministic-zero-llm-orchestration",
+      "title": "Deterministic Zero-LLM Orchestration",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "deterministic-zero-llm-orchestration",
+      "tags": [
+        "orchestration",
+        "multi-agent",
+        "parallel-execution",
+        "deterministic",
+        "test-driven",
+        "zero-llm-overhead"
+      ],
+      "summary": "Multi agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results."
     },
     {
       "id": "dev-tooling-assumptions-reset",
@@ -1603,6 +1658,21 @@
       "summary": "Relying on a single AI model creates a trade off between capability and cost."
     },
     {
+      "id": "output-verification-loop",
+      "title": "Output Verification Loop",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "output-verification-loop",
+      "tags": [
+        "verification",
+        "hallucination-detection",
+        "trust-scores",
+        "fact-checking",
+        "multi-agent"
+      ],
+      "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result."
+    },
+    {
       "id": "parallel-tool-call-learning",
       "title": "Parallel Tool Call Learning",
       "category": "Orchestration & Control",
@@ -2059,6 +2129,21 @@
       "summary": "In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind."
     },
     {
+      "id": "signal-driven-agent-activation",
+      "title": "Signal-Driven Agent Activation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "signal-driven-agent-activation",
+      "tags": [
+        "signals",
+        "event-driven",
+        "automation",
+        "orchestration",
+        "reactive"
+      ],
+      "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts."
+    },
+    {
       "id": "skill-library-evolution",
       "title": "Skill Library Evolution",
       "category": "Learning & Adaptation",
@@ -2395,6 +2480,28 @@
       "summary": "Linear chain-of-thought reasoning can get stuck on complex problems, missing alternative approaches or failing to backtrack."
     },
     {
+      "id": "unified-tool-gateway",
+      "title": "Unified Tool Gateway",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "unified-tool-gateway",
+      "tags": [
+        "tool-gateway",
+        "mcp",
+        "tool-aggregation",
+        "agent-tooling",
+        "api-gateway",
+        "tool-routing"
+      ],
+      "summary": "Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers.",
+      "maturity": "maturing",
+      "domains": [
+        "tool-use",
+        "infrastructure",
+        "ops"
+      ]
+    },
+    {
       "id": "variance-based-rl-sample-selection",
       "title": "Variance-Based RL Sample Selection",
       "category": "Learning & Adaptation",
@@ -2545,8 +2652,23 @@
   ],
   "edges": [
     {
+      "source": "agent-circuit-breaker",
+      "target": "failover-aware-model-fallback",
+      "type": "related"
+    },
+    {
       "source": "denial-tracking-permission-escalation",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "output-verification-loop",
+      "target": "reflection-loop",
+      "type": "related"
+    },
+    {
+      "source": "output-verification-loop",
+      "target": "self-critique-evaluator-loop",
       "type": "related"
     },
     {
@@ -2562,6 +2684,21 @@
     {
       "source": "tool-search-lazy-loading",
       "target": "dynamic-context-injection",
+      "type": "related"
+    },
+    {
+      "source": "unified-tool-gateway",
+      "target": "progressive-tool-discovery",
+      "type": "related"
+    },
+    {
+      "source": "unified-tool-gateway",
+      "target": "tool-search-lazy-loading",
+      "type": "related"
+    },
+    {
+      "source": "unified-tool-gateway",
+      "target": "tool-capability-compartmentalization",
       "type": "related"
     }
   ]
