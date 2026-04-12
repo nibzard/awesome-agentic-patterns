@@ -115,6 +115,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent Modes by Model Personality](patterns/agent-modes-by-model-personality.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
+- [SearchHive](https://searchhive.dev) - API platform for web scraping, search, and AI-powered research.
 - [Artifact-Driven Analysis Pipeline Orchestration](patterns/multi-step-analysis-pipeline-orchestration.md)
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Budget-Aware Model Routing with Hard Cost Caps](patterns/budget-aware-model-routing-with-hard-cost-caps.md)
