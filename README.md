@@ -231,6 +231,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Unified Tool Gateway](patterns/unified-tool-gateway.md)
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 - [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md)
+- [CCHub](https://github.com/Moresl/cchub) - A desktop control panel for the Claude Code / Codex / Gemini CLI ecosystem. Manage MCP servers, config profiles, agent skills, CLAUDE.md, hooks, and workflow templates from a single Tauri app (Windows / macOS / Linux).
 
 ### <a name="ux-collaboration"></a>UX & Collaboration
 
