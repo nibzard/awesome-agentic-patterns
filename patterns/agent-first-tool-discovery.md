@@ -1,18 +1,18 @@
 ---
 title: "Agent-First Tool Discovery"
 status: emerging
-authors: ["Shane Cheek (@unitedideas)"]
+authors: ["Shane Cheek (@unitedideas, affiliated with Not Human Search)"]
 based_on: ["llms.txt community specification", "MCP (Model Context Protocol)", "Anthropic MCP Registry"]
 category: "Tool Use & Environment"
-source: "https://nothumansearch.ai"
+source: "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports"
 tags: [tool-discovery, mcp, agent-search, service-registry, llms-txt, api-discovery, agent-infrastructure]
 ---
 
 ## Problem
 
-AI agents need to discover and evaluate external tools, APIs, and MCP servers at runtime. Today, tool catalogs are either hardcoded into system prompts, manually curated in static lists, or require human-mediated searches through documentation designed for humans. When an agent needs a capability it does not have -- say, a calendar API or a code review tool -- it has no programmatic way to search for, evaluate, and connect to the right service without human intervention.
+Individual services can declare their agent-readiness via static manifests (`llms.txt`, `ai-plugin.json`, OpenAPI specs). But an agent that needs a new capability at runtime has no way to search *across* services to find, compare, and select the best match. Static manifests describe one service; they do not solve cross-service discovery.
 
-Existing search engines optimize for human readability (HTML, ads, SEO-driven rankings). Agents need machine-readable results with structured metadata: authentication methods, endpoint schemas, protocol support (REST, MCP, GraphQL), and reliability signals.
+Today, tool catalogs are hardcoded into system prompts, manually curated in static lists, or require human-mediated searches through documentation designed for humans. When an agent needs a capability it does not have -- say, a calendar API or a code review tool -- there is no programmatic search that returns structured, verified results ranked by agent-relevant signals.
 
 ## Solution
 
@@ -76,5 +76,5 @@ The workflow replaces the human loop of "search Google → read docs → evaluat
 
 - llms.txt community specification: https://llmstxt.org
 - Model Context Protocol (MCP): https://modelcontextprotocol.io
-- Not Human Search, an implementation of agent-first tool discovery: https://nothumansearch.ai
+- Not Human Search (known implementation): https://nothumansearch.ai
 - OpenAI ChatGPT Plugin manifest (prior art for machine-readable service description): https://platform.openai.com/docs/plugins
