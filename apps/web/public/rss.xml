@@ -4,8 +4,23 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 09 Apr 2026 09:55:58 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 22 Apr 2026 16:09:27 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Agent-First Tool Discovery]]></title>
+            <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-first-tool-discovery</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tool-discovery</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[tool-discovery]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[agent-search]]></category>
+            <category><![CDATA[service-registry]]></category>
+            <category><![CDATA[llms-txt]]></category>
+            <category><![CDATA[api-discovery]]></category>
+            <category><![CDATA[agent-infrastructure]]></category>
+            <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Cryptographic Governance Audit Trail]]></title>
             <description><![CDATA[When AI agents execute tool calls autonomously, there is no tamper evident record of what happened.]]></description>
@@ -272,22 +287,6 @@
             <category><![CDATA[cli]]></category>
             <category><![CDATA[natural language control]]></category>
             <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Abstracted Code Representation for Review]]></title>
-            <description><![CDATA[Reviewing AI generated code line by line is time intensive and cognitively demanding.]]></description>
-            <link>https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[code-review]]></category>
-            <category><![CDATA[verification]]></category>
-            <category><![CDATA[abstraction]]></category>
-            <category><![CDATA[pseudocode]]></category>
-            <category><![CDATA[intent-based-review]]></category>
-            <category><![CDATA[explainability]]></category>
-            <category><![CDATA[software-quality]]></category>
-            <category><![CDATA[human-ai-interface]]></category>
-            <pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

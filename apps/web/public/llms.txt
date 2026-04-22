@@ -44,6 +44,10 @@ URL: https://agentic-patterns.com/patterns/agent-assisted-scaffolding
 Agent-Driven Research: Traditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries.
 URL: https://agentic-patterns.com/patterns/agent-driven-research
 
+### agent-first-tool-discovery
+Agent-First Tool Discovery: Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.
+URL: https://agentic-patterns.com/patterns/agent-first-tool-discovery
+
 ### agent-first-tooling-and-logging
 Agent-First Tooling and Logging: Most developer tools, CLIs, and application logs are designed for human consumption.
 URL: https://agentic-patterns.com/patterns/agent-first-tooling-and-logging

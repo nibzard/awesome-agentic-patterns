@@ -168,6 +168,23 @@
       "summary": "Traditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries."
     },
     {
+      "id": "agent-first-tool-discovery",
+      "title": "Agent-First Tool Discovery",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "agent-first-tool-discovery",
+      "tags": [
+        "tool-discovery",
+        "mcp",
+        "agent-search",
+        "service-registry",
+        "llms-txt",
+        "api-discovery",
+        "agent-infrastructure"
+      ],
+      "summary": "Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics."
+    },
+    {
       "id": "agent-first-tooling-and-logging",
       "title": "Agent-First Tooling and Logging",
       "category": "Tool Use & Environment",

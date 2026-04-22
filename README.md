@@ -207,6 +207,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="tool-use-environment"></a>Tool Use & Environment
 
 - [Agent SDK for Programmatic Control](patterns/agent-sdk-for-programmatic-control.md)
+- [Agent-First Tool Discovery](patterns/agent-first-tool-discovery.md)
 - [Agent-First Tooling and Logging](patterns/agent-first-tooling-and-logging.md)
 - [Agentic Search Over Vector Embeddings](patterns/agentic-search-over-vector-embeddings.md)
 - [AI Web Search Agent Loop](patterns/ai-web-search-agent-loop.md)
