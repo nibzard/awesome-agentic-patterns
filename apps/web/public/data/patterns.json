@@ -288,6 +288,34 @@
     "excerpt": "\n## Problem\nTraditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries. Complex research tasks require multi-round investigation, cross-source synthesis, and dynamic strategy adjustment that static retrieval systems cannot provide."
   },
   {
+    "title": "Agent-First Tool Discovery",
+    "status": "emerging",
+    "authors": [
+      "Shane Cheek (@unitedideas, affiliated with Not Human Search)"
+    ],
+    "based_on": [
+      "llms.txt community specification",
+      "MCP (Model Context Protocol)",
+      "Anthropic MCP Registry"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports",
+    "tags": [
+      "tool-discovery",
+      "mcp",
+      "agent-search",
+      "service-registry",
+      "llms-txt",
+      "api-discovery",
+      "agent-infrastructure"
+    ],
+    "slug": "agent-first-tool-discovery",
+    "id": "agent-first-tool-discovery",
+    "summary": "Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.",
+    "updated_at": "2026-04-22",
+    "excerpt": "\n## Problem\nIndividual services can declare their agent-readiness via static manifests (`llms.txt`, `ai-plugin.json`, OpenAPI specs). But an agent that needs a new capability at runtime has no way to search *across* services to find, compare, and select the best match. Static manifests describe one service; they do not solve cross-service discovery.\n\nToday, tool catalogs are hardcoded into system prompts, manually curated in static lists, or require human-mediated searches through documentation designed for humans. When an agent needs a capability it does not have -- say, a calendar API or a code review tool -- there is no programmatic search that returns structured, verified results ranked by agent-relevant signals."
+  },
+  {
     "title": "Agent-First Tooling and Logging",
     "status": "established",
     "authors": [
