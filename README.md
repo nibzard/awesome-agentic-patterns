@@ -305,3 +305,4 @@ Apache‑2.0. See [`LICENSE`](https://github.com/nibzard/awesome-agentic-pattern
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=nibzard/awesome-agentic-patterns&type=date&legend=top-left)](https://www.star-history.com/#nibzard/awesome-agentic-patterns&type=date&legend=top-left)
+- [BenchGecko Agents](https://benchgecko.ai/agents) - AI agent leaderboard with SWE-bench, GAIA, OSWorld, tau-bench scores. 165 agents tracked with GitHub momentum.
