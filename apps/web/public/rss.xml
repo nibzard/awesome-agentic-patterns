@@ -4,8 +4,23 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 22 Apr 2026 16:09:27 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 24 Apr 2026 09:59:33 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Capability-Escrow-Receipt]]></title>
+            <description><![CDATA[When autonomous agents pay each other for work, three concerns collide: Discovery: How does a hiring agent find a provider that can do the job, with a price it trusts?]]></description>
+            <link>https://agentic-patterns.com/patterns/capability-escrow-receipt</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/capability-escrow-receipt</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[coordination]]></category>
+            <category><![CDATA[payments]]></category>
+            <category><![CDATA[escrow]]></category>
+            <category><![CDATA[receipts]]></category>
+            <category><![CDATA[capabilities]]></category>
+            <category><![CDATA[atomic-hire]]></category>
+            <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Agent-First Tool Discovery]]></title>
             <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
@@ -272,20 +287,6 @@
             <category><![CDATA[scaffolding]]></category>
             <category><![CDATA[contract]]></category>
             <category><![CDATA[requirements]]></category>
-            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Tool Use Steering via Prompting]]></title>
-            <description><![CDATA[AI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively.]]></description>
-            <link>https://agentic-patterns.com/patterns/tool-use-steering-via-prompting</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/tool-use-steering-via-prompting</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[tool use]]></category>
-            <category><![CDATA[prompting]]></category>
-            <category><![CDATA[agent guidance]]></category>
-            <category><![CDATA[custom tools]]></category>
-            <category><![CDATA[cli]]></category>
-            <category><![CDATA[natural language control]]></category>
             <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

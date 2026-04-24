@@ -119,6 +119,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
 - [Budget-Aware Model Routing with Hard Cost Caps](patterns/budget-aware-model-routing-with-hard-cost-caps.md)
 - [Burn the Boats](patterns/burn-the-boats.md)
+- [Capability-Escrow-Receipt](patterns/capability-escrow-receipt.md)
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
 - [Cross-Cycle Consensus Relay](patterns/cross-cycle-consensus-relay.md)
