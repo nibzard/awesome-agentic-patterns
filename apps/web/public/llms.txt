@@ -109,6 +109,10 @@ URL: https://agentic-patterns.com/patterns/burn-the-boats
 Canary Rollout and Automatic Rollback for Agent Policy Changes: Agent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds.
 URL: https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes
 
+### capability-escrow-receipt
+Capability-Escrow-Receipt: When autonomous agents pay each other for work, three concerns collide: Discovery: How does a hiring agent find a provider that can do the job, with a price it trusts?
+URL: https://agentic-patterns.com/patterns/capability-escrow-receipt
+
 ### chain-of-thought-monitoring-interruption
 Chain-of-Thought Monitoring & Interruption: Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.
 URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
