@@ -424,6 +424,23 @@
       "summary": "Agent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds."
     },
     {
+      "id": "capability-escrow-receipt",
+      "title": "Capability-Escrow-Receipt",
+      "category": "Orchestration & Control",
+      "status": "experimental-but-awesome",
+      "slug": "capability-escrow-receipt",
+      "tags": [
+        "multi-agent",
+        "coordination",
+        "payments",
+        "escrow",
+        "receipts",
+        "capabilities",
+        "atomic-hire"
+      ],
+      "summary": "When autonomous agents pay each other for work, three concerns collide: Discovery: How does a hiring agent find a provider that can do the job, with a price it trusts?"
+    },
+    {
       "id": "chain-of-thought-monitoring-interruption",
       "title": "Chain-of-Thought Monitoring & Interruption",
       "category": "UX & Collaboration",
