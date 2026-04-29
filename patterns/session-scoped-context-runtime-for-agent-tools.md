@@ -49,6 +49,5 @@ on_tool_read(path, mode):
 ## References
 
 - lean-ctx (Apache-2.0 reference implementation): https://github.com/yvgude/lean-ctx
-- Documentation: https://leanctx.com
-- Model Context Protocol: https://modelcontextprotocol.io/
+- Model Context Protocol specification: https://modelcontextprotocol.io/
 - Related catalogue patterns: [MCP Pattern Injection](mcp-pattern-injection.md), [Context-Minimization Pattern](context-minimization-pattern.md), [Semantic Context Filtering Pattern](semantic-context-filtering.md)
