@@ -2130,6 +2130,24 @@
       "summary": "Raw data sources are too verbose and noisy for effective LLM consumption."
     },
     {
+      "id": "session-scoped-context-runtime-for-agent-tools",
+      "title": "Session-Scoped Context Runtime for Agent Tools",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "session-scoped-context-runtime-for-agent-tools",
+      "tags": [
+        "mcp",
+        "context-compression",
+        "session-cache",
+        "agent-tools",
+        "coding-assistants"
+      ],
+      "summary": "Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens.",
+      "domains": [
+        "coding"
+      ]
+    },
+    {
       "id": "shell-command-contextualization",
       "title": "Shell Command Contextualization",
       "category": "Tool Use & Environment",

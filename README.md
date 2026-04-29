@@ -80,6 +80,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Schema-Guided Graph Retrieval for Multi-Hop Reasoning](patterns/schema-guided-graph-retrieval.md)
 - [Self-Identity Accumulation](patterns/self-identity-accumulation.md)
 - [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md)
+- [Session-Scoped Context Runtime for Agent Tools](patterns/session-scoped-context-runtime-for-agent-tools.md)
 - [Tool Search Lazy Loading](patterns/tool-search-lazy-loading.md)
 - [Working Memory via TodoWrite](patterns/working-memory-via-todos.md)
 
