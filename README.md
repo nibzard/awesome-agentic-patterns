@@ -11,6 +11,18 @@ A curated catalogue of **agentic AI patterns** — real‑world tricks, workflow
 
 ## What counts as a pattern?
 
+## OpenClaw Monitor
+
+| | |
+|---|---|
+| **Project** | [flik2002/openclaw-monitor](https://github.com/flik2002/openclaw-monitor) |
+| **Description** | Real-time AI agent monitoring dashboard — tracks Gateway status, sessions, token usage & trends |
+| **Stars** | ⭐ 1.3k+ |
+
+![Dashboard](https://raw.githubusercontent.com/flik2002/openclaw-monitor/main/Openclaw%20Monitor.jpg)
+
+
+
 * **Repeatable** – more than one team is using it.
 * **Agent‑centric** – improves how an AI agent senses, reasons, or acts.
 * **Traceable** – backed by a public reference: blog post, talk, repo, or paper.
