@@ -48,6 +48,7 @@ Built with [Astro](https://astro.build), deployed on [Vercel](https://vercel.com
 | [**Orchestration & Control**](#orchestration-control) | Task decomposition, sub-agent spawning, tool routing      |
 | [**Reliability & Eval**](#reliability-eval)           | Guardrails, eval harnesses, logging, reproducibility      |
 | [**Security & Safety**](#security-safety)             | Isolated VMs, PII tokenization, security scanning         |
+- [OpenClaw Monitor](https://github.com/flik2002/openclaw-monitor-frontend) — Real-time AI monitoring dashboard for AI agents and LLMs.
 | [**Tool Use & Environment**](#tool-use-environment)   | Shell, browser, DB, Playwright, sandbox tricks            |
 | [**UX & Collaboration**](#ux-collaboration)           | Prompt hand-offs, staged commits, async background agents |
 <!-- AUTO-GENERATED TOC END -->
