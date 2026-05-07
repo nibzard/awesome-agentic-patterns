@@ -542,6 +542,10 @@ URL: https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop
 Semantic Context Filtering Pattern: Raw data sources are too verbose and noisy for effective LLM consumption.
 URL: https://agentic-patterns.com/patterns/semantic-context-filtering
 
+### session-scoped-context-runtime-for-agent-tools
+Session-Scoped Context Runtime for Agent Tools: Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens.
+URL: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools
+
 ### shell-command-contextualization
 Shell Command Contextualization: When an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these commands as context for its subsequent reasoning or actions.
 URL: https://agentic-patterns.com/patterns/shell-command-contextualization

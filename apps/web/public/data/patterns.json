@@ -3460,6 +3460,37 @@
     "excerpt": "\n## Problem\nRaw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.\n\nResearch on boilerplate detection shows that **40-80% of web page content** is typically navigation, footers, ads, and other boilerplate that should be filtered before semantic processing (Kohlschütter et al., SIGIR 2010).\n\nThis creates several problems:\n\n- **Token explosion**: Raw data exceeds context limits or becomes prohibitively expensive\n- **Poor signal-to-noise**: LLM wastes reasoning capacity on irrelevant details\n- **Slower inference**: More tokens = slower generation and higher costs\n- **Confused reasoning**: Noise leads to hallucinations or wrong conclusions\n\nThe issue appears across domains:\n\n- **Web scraping**: Full HTML DOM includes scripts, styles, tracking iframes\n- **API responses**: JSON with nested metadata, internal fields, debug info\n- **Document processing**: Headers, footers, navigation, boilerplate text\n- **Code analysis**: Comments, whitespace, boilerplate code"
   },
   {
+    "title": "Session-Scoped Context Runtime for Agent Tools",
+    "status": "emerging",
+    "authors": [
+      "Yves Gugger (@yvgude)"
+    ],
+    "based_on": [
+      "Anthropic Model Context Protocol Specification"
+    ],
+    "category": "Context & Memory",
+    "source": "https://github.com/yvgude/lean-ctx",
+    "tags": [
+      "mcp",
+      "context-compression",
+      "session-cache",
+      "agent-tools",
+      "coding-assistants"
+    ],
+    "slug": "session-scoped-context-runtime-for-agent-tools",
+    "id": "session-scoped-context-runtime-for-agent-tools",
+    "summary": "Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens.",
+    "tools": [
+      "mcp-server",
+      "editor-integration"
+    ],
+    "domains": [
+      "coding"
+    ],
+    "updated_at": "2026-04-29",
+    "excerpt": "\n## Problem\nCoding agents read the same files and command outputs many times per session. Each hop typically pastes full text into the model context, so cost and latency grow with repetition and verbosity even when the underlying artifact has not changed."
+  },
+  {
     "title": "Shell Command Contextualization",
     "status": "established",
     "authors": [

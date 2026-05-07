@@ -4,8 +4,21 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 24 Apr 2026 10:03:20 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 07 May 2026 11:53:17 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Session-Scoped Context Runtime for Agent Tools]]></title>
+            <description><![CDATA[Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens.]]></description>
+            <link>https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[context-compression]]></category>
+            <category><![CDATA[session-cache]]></category>
+            <category><![CDATA[agent-tools]]></category>
+            <category><![CDATA[coding-assistants]]></category>
+            <pubDate>Wed, 29 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Capability-Escrow-Receipt]]></title>
             <description><![CDATA[When autonomous agents pay each other for work, three concerns collide: Discovery: How does a hiring agent find a provider that can do the job, with a price it trusts?]]></description>
@@ -275,18 +288,6 @@
             <category><![CDATA[planning]]></category>
             <category><![CDATA[control-flow-integrity]]></category>
             <category><![CDATA[prompt-injection]]></category>
-            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Specification-Driven Agent Development]]></title>
-            <description><![CDATA[Hand crafted prompts or loose user stories leave room for ambiguity; agents can wander, over interpret, or produce code that conflicts with stakeholder intent.]]></description>
-            <link>https://agentic-patterns.com/patterns/specification-driven-agent-development</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/specification-driven-agent-development</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[spec-first]]></category>
-            <category><![CDATA[scaffolding]]></category>
-            <category><![CDATA[contract]]></category>
-            <category><![CDATA[requirements]]></category>
             <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
