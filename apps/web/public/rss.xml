@@ -4,8 +4,23 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 07 May 2026 11:53:17 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 07 May 2026 12:20:59 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Black-Box Skill Invocation]]></title>
+            <description><![CDATA[When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations.]]></description>
+            <link>https://agentic-patterns.com/patterns/black-box-skill-invocation</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/black-box-skill-invocation</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[privacy]]></category>
+            <category><![CDATA[skill-sharing]]></category>
+            <category><![CDATA[black-box]]></category>
+            <category><![CDATA[schema-only]]></category>
+            <category><![CDATA[prompt-protection]]></category>
+            <category><![CDATA[inter-agent]]></category>
+            <category><![CDATA[trust]]></category>
+            <pubDate>Thu, 07 May 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Session-Scoped Context Runtime for Agent Tools]]></title>
             <description><![CDATA[Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens.]]></description>
@@ -277,17 +292,6 @@
             <category><![CDATA[exfiltration]]></category>
             <category><![CDATA[outbound-controls]]></category>
             <category><![CDATA[security]]></category>
-            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Plan-Then-Execute Pattern]]></title>
-            <description><![CDATA[When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next.]]></description>
-            <link>https://agentic-patterns.com/patterns/plan-then-execute-pattern</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/plan-then-execute-pattern</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[planning]]></category>
-            <category><![CDATA[control-flow-integrity]]></category>
-            <category><![CDATA[prompt-injection]]></category>
             <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

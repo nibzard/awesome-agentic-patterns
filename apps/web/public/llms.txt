@@ -97,6 +97,10 @@ Background Agent with CI Feedback: ## Problem
 Long-running tasks tie up the editor and require developers to babysit the agent.
 URL: https://agentic-patterns.com/patterns/background-agent-ci
 
+### black-box-skill-invocation
+Black-Box Skill Invocation: When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations.
+URL: https://agentic-patterns.com/patterns/black-box-skill-invocation
+
 ### budget-aware-model-routing-with-hard-cost-caps
 Budget-Aware Model Routing with Hard Cost Caps: Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.
 URL: https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps

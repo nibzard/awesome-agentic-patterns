@@ -623,6 +623,33 @@
     "excerpt": "\n## Problem\nLong-running refactors and flaky-fix cycles force developers into synchronous supervision. When the agent must wait on tests, build jobs, and deployment checks, human attention gets wasted on polling instead of decision-making. This bottleneck is worse in distributed teams where CI feedback arrives minutes later and context-switch cost is high."
   },
   {
+    "title": "Black-Box Skill Invocation",
+    "status": "emerging",
+    "authors": [
+      "Ziwei Zhao (@ZiwayZhao)"
+    ],
+    "based_on": [
+      "Capability-Based Security (Dennis & Van Horn, 1966)",
+      "Remote Procedure Call (Birrell & Nelson, 1984)"
+    ],
+    "category": "Security & Safety",
+    "source": "https://github.com/ZiwayZhao/agent-coworker",
+    "tags": [
+      "privacy",
+      "skill-sharing",
+      "black-box",
+      "schema-only",
+      "prompt-protection",
+      "inter-agent",
+      "trust"
+    ],
+    "slug": "black-box-skill-invocation",
+    "id": "black-box-skill-invocation",
+    "summary": "When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations.",
+    "updated_at": "2026-05-07",
+    "excerpt": "\n## Problem\nWhen agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations. This creates knowledge leakage — a collaborator's agent can learn and replicate proprietary workflows after a single interaction.\n\nTraditional mitigations (NDAs, API gateways, access control lists) constrain humans but do not constrain agent memory. Once an agent observes implementation details during collaboration, the knowledge cannot be \"unlearned.\""
+  },
+  {
     "title": "Budget-Aware Model Routing with Hard Cost Caps",
     "status": "established",
     "authors": [

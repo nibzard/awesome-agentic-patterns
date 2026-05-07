@@ -191,6 +191,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="security-safety"></a>Security & Safety
 
+- [Black-Box Skill Invocation](patterns/black-box-skill-invocation.md)
 - [Cryptographic Governance Audit Trail](patterns/cryptographic-governance-audit-trail.md)
 - [Denial Tracking & Permission Escalation](patterns/denial-tracking-permission-escalation.md)
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)

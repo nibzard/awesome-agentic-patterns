@@ -1,0 +1,27 @@
+{
+  "title": "Black-Box Skill Invocation",
+  "status": "emerging",
+  "authors": [
+    "Ziwei Zhao (@ZiwayZhao)"
+  ],
+  "based_on": [
+    "Capability-Based Security (Dennis & Van Horn, 1966)",
+    "Remote Procedure Call (Birrell & Nelson, 1984)"
+  ],
+  "category": "Security & Safety",
+  "source": "https://github.com/ZiwayZhao/agent-coworker",
+  "tags": [
+    "privacy",
+    "skill-sharing",
+    "black-box",
+    "schema-only",
+    "prompt-protection",
+    "inter-agent",
+    "trust"
+  ],
+  "slug": "black-box-skill-invocation",
+  "id": "black-box-skill-invocation",
+  "summary": "When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations.",
+  "updated_at": "2026-05-07",
+  "body": "\n## Problem\n\nWhen agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations. This creates knowledge leakage — a collaborator's agent can learn and replicate proprietary workflows after a single interaction.\n\nTraditional mitigations (NDAs, API gateways, access control lists) constrain humans but do not constrain agent memory. Once an agent observes implementation details during collaboration, the knowledge cannot be \"unlearned.\"\n\n## Solution\n\nSeparate **what a skill can do** from **how it works** at the protocol level:\n\n- **Schema-only discovery**: Peers discover skill capabilities through input/output schema contracts (name, description, parameter types, return types, minimum trust tier). Implementation code, prompts, and internal logic are never transmitted.\n- **Remote execution, local processing**: The skill runs on the provider's machine. The caller sends structured input and receives structured output. No intermediate state, chain-of-thought, or model artifacts cross the boundary.\n- **Uniform error responses**: Hidden skills, nonexistent skills, and trust-insufficient skills all return the same generic error (\"Unknown skill\"), preventing existence enumeration.\n- **Revocable trust tiers**: Access is granted per collaboration, not permanently. Trust automatically downgrades when the task objective completes, ensuring short-term collaboration does not become long-term access.\n\nThe attack surface shrinks from \"the entire LLM context\" to \"the function parameter boundary.\"\n\n## How to use it\n\n- Agents from different organizations need to collaborate without exposing proprietary logic\n- A skill provider wants to monetize capabilities without revealing implementation\n- Collaboration is temporary and trust should not persist indefinitely\n- Prompt injection defense is needed at the architectural level (not just prompt-level filtering)\n\n## Trade-offs\n\n- **Pros:** Prevents knowledge leakage across agent collaboration boundaries; enables monetization without IP exposure; reduces attack surface to parameter boundaries only.\n- **Cons:** The caller cannot inspect or debug the skill implementation — they must trust the output. Schema contracts must be expressive enough for valid input construction. Asynchronous execution is needed when the provider is not always online. No verifiable computation — the caller cannot prove the skill ran correctly.\n\n## References\n\n- CoWorker Protocol (reference implementation): https://github.com/ZiwayZhao/agent-coworker\n- Capability-Based Security: Dennis, J. B., & Van Horn, E. C. (1966). \"Programming Semantics for Multiprogrammed Computations.\" *Communications of the ACM*.\n- Remote Procedure Call: Birrell, A. D., & Nelson, B. J. (1984). \"Implementing Remote Procedure Calls.\" *ACM TOCS*.\n- Related catalogue patterns: [Zero-Trust Agent Mesh](zero-trust-agent-mesh.md), [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md), [Tool Capability Compartmentalization](tool-capability-compartmentalization.md)\n"
+}

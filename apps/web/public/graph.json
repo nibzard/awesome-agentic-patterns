@@ -377,6 +377,23 @@
       "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent."
     },
     {
+      "id": "black-box-skill-invocation",
+      "title": "Black-Box Skill Invocation",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "black-box-skill-invocation",
+      "tags": [
+        "privacy",
+        "skill-sharing",
+        "black-box",
+        "schema-only",
+        "prompt-protection",
+        "inter-agent",
+        "trust"
+      ],
+      "summary": "When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations."
+    },
+    {
       "id": "budget-aware-model-routing-with-hard-cost-caps",
       "title": "Budget-Aware Model Routing with Hard Cost Caps",
       "category": "Orchestration & Control",
