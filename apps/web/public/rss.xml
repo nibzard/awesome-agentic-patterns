@@ -4,7 +4,7 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 29 Apr 2026 15:20:36 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 07 May 2026 11:53:17 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Session-Scoped Context Runtime for Agent Tools]]></title>
@@ -18,6 +18,122 @@
             <category><![CDATA[agent-tools]]></category>
             <category><![CDATA[coding-assistants]]></category>
             <pubDate>Wed, 29 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Capability-Escrow-Receipt]]></title>
+            <description><![CDATA[When autonomous agents pay each other for work, three concerns collide: Discovery: How does a hiring agent find a provider that can do the job, with a price it trusts?]]></description>
+            <link>https://agentic-patterns.com/patterns/capability-escrow-receipt</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/capability-escrow-receipt</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[coordination]]></category>
+            <category><![CDATA[payments]]></category>
+            <category><![CDATA[escrow]]></category>
+            <category><![CDATA[receipts]]></category>
+            <category><![CDATA[capabilities]]></category>
+            <category><![CDATA[atomic-hire]]></category>
+            <pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent-First Tool Discovery]]></title>
+            <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-first-tool-discovery</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tool-discovery</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[tool-discovery]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[agent-search]]></category>
+            <category><![CDATA[service-registry]]></category>
+            <category><![CDATA[llms-txt]]></category>
+            <category><![CDATA[api-discovery]]></category>
+            <category><![CDATA[agent-infrastructure]]></category>
+            <pubDate>Wed, 22 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Cryptographic Governance Audit Trail]]></title>
+            <description><![CDATA[When AI agents execute tool calls autonomously, there is no tamper evident record of what happened.]]></description>
+            <link>https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[governance]]></category>
+            <category><![CDATA[audit-trail]]></category>
+            <category><![CDATA[compliance]]></category>
+            <category><![CDATA[cryptographic-signing]]></category>
+            <category><![CDATA[policy-enforcement]]></category>
+            <category><![CDATA[eu-ai-act]]></category>
+            <category><![CDATA[owasp]]></category>
+            <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Deterministic Threat Rule Scanning]]></title>
+            <description><![CDATA[Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.]]></description>
+            <link>https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[security]]></category>
+            <category><![CDATA[threat-detection]]></category>
+            <category><![CDATA[regex]]></category>
+            <category><![CDATA[deterministic]]></category>
+            <category><![CDATA[prompt-injection]]></category>
+            <category><![CDATA[tool-poisoning]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[agent-safety]]></category>
+            <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Deterministic Zero-LLM Orchestration]]></title>
+            <description><![CDATA[Multi agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results.]]></description>
+            <link>https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[parallel-execution]]></category>
+            <category><![CDATA[deterministic]]></category>
+            <category><![CDATA[test-driven]]></category>
+            <category><![CDATA[zero-llm-overhead]]></category>
+            <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Output Verification Loop]]></title>
+            <description><![CDATA[Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.]]></description>
+            <link>https://agentic-patterns.com/patterns/output-verification-loop</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/output-verification-loop</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[verification]]></category>
+            <category><![CDATA[hallucination-detection]]></category>
+            <category><![CDATA[trust-scores]]></category>
+            <category><![CDATA[fact-checking]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Policy-Gated Tool Proxy]]></title>
+            <description><![CDATA[Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions.]]></description>
+            <link>https://agentic-patterns.com/patterns/policy-gated-tool-proxy</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/policy-gated-tool-proxy</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[governance]]></category>
+            <category><![CDATA[policy-engine]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[audit-trail]]></category>
+            <category><![CDATA[tool-proxy]]></category>
+            <category><![CDATA[access-control]]></category>
+            <category><![CDATA[compliance]]></category>
+            <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Signal-Driven Agent Activation]]></title>
+            <description><![CDATA[Most agent workflows are command driven : a user types a prompt, the agent acts.]]></description>
+            <link>https://agentic-patterns.com/patterns/signal-driven-agent-activation</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/signal-driven-agent-activation</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[signals]]></category>
+            <category><![CDATA[event-driven]]></category>
+            <category><![CDATA[automation]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[reactive]]></category>
+            <pubDate>Thu, 09 Apr 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Denial Tracking & Permission Escalation]]></title>
@@ -77,161 +193,50 @@
             <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Abstracted Code Representation for Review]]></title>
-            <description><![CDATA[Reviewing AI generated code line by line is time intensive and cognitively demanding.]]></description>
-            <link>https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[code-review]]></category>
-            <category><![CDATA[verification]]></category>
-            <category><![CDATA[abstraction]]></category>
-            <category><![CDATA[pseudocode]]></category>
-            <category><![CDATA[intent-based-review]]></category>
-            <category><![CDATA[explainability]]></category>
-            <category><![CDATA[software-quality]]></category>
-            <category><![CDATA[human-ai-interface]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Action Caching & Replay Pattern]]></title>
-            <description><![CDATA[LLM based agent execution is expensive (both in costs and latency) and non deterministic.]]></description>
-            <link>https://agentic-patterns.com/patterns/action-caching-replay</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/action-caching-replay</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[caching]]></category>
-            <category><![CDATA[replay]]></category>
-            <category><![CDATA[regression-testing]]></category>
-            <category><![CDATA[cost-reduction]]></category>
-            <category><![CDATA[deterministic]]></category>
-            <category><![CDATA[xpath]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Action-Selector Pattern]]></title>
-            <description><![CDATA[In tool enabled agents, untrusted data from emails, web pages, and API responses is often fed back into the model between steps.]]></description>
-            <link>https://agentic-patterns.com/patterns/action-selector-pattern</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/action-selector-pattern</guid>
+            <title><![CDATA[Declarative Multi-Agent Topology Definition]]></title>
+            <description><![CDATA[Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework.]]></description>
+            <link>https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition</guid>
             <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[prompt-injection]]></category>
-            <category><![CDATA[control-flow]]></category>
-            <category><![CDATA[safety]]></category>
-            <category><![CDATA[tool-use]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Adaptive Sandbox Fan-Out Controller]]></title>
-            <description><![CDATA[Parallel sandboxes are intoxicating: you can spawn 10...]]></description>
-            <link>https://agentic-patterns.com/patterns/adaptive-sandbox-fanout-controller</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/adaptive-sandbox-fanout-controller</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[fan-out]]></category>
-            <category><![CDATA[adaptive]]></category>
-            <category><![CDATA[parallel-sandboxes]]></category>
-            <category><![CDATA[early-stopping]]></category>
-            <category><![CDATA[controller]]></category>
-            <category><![CDATA[variance]]></category>
-            <category><![CDATA[prompt-refinement]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent Modes by Model Personality]]></title>
-            <description><![CDATA[Different AI models have fundamentally different personalities and working styles.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-modes-by-model-personality</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-modes-by-model-personality</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[model-personality]]></category>
-            <category><![CDATA[interaction-modes]]></category>
-            <category><![CDATA[multi-model]]></category>
-            <category><![CDATA[ux-design]]></category>
-            <category><![CDATA[agent-behavior]]></category>
-            <category><![CDATA[opus]]></category>
-            <category><![CDATA[gpt-52]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent SDK for Programmatic Control]]></title>
-            <description><![CDATA[Interactive terminal or chat interfaces are suitable for many agent tasks, but not for all.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[sdk]]></category>
-            <category><![CDATA[automation]]></category>
-            <category><![CDATA[ci/cd]]></category>
-            <category><![CDATA[programmatic access]]></category>
-            <category><![CDATA[scripting]]></category>
-            <category><![CDATA[api]]></category>
-            <category><![CDATA[headless agent]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent-Assisted Scaffolding]]></title>
-            <description><![CDATA[Starting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-assisted-scaffolding</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-assisted-scaffolding</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[code-generation]]></category>
-            <category><![CDATA[bootstrapping]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[topology]]></category>
+            <category><![CDATA[declarative]]></category>
+            <category><![CDATA[orchestration]]></category>
             <category><![CDATA[scaffolding]]></category>
-            <category><![CDATA[feature-development]]></category>
-            <category><![CDATA[ide]]></category>
-            <category><![CDATA[initial-setup]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <category><![CDATA[pipeline]]></category>
+            <category><![CDATA[fan-out]]></category>
+            <category><![CDATA[supervisor]]></category>
+            <category><![CDATA[gate]]></category>
+            <category><![CDATA[cross-platform]]></category>
+            <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Agent-Driven Research]]></title>
-            <description><![CDATA[Traditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-driven-research</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-driven-research</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[research]]></category>
-            <category><![CDATA[information retrieval]]></category>
-            <category><![CDATA[tool use]]></category>
-            <category><![CDATA[iterative process]]></category>
-            <category><![CDATA[autonomous search]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <title><![CDATA[Zero-Trust Agent Mesh]]></title>
+            <description><![CDATA[In multi agent systems, trust boundaries are often implicit: agents communicate by convention without verifiable identity, and delegation chains are hard to audit.]]></description>
+            <link>https://agentic-patterns.com/patterns/zero-trust-agent-mesh</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/zero-trust-agent-mesh</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[zero-trust]]></category>
+            <category><![CDATA[identity]]></category>
+            <category><![CDATA[delegation]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[cryptography]]></category>
+            <category><![CDATA[ed25519]]></category>
+            <category><![CDATA[governance]]></category>
+            <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Agent-First Tool Discovery]]></title>
-            <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-first-tool-discovery</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tool-discovery</guid>
+            <title><![CDATA[MCP Pattern Injection]]></title>
+            <description><![CDATA[AI coding assistants lack domain specific knowledge about framework best practices.]]></description>
+            <link>https://agentic-patterns.com/patterns/mcp-pattern-injection</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/mcp-pattern-injection</guid>
             <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[tool-discovery]]></category>
             <category><![CDATA[mcp]]></category>
-            <category><![CDATA[agent-search]]></category>
-            <category><![CDATA[service-registry]]></category>
-            <category><![CDATA[llms-txt]]></category>
-            <category><![CDATA[api-discovery]]></category>
-            <category><![CDATA[agent-infrastructure]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent-First Tooling and Logging]]></title>
-            <description><![CDATA[Most developer tools, CLIs, and application logs are designed for human consumption.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[tool-design]]></category>
-            <category><![CDATA[logging]]></category>
-            <category><![CDATA[machine-readable]]></category>
-            <category><![CDATA[observability]]></category>
-            <category><![CDATA[agent-environment]]></category>
-            <category><![CDATA[mcp]]></category>
-            <category><![CDATA[structured-output]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent-Friendly Workflow Design]]></title>
-            <description><![CDATA[Simply providing an AI agent with a task is often not enough for optimal performance.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-friendly-workflow-design</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[human-agent collaboration]]></category>
-            <category><![CDATA[workflow design]]></category>
-            <category><![CDATA[agent autonomy]]></category>
-            <category><![CDATA[task decomposition]]></category>
-            <category><![CDATA[HCI]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <category><![CDATA[code-patterns]]></category>
+            <category><![CDATA[tool-injection]]></category>
+            <category><![CDATA[context-enhancement]]></category>
+            <category><![CDATA[langgraph]]></category>
+            <pubDate>Thu, 19 Mar 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Agent-Powered Codebase Q&A / Onboarding]]></title>
@@ -246,53 +251,44 @@
             <category><![CDATA[search]]></category>
             <category><![CDATA[context-awareness]]></category>
             <category><![CDATA[knowledge-base]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[AI Web Search Agent Loop]]></title>
-            <description><![CDATA[Traditional LLMs have a training cutoff date, meaning they don't know recent facts or real time information.]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-web-search-agent-loop</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-web-search-agent-loop</guid>
+            <title><![CDATA[Artifact-Driven Analysis Pipeline Orchestration]]></title>
+            <description><![CDATA[Complex data analysis tasks often require running many sequential or parallel processing steps, each producing intermediate artifacts that feed into subsequent stages.]]></description>
+            <link>https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[pipeline]]></category>
+            <category><![CDATA[multi-step]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[report-generation]]></category>
+            <category><![CDATA[data-analysis]]></category>
+            <category><![CDATA[claude-code]]></category>
+            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Egress Lockdown (No-Exfiltration Channel)]]></title>
+            <description><![CDATA[Even with private data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data .]]></description>
+            <link>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</guid>
             <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[web-search]]></category>
-            <category><![CDATA[serp-api]]></category>
-            <category><![CDATA[citations]]></category>
-            <category><![CDATA[parallel-agents]]></category>
-            <category><![CDATA[query-translation]]></category>
-            <category><![CDATA[operators]]></category>
-            <category><![CDATA[grounding]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <category><![CDATA[network-sandbox]]></category>
+            <category><![CDATA[exfiltration]]></category>
+            <category><![CDATA[outbound-controls]]></category>
+            <category><![CDATA[security]]></category>
+            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[AI-Accelerated Learning and Skill Development]]></title>
-            <description><![CDATA[Developing strong software engineering skills, including "taste" for clean and effective code, traditionally requires extensive experience, trial and error, and]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[developer-productivity]]></category>
-            <category><![CDATA[learning]]></category>
-            <category><![CDATA[skill-acquisition]]></category>
-            <category><![CDATA[iteration]]></category>
-            <category><![CDATA[feedback]]></category>
-            <category><![CDATA[taste-development]]></category>
-            <category><![CDATA[education]]></category>
-            <category><![CDATA[junior-developer]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[AI-Assisted Code Review / Verification]]></title>
-            <description><![CDATA[As AI models generate increasing amounts of code, the bottleneck in software development shifts from code generation to code verification and review.]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[code-review]]></category>
-            <category><![CDATA[verification]]></category>
-            <category><![CDATA[quality-assurance]]></category>
-            <category><![CDATA[human-ai-collaboration]]></category>
-            <category><![CDATA[trust]]></category>
-            <category><![CDATA[explainability]]></category>
-            <category><![CDATA[software-quality]]></category>
-            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <title><![CDATA[Plan-Then-Execute Pattern]]></title>
+            <description><![CDATA[When planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next.]]></description>
+            <link>https://agentic-patterns.com/patterns/plan-then-execute-pattern</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/plan-then-execute-pattern</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[planning]]></category>
+            <category><![CDATA[control-flow-integrity]]></category>
+            <category><![CDATA[prompt-injection]]></category>
+            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

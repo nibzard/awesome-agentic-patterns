@@ -2,6 +2,7 @@
 title: Session-Scoped Context Runtime for Agent Tools
 status: emerging
 authors: ["Yves Gugger (@yvgude)"]
+based_on: ["Anthropic Model Context Protocol Specification"]
 category: "Context & Memory"
 source: "https://github.com/yvgude/lean-ctx"
 tags: [mcp, context-compression, session-cache, agent-tools, coding-assistants]
