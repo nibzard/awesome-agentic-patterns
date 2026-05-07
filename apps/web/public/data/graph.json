@@ -709,6 +709,23 @@
       "summary": "Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles."
     },
     {
+      "id": "cross-protocol-agent-discovery",
+      "title": "Cross-Protocol Agent Discovery",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "cross-protocol-agent-discovery",
+      "tags": [
+        "agent-discovery",
+        "mcp",
+        "registry",
+        "interoperability",
+        "protocol-agnostic",
+        "a2a",
+        "agents-txt"
+      ],
+      "summary": "Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer."
+    },
+    {
       "id": "cryptographic-governance-audit-trail",
       "title": "Cryptographic Governance Audit Trail",
       "category": "Security & Safety",

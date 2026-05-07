@@ -4,7 +4,7 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 07 May 2026 12:20:59 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 07 May 2026 12:50:13 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Black-Box Skill Invocation]]></title>
@@ -19,6 +19,21 @@
             <category><![CDATA[prompt-protection]]></category>
             <category><![CDATA[inter-agent]]></category>
             <category><![CDATA[trust]]></category>
+            <pubDate>Thu, 07 May 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Cross-Protocol Agent Discovery]]></title>
+            <description><![CDATA[Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer.]]></description>
+            <link>https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[agent-discovery]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[registry]]></category>
+            <category><![CDATA[interoperability]]></category>
+            <category><![CDATA[protocol-agnostic]]></category>
+            <category><![CDATA[a2a]]></category>
+            <category><![CDATA[agents-txt]]></category>
             <pubDate>Thu, 07 May 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -280,18 +295,6 @@
             <category><![CDATA[report-generation]]></category>
             <category><![CDATA[data-analysis]]></category>
             <category><![CDATA[claude-code]]></category>
-            <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Egress Lockdown (No-Exfiltration Channel)]]></title>
-            <description><![CDATA[Even with private data access and untrusted inputs, attacks fail if the agent has no way to transmit stolen data .]]></description>
-            <link>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[network-sandbox]]></category>
-            <category><![CDATA[exfiltration]]></category>
-            <category><![CDATA[outbound-controls]]></category>
-            <category><![CDATA[security]]></category>
             <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

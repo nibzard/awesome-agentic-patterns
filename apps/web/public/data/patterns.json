@@ -1152,6 +1152,34 @@
     "excerpt": "\n## Problem\nAutonomous multi-agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles. In-memory state is lost on crash or restart. Generic checkpoint files don't encode the *structured reasoning* — what was decided, why, and what comes next — that agents need to make good decisions in subsequent cycles.\n\nWithout a structured relay mechanism, autonomous loops suffer from:\n- **Drift**: each cycle restarts without awareness of prior decisions\n- **Repetition**: agents re-debate already-settled questions\n- **Stalls**: no convergence signal — agents loop indefinitely without shipping"
   },
   {
+    "title": "Cross-Protocol Agent Discovery",
+    "status": "emerging",
+    "authors": [
+      "Global Chat (@globalchatads)"
+    ],
+    "based_on": [
+      "MCP Registry Protocol (Anthropic)",
+      "agents.txt (Agent Communication Description Protocol)",
+      "Google A2A Protocol"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://modelcontextprotocol.io",
+    "tags": [
+      "agent-discovery",
+      "mcp",
+      "registry",
+      "interoperability",
+      "protocol-agnostic",
+      "a2a",
+      "agents-txt"
+    ],
+    "slug": "cross-protocol-agent-discovery",
+    "id": "cross-protocol-agent-discovery",
+    "summary": "Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer.",
+    "updated_at": "2026-05-07",
+    "excerpt": "\n## Problem\nThe AI agent ecosystem is fragmented across multiple incompatible discovery protocols:\n\n- **MCP (Model Context Protocol)**: Multiple competing registries (mcp.so, Glama.ai, Smithery, PulseMCP) each with partial coverage and no cross-referencing\n- **agents.txt**: A convention for advertising agent capabilities via a well-known file, similar to robots.txt\n- **Google A2A (Agent-to-Agent)**: Google's protocol for inter-agent communication and discovery\n- **ACDP (Agent Communication Description Protocol)**: Standardized agent capability descriptions\n- **Platform-specific directories**: OpenAI GPT Store, Claude integrations, and others each maintain their own listings\n\nNo single registry covers all protocols. An agent listed in an MCP registry won't appear in A2A directories, and vice versa. This creates a discovery problem analogous to early web search before meta-search engines."
+  },
+  {
     "title": "Cryptographic Governance Audit Trail",
     "status": "emerging",
     "authors": [

@@ -181,6 +181,10 @@ URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
 Cross-Cycle Consensus Relay: Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles.
 URL: https://agentic-patterns.com/patterns/cross-cycle-consensus-relay
 
+### cross-protocol-agent-discovery
+Cross-Protocol Agent Discovery: Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer.
+URL: https://agentic-patterns.com/patterns/cross-protocol-agent-discovery
+
 ### cryptographic-governance-audit-trail
 Cryptographic Governance Audit Trail: When AI agents execute tool calls autonomously, there is no tamper evident record of what happened.
 URL: https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail

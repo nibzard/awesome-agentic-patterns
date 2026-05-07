@@ -219,6 +219,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Code Mode MCP Tool Interface Improvement Pattern](patterns/code-first-tool-interface-pattern.md)
 - [Code-Over-API Pattern](patterns/code-over-api-pattern.md)
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
+- [Cross-Protocol Agent Discovery](patterns/cross-protocol-agent-discovery.md)
 - [Dual-Use Tool Design](patterns/dual-use-tool-design.md)
 - [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
