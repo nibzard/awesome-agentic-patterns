@@ -21,7 +21,6 @@ summary: >-
   coordination dialogue happens on the work card itself, co-locating
   decision context with the work that generated it.
 related:
-  - kanban-board-as-agent-memory
   - cross-cycle-consensus-relay
   - memory-synthesis-from-execution-logs
 complexity: medium
