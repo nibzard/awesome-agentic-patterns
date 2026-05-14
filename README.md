@@ -198,6 +198,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Deterministic Threat Rule Scanning](patterns/deterministic-threat-rule-scanning.md)
 - [External Credential Sync](patterns/external-credential-sync.md)
 - [Hook-Based Safety Guard Rails for Autonomous Code Agents](patterns/hook-based-safety-guard-rails.md)
+- [APort Agent Guardrails](https://github.com/aporthq/aport-agent-guardrails)
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
 - [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
