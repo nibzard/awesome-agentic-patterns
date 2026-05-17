@@ -50,5 +50,6 @@ on_tool_read(path, mode):
 ## References
 
 - lean-ctx (Apache-2.0 reference implementation): https://github.com/yvgude/lean-ctx
+- Entroly (information-theoretic context engineering proxy): https://github.com/juyterman1000/entroly
 - Model Context Protocol specification: https://modelcontextprotocol.io/
 - Related catalogue patterns: [MCP Pattern Injection](mcp-pattern-injection.md), [Context-Minimization Pattern](context-minimization-pattern.md), [Semantic Context Filtering Pattern](semantic-context-filtering.md)
