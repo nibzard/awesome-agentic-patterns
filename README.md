@@ -309,3 +309,5 @@ Apache‑2.0. See [`LICENSE`](https://github.com/nibzard/awesome-agentic-pattern
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=nibzard/awesome-agentic-patterns&type=date&legend=top-left)](https://www.star-history.com/#nibzard/awesome-agentic-patterns&type=date&legend=top-left)
+
+- [OpenClaw Monitor](https://github.com/flik2002/openclaw-monitor) — Real-time monitoring dashboard for OpenClaw AI agents: token usage, session tracking, 7-day trends, WebSocket updates
