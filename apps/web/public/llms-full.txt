@@ -16011,6 +16011,7 @@ await page.click(element.xpath);
 ## References
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original accessibility tree implementation
+- [Entroly GitHub Repository](https://github.com/juyterman1000/entroly) - Submodular knapsack optimization and PRISM-based semantic context filtering
 - Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1835449.1835550), SIGIR 2010 - Foundational research showing 40-80% of web content is boilerplate
 - Beurer-Kellner et al., ["Design Patterns for Securing LLM Agents"](https://arxiv.org/abs/2506.08837), arXiv 2025 - Context-Minimization Pattern (security framework)
 - [WAI-ARIA Accessibility Tree](https://www.w3.org/TR/core-aam-1.1/) - Browser accessibility API
@@ -16063,6 +16064,7 @@ on_tool_read(path, mode):
 ## References
 
 - lean-ctx (Apache-2.0 reference implementation): https://github.com/yvgude/lean-ctx
+- Entroly (information-theoretic context engineering proxy): https://github.com/juyterman1000/entroly
 - Model Context Protocol specification: https://modelcontextprotocol.io/
 - Related catalogue patterns: [MCP Pattern Injection](mcp-pattern-injection.md), [Context-Minimization Pattern](context-minimization-pattern.md), [Semantic Context Filtering Pattern](semantic-context-filtering.md)
 
