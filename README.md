@@ -7,6 +7,7 @@ A curated catalogue of **agentic AI patterns** — real‑world tricks, workflow
 > **Why?**
 > Tutorials show toy demos. Real products hide the messy bits. This list surfaces the repeatable patterns that bridge the gap so we can all ship smarter, faster agents.
 
+* [Ano](https://ano.chat) - A collaborative shell with built-in AI integration (Claude Code) and custom CLI/MCP automations designed for elite devs.
 ---
 
 ## What counts as a pattern?
