@@ -3,23 +3,21 @@ title: "Local-First Credential Broker"
 status: emerging
 authors: ["Priyansh Khodiyar (@zriyansh)"]
 category: "Security & Safety"
-source: "https://github.com/agentrhq/authsome"
-tags: [credentials, oauth, api-keys, proxy, local-first, no-saas, agent-identity]
-summary: "Keep raw secrets out of the agent process by injecting credentials at the network layer through a local broker process the agent talks through, rather than handing the agent environment variables or config files."
+source: "https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach"
+tags: [credentials, oauth, api-keys, proxy, local-first, agent-identity]
+summary: "Keep raw secrets out of the agent process by injecting credentials at the network layer through a local broker, rather than handing the agent environment variables or config files."
 complexity: medium
 effort: days
 impact: high
 signals:
-  - "Agents call multiple authenticated SaaS APIs in one run (GitHub, Slack, Stripe, Notion, etc.)"
-  - "Users do not want a hosted credential service or central control plane"
+  - "Agents call multiple authenticated SaaS APIs in one run"
   - "Long-running headless workloads need OAuth2 refresh without a human at the keyboard"
-  - "Conversation logs, agent traces, or crash dumps regularly leak through review tools and must not contain real tokens"
+  - "Conversation logs, agent traces, and crash dumps must not contain real tokens"
 anti_signals:
   - "Single static API key per agent, never rotated"
-  - "Multi-tenant agent fleet that needs per-user attribution on the same host (use a hosted gateway instead)"
-  - "Air-gapped environment with no network access at all (the broker still calls out to provider token endpoints)"
+  - "Multi-tenant agent fleet that needs per-user attribution on the same host"
+  - "Air-gapped environment with no network access at all"
 prerequisites:
-  - "User account on each provider the agent will call"
   - "Local OS keychain or filesystem with permission to store an encrypted vault"
   - "Agent runtime that can route outbound HTTPS through a loopback proxy"
 ---
@@ -57,12 +55,12 @@ graph TD
 - **First-time login flow.** Browser PKCE, OAuth device code, or a one-shot bridge that captures an API key the user pastes once. After the initial login the agent never sees the user's credential entry process.
 - **Provider registry.** A JSON-driven manifest mapping provider hostnames (`api.github.com`, `api.openai.com`) to credential type, refresh endpoint, and any provider-specific headers.
 
-**Implementation sketch (Python-ish pseudocode):**
+**Implementation sketch (pseudocode):**
 
 ```python
 class LocalCredentialBroker:
     def __init__(self, vault_path):
-        self.vault = EncryptedVault(vault_path)        # local file, encrypted at rest
+        self.vault = EncryptedVault(vault_path)
         self.providers = load_provider_registry()
         self.refresh_daemon = RefreshDaemon(self.vault, self.providers)
 
@@ -77,33 +75,27 @@ class LocalCredentialBroker:
             cred = self.refresh_daemon.refresh(cred)
         req.headers["Authorization"] = provider.format_auth(cred)
         return req
-
-# Outside the agent process, runs as a local daemon
-async def serve_loopback_proxy(broker, port=39473):
-    async with HTTPSProxy(port=port, ca=local_self_signed_ca()) as proxy:
-        async for req in proxy.incoming():
-            yield broker.proxy_request(req)
 ```
 
-The agent itself only needs to know that its `HTTPS_PROXY` (or equivalent client config) points at `127.0.0.1:<port>`. From the agent's point of view its outbound calls just succeed; it never sees a real token.
+The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config) points at `127.0.0.1:<port>`. From the agent's point of view its outbound calls just succeed; it never sees a real token.
 
 ## Evidence
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Several open-source implementations of this pattern shipped during 2025–2026 ([authsome](https://github.com/agentrhq/authsome), [OneCLI](https://github.com/onecli/onecli), Infisical [Agent Vault](https://github.com/Infisical/agent-vault)), independently converging on the same broker + loopback proxy shape.
-  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) names "credential isolation via proxy" as a recommended control for agent runtimes.
+  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) names credential isolation via proxy as a recommended control for agent runtimes.
   - OWASP's [Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/) lists "agent process never holds raw API keys" as a hardening principle.
+  - Multiple independent open-source implementations of this shape (Python, Rust, server-backed variants) shipped during 2025–2026, suggesting convergent design rather than a single-vendor pattern.
 - **Unverified / Unclear:**
-  - Long-term behavior in shared developer machines (multi-user POSIX hosts, dev containers with shared loopback)
+  - Long-term behavior on shared developer machines (multi-user POSIX hosts, dev containers with shared loopback)
   - Operational data on whether refresh failures in long-running workloads cause real outage incidents
 
 ## How to use it
 
 1. **Pick a vault location.** Default to a per-user directory the OS already restricts (`~/.config/<broker>/` on Linux, `~/Library/Application Support/<broker>/` on macOS). Encrypt at rest with a key derived from OS keychain or user passphrase.
-2. **Define the provider registry.** Start with the providers the agent calls most ( GitHub, Google, OpenAI, Slack, Notion, Stripe). Each entry needs hostname match, auth header format, and token endpoint URL.
+2. **Define the provider registry.** Start with the providers the agent calls most. Each entry needs hostname match, auth header format, and token endpoint URL.
 3. **Pick first-login flow per provider.** OAuth2 providers: browser PKCE for desktop, device code for headless. API-key providers: one-shot bridge page the user pastes the key into. Never ask the user to paste secrets into the agent chat.
-4. **Run the broker as a long-lived local process.** Start with the agent session, keep running across multiple invocations. The refresh daemon needs to be alive to refresh tokens before they expire.
+4. **Run the broker as a long-lived local process.** The refresh daemon needs to be alive to refresh tokens before they expire.
 5. **Configure the agent to use the loopback proxy.** Set `HTTPS_PROXY=https://127.0.0.1:<port>` (or framework-specific config) and install the broker's local CA so the agent's HTTPS client trusts it.
 6. **Audit the seam.** Log every credential injection (provider, request path, time) inside the broker; never log the credential value. Surface those logs to the user, not the agent.
 
@@ -112,7 +104,7 @@ The agent itself only needs to know that its `HTTPS_PROXY` (or equivalent client
 - **Don't proxy traffic to providers the broker doesn't know about.** Default to pass-through. A broker that swallows all outbound HTTPS becomes a debugging nightmare.
 - **Don't store credentials in a global registry.** Per-user vault. Sharing one vault across users on the same host re-introduces the very leakage problem the pattern is meant to solve.
 - **Don't put the broker's own admin API on a public port.** Loopback only.
-- **Don't forget refresh under load.** Refresh tokens need to be retried with backoff; refresh failures need to surface as actionable errors, not as silent 401s the agent then retries forever.
+- **Don't forget refresh under load.** Refresh tokens need retry with backoff; refresh failures need to surface as actionable errors, not as silent 401s the agent then retries forever.
 
 ## Trade-offs
 
@@ -130,14 +122,6 @@ The agent itself only needs to know that its `HTTPS_PROXY` (or equivalent client
 - The agent's HTTP client must respect the proxy config; some SDKs hardcode their own client and need adapters.
 - For multi-tenant agent fleets (one machine serving many users), a hosted gateway is a better fit; this pattern is single-user by design.
 
-## Reference implementations
-
-Several open-source implementations exist; each makes different trade-offs:
-
-- [agentrhq/authsome](https://github.com/agentrhq/authsome) — Python broker with encrypted vault, loopback HTTPS proxy, OAuth2 (PKCE + device code) and API key support. 45 providers bundled, agentskills.io SKILL.md, Claude Code plugin manifest.
-- [onecli/onecli](https://github.com/onecli/onecli) — Rust broker with per-agent scoped tokens, AES-256-GCM at rest, full audit trail.
-- [Infisical/agent-vault](https://github.com/Infisical/agent-vault) — Server-backed variant: same proxy injection pattern but credentials live in Infisical's central store rather than the local machine. Useful when the multi-tenant trade-off swings the other way.
-
 ## References
 
 - [CSA — Agentic AI Identity & Access Management (2025-08)](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach)
@@ -147,3 +131,4 @@ Several open-source implementations exist; each makes different trade-offs:
 - [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
 - Related pattern: [/patterns/external-credential-sync](external-credential-sync.md) — for syncing existing CLI credentials across tools rather than brokering new ones.
 - Related pattern: [/patterns/sandboxed-tool-authorization](sandboxed-tool-authorization.md) — for restricting which tools an agent can call once authenticated.
+- Known implementations (disclosed: author maintains the first): [agentrhq/authsome](https://github.com/agentrhq/authsome) (Python, local-only); [onecli/onecli](https://github.com/onecli/onecli) (Rust, per-agent scopes); [Infisical/agent-vault](https://github.com/Infisical/agent-vault) (server-backed variant).
