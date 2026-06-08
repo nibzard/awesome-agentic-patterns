@@ -66,6 +66,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md)
 - [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
 - [Context Window Auto-Compaction](patterns/context-window-auto-compaction.md)
+- [Cross-Agent Lesson Sharing via Git](patterns/cross-agent-lesson-sharing.md)
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
 - [Curated Code Context Window](patterns/curated-code-context-window.md)
 - [Curated File Context Window](patterns/curated-file-context-window.md)
