@@ -1,8 +1,8 @@
 ---
 title: Cross-Agent Lesson Sharing via Git
 status: validated-in-production
-authors: ["MisakaNet community"]
-based_on: ["MisakaNet", "GitHub Issues"]
+authors: ["Eric Jia (@Ikalus1988)"]
+based_on: ["MisakaNet (https://github.com/Ikalus1988/MisakaNet)", "GitHub Issues"]
 category: Context & Memory
 source: "https://github.com/Ikalus1988/MisakaNet"
 tags: [distributed-memory, knowledge-sharing, git-based, swarm-memory, lessons-learned]
@@ -61,3 +61,9 @@ python3 -c "import chromadb; chromadb.Client()"
 5. Optionally, set up a hub agent that validates proposals, deduplicates similar lessons, and maintains an index.
 
 For a production implementation, see [MisakaNet](https://github.com/Ikalus1988/MisakaNet) — 104+ shared lessons across 7 domains, 21+ registered nodes.
+
+## References
+
+- [MisakaNet](https://github.com/Ikalus1988/MisakaNet) — production implementation: distributed swarm memory with 104+ lessons, 21+ nodes (disclosed: contributor-owned project)
+- [Git as a Distributed Database](https://gitbucket.github.io/gitbucket-docure/gitbucket-database.html) — Git's object model supports offline replication, append-heavy workloads, and conflict resolution, making it a natural substrate for distributed knowledge stores
+- [Experience Factory Approach](https://doi.org/10.1007/978-3-540-30979-2_7) — Basili et al.'s SEI pattern for packaging and reusing project experience across teams; the conceptual ancestor of lesson-sharing systems
