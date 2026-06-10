@@ -4,7 +4,7 @@ status: validated-in-production
 authors: ["James Ross (@jimy-r)"]
 based_on: ["Anthropic context-engineering guidance", "Agent Workspace Architecture (production workspace)"]
 category: "Context & Memory"
-source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/META_ARCHITECTURE.md"
+source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#9-context-is-a-budget-not-a-constant"
 tags: [context-budget, token-costs, ghost-tokens, compaction, scheduled-agents]
 last_updated: "2026-06-11"
 ---
@@ -48,5 +48,5 @@ Adopt once any file is auto-loaded into every session or any agent runs unattend
 
 ## References
 
-- [Agent Workspace Architecture](https://github.com/jimy-r/agent-workspace-architecture) — production implementation (Token Budget module in META_ARCHITECTURE.md: ghost-token baseline counter, per-run cost ledger, budget caps, compaction instructions)
+- [Agent Workspace Architecture — PATTERNS.md #9](https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#9-context-is-a-budget-not-a-constant) — the pattern page this entry is extracted from (Token Budget module detail in META_ARCHITECTURE.md: ghost-token baseline counter, per-run cost ledger, budget caps, compaction instructions)
 - [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — the vendor guidance this governance layer operationalises
