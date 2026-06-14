@@ -1,6 +1,8 @@
 // ABOUTME: API endpoint for newsletter subscription using Resend
 
 import type { APIRoute } from 'astro';
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
 export const prerender = false;
 
@@ -9,27 +11,12 @@ const JSON_HEADERS = {
   'Cache-Control': 'no-store',
 };
 
-// Rate limiting: Store IP addresses with timestamps in memory
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 3;
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimitMap.get(ip);
-
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return true;
-  }
-
-  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
-    return false;
-  }
-
-  record.count++;
-  return true;
-}
+// Security Fix: Replaced vulnerable in-memory rate limiter (susceptible to IP spoofing and OOM DoS)
+// with Upstash Ratelimit backed by Redis, which handles key expiration and uses trusted proxy headers.
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(3, '60 s'),
+});
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -86,14 +73,12 @@ function jsonResponse(body: Record<string, unknown>, status: number) {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Get client IP for rate limiting
-    const ip =
-      request.headers.get('x-forwarded-for')?.split(',')[0] ||
-      request.headers.get('x-real-ip') ||
-      'unknown';
+    // Security Fix: Use platform-specific trusted header instead of blindly trusting X-Forwarded-For
+    const ip = request.headers.get('x-real-ip') || 'unknown';
 
-    // Check rate limit
-    if (!checkRateLimit(ip)) {
+    // Check rate limit using Redis-backed rate limiter
+    const { success } = await ratelimit.limit(ip);
+    if (!success) {
       return jsonResponse({ error: 'Too many requests. Please try again later.' }, 429);
     }
 
