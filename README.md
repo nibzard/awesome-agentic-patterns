@@ -238,6 +238,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Virtual Machine Operator Agent](patterns/virtual-machine-operator-agent.md)
 - [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md)
 
+- [MCP Product Search Pattern](patterns/buywhere-mcp-product-search.md)
 ### <a name="ux-collaboration"></a>UX & Collaboration
 
 - [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md)
