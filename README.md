@@ -114,6 +114,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="orchestration-control"></a>Orchestration & Control
 
+- **[llm-box](https://github.com/alib8b8/llm-box)** - Terminal-first AI workflow engine with YAML-defined pipelines and multi-model orchestration.
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent Modes by Model Personality](patterns/agent-modes-by-model-personality.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)
