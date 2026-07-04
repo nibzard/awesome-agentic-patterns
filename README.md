@@ -63,6 +63,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="context-memory"></a>Context & Memory
 
+- **[Context Kit](https://github.com/JDDavenport/context-kit)** — Personal Context Injection pattern: 4 structured Markdown files (wiki, mental-models, voice, protocols) + 5 Claude Code skills that implement the pattern. Proven in a 28-agent system over 6 months. MIT, one-command install.
 - [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md)
 - [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
 - [Context Window Auto-Compaction](patterns/context-window-auto-compaction.md)
