@@ -61,18 +61,6 @@ graph TD
     F --> H[Drift Monitor vs. Baseline]
 ```
 
-## Evidence
-
-- **Evidence Grade:** low
-- **Most Valuable Findings:** Implemented and demonstrated in a working
-  reference architecture ([Agentic Cortex](https://github.com/Narasimhan-Ramani/agentix-cortex))
-  coordinating cost, reliability, compliance, and performance agents over a
-  shared resource graph; policy-as-code resolution avoids hardcoding
-  domain-priority logic in application code.
-- **Unverified / Unclear:** Not yet validated at scale across many
-  independent teams/orgs; long-term maintenance cost of the policy layer as
-  domain count grows is untested.
-
 ## How to use it
 
 **Applicable when:**
