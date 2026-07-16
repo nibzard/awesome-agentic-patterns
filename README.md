@@ -125,6 +125,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Conditional Parallel Tool Execution](patterns/parallel-tool-execution.md)
 - [Continuous Autonomous Task Loop Pattern](patterns/continuous-autonomous-task-loop-pattern.md)
 - [Cross-Cycle Consensus Relay](patterns/cross-cycle-consensus-relay.md)
+- [Cross-Domain Agent Conflict Resolution](patterns/cross-domain-agent-conflict-resolution.md)
 - [Custom Sandboxed Background Agent](patterns/custom-sandboxed-background-agent.md)
 - [Declarative Multi-Agent Topology Definition](patterns/declarative-multi-agent-topology-definition.md)
 - [Deterministic Zero-LLM Orchestration](patterns/deterministic-zero-llm-orchestration.md)
