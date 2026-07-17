@@ -181,6 +181,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [LLM Observability](patterns/llm-observability.md)
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
+- [Orchestration Prompt-Writing Benchmark](patterns/orchestration-prompt-writing-benchmark.md)
 - [Output Verification Loop](patterns/output-verification-loop.md)
 - [Reliability Problem Map Checklist for RAG and Agents](patterns/wfgy-reliability-problem-map.md)
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
