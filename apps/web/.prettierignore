@@ -4,6 +4,7 @@ node_modules/
 # Build outputs
 dist/
 .astro/
+.vercel/
 
 # Lock files
 package-lock.json
@@ -18,6 +19,14 @@ pnpm-lock.yaml
 .env
 .env.*
 
-# Generated files
-public/patterns/*.json
+# Generated files (emitted by scripts/build-data.ts — keep build-data format, do not reformat)
+public/patterns.json
+public/graph.json
+public/llms.txt
+public/llms-full.txt
+public/sitemap.xml
+public/rss.xml
+public/patterns/
+public/data/
 public/pagefind/
+src/data/github-stars.json
