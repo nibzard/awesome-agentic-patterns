@@ -21,7 +21,7 @@
   "id": "board-mediated-async-inter-agent-coordination",
   "summary": "Route messages between agents through board card comment threads.  A routing prefix triggers inbox card creation for notification; the actual coordination dialogue happens on the work card itself, co-locating decision context with the work that generated it.",
   "complexity": "medium",
-  "effort": "days",
+  "effort": "medium",
   "impact": "high",
   "related": [
     "cross-cycle-consensus-relay",

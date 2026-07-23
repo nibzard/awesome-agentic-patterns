@@ -9,7 +9,7 @@ tags: [multi-agent, orchestration, benchmark, evaluation, prompt-engineering, ro
 summary: "Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway."
 maturity: "early"
 complexity: "medium"
-effort: "days"
+effort: medium
 impact: "medium"
 signals: ["Building a multi-agent system with a fixed or evolving communication topology", "Orchestrator failures are hard to attribute to a specific sub-agent vs. a bad hand-off prompt", "You already have end-to-end evals but still see silent quality regressions"]
 anti_signals: ["Single-agent system with no delegation", "Topology is trivial (one sub-agent, one round-trip)"]

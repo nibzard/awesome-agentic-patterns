@@ -8,7 +8,7 @@ source: "https://github.com/yehudalevy-collab/polis-protocol"
 tags: [multi-agent, coordination, markdown, bandit-routing, governance, vendor-agnostic]
 maturity: maturing
 complexity: medium
-effort: days
+effort: medium
 impact: high
 signals: ["Multiple agents from different vendors need to share state on the same project", "Routing decisions should improve from past outcomes, not just static capability declarations", "Process rules need to evolve without breaking running work"]
 anti_signals: ["Single-agent solo session", "Pure RPC between two agents with no shared state", "Hard real-time coordination (sub-second latency requirements)"]

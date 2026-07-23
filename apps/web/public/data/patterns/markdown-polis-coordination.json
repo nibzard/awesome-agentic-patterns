@@ -22,7 +22,7 @@
   "summary": "When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long lived project, they have no native channel for \"who's good at what,\" \"what did we already try,\" or \"what does this team consider done.\" Each session starts cold.",
   "maturity": "maturing",
   "complexity": "medium",
-  "effort": "days",
+  "effort": "medium",
   "impact": "high",
   "signals": [
     "Multiple agents from different vendors need to share state on the same project",

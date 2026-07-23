@@ -23,7 +23,7 @@
   "summary": "Records agent promises and credits retrieved memory only after an externally verifiable outcome settles.",
   "maturity": "early",
   "complexity": "medium",
-  "effort": "days",
+  "effort": "medium",
   "impact": "high",
   "signals": [
     "Multi-step agent work",
