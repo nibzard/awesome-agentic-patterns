@@ -101,6 +101,10 @@ URL: https://agentic-patterns.com/patterns/background-agent-ci
 Black-Box Skill Invocation: When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations.
 URL: https://agentic-patterns.com/patterns/black-box-skill-invocation
 
+### board-mediated-inter-agent-coordination
+Board-Mediated Async Inter-Agent Coordination: Route messages between agents through board card comment threads.  A routing prefix triggers inbox card creation for notification; the actual coordination dialogue happens on the work card itself, co-locating decision context with the work that generated it.
+URL: https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination
+
 ### budget-aware-model-routing-with-hard-cost-caps
 Budget-Aware Model Routing with Hard Cost Caps: Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.
 URL: https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps
@@ -149,6 +153,10 @@ URL: https://agentic-patterns.com/patterns/codebase-optimization-for-agents
 Coding Agent CI Feedback Loop: When a coding agent tackles multi file refactors or feature additions, running tests and waiting for test feedback synchronously ties up compute and prevents the agent from working on parallel tasks.
 URL: https://agentic-patterns.com/patterns/coding-agent-ci-feedback-loop
 
+### commitment-ledger-reality-gated-credit
+Commitment Ledger with Reality-Gated Credit: Records agent promises and credits retrieved memory only after an externally verifiable outcome settles.
+URL: https://agentic-patterns.com/patterns/commitment-ledger-reality-gated-credit
+
 ### compounding-engineering-pattern
 Compounding Engineering Pattern: Codify all learnings from each feature into reusable prompts, slash commands, subagents, and hooks—making each feature easier to build by creating increasingly "self-teaching" codebase that accelerates productivity over time.
 URL: https://agentic-patterns.com/patterns/compounding-engineering-pattern
@@ -156,6 +164,10 @@ URL: https://agentic-patterns.com/patterns/compounding-engineering-pattern
 ### parallel-tool-execution
 Conditional Parallel Tool Execution: When an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read only and could be run concurrently.
 URL: https://agentic-patterns.com/patterns/parallel-tool-execution
+
+### context-budget-as-a-governed-resource
+Context Budget as a Governed Resource: Always loaded context accretes silently.
+URL: https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource
 
 ### context-window-anxiety-management
 Context Window Anxiety Management: Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains.
@@ -176,6 +188,10 @@ URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-patte
 ### criticgpt-style-evaluation
 CriticGPT-Style Code Review: As AI generated code becomes more sophisticated, it becomes increasingly difficult for human reviewers to catch subtle bugs, security issues, or quality problems.
 URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
+
+### cross-agent-lesson-sharing
+Cross-Agent Lesson Sharing via Git: AI agents working in isolation waste hours debugging issues that other agents have already solved.
+URL: https://agentic-patterns.com/patterns/cross-agent-lesson-sharing
 
 ### cross-cycle-consensus-relay
 Cross-Cycle Consensus Relay: Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles.
@@ -200,6 +216,10 @@ URL: https://agentic-patterns.com/patterns/curated-file-context-window
 ### custom-sandboxed-background-agent
 Custom Sandboxed Background Agent: Off the shelf coding agents (e.g., Devin, Claude Code, Cursor) are either: Too generic Not deeply integrated with company specific dev environments, tools, and
 URL: https://agentic-patterns.com/patterns/custom-sandboxed-background-agent
+
+### dead-mans-switch-for-scheduled-agent-jobs
+Dead-Man's Switch for Scheduled Agent Jobs: An agent workspace accumulates scheduled jobs: a morning digest, a background task manager, a weekly self audit, a memory consolidation pass.
+URL: https://agentic-patterns.com/patterns/dead-mans-switch-for-scheduled-agent-jobs
 
 ### declarative-multi-agent-topology-definition
 Declarative Multi-Agent Topology Definition: Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework.
@@ -390,6 +410,14 @@ URL: https://agentic-patterns.com/patterns/llm-observability
 LLM-Friendly API Design: For AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters.
 URL: https://agentic-patterns.com/patterns/llm-friendly-api-design
 
+### local-first-credential-broker
+Local-First Credential Broker: Keep raw secrets out of the agent process by injecting credentials at the network layer through a local broker, rather than handing the agent environment variables or config files.
+URL: https://agentic-patterns.com/patterns/local-first-credential-broker
+
+### markdown-polis-coordination
+Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution: When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long lived project, they have no native channel for "who's good at what," "what did we already try," or "what does this team consider done." Each session starts cold.
+URL: https://agentic-patterns.com/patterns/markdown-polis-coordination
+
 ### mcp-pattern-injection
 MCP Pattern Injection: AI coding assistants lack domain specific knowledge about framework best practices.
 URL: https://agentic-patterns.com/patterns/mcp-pattern-injection
@@ -437,6 +465,10 @@ URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
 ### oracle-and-worker-multi-model
 Oracle and Worker Multi-Model Approach: Relying on a single AI model creates a trade off between capability and cost.
 URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
+
+### orchestration-prompt-writing-benchmark
+Orchestration Prompt-Writing Benchmark: Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway.
+URL: https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark
 
 ### output-verification-loop
 Output Verification Loop: Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.

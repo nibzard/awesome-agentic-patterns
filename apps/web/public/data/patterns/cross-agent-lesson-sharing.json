@@ -1,0 +1,25 @@
+{
+  "title": "Cross-Agent Lesson Sharing via Git",
+  "status": "validated-in-production",
+  "authors": [
+    "MisakaNet community"
+  ],
+  "based_on": [
+    "MisakaNet",
+    "GitHub Issues"
+  ],
+  "category": "Context & Memory",
+  "source": "https://github.com/Ikalus1988/MisakaNet",
+  "tags": [
+    "distributed-memory",
+    "knowledge-sharing",
+    "git-based",
+    "swarm-memory",
+    "lessons-learned"
+  ],
+  "slug": "cross-agent-lesson-sharing",
+  "id": "cross-agent-lesson-sharing-via-git",
+  "summary": "AI agents working in isolation waste hours debugging issues that other agents have already solved.",
+  "updated_at": "2026-07-23",
+  "body": "\n## Problem\n\nAI agents working in isolation waste hours debugging issues that other agents have already solved. ChromaDB crashes on NTFS, pip install fails on WSL encoding, Feishu webhook URLs get committed to git — each agent discovers these independently. There is no mechanism for one agent's debugging session to benefit the entire fleet.\n\n## Solution\n\nUse **Git as the shared memory substrate** and **GitHub Issues as the message bus** for cross-agent knowledge sharing:\n\n1. When an agent solves a non-trivial problem, it writes a structured \"lesson\" (markdown with problem/fix/verify sections) and pushes to a shared `lessons/` directory.\n2. Other agents pull the repo and search lessons before debugging — `grep` or semantic search over markdown files.\n3. GitHub Issues serve as the coordination layer: agents post proposals, humans (or hub agents) review and merge.\n4. Each node maintains a full copy of the knowledge base, enabling offline operation and natural conflict resolution via Git merge.\n\nKey design decisions:\n- **Markdown for lessons** — human-readable, git-diffable, searchable with standard tools\n- **GitHub Issues as message bus** — zero infrastructure, built-in auth, web UI for humans\n- **Git for sync** — offline-first, conflict-resilient, every node has full history\n- **Hub-spoke with optional arbitration** — a central hub can validate and deduplicate lessons, but nodes work independently when the hub is offline\n\nExample lesson structure:\n```markdown\n---\ntitle: ChromaDB crashes on NTFS\ndomain: devops\nstatus: published\nconfidence: 0.9\n---\n\n## Problem\nChromaDB fails with \"Invalid cross-device link\" on NTFS-mounted WSL paths.\n\n## Fix\nSet `CHROMA_CACHE_DIR` to a native ext4 path:\nexport CHROMA_CACHE_DIR=/tmp/chroma-cache\n\n## Verify\npython3 -c \"import chromadb; chromadb.Client()\"\n```\n\n## Trade-offs\n\n**Pros:** Every debugging session benefits the entire fleet; knowledge compounds over time; works offline; no additional infrastructure beyond GitHub.\n**Cons:** Requires discipline to write lessons; stale lessons can mislead; merge conflicts possible (but rare for append-heavy workloads); GitHub rate limits on API access.\n\n## How to use it\n\n1. Set up a shared Git repository with a `lessons/` directory.\n2. Define a lesson template (problem/fix/verify with YAML frontmatter for metadata).\n3. After solving a non-trivial problem, agents write a lesson and push via PR or direct commit.\n4. Before debugging, agents search the lessons directory: `grep -r \"keyword\" lessons/` or use semantic search.\n5. Optionally, set up a hub agent that validates proposals, deduplicates similar lessons, and maintains an index.\n\nFor a production implementation, see [MisakaNet](https://github.com/Ikalus1988/MisakaNet) — 104+ shared lessons across 7 domains, 21+ registered nodes.\n"
+}

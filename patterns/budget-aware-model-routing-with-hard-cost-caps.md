@@ -4,7 +4,7 @@ status: established
 authors: ["Codex (@openai)"]
 based_on: ["Multi-model routing practices from production LLM systems"]
 category: "Orchestration & Control"
-source: "https://martinfowler.com/articles/llm.html"
+source: "https://arxiv.org/abs/2305.05176"
 tags: [routing, cost-control, multi-model, orchestration, reliability]
 ---
 
@@ -57,8 +57,7 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 
 ## References
 
-- https://martinfowler.com/articles/llm.html
+- https://arxiv.org/abs/2305.05176 - FrugalGPT: Cost-Effective LLM Routing (Stanford, 2023)
 - https://simonwillison.net/2024/May/29/training-not-chatting/
-- https://arxiv.org/abs/2305.05176 - FrugalGPT (Stanford, 2023)
 - https://arxiv.org/abs/2406.18665 - RouteLLM (ICLR 2024)
 - https://arxiv.org/html/2510.08439v1 - xRouter (2025)

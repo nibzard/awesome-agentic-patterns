@@ -2566,12 +2566,134 @@ The attack surface shrinks from "the entire LLM context" to "the function parame
 
 ---
 
+## Board-Mediated Async Inter-Agent Coordination
+
+**Status:** validated-in-production
+**Category:** Orchestration & Control
+**Authors:** James Farley (@AgileSmagile)
+**Source:** https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint
+
+## Problem
+
+Agents running in separate sessions cannot communicate without a human routing messages between them.  Shared context windows do not survive session boundaries.  The standard workarounds -- a human copy-pasting between terminals, shared files, or a dedicated message queue -- all have failure modes: human bottleneck, no delivery guarantee, or a coordination system that is decoupled from the work being coordinated.
+
+The coordination problem compounds when you want the exchange to be useful later.  A review comment posted in a Slack thread disappears from the work record.  A decision made in a separate file has no connection to the card that required it.  The work and the context that shaped it are separated.
+
+## Solution
+
+Use the **Kanban board's card comment thread as the primary coordination channel** between agents.  Coordination happens on the card where the work lives, not in a separate system.
+
+The mechanism has two layers:
+
+**Routing convention (the signal layer):**  When Agent A needs Agent B's input, it posts a comment on the relevant card with Agent B's prefix in square brackets: `[quality-guardian]`.  This is a lightweight convention, not a protocol.  It requires no infrastructure to write; it requires only a scanner to detect.
+
+**Inbox card (the notification layer):**  A handler detects the `[prefix]` token in new comments and creates a transient inbox card in a dedicated inbox column, addressed to the target agent.  The inbox card contains the source card ID and the first 80 characters of the comment -- enough context to know where to look, not a full message.  The target agent polls the inbox column on a schedule and, when it sees a card addressed to it, navigates to the source card to read the full thread.
+
+The actual exchange happens on the source card.  Agent B reads the full comment thread, posts its response on the same card (using Agent A's prefix as an acknowledgement signal), and the handler closes the loop.  The inbox card is closed after processing.
+
+```mermaid
+sequenceDiagram
+    participant A as Agent A
+    participant Board as Kanban Board
+    participant Handler as Event Handler
+    participant B as Agent B
+
+    A->>Board: Post [agent-b] comment on card #42
+    Board->>Handler: Comment event fires (business rule or poll)
+    Handler->>Board: Create inbox card: "[agent-b] #42 — ..."
+    B->>Board: Poll inbox column (next scheduled check)
+    B->>Board: Read card #42 full comment thread
+    B->>Board: Post [agent-a] response on card #42
+    Handler->>Board: Create return inbox card for Agent A
+    A->>Board: Read response on card #42
+    Board->>Board: Inbox cards closed; card #42 retains full thread
+```
+
+**Why coordination belongs on the work card:**  The comment thread becomes the audit trail.  A review, a clarifying question, a decision to change approach -- these are work events, not side conversations.  Co-locating them with the card means a future agent reading the card history sees not just what was done but why, and what debate preceded the decision.  The single source of truth gets richer with every exchange.
+
+**Dialogue mode (`/watch-card`):**  For synchronous-style exchanges where Agent A needs a response before continuing, it enters active wait after posting.  It checks its inbox at a set interval (typically 10 minutes) for up to 6 attempts.  If a response arrives, it continues.  If no response arrives within the hour, the card is automatically blocked with a comment for the human.  The agent does not sit idle during the wait; it continues work on other cards.
+
+**Cascade prevention:**  Agent responses use a modified prefix format (`[notification/Agent-X]`) that contains a slash.  The detection regex (`/\[([A-Za-z][A-Za-z0-9-]*)\]/`) does not match tokens containing slashes.  Responses do not trigger new inbox cards; only new requests do.
+
+## How to use it
+
+**Prerequisites:**
+
+- A Kanban board with a REST API and a dedicated inbox column.  The inbox column sits outside the normal work columns and does not count against WIP limits.
+- An event handler that scans new comments for `[prefix]` tokens and creates inbox cards.  The handler can be push-based (board business rule triggers on comment creation) or polling-based (a scheduled process scans active cards every 60-90 seconds).  Push is strongly preferred; polling works as a fallback.
+- A unique routing prefix for each named agent (e.g., `quality-guardian`, `lead-agent`, `mosaic`).  Each prefix must be owned by exactly one agent.  Two agents sharing a prefix will both act on the same inbox card.
+
+**Prefix ownership:**
+
+```
+Named delivery agents:   one per domain (one prefix each)
+Coordination hubs:       one per scope (one prefix each)
+Sandbox / ephemeral agents: no prefix, no inbox, no named coordination
+```
+
+Sandbox agents read and write to the board but do not receive inbox notifications.  They are cheap to spin up and do not need the coordination overhead.
+
+**Posting a coordination request:**
+
+```pseudo
+# Agent A needs Agent B's input on card #42
+board.comment(card_id=42, text="[agent-b] Can you review the rate-limiting approach here?")
+
+# If Agent A needs the response before continuing (/watch-card mode):
+for attempt in range(6):
+    wait(10 minutes)
+    inbox = board.get_inbox_cards(prefix="agent-a")
+    if inbox:
+        response = board.get_card(inbox[0].source_card_id)
+        process(response.latest_comment)
+        board.close(inbox[0])
+        break
+else:
+    board.block(card_id=42, comment="[human] Waiting on agent-b response; auto-blocked after 1h")
+```
+
+**Polling intervals by role:**
+
+| Role | Interval | Why |
+|------|----------|-----|
+| Project agents | 60 minutes | Planned delivery work; async lag is acceptable |
+| Coordination hubs | 15 minutes | Cross-cutting concerns; faster response has system-wide value |
+| Active wait (`/watch-card`) | 10 minutes | Dialogue mode; agent is waiting on a specific response |
+| Distributed synchronous sessions | Under 5 minutes | Real-time-like collaboration around a single card |
+
+**Initiative wakeup:**  When a planning initiative enters the active column, the handler extracts the prefix from the initiative title (e.g., `[mosaic] v2 rearchitecture`) and creates an inbox card automatically.  No comment required.  Name your initiatives with the responsible agent's prefix and strategic wakeup is free.
+
+## Trade-offs
+
+**Pros:**
+
+- **Coordination context is co-located with work context.**  Decisions, reviews, and blockers are recorded on the card they relate to.  Future agents and humans see the full picture without a separate coordination log.
+- **No shared context window required.**  Agents coordinate across separate sessions via the board.  No handoff document, no human relay.
+- **The pattern survives infrastructure changes.**  The routing convention (`[prefix]`) and inbox column are stable; only the delivery mechanism (push vs poll) varies.  A team that starts with polling can upgrade to push without changing any agent behaviour.
+- **Audit trail included.**  Every inter-agent exchange is recorded on the work card.  Post-session review, escalation, and pattern analysis are possible without additional tooling.
+- **Scales to asynchronous collaboration.**  Agents with different session schedules coordinate naturally.  The board holds the message until the recipient is active.
+
+**Cons:**
+
+- **Latency.**  Push-based delivery (board business rule to event handler) produces inbox cards within seconds.  Polling-based delivery adds up to 90 seconds at the handler and up to 60 minutes at the agent's inbox poll.  For time-sensitive coordination, this is a real constraint.
+- **Multiplicity requirement.**  Each prefix must map to exactly one active agent.  Running two instances of the same agent breaks routing.  This is a process discipline requirement, not a technical one.
+- **Bootstrap gap.**  A comment posted at the exact moment a card enters a scanned column may be missed if the handler records the latest comment ID before processing.  Mitigation: process comments newer than a short time window (5 minutes) even on first scan.
+- **Board tool dependency.**  Comment-event webhooks are not universally supported.  Businessmap supports them via business rules.  Trello and GitHub Projects do not.  Teams on unsupported tools fall back to polling, which works but adds latency.
+- **Shell escaping edge cases.**  Passing comment text through shell arguments into a JSON payload fails on double-quoted strings containing parentheses or special characters.  Single-quoted strings and short comments are more reliable.
+
+## References
+
+- [Agentic Kanban Blueprint](https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint) -- reference implementation including the Cloudflare Worker proxy, n8n handler, routing convention, polling fallback, and `/watch-card` protocol
+- [AKB docs: agent-communication.md](https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint/blob/main/docs/agent-communication.md) -- full implementation detail including failure modes, multiplicity rules, and initiative wakeup
+
+---
+
 ## Budget-Aware Model Routing with Hard Cost Caps
 
 **Status:** established
 **Category:** Orchestration & Control
 **Authors:** Codex (@openai)
-**Source:** https://martinfowler.com/articles/llm.html
+**Source:** https://arxiv.org/abs/2305.05176
 
 ## Problem
 
@@ -2622,9 +2744,8 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 
 ## References
 
-- https://martinfowler.com/articles/llm.html
+- https://arxiv.org/abs/2305.05176 - FrugalGPT: Cost-Effective LLM Routing (Stanford, 2023)
 - https://simonwillison.net/2024/May/29/training-not-chatting/
-- https://arxiv.org/abs/2305.05176 - FrugalGPT (Stanford, 2023)
 - https://arxiv.org/abs/2406.18665 - RouteLLM (ICLR 2024)
 - https://arxiv.org/html/2510.08439v1 - xRouter (2025)
 
@@ -4026,6 +4147,113 @@ sequenceDiagram
 
 ---
 
+## Commitment Ledger with Reality-Gated Credit
+
+**Status:** proposed
+**Category:** Learning & Adaptation
+**Authors:** Max Baluev (@maxbaluev)
+**Source:** https://github.com/maxbaluev/accreted-intelligence
+
+## Problem
+
+Agents often write memories or update heuristics immediately after generating an answer. That creates weak learning signals:
+
+- A plausible answer can be recorded as if it worked.
+- Retrieved memories get credited even when the final action later fails.
+- Human review, tests, production incidents, and real replies are disconnected from the memory records that influenced the action.
+- Future agents cannot audit which past commitments were predictions, which were settled facts, and which were never verified.
+
+The result is memory that compounds confidence faster than it compounds truth.
+
+## Solution
+
+Add a **commitment ledger** between retrieval and memory updates.
+
+1. Before acting, record the goal, the retrieved memories or context IDs, the planned action, and the expected success condition.
+2. Execute the action normally: code change, email, research answer, deployment, ticket update, or tool call.
+3. Wait for a real outcome: passing tests, merged PR, user confirmation, incident resolution, benchmark result, support reply, or other external signal.
+4. Settle the commitment with a provenance tier and update memory credit only from that settlement.
+
+```pseudo
+commitment = ledger.open({
+  goal,
+  retrieved_ids,
+  planned_action,
+  success_condition
+})
+
+result = act(planned_action)
+outcome = verifier.wait_for_signal(result, success_condition)
+
+ledger.close(commitment.id, outcome)
+memory.credit(
+  retrieved_ids,
+  reward=outcome.score,
+  provenance=outcome.provenance
+)
+```
+
+Useful provenance tiers:
+
+- **self-graded:** the agent believes it worked; weak prior only.
+- **runtime:** a local tool, test, or evaluator produced a checkable result.
+- **external:** the outside world answered, such as a merge, reply, production metric, or incident closure.
+- **owner:** a responsible human explicitly accepted or rejected the result.
+
+This separates "the agent predicted this would help" from "reality confirmed it helped."
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Reflexion shows that explicit episodic feedback can improve repeated task performance without model weight updates.
+  - SWE-bench-style evaluation demonstrates the value of real repository tests as settlement signals for coding agents.
+  - SRE postmortem practice supports converting real outcomes into durable learning artifacts rather than relying on unaudited recollection.
+- **Unverified / Unclear:** How to assign fractional credit across many retrieved memories remains implementation-specific.
+
+## How to use it
+
+Use this when an agent repeatedly works in the same environment and later reality can verify whether the action helped.
+
+Implementation checklist:
+
+- Define the smallest commitment record that preserves auditability: goal, retrieved context IDs, planned action, and expected outcome.
+- Make unsettled commitments first-class. Do not let them silently become validated memories.
+- Use weak credit for self-grades and stronger credit for runtime, external, or owner-verified outcomes.
+- Store negative outcomes too. Failed commitments are useful counterexamples when future tasks look semantically similar.
+- Periodically summarize settled commitments into higher-level guidance, but keep links back to the original evidence.
+
+Common applications:
+
+- Coding agents that retrieve past fixes, then settle credit from tests, CI, review, or merge status.
+- Research agents that cite prior notes, then settle credit from human acceptance or downstream reuse.
+- Operations agents that propose mitigations, then settle credit from incident metrics or postmortems.
+
+## Trade-offs
+
+**Pros:**
+
+- Prevents unverified self-belief from becoming high-confidence memory.
+- Creates an auditable chain from retrieved context to action to outcome.
+- Makes failures reusable without erasing the evidence trail.
+- Supports delayed learning when the real answer arrives minutes, days, or weeks later.
+
+**Cons:**
+
+- Requires durable storage for open commitments.
+- Needs a verifier or human process that can map outcomes back to commitments.
+- Adds latency to high-confidence learning because credit waits for settlement.
+- Can overfit to easy-to-measure outcomes if qualitative review is never included.
+
+## References
+
+- AccInt uses this pattern as an implementation example: https://github.com/maxbaluev/accreted-intelligence
+- Reflexion: Language Agents with Verbal Reinforcement Learning: https://arxiv.org/abs/2303.11366
+- SWE-bench: Can Language Models Resolve Real-World GitHub Issues?: https://arxiv.org/abs/2310.06770
+- Google SRE Book, Postmortem Culture: https://sre.google/sre-book/postmortem-culture/
+
+---
+
 ## Compounding Engineering Pattern
 
 **Status:** emerging
@@ -4186,6 +4414,57 @@ flowchart TD
 -   The concept is based on the idea that read operations are generally idempotent and free of side-effects when run concurrently, while write operations require careful sequencing.
 -   The Model Context Protocol (MCP) provides standardized tool schemas that support this classification pattern across 1000+ community tool servers.
 -   [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) observes that Sonnet 4.5 naturally maximizes actions per context window through parallel tool execution.
+
+---
+
+## Context Budget as a Governed Resource
+
+**Status:** validated-in-production
+**Category:** Context & Memory
+**Authors:** James Ross (@jimy-r)
+**Source:** https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#9-context-is-a-budget-not-a-constant
+
+## Problem
+
+Always-loaded context accretes silently. Instruction files, memory indexes, skill descriptions, and hook configuration each add "ghost tokens" the agent pays on every turn of every session. No single addition is big; the aggregate grows a few percent a week. Quality degrades, costs climb, and nothing fails loudly enough to notice. Unattended agents make it worse: scheduled jobs spend tokens with nobody watching, so one job's appetite regression can run for weeks.
+
+## Solution
+
+Treat the context budget like any other governed resource: measured, trended, and capped.
+
+- **Baseline counter.** Measure every always-loaded source (instruction files, memory index, skill and agent descriptions, hook command strings) per source. A chars/4 approximation is good enough. Persist each measurement so there is history.
+- **Trend alarm, not just a ceiling.** Alert when the baseline exceeds its prior 4–8 week median by a relative margin (+10–25%). Absolute ceilings catch catastrophes; trends catch accretion, which is the common failure.
+- **Hard budget caps on unattended runs.** Every scheduled agent invocation carries a spend ceiling (a `--max-budget-usd`-style flag), sized 10–50x a normal cycle. It is a belt against runaway loops, not a tuning knob.
+- **Fan-out bounded by construction.** Estimate agent count before running any multi-agent workflow and cap every stage. A workflow whose agent count scales with discovered data (claims, files, matches) is a cost bomb until bounded.
+- **Index ceilings.** Memory and index files carry explicit line/KB caps with an overflow rule (migrate detail to per-topic files), so the always-loaded set cannot grow unbounded by design.
+- **Compaction instructions.** A standing note tells the runtime what must survive context compaction (decisions with rationale, in-flight edits, open questions) and what may be discarded, so compaction never silently deletes the essential parts.
+
+```pseudo
+baseline = sum(estimate_tokens(src) for src in always_loaded_sources)
+record(baseline, per_source_breakdown)
+if baseline > median(history, weeks=4..8) * (1 + margin):
+    alert(top_growth_sources())
+```
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:** a production workspace caught a ~20% week-over-week baseline jump and named the three growth sources the same day (the per-source breakdown is what makes the alarm actionable); budget caps and fan-out bounds were adopted after a research workflow over-fanned past 100 agents in a single run.
+- **Unverified / Unclear:** the thresholds (+10–25% margin, 10–50x cap sizing) are one workspace's tuning; chars/4 undercounts code-heavy text, so treat estimates as relative, not absolute.
+
+## How to use it
+
+Adopt once any file is auto-loaded into every session or any agent runs unattended. Start with the baseline counter (an afternoon of work), attach the trend alarm to whatever recurring review already exists (a weekly audit is the natural host), then add caps to scheduled jobs. The per-source breakdown is the part that pays for itself: a total says something grew; sources say what to trim.
+
+## Trade-offs
+
+- **Pros:** catches the silent-cost failure class; per-source attribution makes trimming targeted instead of vibes-based; caps convert runaway failures into bounded ones.
+- **Cons:** one more counter to maintain; estimates drift from true tokenizer counts; a budget cap can abort a legitimately heavy run if sized as a governor instead of a belt.
+
+## References
+
+- [Agent Workspace Architecture — PATTERNS.md #9](https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#9-context-is-a-budget-not-a-constant) — the pattern page this entry is extracted from (Token Budget module detail in META_ARCHITECTURE.md: ghost-token baseline counter, per-run cost ledger, budget caps, compaction instructions)
+- [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — the vendor guidance this governance layer operationalises
 
 ---
 
@@ -4932,6 +5211,69 @@ sequenceDiagram
 
 ---
 
+## Cross-Agent Lesson Sharing via Git
+
+**Status:** validated-in-production
+**Category:** Context & Memory
+**Authors:** MisakaNet community
+**Source:** https://github.com/Ikalus1988/MisakaNet
+
+## Problem
+
+AI agents working in isolation waste hours debugging issues that other agents have already solved. ChromaDB crashes on NTFS, pip install fails on WSL encoding, Feishu webhook URLs get committed to git — each agent discovers these independently. There is no mechanism for one agent's debugging session to benefit the entire fleet.
+
+## Solution
+
+Use **Git as the shared memory substrate** and **GitHub Issues as the message bus** for cross-agent knowledge sharing:
+
+1. When an agent solves a non-trivial problem, it writes a structured "lesson" (markdown with problem/fix/verify sections) and pushes to a shared `lessons/` directory.
+2. Other agents pull the repo and search lessons before debugging — `grep` or semantic search over markdown files.
+3. GitHub Issues serve as the coordination layer: agents post proposals, humans (or hub agents) review and merge.
+4. Each node maintains a full copy of the knowledge base, enabling offline operation and natural conflict resolution via Git merge.
+
+Key design decisions:
+- **Markdown for lessons** — human-readable, git-diffable, searchable with standard tools
+- **GitHub Issues as message bus** — zero infrastructure, built-in auth, web UI for humans
+- **Git for sync** — offline-first, conflict-resilient, every node has full history
+- **Hub-spoke with optional arbitration** — a central hub can validate and deduplicate lessons, but nodes work independently when the hub is offline
+
+Example lesson structure:
+```markdown
+---
+title: ChromaDB crashes on NTFS
+domain: devops
+status: published
+confidence: 0.9
+---
+
+## Problem
+ChromaDB fails with "Invalid cross-device link" on NTFS-mounted WSL paths.
+
+## Fix
+Set `CHROMA_CACHE_DIR` to a native ext4 path:
+export CHROMA_CACHE_DIR=/tmp/chroma-cache
+
+## Verify
+python3 -c "import chromadb; chromadb.Client()"
+```
+
+## Trade-offs
+
+**Pros:** Every debugging session benefits the entire fleet; knowledge compounds over time; works offline; no additional infrastructure beyond GitHub.
+**Cons:** Requires discipline to write lessons; stale lessons can mislead; merge conflicts possible (but rare for append-heavy workloads); GitHub rate limits on API access.
+
+## How to use it
+
+1. Set up a shared Git repository with a `lessons/` directory.
+2. Define a lesson template (problem/fix/verify with YAML frontmatter for metadata).
+3. After solving a non-trivial problem, agents write a lesson and push via PR or direct commit.
+4. Before debugging, agents search the lessons directory: `grep -r "keyword" lessons/` or use semantic search.
+5. Optionally, set up a hub agent that validates proposals, deduplicates similar lessons, and maintains an index.
+
+For a production implementation, see [MisakaNet](https://github.com/Ikalus1988/MisakaNet) — 104+ shared lessons across 7 domains, 21+ registered nodes.
+
+---
+
 ## Cross-Cycle Consensus Relay
 
 **Status:** emerging
@@ -5522,6 +5864,60 @@ flowchart TD
 * [E2B - Sandboxed Environments for AI Agents](https://e2b.dev)
 * [Modal - Serverless Infrastructure for AI Workloads](https://modal.com)
 * [Hacker News Discussion](https://news.ycombinator.com/item?id=46589842)
+
+---
+
+## Dead-Man's Switch for Scheduled Agent Jobs
+
+**Status:** validated-in-production
+**Category:** Reliability & Eval
+**Authors:** James Ross (@jimy-r)
+**Source:** https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md
+
+## Problem
+
+An agent workspace accumulates scheduled jobs: a morning digest, a background task manager, a weekly self-audit, a memory consolidation pass. These fail silently. A scheduler misconfiguration, an expired OAuth token, or a permission regression doesn't throw an error anywhere a human looks — the job's logs simply stop appearing. Nothing watches for absence, so a broken daily job can stay broken for weeks before anyone notices the output is missing.
+
+## Solution
+
+Invert the monitoring direction: alert on missing success instead of on errors.
+
+- Every scheduled job writes an explicit success sentinel (for example `MORNING_BRIEF_OK`) into its per-run log as its final act.
+- A freshness checker knows each tracked task, its cadence, and its staleness window. It scans the most recent log per task: sentinel present and recent means FRESH; missing, stale, or sentinel-less files a finding.
+- Findings land in the agent's own task queue — the place the operator already reads — not a separate dashboard nobody opens.
+- A per-task `manual` flag exempts on-demand jobs from staleness, so the watchdog doesn't cry wolf on tasks that legitimately run irregularly.
+- The checker runs from a different cadence than the jobs it watches (a weekly audit plus on-demand), which answers who-watches-the-watchman without new infrastructure.
+
+```pseudo
+for task in tracked_tasks:
+    log = latest_log(task)
+    if task.manual and log is None:        status = MANUAL_OK
+    elif log is None or age(log) > task.window: status = STALE
+    elif task.sentinel not in log.text:    status = NO_SENTINEL
+    else:                                  status = FRESH
+    if status not in (FRESH, MANUAL_OK):
+        file_finding(task, status)   # lands in the agent's task queue
+```
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:** caught a multi-day silent failure in production (a permission regression left a daily job running read-only; config looked correct, the missing sentinel proved otherwise). The underlying inversion is long-established for human cron jobs (Healthchecks.io).
+- **Unverified / Unclear:** the agent-specific variant is validated in one production workspace; it says nothing about jobs that run but produce wrong output (pair with synthetic canaries for that class).
+
+## How to use it
+
+Worth adopting once a workspace has two or more scheduled agent jobs. Requirements: durable per-run logs, a success-sentinel convention written into every job's instructions, and a checker invoked by a cadence you already trust (a recurring self-audit is the natural host). Tune staleness windows per task — a 2-hourly job and a weekly job need different definitions of "late."
+
+## Trade-offs
+
+- **Pros:** catches the failure class config inspection cannot ("configured" is not "running"); no external service; the sentinel convention costs one line per job.
+- **Cons:** per-task configuration to keep current as jobs come and go; a job that runs but produces garbage still passes its sentinel; the checker needs a host cadence of its own.
+
+## References
+
+- [agent-workspace-architecture — PATTERNS.md](https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md) — production implementation this pattern is extracted from (freshness-checker detail in META_ARCHITECTURE.md)
+- [Healthchecks.io](https://healthchecks.io/) — the cron-monitoring service that established the missing-success inversion for human jobs
 
 ---
 
@@ -10838,6 +11234,197 @@ The aim is to create interfaces that are robust and intuitive for LLMs to intera
 
 ---
 
+## Local-First Credential Broker
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** Priyansh Khodiyar (@zriyansh)
+**Source:** https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach
+
+## Problem
+
+AI agents increasingly need to call authenticated third-party APIs: post a Slack message, create a Linear issue, charge a Stripe customer, write to a GitHub repo. The dominant pattern today is to hand the agent raw credentials through environment variables, `.env` files, or per-tool config blocks. That breaks in several ways:
+
+- **Token leakage through context.** Agents that read environment variables can echo them into logs, prompts, error traces, or shared conversation transcripts. One careless `os.environ` printout in a tool call is enough to leak a long-lived API key.
+- **No OAuth refresh.** Static API keys never expire and can be reused indefinitely if exposed; OAuth access tokens need refresh logic the agent shouldn't be writing per-provider.
+- **Per-tool drift.** Every CLI, every framework, every skill builds its own credential bootstrap. The result is the same secret in `~/.config/foo/`, `~/.bar/credentials`, `.env`, and shell history.
+- **Hosted credential services trade one problem for another.** Routing credentials through a SaaS broker fixes the leakage problem but requires sending OAuth refresh tokens to a third party, creates a new audit surface, and adds a network dependency at runtime.
+
+The pattern below keeps credentials local to the user's machine while still keeping them out of the agent's process.
+
+## Solution
+
+Introduce a local **credential broker** process that owns the credentials. The agent talks to providers through a loopback HTTPS proxy run by the broker. The broker matches outbound requests against a provider registry, picks the right credential, and injects it into the request just before the request leaves the host.
+
+```mermaid
+graph TD
+    A[AI Agent] -->|HTTPS to api.github.com| P[Local Broker Proxy 127.0.0.1]
+    P -->|Inject Authorization header| G[github.com]
+    P -->|Inject Bearer token| O[api.openai.com]
+    V[(Encrypted Local Vault)] --> P
+    R[OAuth Refresh Daemon] --> V
+    G --> R
+```
+
+**Core components:**
+
+- **Encrypted local vault.** Stored on the user's machine (for example under `~/.credentials/` or OS keychain). Holds access tokens, refresh tokens, API keys, and metadata about which provider each one belongs to. Never touches a remote service.
+- **Loopback proxy.** A short-lived process the agent's outbound HTTPS traffic is routed through. Matches the request hostname against the provider registry and inserts the right `Authorization` header. Modifies headers only; never modifies the request body.
+- **Refresh daemon.** Watches access tokens for upcoming expiry and contacts the provider's own token endpoint to refresh. Refresh tokens go directly from the local vault to the provider, never through any third party.
+- **First-time login flow.** Browser PKCE, OAuth device code, or a one-shot bridge that captures an API key the user pastes once. After the initial login the agent never sees the user's credential entry process.
+- **Provider registry.** A JSON-driven manifest mapping provider hostnames (`api.github.com`, `api.openai.com`) to credential type, refresh endpoint, and any provider-specific headers.
+
+**Implementation sketch (pseudocode):**
+
+```python
+class LocalCredentialBroker:
+    def __init__(self, vault_path):
+        self.vault = EncryptedVault(vault_path)
+        self.providers = load_provider_registry()
+        self.refresh_daemon = RefreshDaemon(self.vault, self.providers)
+
+    def proxy_request(self, req):
+        provider = self.providers.match(req.host)
+        if provider is None:
+            return req                                  # pass through unmodified
+        cred = self.vault.get(provider.id)
+        if cred is None:
+            raise NotLoggedIn(provider.id)
+        if cred.expires_soon():
+            cred = self.refresh_daemon.refresh(cred)
+        req.headers["Authorization"] = provider.format_auth(cred)
+        return req
+```
+
+The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config) points at `127.0.0.1:<port>`. From the agent's point of view its outbound calls just succeed; it never sees a real token.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) names credential isolation via proxy as a recommended control for agent runtimes.
+  - OWASP's [Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/) lists "agent process never holds raw API keys" as a hardening principle.
+  - Multiple independent open-source implementations of this shape (Python, Rust, server-backed variants) shipped during 2025–2026, suggesting convergent design rather than a single-vendor pattern.
+- **Unverified / Unclear:**
+  - Long-term behavior on shared developer machines (multi-user POSIX hosts, dev containers with shared loopback)
+  - Operational data on whether refresh failures in long-running workloads cause real outage incidents
+
+## How to use it
+
+1. **Pick a vault location.** Default to a per-user directory the OS already restricts (`~/.config/<broker>/` on Linux, `~/Library/Application Support/<broker>/` on macOS). Encrypt at rest with a key derived from OS keychain or user passphrase.
+2. **Define the provider registry.** Start with the providers the agent calls most. Each entry needs hostname match, auth header format, and token endpoint URL.
+3. **Pick first-login flow per provider.** OAuth2 providers: browser PKCE for desktop, device code for headless. API-key providers: one-shot bridge page the user pastes the key into. Never ask the user to paste secrets into the agent chat.
+4. **Run the broker as a long-lived local process.** The refresh daemon needs to be alive to refresh tokens before they expire.
+5. **Configure the agent to use the loopback proxy.** Set `HTTPS_PROXY=https://127.0.0.1:<port>` (or framework-specific config) and install the broker's local CA so the agent's HTTPS client trusts it.
+6. **Audit the seam.** Log every credential injection (provider, request path, time) inside the broker; never log the credential value. Surface those logs to the user, not the agent.
+
+**Pitfalls to avoid:**
+
+- **Don't proxy traffic to providers the broker doesn't know about.** Default to pass-through. A broker that swallows all outbound HTTPS becomes a debugging nightmare.
+- **Don't store credentials in a global registry.** Per-user vault. Sharing one vault across users on the same host re-introduces the very leakage problem the pattern is meant to solve.
+- **Don't put the broker's own admin API on a public port.** Loopback only.
+- **Don't forget refresh under load.** Refresh tokens need retry with backoff; refresh failures need to surface as actionable errors, not as silent 401s the agent then retries forever.
+
+## Trade-offs
+
+**Pros:**
+
+- Raw credentials never enter the agent's process environment, conversation context, or crash dumps.
+- OAuth2 refresh works for headless workloads (cron, CI, background agents) without a human at the keyboard.
+- No SaaS dependency. Credentials never leave the user's machine except to the provider they're for.
+- Adding a new provider is one JSON entry, not a code change in every agent that calls it.
+
+**Cons / Considerations:**
+
+- Adds a local daemon to the user's setup, plus a local CA to trust.
+- Multi-user hosts need careful vault permissions; not a fit for shared-developer-machine scenarios.
+- The agent's HTTP client must respect the proxy config; some SDKs hardcode their own client and need adapters.
+- For multi-tenant agent fleets (one machine serving many users), a hosted gateway is a better fit; this pattern is single-user by design.
+
+## References
+
+- [CSA — Agentic AI Identity & Access Management (2025-08)](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach)
+- [OWASP — Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/)
+- [RFC 6749 — OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749)
+- [RFC 8628 — OAuth 2.0 Device Authorization Grant](https://datatracker.ietf.org/doc/html/rfc8628)
+- [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
+- Related pattern: [/patterns/external-credential-sync](external-credential-sync.md) — for syncing existing CLI credentials across tools rather than brokering new ones.
+- Related pattern: [/patterns/sandboxed-tool-authorization](sandboxed-tool-authorization.md) — for restricting which tools an agent can call once authenticated.
+- Known implementations (disclosed: author maintains the first): [agentrhq/authsome](https://github.com/agentrhq/authsome) (Python, local-only); [onecli/onecli](https://github.com/onecli/onecli) (Rust, per-agent scopes); [Infisical/agent-vault](https://github.com/Infisical/agent-vault) (server-backed variant).
+
+---
+
+## Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Yehuda Levy (@yehudalevy-collab)
+**Source:** https://github.com/yehudalevy-collab/polis-protocol
+
+## Problem
+
+When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for "who's good at what," "what did we already try," or "what does this team consider done." Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes.
+
+## Solution
+
+Treat the polis (Greek *πόλις*, "the body politic") as a folder of markdown files versioned alongside the project. Three primitives:
+
+- **Capability card** — each agent publishes a signed YAML card declaring tags, model, tool, throughput, and historical track record.
+- **Contract** — every unit of work is a structured markdown contract: tags required, acceptance criteria, status, settlement notes.
+- **Routing stats** — a per-tag ε-greedy multi-armed bandit picks the citizen with the best confidence-weighted historical score on the contract's tags. Settled contracts ship lessons that update the stats on the next reconcile.
+
+Two governance affordances on top:
+
+- **Chavruta review** (paired review for high-stakes contracts) — any contract with `risk: high` gets a second citizen assigned as reviewer before settlement.
+- **Amendments** — citizens propose changes to the constitution itself; ratified amendments are appended (never overwritten) and update the rules of routing or review.
+
+```mermaid
+graph TD
+    A[Open contract] --> B{Router}
+    B -->|ε-greedy pick by tag score| C[Assigned citizen]
+    C --> D[Work + settle]
+    D --> E[Lesson file]
+    E --> F[Reconcile updates routing_stats.yml]
+    F --> B
+    G[Citizen proposes amendment] --> H[Vote]
+    H --> I[Ratified amendment appended to constitution]
+    I --> B
+```
+
+## Evidence
+
+- **Evidence Grade:** `low` (pattern in early production use; one open-source reference implementation)
+- **Most Valuable Findings:** A worked example with three citizens, a real routing leader-shift after a lesson, and a ratified amendment is published at `examples/research-team/` in the reference repo. Settlement-driven routing learning is the smallest unit of compounding the pattern produces — capability cards alone aren't enough.
+- **Unverified / Unclear:** Whether the amendment-vote mechanism scales past ~10 active citizens; whether bandit routing's exploration rate (default 15%) is right for low-volume contract streams.
+
+## How to use it
+
+Use when:
+
+- You have ≥ 3 long-running agent sessions touching the same codebase or knowledge base.
+- Coordination cost is currently routed through humans (you Slack one agent's output to another).
+- You want process rules (review thresholds, routing weights) to evolve from real outcomes, not vibes.
+
+Implementation outline:
+
+1. Add a `_polis/` directory to your project root with `CONSTITUTION.md`, `citizens/`, `contracts/open/`, `contracts/settled/`, `lessons/`, `routing_stats.yml`, `amendments/`, and `chronicle.md`.
+2. Each agent reads its own citizen card on session start, scans `contracts/open/`, and routes via the router (or runs the supplied `route_contract.py --explain` for an audit-trail decision).
+3. After completing a contract, the agent writes a settlement note + a lesson with `quality_impact: <int>` so the next reconcile shifts routing scores.
+4. Bridge files (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`) point each vendor's native pre-prompt to the polis, keeping the protocol vendor-agnostic.
+
+## Trade-offs
+
+- **Pros:** Vendor-agnostic — works across any tool that reads markdown. Audit trail is git-native. Routing improves with use. Governance changes (amendments) are first-class, not retrofitted comments. Low operational overhead — no daemon, no database.
+- **Cons:** Markdown-only loop has higher latency than direct RPC. Bandit routing under low contract volume is noisy. The amendment process is overkill for small teams. Trust model assumes citizens don't lie about their own capability cards — fine for cooperating-vendor teams, weaker for adversarial settings.
+
+## References
+
+- Reference implementation: [polis-protocol](https://github.com/yehudalevy-collab/polis-protocol) (MIT)
+- Worked example with 3 citizens, leader-shift after a lesson, and a ratified amendment: [`examples/research-team/`](https://github.com/yehudalevy-collab/polis-protocol/tree/main/examples/research-team)
+- Routing math: [`references/routing.md`](https://github.com/yehudalevy-collab/polis-protocol/blob/main/references/routing.md)
+
+---
+
 ## MCP Pattern Injection
 
 **Status:** validated-in-production
@@ -11932,6 +12519,79 @@ Development environments, complex coding tasks, architectural decisions, debuggi
 * LiteLLM Router: https://github.com/BerriAI/litellm
 
 - Primary source: https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ
+
+---
+
+## Orchestration Prompt-Writing Benchmark
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** Contributor (@WhymustIhaveaname)
+**Source:** https://arxiv.org/abs/2606.08878
+
+## Problem
+
+Multi-agent systems depend on an orchestrator correctly splitting a task's information among sub-agent roles: which fragment goes to which role, what each sub-agent is and is not told, and how that translates into the literal prompt text each sub-agent receives. End-to-end evals (execution success, tool-call correctness) and topology definitions (who talks to whom) both assume this hand-off step is done correctly, but neither tests it directly. A sub-agent can still stumble through a task with an incomplete or wrongly-scoped prompt, masking an orchestration bug until the system is scaled to harder tasks or unfamiliar topologies, where mis-assigned information becomes the dominant failure mode.
+
+## Solution
+
+Treat "writing correct sub-agent prompts" as a skill to benchmark on its own, separate from whether the end task ultimately succeeds. For each of a set of scenarios spanning distinct communication topologies:
+
+1. Define the ground-truth information fragments required for the task and the role that legitimately needs each fragment.
+2. Ask the orchestrator LLM to decompose the task and write the actual prompt text for every sub-agent role in that topology.
+3. Score each generated sub-agent prompt against the ground truth: did it receive every fragment its role needs (recall), does it withhold fragments that role should not see (leakage), and is each fragment routed to the correct role rather than a neighboring one (assignment accuracy)?
+4. Aggregate scores per topology to see where orchestration quality degrades — chain and star topologies typically stress this less than deeper tree or mesh topologies with many-to-many hand-offs.
+
+```mermaid
+graph TD
+    A[Task + Topology Spec] --> B[Orchestrator LLM]
+    B --> C1[Sub-agent Prompt: Role 1]
+    B --> C2[Sub-agent Prompt: Role 2]
+    B --> C3[Sub-agent Prompt: Role N]
+    C1 --> D[Fragment Assignment Scorer]
+    C2 --> D
+    C3 --> D
+    D --> E[Per-topology accuracy / leakage report]
+```
+
+This is deliberately orthogonal to [Workflow Evals with Mocked Tools](workflow-evals-with-mocked-tools.md) (scores whether the right *tools* get called) and to [Declarative Multi-Agent Topology Definition](declarative-multi-agent-topology-definition.md) (specifies the agent graph but not whether prompts populate it correctly). It is closer to a unit test for the hand-off step itself.
+
+## Evidence
+
+- **Evidence Grade:** low-medium. This is a single benchmark paper at time of writing, with no independent replication yet.
+- **Most Valuable Finding:** building the eval around topology variation, rather than one fixed topology, surfaces a failure mode a fixed-topology eval suite would miss: fragment-assignment quality varies unevenly across topologies.
+- **Unverified / Unclear:** how well benchmark performance predicts end-to-end task success in production systems; generalization beyond the paper's reported scenarios and topologies has not been independently confirmed. Verify current figures against the source before citing them.
+
+## How to use it
+
+- Use when you are building or hardening a multi-agent system and want a regression suite for the orchestrator's *delegation quality*, not just final output quality.
+- Write a handful of scenarios per topology you actually use (chain, star, tree, fan-out/fan-in, debate, mesh); you do not need every topology to get value.
+- Score three things per generated sub-agent prompt: required-fragment recall, forbidden-fragment leakage, and role-assignment accuracy.
+- Run this alongside — not instead of — end-to-end workflow evals; it catches a different class of bug (mis-delegation) than tool-call or output-format evals do.
+- Re-run whenever you change the topology or swap the orchestrator model.
+
+## Trade-offs
+
+**Pros:**
+
+- Isolates delegation-quality bugs that end-to-end evals otherwise blame on the wrong sub-agent.
+- Topology-indexed scoring shows exactly where orchestration degrades as systems scale past simple chains/stars.
+- Cheap to extend: new scenarios are just (topology, fragments, ground-truth assignment) tuples.
+
+**Cons:**
+
+- Requires hand-authoring ground-truth fragment/role assignments per scenario, which does not scale automatically to a new domain.
+- A single benchmark; treat absolute scores as directional until independently replicated.
+- Does not replace end-to-end evals — a system can score well here and still fail downstream for unrelated reasons (bad tools, bad models).
+
+## References
+
+- Sun, Y. et al. *PerspectiveGap: A Benchmark for Multi-Agent Orchestration Prompting*. arXiv:2606.08878. Code: https://github.com/WhymustIhaveaname/PerspectiveGap.
+- Related: [Declarative Multi-Agent Topology Definition](declarative-multi-agent-topology-definition.md) — defines the agent graph this pattern tests prompt hand-offs against.
+- Related: [Subject Hygiene for Task Delegation](subject-hygiene.md) — traceability of task subjects; this pattern instead tests information-content correctness of the delegation itself.
+- Related: [Workflow Evals with Mocked Tools](workflow-evals-with-mocked-tools.md) — complementary eval angle (tool-call correctness vs. delegation-prompt correctness).
+- Related: [Sub-Agent Spawning](sub-agent-spawning.md) — describes how the main agent creates the sub-agent invocations this pattern scores; this pattern checks whether those invocations actually carry the right information.
+- FIPA. "FIPA ACL Communicative Act Library Specification." 2002 — theoretical foundation for structured inter-agent communication that this benchmark operationalizes as a measurable score.
 
 ---
 

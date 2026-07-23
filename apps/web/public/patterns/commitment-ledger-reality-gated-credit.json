@@ -1,0 +1,60 @@
+{
+  "title": "Commitment Ledger with Reality-Gated Credit",
+  "status": "proposed",
+  "authors": [
+    "Max Baluev (@maxbaluev)"
+  ],
+  "based_on": [
+    "AccInt implementation example",
+    "Reflexion-style episodic feedback",
+    "SRE postmortem practice"
+  ],
+  "category": "Learning & Adaptation",
+  "source": "https://github.com/maxbaluev/accreted-intelligence",
+  "tags": [
+    "commitment-ledger",
+    "outcome-feedback",
+    "agent-memory",
+    "credit-assignment",
+    "reality-gating"
+  ],
+  "slug": "commitment-ledger-reality-gated-credit",
+  "id": "commitment-ledger-with-reality-gated-credit",
+  "summary": "Records agent promises and credits retrieved memory only after an externally verifiable outcome settles.",
+  "maturity": "early",
+  "complexity": "medium",
+  "effort": "days",
+  "impact": "high",
+  "signals": [
+    "Multi-step agent work",
+    "Clear success or failure signal",
+    "Need auditable learning history"
+  ],
+  "anti_signals": [
+    "One-shot answers",
+    "No observable outcome",
+    "Highly sensitive data without retention policy"
+  ],
+  "prerequisites": [
+    "Persistent ledger",
+    "Outcome verifier",
+    "Memory retrieval provenance"
+  ],
+  "related": [
+    "episodic-memory-retrieval-injection",
+    "memory-reinforcement-learning-memrl",
+    "incident-to-eval-synthesis"
+  ],
+  "tools": [
+    "memory-store",
+    "verifier",
+    "ledger"
+  ],
+  "domains": [
+    "coding",
+    "research",
+    "operations"
+  ],
+  "updated_at": "2026-06-15",
+  "body": "\n## Problem\n\nAgents often write memories or update heuristics immediately after generating an answer. That creates weak learning signals:\n\n- A plausible answer can be recorded as if it worked.\n- Retrieved memories get credited even when the final action later fails.\n- Human review, tests, production incidents, and real replies are disconnected from the memory records that influenced the action.\n- Future agents cannot audit which past commitments were predictions, which were settled facts, and which were never verified.\n\nThe result is memory that compounds confidence faster than it compounds truth.\n\n## Solution\n\nAdd a **commitment ledger** between retrieval and memory updates.\n\n1. Before acting, record the goal, the retrieved memories or context IDs, the planned action, and the expected success condition.\n2. Execute the action normally: code change, email, research answer, deployment, ticket update, or tool call.\n3. Wait for a real outcome: passing tests, merged PR, user confirmation, incident resolution, benchmark result, support reply, or other external signal.\n4. Settle the commitment with a provenance tier and update memory credit only from that settlement.\n\n```pseudo\ncommitment = ledger.open({\n  goal,\n  retrieved_ids,\n  planned_action,\n  success_condition\n})\n\nresult = act(planned_action)\noutcome = verifier.wait_for_signal(result, success_condition)\n\nledger.close(commitment.id, outcome)\nmemory.credit(\n  retrieved_ids,\n  reward=outcome.score,\n  provenance=outcome.provenance\n)\n```\n\nUseful provenance tiers:\n\n- **self-graded:** the agent believes it worked; weak prior only.\n- **runtime:** a local tool, test, or evaluator produced a checkable result.\n- **external:** the outside world answered, such as a merge, reply, production metric, or incident closure.\n- **owner:** a responsible human explicitly accepted or rejected the result.\n\nThis separates \"the agent predicted this would help\" from \"reality confirmed it helped.\"\n\n## Evidence\n\n- **Evidence Grade:** `medium`\n- **Most Valuable Findings:**\n  - Reflexion shows that explicit episodic feedback can improve repeated task performance without model weight updates.\n  - SWE-bench-style evaluation demonstrates the value of real repository tests as settlement signals for coding agents.\n  - SRE postmortem practice supports converting real outcomes into durable learning artifacts rather than relying on unaudited recollection.\n- **Unverified / Unclear:** How to assign fractional credit across many retrieved memories remains implementation-specific.\n\n## How to use it\n\nUse this when an agent repeatedly works in the same environment and later reality can verify whether the action helped.\n\nImplementation checklist:\n\n- Define the smallest commitment record that preserves auditability: goal, retrieved context IDs, planned action, and expected outcome.\n- Make unsettled commitments first-class. Do not let them silently become validated memories.\n- Use weak credit for self-grades and stronger credit for runtime, external, or owner-verified outcomes.\n- Store negative outcomes too. Failed commitments are useful counterexamples when future tasks look semantically similar.\n- Periodically summarize settled commitments into higher-level guidance, but keep links back to the original evidence.\n\nCommon applications:\n\n- Coding agents that retrieve past fixes, then settle credit from tests, CI, review, or merge status.\n- Research agents that cite prior notes, then settle credit from human acceptance or downstream reuse.\n- Operations agents that propose mitigations, then settle credit from incident metrics or postmortems.\n\n## Trade-offs\n\n**Pros:**\n\n- Prevents unverified self-belief from becoming high-confidence memory.\n- Creates an auditable chain from retrieved context to action to outcome.\n- Makes failures reusable without erasing the evidence trail.\n- Supports delayed learning when the real answer arrives minutes, days, or weeks later.\n\n**Cons:**\n\n- Requires durable storage for open commitments.\n- Needs a verifier or human process that can map outcomes back to commitments.\n- Adds latency to high-confidence learning because credit waits for settlement.\n- Can overfit to easy-to-measure outcomes if qualitative review is never included.\n\n## References\n\n- AccInt uses this pattern as an implementation example: https://github.com/maxbaluev/accreted-intelligence\n- Reflexion: Language Agents with Verbal Reinforcement Learning: https://arxiv.org/abs/2303.11366\n- SWE-bench: Can Language Models Resolve Real-World GitHub Issues?: https://arxiv.org/abs/2310.06770\n- Google SRE Book, Postmortem Culture: https://sre.google/sre-book/postmortem-culture/\n"
+}

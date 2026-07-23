@@ -64,10 +64,11 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="context-memory"></a>Context & Memory
 
 - [Agent-Powered Codebase Q&A / Onboarding](patterns/agent-powered-codebase-qa-onboarding.md)
+- [Context Budget as a Governed Resource](patterns/context-budget-as-a-governed-resource.md)
 - [Context Window Anxiety Management](patterns/context-window-anxiety-management.md)
 - [Context Window Auto-Compaction](patterns/context-window-auto-compaction.md)
-- [Cross-Agent Lesson Sharing via Git](patterns/cross-agent-lesson-sharing.md)
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
+- [Cross-Agent Lesson Sharing via Git](patterns/cross-agent-lesson-sharing.md)
 - [Curated Code Context Window](patterns/curated-code-context-window.md)
 - [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
@@ -105,6 +106,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 ### <a name="learning-adaptation"></a>Learning & Adaptation
 
 - [Agent Reinforcement Fine-Tuning (Agent RFT)](patterns/agent-reinforcement-fine-tuning.md)
+- [Commitment Ledger with Reality-Gated Credit](patterns/commitment-ledger-reality-gated-credit.md)
 - [Compounding Engineering Pattern](patterns/compounding-engineering-pattern.md)
 - [Frontier-Focused Development](patterns/frontier-focused-development.md)
 - [Memory Reinforcement Learning (MemRL)](patterns/memory-reinforcement-learning-memrl.md)
@@ -119,6 +121,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Agent-Driven Research](patterns/agent-driven-research.md)
 - [Artifact-Driven Analysis Pipeline Orchestration](patterns/multi-step-analysis-pipeline-orchestration.md)
 - [Autonomous Workflow Agent Architecture](patterns/autonomous-workflow-agent-architecture.md)
+- [Board-Mediated Async Inter-Agent Coordination](patterns/board-mediated-inter-agent-coordination.md)
 - [Budget-Aware Model Routing with Hard Cost Caps](patterns/budget-aware-model-routing-with-hard-cost-caps.md)
 - [Burn the Boats](patterns/burn-the-boats.md)
 - [Capability-Escrow-Receipt](patterns/capability-escrow-receipt.md)
@@ -144,6 +147,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Lane-Based Execution Queueing](patterns/lane-based-execution-queueing.md)
 - [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
+- [Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution](patterns/markdown-polis-coordination.md)
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
 - [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md)
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
@@ -175,6 +179,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [Canary Rollout and Automatic Rollback for Agent Policy Changes](patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes.md)
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)
+- [Dead-Man's Switch for Scheduled Agent Jobs](patterns/dead-mans-switch-for-scheduled-agent-jobs.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
 - [Failover-Aware Model Fallback](patterns/failover-aware-model-fallback.md)
 - [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md)
@@ -201,6 +206,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [External Credential Sync](patterns/external-credential-sync.md)
 - [Hook-Based Safety Guard Rails for Autonomous Code Agents](patterns/hook-based-safety-guard-rails.md)
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
+- [Local-First Credential Broker](patterns/local-first-credential-broker.md)
 - [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
 - [Policy-Gated Tool Proxy](patterns/policy-gated-tool-proxy.md)
