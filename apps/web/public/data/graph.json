@@ -2867,6 +2867,23 @@
       "summary": "Many teams struggle to run agentic workflows because their agent tooling is separate from their day to day collaboration environment."
     },
     {
+      "id": "zero-knowledge-verified-agent-egress",
+      "title": "Zero-Knowledge Verified Agent Egress",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "zero-knowledge-verified-agent-egress",
+      "tags": [
+        "egress",
+        "zero-knowledge-proof",
+        "source-of-truth",
+        "allow-list",
+        "mcp",
+        "outbound-verification",
+        "runtime-protection"
+      ],
+      "summary": "An agent can be tricked into making an outbound request that looks fine at the network layer but carries a false claim: a payment to the wrong recipient, an API call with tampered parameters, a tool call whose arguments do not match what the user approved."
+    },
+    {
       "id": "zero-trust-agent-mesh",
       "title": "Zero-Trust Agent Mesh",
       "category": "Security & Safety",

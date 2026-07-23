@@ -213,6 +213,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Sandboxed Tool Authorization](patterns/sandboxed-tool-authorization.md)
 - [Soulbound Identity Verification](patterns/soulbound-identity-verification.md)
 - [Transitive Vouch-Chain Trust](patterns/transitive-vouch-chain-trust.md)
+- [Zero-Knowledge Verified Agent Egress](patterns/zero-knowledge-verified-agent-egress.md)
 - [Zero-Trust Agent Mesh](patterns/zero-trust-agent-mesh.md)
 
 ### <a name="tool-use-environment"></a>Tool Use & Environment

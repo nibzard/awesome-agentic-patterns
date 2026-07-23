@@ -718,6 +718,10 @@ URL: https://agentic-patterns.com/patterns/working-memory-via-todos
 Workspace-Native Multi-Agent Orchestration: Many teams struggle to run agentic workflows because their agent tooling is separate from their day to day collaboration environment.
 URL: https://agentic-patterns.com/patterns/workspace-native-multi-agent-orchestration
 
+### zero-knowledge-verified-agent-egress
+Zero-Knowledge Verified Agent Egress: An agent can be tricked into making an outbound request that looks fine at the network layer but carries a false claim: a payment to the wrong recipient, an API call with tampered parameters, a tool call whose arguments do not match what the user approved.
+URL: https://agentic-patterns.com/patterns/zero-knowledge-verified-agent-egress
+
 ### zero-trust-agent-mesh
 Zero-Trust Agent Mesh: In multi agent systems, trust boundaries are often implicit: agents communicate by convention without verifiable identity, and delegation chains are hard to audit.
 URL: https://agentic-patterns.com/patterns/zero-trust-agent-mesh

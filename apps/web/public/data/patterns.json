@@ -4766,6 +4766,34 @@
     "excerpt": "\n## Problem\nMany teams struggle to run agentic workflows because their agent tooling is separate from their day-to-day collaboration environment. The result is fragmented context, brittle integrations, and high setup overhead.\n\nCommon pain points include:\n\n- Agents are difficult to create and version for non-engineering users.\n- Context, memory, and knowledge sources are spread across ad hoc systems.\n- Multi-agent workflows require custom glue for routing, event triggers, and state transfer.\n- Integrating agents with operational tools (issue trackers, docs, chat, CRM) is expensive."
   },
   {
+    "title": "Zero-Knowledge Verified Agent Egress",
+    "status": "emerging",
+    "authors": [
+      "Provably (@aural-psynapse)"
+    ],
+    "based_on": [
+      "Zero-knowledge proofs",
+      "Zero trust architecture",
+      "Trusted-endpoint allow-listing"
+    ],
+    "category": "Security & Safety",
+    "source": "https://csrc.nist.gov/pubs/sp/800/207/final",
+    "tags": [
+      "egress",
+      "zero-knowledge-proof",
+      "source-of-truth",
+      "allow-list",
+      "mcp",
+      "outbound-verification",
+      "runtime-protection"
+    ],
+    "slug": "zero-knowledge-verified-agent-egress",
+    "id": "zero-knowledge-verified-agent-egress",
+    "summary": "An agent can be tricked into making an outbound request that looks fine at the network layer but carries a false claim: a payment to the wrong recipient, an API call with tampered parameters, a tool call whose arguments do not match what the user approved.",
+    "updated_at": "2026-07-23",
+    "excerpt": "\n## Problem\nAn agent can be tricked into making an outbound request that looks fine at the network layer but carries a false claim: a payment to the wrong recipient, an API call with tampered parameters, a tool call whose arguments do not match what the user approved. A domain allow-list or egress firewall lets the call through because the destination is allowed; it never checks whether the *content* of the request is truthful. In regulated or high-value flows, teams need each outbound call to prove it matches a trusted source of truth before it leaves, without exposing that source of truth to the agent or the destination."
+  },
+  {
     "title": "Zero-Trust Agent Mesh",
     "status": "established",
     "authors": [
