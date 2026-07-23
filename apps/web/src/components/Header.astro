@@ -230,30 +230,9 @@ const navItems = [
       async function loadSearchIndex() {
         if (searchIndex) return searchIndex;
         try {
-          // In production, pagefind is available as a global
-          if (window.pagefind) {
-            searchIndex = window.pagefind;
-            return searchIndex;
-          }
-          // In dev mode, load the script dynamically
-          const script = document.createElement('script');
-          script.src = '/pagefind/pagefind.js';
-          script.type = 'module';
-          document.head.appendChild(script);
-
-          // Wait for pagefind to be available
-          await new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => reject(new Error('Pagefind load timeout')), 5000);
-            const checkInterval = setInterval(() => {
-              if (window.pagefind) {
-                clearTimeout(timeout);
-                clearInterval(checkInterval);
-                resolve();
-              }
-            }, 50);
-          });
-
-          searchIndex = window.pagefind;
+          // Pagefind's JS API is an ES module; load it with a dynamic import.
+          // (It does NOT set window.pagefind, so a <script>-tag + global poll never resolves.)
+          searchIndex = await import('/pagefind/pagefind.js');
           return searchIndex;
         } catch (e) {
           // Show error message in search results
@@ -281,7 +260,7 @@ const navItems = [
           currentResults = results.results;
           selectedIndex = 0;
 
-          renderResults();
+          await renderResults();
         } catch (e) {
           searchResults.innerHTML =
             '<div class="search-error" role="alert">Search failed. Please try again.</div>';
@@ -289,26 +268,28 @@ const navItems = [
       }
 
       // Render search results
-      function renderResults() {
+      async function renderResults() {
         if (currentResults.length === 0) {
           searchResults.innerHTML =
             '<div class="search-empty" role="status">No results found</div>';
           return;
         }
 
-        const resultCount = currentResults.length;
-        searchResults.innerHTML = currentResults
+        // Pagefind results are lazy: resolve each via result.data() to get url/excerpt/meta.
+        const resolved = await Promise.all(currentResults.map((result) => result.data()));
+        const resultCount = resolved.length;
+        searchResults.innerHTML = resolved
           .map(
-            (result, index) => `
+            (data, index) => `
           <a
-            href="${result.url}"
+            href="${data.url}"
             class="search-result ${index === selectedIndex ? 'search-result--selected' : ''}"
             data-index="${index}"
             role="option"
             aria-selected="${index === selectedIndex ? 'true' : 'false'}"
           >
-            <div class="search-result-title">${result.meta?.title || 'Untitled'}</div>
-            <div class="search-result-excerpt">${result.meta?.excerpt || ''}</div>
+            <div class="search-result-title">${data.meta?.title || 'Untitled'}</div>
+            <div class="search-result-excerpt">${data.excerpt || ''}</div>
           </a>
         `
           )
