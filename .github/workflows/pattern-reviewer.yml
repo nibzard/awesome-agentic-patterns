@@ -21,10 +21,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Review PR against project contribution principles
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@5ef2e550a465a721f4f45e4a7d3c340c873e1dcc # v1
         with:
           github_token: ${{ github.token }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY || vars.ANTHROPIC_API_KEY }}
+          # This workflow intentionally reviews public contributions. The job has
+          # read-only contents access and can only write its PR review response.
+          allowed_non_write_users: "*"
           prompt: |
             Review this pull request for a community-maintained pattern catalogue.
             Leave a PR review comment only. Do not make commits or open follow-up PRs.
