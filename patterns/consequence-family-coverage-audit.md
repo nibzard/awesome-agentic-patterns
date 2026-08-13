@@ -1,8 +1,8 @@
 ---
 title: Consequence-Family Coverage Audit
 status: emerging
-authors: ["Federico A. Kamelhar (@fede-kamel)"]
-based_on: ["Tulip Labs (Policy blindness: the family of harm your agent policy cannot see, 2026)"]
+authors: ["Tulip Labs (@fede-kamel)"]
+based_on: ["Tulip Labs (Policy blindness, 2026)"]
 category: "Security & Safety"
 source: "https://tulipagents.ai/research/policy-blindness/"
 tags: [risk-classification, policy-authoring, coverage-testing, admission-control, blind-spots]
