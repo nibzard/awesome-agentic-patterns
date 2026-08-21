@@ -12,7 +12,7 @@ tags: [tag1, tag2, keyword3, relevant-concept]
 # last_updated: "YYYY-MM-DD"
 ---
 
-<!-- Pattern Reviewer integration probe for issue #137; do not merge. -->
+<!-- Pattern Reviewer integration and review-delivery probe for issue #137; do not merge. -->
 
 ## Problem
 
