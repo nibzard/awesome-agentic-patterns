@@ -27,6 +27,7 @@ jobs:
           persist-credentials: false
 
       - name: Review PR against project contribution principles
+        id: review
         uses: anthropics/claude-code-action@3f854a8fb5146b39d5cbf8b57f70d80810e1366f # v1
         env:
           # The repository API key is issued for this Anthropic-compatible
@@ -39,8 +40,13 @@ jobs:
           # read-only contents access and can only write its PR review response.
           allowed_non_write_users: "*"
           prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
             Review this pull request for a community-maintained pattern catalogue.
-            Leave a PR review comment only. Do not make commits or open follow-up PRs.
+            Do not make commits, post comments, or open follow-up PRs. Return the
+            complete top-level review in the required `review` output field; the
+            workflow publishes that field after your analysis.
 
             Apply these principles:
             - Community-first scope: reject promotional, sales, affiliate, backlink-seeding, SEO, or direct marketing content.
@@ -58,5 +64,20 @@ jobs:
             2) Top findings (concise bullets).
             3) Required changes checklist (if needed).
             4) If blocking for promotion/backlinks or repetition, explain the policy briefly and suggest what would make it acceptable.
+
+            Use `gh pr diff` and `gh pr view` to inspect the contribution.
           claude_args: |
             --max-turns 6
+            --allowedTools "Bash(gh pr diff:*),Bash(gh pr view:*),Read,Grep,Glob"
+            --json-schema '{"type":"object","properties":{"review":{"type":"string","minLength":1,"maxLength":60000}},"required":["review"],"additionalProperties":false}'
+
+      - name: Publish review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVIEW_JSON: ${{ steps.review.outputs.structured_output }}
+        run: |
+          review_body="$(jq -er '.review | select(type == "string" and length > 0)' <<<"$REVIEW_JSON")"
+          gh api "repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/reviews" \
+            --method POST \
+            -f event=COMMENT \
+            -f body="$review_body"
