@@ -24,7 +24,7 @@ Two properties make this failure mode expensive:
 
 Retries do not fix this. Retrying on a dead rail produces more silence.
 
-This is the practical face of a classical result: in an asynchronous system you cannot distinguish a crashed participant from a slow one by observing messages alone (Chandra & Toueg, 1996). A single channel gives the observer exactly one such source of evidence, so "no message" stays undecidable. A second, independently failing channel does not repeal the result — it supplies a second observation, which is enough to tell "the peer is quiet" from "the path is dead".
+This is the practical face of a classical result: in an asynchronous system you cannot distinguish a crashed participant from a slow one by observing messages alone (Chandra & Toueg, 1996). A second, independently failing channel supplies another observation. When a message appears on one rail but not the other, that divergence localizes a rail failure. When neither rail delivers or acknowledges a message, silence is still ambiguous: the peer may be slow or unavailable, or both rails may have failed. Timeouts and escalation remain necessary for that case.
 
 ## Solution
 
@@ -44,11 +44,14 @@ Send every message on **two independent rails at once**, and make sending on onl
 
 The rails must fail *independently*. Two cloud APIs behind the same network path are one rail wearing two hats. A local file-sync plus a hosted chat API is a good pair, because their failure modes rarely overlap.
 
+Payload policy is part of a common envelope. Both rails carry the same inline-safe payload or the same opaque reference plus integrity digest. Sensitive payloads use an encrypted envelope or a capability/reference that is safe on both rails. If no safe common representation exists, this pattern does not apply to that message.
+
 ```pseudo
 send(msg):
-    id = stable_id(msg)                     # SAME id on both rails - this is what makes dedup possible
-    a  = try(file_rail.append(id, msg))
-    b  = try(chat_rail.post(id, msg))
+    envelope = common_envelope(msg)         # inline-safe, referenced, or encrypted
+    id = stable_id(envelope)                # SAME id on both rails enables deduplication
+    a  = try(file_rail.append(id, envelope))
+    b  = try(chat_rail.post(id, envelope))
 
     if not (a or b): raise HardFailure      # both rails dead => fail loudly, never silently
     if not a: alert("rail A degraded")      # partial delivery still succeeded,
@@ -56,9 +59,10 @@ send(msg):
     ledger.record(id, sent_on=[a, b], acked=False)
 
 receive():
-    for id, msg in dedupe_by_id(file_rail.poll() + chat_rail.poll()):
-        handle(msg)                         # handler MUST be idempotent: both copies may arrive
-        send_ack(id)
+    for id, envelope in dedupe_by_id(file_rail.poll() + chat_rail.poll()):
+        msg = resolve_and_verify(envelope)
+        handle_once(id, msg)                # handler MUST be idempotent: both copies may arrive
+        send_ack(id)                        # through the same dual-rail entry point
 
 chase():                                    # "sent" is not "done"
     for id in ledger.unacked_past_sla():
@@ -110,17 +114,17 @@ graph TD
 
 **Pros**
 
-- Silent failure becomes loud: the ambiguity between "dead channel" and "quiet channel" disappears.
+- Single-rail failure becomes observable when rails diverge; simultaneous silence still requires timeout and escalation.
 - Degraded operation still delivers — one rail down is a warning, not an outage.
-- Fault localisation is immediate: rail divergence names the broken component.
+- Rail divergence localizes the failed path within the monitoring interval.
 - Human visibility comes free, because one rail is a chat people already read.
 
 **Cons**
 
 - Every message is duplicated. A receiver that does not dedupe will double-execute — this pattern *requires* idempotency, it does not grant it.
 - Two integrations to build and keep alive, and the health of each must be monitored separately.
-- Chat rails impose size limits (we fall back to the file rail for payloads above ~4 KB), so the rails are not fully symmetric.
-- A chat rail routes content through a third party. Secrets must never travel on it — route them on the file rail only, or not at all.
+- Large payloads must be externalized to access-controlled storage; both rails carry the same opaque reference and integrity digest.
+- Secrets require an encrypted envelope or a capability/reference safe for both rails. Never silently downgrade a message to one rail; if no safe common envelope exists, use a different delivery design.
 
 ## References
 
