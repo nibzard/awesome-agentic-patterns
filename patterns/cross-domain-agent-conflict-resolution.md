@@ -2,15 +2,12 @@
 title: Cross-Domain Agent Conflict Resolution
 status: emerging
 authors: ["Narasimhan Ramani (@Narasimhan-Ramani)"]
-based_on: ["Narasimhan Ramani (Agentic Cortex)"]
+based_on: ["Open Policy Agent policy-as-code", "Multi-objective decision analysis"]
 category: "Orchestration & Control"
-source: "https://github.com/Narasimhan-Ramani/agentix-cortex"
+source: "https://github.com/open-policy-agent/opa"
 tags: [multi-agent, conflict-resolution, policy-as-code, governance, orchestration, drift-detection]
-summary: >-
-  A coordination layer that cross-references recommendations from multiple
-  independent domain-specific agents, detects conflicts on shared resources,
-  and resolves them via policy-as-code rather than ad-hoc arbitration.
-updated_at: '2026-07-16'
+summary: "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code."
+updated_at: '2026-08-21'
 ---
 
 ## Problem
@@ -64,6 +61,7 @@ graph TD
 ## How to use it
 
 **Applicable when:**
+
 - More than one agent (or team) independently assesses/acts on the same
   resources, dataset, or environment.
 - Conflicting recommendations have real cost if acted on blindly (financial,
@@ -72,6 +70,7 @@ graph TD
   another, not just which one "won."
 
 **Implementation considerations:**
+
 - Recommendations need a common resource identifier scheme across all domain
   agents — without it, conflict detection can't match records at all.
 - Start with a small number of explicit policies covering your highest-risk
@@ -87,6 +86,7 @@ graph TD
 ## Trade-offs
 
 **Pros:**
+
 - Conflicts become visible and auditable instead of silently overwriting each
   other or executing in an undefined order.
 - Governance logic lives in versioned, reviewable policy files rather than
@@ -95,6 +95,7 @@ graph TD
   adding policies/mappings.
 
 **Cons:**
+
 - Adds a coordination hop and latency versus letting each agent act
   independently.
 - Requires upfront investment in a shared resource-identifier scheme across
@@ -105,5 +106,5 @@ graph TD
 
 ## References
 
-- [Agentic Cortex](https://github.com/Narasimhan-Ramani/agentix-cortex) — open-source (MIT) reference implementation of this pattern, coordinating Cost, Reliability, Compliance, and Performance agents via a Mesh Evaluator, OPA policy engine, and Sentinel (drift) loop.
-- [Open Policy Agent](https://www.openpolicyagent.org/) — general-purpose policy-as-code engine commonly used for this kind of externalized governance logic.
+- [Open Policy Agent](https://github.com/open-policy-agent/opa) — general-purpose policy-as-code engine for explicit, versioned arbitration rules.
+- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — guidance for making trade-offs among competing objectives explicit and reviewable.
