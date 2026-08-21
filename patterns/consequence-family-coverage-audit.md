@@ -9,7 +9,7 @@ tags: [risk-classification, policy-authoring, coverage-testing, admission-contro
 summary: "Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest"
 maturity: "early"
 complexity: "low"
-effort: low
+effort: hours
 impact: "high"
 signals: ["Agent has tools that can spend money, run code, move data, or message real people", "Risk rules are a keyword list or a set of tool names", "The policy was validated against the tool catalog and passed"]
 anti_signals: ["Agent is read-only", "Every tool call already requires human approval"]
