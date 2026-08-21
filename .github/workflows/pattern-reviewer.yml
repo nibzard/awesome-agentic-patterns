@@ -27,7 +27,11 @@ jobs:
           persist-credentials: false
 
       - name: Review PR against project contribution principles
-        uses: anthropics/claude-code-action@5ef2e550a465a721f4f45e4a7d3c340c873e1dcc # v1
+        uses: anthropics/claude-code-action@3f854a8fb5146b39d5cbf8b57f70d80810e1366f # v1
+        env:
+          # The repository API key is issued for this Anthropic-compatible
+          # endpoint. The action reads custom endpoints from the caller env.
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || vars.ANTHROPIC_BASE_URL }}
         with:
           github_token: ${{ github.token }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY || vars.ANTHROPIC_API_KEY }}
