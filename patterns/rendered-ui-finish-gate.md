@@ -62,7 +62,7 @@ The gate is deliberately separate from product-specific visual taste. It blocks 
 
 ### Known implementations
 
-- [UIZZE anti-ui-slop Skill](https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop) -- a free local workflow that applies this pattern to coding-agent UI changes; the optional full workflow uses 800,000+ real web and iOS screens as reference evidence.
+- [UIZZE anti-ui-slop Skill](https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop) -- an implementation that applies contract, state, interaction, and rendered-output checks to coding-agent UI changes.
 
 ## Trade-offs
 
