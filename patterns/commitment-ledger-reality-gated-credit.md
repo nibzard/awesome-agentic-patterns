@@ -9,7 +9,7 @@ tags: [commitment-ledger, outcome-feedback, agent-memory, credit-assignment, rea
 summary: "Records agent promises and credits retrieved memory only after an externally verifiable outcome settles."
 maturity: early
 complexity: medium
-effort: medium
+effort: days
 impact: high
 signals: ["Multi-step agent work", "Clear success or failure signal", "Need auditable learning history"]
 anti_signals: ["One-shot answers", "No observable outcome", "Highly sensitive data without retention policy"]

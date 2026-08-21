@@ -24,7 +24,7 @@ related:
   - cross-cycle-consensus-relay
   - memory-synthesis-from-execution-logs
 complexity: medium
-effort: medium
+effort: days
 impact: high
 ---
 

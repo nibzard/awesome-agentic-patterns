@@ -9,7 +9,7 @@ tags: [circuit-breaker, fault-tolerance, tool-reliability, graceful-degradation,
 summary: "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints"
 maturity: "maturing"
 complexity: "medium"
-effort: low
+effort: hours
 impact: "high"
 signals: ["Agent calls external APIs or tools that can fail", "Retries burn tokens without progress", "Multiple tool providers available for fallback"]
 anti_signals: ["All tools are local and deterministic", "Single-shot agent with no retry logic"]

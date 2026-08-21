@@ -19,7 +19,7 @@ summary: >-
   fallback strategies, preventing wasted iterations in non-interactive contexts.
 maturity: maturing
 complexity: low
-effort: low
+effort: hours
 impact: high
 signals:
   - "Agent runs in non-interactive or background mode"

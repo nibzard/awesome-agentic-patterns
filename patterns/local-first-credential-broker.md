@@ -7,7 +7,7 @@ source: "https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-acc
 tags: [credentials, oauth, api-keys, proxy, local-first, agent-identity]
 summary: "Keep raw secrets out of the agent process by injecting credentials at the network layer through a local broker, rather than handing the agent environment variables or config files."
 complexity: medium
-effort: medium
+effort: days
 impact: high
 signals:
   - "Agents call multiple authenticated SaaS APIs in one run"
