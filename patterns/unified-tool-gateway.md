@@ -10,7 +10,7 @@ summary: "Route all agent tool calls through a single gateway that handles disco
 slug: "unified-tool-gateway"
 maturity: "maturing"
 complexity: "medium"
-effort: medium
+effort: days
 impact: "high"
 signals: ["Agent needs 10+ external tools or APIs", "Managing multiple API keys across providers", "Usage-based billing required across tools", "Teams sharing tool access with centralized controls"]
 anti_signals: ["Single-provider tool usage", "Agents that only need 1-2 tools", "Fully offline or air-gapped environments"]

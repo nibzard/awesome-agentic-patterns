@@ -25,7 +25,7 @@ const patternCategory = z.enum([
 
 const patternMaturity = z.enum(['early', 'maturing', 'mature']);
 const patternComplexity = z.enum(['low', 'medium', 'high', 'very-high']);
-const patternEffort = z.enum(['low', 'medium', 'high', 'very-high']);
+const patternEffort = z.enum(['hours', 'days', 'weeks']);
 const patternImpact = z.enum(['low', 'medium', 'high', 'transformative']);
 
 // Patterns live in the monorepo root `patterns/` directory. Point Astro's
