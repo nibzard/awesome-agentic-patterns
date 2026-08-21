@@ -18,9 +18,9 @@ and the half-configured services that only exist on someone's laptop.
 
 The obvious fixes are worse than the problem:
 
-- **Open a port on the host.** Now the developer's machine listens on the
-  network for an agent to tell it what to run. This is the same shape as a
-  remote-access backdoor, and it fails immediately behind NAT or a corporate VPN.
+- **Open a port on the host.** Now the developer's machine exposes another
+  network service that must be authenticated, authorized, and reachable through
+  NAT or a corporate VPN.
 - **Hold a synchronous connection.** Sandboxes get suspended, hit request
   timeouts, and are reaped. A 20-minute build outlives the caller, and when the
   caller dies mid-flight the work is orphaned with no way to reclaim the result.
@@ -35,10 +35,11 @@ will drop tasks.
 
 ## Solution
 
-Move the coupling from a connection to a **shared directory**. Neither side
-talks to the other directly. Both sides only append to and read from a spool
-directory that is visible to each — a bind mount, a synced folder, a mounted
-volume.
+Move the coupling from a connection to a **shared directory**. Both sides append
+to and read from a spool directory that is visible to each — a bind mount, a
+synced folder, or a mounted volume. The directory is still an inbound
+command-and-control channel, so it must be secured as deliberately as a network
+API even though the host exposes no listening socket.
 
 The directory holds three roles:
 
@@ -53,15 +54,28 @@ that id whenever it happens to be alive.
 
 ```pseudo
 // sandbox side — never blocks on the host
-task_id = write(queue/, {op, args, timeout, idempotency_key})
+key = stable_idempotency_key(op, args, caller_intent)
+atomic_write(queue/key, signed_request(op, typed_args, timeout, key))
 ...                                  // sandbox may be suspended here
-result  = read(results/task_id)      // returns pending | running | done
+result = read(results/key)           // returns pending | running | done | uncertain
 
-// host side — a loop, not a server
-for request in watch(queue/):
-    if seen(request.idempotency_key): continue   // retries collapse
-    result = execute_if_whitelisted(request)
-    atomic_write(results/request.id, result)
+// host side — atomic rename lets only one worker claim a request
+for request in claim_by_rename(queue/, running/):
+    verify_signature_schema_and_permissions(request)
+    key = request.idempotency_key
+    if exists(results/key):
+        continue                              // replay the durable result
+    ledger.record(key, "running")
+    result = execute_allowlisted_operation(request, idempotency_key=key)
+    atomic_write(results/key, result)
+    ledger.record(key, "done")
+
+// after a crash, never blindly repeat an operation with uncertain outcome
+for key in ledger.entries("running"):
+    if downstream_can_lookup_or_deduplicate(key):
+        reconcile_and_publish(key)
+    else:
+        ledger.record(key, "uncertain")       // require human reconciliation
 ```
 
 ```mermaid
@@ -75,14 +89,17 @@ graph LR
 
 Three properties do the real work:
 
-1. **No listener.** The host opens no port and accepts no inbound connection.
-   Reachability comes from the shared mount, so NAT and VPNs are irrelevant.
-2. **Durability by default.** A request that has been written survives the
-   sandbox dying, the host rebooting, and the poller disappearing for an hour.
-   The result waits in a file until something reads it.
-3. **Idempotency keys make retries safe.** A caller that cannot tell whether its
-   request landed simply writes it again with the same key; the daemon
-   recognises the key and returns the existing result instead of re-executing.
+1. **No network listener.** The host opens no port. Reachability comes from the
+   shared mount, so NAT and VPN traversal are not part of this protocol. Access
+   to the directory still grants authority to submit work.
+2. **Durable decoupling.** On persistent storage, an atomically written and
+   flushed request can outlive the sandbox or poller. Surviving a host reboot
+   additionally requires a durable spool and ledger; a temporary bind mount or
+   best-effort sync does not provide that guarantee.
+3. **Idempotency plus reconciliation makes retries safe.** Completed requests
+   replay their stored result. Requests whose outcome was uncertain at a crash
+   are reconciled through a downstream idempotency key or status lookup. The
+   filesystem alone cannot provide exactly-once execution for external effects.
 
 Polling must be a pure read with no side effects, so a nervous caller can check
 as often as it likes.
@@ -109,8 +126,15 @@ lifetime domains** and the work must happen on specific hardware:
 - Agents whose runtime imposes a short request timeout but whose tasks do not
 - Any case where opening an inbound port on a developer machine is unacceptable
 
-Prerequisites: a directory both sides can reach, atomic file writes (write to a
-temp name, then rename), and a whitelist on the host defining what may run.
+Prerequisites: a persistent directory both sides can reach, atomic file writes
+(write to a temporary name, flush, then rename), a durable idempotency ledger,
+and a whitelist on the host defining fixed operations and typed arguments.
+
+Authenticate each request with a signature or MAC. Enforce restrictive
+ownership and permissions, reject symlinks and path traversal, run the daemon
+with least privilege, and audit claims, execution, and results. For operations
+that cannot accept an idempotency key or report prior status, surface an
+`uncertain` result for human reconciliation instead of retrying automatically.
 
 Because the host executes real commands, pair the transport with a per-task
 safety envelope — a spend ceiling, a permission scope (read-only versus
@@ -120,16 +144,21 @@ gives durability; it gives no safety on its own.
 ## Trade-offs
 
 - **Pros:**
-  - Survives reboots, sandbox suspension, and caller death without losing work
+  - On a persistent spool, survives sandbox suspension and caller death; with a
+    durable ledger and recovery, it can also survive host restarts
   - No inbound port, no tunnel, no NAT traversal
   - Trivially debuggable and auditable — the protocol is files you can read
-  - Retries are safe when keyed
+  - Completed work is safely replayed, while uncertain work is reconciled
 - **Cons:**
   - Polling adds latency; unsuitable for tight interactive loops
   - Requires a shared mount, which not every sandbox offers
   - The daemon holds real execution authority, so the whitelist and permission
     scope become the security boundary
+  - A shared directory is an inbound control surface and requires request
+    authentication, restrictive permissions, and path-safety checks
   - Concurrent writers need atomic rename discipline or results interleave
+  - Exactly-once external effects require downstream deduplication or
+    reconciliation; the filesystem cannot guarantee them by itself
   - Spool directories grow and need reaping
 
 ## References
