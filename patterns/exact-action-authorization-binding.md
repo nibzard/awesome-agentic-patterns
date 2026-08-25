@@ -99,6 +99,6 @@ The adapter is the enforcement point. A prompt instruction to "execute only what
 ## References
 
 - Toraman et al., [*The NOA Action Digest: a Domain-Separated Correlation Value for Human-Approved Agent Actions*](https://datatracker.ietf.org/doc/html/draft-toraman-noa-action-digest-01)
-- Noa et al., [*A SCITT Profile for AI-Agent Action Receipts*](https://datatracker.ietf.org/doc/html/draft-noa-scitt-ai-agent-receipt-01)
+- Toraman, [*A SCITT Profile for AI-Agent Action Receipts*](https://datatracker.ietf.org/doc/html/draft-noa-scitt-ai-agent-receipt-01)
 - [Google AIP-151: Long-running operations](https://google.aip.dev/151)
 - [Kubernetes API conventions: spec and status](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
