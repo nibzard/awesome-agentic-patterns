@@ -20,6 +20,7 @@ summary: >-
   Insert a transparent proxy between agents and tool servers that evaluates
   every tool call against a policy engine before forwarding, producing an
   immutable audit trail of all decisions.
+updated_at: "2026-07-23"
 ---
 
 ## Problem

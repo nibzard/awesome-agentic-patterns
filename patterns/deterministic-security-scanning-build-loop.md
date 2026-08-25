@@ -6,6 +6,7 @@ based_on: ["Geoffrey Huntley"]
 category: "Security & Safety"
 source: "https://ghuntley.com/secure-codegen/"
 tags: [security, deterministic, build-loop, backpressure, static-analysis, supply-chain]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

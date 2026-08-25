@@ -6,6 +6,7 @@ based_on: ["Anthropic", "Google DeepMind"]
 category: "Reliability & Eval"
 source: "https://arxiv.org/abs/2212.08073"
 tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, evaluation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"]
 category: Tool Use & Environment
 source: "https://arxiv.org/abs/2506.08837"
 tags: [dsl, sandbox, program-synthesis, auditability]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

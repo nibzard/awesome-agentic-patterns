@@ -6,6 +6,7 @@ based_on: ["Jory Pestorious"]
 category: Feedback Loops
 source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [validation, drift-detection, continuous-testing]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

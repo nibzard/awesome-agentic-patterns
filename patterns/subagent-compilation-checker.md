@@ -9,6 +9,7 @@ tags: [subagent, compilation, modularity, error-isolation]
 evidence_grade: medium
 evidence_snapshot: "Core mechanism validated by academic work on multi-agent verification (Reflexion, Self-Refine) and formal verification (CaMeL). Industry implementations exist (Cursor, Aider, SWE-agent) but limited controlled studies."
 last_updated: "2026-02-28"
+updated_at: "2026-03-11"
 ---
 
 ## Problem

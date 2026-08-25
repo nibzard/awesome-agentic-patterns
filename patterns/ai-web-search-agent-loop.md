@@ -6,6 +6,7 @@ based_on: ["Colin Flaherty (Muse)", "Amplify Partners Blog"]
 category: Tool Use & Environment
 source: https://www.amplifypartners.com/blog-posts/how-ai-web-search-works
 tags: [web-search, serp-api, citations, parallel-agents, query-translation, operators, grounding]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

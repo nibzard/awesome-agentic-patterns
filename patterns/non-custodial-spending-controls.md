@@ -6,6 +6,7 @@ based_on: ["Walleted agent execution patterns"]
 category: "Security & Safety"
 source: "https://policylayer.com"
 tags: [wallet-controls, spend-limits, policy-enforcement, non-custodial, AI-agents, safety]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -7,6 +7,7 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Learning & Adaptation"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [frontier, state-of-the-art, model-selection, product-strategy, learning, innovation, no-selector]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

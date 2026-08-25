@@ -6,6 +6,7 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Orchestration & Control"
 source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
 tags: [feature-killing, forced-evolution, courage, focus, self-destruct, obsolescence, product-strategy]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

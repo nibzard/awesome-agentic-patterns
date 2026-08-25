@@ -6,6 +6,7 @@ based_on: ["Maildir-style spool directories", "Claude Code / Cowork sandbox spli
 category: "Tool Use & Environment"
 source: "https://github.com/abhinaykrupa/cowork-to-code-bridge"
 tags: [sandbox-escape, host-execution, async-rpc, idempotency, spool-directory, durability]
+updated_at: "2026-08-21"
 ---
 
 ## Problem

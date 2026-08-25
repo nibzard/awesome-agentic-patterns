@@ -6,6 +6,7 @@ based_on: ["Analysis of 88 Claude conversation sessions (nibzard-web, skills-mar
 category: Orchestration & Control
 source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
 tags: [tools, workflow, best-practices, efficiency, patterns, exploration, modification]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

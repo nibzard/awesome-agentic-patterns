@@ -9,6 +9,7 @@ tags: [self-identity, persona, session-hooks, familiarity, cross-session, profil
 evidence_grade: medium
 evidence_snapshot: "Dual-hook validated in production; MemGPT/Reflexion show 91% vs 80% HumanEval via reflection"
 last_updated: "2026-02-28"
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -215,6 +215,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Denial Tracking & Permission Escalation](patterns/denial-tracking-permission-escalation.md)
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
 - [Deterministic Threat Rule Scanning](patterns/deterministic-threat-rule-scanning.md)
+- [Exact-Action Authorization Binding](patterns/exact-action-authorization-binding.md)
 - [External Credential Sync](patterns/external-credential-sync.md)
 - [Hook-Based Safety Guard Rails for Autonomous Code Agents](patterns/hook-based-safety-guard-rails.md)
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)

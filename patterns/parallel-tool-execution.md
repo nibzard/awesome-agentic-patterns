@@ -6,6 +6,7 @@ based_on: ["Gerred Dillon ('Building an Agentic System')"]
 category: "Orchestration & Control"
 source: "https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html" # Assumes this page details the pattern
 tags: [parallel execution, tool orchestration, read-only tools, stateful tools, agent efficiency, agent safety, concurrency control, task scheduling]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

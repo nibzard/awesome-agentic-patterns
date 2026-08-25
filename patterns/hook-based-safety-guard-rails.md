@@ -6,6 +6,7 @@ based_on: ["Claude Code Hooks (Anthropic)", "claude-code-ops-starter (https://gi
 category: "Security & Safety"
 source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
 tags: [hooks, guard-rails, safety, autonomous-operation, destructive-command-blocking, context-monitoring, pre-tool-use, post-tool-use]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

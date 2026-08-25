@@ -6,6 +6,7 @@ based_on: ["WFGY Problem Map (@onestardao)"]
 category: "Reliability & Eval"
 source: "https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md"
 tags: [reliability, evaluation, rag, agents, debugging, failure-modes, checklist]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

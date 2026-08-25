@@ -6,6 +6,7 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Orchestration & Control"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts"
 tags: [queueing, concurrency, lanes, isolation, parallelism, deadlock-prevention]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Voidly Pay (contributor-owned reference implementation)"]
 category: "Orchestration & Control"
 source: "https://github.com/voidly-ai/voidly-pay"
 tags: [multi-agent, coordination, payments, escrow, receipts, capabilities, atomic-hire]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

@@ -11,6 +11,7 @@ effort: "hours"
 impact: "medium"
 signals: ["The agent must judge a quality attribute of its own output before shipping it", "You want the same input to always produce the same verdict", "You want the verdict to be assertable in a test or CI gate"]
 anti_signals: ["The quality attribute genuinely requires semantic judgement (factual correctness, tone-for-this-audience)", "You have no way to enumerate observable features of 'good'"]
+updated_at: "2026-08-21"
 ---
 
 ## Problem

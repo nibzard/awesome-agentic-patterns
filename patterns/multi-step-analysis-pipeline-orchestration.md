@@ -6,6 +6,7 @@ based_on: ["Anthropic Claude Code"]
 category: "Orchestration & Control"
 source: "https://github.com/shmlkv/dna-claude-analysis"
 tags: [pipeline, multi-step, orchestration, report-generation, data-analysis, claude-code]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

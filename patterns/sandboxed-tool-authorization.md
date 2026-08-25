@@ -6,6 +6,7 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Security & Safety"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts"
 tags: [authorization, policy, allowlist, deny-by-default, pattern-matching, subagent-security]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

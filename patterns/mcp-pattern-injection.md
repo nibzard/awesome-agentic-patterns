@@ -6,6 +6,7 @@ based_on: ["Claude Desktop MCP", "Cursor MCP Integration"]
 category: Tool Use & Environment
 source: "https://github.com/Rajathbharadwaj/langgraph-patterns-mcp"
 tags: [mcp, code-patterns, tool-injection, context-enhancement, langgraph]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

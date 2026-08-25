@@ -6,6 +6,7 @@ based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
 source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [spec-first, scaffolding, contract, requirements]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

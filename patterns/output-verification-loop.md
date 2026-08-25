@@ -21,6 +21,7 @@ impact: high
 signals: ["Agent output feeds into decisions or downstream agents", "Hallucination risk is non-trivial", "Compliance requires an audit trail"]
 anti_signals: ["Output is purely creative with no factual claims", "Latency budget under 500ms"]
 related: ["reflection-loop", "self-critique-evaluator-loop"]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

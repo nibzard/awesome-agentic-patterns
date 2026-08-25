@@ -6,6 +6,7 @@ based_on: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
 category: "Tool Use & Environment"
 source: "https://openai.com/research/gpt-4v-system-card"
 tags: [multimodal, vision, video, image-processing, visual-understanding, agent-capabilities]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Michael Bolin (OpenAI Codex)"]
 category: "Context & Memory"
 source: "https://openai.com/index/unrolling-the-codex-agent-loop/"
 tags: [prompt-caching, exact-prefix, performance, stateless, zero-data-retention, message-ordering, optimization]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["OpenAI"]
 category: "Reliability & Eval"
 source: "https://openai.com/research/criticgpt"
 tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

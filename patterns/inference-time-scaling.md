@@ -6,6 +6,7 @@ based_on: ["Google DeepMind", "OpenAI", "Wei et al. (CoT)", "Wang et al. (Self-C
 category: "Orchestration & Control"
 source: "https://deepmind.google/research/"
 tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute, search, verification]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

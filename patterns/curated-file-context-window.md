@@ -6,6 +6,7 @@ based_on: ["Internal AI Dev Team"]
 category: "Context & Memory"
 source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
 tags: [code-context, file-scope, relevance, memory-management]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

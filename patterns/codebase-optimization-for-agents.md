@@ -6,6 +6,7 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack, Tim Culverhouse)", "Raising an Agen
 category: "UX & Collaboration"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [agent-first, human-dx, regression, optimization, tooling, codebase-design, trade-offs, agent-native, feedback-loops]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

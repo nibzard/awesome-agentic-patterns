@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (via Claude Code capability)"]
 category: Orchestration & Control
 source: "https://www.nibzard.com/claude-code"
 tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-agents, collaborative ideation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

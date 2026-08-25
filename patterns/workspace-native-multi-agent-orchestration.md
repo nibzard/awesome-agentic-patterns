@@ -6,6 +6,7 @@ based_on: ["Taskade AI Agents (example implementation)"]
 category: "Orchestration & Control"
 source: "https://taskade.com/agents"
 tags: [multi-agent, orchestration, workflow-automation, workspace, mcp, knowledge-base, persistent-memory, integrations, collaboration]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

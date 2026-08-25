@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
 source: "https://www.nibzard.com/claude-code"
 tags: [context management, configuration, scoped context, automatic loading, CLAUDE.md]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

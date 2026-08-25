@@ -6,6 +6,7 @@ based_on: ["Sourcegraph Team"]
 category: Orchestration & Control
 source: "https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ"
 tags: [multi-model, cost-optimization, strategic-reasoning, architecture]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

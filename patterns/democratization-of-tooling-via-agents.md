@@ -6,6 +6,7 @@ based_on: ["Jacob Jackson (Cursor)", "Alex Albert (Anthropic)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [no-code, low-code, citizen-developer, tool-creation, business-users, automation, custom-software]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

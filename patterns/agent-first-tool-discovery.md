@@ -8,6 +8,7 @@ source: "https://modelcontextprotocol.io/specification/2025-06-18/basic/transpor
 tags: [tool-discovery, mcp, agent-search, service-registry, llms-txt, api-discovery, agent-infrastructure]
 slug: "agent-first-tool-discovery"
 summary: "Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics."
+updated_at: "2026-07-23"
 ---
 
 ## Problem

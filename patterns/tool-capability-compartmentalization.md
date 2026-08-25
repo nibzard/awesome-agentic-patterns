@@ -6,6 +6,7 @@ based_on: ["Simon Willison (MCP critique)"]
 category: Orchestration & Control
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [capability-segregation, least-privilege, tool-permissions]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

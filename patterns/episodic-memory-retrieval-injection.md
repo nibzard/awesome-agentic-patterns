@@ -6,6 +6,7 @@ based_on: ["Cursor AI (MCP)", "Windsurf Flows"]
 category: Context & Memory
 source: "https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021"
 tags: [episodic-memory, vector-db, retrieval-augmented, context-hint]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

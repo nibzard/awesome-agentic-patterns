@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
 source: "https://www.nibzard.com/claude-code"
 tags: [context management, dynamic context, lazy loading, slash commands, at-mention, interactive context]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

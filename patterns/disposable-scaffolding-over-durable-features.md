@@ -6,6 +6,7 @@ based_on: ["Thorsten Ball (Sourcegraph)"]
 category: "Orchestration & Control"
 source: "https://www.sourcegraph.com"
 tags: [bitter-lesson, temporary-tooling, model-centric, adaptability, future-proofing]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

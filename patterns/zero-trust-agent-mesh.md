@@ -6,6 +6,7 @@ based_on: ["NIST SP 800-207 (Zero Trust Architecture)", "SPIFFE/SPIRE identity c
 category: "Security & Safety"
 source: "https://www.nist.gov/publications/zero-trust-architecture"
 tags: [zero-trust, identity, delegation, multi-agent, cryptography, ed25519, governance]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

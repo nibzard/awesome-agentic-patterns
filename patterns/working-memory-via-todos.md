@@ -6,6 +6,7 @@ based_on: ["Analysis of 88 Claude conversation sessions"]
 category: Context & Memory
 source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
 tags: [context, memory, working-memory, state, todo-tracking, dependencies, session-management]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

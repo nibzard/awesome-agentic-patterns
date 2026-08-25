@@ -6,6 +6,7 @@ based_on: ["SCITT (Supply Chain Integrity, Transparency and Trust)", "OWASP Agen
 category: "Security & Safety"
 source: "https://github.com/jagmarques/asqav-sdk"
 tags: [governance, audit-trail, compliance, cryptographic-signing, policy-enforcement, eu-ai-act, owasp]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Zero-knowledge proofs", "Zero trust architecture", "Trusted-endpoint
 category: "Security & Safety"
 source: "https://csrc.nist.gov/pubs/sp/800/207/final"
 tags: [egress, zero-knowledge-proof, source-of-truth, allow-list, mcp, outbound-verification, runtime-protection]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Capability-Based Security (Dennis & Van Horn, 1966)", "Remote Proced
 category: "Security & Safety"
 source: "https://github.com/ZiwayZhao/agent-coworker"
 tags: [privacy, skill-sharing, black-box, schema-only, prompt-protection, inter-agent, trust]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

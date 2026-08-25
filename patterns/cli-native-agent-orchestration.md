@@ -6,6 +6,7 @@ based_on: ["Jory Pestorious"]
 category: Tool Use & Environment
 source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [cli, automation, local-dev, headless]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Theo (OpenAI Solutions Architect)", "Prashant (OpenAI RFT Team)"]
 category: "Learning & Adaptation"
 source: "https://youtu.be/1s_7RMG4O4U"
 tags: [reinforcement-learning, sample-efficiency, variance, data-quality, agent-rft]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

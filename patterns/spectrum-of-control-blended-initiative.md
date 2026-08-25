@@ -6,6 +6,7 @@ based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-delegation, code-editing, ide-integration]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

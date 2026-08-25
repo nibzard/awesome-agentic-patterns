@@ -7,6 +7,7 @@ category: "Reliability & Eval"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md"
 tags: [scheduled-agents, silent-failure, watchdog, observability, automation]
 last_updated: "2026-06-10"
+updated_at: "2026-07-23"
 ---
 
 ## Problem

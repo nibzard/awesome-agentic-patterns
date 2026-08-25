@@ -6,6 +6,7 @@ based_on: ["Anthropic Engineering Team", "Cursor Engineering (Planner-Worker Arc
 category: Orchestration & Control
 source: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
 tags: [long-running-agents, session-handoff, lifecycle-specialization, project-bootstrap, incremental-development]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -11,6 +11,7 @@ tags:
   - automation
   - orchestration
   - reactive
+updated_at: "2026-07-23"
 ---
 
 # Signal-Driven Agent Activation

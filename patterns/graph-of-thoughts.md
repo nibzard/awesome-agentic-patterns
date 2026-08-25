@@ -6,6 +6,7 @@ based_on: ["Besta et al.", "ETH Zurich"]
 category: "Feedback Loops"
 source: "https://arxiv.org/abs/2308.09687"
 tags: [reasoning, graph-based, problem-solving, thought-exploration, backtracking, aggregation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

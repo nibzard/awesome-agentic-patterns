@@ -20,7 +20,7 @@
   "id": "output-verification-loop",
   "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.",
   "complexity": "low",
-  "effort": "low",
+  "effort": "hours",
   "impact": "high",
   "signals": [
     "Agent output feeds into decisions or downstream agents",

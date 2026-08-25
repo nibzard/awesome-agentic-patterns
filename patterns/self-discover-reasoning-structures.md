@@ -6,6 +6,7 @@ based_on: ["Google DeepMind", "USC"]
 category: "Feedback Loops"
 source: "https://arxiv.org/abs/2402.03620"
 tags: [reasoning, self-improvement, meta-learning, problem-solving, task-specific, optimization]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

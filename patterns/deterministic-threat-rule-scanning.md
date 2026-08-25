@@ -11,6 +11,7 @@ summary: >-
   threat patterns in AI agent tool calls and skill definitions.
 evidence_grade: medium
 last_updated: "2026-03-31"
+updated_at: "2026-07-23"
 ---
 
 ## Problem

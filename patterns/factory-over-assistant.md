@@ -6,6 +6,7 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"]
 category: "Orchestration & Control"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [parallelism, autonomous-agents, factory, assistant, sidebar, orchestration, asynchronous-work]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

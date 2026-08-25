@@ -53,12 +53,14 @@ The project has a unique architecture where pattern documentation drives the ent
    category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
    source: "URL to primary source"
    tags: [relevant, keywords, here]
+   updated_at: "YYYY-MM-DD"  # Required: last content change date — file mtimes differ per machine, so generated data needs an explicit date
    ---
    ```
 3. **Required sections**: Problem, Solution, References
 4. **Data sync**: Pattern files must be converted to JSON for the Astro site
-   - Run the data pipeline script to update JSON files
-   - JSON files are stored in `apps/web/public/patterns/`
+   - Run `npm run build:data` to update the JSON files
+   - JSON files are stored in `apps/web/public/patterns/` and `apps/web/public/data/patterns/`
+   - CI fails if the committed JSON files differ from what the pipeline produces; run the pipeline and commit its output together with the pattern `.md` change
 
 ### Content Guidelines
 - Use Mermaid diagrams in patterns for architectural visualization

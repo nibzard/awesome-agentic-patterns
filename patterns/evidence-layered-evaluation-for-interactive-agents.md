@@ -9,6 +9,7 @@ tags: [evaluation, browser-agents, computer-use, reproducibility, observability]
 evidence_grade: medium
 evidence_snapshot: "Separating outcome checks from execution traces makes interactive-agent failures easier to diagnose; the general trade-off is additional storage and instrumentation."
 last_updated: "2026-07-28"
+updated_at: "2026-08-21"
 ---
 
 ## Problem

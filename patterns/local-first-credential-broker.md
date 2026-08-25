@@ -20,6 +20,7 @@ anti_signals:
 prerequisites:
   - "Local OS keychain or filesystem with permission to store an encrypted vault"
   - "Agent runtime that can route outbound HTTPS through a loopback proxy"
+updated_at: "2026-07-23"
 ---
 
 ## Problem

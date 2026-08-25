@@ -348,6 +348,27 @@
       "summary": "Synchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates compute bubbles and idle resources ."
     },
     {
+      "id": "authenticated-authority-channel",
+      "title": "Authenticated Authority Channel",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "authenticated-authority-channel",
+      "tags": [
+        "prompt-injection",
+        "authorization",
+        "provenance",
+        "control-plane",
+        "tool-use"
+      ],
+      "summary": "Preserve a distinguishable channel for authenticated intent so retrieved content can inform reasoning without granting itself authority.",
+      "maturity": "early",
+      "domains": [
+        "ops",
+        "research",
+        "coding"
+      ]
+    },
+    {
       "id": "autonomous-workflow-agent-architecture",
       "title": "Autonomous Workflow Agent Architecture",
       "category": "Orchestration & Control",
@@ -658,6 +679,27 @@
       "summary": "When an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read only and could be run concurrently."
     },
     {
+      "id": "consequence-family-coverage-audit",
+      "title": "Consequence-Family Coverage Audit",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "consequence-family-coverage-audit",
+      "tags": [
+        "risk-classification",
+        "policy-authoring",
+        "coverage-testing",
+        "admission-control",
+        "blind-spots"
+      ],
+      "summary": "Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest",
+      "maturity": "early",
+      "domains": [
+        "ops",
+        "security",
+        "fintech"
+      ]
+    },
+    {
       "id": "context-budget-as-a-governed-resource",
       "title": "Context Budget as a Governed Resource",
       "category": "Context & Memory",
@@ -777,6 +819,22 @@
         "autonomous-loops"
       ],
       "summary": "Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles."
+    },
+    {
+      "id": "cross-domain-agent-conflict-resolution",
+      "title": "Cross-Domain Agent Conflict Resolution",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "cross-domain-agent-conflict-resolution",
+      "tags": [
+        "multi-agent",
+        "conflict-resolution",
+        "policy-as-code",
+        "governance",
+        "orchestration",
+        "drift-detection"
+      ],
+      "summary": "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code."
     },
     {
       "id": "cross-protocol-agent-discovery",
@@ -932,6 +990,22 @@
       ]
     },
     {
+      "id": "deterministic-grader-in-the-loop",
+      "title": "Deterministic Grader in the Loop",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "deterministic-grader-in-the-loop",
+      "tags": [
+        "feedback-loop",
+        "self-critique",
+        "evaluation",
+        "determinism",
+        "llm-as-judge",
+        "reproducibility"
+      ],
+      "summary": "Replace the LLM-as-judge in an agent's self-review loop with a deterministic scorer that returns the raw counts behind each sub-score, so the agent has something specific to fix."
+    },
+    {
       "id": "deterministic-security-scanning-build-loop",
       "title": "Deterministic Security Scanning Build Loop",
       "category": "Security & Safety",
@@ -1075,6 +1149,24 @@
       "summary": "When the same model both reads untrusted content and controls high privilege tools, a single prompt injection path can convert benign context into privileged actions."
     },
     {
+      "id": "dual-rail-message-delivery",
+      "title": "Dual-Rail Message Delivery",
+      "category": "Orchestration & Control",
+      "status": "validated-in-production",
+      "slug": "dual-rail-message-delivery",
+      "tags": [
+        "multi-agent",
+        "coordination",
+        "message-bus",
+        "reliability",
+        "redundancy",
+        "fault-detection",
+        "human-in-the-loop",
+        "distributed-systems"
+      ],
+      "summary": "Agents running on separate machines coordinate over a single channel: a synced folder, a queue, or a chat."
+    },
+    {
       "id": "dual-use-tool-design",
       "title": "Dual-Use Tool Design",
       "category": "Tool Use & Environment",
@@ -1163,6 +1255,43 @@
         "context-hint"
       ],
       "summary": "Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures."
+    },
+    {
+      "id": "evidence-layered-evaluation-for-interactive-agents",
+      "title": "Evidence-Layered Evaluation for Interactive Agents",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "evidence-layered-evaluation-for-interactive-agents",
+      "tags": [
+        "evaluation",
+        "browser-agents",
+        "computer-use",
+        "reproducibility",
+        "observability"
+      ],
+      "summary": "Interactive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state."
+    },
+    {
+      "id": "exact-action-authorization-binding",
+      "title": "Exact-Action Authorization Binding",
+      "category": "Security & Safety",
+      "status": "proposed",
+      "slug": "exact-action-authorization-binding",
+      "tags": [
+        "authorization",
+        "approval",
+        "tool-use",
+        "action-binding",
+        "TOCTOU",
+        "receipts"
+      ],
+      "summary": "Bind a short-lived approval to the complete action presented to the reviewer, then rederive and compare that identity at the acting boundary before execution.",
+      "maturity": "early",
+      "domains": [
+        "ops",
+        "coding",
+        "fintech"
+      ]
     },
     {
       "id": "explicit-posterior-sampling-planner",
@@ -1271,6 +1400,22 @@
         "long-running-tasks"
       ],
       "summary": "Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks."
+    },
+    {
+      "id": "filesystem-mediated-host-delegation",
+      "title": "Filesystem-Mediated Host Delegation",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "filesystem-mediated-host-delegation",
+      "tags": [
+        "sandbox-escape",
+        "host-execution",
+        "async-rpc",
+        "idempotency",
+        "spool-directory",
+        "durability"
+      ],
+      "summary": "An agent that runs inside a sandbox — a container, a hosted runtime, a cloud workspace — is deliberately cut off from the developer's real machine."
     },
     {
       "id": "frontier-focused-development",
@@ -1889,6 +2034,29 @@
       "summary": "Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result."
     },
     {
+      "id": "own-check-fault-injection",
+      "title": "Own-Check Fault Injection",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "own-check-fault-injection",
+      "tags": [
+        "fault-injection",
+        "evals",
+        "reliability",
+        "self-verification",
+        "guardrails",
+        "chaos-engineering",
+        "observability"
+      ],
+      "summary": "Plant a controlled fault inside a running agent pipeline and score whether the pipeline's own checks emit a detection act, keeping detected, reacted and recovered as separate verdicts.",
+      "maturity": "early",
+      "domains": [
+        "ops",
+        "coding",
+        "research"
+      ]
+    },
+    {
       "id": "parallel-tool-call-learning",
       "title": "Parallel Tool Call Learning",
       "category": "Orchestration & Control",
@@ -1916,6 +2084,27 @@
         "coding-agent"
       ],
       "summary": "Coding agents with access to multiple patching or refactoring tools (e.g., text based apply patch , AST based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided."
+    },
+    {
+      "id": "persistent-test-memory-feedback-loop",
+      "title": "Persistent Test Memory Feedback Loop",
+      "category": "Learning & Adaptation",
+      "status": "emerging",
+      "slug": "persistent-test-memory-feedback-loop",
+      "tags": [
+        "testing-agents",
+        "persistent-memory",
+        "feedback-loop",
+        "self-healing",
+        "regression-testing"
+      ],
+      "summary": "Preserve validated test lessons so an agent can reuse successful paths, recognize recurring failures, and retire stale knowledge.",
+      "maturity": "early",
+      "domains": [
+        "software-testing",
+        "web",
+        "mobile"
+      ]
     },
     {
       "id": "pii-tokenization",
@@ -2087,6 +2276,22 @@
       "summary": "Long running agent conversations with many tool calls can suffer from quadratic performance degradation : Growing JSON payloads : Each iteration sends the entir"
     },
     {
+      "id": "reasoning-token-firewall",
+      "title": "Reasoning-Token Firewall",
+      "category": "Reliability & Eval",
+      "status": "validated-in-production",
+      "slug": "reasoning-token-firewall",
+      "tags": [
+        "reasoning",
+        "chain-of-thought",
+        "streaming",
+        "output-hygiene",
+        "safety",
+        "harness"
+      ],
+      "summary": "Assemble an agent's result only from answer-typed stream events, never by string-stripping interleaved reasoning tokens."
+    },
+    {
       "id": "recursive-best-of-n-delegation",
       "title": "Recursive Best-of-N Delegation",
       "category": "Orchestration & Control",
@@ -2133,6 +2338,27 @@
         "checklist"
       ],
       "summary": "RAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates."
+    },
+    {
+      "id": "rendered-ui-finish-gate",
+      "title": "Rendered UI Finish Gate",
+      "category": "Feedback Loops",
+      "status": "emerging",
+      "slug": "rendered-ui-finish-gate",
+      "tags": [
+        "ui-quality",
+        "frontend",
+        "coding-agents",
+        "verification",
+        "design-systems",
+        "feedback-loops"
+      ],
+      "summary": "Verify an agent-built interface against its intended design contract, required states, interaction semantics, and rendered output before merging.",
+      "domains": [
+        "coding",
+        "design",
+        "frontend"
+      ]
     },
     {
       "id": "rich-feedback-loops-perfect-prompts",
@@ -2683,6 +2909,29 @@
       "summary": "AI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively."
     },
     {
+      "id": "tracker-as-desired-state-reconciliation",
+      "title": "Tracker-as-Desired-State Reconciliation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "tracker-as-desired-state-reconciliation",
+      "tags": [
+        "orchestration",
+        "reconciliation",
+        "level-triggered",
+        "issue-tracker",
+        "dispatch",
+        "crash-recovery",
+        "idempotency",
+        "human-in-the-loop"
+      ],
+      "summary": "Derive agent dispatch by re-reading workflow states in the team's issue tracker every tick, keeping only a short-lived claim locally, so missed events, restarts, and human edits all self-heal.",
+      "maturity": "maturing",
+      "domains": [
+        "coding",
+        "ops"
+      ]
+    },
+    {
       "id": "transitive-vouch-chain-trust",
       "title": "Transitive Vouch-Chain Trust",
       "category": "Security & Safety",
@@ -2908,6 +3157,31 @@
       "type": "related"
     },
     {
+      "source": "authenticated-authority-channel",
+      "target": "action-selector-pattern",
+      "type": "related"
+    },
+    {
+      "source": "authenticated-authority-channel",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "authenticated-authority-channel",
+      "target": "context-minimization-pattern",
+      "type": "related"
+    },
+    {
+      "source": "authenticated-authority-channel",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "authenticated-authority-channel",
+      "target": "lethal-trifecta-threat-model",
+      "type": "related"
+    },
+    {
       "source": "board-mediated-async-inter-agent-coordination",
       "target": "cross-cycle-consensus-relay",
       "type": "related"
@@ -2933,8 +3207,33 @@
       "type": "related"
     },
     {
+      "source": "consequence-family-coverage-audit",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "consequence-family-coverage-audit",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
       "source": "denial-tracking-permission-escalation",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "exact-action-authorization-binding",
+      "target": "authenticated-authority-channel",
+      "type": "related"
+    },
+    {
+      "source": "exact-action-authorization-binding",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "exact-action-authorization-binding",
+      "target": "cryptographic-governance-audit-trail",
       "type": "related"
     },
     {
@@ -2963,6 +3262,31 @@
       "type": "related"
     },
     {
+      "source": "persistent-test-memory-feedback-loop",
+      "target": "memory-synthesis-from-execution-logs",
+      "type": "related"
+    },
+    {
+      "source": "persistent-test-memory-feedback-loop",
+      "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "reasoning-token-firewall",
+      "target": "chain-of-thought-monitoring-interruption",
+      "type": "related"
+    },
+    {
+      "source": "reasoning-token-firewall",
+      "target": "verbose-reasoning-transparency",
+      "type": "related"
+    },
+    {
+      "source": "reasoning-token-firewall",
+      "target": "structured-output-specification",
+      "type": "related"
+    },
+    {
       "source": "tool-search-lazy-loading",
       "target": "context-minimization-pattern",
       "type": "related"
@@ -2975,6 +3299,26 @@
     {
       "source": "tool-search-lazy-loading",
       "target": "dynamic-context-injection",
+      "type": "related"
+    },
+    {
+      "source": "tracker-as-desired-state-reconciliation",
+      "target": "board-mediated-async-inter-agent-coordination",
+      "type": "related"
+    },
+    {
+      "source": "tracker-as-desired-state-reconciliation",
+      "target": "signal-driven-agent-activation",
+      "type": "related"
+    },
+    {
+      "source": "tracker-as-desired-state-reconciliation",
+      "target": "multi-platform-webhook-triggers",
+      "type": "related"
+    },
+    {
+      "source": "tracker-as-desired-state-reconciliation",
+      "target": "filesystem-based-agent-state",
       "type": "related"
     },
     {

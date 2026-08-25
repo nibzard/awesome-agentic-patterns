@@ -6,6 +6,7 @@ based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime I
 category: "Context & Memory"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [context-management, code-agent, file-selection, noise-reduction]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

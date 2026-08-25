@@ -9,6 +9,7 @@ tags: [tool use, prompting, agent guidance, custom tools, cli, natural language 
 evidence_grade: high
 evidence_snapshot: "40-70% improvement with deliberation; validated by ReAct research and production deployments"
 last_updated: "2026-02-28"
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -1,0 +1,26 @@
+{
+  "title": "Cross-Domain Agent Conflict Resolution",
+  "status": "emerging",
+  "authors": [
+    "Narasimhan Ramani (@Narasimhan-Ramani)"
+  ],
+  "based_on": [
+    "Open Policy Agent policy-as-code",
+    "Multi-objective decision analysis"
+  ],
+  "category": "Orchestration & Control",
+  "source": "https://github.com/open-policy-agent/opa",
+  "tags": [
+    "multi-agent",
+    "conflict-resolution",
+    "policy-as-code",
+    "governance",
+    "orchestration",
+    "drift-detection"
+  ],
+  "slug": "cross-domain-agent-conflict-resolution",
+  "id": "cross-domain-agent-conflict-resolution",
+  "summary": "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.",
+  "updated_at": "2026-08-21",
+  "body": "\n## Problem\n\nTeams increasingly run several independent, domain-specific agents against the\nsame environment or dataset — e.g., a cost-optimization agent, a reliability\nagent, a compliance agent, and a performance agent all assessing the same\ncloud infrastructure. Each agent is individually competent within its domain,\nbut none of them are aware the others exist.\n\nThis produces silent, unresolved conflicts: one agent recommends deallocating\nan idle resource to save cost, while another recommends adding redundancy to\nthe same resource for reliability, and a third recommends scaling it up for\nperformance. If recommendations are acted on independently (e.g., via\nauto-remediation), the result is thrashing, wasted work, or actively harmful\nchanges — with no record of *why* the conflict happened or *which*\nrecommendation should have won.\n\n## Solution\n\nInsert a coordination/governance layer **above** the domain agents that never\ndoes the domain-specific assessment itself, but instead:\n\n1. **Collects** each domain agent's output as structured findings/\n   recommendations keyed by a shared resource identifier.\n2. **Cross-references** recommendations by resource ID to detect conflicts\n   (a \"mesh\" evaluation step) and computes a composite priority score per\n   recommendation.\n3. **Resolves** conflicts through policy-as-code (e.g., OPA/Rego, or an\n   embedded rule engine) rather than hardcoded if/else logic, so\n   organizational governance rules (which domain wins, under which\n   conditions) are explicit, versioned, and auditable — falling back to a\n   domain-priority hierarchy or LLM-assisted arbitration only when no policy\n   matches.\n4. **Monitors drift** by comparing each new assessment against a previous\n   baseline, flagging when risk levels, KPIs, or recommendation outcomes\n   change materially over time.\n\n```mermaid\ngraph TD\n    A[Domain Agent 1] --> D[Conflict Detector]\n    B[Domain Agent 2] --> D\n    C[Domain Agent N] --> D\n    D --> E[Policy Engine]\n    E -->|policy match| F[Resolved Outcome]\n    E -->|no match| G[Priority Ladder / LLM Arbitration]\n    G --> F\n    F --> H[Drift Monitor vs. Baseline]\n```\n\n## How to use it\n\n**Applicable when:**\n\n- More than one agent (or team) independently assesses/acts on the same\n  resources, dataset, or environment.\n- Conflicting recommendations have real cost if acted on blindly (financial,\n  operational, or compliance risk).\n- You need an auditable record of *why* one recommendation was chosen over\n  another, not just which one \"won.\"\n\n**Implementation considerations:**\n\n- Recommendations need a common resource identifier scheme across all domain\n  agents — without it, conflict detection can't match records at all.\n- Start with a small number of explicit policies covering your highest-risk\n  conflicts (e.g., \"reliability protections override cost optimizations for\n  production resources\") before trying to cover every case.\n- Keep a fallback resolution path (priority ladder, human escalation, or\n  LLM-assisted arbitration) for conflicts no policy anticipated — don't let\n  the system silently drop unmatched conflicts.\n- The coordination layer should stay domain-agnostic: it should not need code\n  changes to support a new domain agent, only a new policy and a mapping into\n  the shared schema.\n\n## Trade-offs\n\n**Pros:**\n\n- Conflicts become visible and auditable instead of silently overwriting each\n  other or executing in an undefined order.\n- Governance logic lives in versioned, reviewable policy files rather than\n  scattered application code.\n- New domains can be added without changing the arbitration logic, only\n  adding policies/mappings.\n\n**Cons:**\n\n- Adds a coordination hop and latency versus letting each agent act\n  independently.\n- Requires upfront investment in a shared resource-identifier scheme across\n  otherwise-independent agent teams.\n- Policy coverage has to be actively maintained — stale or missing policies\n  fall back to weaker heuristics (priority ladder/LLM), which are less\n  auditable than explicit rules.\n\n## References\n\n- [Open Policy Agent](https://github.com/open-policy-agent/opa) — general-purpose policy-as-code engine for explicit, versioned arbitration rules.\n- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — guidance for making trade-offs among competing objectives explicit and reviewable.\n"
+}

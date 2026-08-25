@@ -6,6 +6,7 @@ based_on: ["Cognition AI (2025)"]
 category: Context & Memory
 source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)"
 tags: [context-anxiety, token-management, premature-completion, model-behavior]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

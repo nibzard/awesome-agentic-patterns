@@ -6,6 +6,7 @@ based_on: ["Aman Sanger (Cursor)"]
 category: Feedback Loops
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, quality-assurance, human-ai-collaboration, trust, explainability, software-quality]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

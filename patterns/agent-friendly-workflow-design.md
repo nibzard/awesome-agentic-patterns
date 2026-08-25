@@ -6,6 +6,7 @@ based_on: ["Amjad Masad"]
 category: UX & Collaboration
 source: "https://www.nibzard.com/silent-revolution"
 tags: [human-agent collaboration, workflow design, agent autonomy, task decomposition, HCI]
+updated_at: "2026-03-11"
 ---
 
 ## Problem
