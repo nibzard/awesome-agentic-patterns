@@ -4,8 +4,22 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 21 Aug 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 13 Sep 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Out-of-Process Provider-Boundary Replay]]></title>
+            <description><![CDATA[Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.]]></description>
+            <link>https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[record-replay]]></category>
+            <category><![CDATA[determinism]]></category>
+            <category><![CDATA[regression-testing]]></category>
+            <category><![CDATA[http-boundary]]></category>
+            <category><![CDATA[offline]]></category>
+            <category><![CDATA[instrumentation-free]]></category>
+            <pubDate>Sun, 13 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Cross-Domain Agent Conflict Resolution]]></title>
             <description><![CDATA[A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.]]></description>
@@ -276,19 +290,6 @@
             <category><![CDATA[receipts]]></category>
             <category><![CDATA[capabilities]]></category>
             <category><![CDATA[atomic-hire]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Context Budget as a Governed Resource]]></title>
-            <description><![CDATA[Always loaded context accretes silently.]]></description>
-            <link>https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource</guid>
-            <category><![CDATA[Context & Memory]]></category>
-            <category><![CDATA[context-budget]]></category>
-            <category><![CDATA[token-costs]]></category>
-            <category><![CDATA[ghost-tokens]]></category>
-            <category><![CDATA[compaction]]></category>
-            <category><![CDATA[scheduled-agents]]></category>
             <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

@@ -502,6 +502,10 @@ URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
 Orchestration Prompt-Writing Benchmark: Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway.
 URL: https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark
 
+### out-of-process-provider-boundary-replay
+Out-of-Process Provider-Boundary Replay: Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.
+URL: https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay
+
 ### output-verification-loop
 Output Verification Loop: Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.
 URL: https://agentic-patterns.com/patterns/output-verification-loop

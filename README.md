@@ -194,6 +194,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [Orchestration Prompt-Writing Benchmark](patterns/orchestration-prompt-writing-benchmark.md)
+- [Out-of-Process Provider-Boundary Replay](patterns/out-of-process-provider-boundary-replay.md)
 - [Output Verification Loop](patterns/output-verification-loop.md)
 - [Own-Check Fault Injection](patterns/own-check-fault-injection.md)
 - [Reasoning-Token Firewall](patterns/reasoning-token-firewall.md)
