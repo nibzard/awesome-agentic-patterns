@@ -4422,6 +4422,47 @@
     "excerpt": "\n## Problem\nMost agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.\n\nIn domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.\n\nPolling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met."
   },
   {
+    "title": "Skill Activation as a Precision/Recall Measurement",
+    "status": "emerging",
+    "authors": [
+      "Tomasz Religa (@uipreliga)"
+    ],
+    "based_on": [
+      "Coder Eval (UiPath)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://coder-eval.com/blog/does-your-claude-skill-trigger/",
+    "tags": [
+      "evals",
+      "skills",
+      "routing",
+      "precision-recall",
+      "classification",
+      "ci-cd",
+      "regression-testing"
+    ],
+    "slug": "skill-activation-as-precision-recall",
+    "id": "skill-activation-as-a-precisionrecall-measurement",
+    "summary": "Treat \"did the right skill load?\" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "A catalog has more than a handful of skills, or more than one could plausibly answer a prompt",
+      "Skill descriptions are edited, merged, or added without a behavioural test"
+    ],
+    "anti_signals": [
+      "A single skill with no siblings to compete with",
+      "The agent's skill is invoked explicitly by name rather than selected by the model"
+    ],
+    "domains": [
+      "coding",
+      "ops"
+    ],
+    "updated_at": "2026-09-14",
+    "excerpt": "\n## Problem\nA skill is usually tested as if it were a function: run it, check the output. But before a skill runs, the model must *choose* it. It reads your skill's description alongside every other skill's description and picks one. That choice is a routing decision, and it is what actually fails in production.\n\nIt fails in two directions, and both are silent:\n\n- **Under-triggering (a recall problem).** The skill never loads. Users experience this as \"your feature does not work,\" and blame the feature.\n- **Over-triggering (a precision problem).** The skill loads on prompts it does not own. It hijacks a conversation, injects its playbook into an unrelated context, burns tokens on reference files nobody needed, and produces confidently wrong output because the agent is now steering toward the wrong goal.\n\nThe two are not symmetric in *detectability*. Under-triggering gets reported by users; over-triggering gets absorbed, because the output still looks like an answer. So the more damaging failure is the one you are less likely to hear about.\n\nWorse, the decision is **coupled across the whole catalog**. Adding a skill, editing one sentence of a description, or merging two skills re-routes prompts that belong to skills you did not touch. Hand-testing five prompts once and shipping cannot see this, and nothing in a typical CI pipeline does either — descriptions are prose, so no linter, typechecker, or unit test has an opinion about them."
+  },
+  {
     "title": "Skill Library Evolution",
     "status": "established",
     "authors": [
