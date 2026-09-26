@@ -7,6 +7,19 @@
         <lastBuildDate>Sat, 26 Sep 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
+            <title><![CDATA[Classify-Then-Act for Background Agents]]></title>
+            <description><![CDATA[A background agent working through a task list has two failure modes at the extremes.]]></description>
+            <link>https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[background-agents]]></category>
+            <category><![CDATA[task-triage]]></category>
+            <category><![CDATA[sandboxed-build]]></category>
+            <category><![CDATA[review-queue]]></category>
+            <category><![CDATA[autonomy-boundary]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Non-Generative Judgment Routing with Typed Escalation]]></title>
             <description><![CDATA[Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.]]></description>
             <link>https://agentic-patterns.com/patterns/non-generative-judgment-routing</link>
@@ -276,23 +289,6 @@
             <category><![CDATA[prompt-protection]]></category>
             <category><![CDATA[inter-agent]]></category>
             <category><![CDATA[trust]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Board-Mediated Async Inter-Agent Coordination]]></title>
-            <description><![CDATA[Route messages between agents through board card comment threads.  A routing prefix triggers inbox card creation for notification; the actual coordination dialogue happens on the work card itself, co-locating decision context with the work that generated it.]]></description>
-            <link>https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[coordination]]></category>
-            <category><![CDATA[async]]></category>
-            <category><![CDATA[kanban]]></category>
-            <category><![CDATA[board]]></category>
-            <category><![CDATA[message-routing]]></category>
-            <category><![CDATA[inbox]]></category>
-            <category><![CDATA[session-continuity]]></category>
-            <category><![CDATA[audit-trail]]></category>
             <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

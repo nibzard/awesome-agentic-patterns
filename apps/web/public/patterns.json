@@ -861,6 +861,35 @@
     "excerpt": "\n## Problem\nAI agents can pursue misguided reasoning paths for extended periods before producing final outputs. By the time developers realize the approach is wrong, significant time and tokens have been wasted on a fundamentally flawed direction. Traditional \"fire and forget\" agent execution provides no opportunity for early course correction."
   },
   {
+    "title": "Classify-Then-Act for Background Agents",
+    "status": "emerging",
+    "authors": [
+      "James Ross (@jimy-r)"
+    ],
+    "based_on": [
+      "Google's Large-Scale Changes process (speculative change generation + human review queues)",
+      "Agent Workspace Architecture (production workspace)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#2-classify-then-act-not-ask-then-wait",
+    "tags": [
+      "background-agents",
+      "task-triage",
+      "sandboxed-build",
+      "review-queue",
+      "autonomy-boundary"
+    ],
+    "slug": "classify-then-act-for-background-agents",
+    "id": "classify-then-act-for-background-agents",
+    "summary": "A background agent working through a task list has two failure modes at the extremes.",
+    "related": [
+      "human-in-loop-approval-framework",
+      "custom-sandboxed-background-agent"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nA background agent working through a task list has two failure modes at the extremes. Act on everything with full confidence and it ships work nobody wanted. Ask before doing anything and it becomes a nag that stalls on every ambiguous item, until the human stops trusting it to do anything alone."
+  },
+  {
     "title": "CLI-First Skill Design",
     "status": "emerging",
     "authors": [
