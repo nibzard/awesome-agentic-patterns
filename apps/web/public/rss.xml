@@ -20,6 +20,21 @@
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Evidence Questions, Not Verdict Questions]]></title>
+            <description><![CDATA[Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.]]></description>
+            <link>https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[policy-authoring]]></category>
+            <category><![CDATA[admission-control]]></category>
+            <category><![CDATA[decomposition]]></category>
+            <category><![CDATA[calibration]]></category>
+            <category><![CDATA[confidence]]></category>
+            <category><![CDATA[guard-rails]]></category>
+            <category><![CDATA[determinism]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Non-Generative Judgment Routing with Typed Escalation]]></title>
             <description><![CDATA[Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.]]></description>
             <link>https://agentic-patterns.com/patterns/non-generative-judgment-routing</link>
@@ -274,20 +289,6 @@
             <category><![CDATA[llms-txt]]></category>
             <category><![CDATA[api-discovery]]></category>
             <category><![CDATA[agent-infrastructure]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Artifact-Driven Analysis Pipeline Orchestration]]></title>
-            <description><![CDATA[Complex data analysis tasks often require running many sequential or parallel processing steps, each producing intermediate artifacts that feed into subsequent stages.]]></description>
-            <link>https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[pipeline]]></category>
-            <category><![CDATA[multi-step]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[report-generation]]></category>
-            <category><![CDATA[data-analysis]]></category>
-            <category><![CDATA[claude-code]]></category>
             <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

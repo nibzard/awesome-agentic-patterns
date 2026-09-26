@@ -1272,6 +1272,29 @@
       "summary": "Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures."
     },
     {
+      "id": "evidence-questions-not-verdict-questions",
+      "title": "Evidence Questions, Not Verdict Questions",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "evidence-questions-not-verdict-questions",
+      "tags": [
+        "policy-authoring",
+        "admission-control",
+        "decomposition",
+        "calibration",
+        "confidence",
+        "guard-rails",
+        "determinism"
+      ],
+      "summary": "Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.",
+      "maturity": "early",
+      "domains": [
+        "security",
+        "ops",
+        "coding"
+      ]
+    },
+    {
       "id": "evidence-layered-evaluation-for-interactive-agents",
       "title": "Evidence-Layered Evaluation for Interactive Agents",
       "category": "Reliability & Eval",
@@ -3321,6 +3344,21 @@
     {
       "source": "denial-tracking-permission-escalation",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "consequence-family-coverage-audit",
+      "type": "related"
+    },
+    {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "deterministic-grader-in-the-loop",
       "type": "related"
     },
     {
