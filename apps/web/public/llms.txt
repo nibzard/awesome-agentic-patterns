@@ -129,6 +129,10 @@ URL: https://agentic-patterns.com/patterns/capability-escrow-receipt
 Chain-of-Thought Monitoring & Interruption: Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.
 URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
 
+### classify-then-act-for-background-agents
+Classify-Then-Act for Background Agents: A background agent working through a task list has two failure modes at the extremes.
+URL: https://agentic-patterns.com/patterns/classify-then-act-for-background-agents
+
 ### cli-first-skill-design
 CLI-First Skill Design: Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.
 URL: https://agentic-patterns.com/patterns/cli-first-skill-design
@@ -490,6 +494,10 @@ URL: https://agentic-patterns.com/patterns/no-token-limit-magic
 Non-Custodial Spending Controls: AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts.
 URL: https://agentic-patterns.com/patterns/non-custodial-spending-controls
 
+### non-generative-judgment-routing
+Non-Generative Judgment Routing with Typed Escalation: Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.
+URL: https://agentic-patterns.com/patterns/non-generative-judgment-routing
+
 ### opponent-processor-multi-agent-debate
 Opponent Processor / Multi-Agent Debate Pattern: TODO: Add a concise summary for "Opponent Processor / Multi-Agent Debate Pattern" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
@@ -501,6 +509,10 @@ URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
 ### orchestration-prompt-writing-benchmark
 Orchestration Prompt-Writing Benchmark: Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway.
 URL: https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark
+
+### out-of-process-provider-boundary-replay
+Out-of-Process Provider-Boundary Replay: Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.
+URL: https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay
 
 ### output-verification-loop
 Output Verification Loop: Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.
@@ -537,6 +549,10 @@ URL: https://agentic-patterns.com/patterns/planner-worker-separation-for-long-ru
 ### policy-gated-tool-proxy
 Policy-Gated Tool Proxy: Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions.
 URL: https://agentic-patterns.com/patterns/policy-gated-tool-proxy
+
+### precomputed-code-graph-lookup
+Precomputed Code Graph Lookup: Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.
+URL: https://agentic-patterns.com/patterns/precomputed-code-graph-lookup
 
 ### proactive-agent-state-externalization
 Proactive Agent State Externalization: Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.
@@ -645,6 +661,10 @@ URL: https://agentic-patterns.com/patterns/shipping-as-research
 ### signal-driven-agent-activation
 Signal-Driven Agent Activation: Most agent workflows are command driven : a user types a prompt, the agent acts.
 URL: https://agentic-patterns.com/patterns/signal-driven-agent-activation
+
+### skill-activation-as-precision-recall
+Skill Activation as a Precision/Recall Measurement: Treat "did the right skill load?" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.
+URL: https://agentic-patterns.com/patterns/skill-activation-as-precision-recall
 
 ### skill-library-evolution
 Skill Library Evolution: Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.
