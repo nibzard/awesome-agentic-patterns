@@ -22,6 +22,21 @@
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Precomputed Code Graph Lookup]]></title>
+            <description><![CDATA[Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.]]></description>
+            <link>https://agentic-patterns.com/patterns/precomputed-code-graph-lookup</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/precomputed-code-graph-lookup</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[code-graph]]></category>
+            <category><![CDATA[static-analysis]]></category>
+            <category><![CDATA[precomputed-index]]></category>
+            <category><![CDATA[impact-analysis]]></category>
+            <category><![CDATA[deterministic]]></category>
+            <category><![CDATA[tree-sitter]]></category>
+            <category><![CDATA[tool-design]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Skill Activation as a Precision/Recall Measurement]]></title>
             <description><![CDATA[Treat "did the right skill load?" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.]]></description>
             <link>https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</link>
@@ -278,19 +293,6 @@
             <category><![CDATA[inbox]]></category>
             <category><![CDATA[session-continuity]]></category>
             <category><![CDATA[audit-trail]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Budget-Aware Model Routing with Hard Cost Caps]]></title>
-            <description><![CDATA[Agent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load.]]></description>
-            <link>https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[routing]]></category>
-            <category><![CDATA[cost-control]]></category>
-            <category><![CDATA[multi-model]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[reliability]]></category>
             <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

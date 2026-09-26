@@ -542,6 +542,10 @@ URL: https://agentic-patterns.com/patterns/planner-worker-separation-for-long-ru
 Policy-Gated Tool Proxy: Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions.
 URL: https://agentic-patterns.com/patterns/policy-gated-tool-proxy
 
+### precomputed-code-graph-lookup
+Precomputed Code Graph Lookup: Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.
+URL: https://agentic-patterns.com/patterns/precomputed-code-graph-lookup
+
 ### proactive-agent-state-externalization
 Proactive Agent State Externalization: Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.
 URL: https://agentic-patterns.com/patterns/proactive-agent-state-externalization

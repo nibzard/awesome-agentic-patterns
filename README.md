@@ -253,6 +253,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Multi-Platform Communication Aggregation](patterns/multi-platform-communication-aggregation.md)
 - [Multi-Platform Webhook Triggers](patterns/multi-platform-webhook-triggers.md)
 - [Patch Steering via Prompted Tool Selection](patterns/patch-steering-via-prompted-tool-selection.md)
+- [Precomputed Code Graph Lookup](patterns/precomputed-code-graph-lookup.md)
 - [Progressive Tool Discovery](patterns/progressive-tool-discovery.md)
 - [Shell Command Contextualization](patterns/shell-command-contextualization.md)
 - [Static Service Manifest for Agents](patterns/static-service-manifest-for-agents.md)

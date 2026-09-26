@@ -3752,6 +3752,52 @@
     "excerpt": "\n## Problem\nAI agents call external tools (databases, APIs, file systems) through protocols like MCP. Once an agent has access to a tool server, it can invoke any tool with any arguments. There is no enforcement layer between \"the agent decided to call this tool\" and \"the tool executed.\" This creates three gaps:\n\n1. **No access control** -- agents can call tools they shouldn't (e.g., production DB delete when only reads are authorized).\n2. **No audit trail** -- when something goes wrong, there's no record of what tool calls were made, by which agent, with what arguments.\n3. **No policy enforcement** -- compliance rules (data residency, PII handling, rate limits) can't be enforced at the tool-call boundary."
   },
   {
+    "title": "Precomputed Code Graph Lookup",
+    "status": "emerging",
+    "authors": [
+      "Muthukumaran Navaneethakrishnan (@muthuishere)"
+    ],
+    "based_on": [
+      "Aider repo map (Paul Gauthier)",
+      "SCIP / LSIF (Sourcegraph, Microsoft)"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://github.com/Aider-AI/aider",
+    "tags": [
+      "code-graph",
+      "static-analysis",
+      "precomputed-index",
+      "impact-analysis",
+      "deterministic",
+      "tree-sitter",
+      "tool-design"
+    ],
+    "slug": "precomputed-code-graph-lookup",
+    "id": "precomputed-code-graph-lookup",
+    "summary": "Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "medium",
+    "signals": [
+      "Agent burns many turns on grep-then-read chains",
+      "Questions are structural: callers, dependents, impact of a change",
+      "Answers must be citable and reproducible"
+    ],
+    "anti_signals": [
+      "Small repository the agent can read directly",
+      "Questions are literal string sweeps, not structural",
+      "Languages or dynamic dispatch the parser cannot resolve"
+    ],
+    "related": [
+      "agentic-search-over-vector-embeddings",
+      "curated-code-context-window",
+      "agent-powered-codebase-qa-onboarding"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nA coding agent asked \"who calls `chargeInvoice`?\" or \"what breaks if I change this signature?\" typically answers by searching: grep a name, read the hits, grep the callers of the callers, read again. Every hop is a tool round-trip whose result the model must interpret, and the chain has three failure modes:\n\n- **It is not reproducible.** The same question asked twice takes different paths and can produce different answers, because the model chooses the next search.\n- **It stops early.** Search returns the first plausible matches; the agent decides it has enough and edits code whose second-order callers it never saw.\n- **Impact questions are not search questions.** \"What breaks if I change this\" is a reverse traversal over a call/import graph. Text search can approximate it for unique names and fails silently for common ones.\n\nThe usual alternatives trade one problem for another. Embedding indexes ([agentic-search-over-vector-embeddings](agentic-search-over-vector-embeddings.md) documents why teams abandon them) add infrastructure and go stale against uncommitted work. Search subagents ([curated-code-context-window](curated-code-context-window.md)) spend an LLM call per question and inherit the model's non-determinism."
+  },
+  {
     "title": "Proactive Agent State Externalization",
     "status": "emerging",
     "authors": [
