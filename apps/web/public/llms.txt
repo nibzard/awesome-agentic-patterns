@@ -734,6 +734,10 @@ URL: https://agentic-patterns.com/patterns/team-shared-agent-configuration
 Three-Stage Perception Architecture: Complex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action.
 URL: https://agentic-patterns.com/patterns/three-stage-perception-architecture
 
+### tier-auto-apply-by-mechanical-impact
+Tier Auto-Apply by Mechanical Impact: A system that reviews itself and applies its own findings, a self auditing agent, say, needs a line between "apply automatically" and "ask a human first." The tempting way to draw that line is from how confident or severe a finding sounds.
+URL: https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact
+
 ### tool-capability-compartmentalization
 Tool Capability Compartmentalization: Model Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators).
 URL: https://agentic-patterns.com/patterns/tool-capability-compartmentalization

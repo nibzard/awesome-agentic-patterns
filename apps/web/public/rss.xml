@@ -123,6 +123,19 @@
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Tier Auto-Apply by Mechanical Impact]]></title>
+            <description><![CDATA[A system that reviews itself and applies its own findings, a self auditing agent, say, needs a line between "apply automatically" and "ask a human first." The tempting way to draw that line is from how confident or severe a finding sounds.]]></description>
+            <link>https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[auto-apply]]></category>
+            <category><![CDATA[tiered-autonomy]]></category>
+            <category><![CDATA[self-improving-agent]]></category>
+            <category><![CDATA[findings-triage]]></category>
+            <category><![CDATA[reversibility]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Cross-Domain Agent Conflict Resolution]]></title>
             <description><![CDATA[A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.]]></description>
             <link>https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</link>
@@ -274,22 +287,6 @@
             <category><![CDATA[output-hygiene]]></category>
             <category><![CDATA[safety]]></category>
             <category><![CDATA[harness]]></category>
-            <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Tracker-as-Desired-State Reconciliation]]></title>
-            <description><![CDATA[Derive agent dispatch by re-reading workflow states in the team's issue tracker every tick, keeping only a short-lived claim locally, so missed events, restarts, and human edits all self-heal.]]></description>
-            <link>https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[reconciliation]]></category>
-            <category><![CDATA[level-triggered]]></category>
-            <category><![CDATA[issue-tracker]]></category>
-            <category><![CDATA[dispatch]]></category>
-            <category><![CDATA[crash-recovery]]></category>
-            <category><![CDATA[idempotency]]></category>
-            <category><![CDATA[human-in-the-loop]]></category>
             <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

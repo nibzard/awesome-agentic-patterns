@@ -207,6 +207,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Skill Activation as a Precision/Recall Measurement](patterns/skill-activation-as-precision-recall.md)
 - [Structured Output Specification](patterns/structured-output-specification.md)
 - [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
+- [Tier Auto-Apply by Mechanical Impact](patterns/tier-auto-apply-by-mechanical-impact.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 - [Workflow Evals with Mocked Tools](patterns/workflow-evals-with-mocked-tools.md)
 
