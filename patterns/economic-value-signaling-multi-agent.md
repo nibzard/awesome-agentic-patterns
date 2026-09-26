@@ -6,6 +6,7 @@ based_on: ["Beacon agent coordination framework (contributor-owned reference imp
 category: "Orchestration & Control"
 source: "https://github.com/Scottcjn/beacon-skill"
 tags: [multi-agent, coordination, incentives, economic-signaling, peer-discovery, value-transfer]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

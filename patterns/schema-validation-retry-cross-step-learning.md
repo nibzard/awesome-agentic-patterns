@@ -6,6 +6,7 @@ based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
 category: "Reliability & Eval"
 source: "https://github.com/hyperbrowserai/HyperAgent"
 tags: [retry, validation, cross-step-learning, structured-output, zod, error-accumulation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

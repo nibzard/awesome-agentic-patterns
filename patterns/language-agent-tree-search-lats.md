@@ -6,6 +6,7 @@ based_on: ["Zhou et al.", "University of Illinois"]
 category: "Orchestration & Control"
 source: "https://arxiv.org/abs/2310.04406"
 tags: [search, monte-carlo, tree-search, reasoning, planning, reflection, evaluation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

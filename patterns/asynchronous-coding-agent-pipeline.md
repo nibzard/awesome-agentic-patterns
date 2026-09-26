@@ -6,6 +6,7 @@ based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Reliability & Eval"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [asynchronous, pipeline, code-agent, parallelism]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

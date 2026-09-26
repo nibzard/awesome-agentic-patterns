@@ -9,6 +9,7 @@ tags: [multi-agent, coordination, message-bus, reliability, redundancy, fault-de
 evidence_grade: medium
 evidence_snapshot: "In one 5-machine fleet over ~2 months, every observed coordination outage was a silent single-channel failure rather than a message-content failure; no controlled comparison against a single-rail baseline exists."
 last_updated: "2026-07-28"
+updated_at: "2026-08-21"
 ---
 
 ## Problem

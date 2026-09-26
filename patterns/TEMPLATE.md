@@ -6,6 +6,7 @@ based_on: ["Original Creator (Source)"]    # Pattern originators/inspiration
 category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
 source: "URL to the primary blog post, talk, repo, or paper"
 tags: [tag1, tag2, keyword3, relevant-concept]
+updated_at: "YYYY-MM-DD" # Required: date of the last content change; keeps generated data deterministic
 # Optional evidence metadata for research-informed updates
 # evidence_grade: unknown  # one of: high, medium, low, mixed, unknown
 # evidence_snapshot: "1-2 high-signal findings + key uncertainty"

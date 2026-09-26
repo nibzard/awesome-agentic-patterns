@@ -6,6 +6,7 @@ based_on: ["Quinn Slack (Concept)", "Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [CI, coding-agent, asynchronous, test-driven, feedback]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

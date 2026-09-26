@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (Anthropic)", "Reflexion (Shinn et al., NeurIPS 2023)",
 category: "Orchestration & Control"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [hooks, automation, testing, determinism, success-criteria, continuous-execution]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

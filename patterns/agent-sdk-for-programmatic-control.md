@@ -6,6 +6,7 @@ based_on: ["Anthropic (Claude Code SDK example)"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/claude-code"
 tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -10,6 +10,7 @@ summary: >-
   Define multi-agent systems declaratively in a single topology file — agents, flows,
   gates, hooks, group chats — then compile to platform-specific configurations for any
   agentic framework.
+updated_at: "2026-07-23"
 ---
 
 ## Problem

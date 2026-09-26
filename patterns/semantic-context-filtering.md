@@ -6,6 +6,7 @@ based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
 category: "Context & Memory"
 source: "https://github.com/hyperbrowserai/HyperAgent"
 tags: [context-filtering, token-optimization, semantic-extraction, noise-reduction]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

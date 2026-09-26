@@ -8,6 +8,7 @@ source: "https://github.com/nickzsche/aip-identity"
 tags: [trust, identity, vouch, trust-chain, agent-identity, decentralized-trust, ed25519, reputation]
 evidence_grade: low
 last_updated: "2026-03-08"
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -1,3 +1,5 @@
+// ABOUTME: Validates pattern front matter and section structure for all files under patterns/.
+// ABOUTME: Enforces the required updated_at date because generated site data must stay deterministic.
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
@@ -143,7 +145,7 @@ function validatePattern(filePath: string, checkContent: boolean): ValidationIss
   const raw = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(raw);
 
-  const requiredFields = ['title', 'status', 'authors', 'category', 'source', 'tags'];
+  const requiredFields = ['title', 'status', 'authors', 'category', 'source', 'tags', 'updated_at'];
   requiredFields.forEach((field) => {
     if (!(field in data)) {
       issues.push({

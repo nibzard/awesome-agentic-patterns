@@ -6,6 +6,7 @@ based_on: ["Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models (
 category: "Orchestration & Control"
 source: "https://github.com/nibzard/labruno-agent"
 tags: [recursion, best-of-n, parallel-sandboxes, judge, delegation, rlms, selection, sub-agents]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

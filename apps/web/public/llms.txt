@@ -88,6 +88,10 @@ URL: https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestr
 Asynchronous Coding Agent Pipeline: Synchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates compute bubbles and idle resources .
 URL: https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline
 
+### authenticated-authority-channel
+Authenticated Authority Channel: Preserve a distinguishable channel for authenticated intent so retrieved content can inform reasoning without granting itself authority.
+URL: https://agentic-patterns.com/patterns/authenticated-authority-channel
+
 ### autonomous-workflow-agent-architecture
 Autonomous Workflow Agent Architecture: TODO: Add a concise summary for "Autonomous Workflow Agent Architecture" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture
@@ -124,6 +128,10 @@ URL: https://agentic-patterns.com/patterns/capability-escrow-receipt
 ### chain-of-thought-monitoring-interruption
 Chain-of-Thought Monitoring & Interruption: Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.
 URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
+
+### classify-then-act-for-background-agents
+Classify-Then-Act for Background Agents: A background agent working through a task list has two failure modes at the extremes.
+URL: https://agentic-patterns.com/patterns/classify-then-act-for-background-agents
 
 ### cli-first-skill-design
 CLI-First Skill Design: Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.
@@ -165,6 +173,10 @@ URL: https://agentic-patterns.com/patterns/compounding-engineering-pattern
 Conditional Parallel Tool Execution: When an AI agent decides to use multiple tools in a single reasoning step, executing them strictly sequentially can lead to significant delays, especially if many tools are read only and could be run concurrently.
 URL: https://agentic-patterns.com/patterns/parallel-tool-execution
 
+### consequence-family-coverage-audit
+Consequence-Family Coverage Audit: Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest
+URL: https://agentic-patterns.com/patterns/consequence-family-coverage-audit
+
 ### context-budget-as-a-governed-resource
 Context Budget as a Governed Resource: Always loaded context accretes silently.
 URL: https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource
@@ -196,6 +208,10 @@ URL: https://agentic-patterns.com/patterns/cross-agent-lesson-sharing
 ### cross-cycle-consensus-relay
 Cross-Cycle Consensus Relay: Autonomous multi agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles.
 URL: https://agentic-patterns.com/patterns/cross-cycle-consensus-relay
+
+### cross-domain-agent-conflict-resolution
+Cross-Domain Agent Conflict Resolution: A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.
+URL: https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution
 
 ### cross-protocol-agent-discovery
 Cross-Protocol Agent Discovery: Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer.
@@ -232,6 +248,14 @@ URL: https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents
 ### denial-tracking-permission-escalation
 Denial Tracking & Permission Escalation: Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.
 URL: https://agentic-patterns.com/patterns/denial-tracking-permission-escalation
+
+### design-time-file-partition
+Design-Time File Partition as Concurrency Control: Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.
+URL: https://agentic-patterns.com/patterns/design-time-file-partition
+
+### deterministic-grader-in-the-loop
+Deterministic Grader in the Loop: Replace the LLM-as-judge in an agent's self-review loop with a deterministic scorer that returns the raw counts behind each sub-score, so the agent has something specific to fix.
+URL: https://agentic-patterns.com/patterns/deterministic-grader-in-the-loop
 
 ### deterministic-security-scanning-build-loop
 Deterministic Security Scanning Build Loop: Non deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism code is either secure or not secure, with no grey area.
@@ -270,6 +294,10 @@ URL: https://agentic-patterns.com/patterns/dogfooding-with-rapid-iteration-for-a
 Dual LLM Pattern: When the same model both reads untrusted content and controls high privilege tools, a single prompt injection path can convert benign context into privileged actions.
 URL: https://agentic-patterns.com/patterns/dual-llm-pattern
 
+### dual-rail-message-delivery
+Dual-Rail Message Delivery: Agents running on separate machines coordinate over a single channel: a synced folder, a queue, or a chat.
+URL: https://agentic-patterns.com/patterns/dual-rail-message-delivery
+
 ### dual-use-tool-design
 Dual-Use Tool Design: TODO: Add a concise summary for "Dual-Use Tool Design" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/dual-use-tool-design
@@ -293,6 +321,18 @@ URL: https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-chann
 ### episodic-memory-retrieval-injection
 Episodic Memory Retrieval & Injection: Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures.
 URL: https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection
+
+### evidence-questions-not-verdict-questions
+Evidence Questions, Not Verdict Questions: Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.
+URL: https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions
+
+### evidence-layered-evaluation-for-interactive-agents
+Evidence-Layered Evaluation for Interactive Agents: Interactive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state.
+URL: https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents
+
+### exact-action-authorization-binding
+Exact-Action Authorization Binding: Bind a short-lived approval to the complete action presented to the reviewer, then rederive and compare that identity at the acting boundary before execution.
+URL: https://agentic-patterns.com/patterns/exact-action-authorization-binding
 
 ### explicit-posterior-sampling-planner
 Explicit Posterior-Sampling Planner: Heuristic planning loops often over exploit the first plausible strategy and under explore alternatives.
@@ -321,6 +361,10 @@ URL: https://agentic-patterns.com/patterns/feature-list-as-immutable-contract
 ### filesystem-based-agent-state
 Filesystem-Based Agent State: Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.
 URL: https://agentic-patterns.com/patterns/filesystem-based-agent-state
+
+### filesystem-mediated-host-delegation
+Filesystem-Mediated Host Delegation: An agent that runs inside a sandbox — a container, a hosted runtime, a cloud workspace — is deliberately cut off from the developer's real machine.
+URL: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation
 
 ### frontier-focused-development
 Frontier-Focused Development: AI capabilities advance rapidly along predictable scaling laws—products optimized for today's models become obsolete in months.
@@ -458,6 +502,14 @@ URL: https://agentic-patterns.com/patterns/no-token-limit-magic
 Non-Custodial Spending Controls: AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts.
 URL: https://agentic-patterns.com/patterns/non-custodial-spending-controls
 
+### non-generative-judgment-routing
+Non-Generative Judgment Routing with Typed Escalation: Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.
+URL: https://agentic-patterns.com/patterns/non-generative-judgment-routing
+
+### one-os-user-per-agent
+One OS User per Agent: Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.
+URL: https://agentic-patterns.com/patterns/one-os-user-per-agent
+
 ### opponent-processor-multi-agent-debate
 Opponent Processor / Multi-Agent Debate Pattern: TODO: Add a concise summary for "Opponent Processor / Multi-Agent Debate Pattern" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
@@ -470,9 +522,17 @@ URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
 Orchestration Prompt-Writing Benchmark: Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway.
 URL: https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark
 
+### out-of-process-provider-boundary-replay
+Out-of-Process Provider-Boundary Replay: Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.
+URL: https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay
+
 ### output-verification-loop
 Output Verification Loop: Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.
 URL: https://agentic-patterns.com/patterns/output-verification-loop
+
+### own-check-fault-injection
+Own-Check Fault Injection: Plant a controlled fault inside a running agent pipeline and score whether the pipeline's own checks emit a detection act, keeping detected, reacted and recovered as separate verdicts.
+URL: https://agentic-patterns.com/patterns/own-check-fault-injection
 
 ### parallel-tool-call-learning
 Parallel Tool Call Learning: TODO: Add a concise summary for "Parallel Tool Call Learning" describing the pattern's purpose and key benefits.
@@ -481,6 +541,10 @@ URL: https://agentic-patterns.com/patterns/parallel-tool-call-learning
 ### patch-steering-via-prompted-tool-selection
 Patch Steering via Prompted Tool Selection: Coding agents with access to multiple patching or refactoring tools (e.g., text based apply patch , AST based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided.
 URL: https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection
+
+### persistent-test-memory-feedback-loop
+Persistent Test Memory Feedback Loop: Preserve validated test lessons so an agent can reuse successful paths, recognize recurring failures, and retire stale knowledge.
+URL: https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop
 
 ### pii-tokenization
 PII Tokenization: Implement interception layer in MCP client that automatically tokenizes PII before reaching model and untokenizes for tool calls, enabling agents to orchestrate sensitive workflows without exposing raw data to LLM.
@@ -497,6 +561,10 @@ URL: https://agentic-patterns.com/patterns/planner-worker-separation-for-long-ru
 ### policy-gated-tool-proxy
 Policy-Gated Tool Proxy: Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions.
 URL: https://agentic-patterns.com/patterns/policy-gated-tool-proxy
+
+### precomputed-code-graph-lookup
+Precomputed Code Graph Lookup: Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.
+URL: https://agentic-patterns.com/patterns/precomputed-code-graph-lookup
 
 ### proactive-agent-state-externalization
 Proactive Agent State Externalization: Modern models like Claude Sonnet 4.5 proactively externalize state through self-generated notes—enhanced through guided frameworks, hybrid memory architecture, and progressive state building to capture decision rationale and knowledge gaps.
@@ -526,6 +594,10 @@ URL: https://agentic-patterns.com/patterns/progressive-tool-discovery
 Prompt Caching via Exact Prefix Preservation: Long running agent conversations with many tool calls can suffer from quadratic performance degradation : Growing JSON payloads : Each iteration sends the entir
 URL: https://agentic-patterns.com/patterns/prompt-caching-via-exact-prefix-preservation
 
+### reasoning-token-firewall
+Reasoning-Token Firewall: Assemble an agent's result only from answer-typed stream events, never by string-stripping interleaved reasoning tokens.
+URL: https://agentic-patterns.com/patterns/reasoning-token-firewall
+
 ### recursive-best-of-n-delegation
 Recursive Best-of-N Delegation: Recursive delegation (parent agent → sub agents → sub sub agents) decomposes big tasks, but has a failure mode: A single weak sub agent result can poison the parent's next steps (wrong assumption, missed file, bad patch) Errors compound up the tree: "one bad leaf" can derail the whole rollout Pure recursion underuses parallelism when a node is uncertain: you want multiple shots right where the ambiguity is Meanwhile, "best of N" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the same problem instead of decomposing it.
 URL: https://agentic-patterns.com/patterns/recursive-best-of-n-delegation
@@ -537,6 +609,10 @@ URL: https://agentic-patterns.com/patterns/reflection
 ### wfgy-reliability-problem-map
 Reliability Problem Map Checklist for RAG and Agents: RAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.
 URL: https://agentic-patterns.com/patterns/wfgy-reliability-problem-map
+
+### rendered-ui-finish-gate
+Rendered UI Finish Gate: Verify an agent-built interface against its intended design contract, required states, interaction semantics, and rendered output before merging.
+URL: https://agentic-patterns.com/patterns/rendered-ui-finish-gate
 
 ### rich-feedback-loops
 Rich Feedback Loops > Perfect Prompts: Polishing a single prompt can't cover every edge case; agents need ground truth to self correct.
@@ -598,6 +674,10 @@ URL: https://agentic-patterns.com/patterns/shipping-as-research
 Signal-Driven Agent Activation: Most agent workflows are command driven : a user types a prompt, the agent acts.
 URL: https://agentic-patterns.com/patterns/signal-driven-agent-activation
 
+### skill-activation-as-precision-recall
+Skill Activation as a Precision/Recall Measurement: Treat "did the right skill load?" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.
+URL: https://agentic-patterns.com/patterns/skill-activation-as-precision-recall
+
 ### skill-library-evolution
 Skill Library Evolution: Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.
 URL: https://agentic-patterns.com/patterns/skill-library-evolution
@@ -654,6 +734,10 @@ URL: https://agentic-patterns.com/patterns/team-shared-agent-configuration
 Three-Stage Perception Architecture: Complex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action.
 URL: https://agentic-patterns.com/patterns/three-stage-perception-architecture
 
+### tier-auto-apply-by-mechanical-impact
+Tier Auto-Apply by Mechanical Impact: A system that reviews itself and applies its own findings, a self auditing agent, say, needs a line between "apply automatically" and "ask a human first." The tempting way to draw that line is from how confident or severe a finding sounds.
+URL: https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact
+
 ### tool-capability-compartmentalization
 Tool Capability Compartmentalization: Model Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators).
 URL: https://agentic-patterns.com/patterns/tool-capability-compartmentalization
@@ -673,6 +757,10 @@ URL: https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-s
 ### tool-use-steering-via-prompting
 Tool Use Steering via Prompting: AI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively.
 URL: https://agentic-patterns.com/patterns/tool-use-steering-via-prompting
+
+### tracker-as-desired-state-reconciliation
+Tracker-as-Desired-State Reconciliation: Derive agent dispatch by re-reading workflow states in the team's issue tracker every tick, keeping only a short-lived claim locally, so missed events, restarts, and human edits all self-heal.
+URL: https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation
 
 ### transitive-vouch-chain-trust
 Transitive Vouch-Chain Trust: When autonomous agents interact without a central authority, trust decisions are binary: either you trust an agent completely or you do not trust it at all.

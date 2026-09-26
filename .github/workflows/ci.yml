@@ -28,6 +28,17 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Check generated data is in sync
+        run: |
+          bun run build:data
+          # Star count is live-fetched data, not derived from patterns/*.md; keep it out of the check.
+          git restore apps/web/src/data/github-stars.json
+          git add -A apps/web/public README.md
+          if ! git diff --cached --exit-code; then
+            echo "::error::Generated artifacts under apps/web/public (or the README catalog) do not match patterns/*.md. Run 'npm run build:data' and commit its output together with your pattern change."
+            exit 1
+          fi
+
       - name: Build Astro site
         run: bun run build
 

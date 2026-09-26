@@ -6,6 +6,7 @@ based_on: ["Lukas Möller (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-generation, bootstrapping, scaffolding, feature-development, ide, initial-setup]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

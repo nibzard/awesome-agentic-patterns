@@ -6,6 +6,7 @@ based_on: ["Cursor Engineering Team"]
 category: Orchestration & Control
 source: "https://cursor.com/blog/scaling-agents"
 tags: [multi-agent, coordination, long-running, hierarchical, parallelism]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

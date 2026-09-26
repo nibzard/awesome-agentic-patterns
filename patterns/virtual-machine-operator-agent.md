@@ -6,6 +6,7 @@ based_on: ["Amjad Masad"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/silent-revolution"
 tags: [computer operation, virtual machine, execution environment, agent capability]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Lukas Möller (Cursor)", "Alex Albert (Anthropic)", "Jacob Jackson (
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [developer-productivity, learning, skill-acquisition, iteration, feedback, taste-development, education, junior-developer]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [map-reduce, sub-agents, isolation, untrusted-data]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

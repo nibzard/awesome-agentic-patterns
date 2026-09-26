@@ -6,6 +6,7 @@ based_on: ["Sense-Plan-Act (Robotics)", "ReAct Pattern (Yao et al. 2022)", "Info
 category: "Orchestration & Control"
 source: "https://arxiv.org/abs/2210.03629"
 tags: [architecture, perception, processing, action, pipeline, modular-design]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

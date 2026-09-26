@@ -13,6 +13,7 @@ effort: hours
 impact: high
 signals: ["An agent has changed a user-facing interface", "Visual regressions are hard to catch in code review", "The interface has multiple async, empty, error, or responsive states"]
 anti_signals: ["The change is entirely non-visual", "No rendered or interactive output exists to inspect"]
+updated_at: "2026-08-21"
 ---
 
 ## Problem

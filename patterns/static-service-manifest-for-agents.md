@@ -6,6 +6,7 @@ based_on: ["llms.txt community specification", "OpenAI ChatGPT Plugin manifest (
 category: Tool Use & Environment
 source: "https://llmstxt.org"
 tags: [service-discovery, agent-infrastructure, llms-txt, machine-readable, api-design, well-known, tool-discovery]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

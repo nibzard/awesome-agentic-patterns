@@ -6,6 +6,7 @@ based_on: []
 category: Orchestration & Control
 source: "https://github.com/chernistry/bernstein"
 tags: [orchestration, multi-agent, parallel-execution, deterministic, test-driven, zero-llm-overhead]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

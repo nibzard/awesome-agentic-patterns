@@ -6,6 +6,7 @@ based_on: ["Thorsten Ball", "Quinn Slack"]
 category: Feedback Loops
 source: "https://www.nibzard.com/ampcode"
 tags: [feedback, testing, reliability, user-feedback, positive-reinforcement, corrections]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

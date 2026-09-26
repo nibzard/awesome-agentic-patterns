@@ -6,6 +6,7 @@ based_on: ["Noah D. Goodman (Meta-Prompt)"]
 category: Orchestration & Control
 source: "https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving"
 tags: [meta-prompting, self-improvement, system-prompt, reflection]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

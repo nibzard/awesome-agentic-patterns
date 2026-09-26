@@ -6,6 +6,7 @@ based_on: ["auto-co autonomous AI company framework"]
 category: Orchestration & Control
 source: "https://github.com/NikitaDmitrieff/auto-co-meta"
 tags: [multi-agent, state-management, persistence, long-running-tasks, orchestration, autonomous-loops]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

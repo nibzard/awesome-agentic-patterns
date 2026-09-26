@@ -6,6 +6,7 @@ based_on: ["Hiveism (self-alignment loop)", "Anthropic (Constitutional AI)"]
 category: Reliability & Eval
 source: "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web"
 tags: [constitution, alignment, governance, signed-commits, policy, rlaif, critique-revise]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

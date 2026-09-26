@@ -6,6 +6,7 @@ based_on: ["Canary deployment and SRE rollback practices"]
 category: "Reliability & Eval"
 source: "https://martinfowler.com/bliki/CanaryRelease.html"
 tags: [canary, rollback, reliability, policy, evaluation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

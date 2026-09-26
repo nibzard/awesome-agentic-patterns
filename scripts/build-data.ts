@@ -1,3 +1,5 @@
+// ABOUTME: Generates all site data (pattern JSON, graph, README TOC, llms.txt, rss, sitemap) from patterns/*.md.
+// ABOUTME: All inputs must be deterministic (front-matter updated_at, no clock reads) so CI can diff the output.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -77,7 +79,7 @@ interface ParsedPattern {
   anti_patterns?: string[];
   tools?: string[];
   domains?: string[];
-  updated_at?: string;
+  updated_at: string;
   excerpt?: string;
   body: string;
 }
@@ -107,14 +109,6 @@ function replaceBetweenMarkers(
   const before = source.slice(0, startIndex + startMarker.length);
   const after = source.slice(endIndex);
   return `${before}\n${replacement}\n${after}`;
-}
-
-function toDateString(value: Date): string {
-  return value.toISOString().slice(0, 10);
-}
-
-function getFileModDate(filePath: string): string {
-  return toDateString(new Date(fs.statSync(filePath).mtime));
 }
 
 function toStringArray(value: unknown, fallback?: string[]): string[] | undefined {
@@ -163,7 +157,13 @@ function parsePatternFile(filePath: string): ParsedPattern {
   const slug = (data.slug as string) || fileSlug;
   const id = (data.id as string) || slugify(title);
   const summary = (data.summary as string) || deriveSummary(content);
-  const updatedAt = (data.updated_at as string) || getFileModDate(filePath);
+  const updatedAt = data.updated_at as string | undefined;
+  if (!updatedAt || !/^\d{4}-\d{2}-\d{2}$/.test(updatedAt)) {
+    throw new Error(
+      `${filePath}: front matter must include updated_at in YYYY-MM-DD form. ` +
+        'File mtimes differ between machines, so generated data needs an explicit date.'
+    );
+  }
 
   const excerpt = extractSectionWithHeading(content, 'Problem') || '';
 
@@ -359,12 +359,21 @@ function generateRssFeed(patterns: ParsedPattern[]): string {
       title: pattern.title,
       description: pattern.summary || '',
       url: `${SITE_URL}/patterns/${pattern.slug}`,
-      date: pattern.updated_at ? new Date(pattern.updated_at) : new Date(),
+      date: new Date(pattern.updated_at),
       categories: [pattern.category, ...pattern.tags],
     });
   });
 
-  return feed.xml({ indent: true });
+  const xml = feed.xml({ indent: true });
+
+  // The rss library always writes the current time as lastBuildDate. Replace it
+  // with the newest pattern updated_at so two runs on the same input agree byte for byte.
+  const newestUpdated = patterns.reduce((max, pattern) => {
+    return pattern.updated_at > max ? pattern.updated_at : max;
+  }, '1970-01-01');
+  const lastBuildDate = new Date(newestUpdated).toUTCString();
+
+  return xml.replace(/<lastBuildDate>[^<]*<\/lastBuildDate>/, `<lastBuildDate>${lastBuildDate}</lastBuildDate>`);
 }
 
 function copyImageAssets(): void {

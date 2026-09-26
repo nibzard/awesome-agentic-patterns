@@ -6,6 +6,7 @@ based_on: ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"]
 category: Orchestration & Control
 source: "https://www.nibzard.com/ampcode"
 tags: [orchestration, context, scalability, subagents, yaml-configuration, virtual-files, subject-hygiene, parallel-delegation]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

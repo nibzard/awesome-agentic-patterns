@@ -1,0 +1,53 @@
+{
+  "title": "Own-Check Fault Injection",
+  "status": "emerging",
+  "authors": [
+    "Jeff Otterson (@Jott2121)"
+  ],
+  "based_on": [
+    "Jia et al. (MAS-FIRE, arXiv:2602.19843)",
+    "Bhardwaj (AgentAssay, arXiv:2603.02601)"
+  ],
+  "category": "Reliability & Eval",
+  "source": "https://github.com/Jott2121/sabot",
+  "tags": [
+    "fault-injection",
+    "evals",
+    "reliability",
+    "self-verification",
+    "guardrails",
+    "chaos-engineering",
+    "observability"
+  ],
+  "slug": "own-check-fault-injection",
+  "id": "own-check-fault-injection",
+  "summary": "Plant a controlled fault inside a running agent pipeline and score whether the pipeline's own checks emit a detection act, keeping detected, reacted and recovered as separate verdicts.",
+  "maturity": "early",
+  "complexity": "medium",
+  "effort": "days",
+  "impact": "high",
+  "signals": [
+    "You ship reviewer agents, critic stages or guardrail callbacks and treat them as your reliability story",
+    "You want assurance evidence stronger than \"our end-to-end pass rate is high\"",
+    "You are about to let an agent take a side effect that is expensive to undo"
+  ],
+  "anti_signals": [
+    "Single-turn prompt pipelines with no internal verification stage to measure",
+    "You only need capability benchmarking, not reliability under injected failure"
+  ],
+  "prerequisites": [
+    "A deterministic pass criterion for the task, so a no-fault baseline can be established",
+    "Trace or event capture at the seam where each check runs"
+  ],
+  "tools": [
+    "eval-harness",
+    "tracing"
+  ],
+  "domains": [
+    "ops",
+    "coding",
+    "research"
+  ],
+  "updated_at": "2026-08-21",
+  "body": "\n## Problem\n\nMulti-agent pipelines increasingly gate real work behind their own quality machinery:\nreviewer agents, deterministic guardrail callbacks, escalation interrupts, orchestrator\nprogress ledgers. That machinery underwrites a widespread operational assumption — *if\nsomething goes wrong mid-pipeline, some check will catch it.*\n\nThe assumption is rarely tested, because the usual evidence for it is the wrong\nmeasurement. End-to-end pass rate tells you the pipeline produced a good answer. It does\nnot tell you whether anything would have noticed a bad input. Those come apart badly: a\npipeline can absorb a corrupted tool result, silently route around it, and still emit a\ncorrect answer. Every dashboard stays green, and you have learned nothing about the case\nyour pipeline *cannot* absorb.\n\nWorse, capability benchmarks and external monitors both miss the question. A benchmark\nasks whether the agent is smart. An external monitor asks whether *you* can detect a\nproblem from outside. Neither asks whether the self-verification you already paid for\nactually fires.\n\n## Solution\n\nInject one controlled fault per run into a live execution, tell the pipeline nothing, and\nscore only what the pipeline's **own** components did about it. No external monitor may sit\nin the detection path — if your harness is what noticed, the pipeline did not.\n\nThree design commitments make the result trustworthy:\n\n**1. Separate the funnel.** Score each injected fault on independent axes and never blend\nthem:\n\n- **detected** — a component of the pipeline emitted a *detection act* (a reviewer reject,\n  a guardrail block, an escalation, a retry carrying a reason)\n- **reacted** — some corrective action followed the detection\n- **recovered** — the end output still passed the same criterion as the no-fault baseline\n\nThe interesting quantity is the cell where `recovered` is true and `detected` is false:\n**recovery without detection**. That is silent absorption, and it is invisible to any\naccuracy-only evaluation.\n\n**2. Adjudicate deterministically against a mapping published in advance.** Before\ncollecting data, write down the exhaustive list of surfaces whose events count as a\ndetection act, per framework, from that framework's documentation. Publishing the mapping\nfirst is the only real defense against the accusation that it was tuned to the answer.\nKeep any LLM judge in a clearly separate tier that cannot move the headline.\n\n**3. Validate the baseline, and exclude rather than adjust.** A faulted run is only\nscorable if the same cell passes with no fault injected. If the baseline fails, the cell\nis excluded and itemised — never scored as a miss. Likewise, if a fault cannot be verified\nas having landed, that is an exclusion, not a detection failure. Fake misses are the\neasiest way to manufacture an alarming number.\n\nUseful operator families, all of which occur naturally in production:\n\n| Operator | What it simulates |\n|---|---|\n| Tool-result corruption | An API returns a plausible but wrong value |\n| False success | A component reports work it did not do |\n| Message alteration | Inter-agent context drifts in transit |\n| Model downgrade | A silent fallback to a weaker tier |\n| Stale context | Superseded data reaches one agent |\n| Silent no-op | A side effect reported done, never performed |\n\n## How to use it\n\n1. **Pick one task with a mechanical pass criterion.** If a human has to judge success, you\n   cannot establish a baseline, and everything downstream is opinion.\n2. **Record the detection-act mapping for your stack before you run anything.** Which\n   events, in your framework, mean \"a check fired\"? Write them down. If a documented\n   surface turns out not to exist, strike it publicly rather than quietly.\n3. **Baseline first.** Run the task clean, several seeds, and keep only cells that pass.\n4. **Inject one fault per run** at a defined seam, and verify it landed.\n5. **Score the three axes separately** and publish the recovery-without-detection rate. It\n   is usually the number that changes minds.\n6. **If detection is low, test whether it is a protocol gap before assuming a capability\n   gap.** A cheap probe: require each reviewer to report every inconsistency it noticed,\n   quoting the exact conflicting values, *before* it emits a verdict. If detection rises\n   sharply, the model was already noticing and your protocol simply gave noticing nowhere\n   to go.\n7. **Watch what that fix does and does not buy.** Reporting is not reacting. A reviewer can\n   name the contradiction and approve anyway; measured, corrective acts often do not rise\n   with reports at all. Treat \"the pipeline now tells you\" as a genuine but partial win.\n\nFor orchestrator-style pipelines that rewrite worker instructions, a protocol requirement\nsurvives only if it is part of the **output format contract**. Side instructions get\nrewritten away; format requirements do not.\n\n## Trade-offs\n\n- **Cost and blast radius.** Every cell is a real model run against a real pipeline. Budget\n  a circuit breaker, and never inject into a pipeline with live side effects.\n- **The instrument perturbs the system.** Changing an output contract to carry a report can\n  change orchestration behaviour — measured in one case as clean-run stall rates rising\n  from 3/25 to 18/25 seeds. Always re-run the no-fault baseline under the changed protocol\n  and publish the comparison, or you will attribute your own perturbation to the fix.\n- **Text-matching adjudication has a false-positive floor.** If you score a report by\n  looking for expected substrings, measure how often those substrings appear on *clean*\n  runs. Tasks that embed natural discrepancies produce a non-trivial base rate, and a\n  detection number without its base rate is not interpretable.\n- **Some operators have no signal on some surfaces.** A silent model downgrade injects no\n  text to quote, so a text-report surface cannot see it at all. Report that as no signal\n  rather than as a low score.\n- **Pipeline shape confounds cross-framework comparison.** If a fault lands after a given\n  architecture's last check has run, that cell is a structural zero, not a detection\n  failure. Compare only on the operator subset where every configuration can structurally\n  detect.\n- **Results are version-bound and model-bound.** Detection rates plausibly move with the\n  underlying model. Pin versions, state them, and resist generalising past them.\n\n## Evidence\n\nApplied across three production frameworks (LangGraph, CrewAI, AutoGen/Magentic-One) over\n900 injected faults, median own-check detection was **16.7%**, and recovery without\ndetection was the single most common outcome in **every** configuration at 51–61% of valid\nfaults. Best-documented guardrail configurations did not materially outperform defaults.\nAdding the anomaly-first reporting requirement to the same 825 paired cells raised the\nmedian to **55.0%**, while corrective acts stayed flat — on the original detection surface,\nrecovery without detection remained near 50%. The pattern's central claim is that\ndistinction: silent absorption became *legible*, not corrected.\n\n## References\n\n* [MAS-FIRE: Fault Injection and Reliability Evaluation for LLM-Based Multi-Agent Systems](https://arxiv.org/abs/2602.19843) — Jia et al. Establishes own-mechanism fault detection rates on academic multi-agent systems.\n* [AgentAssay](https://arxiv.org/abs/2603.02601) — Bhardwaj. Formalises an agent mutation score with model-swap and version-downgrade operators under external adjudication.\n* [On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents](https://arxiv.org/abs/2408.00989) — AutoInject. Injects mistakes into agent messages; reports end-task recovery, which is precisely the quantity this pattern keeps separate from detection.\n* [Failing Tools: Benchmarking LLM Agent Recovery Under Runtime Tool Failures](https://openreview.net/forum?id=j7YsSnA64D) — single-agent detection and recovery under tool failure.\n* [Assessing and Enhancing the Robustness of LLM-based Multi-Agent Systems Through Chaos Engineering](https://arxiv.org/abs/2505.03096) — Owotogbe. Chaos-engineering framing for agent systems.\n* Known implementation: [Sabot](https://github.com/Jott2121/sabot) — an open specification and Apache-2.0 harness applying this pattern to three production frameworks, with the detection-act mappings, seeds and anchors registered before any scored run and the full raw trace corpus published for offline recomputation. Authored by this pattern's contributor; listed as a worked example of the mapping-first and funnel-separation mechanics described above.\n"
+}

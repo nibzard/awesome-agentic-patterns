@@ -6,6 +6,7 @@ based_on: ["Multi-model routing practices from production LLM systems"]
 category: "Orchestration & Control"
 source: "https://arxiv.org/abs/2305.05176"
 tags: [routing, cost-control, multi-model, orchestration, reliability]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

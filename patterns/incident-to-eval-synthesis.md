@@ -6,6 +6,7 @@ based_on: ["Post-incident learning loops in software and ML operations"]
 category: "Feedback Loops"
 source: "https://sre.google/sre-book/postmortem-culture/"
 tags: [evals, incidents, reliability, feedback, continuous-improvement]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

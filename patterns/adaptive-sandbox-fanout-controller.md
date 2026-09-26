@@ -6,6 +6,7 @@ based_on: ["Labruno (GitHub)", "Swarm Migration Pattern"]
 category: "Reliability & Eval"
 source: "https://github.com/nibzard/labruno-agent"
 tags: [fan-out, adaptive, parallel-sandboxes, early-stopping, controller, variance, prompt-refinement]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

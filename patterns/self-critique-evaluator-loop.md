@@ -6,6 +6,7 @@ based_on: ["Meta AI (Self-Taught Evaluators)"]
 category: Feedback Loops
 source: "https://arxiv.org/abs/2408.02666"
 tags: [self-critique, evaluator, reward-model, synthetic-data, reflexion, rlaif]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

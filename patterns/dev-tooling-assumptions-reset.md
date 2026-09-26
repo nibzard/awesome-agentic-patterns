@@ -6,6 +6,7 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "UX & Collaboration"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [dev-tools, assumptions, github, tickets, code-review, tooling, agent-workflows, paradigm-shift]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

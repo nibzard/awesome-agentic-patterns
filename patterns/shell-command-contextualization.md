@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/claude-code"
 tags: [shell integration, context management, local execution, bash, cli, interactive tools]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

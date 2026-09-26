@@ -6,6 +6,7 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Tool Use & Environment"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts"
 tags: [bash, shell, pty, fallback, security, process-management, sandboxing]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

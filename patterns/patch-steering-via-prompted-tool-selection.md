@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (Claude Code Concepts)", "Will Brown (Prime Intellect T
 category: "Tool Use & Environment"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [patching, prompt-steering, tool-selection, coding-agent]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

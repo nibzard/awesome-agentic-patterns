@@ -6,6 +6,7 @@ based_on: ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"]
 category: "Tool Use & Environment"
 source: "https://www.sourcegraph.com"
 tags: [tool-design, logging, machine-readable, observability, agent-environment, mcp, structured-output]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

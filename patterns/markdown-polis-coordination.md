@@ -15,6 +15,7 @@ anti_signals: ["Single-agent solo session", "Pure RPC between two agents with no
 prerequisites: ["A shared filesystem (git repo, shared drive) all agents can read and write", "Each agent can read structured markdown with YAML frontmatter"]
 related: [shared-blackboard-coordination, capability-card-discovery]
 domains: ["coding", "research", "ops", "documentation"]
+updated_at: "2026-07-23"
 ---
 
 ## Problem

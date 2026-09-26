@@ -6,6 +6,7 @@ based_on: ["Will Larson (Imprint)"]
 category: "Feedback Loops"
 source: "https://lethain.com/agents-iterative-refinement/"
 tags: [refinement, iteration, prompts, skills, feedback, multi-mechanism, continuous-improvement, dashboards]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

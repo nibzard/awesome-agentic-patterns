@@ -6,6 +6,7 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Orchestration & Control"
 source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
 tags: [model-personality, interaction-modes, multi-model, ux-design, agent-behavior, opus, gpt-52]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

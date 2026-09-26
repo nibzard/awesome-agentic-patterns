@@ -6,6 +6,7 @@ based_on: ["Internal AI Dev Team"]
 category: "Tool Use & Environment"
 source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
 tags: [file-injection, at-mention, slash-commands, IDE-integration]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

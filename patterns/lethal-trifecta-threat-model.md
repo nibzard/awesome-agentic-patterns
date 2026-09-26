@@ -6,6 +6,7 @@ based_on: ["Simon Willison"]
 category: Reliability & Eval
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [security, prompt-injection, threat-model, data-exfiltration]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

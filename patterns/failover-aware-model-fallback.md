@@ -6,6 +6,7 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Reliability & Eval"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts"
 tags: [fallback, reliability, error-classification, multi-model, failover, resilience]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

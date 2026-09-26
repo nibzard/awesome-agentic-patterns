@@ -6,6 +6,7 @@ based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [tool-use, reward-shaping, coding-agent, RL]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

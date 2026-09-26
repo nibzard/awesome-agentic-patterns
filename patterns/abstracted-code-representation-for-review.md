@@ -6,6 +6,7 @@ based_on: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, abstraction, pseudocode, intent-based-review, explainability, software-quality, human-ai-interface]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

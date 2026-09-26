@@ -6,6 +6,7 @@ based_on: ["Ramp (Inspect Agent)", "Zach Bruggeman, Jason Quense, Rahul Sengottu
 category: Orchestration & Control
 source: "https://engineering.ramp.com/post/why-we-built-our-background-agent"
 tags: [background-agent, sandboxed, model-agnostic, real-time, websocket, custom-infra, iterative]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

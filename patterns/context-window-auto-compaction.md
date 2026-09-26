@@ -6,6 +6,7 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)", "Pi
 category: "Context & Memory"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts"
 tags: [context-management, compaction, overflow-recovery, token-estimation, transcript-validation, api-compaction]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

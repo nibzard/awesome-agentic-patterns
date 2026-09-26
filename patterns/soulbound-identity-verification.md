@@ -6,6 +6,7 @@ based_on: ["ERC-5192 Soulbound Tokens", "Chitin (example implementation)"]
 category: Security & Safety
 source: "https://eips.ethereum.org/EIPS/eip-5192"
 tags: [identity, verification, trust, soulbound-token, blockchain, agent-identity]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

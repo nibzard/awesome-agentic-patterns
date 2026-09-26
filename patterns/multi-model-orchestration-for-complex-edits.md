@@ -6,6 +6,7 @@ based_on: ["Aman Sanger (Cursor)"]
 category: Orchestration & Control
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-tasks]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

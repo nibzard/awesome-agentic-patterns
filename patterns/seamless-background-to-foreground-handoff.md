@@ -6,6 +6,7 @@ based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [background-agent, human-in-the-loop, task-handoff, interactive-refinement, agent-collaboration, developer-workflow]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

@@ -6,6 +6,7 @@ based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime I
 category: "Feedback Loops"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [reward-modeling, code-review, inference-healing, quality-assessment]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

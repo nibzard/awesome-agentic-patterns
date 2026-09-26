@@ -6,6 +6,7 @@ based_on: ["Analysis of 88 Claude conversation sessions (48 Task invocations ana
 category: Orchestration & Control
 source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
 tags: [subagents, delegation, traceability, naming, clarity, anti-pattern]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

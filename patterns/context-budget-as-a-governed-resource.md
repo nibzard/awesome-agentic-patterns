@@ -7,6 +7,7 @@ category: "Context & Memory"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#9-context-is-a-budget-not-a-constant"
 tags: [context-budget, token-costs, ghost-tokens, compaction, scheduled-agents]
 last_updated: "2026-06-11"
+updated_at: "2026-07-23"
 ---
 
 ## Problem

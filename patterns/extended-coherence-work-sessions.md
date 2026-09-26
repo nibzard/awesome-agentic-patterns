@@ -6,6 +6,7 @@ based_on: ["Amjad Masad (observation)"]
 category: Reliability & Eval
 source: "https://www.nibzard.com/silent-revolution"
 tags: [coherence, long-running tasks, agent capability, llm, complex projects]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

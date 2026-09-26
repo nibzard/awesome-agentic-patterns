@@ -6,6 +6,7 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
 source: "https://www.nibzard.com/claude-code"
 tags: [explainability, debugging, transparency, agent reasoning, verbose mode, introspection]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

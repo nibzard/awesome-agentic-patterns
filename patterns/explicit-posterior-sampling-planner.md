@@ -6,6 +6,7 @@ based_on: ["Dilip Arumugam", "Thomas L. Griffiths"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2504.20997"
 tags: [RL, PSRL, exploration, planning, decision-making]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

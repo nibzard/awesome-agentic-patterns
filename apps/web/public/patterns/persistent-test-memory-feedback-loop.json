@@ -1,0 +1,56 @@
+{
+  "title": "Persistent Test Memory Feedback Loop",
+  "status": "emerging",
+  "authors": [
+    "Pranshu Chittora (@pranshuchittora)"
+  ],
+  "based_on": [
+    "Vostride Agent QA (contributor-affiliated implementation)",
+    "Shinn et al. (Reflexion)"
+  ],
+  "category": "Learning & Adaptation",
+  "source": "https://github.com/vostride/agent-qa",
+  "tags": [
+    "testing-agents",
+    "persistent-memory",
+    "feedback-loop",
+    "self-healing",
+    "regression-testing"
+  ],
+  "slug": "persistent-test-memory-feedback-loop",
+  "id": "persistent-test-memory-feedback-loop",
+  "summary": "Preserve validated test lessons so an agent can reuse successful paths, recognize recurring failures, and retire stale knowledge.",
+  "maturity": "early",
+  "complexity": "medium",
+  "effort": "days",
+  "impact": "medium",
+  "signals": [
+    "Repeated user-flow tests against an evolving interface",
+    "The agent repeatedly rediscovers the same navigation or failure cause"
+  ],
+  "anti_signals": [
+    "Stateless one-off checks",
+    "Tests whose state or evidence cannot be stored safely"
+  ],
+  "prerequisites": [
+    "A stable scope key for application and environment",
+    "Structured run evidence and a pass/fail oracle"
+  ],
+  "related": [
+    "memory-synthesis-from-execution-logs",
+    "rich-feedback-loops",
+    "workflow-evals-with-mocked-tools"
+  ],
+  "tools": [
+    "test-runner",
+    "memory-store",
+    "evidence-recorder"
+  ],
+  "domains": [
+    "software-testing",
+    "web",
+    "mobile"
+  ],
+  "updated_at": "2026-08-16",
+  "body": "\n## Problem\n\nAn agent that executes end-to-end tests without durable memory starts each run from\nscratch. It repeatedly rediscovers navigation paths, semantic landmarks, and known\nfailure causes. When an interface changes, brittle replay can fail even though the\nuser intent is unchanged.\n\nSaving every trace is not enough. Raw traces contain transient state, sensitive\nvalues, and accidental successes. Replaying them uncritically turns old evidence\ninto a new source of test flakiness.\n\n## Solution\n\nPlace a scoped, evidence-gated memory loop around the test executor:\n\n1. **Scope retrieval** by application, environment, test intent, and identity\n   boundary. Retrieve a small set of relevant, recently verified records.\n2. **Intent-preserving execution** uses remembered semantic landmarks and prior\n   failure classifications as hints, not as a fixed action script.\n3. **Structured observation** records actions, assertions, screenshots or logs,\n   failure signatures, and the final oracle result.\n4. **Write gating** promotes a lesson only when evidence supports it. Redact\n   secrets and reject run-specific values such as session IDs or timestamps.\n5. **Correction and decay** lower confidence, supersede, or retire a record when a\n   later run contradicts it.\n\nA memory record should carry provenance rather than only a prose hint:\n\n    scope: app + environment + test-intent\n    claim: Checkout opens from the cart summary\n    confidence: 0.82\n    evidence: run-id-184\n    last_verified: 2026-08-16\n    failure_signature: null\n    supersedes: memory-id-27\n\nThe key distinction from general log synthesis is that retrieval sits directly in\nthe execution path, while every write is tied to a test oracle and can be reversed\nby contradictory evidence.\n\n## How to use it\n\n- Start with one repeated, non-destructive user flow and define its scope key.\n- Store artifacts separately from compact memories; keep links from each memory to\n  the evidence that justified it.\n- Prefer semantic facts such as labels, roles, and navigation relationships over\n  copied DOM paths or screen coordinates.\n- Require more than one confirmation before promoting risky or broadly scoped\n  lessons. Apply shorter expiry to volatile interfaces.\n- Treat a remembered path as a ranked hint. The executor must still observe the\n  current interface and satisfy the current assertion.\n- Make correction first-class: a failed remembered step should produce a proposed\n  replacement or confidence reduction, not an endless retry.\n- Redact credentials, personal data, tokens, and test fixtures before persistence.\n  Separate memory by tenant and environment.\n- Keep human approval around production writes, purchases, deletion, and other\n  high-impact actions even when a path has succeeded before.\n\nUse the loop for regression suites where the same intent is exercised many times\nagainst a changing application. Pair it with mocked workflow evals when the agent\nitself must be tested without touching a live system.\n\n## Trade-offs\n\n**Pros:**\n\n- Reduces repeated exploration across runs.\n- Lets tests survive some interface changes without discarding the original intent.\n- Preserves evidence and provenance for debugging.\n- Converts recurring failures into reusable, scoped knowledge.\n\n**Cons:**\n\n- Stale or falsely promoted memories can systematically mislead later runs.\n- Safe isolation, redaction, retention, and invalidation add operational complexity.\n- Retrieval and write gating increase latency and storage cost.\n- Adaptation can hide product regressions unless the assertion oracle remains\n  independent from the learned navigation path.\n\n## References\n\n- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — episodic feedback and memory for later decisions.\n- [Memory Synthesis from Execution Logs](memory-synthesis-from-execution-logs.md) — related batch synthesis of reusable lessons.\n- [Workflow Evals with Mocked Tools](workflow-evals-with-mocked-tools.md) — related safe validation of complete agent workflows.\n- [Vostride Agent QA](https://github.com/vostride/agent-qa) — contributor-affiliated implementation of persistent memory in a software-testing agent.\n"
+}

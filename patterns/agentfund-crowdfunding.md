@@ -6,6 +6,7 @@ based_on: ["AgentFund (example implementation)"]
 category: "UX & Collaboration"
 source: "https://github.com/RioTheGreat-ai/agentfund-skill"
 tags: [resource-funding, escrow, milestones, agent-governance, budget-controls]
+updated_at: "2026-03-11"
 ---
 
 ## Problem

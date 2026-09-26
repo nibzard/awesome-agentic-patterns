@@ -6,6 +6,7 @@ based_on: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
 category: Context & Memory
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-understanding, onboarding, q&a, retrieval, search, context-awareness, knowledge-base]
+updated_at: "2026-03-11"
 ---
 
 ## Problem
