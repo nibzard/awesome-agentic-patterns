@@ -146,6 +146,10 @@
     <lastmod>2026-01-05</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</loc>
+    <lastmod>2026-09-26</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/cli-first-skill-design</loc>
     <lastmod>2026-01-05</lastmod>
   </url>
@@ -330,6 +334,10 @@
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</loc>
+    <lastmod>2026-09-26</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents</loc>
     <lastmod>2026-08-21</lastmod>
   </url>
@@ -506,6 +514,10 @@
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/non-generative-judgment-routing</loc>
+    <lastmod>2026-09-26</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate</loc>
     <lastmod>2026-01-05</lastmod>
   </url>
@@ -516,6 +528,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark</loc>
     <lastmod>2026-07-17</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</loc>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/output-verification-loop</loc>
@@ -552,6 +568,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/policy-gated-tool-proxy</loc>
     <lastmod>2026-07-23</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/precomputed-code-graph-lookup</loc>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/proactive-agent-state-externalization</loc>
@@ -660,6 +680,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/signal-driven-agent-activation</loc>
     <lastmod>2026-07-23</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</loc>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/skill-library-evolution</loc>
