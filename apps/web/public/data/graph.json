@@ -513,6 +513,21 @@
       "summary": "Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches."
     },
     {
+      "id": "classify-then-act-for-background-agents",
+      "title": "Classify-Then-Act for Background Agents",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "classify-then-act-for-background-agents",
+      "tags": [
+        "background-agents",
+        "task-triage",
+        "sandboxed-build",
+        "review-queue",
+        "autonomy-boundary"
+      ],
+      "summary": "A background agent working through a task list has two failure modes at the extremes."
+    },
+    {
       "id": "cli-first-skill-design",
       "title": "CLI-First Skill Design",
       "category": "Tool Use & Environment",
@@ -3250,6 +3265,11 @@
     {
       "source": "board-mediated-async-inter-agent-coordination",
       "target": "memory-synthesis-from-execution-logs",
+      "type": "related"
+    },
+    {
+      "source": "classify-then-act-for-background-agents",
+      "target": "custom-sandboxed-background-agent",
       "type": "related"
     },
     {

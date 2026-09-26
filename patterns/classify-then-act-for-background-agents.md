@@ -1,13 +1,13 @@
 ---
 title: Classify-Then-Act for Background Agents
-status: established
+status: emerging
 authors: ["James Ross (@jimy-r)"]
 based_on: ["Google's Large-Scale Changes process (speculative change generation + human review queues)", "Agent Workspace Architecture (production workspace)"]
 category: "Orchestration & Control"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#2-classify-then-act-not-ask-then-wait"
 tags: [background-agents, task-triage, sandboxed-build, review-queue, autonomy-boundary]
 related: ["human-in-loop-approval-framework", "custom-sandboxed-background-agent"]
-updated_at: "2026-08-29"
+updated_at: "2026-09-26"
 ---
 
 ## Problem
@@ -21,8 +21,11 @@ Classify every incoming task into exactly one of three buckets before doing anyt
 ```pseudo
 def classify(task):
     if grep(rejection_log, task.slug_or_keywords).count >= 3:
-        return NEEDS_INTENT   # circuit breaker: stop re-attempting a repeatedly rejected shape
-    bucket = triage(task)     # has-default | needs-intent | out-of-scope
+        bucket = NEEDS_INTENT  # still surface the task; do not silently return
+    else:
+        bucket = triage(task)  # has-default | needs-intent | out-of-scope
+    if bucket not in {HAS_DEFAULT, NEEDS_INTENT, OUT_OF_SCOPE}:
+        bucket = NEEDS_INTENT  # malformed, unknown, or failed triage needs review
     if bucket == HAS_DEFAULT:
         build_in_sandbox(task)
         lodge_for_review(task)
@@ -30,6 +33,8 @@ def classify(task):
         surface_for_human_decision(task)
     return bucket
 ```
+
+Only tasks within an explicit human-delegated mandate enter this loop. A `has-default` label cannot authorize external side effects: sandbox builds still need bounded credentials, spending and network permissions. Surface `needs-intent` items on the operator’s normal review path, with a durable pending record, rather than blocking unrelated ready tasks.
 
 ## Evidence
 

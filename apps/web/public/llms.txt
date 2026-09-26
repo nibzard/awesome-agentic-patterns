@@ -129,6 +129,10 @@ URL: https://agentic-patterns.com/patterns/capability-escrow-receipt
 Chain-of-Thought Monitoring & Interruption: Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches.
 URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
 
+### classify-then-act-for-background-agents
+Classify-Then-Act for Background Agents: A background agent working through a task list has two failure modes at the extremes.
+URL: https://agentic-patterns.com/patterns/classify-then-act-for-background-agents
+
 ### cli-first-skill-design
 CLI-First Skill Design: Design all skills as CLI tools first for dual-use by humans and agents, enabling manual debugging, programmatic invocation, composition with Unix tools, and transparent shell-based execution without building separate interfaces.
 URL: https://agentic-patterns.com/patterns/cli-first-skill-design
