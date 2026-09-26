@@ -1,6 +1,23 @@
 {
   "nodes": [
     {
+      "id": "402-first-machine-payments-price-before-work-tool-purchases",
+      "title": "402-First Machine Payments (Price-Before-Work Tool Purchases)",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "402-first-machine-payments",
+      "tags": [
+        "payments",
+        "micropayments",
+        "x402",
+        "http-402",
+        "agent-commerce",
+        "tool-use",
+        "budget-guards"
+      ],
+      "summary": "An autonomous agent mid task often needs a capability it does not have — summarize a long document, extract entities from a contract, fetch a paywalled dataset."
+    },
+    {
       "id": "abstracted-code-representation-for-review",
       "title": "Abstracted Code Representation for Review",
       "category": "UX & Collaboration",

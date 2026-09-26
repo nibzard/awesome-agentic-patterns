@@ -7,6 +7,21 @@
         <lastBuildDate>Sat, 26 Sep 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
+            <title><![CDATA[402-First Machine Payments (Price-Before-Work Tool Purchases)]]></title>
+            <description><![CDATA[An autonomous agent mid task often needs a capability it does not have — summarize a long document, extract entities from a contract, fetch a paywalled dataset.]]></description>
+            <link>https://agentic-patterns.com/patterns/402-first-machine-payments</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/402-first-machine-payments</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[payments]]></category>
+            <category><![CDATA[micropayments]]></category>
+            <category><![CDATA[x402]]></category>
+            <category><![CDATA[http-402]]></category>
+            <category><![CDATA[agent-commerce]]></category>
+            <category><![CDATA[tool-use]]></category>
+            <category><![CDATA[budget-guards]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Classify-Then-Act for Background Agents]]></title>
             <description><![CDATA[A background agent working through a task list has two failure modes at the extremes.]]></description>
             <link>https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</link>
@@ -274,20 +289,6 @@
             <category><![CDATA[admission-control]]></category>
             <category><![CDATA[blind-spots]]></category>
             <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Reasoning-Token Firewall]]></title>
-            <description><![CDATA[Assemble an agent's result only from answer-typed stream events, never by string-stripping interleaved reasoning tokens.]]></description>
-            <link>https://agentic-patterns.com/patterns/reasoning-token-firewall</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/reasoning-token-firewall</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[reasoning]]></category>
-            <category><![CDATA[chain-of-thought]]></category>
-            <category><![CDATA[streaming]]></category>
-            <category><![CDATA[output-hygiene]]></category>
-            <category><![CDATA[safety]]></category>
-            <category><![CDATA[harness]]></category>
-            <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
