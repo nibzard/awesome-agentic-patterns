@@ -2189,6 +2189,24 @@
       "summary": "Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions."
     },
     {
+      "id": "precomputed-code-graph-lookup",
+      "title": "Precomputed Code Graph Lookup",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "precomputed-code-graph-lookup",
+      "tags": [
+        "code-graph",
+        "static-analysis",
+        "precomputed-index",
+        "impact-analysis",
+        "deterministic",
+        "tree-sitter",
+        "tool-design"
+      ],
+      "summary": "Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.",
+      "maturity": "early"
+    },
+    {
       "id": "proactive-agent-state-externalization",
       "title": "Proactive Agent State Externalization",
       "category": "Context & Memory",
@@ -3317,6 +3335,21 @@
     {
       "source": "persistent-test-memory-feedback-loop",
       "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "precomputed-code-graph-lookup",
+      "target": "agentic-search-over-vector-embeddings",
+      "type": "related"
+    },
+    {
+      "source": "precomputed-code-graph-lookup",
+      "target": "curated-code-context-window",
+      "type": "related"
+    },
+    {
+      "source": "precomputed-code-graph-lookup",
+      "target": "agent-powered-codebase-qa-onboarding",
       "type": "related"
     },
     {

@@ -14,7 +14,7 @@ impact: "medium"
 signals: ["Agent burns many turns on grep-then-read chains", "Questions are structural: callers, dependents, impact of a change", "Answers must be citable and reproducible"]
 anti_signals: ["Small repository the agent can read directly", "Questions are literal string sweeps, not structural", "Languages or dynamic dispatch the parser cannot resolve"]
 related: ["agentic-search-over-vector-embeddings", "curated-code-context-window", "agent-powered-codebase-qa-onboarding"]
-updated_at: "2026-09-09"
+updated_at: "2026-09-26"
 ---
 
 ## Problem
@@ -34,7 +34,7 @@ Build the structural facts **once, ahead of the question**, into a local graph, 
 Three properties do the work:
 
 1. **Precomputed and deterministic.** A parser (tree-sitter, an LSP index, or a compiler front end) walks the repository and emits nodes (file, declaration) and edges (contains, imports, calls) with exact `file:line` locations. No model, no embeddings — the same repository state always yields the same graph, so an answer can be re-derived and checked.
-2. **Intent-shaped verbs, not a query language.** The agent should not have to compose traversals. Ship the small set of questions agents actually ask, each answered in one call: locate a symbol, show a symbol's card (signature, definition site, callers, callees), show reverse impact, show a path between two symbols, and — the composed one — *"I am about to change X"*, which returns callers, blast radius and the tests that cover them together.
+2. **Intent-shaped verbs, not a query language.** The agent should not have to compose traversals. Ship the small set of questions agents actually ask, each answered in one call: locate a symbol, show a symbol's card (signature, definition site, callers, callees), show reverse impact, show a path between two symbols, and — the composed one — *"I am about to change X"*, which returns statically resolved callers and potential blast radius together, plus covering tests when a separate coverage map is available.
 3. **Provenance on every answer.** Each fact carries the file and line range it came from, so the agent can cite it, and a reader can verify it without re-reading the codebase.
 
 Freshness is handled by cheap re-derivation rather than by abandoning the index: hash file contents, re-parse only what changed, and mark the store stale when the working tree moves. This is what makes a precomputed index viable for agents in a way that an embedding index is not — rebuilding is parsing, not inference.
@@ -44,12 +44,14 @@ graph TD
     A[Repository state] -->|parse once, content-hashed| B[(Local code graph<br/>nodes + edges + locations)]
     C[Agent: I am about to change chargeInvoice] --> D{Intent verb}
     D -->|change-plan| B
-    B --> E[Callers + reverse impact + covering tests<br/>each with file:line]
+    B --> E[Resolved callers + potential impact + optional test coverage<br/>each with file:line]
     E --> C
     F[grep hit -> read -> grep -> read] -.->|replaced| D
 ```
 
 Resolution honesty matters more than coverage. Statically resolvable edges (imports, unique call targets) are facts; a call whose name is defined in several places is **ambiguous**, and the right behaviour is to say so — return the shortlist and point the agent at a literal search — rather than to guess and be confidently wrong. Dynamic dispatch, reflection and generated code remain outside what the graph can promise.
+
+A parser alone does not establish which tests execute a symbol. Attach coverage from instrumented test runs, stamped with the source and test revisions; when it is absent or stale, report test coverage as unknown. Graph reachability estimates potential impact, not proof that a caller will break.
 
 ## Evidence
 
@@ -69,7 +71,7 @@ Resolution honesty matters more than coverage. Statically resolvable edges (impo
 ## Trade-offs
 
 - **Pros:**
-  - Reverse-impact and caller questions get a complete answer in one call instead of an open-ended search loop that may stop early.
+  - Reverse-impact and caller questions get the graph’s statically resolved answer in one call instead of an open-ended search loop that may stop early.
   - Deterministic and citable: the same question yields the same answer with `file:line` provenance a human can verify.
   - No model, embeddings or vector store in the query path, so it runs offline and adds no inference cost or new data-egress surface.
 - **Cons:**
