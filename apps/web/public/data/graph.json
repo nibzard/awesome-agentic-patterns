@@ -513,6 +513,21 @@
       "summary": "Implement active surveillance of agent reasoning with capability to interrupt and redirect before completing flawed execution sequences, preventing wasted time on fundamentally wrong approaches."
     },
     {
+      "id": "classify-then-act-for-background-agents",
+      "title": "Classify-Then-Act for Background Agents",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "classify-then-act-for-background-agents",
+      "tags": [
+        "background-agents",
+        "task-triage",
+        "sandboxed-build",
+        "review-queue",
+        "autonomy-boundary"
+      ],
+      "summary": "A background agent working through a task list has two failure modes at the extremes."
+    },
+    {
       "id": "cli-first-skill-design",
       "title": "CLI-First Skill Design",
       "category": "Tool Use & Environment",
@@ -990,6 +1005,27 @@
       ]
     },
     {
+      "id": "design-time-file-partition-as-concurrency-control",
+      "title": "Design-Time File Partition as Concurrency Control",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "design-time-file-partition",
+      "tags": [
+        "multi-agent",
+        "concurrency",
+        "decomposition",
+        "task-queue",
+        "shared-checkout",
+        "headless"
+      ],
+      "summary": "Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.",
+      "maturity": "early",
+      "domains": [
+        "coding",
+        "ops"
+      ]
+    },
+    {
       "id": "deterministic-grader-in-the-loop",
       "title": "Deterministic Grader in the Loop",
       "category": "Feedback Loops",
@@ -1255,6 +1291,29 @@
         "context-hint"
       ],
       "summary": "Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures."
+    },
+    {
+      "id": "evidence-questions-not-verdict-questions",
+      "title": "Evidence Questions, Not Verdict Questions",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "evidence-questions-not-verdict-questions",
+      "tags": [
+        "policy-authoring",
+        "admission-control",
+        "decomposition",
+        "calibration",
+        "confidence",
+        "guard-rails",
+        "determinism"
+      ],
+      "summary": "Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.",
+      "maturity": "early",
+      "domains": [
+        "security",
+        "ops",
+        "coding"
+      ]
     },
     {
       "id": "evidence-layered-evaluation-for-interactive-agents",
@@ -1965,6 +2024,45 @@
       "summary": "AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts."
     },
     {
+      "id": "non-generative-judgment-routing-with-typed-escalation",
+      "title": "Non-Generative Judgment Routing with Typed Escalation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "non-generative-judgment-routing",
+      "tags": [
+        "routing",
+        "latency",
+        "structured-outputs",
+        "classification",
+        "escalation",
+        "orchestration",
+        "agent-loops"
+      ],
+      "summary": "Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.",
+      "domains": [
+        "coding",
+        "ops",
+        "browser-automation"
+      ]
+    },
+    {
+      "id": "one-os-user-per-agent",
+      "title": "One OS User per Agent",
+      "category": "Security & Safety",
+      "status": "validated-in-production",
+      "slug": "one-os-user-per-agent",
+      "tags": [
+        "isolation",
+        "multi-agent",
+        "systemd",
+        "process-identity",
+        "least-privilege",
+        "long-running-agents",
+        "audit-trail"
+      ],
+      "summary": "Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container."
+    },
+    {
       "id": "opponent-processor-multi-agent-debate-pattern",
       "title": "Opponent Processor / Multi-Agent Debate Pattern",
       "category": "Orchestration & Control",
@@ -2016,6 +2114,27 @@
         "multi-agent-systems",
         "evaluation",
         "orchestration"
+      ]
+    },
+    {
+      "id": "out-of-process-provider-boundary-replay",
+      "title": "Out-of-Process Provider-Boundary Replay",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "out-of-process-provider-boundary-replay",
+      "tags": [
+        "record-replay",
+        "determinism",
+        "regression-testing",
+        "http-boundary",
+        "offline",
+        "instrumentation-free"
+      ],
+      "summary": "Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.",
+      "maturity": "maturing",
+      "domains": [
+        "coding",
+        "ops"
       ]
     },
     {
@@ -2165,6 +2284,24 @@
         "compliance"
       ],
       "summary": "Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions."
+    },
+    {
+      "id": "precomputed-code-graph-lookup",
+      "title": "Precomputed Code Graph Lookup",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "precomputed-code-graph-lookup",
+      "tags": [
+        "code-graph",
+        "static-analysis",
+        "precomputed-index",
+        "impact-analysis",
+        "deterministic",
+        "tree-sitter",
+        "tool-design"
+      ],
+      "summary": "Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.",
+      "maturity": "early"
     },
     {
       "id": "proactive-agent-state-externalization",
@@ -2602,6 +2739,27 @@
         "reactive"
       ],
       "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts."
+    },
+    {
+      "id": "skill-activation-as-a-precisionrecall-measurement",
+      "title": "Skill Activation as a Precision/Recall Measurement",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "skill-activation-as-precision-recall",
+      "tags": [
+        "evals",
+        "skills",
+        "routing",
+        "precision-recall",
+        "classification",
+        "ci-cd",
+        "regression-testing"
+      ],
+      "summary": "Treat \"did the right skill load?\" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.",
+      "domains": [
+        "coding",
+        "ops"
+      ]
     },
     {
       "id": "skill-library-evolution",
@@ -3192,6 +3350,11 @@
       "type": "related"
     },
     {
+      "source": "classify-then-act-for-background-agents",
+      "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
       "source": "commitment-ledger-with-reality-gated-credit",
       "target": "episodic-memory-retrieval-injection",
       "type": "related"
@@ -3222,6 +3385,36 @@
       "type": "related"
     },
     {
+      "source": "design-time-file-partition-as-concurrency-control",
+      "target": "lane-based-execution-queueing",
+      "type": "related"
+    },
+    {
+      "source": "design-time-file-partition-as-concurrency-control",
+      "target": "workspace-native-multi-agent-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "design-time-file-partition-as-concurrency-control",
+      "target": "deterministic-zero-llm-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "consequence-family-coverage-audit",
+      "type": "related"
+    },
+    {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "deterministic-grader-in-the-loop",
+      "type": "related"
+    },
+    {
       "source": "exact-action-authorization-binding",
       "target": "authenticated-authority-channel",
       "type": "related"
@@ -3237,6 +3430,26 @@
       "type": "related"
     },
     {
+      "source": "non-generative-judgment-routing-with-typed-escalation",
+      "target": "budget-aware-model-routing-with-hard-cost-caps",
+      "type": "related"
+    },
+    {
+      "source": "one-os-user-per-agent",
+      "target": "local-first-credential-broker",
+      "type": "related"
+    },
+    {
+      "source": "one-os-user-per-agent",
+      "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
+      "source": "one-os-user-per-agent",
+      "target": "isolated-vm-per-rl-rollout",
+      "type": "related"
+    },
+    {
       "source": "orchestration-prompt-writing-benchmark",
       "target": "declarative-multi-agent-topology-definition",
       "type": "related"
@@ -3249,6 +3462,11 @@
     {
       "source": "orchestration-prompt-writing-benchmark",
       "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "out-of-process-provider-boundary-replay",
+      "target": "workflow-evals-with-mocked-tools",
       "type": "related"
     },
     {
@@ -3269,6 +3487,21 @@
     {
       "source": "persistent-test-memory-feedback-loop",
       "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "precomputed-code-graph-lookup",
+      "target": "agentic-search-over-vector-embeddings",
+      "type": "related"
+    },
+    {
+      "source": "precomputed-code-graph-lookup",
+      "target": "curated-code-context-window",
+      "type": "related"
+    },
+    {
+      "source": "precomputed-code-graph-lookup",
+      "target": "agent-powered-codebase-qa-onboarding",
       "type": "related"
     },
     {
