@@ -200,6 +200,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Reliability Problem Map Checklist for RAG and Agents](patterns/wfgy-reliability-problem-map.md)
 - [RLAIF (Reinforcement Learning from AI Feedback)](patterns/rlaif-reinforcement-learning-from-ai-feedback.md)
 - [Schema Validation Retry with Cross-Step Learning](patterns/schema-validation-retry-cross-step-learning.md)
+- [Skill Activation as a Precision/Recall Measurement](patterns/skill-activation-as-precision-recall.md)
 - [Structured Output Specification](patterns/structured-output-specification.md)
 - [Subagent Compilation Checker](patterns/subagent-compilation-checker.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
