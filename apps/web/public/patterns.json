@@ -2155,6 +2155,61 @@
     "excerpt": "\n## Problem\nStateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures. Over multi-session workflows this leads to redundant work, inconsistent behavior, and shallow planning because each turn lacks durable historical context."
   },
   {
+    "title": "Evidence Questions, Not Verdict Questions",
+    "status": "emerging",
+    "authors": [
+      "Doron Podoleanu (@doronp)"
+    ],
+    "based_on": [
+      "jevc (https://github.com/doronp/jevc)",
+      "Beurer-Kellner et al., Design Patterns for Securing LLM Agents (2025)"
+    ],
+    "category": "Security & Safety",
+    "source": "https://github.com/doronp/jevc",
+    "tags": [
+      "policy-authoring",
+      "admission-control",
+      "decomposition",
+      "calibration",
+      "confidence",
+      "guard-rails",
+      "determinism"
+    ],
+    "slug": "evidence-questions-not-verdict-questions",
+    "id": "evidence-questions-not-verdict-questions",
+    "summary": "Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.",
+    "maturity": "early",
+    "complexity": "low",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "A gate asks a model to classify a proposed action as allow / ask / block",
+      "Your written policy lives in prose (CLAUDE.md, AGENTS.md, a runbook) and a model reads it at decision time",
+      "The gate's mistakes are near-misses rather than wild misreads"
+    ],
+    "anti_signals": [
+      "The decision genuinely needs open-ended judgement that cannot be decomposed into observable features",
+      "The gate is already a pure code predicate with no model in the loop"
+    ],
+    "prerequisites": [
+      "An enumerable set of observable features the decision depends on",
+      "The ability to record and replay model calls so thresholds can be measured"
+    ],
+    "related": [
+      "policy-gated-tool-proxy",
+      "consequence-family-coverage-audit",
+      "deterministic-grader-in-the-loop",
+      "hook-based-safety-guard-rails"
+    ],
+    "domains": [
+      "security",
+      "ops",
+      "coding"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nA gate in front of an agent's tools has to turn a proposed action into a decision. The\ndefault implementation hands the model the policy and the action and asks for the decision:\n\n> Here is the policy. The agent wants to run `rm -rf node_modules`. Answer `allow`, `ask`, or `block`.\n\nThis looks like the cheapest possible design, and the failure it produces is quiet. The model\ndoes answer. The answer is usually reasonable. What is missing is any signal about *how close\nthe call was* — and on a gate, the close calls are the whole problem. A gate that blocks\n`rm -rf node_modules` is not a safety win, it is an outage; a gate that allows\n`rm -rf ~/Documents` is the incident.\n\nThe collapsed question also destroys the structure the policy had. A written rule usually\nsays something like *\"deleting regenerable build output is fine, deleting user data is not.\"*\nThat rule names an observable property of the target — regenerable or not. Collapsing it into\none allow/ask/block question throws that property away and asks the model to re-derive it,\nweigh it, and commit to an action, all inside a single token distribution."
+  },
+  {
     "title": "Evidence-Layered Evaluation for Interactive Agents",
     "status": "emerging",
     "authors": [

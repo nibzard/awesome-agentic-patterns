@@ -318,6 +318,10 @@ URL: https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-chann
 Episodic Memory Retrieval & Injection: Stateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures.
 URL: https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection
 
+### evidence-questions-not-verdict-questions
+Evidence Questions, Not Verdict Questions: Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.
+URL: https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions
+
 ### evidence-layered-evaluation-for-interactive-agents
 Evidence-Layered Evaluation for Interactive Agents: Interactive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state.
 URL: https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents

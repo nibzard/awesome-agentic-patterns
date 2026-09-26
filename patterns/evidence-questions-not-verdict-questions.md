@@ -16,7 +16,7 @@ anti_signals: ["The decision genuinely needs open-ended judgement that cannot be
 prerequisites: ["An enumerable set of observable features the decision depends on", "The ability to record and replay model calls so thresholds can be measured"]
 related: ["policy-gated-tool-proxy", "consequence-family-coverage-audit", "deterministic-grader-in-the-loop", "hook-based-safety-guard-rails"]
 domains: ["security", "ops", "coding"]
-updated_at: "2026-09-20"
+updated_at: "2026-09-26"
 ---
 
 ## Problem
@@ -56,19 +56,24 @@ The evidence questions are the compiled form of the prose rule; the reducer is t
 security reviewer actually reads.
 
 ```pseudo
-// Evidence: asked of the model, one narrow question each
+// Evidence: use trusted probes for directly observable facts; models may abstain
 blast_radius  = ask_enum("What does this command destroy?", BLAST_LEVELS)
 reversible    = ask_enum("Can the effect be undone without a backup?", YES_NO)
 
 // Verdict: computed in code, no model involved
+if invalid_or_missing(blast_radius, reversible) -> ask
+if below_calibrated_threshold(blast_radius, reversible) -> ask
 if blast_radius in {user_data, system}     -> block
 if blast_radius == project_source and !reversible -> ask
-otherwise                                  -> allow
+if blast_radius in {none, regenerable_artifacts} -> allow
+otherwise                                  -> ask
 ```
 
-Two properties make this more than a style preference.
+Filesystem and VCS facts should come from trusted probes against the actual target, not from a command string alone. Reject malformed or out-of-enum answers, and escalate missing, ambiguous, or insufficiently confident evidence. A deterministic reducer does not make its model-supplied evidence deterministic or correct. Bind the checked facts to the action executed so target changes cannot invalidate the decision.
 
-**The decomposed questions are measurably better answered.** Confidence on a narrow
+Two properties motivate this design.
+
+**The recorded example gives higher confidence on decomposed questions.** Confidence on a narrow
 observational question is not the same as confidence on the collapsed one, even in the same
 call to the same model.
 
@@ -89,12 +94,12 @@ should fail to build rather than run.
   - In one recorded call on `rm -rf node_modules`, the collapsed allow/ask/block question
     returned allow 0.42 / block 0.35 / ask 0.23 — a 0.07 winner margin, roughly seven times
     the ±0.01 drift seen across repeated identical calls, so the ordering is real but the
-    decision is nearly a coin flip. The narrow `blast_radius` question, asked of the same
+    model has weak preference among the verdict labels; these probabilities do not measure correctness. The narrow `blast_radius` question, asked of the same
     model in the same call, answered "only regenerable artifacts" at 0.97.
   - Predicted thresholds do not survive measurement. Of 58 thresholds predicted ahead of time
     for one corpus, 23 held against the live model and **35 were wrong** and had to be
-    recalibrated. Anyone adopting this should assume their own guesses fail at a similar rate
-    and plan to record calls rather than reason about them.
+    recalibrated. This is one corpus, not a transferable failure rate; measure thresholds on
+    independently labelled cases from the deployment before relying on them.
 - **Unverified / Unclear:** whether the confidence gap between collapsed and decomposed
   questions holds across model families and sizes; how far a decision can be decomposed
   before the reducer becomes the thing that is wrong; whether smaller local models answer the
@@ -110,7 +115,7 @@ should fail to build rather than run.
    and you have a judgement problem, not a decomposition problem.
 3. **Type each question tightly.** Prefer a 3–5 value enum over free text, and over a
    0–1 score. Enums are what make the reducer a table instead of a threshold.
-4. **Write the reducer as first-match rules in code.** Order matters and should be explicit.
+4. **Write the reducer as first-match rules in code.** Put invalid, missing, ambiguous, and low-confidence evidence on an explicit escalation path before any allow rule. Order matters and should be explicit.
    This file is the artifact you put in front of a reviewer.
 5. **Record calls and measure, per feature.** Keep a fixture corpus you can replay offline so
    the thresholds are asserted by tests, and so a model upgrade shows up as a diff rather than
