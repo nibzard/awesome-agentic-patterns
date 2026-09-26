@@ -3309,6 +3309,53 @@
     "excerpt": "\n## Problem\nAI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. This is a specific instance of the \"lethal trifecta\" threat model: combining wallet access with untrusted inputs and external communication creates exploitation paths."
   },
   {
+    "title": "Non-Generative Judgment Routing with Typed Escalation",
+    "status": "emerging",
+    "authors": [
+      "shitianfang (@shitianfang)"
+    ],
+    "based_on": [
+      "jev-use (@shitianfang)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/shitianfang/jev-use",
+    "tags": [
+      "routing",
+      "latency",
+      "structured-outputs",
+      "classification",
+      "escalation",
+      "orchestration",
+      "agent-loops"
+    ],
+    "slug": "non-generative-judgment-routing",
+    "id": "non-generative-judgment-routing-with-typed-escalation",
+    "summary": "Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "medium",
+    "signals": [
+      "A loop repeats the same kind of yes/no, pick-one, or score decision every iteration",
+      "Control-flow decisions are being parsed back out of free-form model text",
+      "Per-step latency dominates the loop, not per-step reasoning depth"
+    ],
+    "anti_signals": [
+      "Almost every step in the loop emits prose, code, or a patch",
+      "Decisions are one-off and never repeat",
+      "No way to measure judgment accuracy on your own traffic"
+    ],
+    "related": [
+      "budget-aware-model-routing-with-hard-cost-caps"
+    ],
+    "domains": [
+      "coding",
+      "ops",
+      "browser-automation"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nAn agent loop mixes two kinds of steps that look alike in the code and are not alike at all.\n\nSome steps have to produce text: write the commit message, explain why the test failed, emit the patch, answer the user. The text *is* the deliverable.\n\nOther steps only have to produce a decision that the control flow immediately consumes: is the build finished, which of these thirty page elements is the login button, is this shell command safe to run unattended, does this message still earn its place in the context window. Nothing downstream reads prose here — the loop reads one bit, one index, or one number.\n\nSending both kinds to the same generative model charges the same price for both. The decision step pays for a full autoregressive decode and its latency, and returns a free-form string the caller must parse back into the decision it already knew the shape of. Those steps are also the ones that repeat: they fire on every iteration, so their cost compounds while each one carries a token's worth of information. And because the answer space was never declared, the model can answer outside it — hedge, explain, invent a third option — leaving the caller to re-prompt or guess."
+  },
+  {
     "title": "Opponent Processor / Multi-Agent Debate Pattern",
     "status": "emerging",
     "authors": [
@@ -3703,6 +3750,52 @@
     "summary": "Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions.",
     "updated_at": "2026-07-23",
     "excerpt": "\n## Problem\nAI agents call external tools (databases, APIs, file systems) through protocols like MCP. Once an agent has access to a tool server, it can invoke any tool with any arguments. There is no enforcement layer between \"the agent decided to call this tool\" and \"the tool executed.\" This creates three gaps:\n\n1. **No access control** -- agents can call tools they shouldn't (e.g., production DB delete when only reads are authorized).\n2. **No audit trail** -- when something goes wrong, there's no record of what tool calls were made, by which agent, with what arguments.\n3. **No policy enforcement** -- compliance rules (data residency, PII handling, rate limits) can't be enforced at the tool-call boundary."
+  },
+  {
+    "title": "Precomputed Code Graph Lookup",
+    "status": "emerging",
+    "authors": [
+      "Muthukumaran Navaneethakrishnan (@muthuishere)"
+    ],
+    "based_on": [
+      "Aider repo map (Paul Gauthier)",
+      "SCIP / LSIF (Sourcegraph, Microsoft)"
+    ],
+    "category": "Tool Use & Environment",
+    "source": "https://github.com/Aider-AI/aider",
+    "tags": [
+      "code-graph",
+      "static-analysis",
+      "precomputed-index",
+      "impact-analysis",
+      "deterministic",
+      "tree-sitter",
+      "tool-design"
+    ],
+    "slug": "precomputed-code-graph-lookup",
+    "id": "precomputed-code-graph-lookup",
+    "summary": "Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "medium",
+    "signals": [
+      "Agent burns many turns on grep-then-read chains",
+      "Questions are structural: callers, dependents, impact of a change",
+      "Answers must be citable and reproducible"
+    ],
+    "anti_signals": [
+      "Small repository the agent can read directly",
+      "Questions are literal string sweeps, not structural",
+      "Languages or dynamic dispatch the parser cannot resolve"
+    ],
+    "related": [
+      "agentic-search-over-vector-embeddings",
+      "curated-code-context-window",
+      "agent-powered-codebase-qa-onboarding"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nA coding agent asked \"who calls `chargeInvoice`?\" or \"what breaks if I change this signature?\" typically answers by searching: grep a name, read the hits, grep the callers of the callers, read again. Every hop is a tool round-trip whose result the model must interpret, and the chain has three failure modes:\n\n- **It is not reproducible.** The same question asked twice takes different paths and can produce different answers, because the model chooses the next search.\n- **It stops early.** Search returns the first plausible matches; the agent decides it has enough and edits code whose second-order callers it never saw.\n- **Impact questions are not search questions.** \"What breaks if I change this\" is a reverse traversal over a call/import graph. Text search can approximate it for unique names and fails silently for common ones.\n\nThe usual alternatives trade one problem for another. Embedding indexes ([agentic-search-over-vector-embeddings](agentic-search-over-vector-embeddings.md) documents why teams abandon them) add infrastructure and go stale against uncommitted work. Search subagents ([curated-code-context-window](curated-code-context-window.md)) spend an LLM call per question and inherit the model's non-determinism."
   },
   {
     "title": "Proactive Agent State Externalization",
@@ -4420,6 +4513,47 @@
     "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts.",
     "updated_at": "2026-07-23",
     "excerpt": "\n## Problem\nMost agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.\n\nIn domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.\n\nPolling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met."
+  },
+  {
+    "title": "Skill Activation as a Precision/Recall Measurement",
+    "status": "emerging",
+    "authors": [
+      "Tomasz Religa (@uipreliga)"
+    ],
+    "based_on": [
+      "Coder Eval (UiPath)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/UiPath/coder_eval",
+    "tags": [
+      "evals",
+      "skills",
+      "routing",
+      "precision-recall",
+      "classification",
+      "ci-cd",
+      "regression-testing"
+    ],
+    "slug": "skill-activation-as-precision-recall",
+    "id": "skill-activation-as-a-precisionrecall-measurement",
+    "summary": "Treat \"did the right skill load?\" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "A catalog has more than a handful of skills, or more than one could plausibly answer a prompt",
+      "Skill descriptions are edited, merged, or added without a behavioural test"
+    ],
+    "anti_signals": [
+      "A single skill with no siblings to compete with",
+      "The agent's skill is invoked explicitly by name rather than selected by the model"
+    ],
+    "domains": [
+      "coding",
+      "ops"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nA skill is usually tested as if it were a function: run it, check the output. But before a skill runs, the model must *choose* it. It reads your skill's description alongside every other skill's description and picks one. That choice is a routing decision, and it is what actually fails in production.\n\nIt fails in two directions, and both are silent:\n\n- **Under-triggering (a recall problem).** The skill never loads. Users experience this as \"your feature does not work,\" and blame the feature.\n- **Over-triggering (a precision problem).** The skill loads on prompts it does not own. It hijacks a conversation, injects its playbook into an unrelated context, burns tokens on reference files nobody needed, and produces confidently wrong output because the agent is now steering toward the wrong goal.\n\nThe two are not symmetric in *detectability*. Under-triggering gets reported by users; over-triggering gets absorbed, because the output still looks like an answer. So the more damaging failure is the one you are less likely to hear about.\n\nWorse, the decision is **coupled across the whole catalog**. Adding a skill, editing one sentence of a description, or merging two skills re-routes prompts that belong to skills you did not touch. Hand-testing five prompts once and shipping cannot see this, and nothing in a typical CI pipeline does either — descriptions are prose, so no linter, typechecker, or unit test has an opinion about them."
   },
   {
     "title": "Skill Library Evolution",

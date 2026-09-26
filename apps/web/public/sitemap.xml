@@ -506,6 +506,10 @@
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/non-generative-judgment-routing</loc>
+    <lastmod>2026-09-26</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate</loc>
     <lastmod>2026-01-05</lastmod>
   </url>
@@ -552,6 +556,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/policy-gated-tool-proxy</loc>
     <lastmod>2026-07-23</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/precomputed-code-graph-lookup</loc>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/proactive-agent-state-externalization</loc>
@@ -660,6 +668,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/signal-driven-agent-activation</loc>
     <lastmod>2026-07-23</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</loc>
+    <lastmod>2026-09-26</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/skill-library-evolution</loc>
