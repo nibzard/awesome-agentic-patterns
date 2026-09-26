@@ -3485,6 +3485,63 @@
     "excerpt": "\n## Problem\nMulti-agent systems depend on an orchestrator correctly splitting a task's information among sub-agent roles: which fragment goes to which role, what each sub-agent is and is not told, and how that translates into the literal prompt text each sub-agent receives. End-to-end evals (execution success, tool-call correctness) and topology definitions (who talks to whom) both assume this hand-off step is done correctly, but neither tests it directly. A sub-agent can still stumble through a task with an incomplete or wrongly-scoped prompt, masking an orchestration bug until the system is scaled to harder tasks or unfamiliar topologies, where mis-assigned information becomes the dominant failure mode."
   },
   {
+    "title": "Out-of-Process Provider-Boundary Replay",
+    "status": "emerging",
+    "authors": [
+      "Xingke Yan (@xizhuomengcontin)"
+    ],
+    "based_on": [
+      "VCR (Myron Marston)",
+      "Polly.JS (Netflix)",
+      "OrcaReplay"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/Continuum-AI-Corp/OrcaReplay",
+    "tags": [
+      "record-replay",
+      "determinism",
+      "regression-testing",
+      "http-boundary",
+      "offline",
+      "instrumentation-free"
+    ],
+    "slug": "out-of-process-provider-boundary-replay",
+    "id": "out-of-process-provider-boundary-replay",
+    "summary": "Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.",
+    "maturity": "maturing",
+    "complexity": "medium",
+    "effort": "hours",
+    "impact": "high",
+    "signals": [
+      "The agent is expensive or slow to re-run",
+      "A bug reproduces only in a full session, not in a unit test",
+      "The framework changes faster than any instrumentation you could write for it"
+    ],
+    "anti_signals": [
+      "You need the agent to reach a *live* model, e.g. to test prompt changes",
+      "The run's tool calls are destructive and you have no sandbox",
+      "Your provider traffic never leaves the process (a model compiled in, or an in-process stub)"
+    ],
+    "prerequisites": [
+      "The client reads its origin from configuration or the environment",
+      "A place to store verbatim request/response bytes"
+    ],
+    "related": [
+      "action-caching-replay",
+      "workflow-evals-with-mocked-tools"
+    ],
+    "tools": [
+      "proxy",
+      "test-harness"
+    ],
+    "domains": [
+      "coding",
+      "ops"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nAn agent session is expensive to reproduce. Re-running it costs tokens, needs the network, and the\nmodel may not make the same choices twice — so \"what did it actually do, and why\" usually gets\nanswered from logs rather than from the run itself.\n\nThe usual fix is to instrument the framework: a callback handler, a tracing decorator, a monkey\npatch around the client. That works until it doesn't:\n\n- **It is per-framework.** Every agent library needs its own hook, and the hooks move between\n  releases faster than the integrations that wrap them.\n- **It records an interpretation, not the traffic.** A handler sees the objects the framework built,\n  after the framework already normalised, retried, or merged streamed chunks.\n- **It cannot capture what you did not anticipate.** A field added by a provider last week is not in\n  your span schema, so it is not in your trace.\n- **It changes the program under test.** The run you recorded is a run with your instrumentation in\n  it."
+  },
+  {
     "title": "Output Verification Loop",
     "status": "emerging",
     "authors": [

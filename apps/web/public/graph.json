@@ -2056,6 +2056,27 @@
       ]
     },
     {
+      "id": "out-of-process-provider-boundary-replay",
+      "title": "Out-of-Process Provider-Boundary Replay",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "out-of-process-provider-boundary-replay",
+      "tags": [
+        "record-replay",
+        "determinism",
+        "regression-testing",
+        "http-boundary",
+        "offline",
+        "instrumentation-free"
+      ],
+      "summary": "Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.",
+      "maturity": "maturing",
+      "domains": [
+        "coding",
+        "ops"
+      ]
+    },
+    {
       "id": "output-verification-loop",
       "title": "Output Verification Loop",
       "category": "Reliability & Eval",
@@ -3335,6 +3356,11 @@
     {
       "source": "orchestration-prompt-writing-benchmark",
       "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "out-of-process-provider-boundary-replay",
+      "target": "workflow-evals-with-mocked-tools",
       "type": "related"
     },
     {

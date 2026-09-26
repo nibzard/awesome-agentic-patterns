@@ -35,6 +35,20 @@
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Out-of-Process Provider-Boundary Replay]]></title>
+            <description><![CDATA[Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.]]></description>
+            <link>https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[record-replay]]></category>
+            <category><![CDATA[determinism]]></category>
+            <category><![CDATA[regression-testing]]></category>
+            <category><![CDATA[http-boundary]]></category>
+            <category><![CDATA[offline]]></category>
+            <category><![CDATA[instrumentation-free]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Precomputed Code Graph Lookup]]></title>
             <description><![CDATA[Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.]]></description>
             <link>https://agentic-patterns.com/patterns/precomputed-code-graph-lookup</link>
@@ -274,21 +288,6 @@
             <category><![CDATA[report-generation]]></category>
             <category><![CDATA[data-analysis]]></category>
             <category><![CDATA[claude-code]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Black-Box Skill Invocation]]></title>
-            <description><![CDATA[When agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations.]]></description>
-            <link>https://agentic-patterns.com/patterns/black-box-skill-invocation</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/black-box-skill-invocation</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[privacy]]></category>
-            <category><![CDATA[skill-sharing]]></category>
-            <category><![CDATA[black-box]]></category>
-            <category><![CDATA[schema-only]]></category>
-            <category><![CDATA[prompt-protection]]></category>
-            <category><![CDATA[inter-agent]]></category>
-            <category><![CDATA[trust]]></category>
             <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
