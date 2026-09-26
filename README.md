@@ -225,6 +225,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
 - [Local-First Credential Broker](patterns/local-first-credential-broker.md)
 - [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
+- [One OS User per Agent](patterns/one-os-user-per-agent.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
 - [Policy-Gated Tool Proxy](patterns/policy-gated-tool-proxy.md)
 - [Sandboxed Tool Authorization](patterns/sandboxed-tool-authorization.md)

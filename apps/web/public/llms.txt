@@ -502,6 +502,10 @@ URL: https://agentic-patterns.com/patterns/non-custodial-spending-controls
 Non-Generative Judgment Routing with Typed Escalation: Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.
 URL: https://agentic-patterns.com/patterns/non-generative-judgment-routing
 
+### one-os-user-per-agent
+One OS User per Agent: Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.
+URL: https://agentic-patterns.com/patterns/one-os-user-per-agent
+
 ### opponent-processor-multi-agent-debate
 Opponent Processor / Multi-Agent Debate Pattern: TODO: Add a concise summary for "Opponent Processor / Multi-Agent Debate Pattern" describing the pattern's purpose and key benefits.
 URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
