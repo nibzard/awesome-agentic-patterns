@@ -18389,7 +18389,7 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 **Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** Tomasz Religa (@uipreliga)
-**Source:** https://coder-eval.com/blog/does-your-claude-skill-trigger/
+**Source:** https://github.com/UiPath/coder_eval
 
 ## Problem
 
@@ -18408,15 +18408,15 @@ Worse, the decision is **coupled across the whole catalog**. Adding a skill, edi
 
 Treat activation as what it is — a **classification problem** — and measure it with the standard instrument: a labelled dataset, per-skill precision/recall/F1, a confusion view, and thresholds that fail the build.
 
-**1. Label a dataset, not a checklist.** One row per prompt, tagged with the skill that *should* own it:
+**1. Label a dataset, not a checklist.** One row per prompt, tagged with the set of skills that *should* engage. Use an empty set when none should engage; include all legitimate skills for a multi-skill task:
 
 ```jsonl
-{"id": "flow-001", "prompt": "Convert checkout to a .flow process", "expected_skill": "acme-flow"}
-{"id": "ins-014", "prompt": "Why is my Insights dashboard empty?",  "expected_skill": "acme-insights"}
-{"id": "neg-007", "prompt": "Set up Acme Insights and connect it to our warehouse", "expected_skill": ""}
+{"id": "flow-001", "prompt": "Convert checkout to a .flow process", "expected_skills": ["acme-flow"]}
+{"id": "ins-014", "prompt": "Why is my Insights dashboard empty?",  "expected_skills": ["acme-insights"]}
+{"id": "neg-007", "prompt": "Set up Acme Insights and connect it to our warehouse", "expected_skills": []}
 ```
 
-**2. Include the negative region — it is most of real traffic.** A positive-only dataset can still catch *cross-skill interference* (skill B firing on a row labelled for skill A is a real false positive). What it cannot see is the much larger space where **no** skill should fire. Those rows carry an empty expected label.
+**2. Include the negative region — it is most of real traffic.** A positive-only dataset can still catch *cross-skill interference* (skill B firing on a row labelled for skill A is a real false positive). What it cannot see is the much larger space where **no** skill should fire. Those rows carry an empty expected set.
 
 **3. Evaluate every row against every skill.** This is the step that makes the measurement whole. Do not ask "did skill A fire on its own rows?" — ask, for each of the N skills, what happened on all M rows. One agent trace per row, N verdicts from it:
 
@@ -18425,7 +18425,7 @@ for row in dataset:                      # M prompts
     trace = run_agent(row.prompt)        # one trace, reused N times
     for skill in catalog:                # N skills
         fired    = skill_engaged(trace, skill)     # tool call, or skill-file read
-        expected = (row.expected_skill == skill)
+        expected = (skill in row.expected_skills)
         confusion[skill][expected][fired] += 1
 ```
 
@@ -18502,11 +18502,9 @@ graph TD
 ## References
 
 - [Does your Claude Code skill actually trigger?](https://coder-eval.com/blog/does-your-claude-skill-trigger/) — the four-cell framing and the 46.3% → 67.3% case study.
-- [Your skill fires too often: the should-NOT-trigger set](https://coder-eval.com/blog/your-skill-fires-too-often/) — building the negative set, and why precision problems are under-measured.
-- [Cross-agent eval measures your eval harness](https://coder-eval.com/blog/cross-agent-eval-measures-your-eval-harness/) — why the same labelled suite scored across harnesses attributes failures correctly.
 - [neondatabase/agent-skills#76](https://github.com/neondatabase/agent-skills/issues/76) — the 19-row pilot above, reported publicly against a live catalog, including the rows that were excluded and why.
 - [mongodb/agent-skills](https://github.com/mongodb/agent-skills) — independent adoption of the idea: [`testing/skills-boundaries/`](https://github.com/mongodb/agent-skills/tree/main/testing/skills-boundaries) holds pairwise skill-**selection** cases (3 pairs at the time of writing), alongside a `qa-eval` workflow.
-- [Coder Eval](https://github.com/UiPath/coder_eval) — one open-source implementation (`skill_triggered` criterion, labelled datasets, suite thresholds).
+- [Coder Eval](https://github.com/UiPath/coder_eval) — maintained by this pattern’s author; one open-source implementation (`skill_triggered` criterion, labelled datasets, suite thresholds).
 - Related: [Workflow Evals with Mocked Tools](workflow-evals-with-mocked-tools.md) — the same instrument applied one layer down, to tool calls within a workflow.
 - Related: [Anti-Reward-Hacking Grader Design](anti-reward-hacking-grader-design.md) — on keeping the grader honest once a threshold gates the build.
 
