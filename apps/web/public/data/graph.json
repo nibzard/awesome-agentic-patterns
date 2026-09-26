@@ -2604,6 +2604,27 @@
       "summary": "Most agent workflows are command driven : a user types a prompt, the agent acts."
     },
     {
+      "id": "skill-activation-as-a-precisionrecall-measurement",
+      "title": "Skill Activation as a Precision/Recall Measurement",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "skill-activation-as-precision-recall",
+      "tags": [
+        "evals",
+        "skills",
+        "routing",
+        "precision-recall",
+        "classification",
+        "ci-cd",
+        "regression-testing"
+      ],
+      "summary": "Treat \"did the right skill load?\" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.",
+      "domains": [
+        "coding",
+        "ops"
+      ]
+    },
+    {
       "id": "skill-library-evolution",
       "title": "Skill Library Evolution",
       "category": "Learning & Adaptation",

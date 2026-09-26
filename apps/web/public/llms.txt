@@ -646,6 +646,10 @@ URL: https://agentic-patterns.com/patterns/shipping-as-research
 Signal-Driven Agent Activation: Most agent workflows are command driven : a user types a prompt, the agent acts.
 URL: https://agentic-patterns.com/patterns/signal-driven-agent-activation
 
+### skill-activation-as-precision-recall
+Skill Activation as a Precision/Recall Measurement: Treat "did the right skill load?" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.
+URL: https://agentic-patterns.com/patterns/skill-activation-as-precision-recall
+
 ### skill-library-evolution
 Skill Library Evolution: Agents persist working code implementations as reusable skills that evolve into well-documented capabilities over time, building organizational knowledge and reducing redundant problem-solving across sessions.
 URL: https://agentic-patterns.com/patterns/skill-library-evolution
