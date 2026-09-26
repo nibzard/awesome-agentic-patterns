@@ -50,6 +50,21 @@
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[One OS User per Agent]]></title>
+            <description><![CDATA[Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.]]></description>
+            <link>https://agentic-patterns.com/patterns/one-os-user-per-agent</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/one-os-user-per-agent</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[isolation]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[systemd]]></category>
+            <category><![CDATA[process-identity]]></category>
+            <category><![CDATA[least-privilege]]></category>
+            <category><![CDATA[long-running-agents]]></category>
+            <category><![CDATA[audit-trail]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Out-of-Process Provider-Boundary Replay]]></title>
             <description><![CDATA[Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.]]></description>
             <link>https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</link>
@@ -275,21 +290,6 @@
             <category><![CDATA[control-plane]]></category>
             <category><![CDATA[tool-use]]></category>
             <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent-First Tool Discovery]]></title>
-            <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-first-tool-discovery</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tool-discovery</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[tool-discovery]]></category>
-            <category><![CDATA[mcp]]></category>
-            <category><![CDATA[agent-search]]></category>
-            <category><![CDATA[service-registry]]></category>
-            <category><![CDATA[llms-txt]]></category>
-            <category><![CDATA[api-discovery]]></category>
-            <category><![CDATA[agent-infrastructure]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

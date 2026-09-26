@@ -2025,6 +2025,23 @@
       ]
     },
     {
+      "id": "one-os-user-per-agent",
+      "title": "One OS User per Agent",
+      "category": "Security & Safety",
+      "status": "validated-in-production",
+      "slug": "one-os-user-per-agent",
+      "tags": [
+        "isolation",
+        "multi-agent",
+        "systemd",
+        "process-identity",
+        "least-privilege",
+        "long-running-agents",
+        "audit-trail"
+      ],
+      "summary": "Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container."
+    },
+    {
       "id": "opponent-processor-multi-agent-debate-pattern",
       "title": "Opponent Processor / Multi-Agent Debate Pattern",
       "category": "Orchestration & Control",
@@ -3379,6 +3396,21 @@
     {
       "source": "non-generative-judgment-routing-with-typed-escalation",
       "target": "budget-aware-model-routing-with-hard-cost-caps",
+      "type": "related"
+    },
+    {
+      "source": "one-os-user-per-agent",
+      "target": "local-first-credential-broker",
+      "type": "related"
+    },
+    {
+      "source": "one-os-user-per-agent",
+      "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
+      "source": "one-os-user-per-agent",
+      "target": "isolated-vm-per-rl-rollout",
       "type": "related"
     },
     {

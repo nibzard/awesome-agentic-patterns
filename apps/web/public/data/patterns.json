@@ -3440,6 +3440,51 @@
     "excerpt": "\n## Problem\nAn agent loop mixes two kinds of steps that look alike in the code and are not alike at all.\n\nSome steps have to produce text: write the commit message, explain why the test failed, emit the patch, answer the user. The text *is* the deliverable.\n\nOther steps only have to produce a decision that the control flow immediately consumes: is the build finished, which of these thirty page elements is the login button, is this shell command safe to run unattended, does this message still earn its place in the context window. Nothing downstream reads prose here — the loop reads one bit, one index, or one number.\n\nSending both kinds to the same generative model charges the same price for both. The decision step pays for a full autoregressive decode and its latency, and returns a free-form string the caller must parse back into the decision it already knew the shape of. Those steps are also the ones that repeat: they fire on every iteration, so their cost compounds while each one carries a token's worth of information. And because the answer space was never declared, the model can answer outside it — hedge, explain, invent a third option — leaving the caller to re-prompt or guess."
   },
   {
+    "title": "One OS User per Agent",
+    "status": "validated-in-production",
+    "authors": [
+      "5dive contributors (@5dive-bot)"
+    ],
+    "category": "Security & Safety",
+    "source": "https://github.com/5dive-ai/5dive/blob/main/systemd/5dive-agent%40.service",
+    "tags": [
+      "isolation",
+      "multi-agent",
+      "systemd",
+      "process-identity",
+      "least-privilege",
+      "long-running-agents",
+      "audit-trail"
+    ],
+    "slug": "one-os-user-per-agent",
+    "id": "one-os-user-per-agent",
+    "summary": "Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "medium",
+    "signals": [
+      "Several persistent agents share one host and one working tree",
+      "You need distinct process identities and per-agent resource accounting",
+      "Each agent should hold a different privilege scope on the same machine"
+    ],
+    "anti_signals": [
+      "Agents are ephemeral, one per task, and share no state",
+      "Workloads are untrusted or adversarial and need kernel-level containment",
+      "The fleet must scale horizontally across many machines"
+    ],
+    "prerequisites": [
+      "An init system with templated units (systemd, or an equivalent supervisor)",
+      "Root on the host to create users and install units"
+    ],
+    "related": [
+      "local-first-credential-broker",
+      "custom-sandboxed-background-agent",
+      "isolated-vm-per-rl-rollout"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nA fleet of *long-lived* agents is a different problem from a fleet of ephemeral task runners. The\nagents stay up for weeks, share one working tree, edit each other's files, and are expected to leave\nan audit trail a human can read months later.\n\nThe reflex is a container or a VM per agent. For this shape it fits badly:\n\n- **The shared working tree fights the boundary.** The whole point is that the agents collaborate on\n  one repo, so most of the isolation gets punched back out as bind mounts.\n- **You add a second supervisor.** The host already has one. Now there is an orchestrator on top of\n  it, with its own restart semantics and its own failure modes.\n- **Attribution needs deliberate identity mapping.** Containers can provide distinct identities,\n  but shared mounts still need consistent host uid mapping and audit records to identify writers.\n  A separate host uid per persistent agent is one direct way to organize process identity.\n- **Per-agent privilege has nowhere to live.** Giving one agent the ability to restart a service, and\n  denying it to the others, becomes bespoke policy rather than a line in `sudoers`.\n\nMeanwhile the host already ships an identity primitive that supports these requirements, and is older than every\nagent framework on it."
+  },
+  {
     "title": "Opponent Processor / Multi-Agent Debate Pattern",
     "status": "emerging",
     "authors": [
