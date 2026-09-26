@@ -4,8 +4,38 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 21 Aug 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 26 Sep 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Non-Generative Judgment Routing with Typed Escalation]]></title>
+            <description><![CDATA[Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.]]></description>
+            <link>https://agentic-patterns.com/patterns/non-generative-judgment-routing</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/non-generative-judgment-routing</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[routing]]></category>
+            <category><![CDATA[latency]]></category>
+            <category><![CDATA[structured-outputs]]></category>
+            <category><![CDATA[classification]]></category>
+            <category><![CDATA[escalation]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[agent-loops]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Skill Activation as a Precision/Recall Measurement]]></title>
+            <description><![CDATA[Treat "did the right skill load?" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.]]></description>
+            <link>https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[evals]]></category>
+            <category><![CDATA[skills]]></category>
+            <category><![CDATA[routing]]></category>
+            <category><![CDATA[precision-recall]]></category>
+            <category><![CDATA[classification]]></category>
+            <category><![CDATA[ci-cd]]></category>
+            <category><![CDATA[regression-testing]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Cross-Domain Agent Conflict Resolution]]></title>
             <description><![CDATA[A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.]]></description>
@@ -261,34 +291,6 @@
             <category><![CDATA[multi-model]]></category>
             <category><![CDATA[orchestration]]></category>
             <category><![CDATA[reliability]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Capability-Escrow-Receipt]]></title>
-            <description><![CDATA[When autonomous agents pay each other for work, three concerns collide: Discovery: How does a hiring agent find a provider that can do the job, with a price it trusts?]]></description>
-            <link>https://agentic-patterns.com/patterns/capability-escrow-receipt</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/capability-escrow-receipt</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[coordination]]></category>
-            <category><![CDATA[payments]]></category>
-            <category><![CDATA[escrow]]></category>
-            <category><![CDATA[receipts]]></category>
-            <category><![CDATA[capabilities]]></category>
-            <category><![CDATA[atomic-hire]]></category>
-            <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Context Budget as a Governed Resource]]></title>
-            <description><![CDATA[Always loaded context accretes silently.]]></description>
-            <link>https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource</guid>
-            <category><![CDATA[Context & Memory]]></category>
-            <category><![CDATA[context-budget]]></category>
-            <category><![CDATA[token-costs]]></category>
-            <category><![CDATA[ghost-tokens]]></category>
-            <category><![CDATA[compaction]]></category>
-            <category><![CDATA[scheduled-agents]]></category>
             <pubDate>Thu, 23 Jul 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

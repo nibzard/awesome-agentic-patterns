@@ -13259,6 +13259,109 @@ Core mechanics:
 
 ---
 
+## Non-Generative Judgment Routing with Typed Escalation
+
+**Status:** emerging
+**Category:** Orchestration & Control
+**Authors:** shitianfang (@shitianfang)
+**Source:** https://github.com/shitianfang/jev-use
+
+## Problem
+
+An agent loop mixes two kinds of steps that look alike in the code and are not alike at all.
+
+Some steps have to produce text: write the commit message, explain why the test failed, emit the patch, answer the user. The text *is* the deliverable.
+
+Other steps only have to produce a decision that the control flow immediately consumes: is the build finished, which of these thirty page elements is the login button, is this shell command safe to run unattended, does this message still earn its place in the context window. Nothing downstream reads prose here — the loop reads one bit, one index, or one number.
+
+Sending both kinds to the same generative model charges the same price for both. The decision step pays for a full autoregressive decode and its latency, and returns a free-form string the caller must parse back into the decision it already knew the shape of. Those steps are also the ones that repeat: they fire on every iteration, so their cost compounds while each one carries a token's worth of information. And because the answer space was never declared, the model can answer outside it — hedge, explain, invent a third option — leaving the caller to re-prompt or guess.
+
+## Solution
+
+Partition the loop's steps by one test: **does this step's output have to be text?**
+
+1. **Split the step inventory.** Text-producing steps stay on the LLM. Decision-only steps go to a judgment path.
+2. **Type the question.** Express each decision-only step as a question over an explicit state with a closed answer space: boolean (yes/no), pick-one over an enumerated set, or score over a bounded range. The caller declares the space, so the answer is in-set by construction rather than by instruction-following.
+3. **Batch per state.** Every question about the *same* state goes in one call. The state is encoded once and the answers come back together, which is what turns a per-question cost into a per-observation cost.
+4. **Answer without generating.** Route the batch to a non-generative judgment model — one that scores or classifies a state in a single forward pass instead of decoding tokens. There is no sampling loop to wait on and no string to parse.
+5. **Escalate by type, never by default.** The judge may decline instead of answering, with a reason code. A useful set:
+
+   | Reason | Meaning |
+   |---|---|
+   | `writing` | The real output is prose, code, or a document, not a decision. |
+   | `open_ended` | No closed answer space exists for this question. |
+   | `oversized` | The state is larger than the judge can faithfully take in. |
+   | `unsure` | Confidence is below the configured threshold. |
+   | `unreachable` | The judgment backend is unavailable. |
+
+   Every one of these returns the step to the LLM. The contract deliberately has **no default branch**: a declined question never resolves to `false`, to the first enum member, or to a midpoint score. Guessing is exactly the failure this pattern exists to avoid, and a silent default reintroduces it where it is hardest to see.
+
+```pseudo
+step = next_step(loop_state)
+
+if step.output_is_text:
+    return llm(step)                    // writing stays with the LLM
+
+questions = typed_questions_for(step)   // bool | pick_one(enum) | score(range)
+verdict = judge(state=step.state, questions=questions)   // one call, no decoding
+
+if verdict.escalated:                   // writing | open_ended | oversized
+    return llm(step)                    // unsure   | unreachable
+                                        // note: no `else: assume(default)`
+return verdict.answers
+```
+
+```mermaid
+graph TD
+    A[Loop step] --> B{Must the output be text?}
+    B -->|Yes| L[LLM]
+    B -->|No| Q[Type the questions, batch per state]
+    Q --> J[Non-generative judge, one forward pass]
+    J --> D{Answered or declined?}
+    D -->|Typed answers| R[Control flow consumes the decision]
+    D -->|Typed escalation| L
+    L --> R
+```
+
+The LLM path stays intact throughout. The judgment path is an accelerator in front of it, not a replacement for it, which is what makes the escalation contract cheap to honour and the whole mechanism safe to remove.
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- **Most Valuable Findings:** On one public implementation, a 454-judgment agreement study against a `claude-opus-5` reference reports 82.2% overall agreement and 89.5% among non-escalated verdicts, against a 68.7% majority-class baseline — so the judge carried real signal on that traffic, but not on every decision type. The same study reports context compaction at 56.3%, below a constant answerer, which is direct evidence that suitability is per-decision-type and not a property of the pattern.
+- **Unverified / Unclear:** A single implementation and a single study. The same study's fair-baseline rerun put the latency advantage at roughly 3x once the generative baselines were enum-constrained, versus roughly 14x when they were not — so headline speedups measured against unconstrained generation overstate what this pattern buys. Nothing here has been replicated on other agents, other traffic, or other judgment backends.
+
+Agreement with another model measures consistency, not ground-truth correctness. The single self-reported study does not establish independent replication or safety for authorization decisions.
+
+## How to use it
+
+- **Inventory before you build.** Take a real trace from your own loop and label each step by whether its output must be text. If the decision-only steps are a thin minority, stop here — there is nothing to route.
+- **Start with the highest-frequency decision.** The economics come from repetition, so the first candidate is whatever the loop asks on every iteration: a completion check, a candidate selection, a keep/drop filter.
+- **Declare the answer space in the call, not in the prompt.** The point is that "outside the set" is unrepresentable, rather than discouraged.
+- **Batch by observation.** Group every question about one state into one call; resist the per-question call that makes the encoding cost repeat.
+- **Measure agreement on your own traffic before acting on it unsupervised.** Sample real decisions, get reference labels from a strong model or a human, and compare against the majority-class baseline for that decision — a judge that "agrees 80% of the time" on a decision that is 78% one answer has told you nothing. Do this per decision type, not in aggregate.
+- **Compare against the honest baseline.** When you measure latency, constrain the generative baseline to the same closed answer space. An unconstrained baseline flatters the judge.
+- **Treat escalation rate as a first-class metric.** A rising `unsure` or `oversized` rate is the signal that the loop has drifted away from what the judge was measured on.
+- **Preserve authorization boundaries.** For safety-critical decisions, both the judge and the LLM fallback remain subject to the same deterministic permission checks or human approval; escalation must not grant additional authority.
+- **Keep the fallback live.** The LLM path must still work with the judge fully disabled; `unreachable` should be an ordinary, exercised code path, not an outage.
+
+### Known implementations
+
+- [jev-use](https://github.com/shitianfang/jev-use) -- a coding-agent plugin and MCP server that routes non-text agent steps to a judgment model with a typed escalation contract. Disclosed: authored by the contributor of this pattern, listed as an example rather than a recommendation.
+
+## Trade-offs
+
+- **Pros:** Removes the decode step from decisions that never needed one, so the loop's repeated steps get cheaper and faster. Closed answer spaces make control flow parseable by construction instead of by prompt discipline. Batching per state pays the encoding cost once. The typed escalation contract makes "the fast path does not apply here" an explicit, countable event rather than a silent wrong answer, and keeps the LLM path as the always-available fallback.
+- **Cons:** Only pays inside loops that repeat the same kind of decision; a loop where nearly every step generates text gains little and still carries the extra component. Adds a second model, a second failure mode, and a question schema to maintain. The judge's accuracy is decision-type-specific and must be measured on your own traffic — published aggregates do not transfer, and at least one measured decision type scored below a constant answerer. Escalation logic is easy to get wrong in the direction that hurts most: any default-on-decline quietly converts the safety valve back into a guess. Speedups compared against unconstrained generation overstate the real gain.
+
+## References
+
+- [jev-use](https://github.com/shitianfang/jev-use) -- disclosed primary implementation, including the re-runnable agreement study and its raw data.
+- [Agreement study and benchmark methodology](https://github.com/shitianfang/jev-use/blob/main/bench/RESULTS.md) -- self-reported measurements by the same author, including the fair-baseline comparison and cases where the approach lost.
+- [Budget-Aware Model Routing with Hard Cost Caps](budget-aware-model-routing-with-hard-cost-caps.md) -- related in-repo pattern; it routes among generative models by cost and complexity, whereas this pattern routes by whether generation is needed at all.
+
+---
+
 ## Opponent Processor / Multi-Agent Debate Pattern
 
 **Status:** emerging
@@ -18381,6 +18484,132 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 - [SOAR Playbook Activation (Gartner)](https://www.gartner.com/en/information-technology/glossary/security-orchestration-automation-response-soar)
 - [CLI-First Skill Design (this catalogue)](cli-first-skill-design.md)
 - [CLI-Native Agent Orchestration (this catalogue)](cli-native-agent-orchestration.md)
+
+---
+
+## Skill Activation as a Precision/Recall Measurement
+
+**Status:** emerging
+**Category:** Reliability & Eval
+**Authors:** Tomasz Religa (@uipreliga)
+**Source:** https://github.com/UiPath/coder_eval
+
+## Problem
+
+A skill is usually tested as if it were a function: run it, check the output. But before a skill runs, the model must *choose* it. It reads your skill's description alongside every other skill's description and picks one. That choice is a routing decision, and it is what actually fails in production.
+
+It fails in two directions, and both are silent:
+
+- **Under-triggering (a recall problem).** The skill never loads. Users experience this as "your feature does not work," and blame the feature.
+- **Over-triggering (a precision problem).** The skill loads on prompts it does not own. It hijacks a conversation, injects its playbook into an unrelated context, burns tokens on reference files nobody needed, and produces confidently wrong output because the agent is now steering toward the wrong goal.
+
+The two are not symmetric in *detectability*. Under-triggering gets reported by users; over-triggering gets absorbed, because the output still looks like an answer. So the more damaging failure is the one you are less likely to hear about.
+
+Worse, the decision is **coupled across the whole catalog**. Adding a skill, editing one sentence of a description, or merging two skills re-routes prompts that belong to skills you did not touch. Hand-testing five prompts once and shipping cannot see this, and nothing in a typical CI pipeline does either — descriptions are prose, so no linter, typechecker, or unit test has an opinion about them.
+
+## Solution
+
+Treat activation as what it is — a **classification problem** — and measure it with the standard instrument: a labelled dataset, per-skill precision/recall/F1, a confusion view, and thresholds that fail the build.
+
+**1. Label a dataset, not a checklist.** One row per prompt, tagged with the set of skills that *should* engage. Use an empty set when none should engage; include all legitimate skills for a multi-skill task:
+
+```jsonl
+{"id": "flow-001", "prompt": "Convert checkout to a .flow process", "expected_skills": ["acme-flow"]}
+{"id": "ins-014", "prompt": "Why is my Insights dashboard empty?",  "expected_skills": ["acme-insights"]}
+{"id": "neg-007", "prompt": "Set up Acme Insights and connect it to our warehouse", "expected_skills": []}
+```
+
+**2. Include the negative region — it is most of real traffic.** A positive-only dataset can still catch *cross-skill interference* (skill B firing on a row labelled for skill A is a real false positive). What it cannot see is the much larger space where **no** skill should fire. Those rows carry an empty expected set.
+
+**3. Evaluate every row against every skill.** This is the step that makes the measurement whole. Do not ask "did skill A fire on its own rows?" — ask, for each of the N skills, what happened on all M rows. One agent trace per row, N verdicts from it:
+
+```pseudo
+for row in dataset:                      # M prompts
+    trace = run_agent(row.prompt)        # one trace, reused N times
+    for skill in catalog:                # N skills
+        fired    = skill_engaged(trace, skill)     # tool call, or skill-file read
+        expected = (skill in row.expected_skills)
+        confusion[skill][expected][fired] += 1
+```
+
+**4. Detect engagement harness-agnostically.** Whichever way your agent records it — a native skill-invocation event, or the agent reading the skill's files off disk — normalize both to one boolean so the same dataset scores across harnesses.
+
+**5. Gate CI on the aggregate, not on individual rows.** Individual rows are non-deterministic; the per-skill aggregate over a few hundred rows is stable enough to threshold:
+
+```yaml
+success_criteria:
+  - type: skill_triggered
+    skill: acme-flow
+    suite_thresholds: { recall: 0.70, precision: 0.90 }
+```
+
+Precision thresholds should usually be stricter than recall thresholds, because a false positive damages every interaction that brushes the trigger surface while a false negative degrades one skill.
+
+```mermaid
+graph TD
+    A[Labelled prompts<br/>positive + negative rows] --> B[One agent run per prompt]
+    B --> C[Which skills engaged?]
+    C --> D[Per-skill confusion matrix]
+    D --> E[precision / recall / F1]
+    E --> F{Thresholds met?}
+    F -- no --> G[Fail the build]
+    F -- yes --> H[Ship]
+```
+
+## Evidence
+
+- **Evidence Grade:** `medium` — one large internal suite plus several public catalogs measured; the technique is young and adoption is early.
+- **Most Valuable Findings:**
+  - **Routine edits move activation a lot.** On a catalog of ~20 skills with ~1,000 labelled prompts, adding *one sentence* to each skill description moved micro-recall from **46.3% to 67.3%**, and took the number of skills clearing 70% recall from **4 to 11**. A change that large under a routine edit cannot be verified by hand once and then trusted.
+  - **Broad "router" descriptions absorb their own specialists.** In a 19-row pilot against a public vendor catalog, a router skill whose description claimed the capabilities of four specialists fired on its own 2 prompts *and* on 3 belonging to specialists — precision **0.40**. Every specialist that did fire, fired correctly (precision 1.00); every failure was recall. In 2 of the 3 absorbed rows the agent loaded the router and then reached for a *web fetch* instead of the local specialist — it absorbed the prompt and failed to route.
+  - **Collisions are findable statically, before any run.** In the catalog above, the router's description claimed a *superset* of four specialists' own trigger lists, and one trigger phrase appeared verbatim in two different skills' descriptions — both readable off the frontmatter with no model calls. A static overlap scan is the cheap first pass, and it predicted the routing failures the run then measured.
+- **Unverified / Unclear:** how few rows suffice (≈50 shows signal; the stability floor is unmeasured); how much of the measurement transfers across model versions; whether precision or recall thresholds should dominate in a safety-critical catalog, where a missed diagnostic skill may outweigh a spurious one.
+
+## How to use it
+
+**Start here, in this order:**
+
+1. **Static scan first (free).** Diff every pair of skill descriptions for shared trigger phrases and shared nouns. Overlap here predicts collisions and costs nothing to find.
+2. **Fifty rows, one skill pair.** Take the two skills you most suspect of competing. ~25 prompts each plus ~10 negatives will already show you a confusion matrix worth reading.
+3. **Add the negative set.** Sample prompts from real traffic that no skill should own. This is where over-triggering becomes visible.
+4. **Widen to the catalog, then threshold.** Once per-skill numbers are stable run to run, set thresholds slightly below current values and put them in CI, so the next description edit has to clear the bar it inherited.
+
+**Prerequisites:** an agent runner that records which skills engaged; a sandbox, so rows cannot contaminate each other; and labels you trust. Labelling is the real cost — budget more time for deciding what each prompt *should* route to than for running the suite.
+
+**Practical notes:**
+
+- **State your labelling convention for out-of-scope prompts**, and score them as their own group. A domain-agnostic question answered with zero tool calls is defensible behaviour, not a failure, and it will otherwise pollute your precision figure.
+- **Give the agent enough turns.** A too-tight turn budget reads as a non-activation.
+- **Give codebase-shaped prompts a codebase.** A prompt like "review the query patterns here" against an empty sandbox measures your fixture, not your routing.
+- **Replicate.** Two or three replicates per row separate a genuine routing failure from ordinary sampling noise.
+
+## Trade-offs
+
+**Pros:**
+
+- Makes the **silent** failure mode visible, and the invisible one (over-triggering) measurable at all.
+- Catches **catalog-wide coupling**: the suite scores every skill on every row, so an edit to one description cannot quietly re-route another skill's prompts.
+- Produces a **threshold that can gate CI**, unlike a per-row assertion on a non-deterministic decision.
+- The same labelled dataset **scores across harnesses**, so it doubles as a harness comparison.
+- Directs the fix at the right artifact: descriptions, which are cheap to edit.
+
+**Cons:**
+
+- **Labelling is real work**, and disagreements about what a prompt "should" route to are common and legitimate.
+- **Costs model calls.** One run per row, times replicates — the pilot above ran ~$0.06/row on a small model. Cheap per row, not free per catalog.
+- **Non-deterministic**, so only the aggregate is trustworthy; a single flipped row means nothing.
+- **Version-bound.** Numbers move with the model, so a threshold is a regression guard, not an absolute quality score.
+- **Quadratic-ish reporting.** N skills × M rows produces a lot of cells; it needs a confusion view to be readable.
+- **Measures selection, not usefulness.** A skill can route perfectly and still give bad advice. This pattern is upstream of output quality, not a substitute for it.
+
+## References
+
+- [Does your Claude Code skill actually trigger?](https://coder-eval.com/blog/does-your-claude-skill-trigger/) — the four-cell framing and the 46.3% → 67.3% case study.
+- [neondatabase/agent-skills#76](https://github.com/neondatabase/agent-skills/issues/76) — the 19-row pilot above, reported publicly against a live catalog, including the rows that were excluded and why.
+- [mongodb/agent-skills](https://github.com/mongodb/agent-skills) — independent adoption of the idea: [`testing/skills-boundaries/`](https://github.com/mongodb/agent-skills/tree/main/testing/skills-boundaries) holds pairwise skill-**selection** cases (3 pairs at the time of writing), alongside a `qa-eval` workflow.
+- [Coder Eval](https://github.com/UiPath/coder_eval) — maintained by this pattern’s author; one open-source implementation (`skill_triggered` criterion, labelled datasets, suite thresholds).
+- Related: [Workflow Evals with Mocked Tools](workflow-evals-with-mocked-tools.md) — the same instrument applied one layer down, to tool calls within a workflow.
+- Related: [Anti-Reward-Hacking Grader Design](anti-reward-hacking-grader-design.md) — on keeping the grader honest once a threshold gates the build.
 
 ---
 
