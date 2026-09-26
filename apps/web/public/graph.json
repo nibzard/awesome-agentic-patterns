@@ -1965,6 +1965,28 @@
       "summary": "AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts."
     },
     {
+      "id": "non-generative-judgment-routing-with-typed-escalation",
+      "title": "Non-Generative Judgment Routing with Typed Escalation",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "non-generative-judgment-routing",
+      "tags": [
+        "routing",
+        "latency",
+        "structured-outputs",
+        "classification",
+        "escalation",
+        "orchestration",
+        "agent-loops"
+      ],
+      "summary": "Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.",
+      "domains": [
+        "coding",
+        "ops",
+        "browser-automation"
+      ]
+    },
+    {
       "id": "opponent-processor-multi-agent-debate-pattern",
       "title": "Opponent Processor / Multi-Agent Debate Pattern",
       "category": "Orchestration & Control",
@@ -3255,6 +3277,11 @@
     {
       "source": "exact-action-authorization-binding",
       "target": "cryptographic-governance-audit-trail",
+      "type": "related"
+    },
+    {
+      "source": "non-generative-judgment-routing-with-typed-escalation",
+      "target": "budget-aware-model-routing-with-hard-cost-caps",
       "type": "related"
     },
     {

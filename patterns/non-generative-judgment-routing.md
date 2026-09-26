@@ -14,7 +14,7 @@ impact: medium
 signals: ["A loop repeats the same kind of yes/no, pick-one, or score decision every iteration", "Control-flow decisions are being parsed back out of free-form model text", "Per-step latency dominates the loop, not per-step reasoning depth"]
 anti_signals: ["Almost every step in the loop emits prose, code, or a patch", "Decisions are one-off and never repeat", "No way to measure judgment accuracy on your own traffic"]
 related: ["budget-aware-model-routing-with-hard-cost-caps"]
-updated_at: "2026-09-19"
+updated_at: "2026-09-26"
 ---
 
 ## Problem
@@ -82,6 +82,8 @@ The LLM path stays intact throughout. The judgment path is an accelerator in fro
 - **Most Valuable Findings:** On one public implementation, a 454-judgment agreement study against a `claude-opus-5` reference reports 82.2% overall agreement and 89.5% among non-escalated verdicts, against a 68.7% majority-class baseline — so the judge carried real signal on that traffic, but not on every decision type. The same study reports context compaction at 56.3%, below a constant answerer, which is direct evidence that suitability is per-decision-type and not a property of the pattern.
 - **Unverified / Unclear:** A single implementation and a single study. The same study's fair-baseline rerun put the latency advantage at roughly 3x once the generative baselines were enum-constrained, versus roughly 14x when they were not — so headline speedups measured against unconstrained generation overstate what this pattern buys. Nothing here has been replicated on other agents, other traffic, or other judgment backends.
 
+Agreement with another model measures consistency, not ground-truth correctness. The single self-reported study does not establish independent replication or safety for authorization decisions.
+
 ## How to use it
 
 - **Inventory before you build.** Take a real trace from your own loop and label each step by whether its output must be text. If the decision-only steps are a thin minority, stop here — there is nothing to route.
@@ -91,6 +93,7 @@ The LLM path stays intact throughout. The judgment path is an accelerator in fro
 - **Measure agreement on your own traffic before acting on it unsupervised.** Sample real decisions, get reference labels from a strong model or a human, and compare against the majority-class baseline for that decision — a judge that "agrees 80% of the time" on a decision that is 78% one answer has told you nothing. Do this per decision type, not in aggregate.
 - **Compare against the honest baseline.** When you measure latency, constrain the generative baseline to the same closed answer space. An unconstrained baseline flatters the judge.
 - **Treat escalation rate as a first-class metric.** A rising `unsure` or `oversized` rate is the signal that the loop has drifted away from what the judge was measured on.
+- **Preserve authorization boundaries.** For safety-critical decisions, both the judge and the LLM fallback remain subject to the same deterministic permission checks or human approval; escalation must not grant additional authority.
 - **Keep the fallback live.** The LLM path must still work with the judge fully disabled; `unreachable` should be an ordinary, exercised code path, not an outage.
 
 ### Known implementations
@@ -105,5 +108,5 @@ The LLM path stays intact throughout. The judgment path is an accelerator in fro
 ## References
 
 - [jev-use](https://github.com/shitianfang/jev-use) -- disclosed primary implementation, including the re-runnable agreement study and its raw data.
-- [Your agent waits a full second to send the number 3](https://dev.to/shitianfang/your-agent-waits-a-full-second-to-send-the-number-3-2513) -- disclosed write-up by the same author, covering the measurements above and the cases where the approach lost.
+- [Agreement study and benchmark methodology](https://github.com/shitianfang/jev-use/blob/main/bench/RESULTS.md) -- self-reported measurements by the same author, including the fair-baseline comparison and cases where the approach lost.
 - [Budget-Aware Model Routing with Hard Cost Caps](budget-aware-model-routing-with-hard-cost-caps.md) -- related in-repo pattern; it routes among generative models by cost and complexity, whereas this pattern routes by whether generation is needed at all.

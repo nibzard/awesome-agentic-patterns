@@ -154,6 +154,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
 - [Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution](patterns/markdown-polis-coordination.md)
 - [Multi-Model Orchestration for Complex Edits](patterns/multi-model-orchestration-for-complex-edits.md)
+- [Non-Generative Judgment Routing with Typed Escalation](patterns/non-generative-judgment-routing.md)
 - [Opponent Processor / Multi-Agent Debate Pattern](patterns/opponent-processor-multi-agent-debate.md)
 - [Oracle and Worker Multi-Model Approach](patterns/oracle-and-worker-multi-model.md)
 - [Parallel Tool Call Learning](patterns/parallel-tool-call-learning.md)
