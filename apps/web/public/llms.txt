@@ -249,6 +249,10 @@ URL: https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents
 Denial Tracking & Permission Escalation: Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.
 URL: https://agentic-patterns.com/patterns/denial-tracking-permission-escalation
 
+### design-time-file-partition
+Design-Time File Partition as Concurrency Control: Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.
+URL: https://agentic-patterns.com/patterns/design-time-file-partition
+
 ### deterministic-grader-in-the-loop
 Deterministic Grader in the Loop: Replace the LLM-as-judge in an agent's self-review loop with a deterministic scorer that returns the raw counts behind each sub-score, so the agent has something specific to fix.
 URL: https://agentic-patterns.com/patterns/deterministic-grader-in-the-loop

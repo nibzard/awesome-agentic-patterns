@@ -1005,6 +1005,27 @@
       ]
     },
     {
+      "id": "design-time-file-partition-as-concurrency-control",
+      "title": "Design-Time File Partition as Concurrency Control",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "design-time-file-partition",
+      "tags": [
+        "multi-agent",
+        "concurrency",
+        "decomposition",
+        "task-queue",
+        "shared-checkout",
+        "headless"
+      ],
+      "summary": "Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.",
+      "maturity": "early",
+      "domains": [
+        "coding",
+        "ops"
+      ]
+    },
+    {
       "id": "deterministic-grader-in-the-loop",
       "title": "Deterministic Grader in the Loop",
       "category": "Feedback Loops",
@@ -3361,6 +3382,21 @@
     {
       "source": "denial-tracking-permission-escalation",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "design-time-file-partition-as-concurrency-control",
+      "target": "lane-based-execution-queueing",
+      "type": "related"
+    },
+    {
+      "source": "design-time-file-partition-as-concurrency-control",
+      "target": "workspace-native-multi-agent-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "design-time-file-partition-as-concurrency-control",
+      "target": "deterministic-zero-llm-orchestration",
       "type": "related"
     },
     {

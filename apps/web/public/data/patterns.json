@@ -1721,6 +1721,58 @@
     "excerpt": "\n## Problem\nWhen agents run in non-interactive contexts (background jobs, CI/CD pipelines, headless mode), every permission prompt is typically auto-denied. If the agent keeps attempting the same blocked tool, it wastes its iteration budget retrying an action that will never succeed. This leads to silent failures, stalled tasks, and burned compute with no progress.\n\nEven in interactive mode, a user who repeatedly denies a specific tool creates the same loop: the agent tries, gets denied, tries again with a slightly different argument, and gets denied again."
   },
   {
+    "title": "Design-Time File Partition as Concurrency Control",
+    "status": "emerging",
+    "authors": [
+      "Jed Arden (@jedarden)"
+    ],
+    "based_on": [
+      "Jed Arden (@jedarden), NEEDLE ADR-015"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/jedarden/NEEDLE/blob/main/docs/adr/015-concurrent-same-repo-worker-isolation.md",
+    "tags": [
+      "multi-agent",
+      "concurrency",
+      "decomposition",
+      "task-queue",
+      "shared-checkout",
+      "headless"
+    ],
+    "slug": "design-time-file-partition",
+    "id": "design-time-file-partition-as-concurrency-control",
+    "summary": "Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.",
+    "maturity": "early",
+    "complexity": "low",
+    "effort": "hours",
+    "impact": "medium",
+    "signals": [
+      "Several headless agents work one repository from a shared checkout",
+      "Per-agent worktrees or clones are too expensive in disk or build cache",
+      "Collisions show up as clobbered files, duplicate fixes, or broken generated artifacts"
+    ],
+    "anti_signals": [
+      "One agent at a time, or agents on unrelated repositories",
+      "Tasks cannot be scoped to a predictable set of paths before they start"
+    ],
+    "prerequisites": [
+      "A task queue that supports blocking dependencies and atomic claims",
+      "A decomposition step that produces tasks with explicit path ownership"
+    ],
+    "related": [
+      "lane-based-execution-queueing",
+      "workspace-native-multi-agent-orchestration",
+      "board-mediated-inter-agent-coordination",
+      "deterministic-zero-llm-orchestration"
+    ],
+    "domains": [
+      "coding",
+      "ops"
+    ],
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nSeveral headless coding agents working the same repository collide on files. The usual fixes are a per-agent worktree (disk and build-cache duplication, merge-back debt) or a runtime coordination channel between agents (more moving parts, and agents negotiating while tokens burn). Neither addresses the actual failure: two tasks that were never safe to run concurrently were both marked ready."
+  },
+  {
     "title": "Deterministic Grader in the Loop",
     "status": "emerging",
     "authors": [
