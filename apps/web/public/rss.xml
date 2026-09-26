@@ -20,6 +20,20 @@
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Design-Time File Partition as Concurrency Control]]></title>
+            <description><![CDATA[Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.]]></description>
+            <link>https://agentic-patterns.com/patterns/design-time-file-partition</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/design-time-file-partition</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[concurrency]]></category>
+            <category><![CDATA[decomposition]]></category>
+            <category><![CDATA[task-queue]]></category>
+            <category><![CDATA[shared-checkout]]></category>
+            <category><![CDATA[headless]]></category>
+            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Evidence Questions, Not Verdict Questions]]></title>
             <description><![CDATA[Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.]]></description>
             <link>https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</link>
@@ -277,19 +291,6 @@
             <category><![CDATA[idempotency]]></category>
             <category><![CDATA[human-in-the-loop]]></category>
             <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Authenticated Authority Channel]]></title>
-            <description><![CDATA[Preserve a distinguishable channel for authenticated intent so retrieved content can inform reasoning without granting itself authority.]]></description>
-            <link>https://agentic-patterns.com/patterns/authenticated-authority-channel</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/authenticated-authority-channel</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[prompt-injection]]></category>
-            <category><![CDATA[authorization]]></category>
-            <category><![CDATA[provenance]]></category>
-            <category><![CDATA[control-plane]]></category>
-            <category><![CDATA[tool-use]]></category>
-            <pubDate>Sat, 08 Aug 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

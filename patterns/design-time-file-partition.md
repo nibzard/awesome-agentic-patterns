@@ -2,9 +2,9 @@
 title: Design-Time File Partition as Concurrency Control
 status: emerging
 authors: ["Jed Arden (@jedarden)"]
-based_on: ["Jed Arden (jedarden.com workflow manual, §06)"]
+based_on: ["Jed Arden (@jedarden), NEEDLE ADR-015"]
 category: "Orchestration & Control"
-source: "https://jedarden.com/guides/workflow/#s06-decomposition-is-concurrency-control"
+source: "https://github.com/jedarden/NEEDLE/blob/main/docs/adr/015-concurrent-same-repo-worker-isolation.md"
 tags: [multi-agent, concurrency, decomposition, task-queue, shared-checkout, headless]
 summary: "Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once."
 maturity: early
@@ -23,7 +23,7 @@ prerequisites:
   - "A decomposition step that produces tasks with explicit path ownership"
 related: ["lane-based-execution-queueing", "workspace-native-multi-agent-orchestration", "board-mediated-inter-agent-coordination", "deterministic-zero-llm-orchestration"]
 domains: ["coding", "ops"]
-updated_at: "2026-08-25"
+updated_at: "2026-09-26"
 ---
 
 ## Problem
@@ -49,7 +49,9 @@ Ownership must cover incidental writes, because those are where "disjoint" tasks
 - **Generated files.** A dependency bump rewrites the lockfile; a schema change regenerates client code, an OpenAPI document, or a snapshot; a docs change regenerates an index or sitemap. The task that changes the input owns every output the build regenerates from it.
 - **Repo-wide files.** Changelogs, version files, aggregate indexes, and the task tracker's own checkpoint file are written by most tasks. Either serialise every task that touches them (they become a single owner) or exclude them from task commits and regenerate them in one downstream step.
 - **Tool side effects.** A formatter or linter with `--fix` writes wherever it finds something to fix. Run it only on owned paths, or treat a repo-wide format as its own task.
-- **Opportunistic edits.** An agent that notices an unrelated problem must not fix it in place; it files a new task. The worker's commit stages only owned paths, so an out-of-scope write fails the commit instead of landing silently.
+- **Opportunistic edits.** An agent that notices an unrelated problem must not fix it in place; it files a new task. Mediate writes against a canonical-path allowlist before they happen, including shell and tool side effects. Committing only owned paths excludes other changes from that commit; it neither rejects nor undoes an out-of-scope write already made in the shared tree.
+
+File partitioning does not partition `.git/`. Serialize index and commit transactions under one shared lock, and prohibit workers from independently checking out branches, resetting, or cleaning the shared tree. If writes cannot be mediated or repository-wide operations cannot be serialized, use isolated worktrees or serialize the whole task. Read dependencies also matter: serialize a task that needs a stable version of files another task will change.
 
 ## Evidence
 
@@ -66,17 +68,16 @@ Ownership must cover incidental writes, because those are where "disjoint" tasks
 - **Enumerate the write set, not the edit set.** For each task ask: what does the build, formatter, codegen, or tracker rewrite when these files change? Add those paths. Two tasks that both trigger a lockfile update overlap even if their source edits do not.
 - **Derive edges mechanically.** Compute the pairwise overlap and add a blocking dependency for every overlapping pair. Do not rely on workers to notice overlap at runtime.
 - **Pair with an atomic claim.** The queue must hand a ready task to exactly one worker in a single transaction; the partition is only as safe as the claim.
-- **Enforce at commit time.** The worker commits only its owned paths (`git commit -- <owned paths>`), never `git add -A`. Anything else in the working tree is either a bug or a new task.
+- **Enforce before writes, then limit commits.** Mediate write operations to owned paths. Serialize Git staging and commits under a shared lock, committing only owned paths rather than `git add -A`. Commit selection is not a write sandbox; unowned writes must be prevented before they can clobber another worker’s work.
 - **Size the partition to the fleet.** The number of mutually disjoint ready tasks is your ceiling on useful concurrency. If the ceiling is lower than the fleet, repartition (split a hot module) rather than adding workers.
 
 ## Trade-offs
 
 - **Pros:** No inter-agent protocol; one shared checkout per repository; collisions are prevented before dispatch rather than detected after; the dependency graph doubles as the record of why two tasks were serialised.
 - **Cons:** Requires the planner to know the code layout and build side effects well enough to write honest ownership lines; vague tasks invite two workers to fix the same obvious thing. Over-partitioning serialises work that could have run in parallel; under-partitioning reintroduces collisions.
-- **Limits:** Does not protect against a worker writing outside its declared set — that needs the commit-time check. Does not help when tasks genuinely need the same file at the same time; those must be serialised or the file split.
+- **Limits:** Does not itself protect against a worker writing outside its declared set — that needs write mediation, task isolation, or whole-task serialization. Does not help when tasks genuinely need the same file at the same time; those must be serialised or the file split.
 
 ## References
 
-- Workflow manual §06–§07 (decomposition, atomic claims): https://jedarden.com/guides/workflow/
-- Failure taxonomy from the same fleet: https://jedarden.com/notes/what-breaks-at-twenty-agents/
-- NEEDLE ADR-015, rejecting per-worker worktrees in favour of task-level serialisation: https://github.com/jedarden/NEEDLE/blob/main/docs/adr/015-concurrent-same-repo-worker-isolation.md
+- [NEEDLE ADR-015](https://github.com/jedarden/NEEDLE/blob/main/docs/adr/015-concurrent-same-repo-worker-isolation.md) — contributor-maintained design record, including shared Git-state hazards and task-level serialization.
+- [Git commit documentation](https://git-scm.com/docs/git-commit) — path-limited commits select content; they do not constrain earlier filesystem writes.
