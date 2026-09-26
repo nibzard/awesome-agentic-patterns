@@ -3538,7 +3538,7 @@
       "coding",
       "ops"
     ],
-    "updated_at": "2026-09-13",
+    "updated_at": "2026-09-26",
     "excerpt": "\n## Problem\nAn agent session is expensive to reproduce. Re-running it costs tokens, needs the network, and the\nmodel may not make the same choices twice — so \"what did it actually do, and why\" usually gets\nanswered from logs rather than from the run itself.\n\nThe usual fix is to instrument the framework: a callback handler, a tracing decorator, a monkey\npatch around the client. That works until it doesn't:\n\n- **It is per-framework.** Every agent library needs its own hook, and the hooks move between\n  releases faster than the integrations that wrap them.\n- **It records an interpretation, not the traffic.** A handler sees the objects the framework built,\n  after the framework already normalised, retried, or merged streamed chunks.\n- **It cannot capture what you did not anticipate.** A field added by a provider last week is not in\n  your span schema, so it is not in your trace.\n- **It changes the program under test.** The run you recorded is a run with your instrumentation in\n  it."
   },
   {

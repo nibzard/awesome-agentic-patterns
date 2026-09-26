@@ -17,7 +17,7 @@ prerequisites: ["The client reads its origin from configuration or the environme
 related: ["action-caching-replay", "workflow-evals-with-mocked-tools"]
 tools: ["proxy", "test-harness"]
 domains: ["coding", "ops"]
-updated_at: "2026-09-13"
+updated_at: "2026-09-26"
 ---
 
 ## Problem
@@ -51,12 +51,14 @@ boundary that every agent framework has in common.
    installed into the agent; its own code is unchanged.
 2. **Store verbatim bytes.** Request and response exactly as they crossed the socket, including
    streamed frames and tool-call arguments — not a parsed summary of them.
-3. **Replay by serving the recording back.** Run the same command again with the proxy in replay
+3. **Restore the initial state, then replay.** Restore the working tree, tool fixtures, and configuration captured before recording; replay in a disposable sandbox. **Serve the recording back.** Run the same command again with the proxy in replay
    mode. The agent executes its own logic, its own control flow, its own tool dispatch; only the
    provider's answers come from the trace.
 4. **Report divergence instead of hiding it.** When the replayed request does not match the
    recorded one byte for byte, say so and say by how much. A prompt carrying an absolute path or a
    session id will differ between runs; that is worth naming, not silently matching.
+   In strict regression mode, a mismatch or missing exchange aborts replay without provider fallback.
+   A diagnostic mode may continue only with explicit divergence labels; it is not a passing regression test.
 
 ```
 record:  agent ──HTTP──▶ [proxy: forward + store] ──▶ provider
@@ -74,8 +76,9 @@ exactly, how many diverged, how many requests had no recorded counterpart at all
     frameworks written in different languages, because the thing it hooks is HTTP, not an API.
   - Byte-level matching is what makes a replay falsifiable. If the harness normalises the request
     before comparing, an exact match and a lucky match become indistinguishable.
-  - Killing the origin process before replaying is the cheap way to prove the replay is offline —
-    a replay that silently reached the network then fails by construction rather than by assertion.
+  - Denying provider egress during replay checks that no live response can silently substitute
+    for a missing recording. Stopping a local mock origin is one additional check, not proof
+    that requests cannot reach a hosted provider.
 - **Unverified / Unclear:** How far this stretches for agents whose provider traffic is multiplexed
   with unrelated traffic on one connection, and for clients that pin certificates.
 
@@ -91,8 +94,9 @@ run in CI, or a bug report that reproduces on a machine with no API key.
   trusted local CA, or they cannot be captured this way at all.
 - Record the *shapes you really use*: streaming SSE, tool calls, and any non-chat endpoint. A
   harness proved against a single plain completion has proved very little.
-- Snapshot the working tree alongside the exchanges. Half of "what did the agent do" is which files
-  it changed, and that never crosses the HTTP boundary.
+- Capture the initial working tree and relevant tool inputs before recording, and the resulting diff
+  afterward. Restore the initial snapshot for each replay; a final-state snapshot alone cannot reproduce
+  the run. Live tool responses, clocks, and other uncontrolled inputs still limit determinism.
 - Redact on the way in, not on the way out: an API key that reaches the trace file has already
   leaked.
 
@@ -122,4 +126,4 @@ run in CI, or a bug report that reproduces on a machine with no API key.
 - [VCR](https://github.com/vcr/vcr) — the original record/replay HTTP fixture library.
 - [Polly.JS](https://github.com/Netflix/pollyjs) — the same idea for JavaScript, with request matching rules.
 - [Docker Cagent](https://github.com/docker/cagent) — a proxy-and-cassette model for deterministic agent testing.
-- [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) — an implementation at the agent's provider boundary, including the divergence verdict described above.
+- [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) — an implementation at the agent's provider boundary, including the divergence verdict described above; maintained by this pattern’s author.
