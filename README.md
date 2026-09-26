@@ -119,6 +119,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 ### <a name="orchestration-control"></a>Orchestration & Control
 
+- [402-First Machine Payments (Price-Before-Work Tool Purchases)](patterns/402-first-machine-payments.md)
 - [Action-Selector Pattern](patterns/action-selector-pattern.md)
 - [Agent Modes by Model Personality](patterns/agent-modes-by-model-personality.md)
 - [Agent-Driven Research](patterns/agent-driven-research.md)

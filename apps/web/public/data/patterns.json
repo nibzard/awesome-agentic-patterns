@@ -1,5 +1,32 @@
 [
   {
+    "title": "402-First Machine Payments (Price-Before-Work Tool Purchases)",
+    "status": "emerging",
+    "authors": [
+      "bettergraininfo-rgb (@bettergraininfo-rgb)"
+    ],
+    "based_on": [
+      "x402 protocol (Coinbase / x402-foundation)",
+      "HTTP 402 Payment Required semantics"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/x402-foundation/x402",
+    "tags": [
+      "payments",
+      "micropayments",
+      "x402",
+      "http-402",
+      "agent-commerce",
+      "tool-use",
+      "budget-guards"
+    ],
+    "slug": "402-first-machine-payments",
+    "id": "402-first-machine-payments-price-before-work-tool-purchases",
+    "summary": "An autonomous agent mid task often needs a capability it does not have — summarize a long document, extract entities from a contract, fetch a paywalled dataset.",
+    "updated_at": "2026-09-26",
+    "excerpt": "\n## Problem\nAn autonomous agent mid-task often needs a capability it does not have — summarize a long document, extract entities from a contract, fetch a paywalled dataset. The standard ways to sell that capability all assume a human in the loop:\n\n- **API keys / subscriptions** require a registration flow, a dashboard, and a payment method on file. An agent cannot sign up mid-task.\n- **Free tiers with rate limits** don't scale to real workloads and give the provider no revenue.\n- **Invoice-after-work** is a non-starter between strangers: the provider does the work with no guarantee of payment; the buyer pre-commits to an unknown price.\n\nThe provider's core fear is doing work for an unpaid stranger. The buyer-agent's core fear is committing to an unknown price or unbounded spend. A machine-to-machine purchase path needs to solve both at once, without any human-readable signup."
+  },
+  {
     "title": "Abstracted Code Representation for Review",
     "status": "proposed",
     "authors": [
