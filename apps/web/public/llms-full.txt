@@ -18790,7 +18790,7 @@ await page.click(element.xpath);
 - Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1835449.1835550), SIGIR 2010 - Foundational research showing 40-80% of web content is boilerplate
 - Beurer-Kellner et al., ["Design Patterns for Securing LLM Agents"](https://arxiv.org/abs/2506.08837), arXiv 2025 - Context-Minimization Pattern (security framework)
 - [WAI-ARIA Accessibility Tree](https://www.w3.org/TR/core-aam-1.1/) - Browser accessibility API
-- Related patterns: [Context Window Anxiety Management](context-window-anxiety-management.md), [Curated Context Windows](curated-context-windows.md)
+- Related patterns: [Context Window Anxiety Management](context-window-anxiety-management.md), [Curated Code Context Window](curated-code-context-window.md)
 
 ---
 
