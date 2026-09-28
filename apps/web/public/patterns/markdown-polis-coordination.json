@@ -19,7 +19,7 @@
   ],
   "slug": "markdown-polis-coordination",
   "id": "markdown-polis-multi-vendor-agent-coordination-via-filesystem-constitution",
-  "summary": "When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long lived project, they have no native channel for \"who's good at what,\" \"what did we already try,\" or \"what does this team consider done.\" Each session starts cold.",
+  "summary": "Coordinates agents from different vendors through versioned markdown files: capability cards, work contracts, and bandit routing that learns from settled work",
   "maturity": "maturing",
   "complexity": "medium",
   "effort": "days",

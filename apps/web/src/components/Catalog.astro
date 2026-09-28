@@ -1,0 +1,484 @@
+---
+// ABOUTME: Pattern catalog: live text filter, maturity chips, sort control, and a dense list of all patterns.
+// ABOUTME: Filters read and write URL parameters (category, status, tag, domain, maturity, complexity, q, code, sort).
+import type { PatternEntry } from '../types';
+import { hasCodeExample } from '../lib/code-example';
+
+interface Props {
+  patterns: PatternEntry[];
+}
+
+const { patterns } = Astro.props;
+
+const sorted = [...patterns].sort(
+  (a, b) => (b.updated_at || '').localeCompare(a.updated_at || '') || a.title.localeCompare(b.title)
+);
+
+const statusOrder = [
+  'best-practice',
+  'validated-in-production',
+  'established',
+  'emerging',
+  'rapidly-improving',
+  'experimental-but-awesome',
+  'proposed',
+];
+
+const statusCounts = patterns.reduce((acc: Record<string, number>, pattern) => {
+  acc[pattern.status] = (acc[pattern.status] || 0) + 1;
+  return acc;
+}, {});
+
+const statuses = statusOrder
+  .filter((status) => statusCounts[status])
+  .map((status) => ({ status, count: statusCounts[status] }));
+
+const codeCount = patterns.filter((pattern) => hasCodeExample(pattern.body)).length;
+const label = (status: string) => status.replace(/-/g, ' ');
+---
+
+<div class="catalog">
+  <header class="catalog-intro">
+    <h1>Agent design patterns</h1>
+    <p>
+      An open catalogue of {patterns.length} patterns for building AI agents. Each pattern is a plain
+      Markdown file: read it here, get it as <a href="/agents">.md for your agent</a>, or <a
+        href="/contribute">propose your own</a
+      >.
+    </p>
+  </header>
+
+  <div class="catalog-controls" role="search">
+    <label class="catalog-filter">
+      <span class="visually-hidden">Filter patterns</span>
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.8"></circle>
+        <path d="M12 12L16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        ></path>
+      </svg>
+      <input
+        id="catalog-filter"
+        type="search"
+        placeholder="Filter by name, tag, or keyword"
+        autocomplete="off"
+        data-catalog-filter
+      />
+    </label>
+    <label class="catalog-sort">
+      <span class="visually-hidden">Sort patterns</span>
+      <select id="catalog-sort" data-catalog-sort>
+        <option value="updated">Recently updated</option>
+        <option value="title">A to Z</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="catalog-chips" aria-label="Filter by maturity">
+    {
+      statuses.map(({ status, count }) => (
+        <button type="button" class="catalog-chip" data-chip-status={status} aria-pressed="false">
+          {label(status)} <span>{count}</span>
+        </button>
+      ))
+    }
+    <button type="button" class="catalog-chip" data-chip-code aria-pressed="false">
+      has code <span>{codeCount}</span>
+    </button>
+  </div>
+
+  <div class="catalog-summary">
+    <p id="catalog-count" aria-live="polite">{patterns.length} patterns</p>
+    <a href="/" class="catalog-reset" data-catalog-reset hidden>Clear filters</a>
+  </div>
+
+  <ol class="catalog-list" id="catalog-list">
+    {
+      sorted.map((pattern) => (
+        <li
+          class="catalog-row"
+          data-pattern-row
+          data-category={pattern.category}
+          data-status={pattern.status}
+          data-maturity={pattern.maturity || ''}
+          data-complexity={pattern.complexity || ''}
+          data-tags={pattern.tags.join('|')}
+          data-domains={(pattern.domains || []).join('|')}
+          data-code={hasCodeExample(pattern.body) ? 'true' : 'false'}
+          data-updated={pattern.updated_at || ''}
+          data-title={pattern.title.toLowerCase()}
+          data-search={`${pattern.title} ${pattern.slug} ${pattern.summary || ''} ${pattern.category} ${pattern.tags.join(' ')} ${(pattern.domains || []).join(' ')}`.toLowerCase()}
+        >
+          <a href={`/patterns/${pattern.slug}`} class="catalog-row-main">
+            <span class="catalog-row-title">{pattern.title}</span>
+            {pattern.summary && <span class="catalog-row-summary">{pattern.summary}</span>}
+          </a>
+          <span class="catalog-row-category">{pattern.category}</span>
+          <span class={`status-pill status-pill--${pattern.status}`}>{label(pattern.status)}</span>
+          <time class="catalog-row-date" datetime={pattern.updated_at}>
+            {pattern.updated_at || ''}
+          </time>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="catalog-empty" id="catalog-empty" hidden>
+    <p>No patterns match these filters.</p>
+    <a href="/" class="button button--secondary">Clear filters</a>
+  </div>
+</div>
+
+<script>
+  const MULTI_KEYS = ['category', 'status', 'tag', 'domain', 'maturity', 'complexity'] as const;
+
+  const list = document.getElementById('catalog-list');
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-pattern-row]'));
+  const filterInput = document.querySelector<HTMLInputElement>('[data-catalog-filter]');
+  const sortSelect = document.querySelector<HTMLSelectElement>('[data-catalog-sort]');
+  const statusChips = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('[data-chip-status]')
+  );
+  const codeChip = document.querySelector<HTMLButtonElement>('[data-chip-code]');
+  const countEl = document.getElementById('catalog-count');
+  const emptyEl = document.getElementById('catalog-empty');
+  const resetEl = document.querySelector<HTMLElement>('[data-catalog-reset]');
+
+  const params = new URLSearchParams(window.location.search);
+  if (filterInput) filterInput.value = params.get('q') || '';
+  if (sortSelect && params.get('sort') === 'title') sortSelect.value = 'title';
+
+  const rowValues = (row: HTMLElement, key: string): string[] => {
+    const attr = key === 'tag' ? 'tags' : key === 'domain' ? 'domains' : key;
+    const value = row.dataset[attr] || '';
+    return key === 'tag' || key === 'domain' ? value.split('|').filter(Boolean) : [value];
+  };
+
+  function syncChips() {
+    const statuses = params.getAll('status');
+    statusChips.forEach((chip) => {
+      chip.setAttribute('aria-pressed', String(statuses.includes(chip.dataset.chipStatus || '')));
+    });
+    codeChip?.setAttribute('aria-pressed', String(params.get('code') === '1'));
+  }
+
+  function syncSidebar() {
+    const active = params.getAll('category');
+    document.querySelectorAll<HTMLElement>('[data-sidebar-category]').forEach((link) => {
+      const category = link.dataset.sidebarCategory || '';
+      const isActive = category === '' ? active.length === 0 : active.includes(category);
+      link.classList.toggle('active', isActive);
+    });
+  }
+
+  function sortRows() {
+    if (!list) return;
+    const byTitle = sortSelect?.value === 'title';
+    const ordered = [...rows].sort((a, b) =>
+      byTitle
+        ? (a.dataset.title || '').localeCompare(b.dataset.title || '')
+        : (b.dataset.updated || '').localeCompare(a.dataset.updated || '') ||
+          (a.dataset.title || '').localeCompare(b.dataset.title || '')
+    );
+    ordered.forEach((row) => list.appendChild(row));
+  }
+
+  function applyFilters() {
+    const query = (params.get('q') || '').trim().toLowerCase();
+    const terms = query.split(/\s+/).filter(Boolean);
+    let visible = 0;
+
+    rows.forEach((row) => {
+      let match = MULTI_KEYS.every((key) => {
+        const selected = params.getAll(key);
+        return selected.length === 0 || rowValues(row, key).some((v) => selected.includes(v));
+      });
+      if (match && params.get('code') === '1') match = row.dataset.code === 'true';
+      if (match && terms.length) {
+        const haystack = row.dataset.search || '';
+        match = terms.every((term) => haystack.includes(term));
+      }
+      row.hidden = !match;
+      if (match) visible += 1;
+    });
+
+    if (countEl) {
+      const categories = params.getAll('category');
+      const scope = categories.length ? ` in ${categories.join(', ')}` : '';
+      countEl.textContent = `${visible} pattern${visible === 1 ? '' : 's'}${scope}`;
+    }
+    if (emptyEl) emptyEl.hidden = visible > 0;
+    if (resetEl) resetEl.hidden = Array.from(params.keys()).every((key) => key === 'sort');
+    syncChips();
+    syncSidebar();
+  }
+
+  function writeUrl() {
+    const search = params.toString();
+    history.replaceState(null, '', search ? `${location.pathname}?${search}` : location.pathname);
+  }
+
+  filterInput?.addEventListener('input', () => {
+    const value = filterInput.value.trim();
+    if (value) params.set('q', value);
+    else params.delete('q');
+    writeUrl();
+    applyFilters();
+  });
+
+  sortSelect?.addEventListener('change', () => {
+    if (sortSelect.value === 'title') params.set('sort', 'title');
+    else params.delete('sort');
+    writeUrl();
+    sortRows();
+  });
+
+  statusChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const status = chip.dataset.chipStatus || '';
+      const current = params.getAll('status');
+      params.delete('status');
+      const next = current.includes(status)
+        ? current.filter((s) => s !== status)
+        : [...current, status];
+      next.forEach((s) => params.append('status', s));
+      writeUrl();
+      applyFilters();
+    });
+  });
+
+  codeChip?.addEventListener('click', () => {
+    if (params.get('code') === '1') params.delete('code');
+    else params.set('code', '1');
+    writeUrl();
+    applyFilters();
+  });
+
+  // Sidebar category links filter in place instead of a full page load.
+  document.querySelectorAll<HTMLAnchorElement>('[data-sidebar-category]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+      event.preventDefault();
+      const category = link.dataset.sidebarCategory || '';
+      params.delete('category');
+      if (category) params.set('category', category);
+      writeUrl();
+      applyFilters();
+      link.closest('[data-docs-sidebar]')?.classList.remove('open');
+    });
+  });
+
+  sortRows();
+  applyFilters();
+</script>
+
+<style>
+  .catalog-intro h1 {
+    font-size: 1.75rem;
+  }
+
+  .catalog-intro p {
+    margin: 0.5rem 0 0;
+    max-width: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .catalog-intro a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .catalog-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .catalog-filter {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    color: var(--color-text-muted);
+  }
+
+  .catalog-filter:focus-within {
+    border-color: var(--color-text-muted);
+  }
+
+  .catalog-filter input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.6rem 0;
+    border: 0;
+    background: transparent;
+    outline: none;
+    font-size: 0.9375rem;
+  }
+
+  .catalog-sort select {
+    height: 100%;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  .catalog-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+  }
+
+  .catalog-chip {
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    cursor: pointer;
+  }
+
+  .catalog-chip span {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+  .catalog-chip:hover {
+    border-color: var(--color-divider);
+    color: var(--color-text);
+  }
+
+  .catalog-chip[aria-pressed='true'] {
+    border-color: var(--color-text);
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .catalog-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .catalog-summary p {
+    margin: 0;
+    font-family: var(--font-mono);
+  }
+
+  .catalog-reset {
+    color: var(--color-primary);
+  }
+
+  .catalog-list {
+    list-style: none;
+  }
+
+  .catalog-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 11rem 9.5rem 6rem;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.7rem 0.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .catalog-row:hover {
+    background: var(--surface-card-soft);
+  }
+
+  .catalog-row-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .catalog-row-title {
+    font-weight: 550;
+  }
+
+  .catalog-row-main:hover .catalog-row-title {
+    color: var(--color-primary);
+  }
+
+  .catalog-row-summary {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .catalog-row-category {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .catalog-row .status-pill {
+    justify-self: start;
+  }
+
+  .catalog-row-date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .catalog-empty {
+    padding: 2rem 0;
+    color: var(--color-text-muted);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1100px) {
+    .catalog-row {
+      grid-template-columns: minmax(0, 1fr) 9.5rem 6rem;
+    }
+
+    .catalog-row-category {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .catalog-intro h1 {
+      font-size: 1.4rem;
+    }
+
+    .catalog-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: 0.35rem;
+    }
+
+    .catalog-row-main {
+      grid-column: 1 / -1;
+    }
+
+    .catalog-row-date {
+      text-align: right;
+    }
+  }
+</style>

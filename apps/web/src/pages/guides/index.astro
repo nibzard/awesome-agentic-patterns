@@ -34,7 +34,7 @@ const sortedGuides = guides.sort((a, b) => {
     <div class="guides-list">
       {
         sortedGuides.map((guide) => (
-          <a href={`/guides/${guide.slug}`} class="guide-card">
+          <a href={`/guides/${guide.id}`} class="guide-card">
             <div class="guide-card-content">
               <h2 class="guide-title">{guide.data.title}</h2>
               <p class="guide-description">{guide.data.description}</p>

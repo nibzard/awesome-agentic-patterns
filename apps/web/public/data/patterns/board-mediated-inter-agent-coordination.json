@@ -19,10 +19,19 @@
   ],
   "slug": "board-mediated-inter-agent-coordination",
   "id": "board-mediated-async-inter-agent-coordination",
-  "summary": "Route messages between agents through board card comment threads.  A routing prefix triggers inbox card creation for notification; the actual coordination dialogue happens on the work card itself, co-locating decision context with the work that generated it.",
+  "summary": "Routes agent-to-agent messages through comment threads on board cards, with a prefix that creates an inbox card to notify the target agent",
   "complexity": "medium",
   "effort": "days",
   "impact": "high",
+  "signals": [
+    "Agents run in separate sessions and cannot talk directly",
+    "Team tracks work on a Kanban board with an API",
+    "Coordination decisions must stay with the work record"
+  ],
+  "anti_signals": [
+    "Coordination is time-sensitive and cannot wait for polling",
+    "Several instances of the same agent run at once"
+  ],
   "related": [
     "cross-cycle-consensus-relay",
     "memory-synthesis-from-execution-logs"

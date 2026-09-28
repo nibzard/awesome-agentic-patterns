@@ -279,13 +279,23 @@ function updateReadme(patterns: ParsedPattern[]): void {
 }
 
 function generateLlmsTxt(patterns: ParsedPattern[]): string {
-  const lines = ['# Awesome Agentic Patterns', '', 'A curated catalogue of AI agent design patterns.', '', '## Patterns', ''];
+  const lines = [
+    '# Awesome Agentic Patterns',
+    '',
+    'A curated catalogue of AI agent design patterns.',
+    '',
+    `Every pattern is also available as Markdown at ${SITE_URL}/patterns/<slug>.md. Full text of all patterns: ${SITE_URL}/llms-full.txt. Usage notes for agents: ${SITE_URL}/agents.`,
+    '',
+    '## Patterns',
+    '',
+  ];
 
   patterns.forEach((pattern) => {
     const summary = pattern.summary || '';
     lines.push(`### ${pattern.slug}`);
     lines.push(`${pattern.title}: ${summary}`.trim());
     lines.push(`URL: ${SITE_URL}/patterns/${pattern.slug}`);
+    lines.push(`Markdown: ${SITE_URL}/patterns/${pattern.slug}.md`);
     lines.push('');
   });
 

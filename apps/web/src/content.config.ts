@@ -64,8 +64,9 @@ const patterns = defineCollection({
   }),
 });
 
+// Guides and packs live in src/content; Astro 6 needs an explicit loader for them.
 const guides = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -74,7 +75,7 @@ const guides = defineCollection({
 });
 
 const packs = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/packs' }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),

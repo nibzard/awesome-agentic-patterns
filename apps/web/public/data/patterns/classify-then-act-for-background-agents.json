@@ -19,7 +19,16 @@
   ],
   "slug": "classify-then-act-for-background-agents",
   "id": "classify-then-act-for-background-agents",
-  "summary": "A background agent working through a task list has two failure modes at the extremes.",
+  "summary": "Sorts each task into has-default, needs-intent, or out-of-scope, builds only has-default work in a sandbox, and queues it for human review",
+  "signals": [
+    "Background agent handles many task shapes",
+    "Full autonomy is too risky but asking about everything stalls work",
+    "Same rejected ideas keep coming back"
+  ],
+  "anti_signals": [
+    "No explicit human-delegated mandate defines which tasks belong to the agent",
+    "No one reads the review queue on their normal path"
+  ],
   "related": [
     "human-in-loop-approval-framework",
     "custom-sandboxed-background-agent"

@@ -1,0 +1,308 @@
+---
+// ABOUTME: Left navigation for the docs shell: categories with counts, learning links, and project links.
+// ABOUTME: On a pattern page it expands the active category to list its patterns; a newsletter signup sits at the end.
+import NewsletterCTA from './NewsletterCTA.astro';
+interface SidebarPattern {
+  slug: string;
+  title: string;
+  category: string;
+}
+
+interface Props {
+  patterns: SidebarPattern[];
+  activeCategory?: string;
+  activeSlug?: string;
+}
+
+const { patterns, activeCategory, activeSlug } = Astro.props;
+
+const counts = patterns.reduce((acc: Record<string, number>, pattern) => {
+  acc[pattern.category] = (acc[pattern.category] || 0) + 1;
+  return acc;
+}, {});
+
+const categories = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+const siblings = activeCategory
+  ? patterns
+      .filter((pattern) => pattern.category === activeCategory)
+      .sort((a, b) => a.title.localeCompare(b.title))
+  : [];
+
+const learnLinks = [
+  { href: '/guides/pattern-selection', label: 'Choose a pattern' },
+  { href: '/decision', label: 'Decision guide' },
+  { href: '/graph', label: 'Pattern graph' },
+  { href: '/guides', label: 'All guides' },
+];
+
+const projectLinks = [
+  { href: '/contribute', label: 'Propose a pattern' },
+  { href: '/agents', label: 'Use from an agent' },
+  { href: 'https://github.com/nibzard/awesome-agentic-patterns', label: 'GitHub' },
+];
+---
+
+<div class="docs-sidebar" data-docs-sidebar>
+  <button
+    type="button"
+    class="docs-sidebar-toggle"
+    aria-expanded="false"
+    aria-controls="docs-sidebar-nav"
+    data-docs-sidebar-toggle
+  >
+    <span>{activeCategory || 'Browse categories'}</span>
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"
+      ><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg
+    >
+  </button>
+
+  <nav id="docs-sidebar-nav" class="docs-sidebar-nav" aria-label="Pattern categories">
+    <a
+      href="/"
+      class:list={['docs-sidebar-link', { active: !activeCategory && !activeSlug }]}
+      data-sidebar-category=""
+    >
+      <span>All patterns</span>
+      <span class="docs-sidebar-count">{patterns.length}</span>
+    </a>
+
+    <p class="docs-sidebar-heading">Categories</p>
+    <ul class="docs-sidebar-list">
+      {
+        categories.map(([category, count]) => (
+          <li>
+            <a
+              href={`/?category=${encodeURIComponent(category)}`}
+              class:list={['docs-sidebar-link', { active: category === activeCategory }]}
+              data-sidebar-category={category}
+              aria-current={category === activeCategory && !activeSlug ? 'page' : undefined}
+            >
+              <span>{category}</span>
+              <span class="docs-sidebar-count">{count}</span>
+            </a>
+            {category === activeCategory && activeSlug && (
+              <ul class="docs-sidebar-children">
+                {siblings.map((pattern) => (
+                  <li>
+                    <a
+                      href={`/patterns/${pattern.slug}`}
+                      class:list={['docs-sidebar-child', { active: pattern.slug === activeSlug }]}
+                      aria-current={pattern.slug === activeSlug ? 'page' : undefined}
+                    >
+                      {pattern.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="docs-sidebar-heading">Learn</p>
+    <ul class="docs-sidebar-list">
+      {
+        learnLinks.map((link) => (
+          <li>
+            <a href={link.href} class="docs-sidebar-link">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="docs-sidebar-heading">Project</p>
+    <ul class="docs-sidebar-list">
+      {
+        projectLinks.map((link) => (
+          <li>
+            <a href={link.href} class="docs-sidebar-link">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="docs-sidebar-newsletter">
+      <NewsletterCTA variant="compact" title="Get new patterns by email" buttonText="Subscribe" />
+    </div>
+  </nav>
+</div>
+
+<script>
+  document.querySelectorAll('[data-docs-sidebar]').forEach((sidebar) => {
+    const toggle = sidebar.querySelector('[data-docs-sidebar-toggle]');
+    toggle?.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // Keep the active child link in view when the category list is long.
+    const activeChild = sidebar.querySelector('.docs-sidebar-child.active');
+    activeChild?.scrollIntoView({ block: 'center' });
+  });
+</script>
+
+<style>
+  .docs-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + 1px);
+    max-height: calc(100vh - var(--header-height) - 1px);
+    overflow-y: auto;
+    padding: 1.25rem 0.75rem 2rem 0;
+    font-size: 0.875rem;
+  }
+
+  .docs-sidebar-toggle {
+    display: none;
+  }
+
+  .docs-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .docs-sidebar-heading {
+    margin: 1.25rem 0 0.35rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .docs-sidebar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .docs-sidebar-link {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.32rem 0.5rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+  }
+
+  .docs-sidebar-link:hover {
+    background: var(--color-bg-soft);
+  }
+
+  .docs-sidebar-link.active {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  .docs-sidebar-newsletter {
+    margin: 1.5rem 0 0 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta-title) {
+    font-size: 0.8125rem;
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta-form) {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta-input) {
+    width: 100%;
+  }
+
+  .docs-sidebar-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .docs-sidebar-link.active .docs-sidebar-count {
+    color: inherit;
+  }
+
+  .docs-sidebar-children {
+    list-style: none;
+    margin: 0.25rem 0 0.5rem 0.75rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .docs-sidebar-child {
+    display: block;
+    padding: 0.22rem 0.5rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .docs-sidebar-child:hover {
+    color: var(--color-text);
+  }
+
+  .docs-sidebar-child.active {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 960px) {
+    .docs-sidebar {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding: 0.75rem 0 0;
+    }
+
+    .docs-sidebar-toggle {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-elevated);
+      color: var(--color-text);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    .docs-sidebar-nav {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-elevated);
+    }
+
+    .docs-sidebar.open .docs-sidebar-nav {
+      display: flex;
+    }
+
+    .docs-sidebar.open svg {
+      transform: rotate(180deg);
+    }
+  }
+</style>

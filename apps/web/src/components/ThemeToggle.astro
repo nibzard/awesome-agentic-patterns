@@ -37,10 +37,12 @@
 
 <style>
   .theme-toggle {
-    background: transparent;
+    width: 2rem;
+    height: 2rem;
+    background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--spacing-sm);
+    padding: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -50,7 +52,12 @@
   }
 
   .theme-toggle:hover {
-    background-color: var(--color-border);
+    border-color: var(--color-divider);
+  }
+
+  .theme-toggle :global(svg) {
+    width: 16px;
+    height: 16px;
   }
 
   .theme-toggle:focus-visible {

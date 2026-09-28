@@ -18,7 +18,17 @@
   ],
   "slug": "tier-auto-apply-by-mechanical-impact",
   "id": "tier-auto-apply-by-mechanical-impact",
-  "summary": "A system that reviews itself and applies its own findings, a self auditing agent, say, needs a line between \"apply automatically\" and \"ask a human first.\" The tempting way to draw that line is from how confident or severe a finding sounds.",
+  "summary": "Decides which self-proposed changes auto-apply by matching the real diff's file paths and change kinds against a trusted tier table, not by finding text",
+  "signals": [
+    "System proposes changes to its own code or config",
+    "Some changes should ship without human review",
+    "Findings can come from fetched or external content"
+  ],
+  "anti_signals": [
+    "Every change already goes to human review",
+    "No way to derive a real diff before applying a change",
+    "Team cannot maintain a path and change-kind table"
+  ],
   "related": [
     "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
     "human-in-loop-approval-framework"

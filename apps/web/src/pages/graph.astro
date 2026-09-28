@@ -56,13 +56,6 @@ const domains = Object.entries(domainMap)
   .map(([domain, count]) => ({ domain, count }))
   .sort((a, b) => b.count - a.count);
 
-const graphOverview = [
-  { value: graphNodes.length, label: 'Patterns' },
-  { value: categories.length, label: 'Categories' },
-  { value: Object.keys(tagMap).length, label: 'Tags' },
-  { value: domains.length, label: 'Domains' },
-];
-
 const positionedNodes = graphNodes.map((node: GraphNode, index: number) => {
   const angle = (index / Math.max(graphNodes.length, 1)) * 2 * Math.PI;
   const radius = 200 + (index % 3) * 50;
@@ -97,34 +90,12 @@ function getCategoryColor(category: string): string {
     <section class="graph-hero">
       <div class="graph-hero-copy">
         <span class="section-label">Graph Explorer</span>
-        <h1>See how patterns cluster, overlap, and pull on each other.</h1>
+        <h1>Pattern graph</h1>
         <p class="graph-subtitle">
-          Switch between shared tags, explicit links, and similarity views to understand which
-          patterns reinforce each other before you decide what to build.
+          See which patterns connect by shared tags, category, explicit links, or similarity. Click
+          a node to open the pattern.
         </p>
       </div>
-
-      <aside class="graph-hero-panel surface-panel">
-        <div class="graph-hero-stats">
-          {
-            graphOverview.map((stat) => (
-              <div class="graph-stat">
-                <span class="graph-stat-value">{stat.value}</span>
-                <span class="graph-stat-label">{stat.label}</span>
-              </div>
-            ))
-          }
-        </div>
-
-        <div class="graph-hero-notes">
-          <p class="graph-kicker">How to use it</p>
-          <ul>
-            <li>Start with shared tags to see the broadest pattern clusters.</li>
-            <li>Switch to explicit links when you want stronger editorial relationships.</li>
-            <li>Open a node to jump into the full pattern once the cluster looks right.</li>
-          </ul>
-        </div>
-      </aside>
     </section>
 
     <div class="graph-layout">
@@ -1214,16 +1185,12 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-    gap: clamp(1rem, 4vw, 2.5rem);
-    padding: var(--spacing-2xl) 0;
+    padding: 1.75rem 0 1.25rem;
   }
 
   .graph-hero-copy h1 {
-    margin-top: var(--spacing-md);
-    max-width: 12ch;
-    font-size: clamp(3rem, 7vw, 5rem);
+    margin-top: 0.4rem;
+    font-size: 1.75rem;
   }
 
   .graph-subtitle {
@@ -1232,54 +1199,6 @@ function getCategoryColor(category: string): string {
     color: var(--color-text-muted);
     font-size: 1.08rem;
     line-height: 1.75;
-  }
-
-  .graph-hero-panel {
-    padding: 1.2rem;
-  }
-
-  .graph-hero-stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.8rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(182, 164, 143, 0.4);
-  }
-
-  .graph-stat {
-    padding: 0.7rem 0.8rem;
-    border-radius: var(--radius-md);
-    background: var(--surface-card-soft);
-  }
-
-  .graph-stat-value {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    line-height: 1;
-  }
-
-  .graph-stat-label,
-  .graph-kicker {
-    display: block;
-    color: var(--text-muted-strong);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .graph-hero-notes {
-    margin-top: 1rem;
-  }
-
-  .graph-hero-notes ul {
-    margin-top: var(--spacing-md);
-    padding-left: 1.1rem;
-    color: var(--text-muted-strong);
-    display: grid;
-    gap: 0.7rem;
-    line-height: 1.7;
   }
 
   .graph-layout {
@@ -1359,7 +1278,7 @@ function getCategoryColor(category: string): string {
   .filter-count {
     font-size: 0.72rem;
     color: var(--text-muted-strong);
-    background-color: rgba(50, 93, 150, 0.08);
+    background-color: var(--color-bg-soft);
     padding: 2px 6px;
     border-radius: 999px;
     font-weight: 700;
@@ -1371,7 +1290,7 @@ function getCategoryColor(category: string): string {
     padding: 0.85rem 1rem;
     text-align: center;
     background-color: var(--color-primary);
-    color: #fff7ef;
+    color: var(--color-on-primary);
     border-radius: 999px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -1452,11 +1371,9 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-canvas {
-    border: 1px solid rgba(182, 164, 143, 0.45);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background:
-      radial-gradient(circle at 25% 20%, rgba(194, 67, 49, 0.12), transparent 20%),
-      radial-gradient(circle at 75% 10%, rgba(50, 93, 150, 0.12), transparent 24%), #161210;
+    background: #111315;
     overflow: hidden;
     position: relative;
     box-shadow: var(--shadow-md);
@@ -1476,9 +1393,9 @@ function getCategoryColor(category: string): string {
     width: 40px;
     height: 40px;
     border-radius: 999px;
-    background-color: rgba(20, 17, 14, 0.88);
+    background-color: rgba(14, 15, 17, 0.9);
     border: 1px solid var(--color-border);
-    color: #f8f0e1;
+    color: #e8e9eb;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1530,7 +1447,7 @@ function getCategoryColor(category: string): string {
   }
 
   .node-circle {
-    stroke: rgba(248, 240, 225, 0.9);
+    stroke: rgba(232, 233, 235, 0.9);
     stroke-width: 2;
     transition: all 0.2s ease;
   }
@@ -1542,7 +1459,7 @@ function getCategoryColor(category: string): string {
 
   .node-label {
     font-size: 12px;
-    fill: rgba(248, 240, 225, 0.88);
+    fill: rgba(232, 233, 235, 0.88);
     pointer-events: none;
   }
 
@@ -1663,13 +1580,13 @@ function getCategoryColor(category: string): string {
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 0.72rem;
-    background-color: rgba(50, 93, 150, 0.08);
+    background-color: var(--color-bg-soft);
     color: var(--text-muted-strong);
   }
 
   .detail-badge--maturity {
     background-color: var(--color-success);
-    color: #fff7ef;
+    color: var(--color-on-primary);
   }
 
   .detail-badge--domain {
@@ -1687,20 +1604,20 @@ function getCategoryColor(category: string): string {
   }
 
   .detail-category {
-    background-color: rgba(50, 93, 150, 0.08);
+    background-color: var(--color-bg-soft);
     color: var(--color-accent-blue);
   }
 
   .detail-status {
     background-color: var(--status-color);
-    color: #fff7ef;
+    color: var(--color-on-primary);
   }
 
   .detail-link {
     display: inline-block;
     padding: 0.85rem 1.1rem;
     background-color: var(--color-primary);
-    color: #fff7ef;
+    color: var(--color-on-primary);
     border-radius: 999px;
     font-weight: 600;
     transition: background-color 0.2s ease;

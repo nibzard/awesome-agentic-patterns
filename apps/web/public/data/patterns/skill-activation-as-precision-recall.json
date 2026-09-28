@@ -20,7 +20,7 @@
   ],
   "slug": "skill-activation-as-precision-recall",
   "id": "skill-activation-as-a-precisionrecall-measurement",
-  "summary": "Treat \"did the right skill load?\" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.",
+  "summary": "Measures skill routing as classification with a labelled prompt dataset, per-skill precision and recall, and CI thresholds that fail the build",
   "complexity": "medium",
   "effort": "days",
   "impact": "high",

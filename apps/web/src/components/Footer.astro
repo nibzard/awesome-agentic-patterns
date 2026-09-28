@@ -1,29 +1,49 @@
 ---
+// ABOUTME: Site footer: link columns, an optional one-line newsletter signup, and the license line.
+// ABOUTME: Pages with the docs sidebar hide the footer signup, because the sidebar shows it.
+import NewsletterCTA from './NewsletterCTA.astro';
+
+interface Props {
+  newsletter?: boolean;
+}
+
+const { newsletter = true } = Astro.props;
+
 const currentYear = new Date().getFullYear();
+const repoUrl = 'https://github.com/nibzard/awesome-agentic-patterns';
 
 const footerSections = [
   {
     title: 'Library',
     links: [
-      { href: '/patterns', label: 'Browse Patterns' },
-      { href: '/graph', label: 'Pattern Graph' },
-      { href: '/decision', label: 'Decision Guide' },
+      { href: '/', label: 'All patterns' },
       { href: '/guides', label: 'Guides' },
+      { href: '/decision', label: 'Decision guide' },
+      { href: '/graph', label: 'Pattern graph' },
+    ],
+  },
+  {
+    title: 'For agents',
+    links: [
+      { href: '/agents', label: 'How to use' },
+      { href: '/llms.txt', label: 'llms.txt' },
+      { href: '/patterns.json', label: 'patterns.json' },
+      { href: '/rss.xml', label: 'RSS' },
     ],
   },
   {
     title: 'Project',
     links: [
-      { href: '/contribute', label: 'Contribute' },
-      { href: 'https://github.com/nibzard/awesome-agentic-patterns', label: 'GitHub' },
+      { href: '/contribute', label: 'Propose a pattern' },
+      { href: repoUrl, label: 'GitHub' },
       { href: 'https://x.com/nibzard', label: 'Twitter' },
     ],
   },
   {
     title: 'Policy',
     links: [
-      { href: '/privacy', label: 'Privacy Policy' },
-      { href: '/terms', label: 'Terms of Service' },
+      { href: '/privacy', label: 'Privacy' },
+      { href: '/terms', label: 'Terms' },
     ],
   },
 ];
@@ -31,30 +51,11 @@ const footerSections = [
 
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-intro">
-      <h2 class="footer-headline">A reference surface for teams building agent products.</h2>
-      <p class="footer-copy">
-        Browse patterns, compare trade-offs, and move from first prototype to production-grade agent
-        systems with fewer blind spots.
-      </p>
-      <div class="footer-actions">
-        <a href="/patterns" class="button button--primary">Browse the Library</a>
-        <a
-          href="https://github.com/nibzard/awesome-agentic-patterns"
-          target="_blank"
-          rel="noreferrer"
-          class="footer-inline-link"
-        >
-          View repository ↗
-        </a>
-      </div>
-    </div>
-
     <div class="footer-links">
       {
         footerSections.map((section) => (
           <div class="footer-section">
-            <h3 class="footer-section-title">{section.title}</h3>
+            <h2 class="footer-section-title">{section.title}</h2>
             <ul class="footer-section-links">
               {section.links.map((link) => (
                 <li>
@@ -68,166 +69,92 @@ const footerSections = [
         ))
       }
     </div>
-  </div>
 
-  <div class="footer-bottom">
+    {
+      newsletter && (
+        <div class="footer-newsletter">
+          <NewsletterCTA
+            variant="compact"
+            title="Get an email when new patterns land"
+            buttonText="Subscribe"
+          />
+        </div>
+      )
+    }
+
     <p class="footer-copyright">
-      &copy; {currentYear} Awesome Agentic Patterns. Built as an open reference for shipping AI agents.
+      &copy; {currentYear} Awesome Agentic Patterns contributors. Apache-2.0. <a
+        href={repoUrl}
+        class="footer-link">Source on GitHub</a
+      >.
     </p>
   </div>
 </footer>
 
 <style>
   .footer {
-    margin-top: auto;
-    border-top: 1px solid var(--color-divider);
-    background: linear-gradient(
-      180deg,
-      rgba(255, 250, 242, 0.25) 0%,
-      rgba(229, 215, 192, 0.72) 100%
-    );
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-soft);
+    font-size: 0.8125rem;
   }
 
   .footer-container {
     max-width: var(--page-max);
     margin: 0 auto;
-    padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-2xl);
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: start;
-  }
-
-  .footer-intro {
-    max-width: 38rem;
-  }
-
-  .footer-headline {
-    margin-top: var(--spacing-md);
-    font-size: clamp(2rem, 5vw, 3.4rem);
-  }
-
-  .footer-copy {
-    margin-top: var(--spacing-lg);
-    max-width: 34rem;
-    color: var(--color-text-muted);
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
-
-  .footer-actions {
-    margin-top: var(--spacing-xl);
+    padding: 2rem 1.5rem 1.5rem;
     display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-  }
-
-  .footer-inline-link {
-    color: var(--color-text-muted);
-    font-weight: 600;
-  }
-
-  .footer-inline-link:hover {
-    color: var(--color-primary);
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .footer-links {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--spacing-xl);
-    padding-top: 0.4rem;
+    grid-template-columns: repeat(4, minmax(0, 10rem));
+    gap: 1.5rem;
   }
 
   .footer-section-title {
-    margin-bottom: var(--spacing-md);
-    color: var(--color-text-muted);
-    font-size: 0.76rem;
-    letter-spacing: 0.12em;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--color-text-muted);
   }
 
   .footer-section-links {
     list-style: none;
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.3rem;
   }
 
   .footer-link {
     color: var(--color-text);
-    font-weight: 500;
   }
 
   .footer-link:hover {
     color: var(--color-primary);
   }
 
-  .footer-bottom {
-    max-width: var(--page-max);
-    margin: 0 auto;
-    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-xl);
-    border-top: 1px solid rgba(182, 164, 143, 0.45);
+  .footer-newsletter {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
   }
 
   .footer-copyright {
     margin: 0;
     color: var(--color-text-muted);
-    font-size: 0.82rem;
   }
 
-  :root[data-theme='dark'] .footer {
-    border-top-color: rgba(104, 84, 69, 0.82);
-    background: linear-gradient(180deg, rgba(32, 26, 21, 0.9) 0%, rgba(54, 44, 36, 0.96) 100%);
-  }
-
-  :root[data-theme='dark'] .footer-copy,
-  :root[data-theme='dark'] .footer-inline-link,
-  :root[data-theme='dark'] .footer-section-title,
-  :root[data-theme='dark'] .footer-copyright {
-    color: #d4c9bb;
-  }
-
-  :root[data-theme='dark'] .footer-bottom {
-    border-top-color: rgba(104, 84, 69, 0.76);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) .footer {
-      border-top-color: rgba(104, 84, 69, 0.82);
-      background: linear-gradient(180deg, rgba(32, 26, 21, 0.9) 0%, rgba(54, 44, 36, 0.96) 100%);
-    }
-
-    :root:not([data-theme]) .footer-copy,
-    :root:not([data-theme]) .footer-inline-link,
-    :root:not([data-theme]) .footer-section-title,
-    :root:not([data-theme]) .footer-copyright {
-      color: #d4c9bb;
-    }
-
-    :root:not([data-theme]) .footer-bottom {
-      border-top-color: rgba(104, 84, 69, 0.76);
-    }
-  }
-
-  @media (max-width: 960px) {
+  @media (max-width: 640px) {
     .footer-container {
-      grid-template-columns: 1fr;
+      padding: 1.5rem 1rem;
     }
 
     .footer-links {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 640px) {
-    .footer-links {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
-    }
-
-    .footer-headline {
-      font-size: 2.3rem;
     }
   }
 </style>

@@ -1,0 +1,187 @@
+---
+// ABOUTME: Page that explains how agents and scripts read the catalog: llms.txt, Markdown twins, and JSON.
+// ABOUTME: All listed endpoints are static files produced by the build; none need an API key.
+import DocsLayout from '../layouts/DocsLayout.astro';
+import { getAllPatterns } from '../lib/patterns';
+import { SITE_URL } from '../lib/pattern-markdown';
+
+const patterns = await getAllPatterns();
+const example = patterns.find((p) => p.slug === 'action-selector-pattern') || patterns[0];
+
+const endpoints = [
+  {
+    path: '/llms.txt',
+    what: 'Index of every pattern: slug, title, one-line summary, page URL, Markdown URL.',
+  },
+  { path: '/llms-full.txt', what: 'Full text of every pattern in one file.' },
+  {
+    path: `/patterns/${example.slug}.md`,
+    what: 'One pattern as Markdown with YAML front-matter. Replace the slug for any pattern.',
+  },
+  {
+    path: '/patterns.json',
+    what: 'Metadata for all patterns: title, status, category, tags, summary, signals.',
+  },
+  {
+    path: `/data/patterns/${example.slug}.json`,
+    what: 'Metadata for one pattern as JSON.',
+  },
+  { path: '/graph.json', what: 'Nodes and "related" edges between patterns.' },
+  { path: '/rss.xml', what: 'Feed of added and updated patterns.' },
+];
+
+const curlExample = `# Find patterns about prompt injection
+curl -s ${SITE_URL}/llms.txt | grep -i -B1 -A2 injection
+
+# Read one pattern
+curl -s ${SITE_URL}/patterns/${example.slug}.md`;
+
+const promptExample = `Read ${SITE_URL}/llms.txt and pick the patterns that fit this project.
+For each one, fetch its .md file, compare its "Use when" and "Avoid when"
+lists with the codebase, and tell me which pattern to apply first and why.`;
+---
+
+<DocsLayout
+  title="Use from an agent - Agentic Patterns"
+  description="Read the Agentic Patterns catalog from an AI agent or script: llms.txt, Markdown for every pattern, and JSON metadata."
+>
+  <article class="agents-page">
+    <h1>Use the catalog from an agent</h1>
+    <p class="agents-lede">
+      Every pattern has a stable slug and a Markdown twin. All endpoints below are static files. You
+      do not need an API key.
+    </p>
+
+    <h2>Endpoints</h2>
+    <div class="agents-table">
+      <table>
+        <thead>
+          <tr><th>URL</th><th>Contents</th></tr>
+        </thead>
+        <tbody>
+          {
+            endpoints.map((endpoint) => (
+              <tr>
+                <td>
+                  <a href={endpoint.path}>
+                    <code>{endpoint.path}</code>
+                  </a>
+                </td>
+                <td>{endpoint.what}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <h2>From the command line</h2>
+    <pre><code>{curlExample}</code></pre>
+
+    <h2>From a coding agent</h2>
+    <p>Give your agent a prompt like this one:</p>
+    <pre><code>{promptExample}</code></pre>
+    <p>
+      On any pattern page, <strong>Copy for agent</strong> copies the pattern as Markdown with a short
+      instruction to check fit and list the files to change first.
+    </p>
+
+    <h2>Discovery</h2>
+    <p>
+      Every page links <code>/llms.txt</code> with <code>&lt;link rel="alternate"&gt;</code>.
+      Pattern pages also link their Markdown twin with <code>type="text/markdown"</code>, so a
+      browsing agent can find the Markdown from the HTML page.
+    </p>
+
+    <h2>Something missing?</h2>
+    <p>
+      Tell us what your agent needs in a <a
+        href="https://github.com/nibzard/awesome-agentic-patterns/issues"
+        target="_blank"
+        rel="noreferrer">GitHub issue</a
+      >.
+    </p>
+  </article>
+</DocsLayout>
+
+<style>
+  .agents-page {
+    max-width: 46rem;
+    line-height: 1.7;
+  }
+
+  .agents-page h1 {
+    font-size: 1.75rem;
+  }
+
+  .agents-lede {
+    margin-top: 0.5rem;
+    color: var(--text-muted-strong);
+    font-size: 1.0625rem;
+  }
+
+  .agents-page h2 {
+    margin-top: 2rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 1.2rem;
+  }
+
+  .agents-page p {
+    margin: 0.75rem 0;
+  }
+
+  .agents-page a {
+    color: var(--color-primary);
+  }
+
+  .agents-page :not(pre) > code {
+    padding: 0.1rem 0.3rem;
+    border-radius: var(--radius-sm);
+    background: var(--code-bg);
+    font-size: 0.85em;
+  }
+
+  .agents-page pre {
+    margin-top: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--code-block-bg);
+    color: var(--code-block-fg);
+    overflow-x: auto;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .agents-table {
+    margin-top: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .agents-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .agents-table th,
+  .agents-table td {
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .agents-table th {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .agents-table td:first-child {
+    white-space: nowrap;
+  }
+</style>

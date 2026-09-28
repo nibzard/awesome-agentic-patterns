@@ -8,7 +8,7 @@
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[402-First Machine Payments (Price-Before-Work Tool Purchases)]]></title>
-            <description><![CDATA[An autonomous agent mid task often needs a capability it does not have — summarize a long document, extract entities from a contract, fetch a paywalled dataset.]]></description>
+            <description><![CDATA[Server returns an HTTP 402 price quote before doing work, and the agent pays the exact amount only if it fits its budget cap]]></description>
             <link>https://agentic-patterns.com/patterns/402-first-machine-payments</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/402-first-machine-payments</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -23,7 +23,7 @@
         </item>
         <item>
             <title><![CDATA[Classify-Then-Act for Background Agents]]></title>
-            <description><![CDATA[A background agent working through a task list has two failure modes at the extremes.]]></description>
+            <description><![CDATA[Sorts each task into has-default, needs-intent, or out-of-scope, builds only has-default work in a sandbox, and queues it for human review]]></description>
             <link>https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -36,7 +36,7 @@
         </item>
         <item>
             <title><![CDATA[Design-Time File Partition as Concurrency Control]]></title>
-            <description><![CDATA[Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.]]></description>
+            <description><![CDATA[Each task declares every path it will write; overlapping tasks get a blocking dependency so only disjoint work runs at once on a shared checkout]]></description>
             <link>https://agentic-patterns.com/patterns/design-time-file-partition</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/design-time-file-partition</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -65,7 +65,7 @@
         </item>
         <item>
             <title><![CDATA[Non-Generative Judgment Routing with Typed Escalation]]></title>
-            <description><![CDATA[Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract.]]></description>
+            <description><![CDATA[Sends decision-only loop steps as batched typed questions to a non-generative judgment model and escalates what it cannot answer back to the LLM]]></description>
             <link>https://agentic-patterns.com/patterns/non-generative-judgment-routing</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/non-generative-judgment-routing</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -124,7 +124,7 @@
         </item>
         <item>
             <title><![CDATA[Skill Activation as a Precision/Recall Measurement]]></title>
-            <description><![CDATA[Treat "did the right skill load?" as a classification problem with a labelled dataset and per-skill precision/recall, because skill selection is a routing decision that silently changes whenever any description in the catalog changes.]]></description>
+            <description><![CDATA[Measures skill routing as classification with a labelled prompt dataset, per-skill precision and recall, and CI thresholds that fail the build]]></description>
             <link>https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -139,7 +139,7 @@
         </item>
         <item>
             <title><![CDATA[Tier Auto-Apply by Mechanical Impact]]></title>
-            <description><![CDATA[A system that reviews itself and applies its own findings, a self auditing agent, say, needs a line between "apply automatically" and "ask a human first." The tempting way to draw that line is from how confident or severe a finding sounds.]]></description>
+            <description><![CDATA[Decides which self-proposed changes auto-apply by matching the real diff's file paths and change kinds against a trusted tier table, not by finding text]]></description>
             <link>https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -180,7 +180,7 @@
         </item>
         <item>
             <title><![CDATA[Dual-Rail Message Delivery]]></title>
-            <description><![CDATA[Agents running on separate machines coordinate over a single channel: a synced folder, a queue, or a chat.]]></description>
+            <description><![CDATA[Sends every inter-agent message on two independent channels through one entry point, alerts when the rails diverge, and requires ACKs to confirm completion]]></description>
             <link>https://agentic-patterns.com/patterns/dual-rail-message-delivery</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/dual-rail-message-delivery</guid>
             <category><![CDATA[Orchestration & Control]]></category>
@@ -196,7 +196,7 @@
         </item>
         <item>
             <title><![CDATA[Evidence-Layered Evaluation for Interactive Agents]]></title>
-            <description><![CDATA[Interactive agents can reach the wrong outcome for many different reasons: a bad plan, an incorrect click, a transient site response, or an evaluator that cannot observe the relevant state.]]></description>
+            <description><![CDATA[Scores interactive agent runs on a task outcome assertion and links each result to layered evidence: actions, screenshots, replays, network, and messages]]></description>
             <link>https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents</guid>
             <category><![CDATA[Reliability & Eval]]></category>
@@ -223,7 +223,7 @@
         </item>
         <item>
             <title><![CDATA[Filesystem-Mediated Host Delegation]]></title>
-            <description><![CDATA[An agent that runs inside a sandbox — a container, a hosted runtime, a cloud workspace — is deliberately cut off from the developer's real machine.]]></description>
+            <description><![CDATA[Lets a sandboxed agent write request files to a shared spool directory that a host daemon runs against a whitelist, with idempotent results the agent polls for]]></description>
             <link>https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation</link>
             <guid isPermaLink="true">https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation</guid>
             <category><![CDATA[Tool Use & Environment]]></category>

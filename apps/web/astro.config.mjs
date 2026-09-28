@@ -14,6 +14,10 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [[remarkAssetPaths, { basePath: '' }]],
     rehypePlugins: [rehypeMermaid],
+    shikiConfig: {
+      // Pattern files use these fence labels for pseudocode; render them as plain text.
+      langAlias: { pseudo: 'plaintext', dsl: 'plaintext' },
+    },
   },
   vite: {
     build: {

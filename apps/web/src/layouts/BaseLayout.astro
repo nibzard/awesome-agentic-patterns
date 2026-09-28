@@ -1,4 +1,6 @@
 ---
+// ABOUTME: Page shell for every route: head metadata, theme boot script, header, and footer.
+// ABOUTME: Pages can set a canonical path and a Markdown alternate URL for agents.
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -8,6 +10,9 @@ interface Props {
   description?: string;
   image?: string;
   type?: 'website' | 'article';
+  canonicalPath?: string;
+  markdownPath?: string;
+  footerNewsletter?: boolean;
 }
 
 const {
@@ -15,9 +20,12 @@ const {
   description = 'A curated catalogue of AI agent design patterns.',
   image = '/og-image.svg',
   type = 'website',
+  canonicalPath,
+  markdownPath,
+  footerNewsletter = true,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = new URL(canonicalPath || Astro.url.pathname, Astro.site);
 
 // Theme initialization script - runs before page render to prevent flash
 const themeScript = `
@@ -42,6 +50,8 @@ const themeScript = `
     <meta name="viewport" content="width=device-width" />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
+    {markdownPath && <link rel="alternate" type="text/markdown" href={markdownPath} />}
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -63,14 +73,14 @@ const themeScript = `
     <meta property="twitter:image" content={new URL(image, Astro.site)} />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#c24331" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#ec745f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e0f11" media="(prefers-color-scheme: dark)" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
     />
 
     <!-- Theme Initialization -->
@@ -84,6 +94,6 @@ const themeScript = `
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    <Footer newsletter={footerNewsletter} />
   </body>
 </html>

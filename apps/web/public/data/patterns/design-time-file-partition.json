@@ -19,7 +19,7 @@
   ],
   "slug": "design-time-file-partition",
   "id": "design-time-file-partition-as-concurrency-control",
-  "summary": "Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once.",
+  "summary": "Each task declares every path it will write; overlapping tasks get a blocking dependency so only disjoint work runs at once on a shared checkout",
   "maturity": "early",
   "complexity": "low",
   "effort": "hours",

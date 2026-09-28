@@ -1,0 +1,94 @@
+---
+// ABOUTME: Docs shell layout: category sidebar on the left, page content, and an optional right rail.
+// ABOUTME: Wraps BaseLayout so head metadata, header, and footer stay in one place.
+import BaseLayout from './BaseLayout.astro';
+import DocsSidebar from '../components/DocsSidebar.astro';
+import { getAllPatterns } from '../lib/patterns';
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+  canonicalPath?: string;
+  markdownPath?: string;
+  activeCategory?: string;
+  activeSlug?: string;
+}
+
+const { activeCategory, activeSlug, ...layoutProps } = Astro.props;
+const patterns = await getAllPatterns();
+const hasRail = Astro.slots.has('rail');
+---
+
+<BaseLayout {...layoutProps} footerNewsletter={false}>
+  <div class:list={['docs-shell', { 'docs-shell--rail': hasRail }]}>
+    <aside class="docs-shell-sidebar">
+      <DocsSidebar {patterns} {activeCategory} {activeSlug} />
+    </aside>
+    <div class="docs-shell-main">
+      <slot />
+    </div>
+    {
+      hasRail && (
+        <aside class="docs-shell-rail">
+          <slot name="rail" />
+        </aside>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .docs-shell {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .docs-shell--rail {
+    grid-template-columns: 15rem minmax(0, 1fr) 13rem;
+  }
+
+  .docs-shell-sidebar {
+    border-right: 1px solid var(--color-border);
+  }
+
+  .docs-shell-main {
+    min-width: 0;
+    padding: 1.75rem 0 4rem;
+  }
+
+  .docs-shell-rail {
+    min-width: 0;
+  }
+
+  @media (max-width: 1180px) {
+    .docs-shell--rail {
+      grid-template-columns: 15rem minmax(0, 1fr);
+    }
+
+    .docs-shell-rail {
+      display: none;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .docs-shell,
+    .docs-shell--rail {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding: 0 1rem;
+    }
+
+    .docs-shell-sidebar {
+      border-right: 0;
+    }
+
+    .docs-shell-main {
+      padding-top: 1.25rem;
+    }
+  }
+</style>

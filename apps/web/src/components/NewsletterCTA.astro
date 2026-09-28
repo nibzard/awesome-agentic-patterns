@@ -1,5 +1,6 @@
 ---
 // ABOUTME: NewsletterCTA component - A reusable newsletter subscription form component
+// ABOUTME: Renders as one compact row; the site shows it once, in the footer.
 
 interface Props {
   variant?: 'default' | 'compact' | 'banner' | 'minimal';
@@ -127,114 +128,106 @@ const {
 
 <style>
   .newsletter-cta {
-    border-radius: var(--radius-lg);
-    padding: clamp(1.35rem, 3vw, 2rem);
-    background: rgba(255, 250, 242, 0.76);
-    border: 1px solid rgba(182, 164, 143, 0.48);
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(16px);
-  }
-
-  .newsletter-cta-content {
-    margin-bottom: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
   }
 
   .newsletter-cta-title {
-    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
-    margin-bottom: var(--spacing-sm);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-text);
   }
 
-  .newsletter-cta-description {
-    font-size: 0.98rem;
+  .newsletter-cta-description,
+  .newsletter-cta-invite {
+    margin: 0.15rem 0 0;
+    font-size: 0.8125rem;
     color: var(--color-text-muted);
-    margin: 0;
-    line-height: 1.7;
   }
 
   .newsletter-cta-form {
-    width: 100%;
+    flex: 1;
+    min-width: min(100%, 18rem);
+    max-width: 26rem;
   }
 
   .newsletter-cta-input-group {
     display: flex;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 
   .newsletter-cta-input {
     flex: 1;
-    min-width: 220px;
-    padding: 0.95rem 1rem;
+    min-width: 0;
+    height: 2rem;
+    padding: 0 0.6rem;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
-    font-size: 0.95rem;
-    background-color: var(--color-bg-elevated);
-    color: var(--color-text);
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    font-size: 0.8125rem;
   }
 
   .newsletter-cta-input:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--color-primary-light);
-  }
-
-  .newsletter-cta-input::placeholder {
-    color: var(--color-text-muted);
+    border-color: var(--color-text-muted);
   }
 
   .newsletter-cta-button {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    padding: 0.95rem 1.2rem;
-    background-color: var(--color-primary);
-    color: #fff7ef;
-    border: none;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    gap: 0.35rem;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    font-size: 0.8125rem;
+    font-weight: 500;
     cursor: pointer;
-    transition:
-      background-color 0.2s ease,
-      transform 0.2s ease;
-    white-space: nowrap;
   }
 
   .newsletter-cta-button:hover:not(:disabled) {
-    background-color: var(--color-primary-hover);
-    transform: translateY(-1px);
+    border-color: var(--color-divider);
   }
 
   .newsletter-cta-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+    opacity: 0.6;
+    cursor: default;
   }
 
   .newsletter-cta-spinner {
     display: none;
   }
 
-  .spinner-spinning {
+  .newsletter-cta-spinner.spinner-spinning {
     display: block;
-    animation: spin 1s linear infinite;
+    animation: newsletter-spin 0.8s linear infinite;
   }
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
+  @keyframes newsletter-spin {
     to {
       transform: rotate(360deg);
     }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-cta-spinner.spinner-spinning {
+      animation: none;
+    }
+  }
+
   .newsletter-cta-message {
-    margin-top: var(--spacing-sm);
-    font-size: 0.82rem;
-    min-height: 1.25rem;
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+  }
+
+  .newsletter-cta-message:empty {
+    display: none;
   }
 
   .newsletter-cta-message--success {
@@ -243,126 +236,5 @@ const {
 
   .newsletter-cta-message--error {
     color: var(--color-error);
-  }
-
-  /* Compact variant */
-  .newsletter-cta--compact {
-    padding: var(--spacing-md);
-  }
-
-  .newsletter-cta--compact .newsletter-cta-content {
-    margin-bottom: var(--spacing-sm);
-  }
-
-  .newsletter-cta--compact .newsletter-cta-title {
-    font-size: 1rem;
-  }
-
-  .newsletter-cta--compact .newsletter-cta-description {
-    font-size: 0.875rem;
-  }
-
-  /* Banner variant */
-  .newsletter-cta--banner {
-    background:
-      radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 32%),
-      linear-gradient(135deg, var(--color-primary) 0%, #7f2c22 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-  }
-
-  .newsletter-cta--banner .newsletter-cta-title {
-    color: #fff7ef;
-  }
-
-  .newsletter-cta--banner .newsletter-cta-description {
-    color: rgba(255, 247, 239, 0.88);
-  }
-
-  .newsletter-cta--banner .newsletter-cta-input {
-    background-color: rgba(255, 247, 239, 0.96);
-  }
-
-  /* Minimal variant - for footer */
-  .newsletter-cta--minimal {
-    padding: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    backdrop-filter: none;
-  }
-
-  .newsletter-cta--minimal .newsletter-cta-content {
-    display: none;
-  }
-
-  .newsletter-cta--minimal .newsletter-cta-form {
-    width: 100%;
-  }
-
-  .newsletter-cta-invite {
-    font-size: 0.74rem;
-    color: var(--color-text-muted);
-    margin: 0 0 var(--spacing-xs) 0;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .newsletter-cta--minimal .newsletter-cta-input {
-    padding: 0.7rem 0.85rem;
-    font-size: 0.82rem;
-    border: 1px solid var(--color-border);
-    background-color: var(--color-bg-elevated);
-  }
-
-  .newsletter-cta--minimal .newsletter-cta-input:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px var(--color-primary-light);
-  }
-
-  .newsletter-cta--minimal .newsletter-cta-button {
-    padding: 0.7rem 0.95rem;
-    font-size: 0.82rem;
-  }
-
-  .newsletter-cta--minimal .newsletter-cta-message {
-    font-size: 0.75rem;
-    margin-top: var(--spacing-xs);
-  }
-
-  /* Responsive */
-  @media (max-width: 640px) {
-    .newsletter-cta-input-group {
-      flex-direction: column;
-    }
-
-    .newsletter-cta-input,
-    .newsletter-cta-button {
-      width: 100%;
-    }
-  }
-
-  :root[data-theme='dark'] .newsletter-cta {
-    background: rgba(31, 25, 20, 0.82);
-    border-color: rgba(88, 71, 58, 0.8);
-  }
-
-  :root[data-theme='dark'] .newsletter-cta--banner {
-    background:
-      radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 32%),
-      linear-gradient(135deg, #c95342 0%, #6f271f 100%);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) .newsletter-cta {
-      background: rgba(31, 25, 20, 0.82);
-      border-color: rgba(88, 71, 58, 0.8);
-    }
-
-    :root:not([data-theme]) .newsletter-cta--banner {
-      background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 32%),
-        linear-gradient(135deg, #c95342 0%, #6f271f 100%);
-    }
   }
 </style>

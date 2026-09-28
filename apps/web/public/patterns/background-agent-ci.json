@@ -16,7 +16,16 @@
   ],
   "slug": "background-agent-ci",
   "id": "background-agent-with-ci-feedback",
-  "summary": "## Problem\nLong-running tasks tie up the editor and require developers to babysit the agent.",
+  "summary": "Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked",
+  "signals": [
+    "Long-running refactors or dependency upgrades",
+    "Developers wait and poll for CI results",
+    "CI gives objective pass or fail signals"
+  ],
+  "anti_signals": [
+    "No reliable CI suite exists",
+    "Task needs frequent human decisions during the work"
+  ],
   "updated_at": "2026-01-05",
   "body": "\n## Problem\n\nLong-running refactors and flaky-fix cycles force developers into synchronous supervision. When the agent must wait on tests, build jobs, and deployment checks, human attention gets wasted on polling instead of decision-making. This bottleneck is worse in distributed teams where CI feedback arrives minutes later and context-switch cost is high.\n\n## Solution\n\nRun the agent asynchronously in the background with CI as the objective feedback channel. The agent pushes a branch, waits for CI results, patches failures, and repeats until policy-defined stopping conditions are met. Users are only pulled back in for approvals, ambiguous failures, or final review.\n\nProduction implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands.\n\nKey mechanics:\n- Branch-per-task isolation (often via cloud-based execution or git worktrees).\n- CI log ingestion into structured failure signals.\n- Retry budget and stop rules to avoid infinite churn.\n- Notification on terminal states (`green`, `blocked`, `needs-human`).\n\n## Example (flow)\n\n```mermaid\nsequenceDiagram\n  Dev->>Agent: \"Upgrade to React 19\"\n  Agent->>Git: push branch react19-upgrade\n  Agent-->>CI: trigger tests\n  CI-->>Agent: 12 failures\n  Agent->>Files: patch imports\n  Agent-->>CI: re-run\n  CI-->>Agent: ✅ all green\n  Agent-->>Dev: PR ready\n```\n\n## How to use it\n\n- Start with deterministic tasks: dependency upgrades, lint migrations, flaky test triage.\n- Define retry budgets (`max_attempts`, `max_runtime`) and escalation triggers.\n- Use safe defaults: read-only permissions where possible, draft PRs for AI-generated changes.\n- Keep artifact links in notifications so humans can review failures quickly.\n- Gate merge on CI plus at least one human approval for high-risk repos.\n- Consider durable execution mechanisms (Temporal, LangGraph) for long-running tasks.\n\n## Trade-offs\n\n* **Pros:** Better developer focus, lower waiting time, and tighter CI-driven iteration loops.\n* **Cons:** Requires robust task lifecycle management, failure triage logic, and notification discipline.\n\n## References\n\n* Raising An Agent - Episode 6: Background agents use existing CI as the feedback loop.\n* GitHub Agentic Workflows (2026) - Agents run within GitHub Actions with safety controls.\n* OpenHands - Open-source platform achieving 72% on SWE-bench Verified.\n\n[Source](https://ampcode.com/manual#background)\n"
 }

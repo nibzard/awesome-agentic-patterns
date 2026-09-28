@@ -11,7 +11,7 @@
       "@lib/*": ["./src/lib/*"],
       "@types/*": ["./src/types/*"]
     },
-    "types": ["astro/client", "node"],
+    "types": ["astro/client", "node", "bun"],
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "esModuleInterop": true,

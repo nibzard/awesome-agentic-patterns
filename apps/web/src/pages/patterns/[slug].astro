@@ -1,12 +1,14 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+// ABOUTME: Pattern page in the docs shell: summary, use/avoid lists, every body section, and related patterns.
+// ABOUTME: Links a Markdown twin at /patterns/<slug>.md for agents and crawlers.
+import DocsLayout from '../../layouts/DocsLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
 import PatternActions from '../../components/PatternActions.astro';
-import PatternList from '../../components/PatternList.astro';
-import NewsletterCTA from '../../components/NewsletterCTA.astro';
 import type { PatternEntry } from '../../types';
 import { getAllPatterns } from '../../lib/patterns';
 import { renderMarkdown } from '../../lib/markdown';
+import { splitSections } from '../../lib/sections';
+import { pickRelated } from '../../lib/related';
 
 export async function getStaticPaths() {
   const patterns = await getAllPatterns();
@@ -19,571 +21,541 @@ export async function getStaticPaths() {
 const allPatterns = await getAllPatterns();
 const { pattern } = Astro.props as { pattern: PatternEntry };
 
-const patternById = new Map(allPatterns.map((entry) => [entry.id, entry]));
-const patternBySlug = new Map(allPatterns.map((entry) => [entry.slug, entry]));
+const repoUrl = 'https://github.com/nibzard/awesome-agentic-patterns';
+const editUrl = `${repoUrl}/edit/main/patterns/${pattern.slug}.md`;
+const markdownPath = `/patterns/${pattern.slug}.md`;
 
-const resolvePattern = (id: string) => patternById.get(id) || patternBySlug.get(id);
+const sections = splitSections(pattern.body).map((section) => ({
+  ...section,
+  html: renderMarkdown(section.markdown),
+}));
 
-const toListItem = (entry: PatternEntry) => ({
-  title: entry.title,
-  slug: entry.slug,
-  summary: entry.summary,
-  status: entry.status,
-  category: entry.category,
-  tags: entry.tags,
+const related = pickRelated(pattern, allPatterns, 4);
+
+const patternByKey = new Map<string, PatternEntry>();
+allPatterns.forEach((entry) => {
+  patternByKey.set(entry.id, entry);
+  patternByKey.set(entry.slug, entry);
 });
-
-const relatedPatterns = (pattern.related || [])
-  .map((id) => resolvePattern(id))
-  .filter(Boolean)
-  .map((entry) => toListItem(entry as typeof pattern));
-
 const antiPatterns = (pattern.anti_patterns || [])
-  .map((id) => resolvePattern(id))
-  .filter(Boolean)
-  .map((entry) => toListItem(entry as typeof pattern));
+  .map((key) => patternByKey.get(key))
+  .filter((entry): entry is PatternEntry => Boolean(entry));
 
-function extractSection(body: string, sectionName: string): string | null {
-  const regex = new RegExp(`## ${sectionName}\\n([\\s\\S]*?)(?=## |$)`, 'i');
-  const match = body.match(regex);
-  return match ? match[1].trim() : null;
-}
+const hasUseAvoid = Boolean(pattern.signals?.length || pattern.anti_signals?.length);
+const railLinks = [
+  ...(hasUseAvoid ? [{ id: 'use-avoid', label: 'Use or avoid' }] : []),
+  ...sections.map(({ id, label }) => ({ id, label })),
+  ...(related.length ? [{ id: 'related', label: 'Related patterns' }] : []),
+];
 
-function renderSection(body: string, sectionName: string): string | null {
-  const section = extractSection(body, sectionName);
-  return section ? renderMarkdown(section) : null;
-}
-
-const sectionDefinitions = [
-  { id: 'problem', label: 'Problem', number: '01', html: renderSection(pattern.body, 'Problem') },
-  {
-    id: 'solution',
-    label: 'Solution',
-    number: '02',
-    html: renderSection(pattern.body, 'Solution'),
-  },
-  {
-    id: 'how-to-use-it',
-    label: 'How to use it',
-    number: '03',
-    html: renderSection(pattern.body, 'How to use it'),
-  },
-  {
-    id: 'tradeoffs',
-    label: 'Trade-offs',
-    number: '04',
-    html: renderSection(pattern.body, 'Trade-offs'),
-  },
-  { id: 'example', label: 'Example', number: '05', html: renderSection(pattern.body, 'Example') },
-  {
-    id: 'references',
-    label: 'References',
-    number: '06',
-    html: renderSection(pattern.body, 'References'),
-  },
-].filter((section) => section.html);
-
-const formatDate = (value?: string) =>
-  value
-    ? new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(
-        new Date(value)
-      )
-    : null;
-
-const summaryFacts = [
-  { label: 'Category', value: pattern.category },
-  { label: 'Status', value: pattern.status.replace(/-/g, ' ') },
+const statusLabel = pattern.status.replace(/-/g, ' ');
+const extraFacts = [
   { label: 'Complexity', value: pattern.complexity },
   { label: 'Maturity', value: pattern.maturity },
   { label: 'Effort', value: pattern.effort },
   { label: 'Impact', value: pattern.impact },
-  { label: 'Updated', value: formatDate(pattern.updated_at) },
-].filter((item) => item.value);
+].filter((fact) => fact.value);
 ---
 
-<BaseLayout
-  title={`${pattern.title} - Pattern`}
+<DocsLayout
+  title={`${pattern.title} - Agentic Patterns`}
   description={pattern.summary || `Reference entry for ${pattern.title}.`}
   type="article"
+  {markdownPath}
+  activeCategory={pattern.category}
+  activeSlug={pattern.slug}
 >
-  <div class="pattern-page">
-    <section class="pattern-hero">
-      <div class="pattern-hero-main">
-        <div class="pattern-meta">
-          <span class="section-label">Pattern Reference</span>
-          <span class="pattern-pill pattern-pill--category">{pattern.category}</span>
-          <span class="pattern-pill pattern-pill--status">{pattern.status.replace(/-/g, ' ')}</span>
-          {
-            pattern.complexity && (
-              <span class="pattern-pill pattern-pill--neutral">{pattern.complexity}</span>
-            )
-          }
-          {
-            pattern.maturity && (
-              <span class="pattern-pill pattern-pill--neutral">{pattern.maturity}</span>
-            )
-          }
-        </div>
+  <article class="pattern" data-pagefind-body>
+    <nav class="pattern-crumbs" aria-label="Breadcrumb">
+      <a href="/">Patterns</a>
+      <span aria-hidden="true">/</span>
+      <a href={`/?category=${encodeURIComponent(pattern.category)}`}>{pattern.category}</a>
+    </nav>
 
-        <h1>{pattern.title}</h1>
-        {pattern.summary && <p class="pattern-summary">{pattern.summary}</p>}
+    <h1 data-pagefind-meta="title">{pattern.title}</h1>
+    {pattern.summary && <p class="pattern-summary">{pattern.summary}</p>}
 
-        <div class="pattern-authors">
-          <span class="pattern-authors-label">By</span>
-          {pattern.authors.map((author) => <span class="author">{author}</span>)}
-        </div>
+    <div class="pattern-meta" data-pagefind-ignore>
+      <span class={`status-pill status-pill--${pattern.status}`}>{statusLabel}</span>
+      {pattern.updated_at && <span>Updated {pattern.updated_at}</span>}
+      <span>By {pattern.authors.join(', ')}</span>
+      {
+        pattern.based_on && pattern.based_on.length > 0 && (
+          <span>Based on {pattern.based_on.join(', ')}</span>
+        )
+      }
+      {
+        extraFacts.map((fact) => (
+          <span>
+            {fact.label}: {fact.value}
+          </span>
+        ))
+      }
+    </div>
 
-        <PatternActions {pattern} />
-      </div>
-
-      <aside class="pattern-summary-panel surface-panel">
-        <p class="pattern-kicker">At a glance</p>
-        <div class="pattern-fact-grid">
-          {
-            summaryFacts.map((fact) => (
-              <div class="pattern-fact">
-                <span class="pattern-fact-label">{fact.label}</span>
-                <span class="pattern-fact-value">{fact.value}</span>
-              </div>
-            ))
-          }
-        </div>
-
-        {
-          pattern.tags.length > 0 && (
-            <div class="pattern-tag-cluster">
-              <p class="pattern-kicker">Tags</p>
-              <div class="pattern-tags">
-                {pattern.tags.map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
-            </div>
-          )
-        }
-      </aside>
-    </section>
-
-    <section class="pattern-body-layout">
-      <aside class="pattern-rail">
-        <div class="pattern-nav surface-panel">
-          <p class="pattern-kicker">On this page</p>
-          <nav aria-label="Pattern sections">
-            {
-              sectionDefinitions.map((section) => (
-                <a href={`#${section.id}`} class="pattern-nav-link">
-                  <span class="pattern-nav-number">{section.number}</span>
-                  <span>{section.label}</span>
-                </a>
-              ))
-            }
-          </nav>
-        </div>
-
-        {
-          pattern.source && (
-            <div class="pattern-rail-source">
-              <PatternSource source={pattern.source} />
-            </div>
-          )
-        }
-      </aside>
-
-      <article class="pattern-content">
-        {
-          sectionDefinitions.map((section) => (
-            <section id={section.id} class="pattern-section surface-panel">
-              <div class="pattern-section-header">
-                <span class="pattern-section-number">{section.number}</span>
-                <h2>{section.label}</h2>
-              </div>
-              <div class="pattern-section-body" set:html={section.html || ''} />
-            </section>
-          ))
-        }
-      </article>
-    </section>
-
-    <section class="pattern-dispatch">
-      <NewsletterCTA
-        variant="default"
-        title="Follow the library as it sharpens"
-        description="Get notified when this pattern improves or when related entries are added."
-        buttonText="Subscribe"
-      />
-    </section>
+    <div data-pagefind-ignore>
+      <PatternActions {pattern} {editUrl} {markdownPath} />
+    </div>
 
     {
-      (relatedPatterns.length > 0 || antiPatterns.length > 0) && (
-        <section class="pattern-related-grid">
-          {relatedPatterns.length > 0 && (
-            <section class="pattern-related-panel">
-              <div class="pattern-related-header">
-                <span class="section-label">Next Reads</span>
-                <h2>Related patterns</h2>
-              </div>
-              <PatternList patterns={relatedPatterns} />
-            </section>
+      hasUseAvoid && (
+        <section id="use-avoid" class="pattern-use-avoid" aria-label="When to use this pattern">
+          {pattern.signals && pattern.signals.length > 0 && (
+            <div class="pattern-box pattern-box--use">
+              <h2>Use when</h2>
+              <ul>
+                {pattern.signals.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
           )}
-
-          {antiPatterns.length > 0 && (
-            <section class="pattern-related-panel">
-              <div class="pattern-related-header">
-                <span class="section-label">Counterpoint</span>
-                <h2>Anti-patterns</h2>
-              </div>
-              <PatternList patterns={antiPatterns} />
-            </section>
+          {pattern.anti_signals && pattern.anti_signals.length > 0 && (
+            <div class="pattern-box pattern-box--avoid">
+              <h2>Avoid when</h2>
+              <ul>
+                {pattern.anti_signals.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
           )}
         </section>
       )
     }
+
+    {
+      sections.map((section) => (
+        <section id={section.id} class="pattern-section">
+          <h2>
+            <a href={`#${section.id}`} class="pattern-anchor">
+              {section.label}
+            </a>
+          </h2>
+          <div class="prose" set:html={section.html} />
+        </section>
+      ))
+    }
+
+    {
+      related.length > 0 && (
+        <section id="related" class="pattern-section" data-pagefind-ignore>
+          <h2>Related patterns</h2>
+          <ul class="pattern-related">
+            {related.map((entry) => (
+              <li>
+                <a href={`/patterns/${entry.slug}`}>
+                  <span class="pattern-related-reason">
+                    {entry.reason === 'related' ? 'linked' : `shares tags · ${entry.category}`}
+                  </span>
+                  <span class="pattern-related-title">{entry.title}</span>
+                  {entry.summary && <span class="pattern-related-summary">{entry.summary}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      antiPatterns.length > 0 && (
+        <section id="anti-patterns" class="pattern-section" data-pagefind-ignore>
+          <h2>Anti-patterns</h2>
+          <ul class="pattern-related">
+            {antiPatterns.map((entry) => (
+              <li>
+                <a href={`/patterns/${entry.slug}`}>
+                  <span class="pattern-related-title">{entry.title}</span>
+                  {entry.summary && <span class="pattern-related-summary">{entry.summary}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <footer class="pattern-footer" data-pagefind-ignore>
+      <a href={editUrl} target="_blank" rel="noreferrer">Edit this pattern on GitHub</a>
+      <a href={markdownPath}>View as Markdown</a>
+      <a href="/contribute">Propose a new pattern</a>
+    </footer>
+  </article>
+
+  <div slot="rail" class="pattern-rail">
+    <p class="section-label">On this page</p>
+    <nav aria-label="Pattern sections" class="pattern-rail-nav">
+      {
+        railLinks.map((link) => (
+          <a href={`#${link.id}`} data-rail-link={link.id}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    {
+      pattern.source && (
+        <div class="pattern-rail-block">
+          <PatternSource source={pattern.source} />
+        </div>
+      )
+    }
+
+    {
+      pattern.tags.length > 0 && (
+        <div class="pattern-rail-block">
+          <p class="section-label">Tags</p>
+          <div class="pattern-rail-tags">
+            {pattern.tags.map((tag) => (
+              <a href={`/?tag=${encodeURIComponent(tag)}`}>{tag}</a>
+            ))}
+          </div>
+        </div>
+      )
+    }
   </div>
-</BaseLayout>
+</DocsLayout>
 
 <script>
   import mermaid from 'mermaid';
 
-  const mermaidNodes = document.querySelectorAll('.mermaid');
+  const mermaidNodes = document.querySelectorAll<HTMLElement>('.mermaid');
   if (mermaidNodes.length > 0) {
-    mermaid.initialize({ startOnLoad: false });
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'neutral' });
     mermaid.run({ nodes: mermaidNodes });
+  }
+
+  // Highlight the section in view in the right rail.
+  const railLinks = new Map(
+    Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-rail-link]')).map((link) => [
+      link.dataset.railLink,
+      link,
+    ])
+  );
+  if (railLinks.size > 0 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          railLinks.forEach((link) => link.classList.remove('active'));
+          railLinks.get(entry.target.id)?.classList.add('active');
+        });
+      },
+      { rootMargin: '-15% 0px -75% 0px' }
+    );
+    railLinks.forEach((_link, id) => {
+      const target = id ? document.getElementById(id) : null;
+      if (target) observer.observe(target);
+    });
   }
 </script>
 
 <style>
-  .pattern-page {
-    max-width: var(--page-max);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
+  .pattern {
+    max-width: 48rem;
   }
 
-  .pattern-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-    gap: clamp(1.25rem, 4vw, 2.5rem);
-    padding: var(--spacing-2xl) 0;
+  .pattern-crumbs {
+    display: flex;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .pattern-crumbs a:hover {
+    color: var(--color-primary);
+  }
+
+  .pattern h1 {
+    margin-top: 0.5rem;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+
+  .pattern-summary {
+    margin: 0.6rem 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--text-muted-strong);
   }
 
   .pattern-meta {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
     flex-wrap: wrap;
-    margin-top: 0;
+    align-items: center;
+    gap: 0.35rem 0.9rem;
+    margin-top: 0.9rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
   }
 
-  .pattern-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.42rem 0.72rem;
-    border-radius: 999px;
-    font-size: 0.74rem;
-    font-weight: 700;
+  .pattern-use-avoid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .pattern-box {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .pattern-box h2 {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .pattern-pill--category {
-    background: rgba(50, 93, 150, 0.1);
-    color: var(--color-accent-blue);
+  .pattern-box--use h2 {
+    color: var(--color-success);
   }
 
-  .pattern-pill--status {
-    background: var(--color-primary-light);
+  .pattern-box--avoid h2 {
     color: var(--color-primary);
   }
 
-  .pattern-pill--neutral {
-    background: rgba(255, 250, 242, 0.72);
-    border: 1px solid rgba(182, 164, 143, 0.48);
+  .pattern-box ul {
+    margin-top: 0.45rem;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted-strong);
+  }
+
+  .pattern-box li + li {
+    margin-top: 0.25rem;
+  }
+
+  .pattern-section {
+    margin-top: 2.25rem;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .pattern-section > h2 {
+    font-size: 1.3rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pattern-anchor:hover::after {
+    content: ' #';
     color: var(--color-text-muted);
   }
 
-  .pattern-hero-main h1 {
-    margin-top: var(--spacing-md);
-    max-width: 12ch;
-    font-size: clamp(3rem, 7vw, 5.3rem);
+  .prose {
+    margin-top: 0.9rem;
+    line-height: 1.7;
   }
 
-  .pattern-summary {
-    margin-top: var(--spacing-lg);
-    max-width: 48rem;
-    color: var(--color-text-muted);
-    font-size: 1.12rem;
-    line-height: 1.8;
+  .prose :global(p) {
+    margin: 0 0 0.9rem;
   }
 
-  .pattern-authors {
-    display: flex;
-    gap: 0.55rem;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: var(--spacing-lg);
-    color: var(--color-text-muted);
+  .prose :global(h3) {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 1.05rem;
   }
 
-  .pattern-authors-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .author {
+  .prose :global(h4) {
+    margin: 1.25rem 0 0.4rem;
     font-size: 0.95rem;
   }
 
-  .pattern-summary-panel {
-    padding: 1.25rem;
-    align-self: start;
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 0.9rem;
+    padding-left: 1.3rem;
   }
 
-  .pattern-kicker {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  .prose :global(li) {
+    margin: 0.25rem 0;
   }
 
-  .pattern-fact-grid {
-    margin-top: var(--spacing-md);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
+  .prose :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
   }
 
-  .pattern-fact {
-    padding: 0.8rem;
-    border-radius: var(--radius-md);
-    background: rgba(255, 250, 242, 0.58);
-  }
-
-  .pattern-fact-label {
-    display: block;
-    color: var(--color-text-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .pattern-fact-value {
-    display: block;
-    margin-top: 0.3rem;
-    font-size: 0.98rem;
+  .prose :global(strong) {
     font-weight: 600;
-    line-height: 1.35;
   }
 
-  .pattern-tag-cluster {
-    margin-top: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid rgba(182, 164, 143, 0.42);
+  .prose :global(code) {
+    padding: 0.1rem 0.3rem;
+    border-radius: var(--radius-sm);
+    background: var(--code-bg);
+    font-size: 0.85em;
   }
 
-  .pattern-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.7rem;
+  .prose :global(pre) {
+    margin: 0 0 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--code-block-bg);
+    color: var(--code-block-fg);
+    overflow-x: auto;
+    font-size: 0.8125rem;
+    line-height: 1.6;
   }
 
-  .tag {
-    padding: 0.3rem 0.58rem;
-    border-radius: 999px;
-    background: rgba(50, 93, 150, 0.08);
+  .prose :global(pre code) {
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .prose :global(blockquote) {
+    margin: 0 0 1rem;
+    padding: 0.25rem 0 0.25rem 1rem;
+    border-left: 3px solid var(--color-divider);
     color: var(--color-text-muted);
-    font-size: 0.78rem;
   }
 
-  .pattern-body-layout {
+  .prose :global(table) {
+    display: block;
+    width: 100%;
+    margin: 0 0 1rem;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .prose :global(th),
+  .prose :global(td) {
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .prose :global(th) {
+    background: var(--color-bg-soft);
+    font-weight: 600;
+  }
+
+  .prose :global(img) {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .pattern-related {
+    list-style: none;
     display: grid;
-    grid-template-columns: 260px minmax(0, 1fr);
-    gap: clamp(1rem, 3vw, 2rem);
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+  }
+
+  .pattern-related a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    height: 100%;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .pattern-related a:hover {
+    border-color: var(--color-divider);
+  }
+
+  .pattern-related-reason {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+  }
+
+  .pattern-related-title {
+    font-weight: 550;
+  }
+
+  .pattern-related-summary {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  .pattern-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+  }
+
+  .pattern-footer a {
+    color: var(--color-primary);
   }
 
   .pattern-rail {
     position: sticky;
-    top: 88px;
-    align-self: start;
+    top: calc(var(--header-height) + 1px);
+    padding: 1.75rem 0 2rem;
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+    font-size: 0.8125rem;
   }
 
-  .pattern-nav {
-    padding: 1.1rem;
-  }
-
-  .pattern-nav nav {
-    margin-top: var(--spacing-md);
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .pattern-nav-link {
+  .pattern-rail-nav {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.65rem 0.75rem;
-    border-radius: var(--radius-md);
-    color: var(--color-text-muted);
-    font-size: 0.92rem;
-    font-weight: 600;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin-top: 0.5rem;
+    border-left: 1px solid var(--color-border);
   }
 
-  .pattern-nav-link:hover {
-    background: rgba(255, 250, 242, 0.72);
+  .pattern-rail-nav a {
+    padding: 0.2rem 0 0.2rem 0.75rem;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    color: var(--color-text-muted);
+  }
+
+  .pattern-rail-nav a:hover {
     color: var(--color-text);
   }
 
-  .pattern-nav-number {
-    display: inline-flex;
-    width: 2rem;
-    justify-content: center;
-    color: var(--color-primary);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-  }
-
-  .pattern-rail-source {
-    margin-top: var(--spacing-md);
-  }
-
-  .pattern-content {
-    display: grid;
-    gap: var(--spacing-lg);
-  }
-
-  .pattern-section {
-    padding: clamp(1.15rem, 2.4vw, 1.7rem);
-    scroll-margin-top: 110px;
-  }
-
-  .pattern-section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 0.8rem;
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid rgba(182, 164, 143, 0.42);
-  }
-
-  .pattern-section-number {
-    color: var(--color-primary);
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-  }
-
-  .pattern-section h2 {
-    font-size: clamp(1.6rem, 3vw, 2.1rem);
-  }
-
-  .pattern-section-body :global(p) {
-    color: var(--color-text-muted);
-    line-height: 1.78;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .pattern-section-body :global(h3) {
-    margin-top: var(--spacing-lg);
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.2rem;
-  }
-
-  .pattern-section-body :global(ul),
-  .pattern-section-body :global(ol) {
-    margin-bottom: var(--spacing-md);
-    padding-left: 1.2rem;
-  }
-
-  .pattern-section-body :global(li) {
-    color: var(--color-text-muted);
-    line-height: 1.7;
-    margin-bottom: 0.4rem;
-  }
-
-  .pattern-section-body :global(code) {
-    background: rgba(50, 93, 150, 0.08);
-    padding: 0.12rem 0.38rem;
-    border-radius: 0.35rem;
-    font-size: 0.92em;
-  }
-
-  .pattern-section-body :global(pre) {
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    background: rgba(24, 21, 18, 0.92);
-    color: #f6efe4;
-    overflow-x: auto;
-    margin-bottom: var(--spacing-md);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .pattern-section-body :global(pre code) {
-    padding: 0;
-    background: transparent;
-    color: inherit;
-  }
-
-  .pattern-section-body :global(blockquote) {
-    margin: var(--spacing-lg) 0;
-    padding: 0.85rem 1rem;
-    border-left: 3px solid var(--color-primary);
-    background: rgba(194, 67, 49, 0.05);
+  .pattern-rail-nav a.active {
+    border-left-color: var(--color-primary);
     color: var(--color-text);
   }
 
-  .pattern-dispatch {
-    margin-top: var(--spacing-2xl);
+  .pattern-rail-block {
+    margin-top: 1.5rem;
   }
 
-  .pattern-related-grid {
-    margin-top: var(--spacing-2xl);
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(1rem, 3vw, 2rem);
+  .pattern-rail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
   }
 
-  .pattern-related-header {
-    margin-bottom: var(--spacing-lg);
+  .pattern-rail-tags a {
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface-pill);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
   }
 
-  .pattern-related-header h2 {
-    margin-top: var(--spacing-md);
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-  }
-
-  @media (max-width: 1080px) {
-    .pattern-hero,
-    .pattern-body-layout,
-    .pattern-related-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .pattern-rail {
-      position: static;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .pattern-page {
-      padding-left: var(--spacing-md);
-      padding-right: var(--spacing-md);
-    }
-
-    .pattern-hero-main h1 {
-      max-width: none;
-      font-size: clamp(2.5rem, 15vw, 4rem);
-    }
-
-    .pattern-fact-grid {
-      grid-template-columns: 1fr;
-    }
+  .pattern-rail-tags a:hover {
+    color: var(--color-text);
   }
 </style>

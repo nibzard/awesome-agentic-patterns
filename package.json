@@ -6,6 +6,7 @@
     "apps/web"
   ],
   "scripts": {
+    "test": "bun test apps/web/src",
     "validate:patterns": "bun scripts/validate-patterns.ts patterns",
     "validate:patterns:content": "bun scripts/validate-patterns.ts patterns --check-content",
     "build:data": "bun scripts/build-data.ts",

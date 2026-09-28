@@ -1,3 +1,5 @@
+// ABOUTME: Loads pattern Markdown files from the repo root and exposes query helpers.
+// ABOUTME: Runs at build time with Node fs; results are read once and shared by all pages.
 import matter from 'gray-matter';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -38,7 +40,17 @@ const patternsDir = findPatternsDir();
  *
  * NOTE: This function uses Node.js fs module and works in SSR/build context.
  */
-export async function getAllPatterns(): Promise<PatternEntry[]> {
+let patternsCache: Promise<PatternEntry[]> | null = null;
+
+export function getAllPatterns(): Promise<PatternEntry[]> {
+  // Every page reads the full pattern list (the sidebar needs it), so read the files once per build.
+  // The dev server skips the cache so edits to pattern files show on reload.
+  if (import.meta.env?.DEV) return loadAllPatterns();
+  if (!patternsCache) patternsCache = loadAllPatterns();
+  return patternsCache;
+}
+
+async function loadAllPatterns(): Promise<PatternEntry[]> {
   // Read all markdown files from the root patterns directory
   const files = fs
     .readdirSync(patternsDir)

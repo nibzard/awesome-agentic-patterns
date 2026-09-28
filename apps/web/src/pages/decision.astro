@@ -3,14 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import questions from '../data/decision-questions.json';
 
 const initialQuestion = questions[0];
-const decisionStats = [
-  { value: `${questions.length}`, label: 'questions' },
-  {
-    value: `${questions.reduce((total, question) => total + question.options.length, 0)}`,
-    label: 'answer paths',
-  },
-  { value: '3', label: 'recommended patterns' },
-];
 const initialProgress = (1 / questions.length) * 100;
 ---
 
@@ -19,47 +11,12 @@ const initialProgress = (1 / questions.length) * 100;
     <section class="decision-hero">
       <div class="decision-hero-copy">
         <span class="section-label">Decision Guide</span>
-        <h1>Choose the right pattern before you build the wrong system.</h1>
+        <h1>Decision guide</h1>
         <p class="decision-subtitle">
-          Answer a few focused questions about control, memory, tools, and safety. The guide will
-          point you toward a smaller set of patterns with clear rationale.
+          Answer a few questions about control, memory, tools, and safety. You get a short list of
+          patterns and the reason for each.
         </p>
       </div>
-
-      <aside class="decision-guide surface-panel">
-        <div class="decision-guide-stats">
-          {
-            decisionStats.map((stat) => (
-              <div class="decision-guide-stat">
-                <span class="decision-guide-value">{stat.value}</span>
-                <span class="decision-guide-label">{stat.label}</span>
-              </div>
-            ))
-          }
-        </div>
-
-        <div class="decision-guide-columns">
-          <div>
-            <p class="decision-kicker">What this does</p>
-            <ul class="decision-guide-list">
-              <li>Translates product constraints into a narrower pattern shortlist.</li>
-              <li>Highlights the trade-offs you should care about before implementation.</li>
-              <li>Gives you a direct path back into the full catalog when you need more depth.</li>
-            </ul>
-          </div>
-
-          <div>
-            <p class="decision-kicker">Signals it weighs</p>
-            <ul class="decision-signal-list">
-              <li>Control model</li>
-              <li>Task complexity</li>
-              <li>Memory scope</li>
-              <li>Tool surface</li>
-              <li>Safety bar</li>
-            </ul>
-          </div>
-        </div>
-      </aside>
     </section>
 
     <section class="decision-stage surface-panel">
@@ -377,16 +334,12 @@ const initialProgress = (1 / questions.length) * 100;
   }
 
   .decision-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-    gap: clamp(1rem, 4vw, 2.5rem);
-    padding: var(--spacing-2xl) 0;
+    padding: 1.75rem 0 1.25rem;
   }
 
   .decision-hero-copy h1 {
-    margin-top: var(--spacing-md);
-    max-width: 12ch;
-    font-size: clamp(3rem, 7vw, 5rem);
+    margin-top: 0.4rem;
+    font-size: 1.75rem;
   }
 
   .decision-subtitle {
@@ -395,84 +348,6 @@ const initialProgress = (1 / questions.length) * 100;
     color: var(--color-text-muted);
     font-size: 1.08rem;
     line-height: 1.75;
-  }
-
-  .decision-guide {
-    padding: 1.2rem;
-  }
-
-  .decision-guide-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.85rem;
-    margin-bottom: 1.15rem;
-  }
-
-  .decision-guide-stat {
-    padding: 1rem 0.95rem;
-    border: 1px solid rgba(182, 164, 143, 0.42);
-    border-radius: var(--radius-md);
-    background: var(--surface-card);
-    display: grid;
-    gap: 0.2rem;
-  }
-
-  .decision-guide-value {
-    font-size: clamp(1.55rem, 4vw, 2rem);
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1;
-  }
-
-  .decision-guide-label {
-    color: var(--text-muted-strong);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .decision-guide-columns {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: 1.2rem;
-  }
-
-  .decision-kicker {
-    margin: 0;
-    color: var(--text-muted-strong);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .decision-guide-list {
-    margin-top: var(--spacing-md);
-    padding-left: 1.1rem;
-    color: var(--text-muted-strong);
-    display: grid;
-    gap: 0.7rem;
-    line-height: 1.7;
-  }
-
-  .decision-signal-list {
-    margin: var(--spacing-md) 0 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .decision-signal-list li {
-    padding: 0.45rem 0.72rem;
-    border-radius: 999px;
-    border: 1px solid rgba(182, 164, 143, 0.46);
-    background: var(--surface-pill);
-    color: var(--color-text);
-    font-size: 0.82rem;
-    font-weight: 600;
   }
 
   .decision-stage {
@@ -527,7 +402,7 @@ const initialProgress = (1 / questions.length) * 100;
     position: relative;
     height: 0.45rem;
     border-radius: 999px;
-    background: rgba(182, 164, 143, 0.28);
+    background: var(--color-bg-panel);
     overflow: hidden;
   }
 
@@ -535,7 +410,7 @@ const initialProgress = (1 / questions.length) * 100;
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--color-primary) 0%, #de8b63 100%);
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
   }
 
   .question-title {
@@ -553,7 +428,7 @@ const initialProgress = (1 / questions.length) * 100;
   .option-card {
     display: block;
     padding: clamp(1rem, 2vw, 1.25rem);
-    border: 1px solid rgba(182, 164, 143, 0.5);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     color: var(--color-text);
     background: var(--surface-card);
@@ -619,7 +494,7 @@ const initialProgress = (1 / questions.length) * 100;
 
   .results-rationale {
     padding: var(--spacing-lg);
-    background-color: rgba(50, 93, 150, 0.08);
+    background-color: var(--color-bg-soft);
     border-radius: var(--radius-lg);
   }
 
@@ -638,7 +513,7 @@ const initialProgress = (1 / questions.length) * 100;
 
   .results-avoid {
     padding: var(--spacing-lg);
-    background-color: rgba(194, 67, 49, 0.06);
+    background-color: var(--color-primary-light);
     border-radius: var(--radius-lg);
     border-left: 3px solid var(--color-warning);
   }
@@ -694,10 +569,6 @@ const initialProgress = (1 / questions.length) * 100;
       grid-template-columns: 1fr;
     }
 
-    .decision-guide-columns {
-      grid-template-columns: 1fr;
-    }
-
     .decision-stage-heading {
       flex-direction: column;
     }
@@ -711,10 +582,6 @@ const initialProgress = (1 / questions.length) * 100;
 
     .decision-actions {
       flex-direction: column;
-    }
-
-    .decision-guide-stats {
-      grid-template-columns: 1fr;
     }
 
     .decision-progress {
