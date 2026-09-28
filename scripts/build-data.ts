@@ -3,7 +3,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { execSync } from 'node:child_process';
 import matter from 'gray-matter';
 import RSS from 'rss';
 import { create } from 'xmlbuilder2';
@@ -507,7 +506,7 @@ function writeOutputs(patterns: ParsedPattern[]): void {
   fs.writeFileSync(path.join(publicDir, 'rss.xml'), generateRssFeed(patterns));
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const args = new Set(process.argv.slice(2));
   const patterns = parseAllPatterns().sort((a, b) => a.title.localeCompare(b.title));
   updateReadme(patterns);
@@ -518,24 +517,21 @@ function main(): void {
 
   copyImageAssets();
   writeOutputs(patterns);
-  fetchGithubStars();
+  await fetchGithubStars();
 }
 
-function fetchGithubStars(): void {
+async function fetchGithubStars(): Promise<void> {
   const dataDir = path.join(repoRoot, 'apps', 'web', 'src', 'data');
   const outputPath = path.join(dataDir, 'github-stars.json');
 
   try {
-    const result = execSync(
-      'gh api repos/nibzard/awesome-agentic-patterns --jq .stargazers_count',
-      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
-    ).trim();
-
-    const count = Number(result);
-    if (!Number.isFinite(count)) {
-      console.warn(`[build-data] Invalid star count: ${result}`);
-      return;
-    }
+    const response = await fetch('https://api.github.com/repos/nibzard/awesome-agentic-patterns', {
+      headers: { Accept: 'application/vnd.github+json' },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+    const { stargazers_count: count } = await response.json();
+    if (!Number.isSafeInteger(count) || count < 0) throw new Error('Invalid GitHub star count');
 
     const formatted = new Intl.NumberFormat('en-US', {
       notation: count >= 1000 ? 'compact' : 'standard',
@@ -555,4 +551,4 @@ function fetchGithubStars(): void {
   }
 }
 
-main();
+await main();

@@ -488,6 +488,25 @@ const isActive = (item: (typeof navItems)[number]) =>
   </div>
 </header>
 
+<script>
+  // Keep the build-time value visible until the cached live count arrives.
+  fetch('/api/github-stars')
+    .then((response) => {
+      if (!response.ok) throw new Error('GitHub star count unavailable');
+      return response.json();
+    })
+    .then(({ formatted }) => {
+      if (typeof formatted !== 'string' || !formatted) return;
+      document.querySelectorAll('.repo-link-count').forEach((element) => {
+        element.textContent = formatted;
+        element.setAttribute('aria-label', `${formatted} GitHub stars`);
+      });
+    })
+    .catch(() => {
+      // The build-time value remains visible if the live request fails.
+    });
+</script>
+
 <style>
   .header {
     border-bottom: 1px solid var(--color-border);
