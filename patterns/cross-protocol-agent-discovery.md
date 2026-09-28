@@ -7,6 +7,8 @@ category: "Tool Use & Environment"
 source: "https://modelcontextprotocol.io"
 tags: [agent-discovery, mcp, registry, interoperability, protocol-agnostic, a2a, agents-txt]
 summary: "Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer."
+signals: ["You need to find agents across MCP, A2A, and agents.txt registries", "No single registry covers the protocols your platform uses", "Orchestration routes tasks to agents across protocol boundaries"]
+anti_signals: ["All needed agents are in one known registry", "You need protocol-specific metadata that normalization would drop", "You need a trust signal, since discovery does not verify agent quality"]
 updated_at: "2026-05-07"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["auto-co autonomous AI company framework"]
 category: Orchestration & Control
 source: "https://github.com/NikitaDmitrieff/auto-co-meta"
 tags: [multi-agent, state-management, persistence, long-running-tasks, orchestration, autonomous-loops]
+summary: "Each loop cycle reads a structured relay document, does its work, and atomically writes back decisions, open questions, and the single next action"
+signals: ["Autonomous agent loops run across many cycles, hours, or days", "Context and decisions must survive crashes and restarts", "Agents re-debate settled questions or stall without shipping"]
+anti_signals: ["High-frequency loops faster than about one cycle per minute", "Single-session tasks that finish in one cycle", "State would include secrets that must not go in a file"]
 updated_at: "2026-03-11"
 ---
 

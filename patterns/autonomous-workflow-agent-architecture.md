@@ -16,9 +16,9 @@ tags:
   - error-recovery
 slug: autonomous-workflow-agent-architecture
 id: autonomous-workflow-agent-architecture
-summary: >-
-  TODO: Add a concise summary for "Autonomous Workflow Agent Architecture"
-  describing the pattern's purpose and key benefits.
+summary: "Runs multi-step engineering workflows in containers with tmux sessions, adaptive monitoring, checkpoints, and context-aware error recovery"
+signals: ["Long-running engineering workflows such as training pipelines or deployments", "Workflows fail at intermediate steps and need manual restart", "Engineers spend much time on monitoring and operational overhead"]
+anti_signals: ["Critical workflow needs human validation at each step", "Workflow is too long for the agent context window", "Short one-off task that does not justify container and monitoring setup"]
 updated_at: '2026-01-05'
 ---
 

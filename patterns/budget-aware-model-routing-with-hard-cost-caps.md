@@ -6,6 +6,9 @@ based_on: ["Multi-model routing practices from production LLM systems"]
 category: "Orchestration & Control"
 source: "https://arxiv.org/abs/2305.05176"
 tags: [routing, cost-control, multi-model, orchestration, reliability]
+summary: "Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail"
+signals: ["Model bills grow faster than product value", "Every request goes to the strongest model by default", "High-volume workflows with measurable quality targets"]
+anti_signals: ["Task complexity cannot be classified reliably", "Team cannot maintain an extra routing control plane"]
 updated_at: "2026-07-23"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["AgentFund (example implementation)"]
 category: "UX & Collaboration"
 source: "https://github.com/RioTheGreat-ai/agentfund-skill"
 tags: [resource-funding, escrow, milestones, agent-governance, budget-controls]
+summary: "Holds agent funding in escrow and releases each payment only after independent verification of a measurable milestone"
+signals: ["Autonomous agent teams need ongoing compute or API spend", "Work splits into small, auditable milestones", "Budget runaway is a risk without heavy human oversight"]
+anti_signals: ["Work cannot be split into objective milestones", "No one is assigned to verify milestones or handle disputes"]
 updated_at: "2026-03-11"
 ---
 

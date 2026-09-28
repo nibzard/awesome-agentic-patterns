@@ -6,6 +6,9 @@ based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime I
 category: "Reliability & Eval"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [subagent, compilation, modularity, error-isolation]
+summary: "Spawns one subagent per module to build and check it, and returns only a short structured error list or artifact reference to the main agent"
+signals: ["Codebase has several independently buildable modules", "Build logs are too large for the main agent's context", "Need to find which module caused a build failure"]
+anti_signals: ["Single small module with short build output", "Modules depend tightly on each other's build order", "No infrastructure to run separate build environments"]
 evidence_grade: medium
 evidence_snapshot: "Core mechanism validated by academic work on multi-agent verification (Reflexion, Self-Refine) and formal verification (CaMeL). Industry implementations exist (Cursor, Aider, SWE-agent) but limited controlled studies."
 last_updated: "2026-02-28"

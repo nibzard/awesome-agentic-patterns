@@ -6,6 +6,9 @@ based_on: ["Analysis of 88 Claude conversation sessions (48 Task invocations ana
 category: Orchestration & Control
 source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
 tags: [subagents, delegation, traceability, naming, clarity, anti-pattern]
+summary: "Requires a specific action-plus-target subject on every subagent task so each delegated job stays traceable and easy to reference"
+signals: ["Main agent delegates work to subagents via a Task tool", "Several subagents run in parallel", "Users or the main agent must review subagent output later"]
+anti_signals: ["No subagent delegation in the workflow", "Single short delegation that nobody will reference again"]
 updated_at: "2026-03-11"
 ---
 

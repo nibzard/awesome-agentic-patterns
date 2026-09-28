@@ -6,6 +6,9 @@ based_on: ["Hiveism (self-alignment loop)", "Anthropic (Constitutional AI)"]
 category: Reliability & Eval
 source: "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web"
 tags: [constitution, alignment, governance, signed-commits, policy, rlaif, critique-revise]
+summary: "Stores the agent constitution in a signed Git repository where the agent can only propose changes and reviewers or CI gates merge them"
+signals: ["Agents can propose changes to their own policy or constitution", "Team must prove who changed a safety rule and why", "Need rollback of bad policy changes"]
+anti_signals: ["Policy is fixed and never changes", "Team needs fast policy iteration without review gates"]
 updated_at: "2026-03-11"
 ---
 

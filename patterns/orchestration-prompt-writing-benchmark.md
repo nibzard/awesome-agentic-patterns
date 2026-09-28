@@ -6,7 +6,7 @@ based_on: ["Sun et al. (2026)"]
 category: "Reliability & Eval"
 source: "https://arxiv.org/abs/2606.08878"
 tags: [multi-agent, orchestration, benchmark, evaluation, prompt-engineering, role-assignment, communication-topology, sub-agent-prompting]
-summary: "Score an orchestrator LLM on whether it assigns the right information fragments to the right sub-agent roles and writes correct sub-agent prompts, independent of whether the downstream task happens to succeed anyway."
+summary: "Scores an orchestrator on whether its sub-agent prompts give the right information fragments to the right roles, separate from end-task success"
 maturity: "early"
 complexity: "medium"
 effort: days

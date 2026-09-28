@@ -6,6 +6,9 @@ based_on: ["Michael Bolin (OpenAI Codex)"]
 category: "Context & Memory"
 source: "https://openai.com/index/unrolling-the-codex-agent-loop/"
 tags: [prompt-caching, exact-prefix, performance, stateless, zero-data-retention, message-ordering, optimization]
+summary: "Keeps static prompt content first in a fixed order and only appends new messages, including config changes, so each request reuses the cached prefix"
+signals: ["Long agent conversations with many tool calls", "Zero Data Retention rules out server-side conversation state", "Inference cost or latency grows as history grows"]
+anti_signals: ["Tool list or model must change mid-conversation", "Short single-turn requests with little repeated content"]
 updated_at: "2026-03-11"
 ---
 

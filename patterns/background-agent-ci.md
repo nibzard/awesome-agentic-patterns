@@ -13,11 +13,9 @@ tags:
   - feedback
 slug: background-agent-ci
 id: background-agent-with-ci-feedback
-summary: >-
-  ## Problem
-
-  Long-running tasks tie up the editor and require developers to babysit the
-  agent.
+summary: "Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked"
+signals: ["Long-running refactors or dependency upgrades", "Developers wait and poll for CI results", "CI gives objective pass or fail signals"]
+anti_signals: ["No reliable CI suite exists", "Task needs frequent human decisions during the work"]
 updated_at: '2026-01-05'
 ---
 

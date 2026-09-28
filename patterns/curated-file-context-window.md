@@ -6,6 +6,9 @@ based_on: ["Internal AI Dev Team"]
 category: "Context & Memory"
 source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
 tags: [code-context, file-scope, relevance, memory-management]
+summary: "Loads only the primary task files into the main context and has a search sub-agent rank and summarize secondary files before adding them"
+signals: ["Task touches a few files in a large repository", "Dumping all files exceeds token limits or distracts the agent", "A search tool such as ripgrep or AST traversal is available"]
+anti_signals: ["Small repository where all files fit in context", "Missing a file due to weak ranking would be costly"]
 updated_at: "2026-03-11"
 ---
 

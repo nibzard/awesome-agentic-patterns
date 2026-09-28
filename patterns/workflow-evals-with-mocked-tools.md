@@ -18,9 +18,9 @@ tags:
   - end-to-end-testing
 slug: workflow-evals-with-mocked-tools
 id: workflow-evals-with-mocked-tools
-summary: >-
-  TODO: Add a concise summary for "Workflow Evals with Mocked Tools" describing
-  the pattern's purpose and key benefits.
+summary: "Runs complete agent workflows against mocked tools in CI and checks which tools were called plus agent-as-judge quality criteria"
+signals: ["Agent tools have side effects such as API or database writes", "Unit tests pass but prompts and tools fail together", "Need regression tests for agent behavior on each PR"]
+anti_signals: ["Results must act as a strict CI gate, since non-determinism makes them flaky", "Team cannot keep mocks in sync with real tools"]
 updated_at: '2026-01-13'
 ---
 

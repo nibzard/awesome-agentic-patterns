@@ -15,10 +15,9 @@ tags:
   - ux
 slug: chain-of-thought-monitoring-interruption
 id: chain-of-thought-monitoring-interruption
-summary: >-
-  Implement active surveillance of agent reasoning with capability to interrupt and
-  redirect before completing flawed execution sequences, preventing wasted time on
-  fundamentally wrong approaches.
+summary: "Streams agent reasoning and tool calls in real time so a human can interrupt and redirect early when the approach is wrong"
+signals: ["Complex refactoring where wrong file choices are costly", "High-stakes operations such as database migrations or API changes", "Requirements are ambiguous and the agent may misread them"]
+anti_signals: ["Agent runs fully unattended with no human watching", "Routine tasks where monitoring adds more load than it saves"]
 updated_at: '2026-01-05'
 ---
 
@@ -137,4 +136,4 @@ sequenceDiagram
 - [Effectively Controlling Reasoning Models through Thinking Intervention](https://arxiv.org/pdf/2503.24370) (Princeton et al., March 2025) - "Thinking intervention" for strategically inserting/modifying thinking tokens during generation
 - [Dynamic Early Exit in Reasoning Models](https://arxiv.org/abs/2504.15895) (arXiv:2504.15895, April 2025) - Confidence-based early stopping; ~75% of samples contain early exit opportunities
 - [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/) - Standard attributes for AI agent tracing
-- Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control.md), [Verbose Reasoning Transparency](verbose-reasoning-transparency.md)
+- Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Verbose Reasoning Transparency](verbose-reasoning-transparency.md)

@@ -53,6 +53,9 @@ The project has a unique architecture where pattern documentation drives the ent
    category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
    source: "URL to primary source"
    tags: [relevant, keywords, here]
+   summary: "One sentence that says what the pattern does (the solution)"  # Shown in the catalog list
+   signals: ["When to use it"]          # 2-4 items, shown as "Use when"
+   anti_signals: ["When not to use it"] # 2-3 items, shown as "Avoid when"
    updated_at: "YYYY-MM-DD"  # Required: last content change date — file mtimes differ per machine, so generated data needs an explicit date
    ---
    ```

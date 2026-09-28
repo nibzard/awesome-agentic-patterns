@@ -6,6 +6,9 @@ based_on: ["Labruno (GitHub)", "Swarm Migration Pattern"]
 category: "Reliability & Eval"
 source: "https://github.com/nibzard/labruno-agent"
 tags: [fan-out, adaptive, parallel-sandboxes, early-stopping, controller, variance, prompt-refinement]
+summary: "Starts a small batch of parallel sandboxes, then scales up, stops early, or refines the prompt based on early success, variance, and error signals"
+signals: ["Running best-of-N code generation in parallel sandboxes", "Cheap objective checks such as unit tests exist", "A fixed N wastes cost and latency"]
+anti_signals: ["No objective check or reliable scoring function for results", "One run per task is enough"]
 updated_at: "2026-03-11"
 ---
 

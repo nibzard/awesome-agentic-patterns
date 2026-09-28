@@ -18,6 +18,8 @@ summary: >-
   Agents persist intermediate results and working state to files, creating durable
   checkpoints that enable workflow resumption, recovery from failures, and support
   for long-running tasks.
+signals: ["Multi-step workflows with expensive operations such as API calls or data processing", "Tasks may be interrupted or exceed single-session context limits", "Several agents or sessions build on earlier work"]
+anti_signals: ["Short tasks that finish in one session with cheap steps", "The execution environment has no persistent storage", "Concurrent writers with no file locking or atomic writes"]
 updated_at: '2026-01-05'
 ---
 

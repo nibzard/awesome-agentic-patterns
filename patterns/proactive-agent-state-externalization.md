@@ -14,11 +14,9 @@ tags:
   - note-taking
 slug: proactive-agent-state-externalization
 id: proactive-agent-state-externalization
-summary: >-
-  Modern models like Claude Sonnet 4.5 proactively externalize state through
-  self-generated notes—enhanced through guided frameworks, hybrid memory
-  architecture, and progressive state building to capture decision rationale
-  and knowledge gaps.
+summary: "Gives agents note templates, completeness checks, and an external memory fallback so self-written notes keep objectives, decisions, and knowledge gaps"
+signals: ["Agent works on multi-hour or multi-session tasks", "Agent already writes its own summary or changelog files", "Main agent must pass state to subagents"]
+anti_signals: ["Short single-session tasks", "Documentation tokens cost more than the continuity they give"]
 updated_at: '2026-01-05'
 ---
 

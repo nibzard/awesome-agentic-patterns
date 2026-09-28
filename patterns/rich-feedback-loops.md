@@ -6,6 +6,9 @@ based_on: ["Thorsten Ball", "Quinn Slack"]
 category: Feedback Loops
 source: "https://www.nibzard.com/ampcode"
 tags: [feedback, testing, reliability, user-feedback, positive-reinforcement, corrections]
+summary: "Returns compiler errors, test failures, lint output, and human feedback to the agent after each tool call so it can plan fixes and self-correct"
+signals: ["Agent quality improves only after iterative critique or retries", "Tools can emit structured errors, exit codes, or test results", "Users give frequent positive or corrective feedback"]
+anti_signals: ["No objective signal or tool output to feed back", "Runtime and cost of iterative passes are not acceptable"]
 updated_at: "2026-03-11"
 ---
 

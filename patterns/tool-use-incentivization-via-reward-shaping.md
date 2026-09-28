@@ -6,6 +6,9 @@ based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [tool-use, reward-shaping, coding-agent, RL]
+summary: "Gives dense RL rewards for useful intermediate tool calls such as compile, lint, and test so the agent learns to use tools instead of only thinking"
+signals: ["Training a coding agent with reinforcement learning", "Agent uses thinking tokens instead of calling tools", "Final-only rewards are too sparse to learn from"]
+anti_signals: ["No RL training loop, only prompting", "Team cannot design and tune per-tool reward functions"]
 updated_at: "2026-03-11"
 ---
 

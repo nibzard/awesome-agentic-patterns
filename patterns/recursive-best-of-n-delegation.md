@@ -6,6 +6,9 @@ based_on: ["Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models (
 category: "Orchestration & Control"
 source: "https://github.com/nibzard/labruno-agent"
 tags: [recursion, best-of-n, parallel-sandboxes, judge, delegation, rlms, selection, sub-agents]
+summary: "Runs several parallel candidate workers per subtask in a recursive agent tree, scores them with tests and a judge, and promotes the best result upward"
+signals: ["Subtasks are shardable but each shard can be tricky", "Outputs can be scored cheaply with tests, type checks, or lint", "One wrong subtask result is costly, as in migrations or large refactors"]
+anti_signals: ["No objective checks exist and judge quality is weak", "Cost or latency budget cannot cover multiple attempts per subtask"]
 updated_at: "2026-03-11"
 ---
 

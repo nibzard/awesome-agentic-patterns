@@ -6,6 +6,9 @@ based_on: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
 category: Context & Memory
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-understanding, onboarding, q&a, retrieval, search, context-awareness, knowledge-base]
+summary: "Agent indexes the codebase with embeddings and code graphs and answers natural-language questions about where code is and how it behaves"
+signals: ["Developers onboard to a large or unfamiliar codebase", "Team explores legacy systems or asks repository-wide questions"]
+anti_signals: ["Codebase is small enough to read directly", "Team cannot keep indexes current as code changes"]
 updated_at: "2026-03-11"
 ---
 

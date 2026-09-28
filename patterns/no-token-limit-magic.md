@@ -6,6 +6,9 @@ based_on: ["Thorsten Ball", "Quinn Slack"]
 category: Reliability & Eval
 source: "https://www.nibzard.com/ampcode"
 tags: [performance, cost, experimentation]
+summary: "Removes hard token limits during prototyping to learn what good behavior needs, then compresses context only after quality is stable and measured"
+signals: ["Pattern discovery, architecture design, or early benchmark work", "Quality baseline is not known yet", "Token usage and quality scores can be measured from the start"]
+anti_signals: ["Workflow is stable and already in production", "Budget cannot cover higher short-term inference cost"]
 updated_at: "2026-03-11"
 ---
 

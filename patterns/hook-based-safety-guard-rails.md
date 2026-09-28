@@ -6,6 +6,9 @@ based_on: ["Claude Code Hooks (Anthropic)", "claude-code-ops-starter (https://gi
 category: "Security & Safety"
 source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
 tags: [hooks, guard-rails, safety, autonomous-operation, destructive-command-blocking, context-monitoring, pre-tool-use, post-tool-use]
+summary: "Runs small shell scripts on PreToolUse and PostToolUse hooks to block destructive commands, lint edits, and warn on context use outside the agent's reasoning"
+signals: ["Code agents run unattended with shell and file write access", "Destructive commands or silent syntax errors are a risk", "The agent framework supports pre- and post-tool-use hooks"]
+anti_signals: ["The framework has no hook events", "You need complete protection, since pattern matching misses creative commands", "Every action already goes through human review"]
 updated_at: "2026-03-11"
 ---
 

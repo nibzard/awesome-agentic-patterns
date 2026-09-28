@@ -6,6 +6,9 @@ based_on: ["ERC-5192 Soulbound Tokens", "Chitin (example implementation)"]
 category: Security & Safety
 source: "https://eips.ethereum.org/EIPS/eip-5192"
 tags: [identity, verification, trust, soulbound-token, blockchain, agent-identity]
+summary: "Binds agent identity to a non-transferable credential with a committed state hash and logs signed state changes so verifiers can check continuity"
+signals: ["Delegating work to another agent across networks or organizations", "Agent marketplaces need to detect impersonation", "Compliance requires auditable agent-state continuity"]
+anti_signals: ["No external registry or append-only log infrastructure", "Semantic correctness of agent behavior matters more than state integrity"]
 updated_at: "2026-03-11"
 ---
 

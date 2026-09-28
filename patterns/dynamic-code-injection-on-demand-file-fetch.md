@@ -6,6 +6,9 @@ based_on: ["Internal AI Dev Team"]
 category: "Tool Use & Environment"
 source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
 tags: [file-injection, at-mention, slash-commands, IDE-integration]
+summary: "Expands @file or /load tokens in the prompt into file contents, line ranges, or summaries so the agent sees code without manual copy and paste"
+signals: ["Interactive coding sessions need files that were not loaded at the start", "Users copy and paste large files into chat", "The chat front end or proxy has local file system access"]
+anti_signals: ["The interface cannot access the local file system", "You cannot enforce path validation and sensitive file blocking", "The agent must see full files and summaries would drop needed context"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
 category: "Tool Use & Environment"
 source: "https://openai.com/research/gpt-4v-system-card"
 tags: [multimodal, vision, video, image-processing, visual-understanding, agent-capabilities]
+summary: "Adds multimodal models to the agent so it can analyze images, video, and screenshots and combine them with text to reason and act"
+signals: ["Tasks involve screenshots, charts, diagrams, or video", "Agent must debug UIs or extract data from visual documents", "Users want to show a problem instead of describing it"]
+anti_signals: ["All inputs are text only", "Budget cannot cover higher visual processing costs", "Visual data carries privacy risks that cannot be controlled"]
 updated_at: "2026-03-11"
 ---
 

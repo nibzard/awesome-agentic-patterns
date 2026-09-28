@@ -6,6 +6,9 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Security & Safety"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts"
 tags: [credentials, oauth, token-sync, keychain, cli-integration, auth-reuse]
+summary: "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with near-expiry refresh, OAuth upgrade, and dedupe"
+signals: ["Users already sign in to the same providers through other CLIs or tools", "Stale or expired tokens cause auth failures during sessions", "Credentials drift between tools"]
+anti_signals: ["Headless environments with no OS keychain access", "The agent is the only tool that holds credentials for the provider", "Policy forbids reading credentials owned by other tools"]
 updated_at: "2026-03-11"
 ---
 

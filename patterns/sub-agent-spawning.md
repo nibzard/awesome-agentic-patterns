@@ -6,6 +6,9 @@ based_on: ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"]
 category: Orchestration & Control
 source: "https://www.nibzard.com/ampcode"
 tags: [orchestration, context, scalability, subagents, yaml-configuration, virtual-files, subject-hygiene, parallel-delegation]
+summary: "Lets the main agent spawn sub-agents with fresh context and scoped tools to work on subtasks in parallel, then merges their results"
+signals: ["Large multi-file task overflows the main agent's context", "Subtasks are independent and can run in parallel", "Some work needs isolated tools or files for safety"]
+anti_signals: ["Small task that fits in one context window", "Subtasks depend on each other and need tight coordination", "Token budget cannot cover several agents at once"]
 updated_at: "2026-03-11"
 ---
 

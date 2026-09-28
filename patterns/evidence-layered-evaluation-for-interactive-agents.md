@@ -6,6 +6,9 @@ based_on: ["BrowserGym contributors", "WebArena contributors"]
 category: "Reliability & Eval"
 source: "https://github.com/TIGER-AI-Lab/ClawBench"
 tags: [evaluation, browser-agents, computer-use, reproducibility, observability]
+summary: "Scores interactive agent runs on a task outcome assertion and links each result to layered evidence: actions, screenshots, replays, network, and messages"
+signals: ["Browser or desktop agents fail for causes a single pass/fail score hides", "Regressions on live sites or apps are hard to reproduce", "Humans must adjudicate ambiguous outcomes"]
+anti_signals: ["Tasks with deterministic outputs that one assertion fully verifies", "Storage and instrumentation overhead is not acceptable", "Network and message logs would capture sensitive data you cannot retain"]
 evidence_grade: medium
 evidence_snapshot: "Separating outcome checks from execution traces makes interactive-agent failures easier to diagnose; the general trade-off is additional storage and instrumentation."
 last_updated: "2026-07-28"

@@ -6,6 +6,9 @@ based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Context & Memory
 source: "https://arxiv.org/abs/2506.08837"
 tags: [context-hygiene, taint-removal, prompt-injection]
+summary: "Removes untrusted user text and tool output from context after it becomes a safe structured artifact, so later steps see only trusted data"
+signals: ["Multi-turn flows where initial text must not steer later steps", "Untrusted input may contain prompt injection", "Data-minimization rules such as HIPAA or GDPR apply"]
+anti_signals: ["Later turns refer back to earlier user wording", "Conversational nuance matters more than injection risk"]
 updated_at: "2026-03-11"
 ---
 

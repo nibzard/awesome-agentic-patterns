@@ -6,6 +6,9 @@ based_on: ["x402 protocol (Coinbase / x402-foundation)", "HTTP 402 Payment Requi
 category: "Orchestration & Control"
 source: "https://github.com/x402-foundation/x402"
 tags: [payments, micropayments, x402, http-402, agent-commerce, tool-use, budget-guards]
+summary: "Server returns an HTTP 402 price quote before doing work, and the agent pays the exact amount only if it fits its budget cap"
+signals: ["Agent buys small, bounded capabilities from unknown providers mid-task", "Buyer has a funded wallet and a hard per-task budget", "No human is available to sign up for API keys"]
+anti_signals: ["Buyers are people who can register and hold API keys", "Agent has no funded wallet", "Work needs refunds or dispute handling after settlement"]
 updated_at: "2026-09-26"
 ---
 

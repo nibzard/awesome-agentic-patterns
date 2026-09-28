@@ -6,6 +6,9 @@ based_on: ["Geoffrey Huntley"]
 category: "Security & Safety"
 source: "https://ghuntley.com/secure-codegen/"
 tags: [security, deterministic, build-loop, backpressure, static-analysis, supply-chain]
+summary: "Adds SAST, SCA, and secret scanners to the build target that the agent must run after each change, so scanner failures force the agent to fix the code"
+signals: ["Coding agents generate code that must meet security rules", "Prompt rules or MCP security tools are the only security control", "You already have security scanning tools for CI"]
+anti_signals: ["Security scanners are too slow for a per-change inner loop", "No capacity to review false positives from scanners"]
 updated_at: "2026-03-11"
 ---
 

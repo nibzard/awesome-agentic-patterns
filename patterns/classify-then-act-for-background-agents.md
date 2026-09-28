@@ -6,6 +6,9 @@ based_on: ["Google's Large-Scale Changes process (speculative change generation 
 category: "Orchestration & Control"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#2-classify-then-act-not-ask-then-wait"
 tags: [background-agents, task-triage, sandboxed-build, review-queue, autonomy-boundary]
+summary: "Sorts each task into has-default, needs-intent, or out-of-scope, builds only has-default work in a sandbox, and queues it for human review"
+signals: ["Background agent handles many task shapes", "Full autonomy is too risky but asking about everything stalls work", "Same rejected ideas keep coming back"]
+anti_signals: ["No explicit human-delegated mandate defines which tasks belong to the agent", "No one reads the review queue on their normal path"]
 related: ["human-in-loop-approval-framework", "custom-sandboxed-background-agent"]
 updated_at: "2026-09-26"
 ---

@@ -6,6 +6,9 @@ based_on: ["Aman Sanger (Cursor)"]
 category: Feedback Loops
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, quality-assurance, human-ai-collaboration, trust, explainability, software-quality]
+summary: "Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic"
+signals: ["AI generates more code than humans can review line by line", "Code review is the development bottleneck"]
+anti_signals: ["Team cannot tolerate false positives and alert fatigue", "Architectural decisions that need human-only judgment"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [background-agent, human-in-the-loop, task-handoff, interactive-refinement, agent-collaboration, developer-workflow]
+summary: "Lets a user take over a background agent's unfinished work in the foreground, with the agent's branch, PR, and summaries carried over as context"
+signals: ["Background agents finish most of a task but not all of it", "Remaining work needs human judgment or finesse", "Agent output lands in durable artifacts such as branches or draft PRs"]
+anti_signals: ["Background agent output is usually fully correct", "No infrastructure to preserve context or show progress at the handoff"]
 updated_at: "2026-03-11"
 ---
 

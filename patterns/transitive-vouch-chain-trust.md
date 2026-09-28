@@ -6,6 +6,9 @@ based_on: ["Isnad methodology (hadith chain of transmission)", "PGP Web of Trust
 category: Security & Safety
 source: "https://github.com/nickzsche/aip-identity"
 tags: [trust, identity, vouch, trust-chain, agent-identity, decentralized-trust, ed25519, reputation]
+summary: "Builds a graph of signed vouches between agents and derives trust in an unknown agent from the chain back to a trusted one, with decay at each hop"
+signals: ["Agents from different operators must collaborate without a central authority", "Agents must decide how much to trust previously unknown agents", "Each agent can hold a stable cryptographic keypair"]
+anti_signals: ["A trusted central registry already covers all agents", "New agents need trust at once with no vouches (cold start)", "Identities are cheap to create and Sybil attacks are a risk"]
 evidence_grade: low
 last_updated: "2026-03-08"
 updated_at: "2026-03-11"

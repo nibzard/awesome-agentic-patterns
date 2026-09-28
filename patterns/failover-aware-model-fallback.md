@@ -6,6 +6,9 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Reliability & Eval"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts"
 tags: [fallback, reliability, error-classification, multi-model, failover, resilience]
+summary: "Classifies each model failure by reason and falls back along a model chain only for retryable errors, failing fast on auth, billing, and user aborts"
+signals: ["The agent calls models from multiple providers or models", "Timeouts and rate limits interrupt requests", "Blind retries waste calls on auth or billing errors"]
+anti_signals: ["A single model with no alternative provider", "Downstream parsing cannot handle output differences between models", "Extra latency and API charges from failed attempts are not acceptable"]
 updated_at: "2026-03-11"
 ---
 

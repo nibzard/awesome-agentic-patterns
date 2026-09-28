@@ -17,9 +17,9 @@ tags:
   - metadata
 slug: progressive-disclosure-large-files
 id: progressive-disclosure-for-large-files
-summary: >-
-  TODO: Add a concise summary for "Progressive Disclosure for Large Files"
-  describing the pattern's purpose and key benefits.
+summary: "Puts only file metadata in the prompt and gives the agent load, peek, and extract tools to pull file content into context on demand"
+signals: ["Agent works with large PDFs, DOCX files, or images", "Files are much bigger than the relevant text they contain", "Workflows compare documents or read ticket attachments"]
+anti_signals: ["Files are small enough to load in full", "Extra tool round-trips are not acceptable"]
 updated_at: '2026-01-13'
 ---
 

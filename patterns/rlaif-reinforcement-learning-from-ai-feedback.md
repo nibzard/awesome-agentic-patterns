@@ -6,6 +6,9 @@ based_on: ["Anthropic", "Google DeepMind"]
 category: "Reliability & Eval"
 source: "https://arxiv.org/abs/2212.08073"
 tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, evaluation]
+summary: "Uses an AI model guided by written principles to critique outputs and label preferences, which train a reward model that optimizes the policy"
+signals: ["Human preference annotation is too expensive or slow to scale", "Domain experts for labeling are scarce", "Evaluation criteria can be written as explicit principles"]
+anti_signals: ["No capable, well-aligned supervisory model for the target domain", "Critical outputs need human validation that AI labels cannot replace"]
 updated_at: "2026-03-11"
 ---
 

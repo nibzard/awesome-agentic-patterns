@@ -20,6 +20,8 @@ summary: >-
   Systematically insert human approval gates for designated high-risk functions
   while maintaining agent autonomy for safe operations, with multi-channel approval
   interfaces and comprehensive audit trails.
+signals: ["Agents run high-risk or irreversible operations such as production DB writes, payments, or deploys", "Compliance requires a record of who approved each sensitive action", "Humans can respond fast enough through Slack, email, or a dashboard"]
+anti_signals: ["All agent actions are safe or easily reversible", "No human is available to respond in time", "Approval volume would be so high that reviewers rubber-stamp requests"]
 updated_at: '2026-01-05'
 ---
 
@@ -189,4 +191,4 @@ approval_channels:
 - [HumanLayer Documentation](https://docs.humanlayer.dev/) - Framework and examples for human-in-the-loop agent workflows
 - [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) - Principles for production agent systems including human oversight patterns
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
-- Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)
+- Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)

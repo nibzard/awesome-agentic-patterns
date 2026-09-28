@@ -6,6 +6,9 @@ based_on: ["Sourcegraph Team"]
 category: Orchestration & Control
 source: "https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ"
 tags: [multi-model, cost-optimization, strategic-reasoning, architecture]
+summary: "Uses a fast, low-cost worker model for most tool use and code generation, and lets it consult an expensive oracle model when it is stuck"
+signals: ["Frontier models are too expensive for all routine work", "Coding tasks include complex debugging or architecture decisions", "Worker can detect when its approach is failing"]
+anti_signals: ["Tasks are routine and the worker model handles them alone", "Latency from model switching is not acceptable"]
 updated_at: "2026-03-11"
 ---
 

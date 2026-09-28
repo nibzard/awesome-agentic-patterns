@@ -6,6 +6,9 @@ based_on: ["Danny Tarlow", "Connie Fan"]
 category: Orchestration & Control
 source: "https://www.youtube.com/watch?v=u85G2aV_5rQ"
 tags: [research, information retrieval, tool use, iterative process, autonomous search]
+summary: "Agent plans its own search queries, runs them across sources, reflects on gaps, and iterates until it can write a sourced report"
+signals: ["Open-ended research question needs multiple search rounds", "Answer needs synthesis across many sources"]
+anti_signals: ["A single retrieval round answers the question", "Token cost or latency budget is tight"]
 updated_at: "2026-03-11"
 ---
 

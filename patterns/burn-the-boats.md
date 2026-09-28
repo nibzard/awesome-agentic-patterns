@@ -6,6 +6,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Orchestration & Control"
 source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
 tags: [feature-killing, forced-evolution, courage, focus, self-destruct, obsolescence, product-strategy]
+summary: "Removes working but obsolete features on a hard, announced deadline so the team and users move to the new approach"
+signals: ["The paradigm shifted and an old feature is now obsolete", "Maintaining the old feature splits team focus", "Feature is kept only for comfort"]
+anti_signals: ["Feature is core to the value proposition", "No clear alternative exists or the new way is unproven", "Change gives agents irreversible operations with broad permissions"]
 updated_at: "2026-03-11"
 ---
 

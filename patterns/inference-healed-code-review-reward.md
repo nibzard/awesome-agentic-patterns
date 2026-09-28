@@ -6,6 +6,9 @@ based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime I
 category: "Feedback Loops"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [reward-modeling, code-review, inference-healing, quality-assessment]
+summary: "Replaces a binary tests-passed reward with a critic that scores correctness, style, performance, and security, explains low scores, and combines them"
+signals: ["RL coding agents pass tests but produce low-quality patches", "The agent needs to know which quality aspect caused a low reward", "Linters, benchmarks, and static analyzers are available to feed sub-scores"]
+anti_signals: ["Test pass/fail fully captures what you care about", "Reward latency and compute from extra checks is not acceptable", "No labeled patch data to train or calibrate the critic"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack, Tim Culverhouse)", "Raising an Agen
 category: "UX & Collaboration"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [agent-first, human-dx, regression, optimization, tooling, codebase-design, trade-offs, agent-native, feedback-loops]
+summary: "Optimizes tooling, CLIs, tests, and docs for agents first, with one-command verify loops and machine-readable output, even if human DX regresses"
+signals: ["Agents will use a workflow about 10x more than humans", "Agents cannot verify their own changes automatically", "The workflow is automatable and well-defined"]
+anti_signals: ["The workflow needs human creativity or judgment", "Humans are the primary users and agents rarely touch it", "The team is not committed to agent-first development"]
 updated_at: "2026-03-11"
 ---
 

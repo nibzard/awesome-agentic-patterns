@@ -19,10 +19,9 @@ tags:
   - knowledge-sharing
 slug: compounding-engineering-pattern
 id: compounding-engineering-pattern
-summary: >-
-  Codify all learnings from each feature into reusable prompts, slash commands,
-  subagents, and hooks—making each feature easier to build by creating
-  increasingly "self-teaching" codebase that accelerates productivity over time.
+summary: "After each feature, codifies agent mistakes and learnings into CLAUDE.md, slash commands, subagents, and hooks so the next feature is easier to build"
+signals: ["The agent repeats the same mistakes across features", "Onboarding people or agents to the codebase is slow", "Your agent system supports slash commands, subagents, or hooks"]
+anti_signals: ["The team cannot spend time documenting after each feature", "System prompts are already bloated with too many rules"]
 updated_at: '2026-01-05'
 ---
 

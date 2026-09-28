@@ -6,6 +6,9 @@ based_on: ["Quinn Slack (Concept)", "Will Brown (Prime Intellect Talk)"]
 category: "Feedback Loops"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [CI, coding-agent, asynchronous, test-driven, feedback]
+summary: "Agent pushes a branch, polls CI for partial failures, patches the failing files within a retry budget, and notifies when all tests pass"
+signals: ["Coding agent does multi-file refactors or features with long test suites", "Waiting for CI synchronously leaves the agent or compute idle", "CI output can be parsed into structured diagnostics"]
+anti_signals: ["Flaky tests without flakiness detection would mislead the agent", "The agent must not have permission to push branches or read CI logs"]
 updated_at: "2026-03-11"
 ---
 

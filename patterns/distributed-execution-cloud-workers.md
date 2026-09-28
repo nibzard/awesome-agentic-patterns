@@ -16,9 +16,9 @@ tags:
   - team-coordination
 slug: distributed-execution-cloud-workers
 id: distributed-execution-with-cloud-workers
-summary: >-
-  TODO: Add a concise summary for "Distributed Execution with Cloud Workers"
-  describing the pattern's purpose and key benefits.
+summary: "Runs many agent sessions in parallel on cloud workers, each in its own git worktree, with dependency-aware scheduling, merge coordination, and approval gates"
+signals: ["Team-wide migrations, refactors, or framework upgrades touch many files", "Work can be split into parallel units with clear dependencies", "Cloud compute and orchestration infrastructure are available"]
+anti_signals: ["Small tasks that one agent session can finish", "Changes are tightly coupled and would cause constant merge conflicts", "Infrastructure complexity or parallel model cost is not acceptable"]
 updated_at: '2026-01-05'
 ---
 

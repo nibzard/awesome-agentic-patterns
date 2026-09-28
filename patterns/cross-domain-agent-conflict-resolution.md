@@ -7,6 +7,8 @@ category: "Orchestration & Control"
 source: "https://github.com/open-policy-agent/opa"
 tags: [multi-agent, conflict-resolution, policy-as-code, governance, orchestration, drift-detection]
 summary: "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code."
+signals: ["Several domain agents assess or act on the same resources", "Conflicting recommendations have financial, operational, or compliance cost", "You need an auditable record of why one recommendation won"]
+anti_signals: ["Only one agent acts on the resources", "Agents do not share a common resource identifier scheme"]
 updated_at: '2026-08-21'
 ---
 

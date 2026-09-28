@@ -6,6 +6,9 @@ based_on: ["llms.txt community specification", "OpenAI ChatGPT Plugin manifest (
 category: Tool Use & Environment
 source: "https://llmstxt.org"
 tags: [service-discovery, agent-infrastructure, llms-txt, machine-readable, api-design, well-known, tool-discovery]
+summary: "Serves a static llms.txt or agent.json file at a well-known URL that lists services, auth, and limits so agents can plan before they call"
+signals: ["API platform exposes many services behind one base URL", "Agents must discover capabilities before planning", "Different API keys unlock different service subsets"]
+anti_signals: ["Single endpoint with no discovery need", "API changes too often to keep a static manifest in sync", "Agents need full per-endpoint schemas, not a summary"]
 updated_at: "2026-03-11"
 ---
 

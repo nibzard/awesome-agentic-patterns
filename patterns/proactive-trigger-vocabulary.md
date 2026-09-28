@@ -15,9 +15,9 @@ tags:
   - natural-language
 slug: proactive-trigger-vocabulary
 id: proactive-trigger-vocabulary
-summary: >-
-  TODO: Add a concise summary for "Proactive Trigger Vocabulary" describing the
-  pattern's purpose and key benefits.
+summary: "Gives each skill an explicit, documented list of trigger phrases and patterns so input routes to skills predictably, with optional proactive activation"
+signals: ["Agent has many skills and must route input to the right one", "Users need to know which phrases activate which skill", "Some skills should activate without an explicit request"]
+anti_signals: ["Users phrase requests in many ways that a fixed list cannot cover", "Team cannot maintain trigger lists as vocabulary changes", "Users work in languages where the triggers do not translate"]
 updated_at: '2026-01-05'
 ---
 

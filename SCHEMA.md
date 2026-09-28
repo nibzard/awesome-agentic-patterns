@@ -40,6 +40,9 @@ Every pattern MUST include these fields:
 | `category` | enum | Primary category (see values below) | `Feedback Loops` |
 | `source` | string (URL) | Primary reference/origin | `https://arxiv.org/abs/2303.11366` |
 | `tags` | array of strings | Keywords for discovery | `[self-feedback, iterative-improvement]` |
+| `summary` | string | One sentence that says what the pattern does (the solution) | `Critiques and revises its own draft before it returns the answer` |
+| `signals` | array of strings | When this pattern helps (2-4 items, shown as "Use when") | `["Quality-critical output", "Iterative refinement possible"]` |
+| `anti_signals` | array of strings | When to avoid it (2-3 items, shown as "Avoid when") | `["Single-pass generation", "Tight latency budget"]` |
 
 #### Status Values
 
@@ -82,14 +85,11 @@ These fields MAY be included to enhance pattern metadata:
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
 | `based_on` | array of strings | Originators/inspiration | `["Shinn et al. (2023)"]` |
-| `summary` | string | One-sentence description | `Improves outputs via iterative self-feedback` |
 | `slug` | string | URL identifier (auto-generated if omitted) | `reflection-loop` |
 | `maturity` | enum | Development phase | `maturing` |
 | `complexity` | enum | Implementation difficulty | `medium` |
 | `effort` | enum | Time to implement | `days` |
 | `impact` | enum | Potential benefit | `high` |
-| `signals` | array of strings | When this pattern helps | `["Quality-critical output", "Iterative refinement possible"]` |
-| `anti_signals` | array of strings | When to avoid | `["Single-pass generation", "Tight latency budget"]` |
 | `prerequisites` | array of strings | Required setup | `["Evaluation metric", "Iterative loop support"]` |
 | `related` | array of strings | Related pattern IDs | `["self-critique-evaluator-loop"]` |
 | `anti_patterns` | array of strings | Opposing patterns | `["one-shot-generation"]` |

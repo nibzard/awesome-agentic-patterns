@@ -22,6 +22,8 @@ summary: >-
   LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates,
   eliminating token-heavy round-trips and enabling efficient multi-step workflows
   with 10x+ token savings.
+signals: ["Workflow has a clear sequence of tool calls you can map out upfront", "Fan-out over many items would overflow context with direct tool calls", "Intermediate tool results are large JSON that the model does not need to see"]
+anti_signals: ["Open-ended research where each next step depends on the last result", "LLM reasoning is needed between tool calls, such as per-item personalization", "Single one-off tool calls or quick prototypes without sandbox infrastructure"]
 updated_at: '2026-01-05'
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Ramp (Inspect Agent)", "Zach Bruggeman, Jason Quense, Rahul Sengottu
 category: Orchestration & Control
 source: "https://engineering.ramp.com/post/why-we-built-our-background-agent"
 tags: [background-agent, sandboxed, model-agnostic, real-time, websocket, custom-infra, iterative]
+summary: "Builds an in-house background coding agent that runs in sandboxed dev environments, streams progress over WebSocket, and iterates on compiler and test feedback"
+signals: ["Off-the-shelf agents cannot integrate with internal tools, private repos, or workflows", "You need model-agnostic infrastructure to switch providers", "Developers need real-time visibility into agent progress"]
+anti_signals: ["Off-the-shelf agents already cover your generic tasks", "No devops capacity to build and maintain sandbox and WebSocket infrastructure"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Orchestration & Control"
 source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
 tags: [model-personality, interaction-modes, multi-model, ux-design, agent-behavior, opus, gpt-52]
+summary: "Offers separate working modes, each with its own prompts, tools, UI, and expectations, tuned to one model's working style"
+signals: ["Product uses several models with different working styles", "Some tasks need fast interaction and others need long autonomous research"]
+anti_signals: ["Product uses one model for all tasks", "Users only want to pick the best model", "Team cannot test and maintain several modes"]
 updated_at: "2026-03-11"
 ---
 

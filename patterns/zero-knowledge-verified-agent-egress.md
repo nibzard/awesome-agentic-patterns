@@ -6,6 +6,9 @@ based_on: ["Zero-knowledge proofs", "Zero trust architecture", "Trusted-endpoint
 category: "Security & Safety"
 source: "https://csrc.nist.gov/pubs/sp/800/207/final"
 tags: [egress, zero-knowledge-proof, source-of-truth, allow-list, mcp, outbound-verification, runtime-protection]
+summary: "Intercepts each outbound HTTP or MCP call, proves its claims against a private source of truth with a zero-knowledge proof, and blocks calls that fail"
+signals: ["Agent makes high-value outbound calls such as payments", "Tampered tool arguments are a threat that domain allow-lists miss", "Source of truth must stay hidden from the agent and destination"]
+anti_signals: ["Agent makes no outbound calls with consequences", "Per-call proof latency is not acceptable", "No one can define and maintain a source of truth per flow"]
 updated_at: "2026-07-23"
 ---
 

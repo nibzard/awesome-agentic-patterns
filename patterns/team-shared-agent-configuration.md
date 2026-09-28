@@ -22,6 +22,8 @@ summary: >-
   Check agent configuration into version control as code, enabling consistent
   behavior across teams, faster onboarding, and collaborative improvement through
   PRs and code review.
+signals: ["Several engineers use the same agent on one repository", "Team members get the same permission prompts again and again", "Team needs standard rules for files the agent must not touch"]
+anti_signals: ["Solo developer with no shared repository", "Config would need secrets that cannot be committed"]
 updated_at: '2026-01-05'
 ---
 

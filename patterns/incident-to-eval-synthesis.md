@@ -6,6 +6,9 @@ based_on: ["Post-incident learning loops in software and ML operations"]
 category: "Feedback Loops"
 source: "https://sre.google/sre-book/postmortem-culture/"
 tags: [evals, incidents, reliability, feedback, continuous-improvement]
+summary: "Converts each production incident into executable eval cases with pass/fail criteria and gates future releases on them"
+signals: ["Production incidents recur after being fixed operationally", "The eval suite drifts away from failures seen in production", "Incident artifacts such as inputs, tool traces, and outputs can be captured"]
+anti_signals: ["No production traffic or incident history exists yet", "Incident data cannot be captured or redacted safely", "The team cannot take on triage overhead for each incident"]
 updated_at: "2026-03-11"
 ---
 

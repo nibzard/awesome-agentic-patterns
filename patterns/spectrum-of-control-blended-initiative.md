@@ -6,6 +6,9 @@ based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-delegation, code-editing, ide-integration]
+summary: "Gives users several autonomy modes, from inline completion to background agents, and lets them switch modes per task"
+signals: ["Tasks range from small edits to multi-file features", "Users need to move between direct control and delegation", "Coding tool or IDE with room for several interaction paths"]
+anti_signals: ["Single task type that needs only one autonomy level", "Team cannot build and maintain several interaction modes"]
 updated_at: "2026-03-11"
 ---
 

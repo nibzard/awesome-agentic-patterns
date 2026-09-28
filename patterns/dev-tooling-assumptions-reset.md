@@ -6,6 +6,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "UX & Collaboration"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [dev-tools, assumptions, github, tickets, code-review, tooling, agent-workflows, paradigm-shift]
+summary: "Audits dev tools for human-effort assumptions and replaces tickets, PR ceremony, and sprints with immediate agent dispatch, variations, and automated tests"
+signals: ["Agents write most of the code (50% or more)", "Codebase has good automated testing", "Tickets, reviews, or sprint queues delay work agents could start now"]
+anti_signals: ["Humans still write most code", "Team or leadership is not committed to autonomous agents", "Weak automated tests cannot replace human review"]
 updated_at: "2026-03-11"
 ---
 

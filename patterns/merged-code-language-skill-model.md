@@ -6,6 +6,9 @@ based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime I
 category: "Reliability & Eval"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [model-merging, transfer-learning, coding-agent, multilingual]
+summary: "Fine-tunes separate language and code specialists from the same base model, then merges their weights into one model instead of one large joint training run"
+signals: ["Need one model strong at both natural language and code", "Compute for one large joint training run is not available", "Teams train specialists on the same base architecture"]
+anti_signals: ["Specialists use different architectures or tokenizers", "No benchmark suite to detect interference after merging"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Aman Sanger (Cursor)"]
 category: Orchestration & Control
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [multi-model, code-generation, code-editing, retrieval, pipeline, complex-tasks]
+summary: "Splits complex code edits across specialized models: a retrieval model gathers context, a large model writes the changes, and smaller models apply them"
+signals: ["Multi-file code edits need broad context plus precise changes", "One model is too costly or too weak for all sub-tasks", "Phases can pass distilled results instead of full history"]
+anti_signals: ["Simple edits that one model handles well", "Team cannot afford to debug a multi-stage pipeline"]
 updated_at: "2026-03-11"
 ---
 

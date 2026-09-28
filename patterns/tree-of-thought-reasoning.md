@@ -13,9 +13,9 @@ tags:
   - search
 slug: tree-of-thought-reasoning
 id: tree-of-thought-reasoning
-summary: >-
-  Linear chain-of-thought reasoning can get stuck on complex problems, missing
-  alternative approaches or failing to backtrack.
+summary: "Expands a tree of candidate reasoning steps, scores partial states, prunes weak branches, and picks the best path instead of one linear chain"
+signals: ["Complex planning, math, or code tasks where the first path often fails", "A good evaluation function or external verifier exists", "Task needs explicit backtracking"]
+anti_signals: ["Simple linear tasks", "Tight latency or token budget (3-10x more tokens than chain-of-thought)"]
 updated_at: '2026-01-05'
 ---
 

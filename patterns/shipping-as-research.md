@@ -6,6 +6,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Learning & Adaptation"
 source: "https://www.youtube.com/watch?v=4rx36wc9ugw"
 tags: [research, experimentation, rapid-iteration, learning, dogfooding, shipping, uncertainty]
+summary: "Releases reversible, instrumented features to learn whether they work, then doubles down or removes them based on usage data and feedback"
+signals: ["Product sits on a fast-changing frontier such as AI agents", "Users are early adopters who accept experimentation", "Features can be reversed through flags or gradual rollout"]
+anti_signals: ["Safety-critical or regulated applications", "Established market or enterprise users that need stability", "Features with high switching costs"]
 updated_at: "2026-03-11"
 ---
 

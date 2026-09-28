@@ -6,6 +6,9 @@ based_on: ["Maildir-style spool directories", "Claude Code / Cowork sandbox spli
 category: "Tool Use & Environment"
 source: "https://github.com/abhinaykrupa/cowork-to-code-bridge"
 tags: [sandbox-escape, host-execution, async-rpc, idempotency, spool-directory, durability]
+summary: "Lets a sandboxed agent write request files to a shared spool directory that a host daemon runs against a whitelist, with idempotent results the agent polls for"
+signals: ["A sandboxed or cloud agent must build, test, or run things on a specific host machine", "Host tasks outlive the sandbox's request timeout or lifetime", "Opening an inbound port on the developer machine is not acceptable"]
+anti_signals: ["Tight interactive loops where polling latency is too slow", "The sandbox cannot share a mounted directory with the host", "You cannot secure the directory with request authentication and strict permissions"]
 updated_at: "2026-08-21"
 ---
 

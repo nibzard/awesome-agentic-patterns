@@ -15,9 +15,9 @@ tags:
   - multi-model
 slug: discrete-phase-separation
 id: discrete-phase-separation
-summary: >-
-  TODO: Add a concise summary for "Discrete Phase Separation" describing the
-  pattern's purpose and key benefits.
+summary: "Splits work into separate research, planning, and implementation conversations, each with fresh context, passing only distilled outputs between phases"
+signals: ["Complex features need significant background research", "Refactors where understanding existing code is critical", "Mixing research and implementation in one conversation degrades quality"]
+anti_signals: ["Small tasks where phase handoffs add more overhead than value", "Latency or total token usage must stay low"]
 updated_at: '2026-01-05'
 ---
 

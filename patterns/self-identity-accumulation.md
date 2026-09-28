@@ -6,6 +6,9 @@ based_on: ["Claude Code Hooks System"]
 category: "Context & Memory"
 source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
 tags: [self-identity, persona, session-hooks, familiarity, cross-session, profile, soul-document, agent-personality]
+summary: "Injects a persistent identity document at session start and updates it with new user insights at session end through lifecycle hooks"
+signals: ["Users re-explain preferences and goals every session", "Agent works with the same user over many sessions", "Host supports session start and end hooks"]
+anti_signals: ["Agent must stay general rather than specialize to one user", "No lifecycle hook infrastructure", "Per-session token budget cannot hold the profile"]
 evidence_grade: medium
 evidence_snapshot: "Dual-hook validated in production; MemGPT/Reflexion show 91% vs 80% HumanEval via reflection"
 last_updated: "2026-02-28"

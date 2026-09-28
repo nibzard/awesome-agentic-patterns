@@ -18,9 +18,9 @@ tags:
   - stability-plasticity
 slug: memory-reinforcement-learning-memrl
 id: memory-reinforcement-learning-memrl
-summary: >-
-  TODO: Add a concise summary for "Memory Reinforcement Learning (MemRL)"
-  describing the pattern's purpose and key benefits.
+summary: "Stores memories with learned utility scores, retrieves by similarity then re-ranks by utility, and updates scores from outcomes while the LLM stays frozen"
+signals: ["Multi-step tasks with clear success or failure signals", "Similar past solutions retrieved by RAG often fail", "Fine-tuning is too expensive"]
+anti_signals: ["Single-turn queries", "No clear reward signal", "Tasks are highly diverse with no repeating patterns"]
 updated_at: '2026-01-13'
 ---
 

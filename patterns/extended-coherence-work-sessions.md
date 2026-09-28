@@ -6,6 +6,9 @@ based_on: ["Amjad Masad (observation)"]
 category: Reliability & Eval
 source: "https://www.nibzard.com/silent-revolution"
 tags: [coherence, long-running tasks, agent capability, llm, complex projects]
+summary: "Combines models with long coherence windows with context compaction, prompt caching, and persisted state so agents stay on task for hours"
+signals: ["Tasks take hours, such as multi-hour coding or research sessions", "Agent output degrades with goal drift, contradictions, or loops in long sessions", "You can add context management and state persistence"]
+anti_signals: ["Short tasks that finish in a few turns", "No prompt caching, so long sessions become too expensive", "No infrastructure for context compaction or state persistence"]
 updated_at: "2026-03-11"
 ---
 

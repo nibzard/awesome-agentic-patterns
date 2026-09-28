@@ -6,6 +6,9 @@ based_on: ["Lukas Möller (Cursor)"]
 category: Tool Use & Environment
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [api-design, llm-interaction, tool-use, system-design, code-structure, agent-compatibility]
+summary: "Designs APIs with visible versions, self-descriptive names and schemas, simple calls, actionable errors, and few indirection levels so LLMs call them correctly"
+signals: ["Agents call internal APIs or libraries as tools", "LLM often calls an API with the wrong version or parameters", "Error responses do not help the agent self-correct"]
+anti_signals: ["API is consumed only by humans", "Agent already uses a small, stable tool surface without errors"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["NIST SP 800-207 (Zero Trust Architecture)", "SPIFFE/SPIRE identity c
 category: "Security & Safety"
 source: "https://www.nist.gov/publications/zero-trust-architecture"
 tags: [zero-trust, identity, delegation, multi-agent, cryptography, ed25519, governance]
+summary: "Gives each agent a cryptographic identity and verifies identity, signed delegation tokens, and chain depth on every inter-agent request"
+signals: ["Multi-agent system where agents delegate tasks to each other", "Risk of agent impersonation or privilege confusion", "Delegation chains must be auditable"]
+anti_signals: ["Single agent with no inter-agent calls", "Team cannot operate key rotation and revocation"]
 updated_at: "2026-07-23"
 ---
 

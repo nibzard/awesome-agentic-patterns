@@ -14,10 +14,9 @@ tags:
   - mcp
 slug: code-over-api-pattern
 id: code-over-api-pattern
-summary: >-
-  Agents write and execute code that processes data in execution environment instead
-  of making direct API calls, dramatically reducing token consumption by keeping
-  intermediate data out of context window (150K → 2K tokens).
+summary: "Agent writes code that calls tools and filters data inside a sandbox, so only summaries and samples return to the context window"
+signals: ["Data-heavy workflows over spreadsheets, databases, or logs", "Intermediate results do not need model inspection", "Token cost or latency matters"]
+anti_signals: ["No secure sandboxed code execution environment is available", "The model is not able to write correct code for the task", "Small tool results that fit easily in context"]
 updated_at: '2026-01-05'
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Simon Willison (observation)", "Multiple vendor incident reports"]
 category: Tool Use & Environment
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [network-sandbox, exfiltration, outbound-controls, security]
+summary: "Puts the agent behind a default-deny egress firewall with allowlisted destinations so stolen data has no outbound channel"
+signals: ["Agent has access to private data and reads untrusted input", "Agent runs in a container or VM where you control outbound network rules", "Needed external APIs can go through an internal proxy"]
+anti_signals: ["The agent must reach many arbitrary external sites to do its job", "The agent has no access to sensitive data", "You cannot build proxy stubs for essential integrations"]
 updated_at: "2026-07-23"
 ---
 

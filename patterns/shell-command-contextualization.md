@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/claude-code"
 tags: [shell integration, context management, local execution, bash, cli, interactive tools]
+summary: "Lets the user run a shell command with a prefix such as ! and injects the command and its full output into the agent's context"
+signals: ["Agent works in a local development environment", "Users paste command output into prompts by hand", "Agent needs linter, git, or file listing output to reason"]
+anti_signals: ["Agent has no local shell access", "Commands produce large output that inflates token costs"]
 updated_at: "2026-03-11"
 ---
 

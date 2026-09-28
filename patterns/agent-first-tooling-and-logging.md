@@ -6,6 +6,9 @@ based_on: ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"]
 category: "Tool Use & Environment"
 source: "https://www.sourcegraph.com"
 tags: [tool-design, logging, machine-readable, observability, agent-environment, mcp, structured-output]
+summary: "Designs tools and logs for agent consumption with one unified log stream, structured JSON output, and agent-aware CLI flags"
+signals: ["Agent parses human-oriented CLI or log output", "Logs are split across client, server, and database streams", "Agent wastes tokens interpreting ambiguous tool output"]
+anti_signals: ["Humans are the main consumers of the tool output", "Team cannot maintain separate human and agent interfaces"]
 updated_at: "2026-03-11"
 ---
 

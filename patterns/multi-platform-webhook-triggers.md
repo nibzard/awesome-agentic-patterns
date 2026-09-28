@@ -18,10 +18,9 @@ tags:
   - event-driven
 slug: multi-platform-webhook-triggers
 id: multi-platform-webhook-triggers
-summary: >-
-  Implement multi-platform webhook triggers (Notion, Slack, Jira, reacji, scheduled
-  events) to allow external SaaS tools to automatically initiate agent workflows,
-  enabling low-friction, reactive automation from existing platforms.
+summary: "Starts agent workflows from Slack, Notion, and Jira webhooks, emoji reactions, and schedules, with idempotency and signature checks on each event"
+signals: ["Internal agent platform with many integration points", "Teams already work in Slack, Notion, or Jira", "Document workflows like RFCs and reviews need automatic routing"]
+anti_signals: ["Esoteric one-off integrations where Zapier or n8n is enough", "Rapid prototype before a custom build", "Non-technical users need self-service automation"]
 updated_at: '2026-01-13'
 ---
 

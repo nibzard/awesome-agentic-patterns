@@ -6,6 +6,9 @@ based_on: []
 category: Orchestration & Control
 source: "https://github.com/chernistry/bernstein"
 tags: [orchestration, multi-agent, parallel-execution, deterministic, test-driven, zero-llm-overhead]
+summary: "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending no LLM tokens on coordination"
+signals: ["Multi-agent coding system spends tokens on routing and coordination", "Project structure is well defined enough for rule-based planning", "You want the same goal to produce the same task breakdown"]
+anti_signals: ["Ambiguous goals need LLM judgment to split", "Novel task types need adaptive routing"]
 updated_at: "2026-07-23"
 ---
 

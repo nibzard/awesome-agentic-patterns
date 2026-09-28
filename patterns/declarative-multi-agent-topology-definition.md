@@ -10,6 +10,8 @@ summary: >-
   Define multi-agent systems declaratively in a single topology file — agents, flows,
   gates, hooks, group chats — then compile to platform-specific configurations for any
   agentic framework.
+signals: ["The same multi-agent topology must run on more than one framework", "The agent graph is hidden in scattered glue code", "Teams repeat pipeline, fan-out, or gate scaffolding in each project"]
+anti_signals: ["You need platform-specific features the declarative layer cannot express", "A single simple agent with no multi-agent topology"]
 updated_at: "2026-07-23"
 ---
 

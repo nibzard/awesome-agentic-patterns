@@ -6,6 +6,9 @@ based_on: ["Thorsten Ball (Sourcegraph)"]
 category: "Orchestration & Control"
 source: "https://www.sourcegraph.com"
 tags: [bitter-lesson, temporary-tooling, model-centric, adaptability, future-proofing]
+summary: "Treats code around the model as temporary scaffolding: build the simplest thing that works now, mark it disposable, and remove it when models improve"
+signals: ["You plan tooling that compensates for a current model weakness", "The feature would likely fail a test of being useful in 6 months", "Fast reaction to new model releases matters more than long-term polish"]
+anti_signals: ["The code is durable business value such as domain logic or unique integrations", "The team cannot track disposal triggers and would keep the debt forever", "The work compounds over time and does not depend on model limitations"]
 updated_at: "2026-03-11"
 ---
 

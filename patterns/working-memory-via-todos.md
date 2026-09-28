@@ -6,6 +6,9 @@ based_on: ["Analysis of 88 Claude conversation sessions"]
 category: Context & Memory
 source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
 tags: [context, memory, working-memory, state, todo-tracking, dependencies, session-management]
+summary: "Keeps an explicit todo list with status, blockers, and next steps during the session so agent and user can track progress"
+signals: ["Complex multi-step tasks with dependencies", "Agent forgets or repeats tasks after context switches", "Several work streams run in the same session"]
+anti_signals: ["Simple single-step tasks", "Tasks that finish in seconds or quick questions"]
 updated_at: "2026-03-11"
 ---
 

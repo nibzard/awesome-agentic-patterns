@@ -6,6 +6,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"]
 category: "Orchestration & Control"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [parallelism, autonomous-agents, factory, assistant, sidebar, orchestration, asynchronous-work]
+summary: "Spawns several autonomous agents in parallel with automated feedback loops such as tests and builds, and checks on them later instead of watching one agent"
+signals: ["Models can work autonomously for long periods", "Tests, builds, and linters can verify agent output without a human", "You have many independent tasks to run at once"]
+anti_signals: ["Exploratory work where you do not yet know what you want", "Tasks need frequent human guidance or domain knowledge not written down", "Quick iterations where interactive feedback is faster"]
 updated_at: "2026-03-11"
 ---
 

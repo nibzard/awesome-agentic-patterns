@@ -6,6 +6,9 @@ based_on: ["Besta et al.", "ETH Zurich"]
 category: "Feedback Loops"
 source: "https://arxiv.org/abs/2308.09687"
 tags: [reasoning, graph-based, problem-solving, thought-exploration, backtracking, aggregation]
+summary: "Represents reasoning as a directed graph of thoughts so the model can branch, aggregate, refine, and revisit reasoning paths"
+signals: ["Problems need several solution approaches merged into one", "Early decisions may need revision based on later insights", "Reasoning steps have interdependencies that do not fit a chain or tree"]
+anti_signals: ["Straightforward problems with a single viable solution path", "Compute is limited, since cost is much higher than linear reasoning", "Reasoning branches never need to recombine"]
 updated_at: "2026-03-11"
 ---
 

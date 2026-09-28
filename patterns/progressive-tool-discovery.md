@@ -14,9 +14,9 @@ tags:
   - lazy-loading
 slug: progressive-tool-discovery
 id: progressive-tool-discovery
-summary: >-
-  TODO: Add a concise summary for "Progressive Tool Discovery" describing the
-  pattern's purpose and key benefits.
+summary: "Organizes tools in a browsable hierarchy and lets the agent load names, descriptions, or full schemas only for the tools it needs"
+signals: ["Agent has 20 or more tools or integrations", "Tool definitions take a large part of the context window", "MCP servers or plugin architectures expose many capabilities"]
+anti_signals: ["Agent needs most of its tools in every workflow", "Extra discovery calls before execution are not acceptable"]
 updated_at: '2026-01-05'
 ---
 

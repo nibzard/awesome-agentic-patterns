@@ -17,9 +17,9 @@ tags:
   - latent-demand
 slug: latent-demand-product-discovery
 id: latent-demand-product-discovery
-summary: >-
-  TODO: Add a concise summary for "Latent Demand Product Discovery" describing
-  the pattern's purpose and key benefits.
+summary: "Builds hackable, extensible products, watches how power users repurpose them, and turns the most frequent workarounds into supported features"
+signals: ["Product can expose hooks, plugins, or configuration to users", "Unclear which features have real demand", "Analytics can detect unexpected usage patterns"]
+anti_signals: ["No analytics or monitoring to detect usage patterns", "Power user behavior does not represent mainstream needs"]
 updated_at: '2026-01-05'
 ---
 

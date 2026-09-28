@@ -16,9 +16,9 @@ tags:
   - task-management
 slug: feature-list-as-immutable-contract
 id: feature-list-as-immutable-contract
-summary: >-
-  TODO: Add a concise summary for "Feature List as Immutable Contract"
-  describing the pattern's purpose and key benefits.
+summary: "Defines every feature up front in a JSON list with acceptance steps; the agent may only flip a feature to passing after it verifies it"
+signals: ["Long-running agents build complete applications with known requirements", "Agents declare done early or delete tests to pass", "Work spans many sessions and progress must stay measurable"]
+anti_signals: ["Exploratory prototyping or research with unclear scope", "Small, single-session tasks", "Requirements change rapidly during implementation"]
 updated_at: '2026-01-05'
 ---
 

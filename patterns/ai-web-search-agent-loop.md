@@ -6,6 +6,9 @@ based_on: ["Colin Flaherty (Muse)", "Amplify Partners Blog"]
 category: Tool Use & Environment
 source: https://www.amplifypartners.com/blog-posts/how-ai-web-search-works
 tags: [web-search, serp-api, citations, parallel-agents, query-translation, operators, grounding]
+summary: "Coordinator agent translates queries, spawns parallel search workers across domains and time ranges, refines iteratively, and answers with citations"
+signals: ["Assistant needs real-time information beyond the training cutoff", "Answers need source citations", "Research needs diverse, long-tail web results"]
+anti_signals: ["Internal model knowledge answers the query", "Latency and cost budgets cannot absorb multiple search rounds"]
 updated_at: "2026-03-11"
 ---
 

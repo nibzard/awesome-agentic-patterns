@@ -6,6 +6,9 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Security & Safety"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts"
 tags: [authorization, policy, allowlist, deny-by-default, pattern-matching, subagent-security]
+summary: "Filters an agent's tools through deny-first allow and deny patterns, profile presets, and subagent policies that inherit parent restrictions"
+signals: ["Agents with different roles need different tool access", "Subagents must get stricter permissions than their parent", "Plugin tools must join policies without manual allowlist updates", "Development and production need different permissions"]
+anti_signals: ["Single agent with a small, fixed tool set", "Team cannot audit many per-agent policies"]
 updated_at: "2026-03-11"
 ---
 

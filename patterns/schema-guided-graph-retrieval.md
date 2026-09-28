@@ -21,6 +21,8 @@ summary: >-
   Use one shared domain schema to align graph construction, schema evolution,
   query decomposition, and typed retrieval so multi-hop reasoning over private
   knowledge stays precise as domains change.
+signals: ["Multi-hop questions over private or domain-specific knowledge", "Flat chunk retrieval returns too much irrelevant context", "Domain ontology is stable enough to define types up front"]
+anti_signals: ["Simple vector search already gives enough precision", "No capacity for upfront schema design and ongoing governance"]
 updated_at: '2026-03-27'
 ---
 

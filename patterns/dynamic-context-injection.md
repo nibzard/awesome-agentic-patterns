@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
 source: "https://www.nibzard.com/claude-code"
 tags: [context management, dynamic context, lazy loading, slash commands, at-mention, interactive context]
+summary: "Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands"
+signals: ["Interactive sessions need specific files or script output on demand", "Users often paste large text blocks or edit static context files", "Teams reuse the same complex instructions across sessions"]
+anti_signals: ["Non-interactive agents with no user in the session", "The needed context is static and fits in baseline configuration files", "You cannot enforce path allowlists and secret scanning on injected files"]
 updated_at: "2026-03-11"
 ---
 

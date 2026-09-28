@@ -18,9 +18,9 @@ tags:
   - validation
 slug: opponent-processor-multi-agent-debate
 id: opponent-processor-multi-agent-debate-pattern
-summary: >-
-  TODO: Add a concise summary for "Opponent Processor / Multi-Agent Debate
-  Pattern" describing the pattern's purpose and key benefits.
+summary: "Spawns agents with opposing roles on the same context, lets them critique each other, then synthesizes their positions to expose bias and blind spots"
+signals: ["High-stakes decision where confirmation bias is a risk", "Competing interests or perspectives must be weighed", "A synthesizer agent or human can resolve the debate"]
+anti_signals: ["Simple decisions that need no debate", "Budget cannot cover 2x or more token cost"]
 updated_at: '2026-01-05'
 ---
 

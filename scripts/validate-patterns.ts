@@ -220,14 +220,26 @@ function validatePattern(filePath: string, checkContent: boolean): ValidationIss
     });
   }
 
-  if (data.summary && typeof data.summary !== 'string') {
+  if (typeof data.summary !== 'string' || data.summary.trim().length === 0) {
     issues.push({
       file: filePath,
       level: 'error',
       field: 'summary',
-      message: 'summary must be a string.',
+      message: 'summary must be a non-empty string: one sentence that says what the pattern does.',
     });
   }
+
+  (['signals', 'anti_signals'] as const).forEach((field) => {
+    const value = data[field];
+    if (!isStringArray(value) || value.length === 0) {
+      issues.push({
+        file: filePath,
+        level: 'error',
+        field,
+        message: `${field} must be a non-empty array of strings (${field === 'signals' ? 'when to use' : 'when not to use'} the pattern).`,
+      });
+    }
+  });
 
   if (data.slug && typeof data.slug !== 'string') {
     issues.push({

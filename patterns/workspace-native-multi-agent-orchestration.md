@@ -6,6 +6,9 @@ based_on: ["Taskade AI Agents (example implementation)"]
 category: "Orchestration & Control"
 source: "https://taskade.com/agents"
 tags: [multi-agent, orchestration, workflow-automation, workspace, mcp, knowledge-base, persistent-memory, integrations, collaboration]
+summary: "Runs agents inside the team's workspace platform so they share its memory, knowledge sources, event triggers, and integrations with humans"
+signals: ["Agent tooling is separate from where the team works", "Non-engineers need to create and version agents", "Multi-agent workflows need shared context and event triggers"]
+anti_signals: ["Team cannot accept coupling to one workspace platform", "Workflows need custom agent code the platform cannot run"]
 updated_at: "2026-03-11"
 ---
 

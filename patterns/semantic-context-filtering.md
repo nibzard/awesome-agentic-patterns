@@ -6,6 +6,9 @@ based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
 category: "Context & Memory"
 source: "https://github.com/hyperbrowserai/HyperAgent"
 tags: [context-filtering, token-optimization, semantic-extraction, noise-reduction]
+summary: "Extracts only the semantic or interactive parts of raw data, such as accessibility trees or relevant fields, before sending it to the LLM"
+signals: ["Raw HTML, API responses, or documents exceed context or cost budgets", "Boilerplate and noise confuse the model's reasoning", "Agent acts on elements that must map back to the original source"]
+anti_signals: ["Source data is already compact and relevant", "Hidden or dynamic content that filters can remove is essential to the task"]
 updated_at: "2026-03-11"
 ---
 

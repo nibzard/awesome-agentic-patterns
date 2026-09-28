@@ -19,9 +19,9 @@ tags:
   - maintenance
 slug: agentic-search-over-vector-embeddings
 id: agentic-search-over-vector-embeddings
-summary: >-
-  TODO: Add a concise summary for "Agentic Search Over Vector Embeddings"
-  describing the pattern's purpose and key benefits.
+summary: "Replaces vector indexes with agent-driven grep, find, and file traversal that searches current file state on demand and refines iteratively"
+signals: ["Codebase changes often or has local uncommitted changes", "Team has no dedicated vector infrastructure", "Security-sensitive deployment needs fewer dependencies"]
+anti_signals: ["Codebase has millions of files", "Queries need semantic matching across different terms", "Model is not capable enough to search iteratively"]
 updated_at: '2026-01-05'
 ---
 

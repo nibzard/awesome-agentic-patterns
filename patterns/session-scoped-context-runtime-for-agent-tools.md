@@ -7,6 +7,8 @@ category: "Context & Memory"
 source: "https://github.com/yvgude/lean-ctx"
 tags: [mcp, context-compression, session-cache, agent-tools, coding-assistants]
 summary: "Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens."
+signals: ["Coding agents read the same files and command outputs many times per session", "Repeated raw tool output drives up cost and latency", "The host can route tools through an MCP server"]
+anti_signals: ["Short sessions with few repeated reads", "Agents cannot be pointed at the runtime consistently"]
 tools: [mcp-server, editor-integration]
 domains: [coding]
 updated_at: "2026-04-29"

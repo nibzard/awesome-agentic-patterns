@@ -6,6 +6,9 @@ based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [prompt-injection, control-flow, safety, tool-use]
+summary: "LLM maps user intent to a pre-approved action ID with schema-validated parameters, and tool outputs never return to the selector"
+signals: ["Agent processes untrusted data such as emails, web pages, or API responses", "Allowed actions are finite and auditable", "Prompt injection must not change which action runs"]
+anti_signals: ["Tasks need open-ended tool use or frequent new capabilities", "Main risk is poisoned parameters passed to approved tools"]
 updated_at: "2026-03-11"
 ---
 

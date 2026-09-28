@@ -21,6 +21,8 @@ summary: >-
   Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination
   between parallel agent executions, ensuring safe training with destructive tool
   access.
+signals: ["RL training runs many parallel rollouts of an agent with shell or other stateful tools", "One rollout's side effects could corrupt another rollout's reward", "Infrastructure can handle bursts of hundreds of VMs or containers"]
+anti_signals: ["Tools are read-only or stateless, so shared infrastructure is safe", "Budget or provider quotas cannot support one VM per concurrent rollout", "State can live in a database keyed by rollout ID with no filesystem tools"]
 updated_at: '2026-01-05'
 ---
 

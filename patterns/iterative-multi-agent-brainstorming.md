@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (via Claude Code capability)"]
 category: Orchestration & Control
 source: "https://www.nibzard.com/claude-code"
 tags: [multi-agent, brainstorming, parallel processing, idea generation, sub-agents, collaborative ideation]
+summary: "Spawns several agents in parallel on the same problem, often with different perspectives, then merges their ideas into one set of options"
+signals: ["Task needs a wide range of ideas or solution approaches", "A single agent keeps converging on the same answer", "A coordinator agent or human can synthesize the outputs"]
+anti_signals: ["Task has one clear correct answer", "Budget cannot cover several parallel agent runs"]
 updated_at: "2026-03-11"
 ---
 

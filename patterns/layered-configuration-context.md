@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
 source: "https://www.nibzard.com/claude-code"
 tags: [context management, configuration, scoped context, automatic loading, CLAUDE.md]
+summary: "Loads context files from enterprise, user, project, and local levels automatically and merges them into the agent's baseline context"
+signals: ["Agent needs project or team instructions in every session", "Organization, user, and project need different baseline context", "Same context is repeated manually in each prompt"]
+anti_signals: ["One-off tasks that need no persistent context", "Context window is too small to hold several layers"]
 updated_at: "2026-03-11"
 ---
 

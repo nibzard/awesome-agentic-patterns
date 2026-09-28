@@ -15,10 +15,9 @@ tags:
   - unified-interface
 slug: multi-platform-communication-aggregation
 id: multi-platform-communication-aggregation
-summary: >-
-  Create unified search interface that queries all communication platforms in
-  parallel and aggregates results into consistent format, enabling single-query
-  cross-platform search with minimal latency through parallel execution.
+summary: "Queries every communication platform in parallel through adapters that share one schema, then merges, deduplicates, and ranks the results"
+signals: ["Users search for messages without knowing which platform holds them", "Each platform has a CLI or API with search support", "Cross-platform audit or compliance searches"]
+anti_signals: ["All communication is on one platform", "Privacy rules do not allow aggregating data across platforms"]
 updated_at: '2026-01-05'
 ---
 

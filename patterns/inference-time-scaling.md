@@ -6,6 +6,9 @@ based_on: ["Google DeepMind", "OpenAI", "Wei et al. (CoT)", "Wang et al. (Self-C
 category: "Orchestration & Control"
 source: "https://deepmind.google/research/"
 tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute, search, verification]
+summary: "Spends extra compute at inference time with best-of-N sampling, longer reasoning, self-refinement, search, and verification to improve output quality"
+signals: ["Complex reasoning tasks such as math or coding where more deliberation helps", "Output quality matters more than latency and cost", "You want a smaller model to match a larger one on hard tasks"]
+anti_signals: ["Simple tasks that gain nothing from extra compute", "Latency-sensitive responses", "Inference budget cannot absorb higher per-request cost"]
 updated_at: "2026-03-11"
 ---
 

@@ -20,6 +20,8 @@ summary: >-
   Design reward functions with multi-criteria evaluation and iterative hardening
   to prevent models from gaming graders, ensuring training rewards align with
   actual task quality.
+signals: ["Training a model with reinforcement learning against a grader", "Training reward rises while real performance does not", "Simple graders penalize valid answers for format differences"]
+anti_signals: ["No reinforcement learning or reward-based training", "Team cannot inspect traces and iterate on the grader"]
 updated_at: '2026-01-05'
 ---
 

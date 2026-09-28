@@ -18,9 +18,9 @@ tags:
   - model-intelligence
 slug: progressive-autonomy-with-model-evolution
 id: progressive-autonomy-with-model-evolution
-summary: >-
-  TODO: Add a concise summary for "Progressive Autonomy with Model Evolution"
-  describing the pattern's purpose and key benefits.
+summary: "Audits prompts and orchestration after each model upgrade and removes the scaffolding that evals show the new model no longer needs"
+signals: ["A newer, more capable model is in production", "System prompts hold instructions written for older model weaknesses", "Token cost or latency of scaffolding is noticeable"]
+anti_signals: ["No evals to detect quality loss after removal", "Instructions carry domain knowledge or safety constraints", "The new model is not yet proven stable in production"]
 updated_at: '2026-01-05'
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Cursor Engineering Team"]
 category: Orchestration & Control
 source: "https://cursor.com/blog/scaling-agents"
 tags: [multi-agent, coordination, long-running, hierarchical, parallelism]
+summary: "Splits agents into planners that create tasks, workers that complete them in isolation, and a judge that decides each cycle whether to continue"
+signals: ["Many agents work in parallel on one large codebase for days or weeks", "Flat peer agents conflict, duplicate work, or wait on locks", "No agent owns hard problems or overall project direction"]
+anti_signals: ["Small task that one agent can finish in a single session", "No budget to run many concurrent agents", "No orchestration infrastructure for roles and task distribution"]
 updated_at: "2026-03-11"
 ---
 

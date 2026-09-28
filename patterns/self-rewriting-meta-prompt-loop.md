@@ -6,6 +6,9 @@ based_on: ["Noah D. Goodman (Meta-Prompt)"]
 category: Orchestration & Control
 source: "https://noahgoodman.substack.com/p/meta-prompt-a-simple-self-improving"
 tags: [meta-prompting, self-improvement, system-prompt, reflection]
+summary: "Has the agent reflect after each episode, draft edits to its own system prompt, validate them through guardrails, and save the new version"
+signals: ["Low-risk, high-volume, well-defined workflows such as formatting or style", "Static system prompts go stale as new edge cases appear", "Version control and rollback for prompts are in place"]
+anti_signals: ["Safety-critical or regulated domain without human approval gates", "No guardrails to stop drift, prompt bloat, or jailbreaks"]
 updated_at: "2026-03-11"
 ---
 

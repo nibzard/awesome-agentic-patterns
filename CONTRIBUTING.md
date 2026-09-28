@@ -29,6 +29,9 @@ authors: ["Contributor Name (@username)"]
 category: "Feedback Loops"  # See SCHEMA.md for all categories
 source: "https://example.com/reference"
 tags: [tag1, tag2, tag3]
+summary: "One sentence that says what the pattern does (the solution, not the problem)"
+signals: ["When this pattern helps"]  # 2-4 items; shown as "Use when"
+anti_signals: ["When it is a bad fit"]  # 2-3 items; shown as "Avoid when"
 ---
 ```
 
@@ -39,14 +42,11 @@ These fields MAY be added to provide additional context:
 ```yaml
 ---
 based_on: ["Original Creator (Source)"]
-summary: "One-sentence description of the pattern"
 slug: "pattern-slug"  # Auto-generated from title if omitted
 maturity: "maturing"  # early, maturing, mature
 complexity: "medium"  # low, medium, high
 effort: "days"  # hours, days, weeks
 impact: "high"  # low, medium, high
-signals: ["When this pattern helps"]
-anti_signals: ["When it is a bad fit"]
 prerequisites: ["Prereq 1", "Prereq 2"]
 related: ["other-pattern-id"]
 anti_patterns: ["opposing-pattern-id"]

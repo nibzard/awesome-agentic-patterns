@@ -6,6 +6,9 @@ based_on: ["Lukas Möller (Cursor)", "Alex Albert (Anthropic)", "Jacob Jackson (
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [developer-productivity, learning, skill-acquisition, iteration, feedback, taste-development, education, junior-developer]
+summary: "Uses AI assistants as tutors that explain errors and concepts, offer alternatives, and fade support as the developer gains skill"
+signals: ["Junior developers need to build skills and code taste", "Developer is learning a new framework or domain"]
+anti_signals: ["Developer copies AI output without independent problem-solving", "Team cannot fade AI support as skills grow"]
 updated_at: "2026-03-11"
 ---
 

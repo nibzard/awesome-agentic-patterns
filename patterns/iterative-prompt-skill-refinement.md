@@ -6,6 +6,9 @@ based_on: ["Will Larson (Imprint)"]
 category: "Feedback Loops"
 source: "https://lethain.com/agents-iterative-refinement/"
 tags: [refinement, iteration, prompts, skills, feedback, multi-mechanism, continuous-improvement, dashboards]
+summary: "Combines a feedback channel, editable prompt documents, log-driven skill fixes, and usage dashboards to improve agent prompts and skills continuously"
+signals: ["Agent workflows run in production for many internal users", "Prompts and skills fail in ways no single review catches", "Workflow runs, errors, and tool usage can be logged"]
+anti_signals: ["Workflow is well understood and can be deterministic code", "No one has time to monitor feedback and dashboards"]
 updated_at: "2026-03-11"
 ---
 

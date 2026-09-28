@@ -15,10 +15,9 @@ tags:
   - data-protection
 slug: pii-tokenization
 id: pii-tokenization
-summary: >-
-  Implement interception layer in MCP client that automatically tokenizes PII
-  before reaching model and untokenizes for tool calls, enabling agents to
-  orchestrate sensitive workflows without exposing raw data to LLM.
+summary: "Replaces PII in tool results with placeholder tokens before the model sees them and restores the real values in outgoing tool calls"
+signals: ["Agent workflows handle customer, HR, or medical records", "Compliance rules such as GDPR, HIPAA, or CCPA apply", "Agent routes data between tools without needing to read raw values"]
+anti_signals: ["Agent must reason over the actual content of the sensitive values", "Data contains no PII", "Tokenization would replace access controls and encryption instead of adding to them"]
 updated_at: '2026-01-05'
 ---
 

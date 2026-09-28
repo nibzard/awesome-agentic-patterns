@@ -6,6 +6,9 @@ based_on: ["Meta AI (Self-Taught Evaluators)"]
 category: Feedback Loops
 source: "https://arxiv.org/abs/2408.02666"
 tags: [self-critique, evaluator, reward-model, synthetic-data, reflexion, rlaif]
+summary: "Trains a judge model on its own synthetic comparisons of candidate outputs and uses it as a reward model or quality gate for the main agent"
+signals: ["Human-labeled preference data is too expensive or goes stale", "Evaluation must keep pace with model and domain changes", "A small human-labeled anchor set is available for checks"]
+anti_signals: ["No human anchor set or adversarial tests to detect evaluator collusion", "Judge criteria for the domain cannot be defined objectively"]
 updated_at: "2026-03-11"
 ---
 

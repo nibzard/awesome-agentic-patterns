@@ -6,6 +6,9 @@ based_on: ["Jory Pestorious"]
 category: Feedback Loops
 source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [validation, drift-detection, continuous-testing]
+summary: "Generates executable tests from the spec on every spec or code commit and opens agent PRs that fix code or flag unclear spec parts"
+signals: ["Project has a formal spec that code must follow", "Spec and code change often and drift apart", "CI can run generated tests on each commit"]
+anti_signals: ["Small or one-off tasks with no written spec", "Spec wording is too ambiguous to turn into tests", "CI capacity is limited"]
 updated_at: "2026-03-11"
 ---
 

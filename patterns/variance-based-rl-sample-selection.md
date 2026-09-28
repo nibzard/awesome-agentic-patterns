@@ -6,6 +6,9 @@ based_on: ["Theo (OpenAI Solutions Architect)", "Prashant (OpenAI RFT Team)"]
 category: "Learning & Adaptation"
 source: "https://youtu.be/1s_7RMG4O4U"
 tags: [reinforcement-learning, sample-efficiency, variance, data-quality, agent-rft]
+summary: "Runs the base model several times per sample and trains RL only on samples with score variance, skipping ones that are always right or always wrong"
+signals: ["Planning reinforcement fine-tuning on a limited budget", "Dataset may contain many samples with no learning signal", "Need to estimate RL improvement potential before training"]
+anti_signals: ["Very small dataset (under about 50 samples) with noisy variance estimates", "No budget for 3-5 baseline runs per sample"]
 updated_at: "2026-03-11"
 ---
 

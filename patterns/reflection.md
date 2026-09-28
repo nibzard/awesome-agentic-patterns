@@ -13,9 +13,9 @@ tags:
   - evaluation
 slug: reflection
 id: reflection-loop
-summary: >-
-  Generative models may produce subpar output if they never review or critique
-  their own work.
+summary: "Scores each draft against a fixed rubric, feeds the critique into a revision, and repeats until the draft passes a threshold or the retry budget ends"
+signals: ["Output must meet explicit quality criteria", "Single-pass answers miss edge cases or constraints", "Writing, reasoning, or code tasks with a clear scoring metric"]
+anti_signals: ["No well-defined metric to score drafts", "Extra compute per answer is not acceptable"]
 updated_at: '2026-01-05'
 ---
 

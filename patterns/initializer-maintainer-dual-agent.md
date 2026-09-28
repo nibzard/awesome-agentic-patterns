@@ -6,6 +6,9 @@ based_on: ["Anthropic Engineering Team", "Cursor Engineering (Planner-Worker Arc
 category: Orchestration & Control
 source: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
 tags: [long-running-agents, session-handoff, lifecycle-specialization, project-bootstrap, incremental-development]
+summary: "Uses a one-time initializer agent to create the feature list, progress files, and bootstrap script, then a coding agent that resumes from them one feature per session"
+signals: ["Projects need many agent sessions over days or weeks", "Applications have many discrete features to track", "Context loss between sessions is costly"]
+anti_signals: ["Small, single-session tasks", "Exploratory or research projects with no clear feature list up front"]
 updated_at: "2026-03-11"
 ---
 

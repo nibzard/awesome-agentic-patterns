@@ -17,10 +17,9 @@ tags:
   - exploration
 slug: agent-reinforcement-fine-tuning
 id: agent-reinforcement-fine-tuning-agent-rft
-summary: >-
-  Train model weights end-to-end on agentic tasks via reinforcement learning with
-  real tool calls and custom reward signals, optimizing for domain-specific
-  tool use efficiency and multi-step reasoning performance.
+summary: "Trains model weights with reinforcement learning on real tool calls and custom graders to improve domain-specific tool use and multi-step reasoning"
+signals: ["Agent still underperforms on domain tasks after prompt optimization", "Agent makes too many or wrong tool calls", "Task has agreed correct answers and non-zero baseline performance"]
+anti_signals: ["Base model never solves the task", "Team cannot host tool and grader endpoints that mirror production", "No consensus on what a correct answer is"]
 updated_at: '2026-01-05'
 ---
 

@@ -6,6 +6,9 @@ based_on: ["MisakaNet", "GitHub Issues"]
 category: Context & Memory
 source: "https://github.com/Ikalus1988/MisakaNet"
 tags: [distributed-memory, knowledge-sharing, git-based, swarm-memory, lessons-learned]
+summary: "Agents write solved problems as markdown lessons in a shared Git repo and search them before debugging, with GitHub Issues as the coordination layer"
+signals: ["Several agents hit the same environment or tooling problems independently", "Agents need shared knowledge that works offline", "You want to avoid infrastructure beyond Git and GitHub"]
+anti_signals: ["A single agent with no fleet to share lessons with", "No one maintains lessons, so stale entries would mislead agents"]
 updated_at: "2026-07-23"
 ---
 

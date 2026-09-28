@@ -6,6 +6,9 @@ based_on: ["Amjad Masad"]
 category: UX & Collaboration
 source: "https://www.nibzard.com/silent-revolution"
 tags: [human-agent collaboration, workflow design, agent autonomy, task decomposition, HCI]
+summary: "Gives agents clear high-level goals, room for implementation choices, structured I/O, and plan review before execution"
+signals: ["Humans micromanage the agent's technical decisions", "Humans and agents share work across handoffs", "Rigid step-by-step workflows reduce agent output quality"]
+anti_signals: ["Task needs exact prescribed steps with no agent choice", "Team cannot invest in explicit process design"]
 updated_at: "2026-03-11"
 ---
 

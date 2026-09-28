@@ -6,6 +6,9 @@ based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
 category: "Reliability & Eval"
 source: "https://github.com/hyperbrowserai/HyperAgent"
 tags: [caching, replay, regression-testing, cost-reduction, deterministic, xpath]
+summary: "Records each agent action with XPath and frame metadata so later runs replay it without LLM calls, with LLM fallback when replay fails"
+signals: ["Same browser workflow runs many times", "LLM cost or latency per run is too high", "Agent workflows need deterministic regression tests in CI"]
+anti_signals: ["Workflow is not deterministic and changes each run", "Target UI goes through frequent major redesigns"]
 updated_at: "2026-03-11"
 ---
 

@@ -20,6 +20,8 @@ summary: >-
   Constrain agent outputs using deterministic schemas that enforce structured,
   machine-readable results, enabling reliable validation, parsing, and integration
   with downstream systems.
+signals: ["Agent output feeds databases, APIs, or other agents", "Classification or data extraction tasks", "Framework supports schema-constrained output"]
+anti_signals: ["Task needs open-ended free-form text", "Output shape changes too often to keep a schema"]
 updated_at: '2026-01-05'
 ---
 

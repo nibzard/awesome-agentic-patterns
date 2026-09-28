@@ -6,6 +6,9 @@ based_on: ["Hyperbrowser Team (@hyperbrowserai)"]
 category: "Reliability & Eval"
 source: "https://github.com/hyperbrowserai/HyperAgent"
 tags: [retry, validation, cross-step-learning, structured-output, zod, error-accumulation]
+summary: "Retries failed structured outputs with the validation errors as feedback and adds recent errors from earlier steps to later prompts so mistakes do not repeat"
+signals: ["Multi-step workflow depends on LLM output that matches a schema", "A single schema violation ends the whole workflow", "The same validation errors repeat across steps"]
+anti_signals: ["The API enforces the schema server-side through structured outputs or tool use", "Latency or cost of extra LLM calls is not acceptable"]
 updated_at: "2026-03-11"
 ---
 

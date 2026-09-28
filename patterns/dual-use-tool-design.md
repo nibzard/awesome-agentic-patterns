@@ -18,9 +18,9 @@ tags:
   - consistency
 slug: dual-use-tool-design
 id: dual-use-tool-design
-summary: >-
-  TODO: Add a concise summary for "Dual-Use Tool Design" describing the
-  pattern's purpose and key benefits.
+summary: "Builds each tool with one interface and implementation that both humans and agents can call, with the same output, permissions, and logs"
+signals: ["You maintain separate tools for humans and agents", "Human and agent capabilities drift apart over time", "Tools have interactive prompts or output that agents cannot parse"]
+anti_signals: ["A tool is only ever used by one audience", "A separate specialized tool gives clearly better results for agents or humans"]
 updated_at: '2026-01-05'
 ---
 

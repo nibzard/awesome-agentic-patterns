@@ -6,6 +6,9 @@ based_on: ["Walleted agent execution patterns"]
 category: "Security & Safety"
 source: "https://policylayer.com"
 tags: [wallet-controls, spend-limits, policy-enforcement, non-custodial, AI-agents, safety]
+summary: "Puts a policy layer between the agent and the transaction signer that checks each intent against allowlists, budgets, and rate limits, and fails closed"
+signals: ["Agent can start wallet or payment transactions", "Spending rules must not depend on prompt logic", "Every spend decision needs an audit log"]
+anti_signals: ["Agent never moves funds", "Extra latency per transaction is not acceptable"]
 updated_at: "2026-03-11"
 ---
 

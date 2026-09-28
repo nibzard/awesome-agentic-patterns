@@ -6,6 +6,9 @@ based_on: ["Claude Desktop MCP", "Cursor MCP Integration"]
 category: Tool Use & Environment
 source: "https://github.com/Rajathbharadwaj/langgraph-patterns-mcp"
 tags: [mcp, code-patterns, tool-injection, context-enhancement, langgraph]
+summary: "Runs an MCP server that exposes framework best-practice patterns as tools, so the coding assistant fetches current patterns on demand"
+signals: ["Team uses a fast-moving framework that model training data covers poorly", "Developers keep pasting the same framework patterns into prompts", "Coding assistant supports MCP"]
+anti_signals: ["Framework is stable and well covered by training data", "No one can maintain the pattern library"]
 updated_at: "2026-07-23"
 ---
 

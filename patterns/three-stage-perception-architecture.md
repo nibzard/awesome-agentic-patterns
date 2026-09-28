@@ -6,6 +6,9 @@ based_on: ["Sense-Plan-Act (Robotics)", "ReAct Pattern (Yao et al. 2022)", "Info
 category: "Orchestration & Control"
 source: "https://arxiv.org/abs/2210.03629"
 tags: [architecture, perception, processing, action, pipeline, modular-design]
+summary: "Splits the agent into separate perception, processing, and action stages so each stage can be built, tested, and scaled on its own"
+signals: ["Agent handles mixed input types such as text, images, and audio", "Monolithic agent is hard to debug or extend", "Different stages need different scaling or teams"]
+anti_signals: ["Simple task where extra stages add only complexity", "Latency budget cannot absorb stage transitions"]
 updated_at: "2026-03-11"
 ---
 

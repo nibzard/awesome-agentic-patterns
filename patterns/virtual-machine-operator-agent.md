@@ -6,6 +6,9 @@ based_on: ["Amjad Masad"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/silent-revolution"
 tags: [computer operation, virtual machine, execution environment, agent capability]
+summary: "Gives the agent a dedicated virtual machine where it can run code, install packages, use the file system, and operate CLI tools"
+signals: ["Tasks need code execution, package installs, or system tools", "Agent must work as a general-purpose computer operator", "Isolation from the host system is required"]
+anti_signals: ["Tasks are only text or code generation with no execution", "Cold-start latency of VMs or containers is not acceptable"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Internal Practice"]
 category: "Orchestration & Control"
 source: "https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78"
 tags: [autonomous-execution, task-loop, rate-limiting, git-automation, cli-driven, stream-processing]
+summary: "Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits"
+signals: ["A todo file holds discrete, well-defined tasks", "Manual task selection and Git commits slow down work", "Rate limits interrupt long agent sessions"]
+anti_signals: ["Tasks are complex or poorly defined", "Each task decision needs human oversight", "Elevated execution permissions are not allowed"]
 updated_at: "2026-03-11"
 ---
 

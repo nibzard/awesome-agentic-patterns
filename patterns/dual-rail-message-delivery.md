@@ -6,6 +6,9 @@ based_on: ["Chandra & Toueg (1996), unreliable failure detectors", "Helland (201
 category: "Orchestration & Control"
 source: "https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf"
 tags: [multi-agent, coordination, message-bus, reliability, redundancy, fault-detection, human-in-the-loop, distributed-systems]
+summary: "Sends every inter-agent message on two independent channels through one entry point, alerts when the rails diverge, and requires ACKs to confirm completion"
+signals: ["Agents on separate machines or networks coordinate over one channel", "Silence could mean either nothing to do or a lost message", "Humans want to watch fleet traffic without a dashboard"]
+anti_signals: ["Agents share a process or a single machine", "Receivers cannot dedupe or handle messages idempotently", "No payload form is safe to carry on both rails"]
 evidence_grade: medium
 evidence_snapshot: "In one 5-machine fleet over ~2 months, every observed coordination outage was a silent single-channel failure rather than a message-content failure; no controlled comparison against a single-rail baseline exists."
 last_updated: "2026-07-28"

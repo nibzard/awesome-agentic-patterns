@@ -6,6 +6,9 @@ based_on: ["Aman Sanger (Cursor, referencing Michael Grinich)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-review, verification, abstraction, pseudocode, intent-based-review, explainability, software-quality, human-ai-interface]
+summary: "Shows reviewers pseudocode, intent summaries, and logical diffs of code changes, with drill-down to the real code to confirm the mapping"
+signals: ["Reviewers spend too long reading AI-generated code line by line", "Reviewers care more about why code changed than how"]
+anti_signals: ["No reliable way to confirm the abstraction matches the actual code", "Changes are small enough to review directly"]
 updated_at: "2026-03-11"
 ---
 

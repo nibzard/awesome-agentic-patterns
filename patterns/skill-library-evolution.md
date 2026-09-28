@@ -21,10 +21,9 @@ tags:
   - lazy-loading
 slug: skill-library-evolution
 id: skill-library-evolution
-summary: >-
-  Agents persist working code implementations as reusable skills that evolve into
-  well-documented capabilities over time, building organizational knowledge and
-  reducing redundant problem-solving across sessions.
+summary: "Saves working agent code as reusable skills in a skills directory, documents and tests them over time, and loads skill details only on demand"
+signals: ["Agents solve similar problems across sessions", "Agents rewrite the same code and waste tokens", "Many skills or MCP tools would bloat context if loaded up front"]
+anti_signals: ["One-off tasks with no repeated problems", "No capacity to test, review, and deprecate saved skills"]
 updated_at: '2026-01-13'
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Dilip Arumugam", "Thomas L. Griffiths"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2504.20997"
 tags: [RL, PSRL, exploration, planning, decision-making]
+summary: "Embeds Posterior Sampling for RL in the LLM's reasoning: sample a task model, plan, act, observe reward, and update the posterior"
+signals: ["Agent explores an uncertain environment and gets stuck on its first plausible strategy", "The environment gives measurable, informative reward signals", "The state space is small to medium or can be abstracted into discrete states"]
+anti_signals: ["No reliable reward signal is available", "Very large or unstructured state spaces with no good state abstraction", "Simple tasks where extra complexity and compute are not justified"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["Anthropic Claude Code"]
 category: "Orchestration & Control"
 source: "https://github.com/shmlkv/dna-claude-analysis"
 tags: [pipeline, multi-step, orchestration, report-generation, data-analysis, claude-code]
+summary: "Has an agent run independent analysis scripts, read their structured reports, and merge them into one final report or visualization"
+signals: ["Several scripts analyze the same input from different angles", "Intermediate outputs are markdown, JSON, or CSV", "Final deliverable is one unified report or visualization"]
+anti_signals: ["Pipeline has thousands of steps", "Final output must be identical between runs"]
 updated_at: "2026-07-23"
 ---
 

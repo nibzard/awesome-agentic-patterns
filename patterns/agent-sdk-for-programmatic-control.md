@@ -6,6 +6,9 @@ based_on: ["Anthropic (Claude Code SDK example)"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/claude-code"
 tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
+summary: "Exposes agent functions through an SDK and CLI so code can run the agent headless with set tools, permissions, and resource limits"
+signals: ["Agent must run in CI/CD pipelines or scheduled jobs", "Batch processing across many files or projects", "Building custom apps or UIs on an agent backend"]
+anti_signals: ["Microservices architecture that prefers REST or gRPC APIs", "High-frequency calls or real-time streaming", "Task needs conversational clarification"]
 updated_at: "2026-03-11"
 ---
 

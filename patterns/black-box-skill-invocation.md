@@ -6,6 +6,9 @@ based_on: ["Capability-Based Security (Dennis & Van Horn, 1966)", "Remote Proced
 category: "Security & Safety"
 source: "https://github.com/ZiwayZhao/agent-coworker"
 tags: [privacy, skill-sharing, black-box, schema-only, prompt-protection, inter-agent, trust]
+summary: "Shares skills through input and output schemas only and runs them on the provider side, so prompts and code never cross the boundary"
+signals: ["Agents from different organizations collaborate without exposing proprietary logic", "Provider wants to offer a skill without revealing its implementation", "Collaboration is temporary and trust must expire"]
+anti_signals: ["Caller must inspect, debug, or verify how the skill ran", "Schemas cannot express valid inputs for the skill"]
 updated_at: "2026-07-23"
 ---
 

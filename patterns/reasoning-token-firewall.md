@@ -11,7 +11,7 @@ complexity: "low"
 effort: "hours"
 impact: "high"
 signals: ["The harness streams reasoning and answer tokens in one response", "The agent's output is committed, stored in memory, or forwarded to users or other agents"]
-anti_signals: ["The model returns a single non-streamed answer with no separate reasoning channel"]
+anti_signals: ["The model returns a single non-streamed answer with no separate reasoning channel", "The provider does not label reasoning and answer chunks reliably"]
 related: ["chain-of-thought-monitoring-interruption", "verbose-reasoning-transparency", "structured-output-specification"]
 updated_at: "2026-08-11"
 ---

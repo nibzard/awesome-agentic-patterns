@@ -6,6 +6,9 @@ based_on: ["Gerred Dillon ('Building an Agentic System')"]
 category: "Orchestration & Control"
 source: "https://gerred.github.io/building-an-agentic-system/parallel-tool-execution.html" # Assumes this page details the pattern
 tags: [parallel execution, tool orchestration, read-only tools, stateful tools, agent efficiency, agent safety, concurrency control, task scheduling]
+summary: "Runs a batch of tool calls in parallel when all are read-only and in sequence when any modifies state, then returns results in request order"
+signals: ["Agent often requests several tools in one step", "Most tool calls only read files or state", "Each tool can declare whether it is read-only"]
+anti_signals: ["Most batches include state-modifying tools", "Tools cannot be classified reliably"]
 updated_at: "2026-03-11"
 ---
 

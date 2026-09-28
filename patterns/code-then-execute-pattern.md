@@ -6,6 +6,9 @@ based_on: ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"]
 category: Tool Use & Environment
 source: "https://arxiv.org/abs/2506.08837"
 tags: [dsl, sandbox, program-synthesis, auditability]
+summary: "LLM writes a sandboxed program or DSL script, a static taint checker verifies data flows, and an interpreter runs it in a locked sandbox"
+signals: ["Security-sensitive workflows where tainted input must not reach dangerous sinks", "Multi-step agents such as SQL copilots or workflow automators that need auditability", "You need formal verification or replay logs of agent actions"]
+anti_signals: ["You cannot invest in DSL design and static-analysis infrastructure", "Simple tasks where sandbox execution overhead outweighs audit value"]
 updated_at: "2026-03-11"
 ---
 

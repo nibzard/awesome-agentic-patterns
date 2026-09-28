@@ -6,6 +6,9 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Orchestration & Control"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts"
 tags: [queueing, concurrency, lanes, isolation, parallelism, deadlock-prevention]
+summary: "Routes work into named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users"
+signals: ["Several user sessions or channels share one agent process", "Background jobs like cron or sub-agents must not block user replies", "Output from concurrent commands must not interleave"]
+anti_signals: ["Work needs priorities, deadlines, or work stealing", "A single serial queue already gives enough throughput"]
 updated_at: "2026-03-11"
 ---
 

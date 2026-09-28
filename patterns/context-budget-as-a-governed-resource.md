@@ -6,6 +6,9 @@ based_on: ["Anthropic context-engineering guidance", "Agent Workspace Architectu
 category: "Context & Memory"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#9-context-is-a-budget-not-a-constant"
 tags: [context-budget, token-costs, ghost-tokens, compaction, scheduled-agents]
+summary: "Measures always-loaded context per source, alerts on trend growth, and puts hard spend caps and fan-out bounds on unattended agent runs"
+signals: ["Files are auto-loaded into every agent session", "Agents run unattended on a schedule", "Multi-agent workflows fan out based on discovered data"]
+anti_signals: ["No always-loaded context and no unattended runs", "Cap sizing would abort legitimately heavy runs you cannot bound"]
 last_updated: "2026-06-11"
 updated_at: "2026-07-23"
 ---

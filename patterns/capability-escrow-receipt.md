@@ -6,6 +6,9 @@ based_on: ["Voidly Pay (contributor-owned reference implementation)"]
 category: "Orchestration & Control"
 source: "https://github.com/voidly-ai/voidly-pay"
 tags: [multi-agent, coordination, payments, escrow, receipts, capabilities, atomic-hire]
+summary: "Binds a signed capability listing, an atomic escrow-plus-hire step, and a signed work receipt into one loop for agent-to-agent payment"
+signals: ["Agents pay other agents for bounded, verifiable work units", "Budget hold and hire record must not drift apart", "Parties cross organizational trust boundaries"]
+anti_signals: ["Ledger cannot do multi-write transactions", "Agents cannot manage signing keys safely", "No one can verify work or decide contested receipts"]
 updated_at: "2026-07-23"
 ---
 

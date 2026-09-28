@@ -6,6 +6,9 @@ based_on: ["Luca Beurer-Kellner et al. (2025)", "C. Parisien et al. (2024)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [planning, control-flow-integrity, prompt-injection]
+summary: "Has the LLM fix the full sequence of tool calls before it reads untrusted data, then runs that sequence so tool outputs change only parameters"
+signals: ["Tool outputs contain untrusted content that can carry prompt injections", "The set of actions is known up front but parameters vary", "Complex tasks benefit from a reviewed plan before execution"]
+anti_signals: ["The next action depends on what earlier tool results reveal", "Poisoned output content, such as a bad email body, is the main risk", "Simple task that a capable model can one-shot"]
 updated_at: "2026-03-11"
 ---
 

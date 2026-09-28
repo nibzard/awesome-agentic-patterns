@@ -23,6 +23,8 @@ summary: >-
   Main agent orchestrates 10+ parallel subagents working simultaneously on
   independent migration chunks, achieving 10x+ speedup for large-scale framework
   upgrades, lint rule rollouts, and API migrations.
+signals: ["Migration touches many files that can change independently", "Good test coverage can verify each chunk", "Clear, unambiguous migration rules exist"]
+anti_signals: ["Fewer than about 10 files to migrate", "Files are tightly coupled and need coordinated changes", "Budget cannot cover many parallel agents"]
 updated_at: '2026-01-05'
 ---
 

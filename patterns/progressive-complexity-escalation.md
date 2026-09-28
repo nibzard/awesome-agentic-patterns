@@ -16,10 +16,9 @@ tags:
   - complexity-management
 slug: progressive-complexity-escalation
 id: progressive-complexity-escalation
-summary: >-
-  Start agents with low-complexity, high-reliability tasks and progressively unlock
-  more complex capabilities as models improve and trust is established, matching
-  task complexity to current model capabilities for risk mitigation.
+summary: "Deploys agents on low-complexity, high-reliability tasks first and unlocks higher capability tiers when metrics and human review gates show proven reliability"
+signals: ["Deploying agents into production or regulated domains", "New agent capabilities have unproven reliability", "Errors in high-stakes operations are costly"]
+anti_signals: ["Full automation value is needed immediately", "No metrics or monitoring to decide tier promotion"]
 updated_at: '2026-01-05'
 ---
 

@@ -17,10 +17,9 @@ tags:
   - progressive-enhancement
 slug: hybrid-llm-code-workflow-coordinator
 id: hybrid-llmcode-workflow-coordinator
-summary: >-
-  Configurable coordinator supporting both LLM-driven (flexible, fast iteration)
-  and code-driven (deterministic, code review) workflows, enabling progressive
-  enhancement from prototype to production-ready systems.
+summary: "Lets each workflow pick an LLM or a code script as its coordinator, so teams prototype with the LLM and move to reviewed code when determinism matters"
+signals: ["Workflows start as quick LLM prototypes", "Some workflows cannot tolerate occasional LLM errors", "Critical workflow logic should go through code review"]
+anti_signals: ["The task is deterministic from the start, so write code directly", "Highly exploratory tasks that always need the LLM"]
 updated_at: '2026-01-13'
 ---
 

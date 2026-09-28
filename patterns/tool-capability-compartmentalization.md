@@ -6,6 +6,9 @@ based_on: ["Simon Willison (MCP critique)"]
 category: Orchestration & Control
 source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
 tags: [capability-segregation, least-privilege, tool-permissions]
+summary: "Splits tools into reader, processor, and writer classes with scoped permissions and blocks tool chains that combine private data, untrusted input, and external writes"
+signals: ["Agent tools read private data and also reach the network", "Untrusted input can reach tools that write or send data", "MCP or framework tools mix several capability classes"]
+anti_signals: ["All tools are read-only and local", "Team cannot maintain per-tool permission manifests"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["SCITT (Supply Chain Integrity, Transparency and Trust)", "OWASP Agen
 category: "Security & Safety"
 source: "https://github.com/jagmarques/asqav-sdk"
 tags: [governance, audit-trail, compliance, cryptographic-signing, policy-enforcement, eu-ai-act, owasp]
+summary: "Middleware checks each tool call against a policy file, then signs a receipt of the action with ML-DSA and appends it to a tamper-evident chain"
+signals: ["Regulated environment such as finance, healthcare, or EU AI Act", "You must prove what an agent did and whether it stayed within policy", "Agent framework supports tool-calling middleware"]
+anti_signals: ["Per-call signing latency is not acceptable", "You cannot manage signing keys or store receipts that grow with activity"]
 updated_at: "2026-07-23"
 ---
 

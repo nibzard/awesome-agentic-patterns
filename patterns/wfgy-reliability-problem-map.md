@@ -6,6 +6,9 @@ based_on: ["WFGY Problem Map (@onestardao)"]
 category: "Reliability & Eval"
 source: "https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md"
 tags: [reliability, evaluation, rag, agents, debugging, failure-modes, checklist]
+summary: "Runs a fixed 16-question failure checklist on each RAG or agent incident, maps the result to repair actions, and re-tests the same failing case"
+signals: ["RAG or agent failures are hard to diagnose", "Team fixes incidents by changing prompts at random", "Team needs a shared vocabulary for failure modes"]
+anti_signals: ["Automated evals and metrics already find root causes", "Team will not run the full triage sequence first"]
 updated_at: "2026-03-11"
 ---
 

@@ -6,6 +6,9 @@ based_on: ["OpenAI"]
 category: "Reliability & Eval"
 source: "https://openai.com/research/criticgpt"
 tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
+summary: "Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration"
+signals: ["High volume of AI-generated code overwhelms human reviewers", "Security-sensitive code needs vulnerability checks before merge", "CI/CD pipelines need automated pre-commit review"]
+anti_signals: ["Review depends on full business context only humans have", "You cannot afford human verification of false positives", "Low commit volume where human review is sufficient"]
 updated_at: "2026-03-11"
 ---
 

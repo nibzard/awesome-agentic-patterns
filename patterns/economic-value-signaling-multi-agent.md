@@ -6,6 +6,9 @@ based_on: ["Beacon agent coordination framework (contributor-owned reference imp
 category: "Orchestration & Control"
 source: "https://github.com/Scottcjn/beacon-skill"
 tags: [multi-agent, coordination, incentives, economic-signaling, peer-discovery, value-transfer]
+summary: "Attaches a token value to inter-agent requests so recipients prioritize by value, with a peer registry for discovery and ledger settlement"
+signals: ["Many autonomous agents send each other work requests with no priority signal", "Agents must find peers with complementary capabilities", "Agents cross organizational boundaries with no central scheduler"]
+anti_signals: ["A central scheduler or priority queue already works for your agents", "You cannot add a shared value token or settlement layer", "Few agents with fixed roles and simple coordination"]
 updated_at: "2026-03-11"
 ---
 

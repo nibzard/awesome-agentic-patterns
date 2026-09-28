@@ -6,6 +6,9 @@ based_on: ["Analysis of 88 Claude conversation sessions (nibzard-web, skills-mar
 category: Orchestration & Control
 source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
 tags: [tools, workflow, best-practices, efficiency, patterns, exploration, modification]
+summary: "Maps each task type to a preferred tool: Glob, Grep, and Read to explore, Edit to modify, Bash to verify, and Task with a clear subject to delegate"
+signals: ["Coding agent has file, shell, and delegation tools", "Agent wastes tokens with wrong tool choices such as Write for small edits", "Agent skips build checks after code changes"]
+anti_signals: ["Agent has only one or two tools", "Simple one-off tasks where the workflow adds overhead"]
 updated_at: "2026-03-11"
 ---
 

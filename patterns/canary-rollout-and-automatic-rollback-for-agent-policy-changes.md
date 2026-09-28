@@ -6,6 +6,9 @@ based_on: ["Canary deployment and SRE rollback practices"]
 category: "Reliability & Eval"
 source: "https://martinfowler.com/bliki/CanaryRelease.html"
 tags: [canary, rollback, reliability, policy, evaluation]
+summary: "Ships agent policy changes to a small traffic slice first, monitors guardrail metrics, and rolls back to the last stable version automatically"
+signals: ["Prompts, tool policies, or routing rules change often", "Small policy edits can cause regressions in cost, latency, safety, or quality"]
+anti_signals: ["No real-time telemetry to detect regressions", "Policies are not versioned, so rollback cannot restore a known-good state"]
 updated_at: "2026-03-11"
 ---
 

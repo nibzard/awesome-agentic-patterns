@@ -6,7 +6,7 @@ based_on: ["Jed Arden (@jedarden), NEEDLE ADR-015"]
 category: "Orchestration & Control"
 source: "https://github.com/jedarden/NEEDLE/blob/main/docs/adr/015-concurrent-same-repo-worker-isolation.md"
 tags: [multi-agent, concurrency, decomposition, task-queue, shared-checkout, headless]
-summary: "Decide which tasks may run concurrently when the work is decomposed: every task declares the full set of paths it will write, overlapping tasks get a blocking dependency edge, and only disjoint work is ever offered to agents at once."
+summary: "Each task declares every path it will write; overlapping tasks get a blocking dependency so only disjoint work runs at once on a shared checkout"
 maturity: early
 complexity: low
 effort: hours

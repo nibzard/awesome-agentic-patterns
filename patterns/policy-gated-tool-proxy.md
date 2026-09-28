@@ -20,6 +20,8 @@ summary: >-
   Insert a transparent proxy between agents and tool servers that evaluates
   every tool call against a policy engine before forwarding, producing an
   immutable audit trail of all decisions.
+signals: ["Different agents need different tool permissions", "Regulated environment needs an audit trail of tool calls", "Some tool calls need human sign-off before they run", "Tool calls go through an interceptable protocol such as MCP, REST, or gRPC"]
+anti_signals: ["Governance rules cannot be defined in advance", "Violations only show up across sequences of tool calls", "Added latency on every tool call is not acceptable"]
 updated_at: "2026-07-23"
 ---
 

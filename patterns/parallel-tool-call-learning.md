@@ -16,9 +16,9 @@ tags:
   - performance
 slug: parallel-tool-call-learning
 id: parallel-tool-call-learning
-summary: >-
-  TODO: Add a concise summary for "Parallel Tool Call Learning" describing the
-  pattern's purpose and key benefits.
+summary: "Uses agent reinforcement fine-tuning to teach the model to issue independent tool calls in parallel, which cuts sequential rounds and latency"
+signals: ["Agent makes many sequential tool calls that do not depend on each other", "Tool execution is faster than inference", "Agent RFT training and concurrent tool infrastructure are available"]
+anti_signals: ["Each tool result decides the next call", "Tools are slow or rate-limited"]
 updated_at: '2026-01-05'
 ---
 

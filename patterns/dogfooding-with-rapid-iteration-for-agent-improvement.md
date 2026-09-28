@@ -17,12 +17,9 @@ tags:
   - product-development
 slug: dogfooding-with-rapid-iteration-for-agent-improvement
 id: dogfooding-with-rapid-iteration-for-agent-improvement
-summary: >-
-  ## Problem
-
-  Developing effective AI agents requires understanding real-world usage and
-  quickly identifying areas for improvement. External feedback loops can be
-  slow, and simulated environments may not capture all nuances.
+summary: "The agent team uses its own agent for daily work, collects feedback in low-friction channels, and ships features internally first to validate or discard them"
+signals: ["You build an agent product your own team can use for real work", "External feedback loops are slow", "You want to validate or cut features before a wide release"]
+anti_signals: ["Your team does not do the kind of work the agent targets", "Internal users do not represent your main customer segments", "Internal adoption is too low to give a steady feedback signal"]
 updated_at: '2026-01-05'
 ---
 

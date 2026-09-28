@@ -6,7 +6,7 @@ based_on: ["jev-use (@shitianfang)"]
 category: "Orchestration & Control"
 source: "https://github.com/shitianfang/jev-use"
 tags: [routing, latency, structured-outputs, classification, escalation, orchestration, agent-loops]
-summary: "Partition an agent loop by whether a step must produce text, answer the decision-only steps with a non-generative judgment model using batched typed questions, and hand anything it cannot or should not answer back to the LLM through a typed escalation contract."
+summary: "Sends decision-only loop steps as batched typed questions to a non-generative judgment model and escalates what it cannot answer back to the LLM"
 domains: ["coding", "ops", "browser-automation"]
 complexity: medium
 effort: days

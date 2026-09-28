@@ -9,6 +9,8 @@ tags: [security, threat-detection, regex, deterministic, prompt-injection, tool-
 summary: >-
   Apply deterministic regex rules as a first-pass security layer to detect known
   threat patterns in AI agent tool calls and skill definitions.
+signals: ["Agent consumes tool descriptions, responses, or skill files from external MCP servers", "You need a detection layer that prompt injection cannot bypass", "You want to reserve LLM security review for ambiguous cases"]
+anti_signals: ["You need detection of novel attacks without rule updates", "No one can maintain the rule library as threats change"]
 evidence_grade: medium
 last_updated: "2026-03-31"
 updated_at: "2026-07-23"

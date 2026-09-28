@@ -6,6 +6,9 @@ based_on: ["Lukas Möller (Cursor)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [code-generation, bootstrapping, scaffolding, feature-development, ide, initial-setup]
+summary: "Agent generates initial files, boilerplate, and directory structure from a high-level description so developers start on core logic"
+signals: ["Starting a new feature, module, or greenfield project", "Standardized framework with repetitive boilerplate"]
+anti_signals: ["Integration with an old legacy codebase", "Complex business logic that needs deep domain expertise", "Highly regulated environment with strict compliance"]
 updated_at: "2026-03-11"
 ---
 

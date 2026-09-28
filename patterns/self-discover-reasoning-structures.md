@@ -6,6 +6,9 @@ based_on: ["Google DeepMind", "USC"]
 category: "Feedback Loops"
 source: "https://arxiv.org/abs/2402.03620"
 tags: [reasoning, self-improvement, meta-learning, problem-solving, task-specific, optimization]
+summary: "Has the LLM select, adapt, and compose reasoning modules into a task-specific reasoning structure, then solve the task by following that structure"
+signals: ["Complex reasoning tasks need different strategies per problem", "Performance gains justify extra LLM calls", "Interpretability of the reasoning approach is valuable"]
+anti_signals: ["Simple problems that single-pass Chain-of-Thought handles well", "Budget cannot cover about 2-3x the cost of Chain-of-Thought"]
 updated_at: "2026-03-11"
 ---
 

@@ -19,9 +19,9 @@ tags:
   - learning
 slug: memory-synthesis-from-execution-logs
 id: memory-synthesis-from-execution-logs
-summary: >-
-  TODO: Add a concise summary for "Memory Synthesis from Execution Logs"
-  describing the pattern's purpose and key benefits.
+summary: "Has the agent write a structured diary per task, then runs synthesis agents over many diaries to turn recurring patterns into rules, commands, and tests"
+signals: ["Agent handles many similar tasks over time", "Lessons from single tasks are too specific to reuse directly", "Task logs can be stored and reviewed periodically"]
+anti_signals: ["Too few task logs to find recurring patterns", "Logs contain sensitive data that cannot be kept"]
 updated_at: '2026-01-05'
 ---
 

@@ -11,6 +11,9 @@ tags:
   - automation
   - orchestration
   - reactive
+summary: "Watches external sources for structured signals and starts predefined agent workflows when declarative rules with thresholds and cooldowns match"
+signals: ["The right time to act depends on external events such as failed deploys or new CVEs", "Signal volume is too high for human triage", "Structured signal sources and clear activation thresholds exist"]
+anti_signals: ["Signals are noisy with many false positives", "No cooldowns, rate limits, or kill switch to stop runaway activation"]
 updated_at: "2026-07-23"
 ---
 

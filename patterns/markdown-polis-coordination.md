@@ -6,6 +6,7 @@ based_on: ["Polis Protocol (https://github.com/yehudalevy-collab/polis-protocol)
 category: "Orchestration & Control"
 source: "https://github.com/yehudalevy-collab/polis-protocol"
 tags: [multi-agent, coordination, markdown, bandit-routing, governance, vendor-agnostic]
+summary: "Coordinates agents from different vendors through versioned markdown files: capability cards, work contracts, and bandit routing that learns from settled work"
 maturity: maturing
 complexity: medium
 effort: days

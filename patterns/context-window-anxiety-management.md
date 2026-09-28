@@ -6,6 +6,9 @@ based_on: ["Cognition AI (2025)"]
 category: Context & Memory
 source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)"
 tags: [context-anxiety, token-management, premature-completion, model-behavior]
+summary: "Enables a large context window but caps usage lower, and adds prompts that state the token budget so the model does not rush to finish"
+signals: ["Model summarizes or wraps up early despite remaining context", "Long coding, research, or planning sessions where premature completion hurts quality"]
+anti_signals: ["The model does not show context-anxiety behavior", "Extra prompt tokens and model-specific tuning are not acceptable"]
 updated_at: "2026-03-11"
 ---
 

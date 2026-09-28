@@ -6,6 +6,9 @@ based_on: ["Healthchecks.io-style cron monitoring (inverted to success-sentinel 
 category: "Reliability & Eval"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md"
 tags: [scheduled-agents, silent-failure, watchdog, observability, automation]
+summary: "Each scheduled job writes a success sentinel to its log, and a separate checker files a task when the sentinel is missing or stale"
+signals: ["Two or more scheduled agent jobs run unattended", "Jobs can fail silently from expired tokens, scheduler errors, or permission changes", "Durable per-run logs exist"]
+anti_signals: ["Jobs run but produce wrong output, which a sentinel does not detect", "Only on-demand jobs with no regular cadence"]
 last_updated: "2026-06-10"
 updated_at: "2026-07-23"
 ---

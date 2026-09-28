@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (via Claude Code examples)"]
 category: Tool Use & Environment
 source: "https://www.nibzard.com/claude-code"
 tags: [tool use, prompting, agent guidance, custom tools, cli, natural language control]
+summary: "Tells the agent in the prompt which tool to use, how to learn a custom tool, and which shorthands map to tool sequences"
+signals: ["Agent has custom or team-specific tools the base model does not know", "Smaller models pick the wrong tools", "Tool calls fail often without guidance"]
+anti_signals: ["Agent has few tools and picks them correctly on its own", "Tool interfaces change too often to keep prompts current"]
 evidence_grade: high
 evidence_snapshot: "40-70% improvement with deliberation; validated by ReAct research and production deployments"
 last_updated: "2026-02-28"

@@ -6,6 +6,9 @@ based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Reliability & Eval"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [asynchronous, pipeline, code-agent, parallelism]
+summary: "Splits inference, tool execution, reward modeling, and learning into asynchronous workers linked by message queues so GPUs stay busy"
+signals: ["RL rollouts for coding agents block on slow compile or test calls", "GPUs sit idle while CPU-bound tools run"]
+anti_signals: ["Team cannot maintain monitoring across many services", "Training cannot tolerate slightly stale policy data"]
 updated_at: "2026-03-11"
 ---
 

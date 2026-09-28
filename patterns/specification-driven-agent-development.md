@@ -6,6 +6,9 @@ based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
 source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [spec-first, scaffolding, contract, requirements]
+summary: "Makes a version-controlled spec file the agent's main input, scaffolds code from it, and links each artifact back to a spec clause"
+signals: ["Loose prompts cause agents to drift from stakeholder intent", "Requirements can be written as Markdown, OpenAPI, or JSON Schema", "Team needs audit trails from code back to requirements"]
+anti_signals: ["Requirements are too coarse or unknown to specify", "Quick exploratory work where writing a spec costs more than it saves"]
 updated_at: "2026-03-11"
 ---
 

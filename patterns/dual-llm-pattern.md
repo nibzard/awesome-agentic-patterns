@@ -6,6 +6,9 @@ based_on: ["Simon Willison (orig.)", "Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [privilege-separation, quarantined-llm, symbolic-variables]
+summary: "Splits work between a privileged LLM that calls tools but never sees untrusted data and a quarantined LLM that reads untrusted data but has no tools"
+signals: ["One agent reads untrusted input and also calls high-privilege tools", "Prompt injection could trigger writes, sends, or external API calls", "Untrusted content can be reduced to typed values or opaque handles"]
+anti_signals: ["The agent has no privileged tools or side effects", "All input comes from trusted sources", "The task needs the tool-calling model to reason over raw untrusted text"]
 updated_at: "2026-03-11"
 ---
 

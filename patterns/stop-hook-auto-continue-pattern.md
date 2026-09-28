@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (Anthropic)", "Reflexion (Shinn et al., NeurIPS 2023)",
 category: "Orchestration & Control"
 source: "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it"
 tags: [hooks, automation, testing, determinism, success-criteria, continuous-execution]
+summary: "Runs a stop hook after each agent turn that checks success criteria and makes the agent continue until tests or checks pass"
+signals: ["Agent stops before tests, builds, or linters pass", "Success criteria can be checked by a script", "Agent runs in a sandbox or container"]
+anti_signals: ["No reliable automated success check exists", "Criteria may be impossible to meet, which causes endless loops", "No timeout or token budget can be set"]
 updated_at: "2026-03-11"
 ---
 

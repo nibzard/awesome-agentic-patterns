@@ -6,6 +6,9 @@ based_on: ["Jory Pestorious"]
 category: Tool Use & Environment
 source: "http://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [cli, automation, local-dev, headless]
+summary: "Exposes agent capabilities as CLI commands with JSON output and exit codes so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs"
+signals: ["Agent runs must repeat the same way in local dev and CI", "You want to compose agent steps with shell tools, make targets, or Git hooks", "Scripts need to parse agent results and exit codes"]
+anti_signals: ["Exploratory tasks with unclear next steps", "Real-time conversational workflows", "High-frequency calls above about 100 per second"]
 updated_at: "2026-03-11"
 ---
 

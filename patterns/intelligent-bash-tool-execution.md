@@ -6,6 +6,9 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
 category: "Tool Use & Environment"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts"
 tags: [bash, shell, pty, fallback, security, process-management, sandboxing]
+summary: "Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals"
+signals: ["Agents run TTY-required CLIs or interactive tools", "Agents start long-running background processes that need tracking and cleanup", "Command execution needs approval modes such as deny, allowlist, or full"]
+anti_signals: ["Agents only run simple non-interactive commands", "The environment cannot install or compile a native PTY module and needs no TTY support"]
 updated_at: "2026-03-11"
 ---
 

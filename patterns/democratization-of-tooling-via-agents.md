@@ -6,6 +6,9 @@ based_on: ["Jacob Jackson (Cursor)", "Alex Albert (Anthropic)"]
 category: UX & Collaboration
 source: "https://www.youtube.com/watch?v=BGgsoIgbT_Y"
 tags: [no-code, low-code, citizen-developer, tool-creation, business-users, automation, custom-software]
+summary: "Non-programmers describe a tool in natural language and iterate with an AI agent that generates and fixes the code for dashboards, scripts, or small apps"
+signals: ["Domain experts need custom tools but cannot program", "Engineering is a bottleneck for small internal tools", "Destructive operations can go through an approval workflow"]
+anti_signals: ["The tool goes to production where users cannot detect reliability or security issues", "No guardrails for quality and security are in place"]
 updated_at: "2026-03-11"
 ---
 

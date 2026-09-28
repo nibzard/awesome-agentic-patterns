@@ -6,6 +6,9 @@ based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)", "Pi
 category: "Context & Memory"
 source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts"
 tags: [context-management, compaction, overflow-recovery, token-estimation, transcript-validation, api-compaction]
+summary: "Catches context overflow errors, compacts and validates the transcript with a reserve token floor, and retries the request automatically"
+signals: ["Long sessions fail with context_length_exceeded errors", "Operators truncate transcripts by hand", "Agent supports multiple model providers with different transcript rules"]
+anti_signals: ["Short sessions that never approach the context limit", "Summary detail loss is not acceptable and manual curation is required"]
 updated_at: "2026-03-11"
 ---
 

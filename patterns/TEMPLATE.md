@@ -6,6 +6,9 @@ based_on: ["Original Creator (Source)"]    # Pattern originators/inspiration
 category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
 source: "URL to the primary blog post, talk, repo, or paper"
 tags: [tag1, tag2, keyword3, relevant-concept]
+summary: "One sentence that says what the pattern does (the solution, not the problem)"
+signals: ["Condition when a developer should use this pattern", "Another concrete condition"]
+anti_signals: ["Condition when this pattern is the wrong choice", "Another concrete condition"]
 updated_at: "YYYY-MM-DD" # Required: date of the last content change; keeps generated data deterministic
 # Optional evidence metadata for research-informed updates
 # evidence_grade: unknown  # one of: high, medium, low, mixed, unknown

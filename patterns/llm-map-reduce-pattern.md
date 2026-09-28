@@ -6,6 +6,9 @@ based_on: ["Luca Beurer-Kellner et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [map-reduce, sub-agents, isolation, untrusted-data]
+summary: "Processes each untrusted document in its own sandboxed LLM call with a constrained output, then aggregates the results with deterministic code"
+signals: ["Many untrusted documents feed one decision", "One malicious item must not influence results for other items", "Items are independent and each gets a constrained answer"]
+anti_signals: ["Decision needs context across items", "Only a few trusted items to process"]
 updated_at: "2026-03-11"
 ---
 

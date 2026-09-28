@@ -6,6 +6,9 @@ based_on: ["James Ross (@jimy-r), Agent Workspace Architecture"]
 category: "Reliability & Eval"
 source: "https://github.com/jimy-r/agent-workspace-architecture/blob/main/PATTERNS.md#4-tier-by-mechanical-impact-not-by-tone"
 tags: [auto-apply, tiered-autonomy, self-improving-agent, findings-triage, reversibility]
+summary: "Decides which self-proposed changes auto-apply by matching the real diff's file paths and change kinds against a trusted tier table, not by finding text"
+signals: ["System proposes changes to its own code or config", "Some changes should ship without human review", "Findings can come from fetched or external content"]
+anti_signals: ["Every change already goes to human review", "No way to derive a real diff before applying a change", "Team cannot maintain a path and change-kind table"]
 related: ["canary-rollout-and-automatic-rollback-for-agent-policy-changes", "human-in-loop-approval-framework"]
 updated_at: "2026-09-26"
 ---

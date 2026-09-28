@@ -19,10 +19,9 @@ tags:
   - llmops
 slug: llm-observability
 id: llm-observability
-summary: >-
-  Integrate LLM observability platforms for span-level tracing of agent workflows,
-  providing visual UI debugging, workflow linking, and aggregate metrics to enable
-  fast navigation of complex multi-step executions.
+summary: "Sends agent runs to an LLM observability platform for span-level traces of each LLM call and tool use, plus aggregate cost, latency, and success metrics"
+signals: ["Multi-step agent workflows are hard to debug from raw logs", "Non-engineers need to inspect workflow runs", "Team needs cost, latency, and success metrics across runs"]
+anti_signals: ["Simple, deterministic tools with no agent behavior", "Single-step operations where standard logs suffice", "Budget does not cover observability spend"]
 updated_at: '2026-01-13'
 ---
 

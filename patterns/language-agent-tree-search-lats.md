@@ -6,6 +6,9 @@ based_on: ["Zhou et al.", "University of Illinois"]
 category: "Orchestration & Control"
 source: "https://arxiv.org/abs/2310.04406"
 tags: [search, monte-carlo, tree-search, reasoning, planning, reflection, evaluation]
+summary: "Runs Monte Carlo Tree Search over reasoning steps, with the LLM generating candidate actions and scoring partial solutions to pick the best path"
+signals: ["Task needs multi-step planning with many possible solution paths", "Linear ReAct or reflection loops get stuck in dead ends", "Budget allows 5-20x more LLM calls"]
+anti_signals: ["Task is simple or linear", "Real-time response is required", "Cost-sensitive application"]
 updated_at: "2026-03-11"
 ---
 

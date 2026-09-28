@@ -17,10 +17,9 @@ tags:
   - unix-philosophy
 slug: cli-first-skill-design
 id: cli-first-skill-design
-summary: >-
-  Design all skills as CLI tools first for dual-use by humans and agents, enabling
-  manual debugging, programmatic invocation, composition with Unix tools, and
-  transparent shell-based execution without building separate interfaces.
+summary: "Builds each skill as a standalone CLI with JSON output and exit codes so humans and agents use the same interface"
+signals: ["Skills must be usable by both humans and agents", "Teams maintain separate API and GUI interfaces for one skill", "Skills need to compose with Unix tools and scripts"]
+anti_signals: ["High-frequency calls above about 100 per second", "Complex object graphs or real-time streaming"]
 updated_at: '2026-01-05'
 ---
 

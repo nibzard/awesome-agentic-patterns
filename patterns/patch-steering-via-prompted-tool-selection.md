@@ -6,6 +6,9 @@ based_on: ["Boris Cherny (Claude Code Concepts)", "Will Brown (Prime Intellect T
 category: "Tool Use & Environment"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [patching, prompt-steering, tool-selection, coding-agent]
+summary: "Tells the agent in the prompt which patch or refactoring tool to use, with usage examples, negative rules, and a fallback order"
+signals: ["Coding agent has several patching tools, such as text, AST, and semantic", "Agent uses text patches for refactors and breaks references", "Tool choice varies between runs for the same task"]
+anti_signals: ["Agent has only one patching tool", "Token budget cannot hold tool documentation in the prompt"]
 updated_at: "2026-03-11"
 ---
 

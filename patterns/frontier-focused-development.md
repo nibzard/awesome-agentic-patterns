@@ -7,6 +7,9 @@ based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Learning & Adaptation"
 source: "https://www.youtube.com/watch?v=2wjnV6F2arc"
 tags: [frontier, state-of-the-art, model-selection, product-strategy, learning, innovation, no-selector]
+summary: "Targets only state-of-the-art models, picks the best model per use case with no user model selector, and expects to rework the product every few months"
+signals: ["AI capability is the core value of the product", "Users are early adopters or developers who value speed over cost", "A small team can change direction quickly"]
+anti_signals: ["Enterprise customers require stability", "Cost-sensitive markets where top performance is not critical", "AI is a minor feature, or a large team cannot change direction each quarter"]
 updated_at: "2026-03-11"
 ---
 

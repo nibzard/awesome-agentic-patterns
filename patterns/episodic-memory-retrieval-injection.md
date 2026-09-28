@@ -6,6 +6,9 @@ based_on: ["Cursor AI (MCP)", "Windsurf Flows"]
 category: Context & Memory
 source: "https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021"
 tags: [episodic-memory, vector-db, retrieval-augmented, context-hint]
+summary: "Writes a structured memory record after each episode and injects the top-k similar past memories as hints when a new task starts"
+signals: ["Agent works across multiple sessions on the same repo, user, or project", "Agent repeats past mistakes or rediscovers earlier decisions", "You can store and curate memory records with task and time metadata"]
+anti_signals: ["Single-shot tasks with no continuity between sessions", "You cannot review or prune memories, so noise would build up", "Storage or retrieval cost is not acceptable for the workload"]
 updated_at: "2026-03-11"
 ---
 
