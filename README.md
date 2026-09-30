@@ -83,6 +83,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Self-Identity Accumulation](patterns/self-identity-accumulation.md)
 - [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md)
 - [Session-Scoped Context Runtime for Agent Tools](patterns/session-scoped-context-runtime-for-agent-tools.md)
+- [Surface-Scoped System Prompt](patterns/surface-scoped-system-prompt.md)
 - [Tool Search Lazy Loading](patterns/tool-search-lazy-loading.md)
 - [Working Memory via TodoWrite](patterns/working-memory-via-todos.md)
 

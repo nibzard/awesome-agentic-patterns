@@ -2954,6 +2954,22 @@
       "summary": "Requires a specific action-plus-target subject on every subagent task so each delegated job stays traceable and easy to reference"
     },
     {
+      "id": "surface-scoped-system-prompt",
+      "title": "Surface-Scoped System Prompt",
+      "category": "Context & Memory",
+      "status": "established",
+      "slug": "surface-scoped-system-prompt",
+      "tags": [
+        "system-prompt",
+        "entrypoint",
+        "headless",
+        "prompt-assembly",
+        "tool-surface",
+        "harness-design"
+      ],
+      "summary": "Ships one system prompt per invocation surface and selects it at launch, so an interactive session, a headless run and a task mode each get instructions written for that surface"
+    },
+    {
       "id": "swarm-migration-pattern",
       "title": "Swarm Migration Pattern",
       "category": "Orchestration & Control",
@@ -3549,6 +3565,11 @@
     {
       "source": "reasoning-token-firewall",
       "target": "structured-output-specification",
+      "type": "related"
+    },
+    {
+      "source": "surface-scoped-system-prompt",
+      "target": "agent-modes-by-model-personality",
       "type": "related"
     },
     {

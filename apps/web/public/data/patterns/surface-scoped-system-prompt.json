@@ -1,0 +1,39 @@
+{
+  "title": "Surface-Scoped System Prompt",
+  "status": "established",
+  "authors": [
+    "Continuum AI (@xizhuomengcontin)"
+  ],
+  "based_on": [
+    "MiniMax Code (MiniMax-AI)",
+    "Claude Code (Anthropic)"
+  ],
+  "category": "Context & Memory",
+  "source": "https://github.com/MiniMax-AI/minimax-code",
+  "tags": [
+    "system-prompt",
+    "entrypoint",
+    "headless",
+    "prompt-assembly",
+    "tool-surface",
+    "harness-design"
+  ],
+  "slug": "surface-scoped-system-prompt",
+  "id": "surface-scoped-system-prompt",
+  "summary": "Ships one system prompt per invocation surface and selects it at launch, so an interactive session, a headless run and a task mode each get instructions written for that surface",
+  "signals": [
+    "The harness runs both interactively and headless or in CI",
+    "Some tools only make sense when a human can answer",
+    "Instructions about formatting, pacing or asking questions differ by surface"
+  ],
+  "anti_signals": [
+    "One entrypoint and one way of running the agent",
+    "Nobody can maintain more than one prompt document",
+    "Differences are small enough for a single conditional line"
+  ],
+  "related": [
+    "agent-modes-by-model-personality"
+  ],
+  "updated_at": "2026-09-30",
+  "body": "\n## Problem\n\nA coding agent is usually reachable through more than one door: an interactive terminal session, a\nheadless `-p`/`exec` invocation in CI, an SDK embedding, a \"work\" or \"research\" mode chosen by flag.\nOne system prompt has to serve all of them, and the instructions pull in opposite directions.\n\nInteractive prompts tell the model to keep answers short because a human is watching, to ask before\ndoing anything irreversible, and to use terminal formatting. None of that survives contact with a\nheadless run: there is nobody to ask, the output is consumed by a script, and a tool that waits for\nconfirmation is a hang, not a safeguard. Teams usually notice this as an agent that is chatty in CI,\nor one that stalls waiting for an answer that will never come.\n\nThe tempting fix is conditionals inside one prompt — \"if running non-interactively, then…\" — which\ngrows a second prompt inside the first and asks the model to route around instructions that do not\napply to it.\n\n## Solution\n\nAssemble the system prompt from the **invocation surface**, decided by the harness at launch, before\nthe model sees anything. Each surface gets its own prompt document, and optionally its own tool set.\nThe model is not asked to work out which situation it is in; the harness already knows.\n\nTwo shipped implementations, reached independently:\n\n**Claude Code** switches on the entrypoint. The request carries it explicitly\n(`cc_entrypoint=cli` versus `cc_entrypoint=sdk-cli`), and both the prompt and the tool schema change\nwith it. The identity line itself is rewritten — `You are Claude Code, Anthropic's official CLI for\nClaude` becomes `You are a Claude agent, built on Anthropic's Claude Agent SDK` — and the tool list\nis trimmed, because tools that assume a terminal have no meaning in an SDK embedding.\n\n**MiniMax Code** switches on a declared task mode. `mcode` ships three Handlebars templates under\n`assets/agents/_v2/*/SYSTEM.md.hbs` and picks one per `--prompt-mode`: `tui`, `coding`, `work`.\nThey are three documents, not one with a flag: `coding` swaps the `Deliverable Files` section for\n`Media Output`, and `work` adds an `Artifact Completion Contract` on top. The tool set stays\nidentical across all three — here the surface changes what the agent is told to produce, not what it\ncan reach.\n\n```pseudo\nlaunch(surface, model):\n    prompt = PROMPTS[surface]          // a document, not a branch\n    tools  = TOOLS[surface] or TOOLS.default\n    return session(prompt, tools, model)\n```\n\n## Evidence\n\n- **Evidence Grade:** `medium`\n- **Most Valuable Findings:**\n  - Both variables were measured on the wire, not inferred. Claude Code `claude-fable-5-1` on\n    2026-09-02: interactive 26,131 characters and 35 tool definitions, print/SDK 20,806 characters\n    and 29 tools, same model, same day.\n  - MiniMax Code `mcode` 0.4.12 on 2026-09-20: 14,675 / 16,055 / 17,619 characters for\n    `tui` / `coding` / `work`, with a byte-identical 18-tool schema across all three.\n  - **The model is not the variable.** Seven models across six labs driven through the same MiniMax\n    Code surface produced prompts identical line for line except `- Model: <id>`. This is what\n    separates this pattern from picking modes by model personality: here the model can change freely\n    and the prompt does not move.\n- **Unverified / Unclear:** whether the trimmed headless tool set is a deliberate safety decision or\n  a consequence of which tools the embedding can host; only the two harnesses above were measured,\n  so the frequency across the wider ecosystem is unknown.\n\n## How to use it\n\n- Enumerate your real entrypoints first. If there is genuinely one, this pattern is overhead.\n- Give each surface a prompt file of its own and diff them in review. The diff is the design: if two\n  files differ by one sentence, merge them; if they differ by a section, the split is earning its\n  keep.\n- Decide per surface whether the **tool set** also changes. Anything that asks a human something\n  should not exist in a headless surface — removing it is safer than instructing the model not to\n  call it.\n- Put the surface in the request metadata or a header so a later trace says which prompt was used.\n  Debugging a bad run starts with knowing which document the model was given.\n- Keep the shared material in one place — a partial, an include, a template layer — so a policy\n  change lands in every surface at once.\n\n## Trade-offs\n\n- **Pros:** Each surface gets instructions that are true for it; no conditional logic for the model\n  to interpret; the headless tool surface can be genuinely smaller rather than nominally forbidden;\n  behaviour differences between CI and local become a readable diff instead of a mystery.\n- **Cons:** N prompts to keep in sync, and drift between them is silent — a safety rule can be\n  tightened in the interactive prompt and forgotten in the headless one. Prompt-prefix caching is\n  fragmented across surfaces. It multiplies the evaluation matrix: every surface is its own thing to\n  test. And a surface added later inherits nothing unless the shared layer was built up front.\n\n## References\n\n- [MiniMax Code (`mcode`)](https://github.com/MiniMax-AI/minimax-code) — the three\n  `assets/agents/_v2/*/SYSTEM.md.hbs` templates and the `--prompt-mode` flag that selects them.\n- [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-python) — the SDK surface whose\n  prompt and tool set differ from the interactive CLI.\n- [OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault) — the wire captures the\n  measurements above come from; `Claude-Code/` and `MiniMax-Code/` hold both sides of each pair, and\n  `docs/CAPTURES.md` gives the command that reproduces each one. Disclosure: this archive is\n  maintained by the author of this pattern, and is cited here as the measurement source rather than\n  as an implementation of the pattern.\n"
+}

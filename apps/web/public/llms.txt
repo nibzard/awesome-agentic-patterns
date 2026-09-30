@@ -906,6 +906,11 @@ Subject Hygiene for Task Delegation: Requires a specific action-plus-target subj
 URL: https://agentic-patterns.com/patterns/subject-hygiene
 Markdown: https://agentic-patterns.com/patterns/subject-hygiene.md
 
+### surface-scoped-system-prompt
+Surface-Scoped System Prompt: Ships one system prompt per invocation surface and selects it at launch, so an interactive session, a headless run and a task mode each get instructions written for that surface
+URL: https://agentic-patterns.com/patterns/surface-scoped-system-prompt
+Markdown: https://agentic-patterns.com/patterns/surface-scoped-system-prompt.md
+
 ### swarm-migration-pattern
 Swarm Migration Pattern: Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations.
 URL: https://agentic-patterns.com/patterns/swarm-migration-pattern
