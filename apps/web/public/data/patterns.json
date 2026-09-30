@@ -6581,6 +6581,45 @@
     "excerpt": "\n## Problem\nWhen delegating work to subagents via the Task tool, empty or generic task subjects make conversations:\n\n- **Untraceable**: Cannot identify what a subagent was working on\n- **Unreferencable**: Cannot discuss specific subagent work later\n- **Confusing**: Multiple subagents with empty subjects are indistinguishable\n\nFrom 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point. This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce)."
   },
   {
+    "title": "Surface-Scoped System Prompt",
+    "status": "established",
+    "authors": [
+      "Continuum AI (@xizhuomengcontin)"
+    ],
+    "based_on": [
+      "MiniMax Code (MiniMax-AI)",
+      "Claude Code (Anthropic)"
+    ],
+    "category": "Context & Memory",
+    "source": "https://github.com/MiniMax-AI/minimax-code",
+    "tags": [
+      "system-prompt",
+      "entrypoint",
+      "headless",
+      "prompt-assembly",
+      "tool-surface",
+      "harness-design"
+    ],
+    "slug": "surface-scoped-system-prompt",
+    "id": "surface-scoped-system-prompt",
+    "summary": "Ships one system prompt per invocation surface and selects it at launch, so an interactive session, a headless run and a task mode each get instructions written for that surface",
+    "signals": [
+      "The harness runs both interactively and headless or in CI",
+      "Some tools only make sense when a human can answer",
+      "Instructions about formatting, pacing or asking questions differ by surface"
+    ],
+    "anti_signals": [
+      "One entrypoint and one way of running the agent",
+      "Nobody can maintain more than one prompt document",
+      "Differences are small enough for a single conditional line"
+    ],
+    "related": [
+      "agent-modes-by-model-personality"
+    ],
+    "updated_at": "2026-09-30",
+    "excerpt": "\n## Problem\nA coding agent is usually reachable through more than one door: an interactive terminal session, a\nheadless `-p`/`exec` invocation in CI, an SDK embedding, a \"work\" or \"research\" mode chosen by flag.\nOne system prompt has to serve all of them, and the instructions pull in opposite directions.\n\nInteractive prompts tell the model to keep answers short because a human is watching, to ask before\ndoing anything irreversible, and to use terminal formatting. None of that survives contact with a\nheadless run: there is nobody to ask, the output is consumed by a script, and a tool that waits for\nconfirmation is a hang, not a safeguard. Teams usually notice this as an agent that is chatty in CI,\nor one that stalls waiting for an answer that will never come.\n\nThe tempting fix is conditionals inside one prompt — \"if running non-interactively, then…\" — which\ngrows a second prompt inside the first and asks the model to route around instructions that do not\napply to it."
+  },
+  {
     "title": "Swarm Migration Pattern",
     "status": "validated-in-production",
     "authors": [

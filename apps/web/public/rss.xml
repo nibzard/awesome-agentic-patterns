@@ -4,8 +4,22 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 26 Sep 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 30 Sep 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Surface-Scoped System Prompt]]></title>
+            <description><![CDATA[Ships one system prompt per invocation surface and selects it at launch, so an interactive session, a headless run and a task mode each get instructions written for that surface]]></description>
+            <link>https://agentic-patterns.com/patterns/surface-scoped-system-prompt</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/surface-scoped-system-prompt</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[system-prompt]]></category>
+            <category><![CDATA[entrypoint]]></category>
+            <category><![CDATA[headless]]></category>
+            <category><![CDATA[prompt-assembly]]></category>
+            <category><![CDATA[tool-surface]]></category>
+            <category><![CDATA[harness-design]]></category>
+            <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[402-First Machine Payments (Price-Before-Work Tool Purchases)]]></title>
             <description><![CDATA[Server returns an HTTP 402 price quote before doing work, and the agent pays the exact amount only if it fits its budget cap]]></description>
@@ -276,19 +290,6 @@
             <category><![CDATA[self-healing]]></category>
             <category><![CDATA[regression-testing]]></category>
             <pubDate>Sun, 16 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Consequence-Family Coverage Audit]]></title>
-            <description><![CDATA[Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest]]></description>
-            <link>https://agentic-patterns.com/patterns/consequence-family-coverage-audit</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/consequence-family-coverage-audit</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[risk-classification]]></category>
-            <category><![CDATA[policy-authoring]]></category>
-            <category><![CDATA[coverage-testing]]></category>
-            <category><![CDATA[admission-control]]></category>
-            <category><![CDATA[blind-spots]]></category>
-            <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
