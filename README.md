@@ -270,6 +270,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Visual AI Multimodal Integration](patterns/visual-ai-multimodal-integration.md)
 
 ### <a name="ux-collaboration"></a>UX & Collaboration
+- [AI Group Call](https://aigroupcall.app) - An AI council you can talk to: a group voice call where agents riff with each other, answer when named, and yield when you speak.
 
 - [Abstracted Code Representation for Review](patterns/abstracted-code-representation-for-review.md)
 - [Agent-Assisted Scaffolding](patterns/agent-assisted-scaffolding.md)
