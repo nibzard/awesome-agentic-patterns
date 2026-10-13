@@ -21,7 +21,7 @@ id: dual-use-tool-design
 summary: "Builds each tool with one interface and implementation that both humans and agents can call, with the same output, permissions, and logs"
 signals: ["You maintain separate tools for humans and agents", "Human and agent capabilities drift apart over time", "Tools have interactive prompts or output that agents cannot parse"]
 anti_signals: ["A tool is only ever used by one audience", "A separate specialized tool gives clearly better results for agents or humans"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -84,7 +84,7 @@ agent.call_slash_command("/commit")
 
 - **GitHub CLI**: `--json` flag enables programmatic consumption; same command works for humans and agents
 - **kubectl/AWS CLI**: `-o json` provides machine-readable output while preserving human-friendly defaults
-- **Sourcegraph Cody**: `--for-agent` flags on existing tools with unified JSONL logging
+- **`--for-agent` convention**: proposed in the [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md) pattern; treat it as a design convention rather than a shipped flag, since no vendor CLI documents one
 
 **Claude Code implementation examples:**
 
@@ -129,3 +129,6 @@ agent.call_slash_command("/commit")
 * Boris Cherny: "I have a slash command for slash commit... I run it manually, but also Claude can run this for me. And this is pretty useful because we get to share this logic."
 * Cat Wu: "Claude Code has access to everything that an engineer does at the terminal. Making them dual use actually makes the tools a lot easier to understand. Everything you can do, Claude can do. There's nothing in between."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Arcjet: Designing a CLI for AI agents](https://arcjet.com/blog/designing-a-cli-for-ai-agents) (June 2, 2026) - treats CLIs as interfaces that must serve human and agent callers at once
+* Distinct from [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md): that pattern optimizes tool output and logs for agent consumption, while this pattern keeps one interface serving both audiences
+* Distinct from [LLM-Friendly API Design](llm-friendly-api-design.md): that pattern shapes API structure and versioning for model consumption, while this pattern covers tools invokable by both humans and agents unchanged

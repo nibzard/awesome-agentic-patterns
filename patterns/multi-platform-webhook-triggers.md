@@ -21,7 +21,7 @@ id: multi-platform-webhook-triggers
 summary: "Starts agent workflows from Slack, Notion, and Jira webhooks, emoji reactions, and schedules, with idempotency and signature checks on each event"
 signals: ["Internal agent platform with many integration points", "Teams already work in Slack, Notion, or Jira", "Document workflows like RFCs and reviews need automatic routing"]
 anti_signals: ["Esoteric one-off integrations where Zapier or n8n is enough", "Rapid prototype before a custom build", "Non-technical users need self-service automation"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -30,7 +30,7 @@ An internal agent only provides value when its workflows are initiated. Building
 
 ## Solution
 
-Implement **multi-platform webhook triggers** that allow external SaaS tools to initiate agent workflows automatically. This pattern leverages a mature ecosystem of workflow automation platforms (n8n with 400+ integrations, Zapier with 6,000+, Make.com with 1,000+) that can be used directly or as reference implementations.
+Implement **multi-platform webhook triggers** that allow external SaaS tools to initiate agent workflows automatically. This pattern leverages a mature ecosystem of workflow automation platforms: n8n lists 400+ integrations and has over 200,000 GitHub stars (October 2026), and Zapier and Make.com advertise integration counts in the thousands as vendor marketing claims.
 
 **Trigger types implemented:**
 
@@ -74,6 +74,8 @@ Platform Event → Webhook → Agent Trigger → Workflow Execution
 - No authorization tokens for platforms that don't support it
 
 **Reliability patterns:**
+
+The idempotency, replay-protection, and queue details below are generalization added by this catalogue. Larson's article documents the five trigger types and the build-versus-buy reasoning, not these reliability mechanics.
 
 ```yaml
 # Idempotency - handle duplicate webhook deliveries
@@ -197,6 +199,6 @@ Custom implementation allows nuances like:
 
 * [Building an internal agent: Triggers](https://lethain.com/agents-triggers/) - Will Larson (2025)
 * Related: [Proactive Trigger Vocabulary](proactive-trigger-vocabulary.md) - Natural language trigger phrases for skill routing
-* [n8n](https://n8n.io) - Open-source workflow automation with 400+ integrations (45K+ GitHub stars)
+* [n8n](https://n8n.io) and [n8n on GitHub](https://github.com/n8n-io/n8n) - open-source workflow automation; the repository describes 400+ integrations and passed 200,000 stars in October 2026
 * Hohpe, G. "Enterprise Integration Patterns." 2003 - Foundational patterns for event-driven integration
 * Omicini et al. "Blending Event-Based and Multi-Agent Systems Around Coordination Abstractions." IFIP WG 6.1, 2015

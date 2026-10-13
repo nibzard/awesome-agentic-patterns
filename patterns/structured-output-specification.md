@@ -22,7 +22,7 @@ summary: >-
   with downstream systems.
 signals: ["Agent output feeds databases, APIs, or other agents", "Classification or data extraction tasks", "Framework supports schema-constrained output"]
 anti_signals: ["Task needs open-ended free-form text", "Output shape changes too often to keep a schema"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -53,7 +53,7 @@ Constrain agent outputs using deterministic schemas that enforce structured, mac
 **Leverage framework structured output APIs:**
 
 - OpenAI's structured outputs with JSON schema (constrained decoding)
-- Anthropic's tool use for structured results
+- Anthropic's structured outputs: JSON outputs plus strict tool use (beta 2025-11-13, now generally available)
 - Vercel AI SDK's `generateObject` function
 - LangChain's output parsers
 - LlamaIndex Pydantic programs
@@ -177,7 +177,7 @@ else:
 - **Type safety:** Compile-time checking in typed languages
 - **Integration:** Seamless connection to databases, APIs, workflows
 - **Validation:** Built-in constraint enforcement
-- **Security:** Schema validation prevents prompt injection before execution
+- **Security (limited):** Output schemas constrain format, not content; they do not stop prompt injection carried inside field values
 - **Maintainability:** Explicit contracts between system components
 - **Testability:** Easy to verify output correctness
 
@@ -200,8 +200,11 @@ else:
 ## References
 
 - [Vercel: What We Learned Building Agents](https://vercel.com/blog/what-we-learned-building-agents-at-vercel) - Lead qualification using structured categorization
-- [OpenAI Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs) - JSON schema enforcement
+- [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) - JSON schema enforcement
+- [Anthropic Structured Outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) - JSON outputs plus strict tool use, generally available after a 2025-11-13 beta
+- [Anthropic Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) - Structured outputs via tool calling
 - [Vercel AI SDK generateObject](https://sdk.vercel.ai/docs/reference/ai-sdk-core/generate-object) - TypeScript-native structured generation
-- [Anthropic Tool Use](https://docs.anthropic.com/claude/docs/tool-use) - Structured outputs via tool calling
-- [JSONformer: A Structural Generation Framework for JSON](https://arxiv.org/abs/2306.05659) - Constrained decoding eliminating retry loops (Billings et al., 2023)
+- [JSONformer](https://github.com/1rgs/jsonformer) - Open-source constrained decoding library for JSON generation (GitHub project, not a paper)
+- [Outlines: Guided Generation for Instruction-Tuned LLMs](https://arxiv.org/abs/2307.09702) - Willard and Louf, 2023 - constrained decoding that guarantees schema-valid output
+- Distinct from [Schema Validation Retry with Cross-Step Learning](schema-validation-retry-cross-step-learning.md): this pattern enforces the output contract at generation time, while that pattern handles validation failures with retries and cross-step error learning
 - Related patterns: [Discrete Phase Separation](discrete-phase-separation.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)

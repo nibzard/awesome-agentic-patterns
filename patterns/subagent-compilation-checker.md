@@ -2,7 +2,7 @@
 title: "Subagent Compilation Checker"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
+based_on: ["Will Brown (Prime Intellect agentic-RL talk)"]
 category: "Reliability & Eval"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [subagent, compilation, modularity, error-isolation]
@@ -10,9 +10,8 @@ summary: "Spawns one subagent per module to build and check it, and returns only
 signals: ["Codebase has several independently buildable modules", "Build logs are too large for the main agent's context", "Need to find which module caused a build failure"]
 anti_signals: ["Single small module with short build output", "Modules depend tightly on each other's build order", "No infrastructure to run separate build environments"]
 evidence_grade: medium
-evidence_snapshot: "Core mechanism validated by academic work on multi-agent verification (Reflexion, Self-Refine) and formal verification (CaMeL). Industry implementations exist (Cursor, Aider, SWE-agent) but limited controlled studies."
-last_updated: "2026-02-28"
-updated_at: "2026-03-11"
+evidence_snapshot: "Core mechanism comes from Will Brown's agentic-RL talk (subagent spawning for code subtasks). Related ideas appear in Self-Refine (Madaan et al., iterative refinement) and CaMeL (Debenedetti et al., verification before execution). Claude Code ships first-party subagents for this delegation; controlled studies are absent."
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -42,9 +41,10 @@ Spawn **specialized "Compilation Subagents"** to independently build and verify 
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Self-Refine (Shinn et al., 2023) shows 15-45% quality improvements through iterative feedback loops
-  - CaMeL (Debenedetti et al., 2025) demonstrates static verification before execution as a safety pattern
-  - Industry tools (Cursor, Aider, OpenHands) implement similar compilation/test-checking workflows
+  - Will Brown's talk motivates decoupling long I/O-bound build steps from the main model's inference to avoid context explosion
+  - Self-Refine (Madaan et al., 2023) supports the value of iterative feedback loops, without quantified gains for this use case
+  - CaMeL (Debenedetti et al., 2025) demonstrates verification before execution as a safety pattern
+  - Claude Code documents first-party subagents that read files and run tools in their own context window, returning only findings
 - **Unverified / Unclear:** Quantitative impact on main agent context efficiency; optimal subagent parallelization strategies
 
 ## Example
@@ -78,9 +78,11 @@ sequenceDiagram
 
 ## References
 
-- Inspired by "Subagent Spawning" for code-related subtasks in the Open Source Agent RL talk (May 2025).
+- Inspired by subagent spawning for code-related subtasks in Will Brown's Open Source Agent RL talk (May 2025). The talk motivates the pattern but does not verifiably describe this compilation-checker variant in detail.
 - Will Brown's note on decoupling long I/O-bound steps from the main model's inference to avoid context explosion.
-- Shinn, N., et al. (2023). "Self-Refine: Improving Reasoning in Language Models via Iterative Feedback." *arXiv:2303.11366*
-- Debenedetti, E., et al. (2025). "CaMeL: Code-Augmented Language Model for Tool Use." *arXiv:2506.08837*
-
+- Madaan, A., et al. (2023). "Self-Refine: Iterative Refinement with Self-Feedback." *arXiv:2303.17651* (ICLR 2024)
+- Debenedetti, E., et al. (2025). "CaMeL: Defeating Prompt Injections by Design." *arXiv:2503.18813* (Google DeepMind)
+- Beurer-Kellner, L., et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." *arXiv:2506.08837*
+- [Claude Code subagents documentation](https://code.claude.com/docs/en/sub-agents) - first-party subagent mechanism with per-subagent context and tool scoping
+- Distinct from [Sub-Agent Spawning](sub-agent-spawning.md): that pattern covers general-purpose delegation to subagents, while this pattern specializes subagents for build and compile verification with structured error reports
 - Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

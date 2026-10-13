@@ -9,7 +9,7 @@ tags: [sandbox-escape, host-execution, async-rpc, idempotency, spool-directory, 
 summary: "Lets a sandboxed agent write request files to a shared spool directory that a host daemon runs against a whitelist, with idempotent results the agent polls for"
 signals: ["A sandboxed or cloud agent must build, test, or run things on a specific host machine", "Host tasks outlive the sandbox's request timeout or lifetime", "Opening an inbound port on the developer machine is not acceptable"]
 anti_signals: ["Tight interactive loops where polling latency is too slow", "The sandbox cannot share a mounted directory with the host", "You cannot secure the directory with request authentication and strict permissions"]
-updated_at: "2026-08-21"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -108,6 +108,14 @@ Three properties do the real work:
 Polling must be a pure read with no side effects, so a nervous caller can check
 as often as it likes.
 
+First-party alternatives now cover part of this need. Claude Code Remote
+Control delegates cloud sessions to a local machine, and Routines or desktop
+scheduled tasks run work without the developer present. Reach for those when
+the agent platform is the same vendor on both sides. The spool design still
+wins when the host side is your own daemon with a custom operation whitelist,
+when you need a durable audit trail of every request, or when the cloud side is
+not a Claude product at all.
+
 ## Evidence
 
 - **Evidence Grade:** `medium`
@@ -117,6 +125,9 @@ as often as it likes.
     without inventing a protocol.
   - Decoupling caller lifetime from work lifetime is what makes long host-side
     tasks survivable — the same reason job queues beat synchronous RPC generally.
+  - Cloud-to-local delegation is now a mainstream requirement with first-party
+    support, which corroborates the need even though those products solve it
+    with vendor-managed channels rather than a shared spool directory.
 - **Unverified / Unclear:** No published comparative benchmark of this approach
   against tunnel- or socket-based host bridges. Polling latency versus a
   filesystem-watch trigger is implementation-specific and unmeasured here.
@@ -173,3 +184,9 @@ gives durability; it gives no safety on its own.
   — pausing and resuming long-running work across process lifetimes.
 - [cowork-to-code-bridge](https://github.com/abhinaykrupa/cowork-to-code-bridge)
   — a working implementation, maintained by this pattern's author.
+- [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control) —
+  first-party cloud-to-local delegation for Claude sessions.
+- [Claude Code Routines](https://code.claude.com/docs/en/routines) and
+  [desktop scheduled tasks](https://code.claude.com/docs/en/desktop-scheduled-tasks)
+  — vendor-managed alternatives for running work away from the developer's
+  interactive session.

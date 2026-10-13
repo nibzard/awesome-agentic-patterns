@@ -140,7 +140,7 @@
       "id": "agent-sdk-for-programmatic-control",
       "title": "Agent SDK for Programmatic Control",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "established",
       "slug": "agent-sdk-for-programmatic-control",
       "tags": [
         "sdk",
@@ -591,7 +591,7 @@
         "v8-isolates",
         "token-optimization"
       ],
-      "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with 10x+ token savings."
+      "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with large measured token savings."
     },
     {
       "id": "code-over-api-pattern",
@@ -1845,7 +1845,7 @@
       "id": "mcp-pattern-injection",
       "title": "MCP Pattern Injection",
       "category": "Tool Use & Environment",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "mcp-pattern-injection",
       "tags": [
         "mcp",
@@ -2668,7 +2668,7 @@
     {
       "id": "shell-command-contextualization",
       "title": "Shell Command Contextualization",
-      "category": "Tool Use & Environment",
+      "category": "UX & Collaboration",
       "status": "established",
       "slug": "shell-command-contextualization",
       "tags": [
@@ -3212,7 +3212,7 @@
       "id": "workflow-evals-with-mocked-tools",
       "title": "Workflow Evals with Mocked Tools",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "established",
       "slug": "workflow-evals-with-mocked-tools",
       "tags": [
         "evals",

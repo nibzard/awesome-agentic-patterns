@@ -1146,10 +1146,10 @@ graph TD
 
 ## Agent SDK for Programmatic Control
 
-**Status:** emerging
+**Status:** established
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.nibzard.com/claude-code
+**Source:** https://github.com/anthropics/claude-agent-sdk-python
 
 ## Problem
 
@@ -1168,6 +1168,8 @@ Provide a Software Development Kit (SDK) that exposes the agent's core functiona
 -   Implement fine-grained permission management and authorization scopes.
 
 The SDK typically includes libraries, command-line interfaces (CLIs) for scripting, and documentation for headless or embedded use of the agent.
+
+As of 2026 this is mainstream vendor territory rather than a niche: Anthropic ships the Claude Agent SDK (renamed from "Claude Code SDK" in September 2025) with TypeScript and Python packages, and OpenAI (Agents SDK) and Google (Agent Development Kit) offer comparable programmatic agent control.
 
 ## Example (SDK integration)
 
@@ -1189,7 +1191,7 @@ flowchart TD
     G --> L[Custom Tools]
 ```
 
-## Example CLI Usage (Conceptual, from Claude Code SDK info):
+## Example CLI Usage (Conceptual, from Claude Agent SDK info):
 
 ```bash
 $ claude -p "what did i do this week?" \
@@ -1226,11 +1228,12 @@ $ claude -p "what did i do this week?" \
 
 ## References
 
--   Based on the description of the Claude Code SDK in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section VI.
--   OpenAI Agents SDK (Swarm framework): https://github.com/openai/openai-agents-python
+-   [Claude Agent SDK (Python)](https://github.com/anthropics/claude-agent-sdk-python) and [Claude Agent SDK (TypeScript)](https://github.com/anthropics/claude-agent-sdk-typescript) - official SDK packages; the SDK was renamed from "Claude Code SDK" in September 2025
+-   [Claude Code headless mode](https://code.claude.com/docs/en/headless) - official documentation for non-interactive CLI usage and output formats
+-   OpenAI Agents SDK: https://github.com/openai/openai-agents-python
 -   Google Agent Development Kit (ADK): https://github.com/google/adk-python
-
-[Source](https://www.nibzard.com/claude-code)
+-   Distinct from [CLI-Native Agent Orchestration](cli-native-agent-orchestration.md): that pattern scripts an existing interactive CLI from the outside, while this pattern embeds the agent engine as a library inside your application
+-   Supplementary practitioner overview (author's cheatsheet, May 2025): https://www.nibzard.com/claude-code
 
 ---
 
@@ -1471,7 +1474,7 @@ The workflow replaces the human loop of "search Google → read docs → evaluat
 **Status:** established
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.sourcegraph.com
+**Source:** https://blog.cloudflare.com/code-mode/
 
 ## Problem
 
@@ -1484,8 +1487,8 @@ Consciously design and adapt tooling and logging to be "agent-first," prioritizi
 - **Unified Logging:** Instead of multiple log streams (client, server, database), consolidate them into a single, unified log. This gives the agent a single source of truth to monitor.
 - **Verbose, Structured Output:** Prefer verbose, structured formats like JSON lines over concise, human-readable text. An agent can parse structured data far more effectively and is not constrained by screen space. Use schemas like Pydantic (Python) or Zod (TypeScript) for type-safe structured outputs.
 - **Agent-Aware CLIs:** Design new tools or add flags to existing tools (`--for-agent`, `--json`) that modify their output to be more explicit and less ambiguous for an AI. Assume the agent, not a human, is the primary consumer.
-- **Standardized Tool Protocol:** Use the Model Context Protocol (MCP) as the standard interface for agent-tool communication. Introduced in 2024 and donated to the Agent AI Foundation in 2025, MCP provides a universal "USB interface for agents."
-- **Code-First Tool Interface:** For complex workflows, LLMs generate code that calls tools rather than invoking them directly. This provides 10-100x token reduction by keeping intermediate results in the execution environment rather than model context.
+- **Standardized Tool Protocol:** Use the Model Context Protocol (MCP) as the standard interface for agent-tool communication. Introduced in 2024 and donated to the Linux Foundation's Agentic AI Foundation in December 2025, MCP provides a universal "USB interface for agents."
+- **Code-First Tool Interface:** For complex workflows, LLMs generate code that calls tools rather than invoking them directly. Measured input-token reductions for code-mode tool calling range from 58.2% to 92.8% in Bifrost's benchmarks, because intermediate results stay in the execution environment instead of model context. See [Code-Over-API Pattern](code-over-api-pattern.md) for the full treatment.
 
 This shift in design philosophy acknowledges that as agents perform more development work, the tools they use must adapt to serve them directly. An agent-friendly environment is a prerequisite for reliable and efficient agent performance.
 
@@ -1530,13 +1533,17 @@ sequenceDiagram
 
 ## References
 
-- From Thorsten Ball: "What we've seen people now do is well instead of having the client log and having the browser log and having the database log, let's have one unified log because then it's easier for the agent to just look at this log... You can just have like JSON line outputs and whatnot because the agent can understand it much better than a human can... This is not made for human consumption anymore. How can we optimize this for agent consumption?"
+- Thorsten Ball's advocacy for agent-first tooling (one unified log stream instead of separate client, browser, and database logs, with JSON-line output the agent can parse) is the paraphrased source of the unified-logging bullet above; no verbatim, citable transcript of that passage could be located, so it is not quoted.
 
-- From Kenton Varda: "LLMs are better at writing code to call MCP, than at calling MCP directly."
+- From Kenton Varda, [Cloudflare Code Mode](https://blog.cloudflare.com/code-mode/) (September 26, 2025): "LLMs are better at writing code to call MCP, than at calling MCP directly."
 
 - Model Context Protocol: https://modelcontextprotocol.io (de facto standard for agent-tool interface, 2024-2025)
 
-- Primary source: https://www.sourcegraph.com
+- [Linux Foundation announces the Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation) (December 9, 2025) - MCP stewardship moved to the Agentic AI Foundation, anchored by MCP, goose, and AGENTS.md contributions
+
+- Measured code-mode token savings: [Bifrost Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) (58.2% to 92.8% input-token reduction)
+
+- Distinct from [Dual-Use Tool Design](dual-use-tool-design.md) (one interface for both audiences) and [LLM-Friendly API Design](llm-friendly-api-design.md) (API shape): this pattern is about tool output and logging being agent-consumable
 
 ---
 
@@ -1834,7 +1841,7 @@ flowchart TD
 
 **Implementation considerations:**
 
-- **SERP API limitations**: Current SERP APIs (Google, Bing, DuckDuckGo) are optimized for humans, not AI. They curate top 10 results rather than providing breadth/diversity
+- **SERP API limitations**: Classic SERP APIs (Google, Bing, DuckDuckGo) are optimized for humans, not AI. They curate top 10 results rather than providing breadth/diversity. Agent-native search APIs such as [Exa](https://exa.ai) and [Tavily](https://www.tavily.com) (established by 2026) address this gap directly and are the current alternative to raw SERP integration
 - **Caching strategy**: For performance, consider maintaining a cached web index for quick retrieval, using SERP APIs primarily for URL discovery and then pulling content directly
 - **Operator support**: Some SERP APIs have deprecated advanced operators, limiting refinement capabilities
 - **Parallelization**: Web search is easily parallelizable - spawn multiple workers for speed
@@ -1866,7 +1873,7 @@ Models should emulate human search behavior:
 
 **Cons:**
 
-- SERP APIs are not optimized for AI agents (keyword limits, curation bias)
+- SERP APIs are not optimized for AI agents (keyword limits, curation bias); agent-native search APIs such as Exa and Tavily reduce this cost
 - Complex system with multiple moving parts and external dependencies
 - Higher latency and cost than internal knowledge retrieval
 - Requires training models to make reliable tool calls
@@ -1874,7 +1881,9 @@ Models should emulate human search behavior:
 
 ## References
 
-* [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works)
+* [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works) - written by Justin Gage, published January 15, 2026
+* [Exa](https://exa.ai) and [Tavily](https://www.tavily.com) - agent-native search APIs that replace raw SERP integration
+* Distinct from [Agent-Driven Research](agent-driven-research.md): that pattern covers the full research workflow (iterative query planning, parallel multi-agent workers, reflection, cited synthesis), while this pattern focuses on the search loop mechanics - query translation, operators, and result diversification
 * [Retrieval-Augmented Generation (RAG) | Lewis et al., NeurIPS 2020](https://arxiv.org/abs/2005.11401)
 * [ReAct: Synergizing Reasoning and Acting | Yao et al., ICLR 2023](https://arxiv.org/abs/2210.03629)
 * [Toolformer | Schick et al., NeurIPS 2023](https://arxiv.org/abs/2302.04761)
@@ -3946,7 +3955,7 @@ User Request → LLM → Generated Code → V8 Isolate
 
 **Pros:**
 
-- **Dramatic token savings** on multi-step workflows (10-100x reduction; Anthropic reports 75x on 10K-row spreadsheets: 150K → 2K tokens)
+- **Dramatic token savings** on multi-step workflows (Anthropic reports 150K → 2K tokens, a 98.7% reduction, for tool definitions loaded on demand rather than upfront; Bifrost measures 58.2-92.8% input-token reductions for code-mode tool calling at 508 tools)
 - **Dramatic fan-out efficiency** - for loops over 100+ entries vs 100+ tool calls (speed + reliability at scale)
 - **Faster execution** through elimination of round-trips
 - **Enhanced security** - credentials stay in MCP servers, never in LLM
@@ -3987,11 +3996,14 @@ User Request → LLM → Generated Code → V8 Isolate
 
 ## References
 
-- [Cloudflare Code Mode Blog Post](https://blog.cloudflare.com/code-mode/) - Original announcement and technical details
-- [Anthropic Engineering: Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Code-Over-API pattern with data processing examples
-- [CaMeL: Code-Augmented Language Model (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837) - Formal verification and taint analysis for code-first tool use
+- [Cloudflare Code Mode Blog Post](https://blog.cloudflare.com/code-mode/) - Original announcement and technical details (September 26, 2025; qualitative benefits, no numeric claims)
+- [Anthropic Engineering: Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Code-Over-API pattern with data processing examples; the 150,000-to-2,000-token (98.7%) figure applies to tool definitions loaded on demand, and the spreadsheet example returns 5 of 10,000 rows
+- [Bifrost Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - third-party implementation measuring 58.2% to 92.8% input-token reductions with code-mode tool calling
+- [CaMeL: Defeating Prompt Injections by Design (Debenedetti et al., Google DeepMind, 2025)](https://arxiv.org/abs/2503.18813) - taint tracking and verification for code-first tool use
+- [Design Patterns for Securing LLM Agents against Prompt Injections (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837) - survey that names the Code-Then-Execute pattern
 - [Model Context Protocol](https://modelcontextprotocol.io/) - Background on traditional tool calling approaches
 - [Rafal Wilinski's Code Mode Analysis](https://x.com/rafalwilinski/status/1972362720579035146) - Real-world insights on Code Mode strengths and limitations
+- Division of labor with [Code-Over-API Pattern](code-over-api-pattern.md): this file documents Cloudflare's vendor implementation (V8 isolates, MCP bindings), while that file documents the general technique of moving data processing into a sandbox regardless of runtime
 
 [^1]: Phrase coined by Rafal Wilinski in his Code Mode analysis
 
@@ -4082,7 +4094,7 @@ The agent sees the log output and return value, but the full dataset never enter
 
 **Pros:**
 
-- Dramatic token reduction (150K → 2K in reported cases)
+- Dramatic token reduction (Anthropic's 150K → 2K tokens, 98.7%, is measured on tool definitions loaded on demand; its spreadsheet example reports the agent seeing 5 of 10,000 rows, and Bifrost measures 58.2-92.8% input-token reductions for code-mode tool calling)
 - Lower latency (fewer large context API calls)
 - Natural fit for data processing tasks
 - Intermediate data stays contained in execution environment
@@ -4106,18 +4118,20 @@ The agent sees the log output and return value, but the full dataset never enter
 
 - **V8 isolates**: Millisecond startup, minimal memory, strong isolation (Cloudflare Code Mode)
 - **Containers**: 2-5 second startup, full language flexibility (Modal, Docker)
-- **VMs**: Complete isolation for destructive operations (Cognition/Devon)
+- **VMs**: Complete isolation for destructive operations (Cognition/Devin)
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Cloudflare: Code Mode - V8 isolate-based execution (2025)
-* Beurer-Kellner et al.: Code-Then-Execute security framework (2025)
+* Anthropic Engineering: [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (November 4, 2025) - 150K → 2K tokens (98.7%) applies to tool definitions loaded on demand; the spreadsheet example returns 5 of 10,000 rows
+* Simon Willison: [Code execution with MCP](https://simonwillison.net/2025/Nov/4/code-execution-with-mcp/) (November 4, 2025) - independent commentary on the announcement
+* Cloudflare: [Code Mode](https://blog.cloudflare.com/code-mode/) - V8 isolate-based execution (September 2025)
+* Bifrost: [Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - third-party implementation measuring 58.2-92.8% input-token reductions through 2026
+* Beurer-Kellner et al.: [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (2025) - names the Code-Then-Execute pattern (§3.1, pattern 5)
 * Related: Code-Then-Execute Pattern (focuses on security/formal verification vs token optimization)
+* Division of labor with [Code-First Tool Interface Pattern](code-first-tool-interface-pattern.md): this file documents the general technique of moving data processing into a sandbox, while that file documents Cloudflare's specific Code Mode implementation
 
 - Primary: https://www.anthropic.com/engineering/code-execution-with-mcp
 - Cloudflare: https://blog.cloudflare.com/code-mode/
-- Academic: https://arxiv.org/abs/2506.08837
 
 ---
 
@@ -4142,13 +4156,33 @@ Have the LLM output a **sandboxed program or DSL script**:
 
 The key shift is to move from "reasoning about actions" to "compiling actions" into an inspectable artifact. Once actions are code, policy engines and static analyzers can enforce data-flow rules before execution.
 
-This pattern also serves a complementary purpose: **token optimization**. When tool calls execute within the sandbox rather than through special tokens, only condensed results return to the LLM context, reducing token usage for data-heavy workflows by 75-99% in production deployments.
+Scope note: step 2 is an optional hardening layer, not part of the base pattern. The survey's Code-Then-Execute pattern (Beurer-Kellner et al., §3.1, pattern 5) defines no checker step and states it cannot stop injected content that arrives inside tool data. CaMeL (Debenedetti et al.) is the stronger variant that adds taint tracking and security-classified variables on top.
+
+This pattern also serves a complementary purpose: **token optimization**. When tool calls execute within the sandbox rather than through special tokens, only condensed results return to the LLM context. Published measurements: Anthropic reports 98.7% (150K → 2K tokens) for tool definitions loaded on demand, and Bifrost measures 58.2-92.8% input-token reductions for code-mode tool calling.
 
 ```dsl
 x = calendar.read(today)
 y = QuarantineLLM.format(x)
 email.write(to="john@acme.com", body=y)
 ```
+
+## Example
+
+The calendar-to-email flow above illustrates the three steps separately:
+
+**1. The DSL script (what the LLM writes):** three lines, each a tool call with explicit arguments; the recipient and body are visible as data flows, not buried in prose.
+
+**2. The checker (optional CaMeL-style hardening):** a static pass over the script that rejects forbidden flows before anything runs:
+
+```pseudo
+tainted = {x}                       # calendar data is untrusted
+policy: email.recipient must be untainted_constant
+check(x -> y -> email.body)  = ok   # body may carry quaranted content
+check(email.recipient == "john@acme.com")  = ok
+# email.write(to=user_input) would be rejected at compile time
+```
+
+**3. The sandbox (where it runs):** an interpreter with no network egress except the two tool endpoints, a per-run time and write budget, and a replay log keyed by script hash, so any executed action can be re-verified after the fact.
 
 ## How to use it
 
@@ -4161,8 +4195,12 @@ Use this for complex multi-step agents such as SQL copilots, software-engineerin
 
 ## References
 
-* Debenedetti et al., CaMeL (2025); Beurer-Kellner et al., §3.1 (5).
-* Anthropic Engineering, Code Execution with MCP (2024).
+* Debenedetti et al., [CaMeL: Defeating Prompt Injections by Design](https://arxiv.org/abs/2503.18813) (Google DeepMind, 2025) - origin of the taint-tracked variant
+* Beurer-Kellner et al., [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (2025) - names Code-Then-Execute as §3.1 pattern 5, without a checker step
+* Anthropic Engineering, [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (November 4, 2025) - 98.7% tool-definition token reduction
+* Bifrost, [Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - 58.2-92.8% measured input-token reduction
+* Distinct from [Plan-Then-Execute Pattern](plan-then-execute-pattern.md): that pattern structures reasoning before acting, while this pattern compiles actions into a verifiable program
+* Distinct from [Code-Over-API Pattern](code-over-api-pattern.md): that pattern optimizes tokens for data processing, while this pattern prioritizes auditability and data-flow control
 
 - Primary source: https://arxiv.org/abs/2506.08837
 - Industry implementation: https://www.anthropic.com/engineering/code-execution-with-mcp
@@ -7931,7 +7969,7 @@ agent.call_slash_command("/commit")
 
 - **GitHub CLI**: `--json` flag enables programmatic consumption; same command works for humans and agents
 - **kubectl/AWS CLI**: `-o json` provides machine-readable output while preserving human-friendly defaults
-- **Sourcegraph Cody**: `--for-agent` flags on existing tools with unified JSONL logging
+- **`--for-agent` convention**: proposed in the [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md) pattern; treat it as a design convention rather than a shipped flag, since no vendor CLI documents one
 
 **Claude Code implementation examples:**
 
@@ -7976,6 +8014,9 @@ agent.call_slash_command("/commit")
 * Boris Cherny: "I have a slash command for slash commit... I run it manually, but also Claude can run this for me. And this is pretty useful because we get to share this logic."
 * Cat Wu: "Claude Code has access to everything that an engineer does at the terminal. Making them dual use actually makes the tools a lot easier to understand. Everything you can do, Claude can do. There's nothing in between."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Arcjet: Designing a CLI for AI agents](https://arcjet.com/blog/designing-a-cli-for-ai-agents) (June 2, 2026) - treats CLIs as interfaces that must serve human and agent callers at once
+* Distinct from [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md): that pattern optimizes tool output and logs for agent consumption, while this pattern keeps one interface serving both audiences
+* Distinct from [LLM-Friendly API Design](llm-friendly-api-design.md): that pattern shapes API structure and versioning for model consumption, while this pattern covers tools invokable by both humans and agents unchanged
 
 ---
 
@@ -7984,7 +8025,7 @@ agent.call_slash_command("/commit")
 **Status:** established
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://docs.anthropic.com/en/docs/claude-code/common-workflows
+**Source:** https://code.claude.com/docs/en/common-workflows
 
 ## Problem
 
@@ -8011,7 +8052,7 @@ Concretely:
 ## How to use it
 
 - **Command Syntax Examples:**
-  - `@path/to/file.ext` → loads entire file if < 2,000 tokens; otherwise runs a heuristic summarizer.
+  - `@path/to/file.ext` → loads the entire file when it fits the read limit (Claude Code documents a 25,000-token default per file reference, with a 256KB text-file cap); otherwise summarize or narrow the range.
   - `/load path/to/file.ext:10-50` → loads exactly lines 10 through 50.
   - `/summarize path/to/test_spec.py` → runs a summary routine (e.g., extract docstrings + test names).
 
@@ -8032,7 +8073,7 @@ Concretely:
   - Enables **interactive exploration** of code without leaving the chat environment.
   - Reduces human overhead: no manual copy/paste of code blocks.
   - Improves agent accuracy by ensuring the most relevant code is directly visible.
-  - Token-efficient: 10-100x reduction versus full context loading; documented 3x+ development efficiency gains.
+  - Token-efficient: injects only the requested files or ranges instead of preloading the whole repository; no reliable multiplier is published, so size the wins against your own baseline.
 
 - **Cons/Considerations:**
   - Requires the chat interface (or a proxy server) to have **local file system access**.
@@ -8044,7 +8085,8 @@ Concretely:
 - Adapted from "Dynamic Context Injection" patterns (e.g., at-mention in Claude Code) for general coding-agent use.
 - Common in AI-powered IDE plugins (e.g., GitHub Copilot Workspace, Cursor AI).
 - Aider: `/add`, `/drop` CLI commands with tree-sitter AST parsing.
-- Shunyu Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023) - https://arxiv.org/abs/2210.03629
+- [Claude Code common workflows](https://code.claude.com/docs/en/common-workflows) - documents `@` file references, the 25,000-token default read limit, and the 256KB text-file cap.
+- Overlaps [Dynamic Context Injection](dynamic-context-injection.md): that pattern covers on-demand context injection generally, while this file adds the file-specific mechanics (line ranges, tree-sitter extraction, path validation).
 
 ---
 
@@ -8125,11 +8167,11 @@ sequenceDiagram
 **Status:** established
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://simonwillison.net/2025/Jun/16/lethal-trifecta/
+**Source:** https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
 
 ## Problem
 
-Even with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. This pattern implements the Bell-LaPadula model's "no write down" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels.
+Even with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. As an analogy of this pattern's author (not a framing from the source article), the design echoes the Bell-LaPadula "no write down" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels.
 
 ## Solution
 
@@ -8162,9 +8204,10 @@ RUN iptables -A OUTPUT -d api.mycompany.internal -j ACCEPT
 
 ## References
 
-* Multiple vendor post-mortems cited by Willison: Microsoft 365 Copilot, GitHub MCP, GitLab Duo Chatbot fixes all disabled egress paths as the first patch.
+* Willison's article cites the Microsoft 365 Copilot, GitHub MCP, and GitLab Duo Chatbot incidents as "almost all... promptly fixed by the vendors, usually by locking down the exfiltration vector." It gives no per-vendor fix details and does not claim egress lockdown was the first patch in every case.
 
-- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/
+- Primary source: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ - describes the threat model this pattern mitigates; the default-deny egress firewall implementation itself is this pattern's contribution
+- Parent threat model: [Lethal Trifecta Threat Model](lethal-trifecta-threat-model.md)
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837.
 
 ---
@@ -9515,6 +9558,14 @@ Three properties do the real work:
 Polling must be a pure read with no side effects, so a nervous caller can check
 as often as it likes.
 
+First-party alternatives now cover part of this need. Claude Code Remote
+Control delegates cloud sessions to a local machine, and Routines or desktop
+scheduled tasks run work without the developer present. Reach for those when
+the agent platform is the same vendor on both sides. The spool design still
+wins when the host side is your own daemon with a custom operation whitelist,
+when you need a durable audit trail of every request, or when the cloud side is
+not a Claude product at all.
+
 ## Evidence
 
 - **Evidence Grade:** `medium`
@@ -9524,6 +9575,9 @@ as often as it likes.
     without inventing a protocol.
   - Decoupling caller lifetime from work lifetime is what makes long host-side
     tasks survivable — the same reason job queues beat synchronous RPC generally.
+  - Cloud-to-local delegation is now a mainstream requirement with first-party
+    support, which corroborates the need even though those products solve it
+    with vendor-managed channels rather than a shared spool directory.
 - **Unverified / Unclear:** No published comparative benchmark of this approach
   against tunnel- or socket-based host bridges. Polling latency versus a
   filesystem-watch trigger is implementation-specific and unmeasured here.
@@ -9580,6 +9634,12 @@ gives durability; it gives no safety on its own.
   — pausing and resuming long-running work across process lifetimes.
 - [cowork-to-code-bridge](https://github.com/abhinaykrupa/cowork-to-code-bridge)
   — a working implementation, maintained by this pattern's author.
+- [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control) —
+  first-party cloud-to-local delegation for Claude sessions.
+- [Claude Code Routines](https://code.claude.com/docs/en/routines) and
+  [desktop scheduled tasks](https://code.claude.com/docs/en/desktop-scheduled-tasks)
+  — vendor-managed alternatives for running work away from the developer's
+  interactive session.
 
 ---
 
@@ -12408,11 +12468,13 @@ Design or adapt software APIs (including internal libraries and modules) with ex
 
 The aim is to create interfaces that are robust and intuitive for LLMs to interact with, thereby improving the reliability and effectiveness of agent tool use.
 
+The idea has since been embodied in ecosystem conventions: AGENTS.md gives agents a standard, visible entry point per repository (now stewarded by the Linux Foundation's Agentic AI Foundation), and llms.txt does the same for websites. Both exist because agents resolve versions and endpoints from what the interface itself exposes.
+
 ## How to use it
 
 - Use this when agent success depends on reliable tool invocation and environment setup.
 - Start with a narrow tool surface and explicit parameter validation.
-- Add observability around tool latency, failures, and fallback paths.
+- Publish machine-readable API context (OpenAPI schemas, an AGENTS.md file, or llms.txt) so agents resolve the right version and endpoint from the interface itself instead of guessing.
 
 ## Trade-offs
 
@@ -12430,6 +12492,14 @@ The aim is to create interfaces that are robust and intuitive for LLMs to intera
 - Gorilla: Fine-tuned LLMs for API Calls (Berkeley, 2023): https://arxiv.org/abs/2305.15334
 
 - Model Context Protocol (Anthropic): Standardized tool schemas for LLM consumption: https://modelcontextprotocol.io
+
+- AGENTS.md: https://agents.md - standard repository context file for agents; an Agentic AI Foundation project since December 2025
+
+- llms.txt: https://llmstxt.org - proposed standard for making website content legible to LLMs
+
+- InfoQ, [AGENTS.md research debate](https://www.infoq.com/news/2026/03/agents-context-file-value-review/) (March 2026) - ongoing evaluation of how much agent-facing context files help
+
+- Context7: https://github.com/upstash/context7 - serves version-specific, current documentation to coding agents, a direct consequence of this design principle
 
 ---
 
@@ -12630,7 +12700,7 @@ Implementation outline:
 
 ## MCP Pattern Injection
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Tool Use & Environment
 **Authors:** Rajath Bharadwaj (@Rajathbharadwaj)
 **Source:** https://github.com/Rajathbharadwaj/langgraph-patterns-mcp
@@ -12663,6 +12733,8 @@ server.tool("get_pattern", { name: z.string() }, async ({ name }) => {
 
 The key insight: MCP servers act as **live documentation** that the AI can query, rather than static context that burns tokens.
 
+The technique is production-scale in its docs-serving form: Context7 (Upstash) serves current, version-specific library documentation to coding agents over MCP. The pattern-library variant documented here rests on a small personal reference implementation, so the status is emerging rather than validated-in-production.
+
 ## Trade-offs
 
 **Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.  
@@ -12680,6 +12752,8 @@ The key insight: MCP servers act as **live documentation** that the AI can query
 
 - Model Context Protocol: https://modelcontextprotocol.io/
 - LangGraph Patterns MCP (reference impl): https://github.com/Rajathbharadwaj/langgraph-patterns-mcp
+- Context7: https://github.com/upstash/context7 - production-scale MCP server delivering current, version-specific documentation on demand
+- Anthropic Engineering, Code Execution with MCP: https://www.anthropic.com/engineering/code-execution-with-mcp - vendor guidance on MCP tool design and on-demand tool definition loading
 - Claude Desktop MCP Integration: https://docs.anthropic.com/en/docs/claude-code/mcp
 - Cursor MCP Support: https://docs.cursor.com/context/model-context-protocol
 
@@ -13248,8 +13322,8 @@ Results presented in unified table, grouped by platform.
 
 * Sub-Agent Spawning pattern for parallel execution
 * LLM Map-Reduce pattern for result aggregation
-* Claude Code `/search-all` skill implementation
-* **Academic**: Callan, J. (2020). *Federated Search: From Theory to Practice*
+* **Academic**: Shokouhi, M. (2013). *Federated Search*. Foundations and Trends in Information Retrieval 6(4-5) - the standard survey of federated search; the earlier "Callan (2020)" citation in this file could not be found in any index and has been removed
+* Practitioner-contributed: the aggregation design and the `/search-all` skill example come from the author's personal Claude Code skill setup; Anthropic documents no such built-in skill, and the source repository below is the CLI the skill runs in, not a description of this pattern
 
 - Primary source: https://github.com/anthropics/claude-code
 
@@ -13268,7 +13342,7 @@ An internal agent only provides value when its workflows are initiated. Building
 
 ## Solution
 
-Implement **multi-platform webhook triggers** that allow external SaaS tools to initiate agent workflows automatically. This pattern leverages a mature ecosystem of workflow automation platforms (n8n with 400+ integrations, Zapier with 6,000+, Make.com with 1,000+) that can be used directly or as reference implementations.
+Implement **multi-platform webhook triggers** that allow external SaaS tools to initiate agent workflows automatically. This pattern leverages a mature ecosystem of workflow automation platforms: n8n lists 400+ integrations and has over 200,000 GitHub stars (October 2026), and Zapier and Make.com advertise integration counts in the thousands as vendor marketing claims.
 
 **Trigger types implemented:**
 
@@ -13312,6 +13386,8 @@ Platform Event → Webhook → Agent Trigger → Workflow Execution
 - No authorization tokens for platforms that don't support it
 
 **Reliability patterns:**
+
+The idempotency, replay-protection, and queue details below are generalization added by this catalogue. Larson's article documents the five trigger types and the build-versus-buy reasoning, not these reliability mechanics.
 
 ```yaml
 # Idempotency - handle duplicate webhook deliveries
@@ -13435,7 +13511,7 @@ Custom implementation allows nuances like:
 
 * [Building an internal agent: Triggers](https://lethain.com/agents-triggers/) - Will Larson (2025)
 * Related: [Proactive Trigger Vocabulary](proactive-trigger-vocabulary.md) - Natural language trigger phrases for skill routing
-* [n8n](https://n8n.io) - Open-source workflow automation with 400+ integrations (45K+ GitHub stars)
+* [n8n](https://n8n.io) and [n8n on GitHub](https://github.com/n8n-io/n8n) - open-source workflow automation; the repository describes 400+ integrations and passed 200,000 stars in October 2026
 * Hohpe, G. "Enterprise Integration Patterns." 2003 - Foundational patterns for event-driven integration
 * Omicini et al. "Blending Event-Based and Multi-Agent Systems Around Coordination Abstractions." IFIP WG 6.1, 2015
 
@@ -16238,7 +16314,7 @@ When agents have access to large tool catalogs (dozens to thousands of available
 
 ## Solution
 
-Present tools through a filesystem-like hierarchy where agents discover capabilities on-demand by exploring the structure. This pattern scales to 1000+ tools and is production-validated across major platforms (MCP, Cloudflare Code Mode, OpenAI, LangChain).
+Present tools through a filesystem-like hierarchy where agents discover capabilities on-demand by exploring the structure. This pattern scales to 1000+ tools. Anthropic ships it in two first-party forms: hierarchical tool files with on-demand definition loading (documented in its MCP engineering guidance) and the Tool Search Tool with `defer_loading` (announced November 24, 2025); Claude Code exposes tool search in the Agent SDK.
 
 Implement a `search_tools` capability that allows agents to request different levels of detail:
 
@@ -16300,7 +16376,7 @@ servers/
 
 **Pros:**
 
-- Reduces initial context consumption by 70-90% (based on production data)
+- Reduces initial context consumption: Anthropic reports 98.7% (150K → 2K tokens) for tool definitions loaded on demand, and 85% token reduction with the Tool Search Tool
 - Scales to 1000+ tools efficiently
 - Agents learn about tool ecosystem through exploration
 - Natural mapping to code-based tool interfaces
@@ -16315,11 +16391,11 @@ servers/
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Model Context Protocol specification
-* Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (NeurIPS 2020)
-* Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)
-* Packer et al. "MemGPT: Towards LLMs as Operating Systems" (arXiv 2023)
+* Anthropic Engineering: [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (November 4, 2025) - hierarchical tool files; 150K → 2K tokens (98.7%) for definitions loaded on demand
+* Anthropic Engineering: [Advanced Tool Use](https://www.anthropic.com/engineering/advanced-tool-use) (November 24, 2025) - Tool Search Tool and `defer_loading`; 85% token reduction
+* Claude Code: [Tool search in the Agent SDK](https://code.claude.com/docs/en/agent-sdk/tool-search)
+* Model Context Protocol specification: https://modelcontextprotocol.io/
+* Distinct from [Tool Search Lazy Loading](tool-search-lazy-loading.md): that pattern retrieves tools by searching when needed, while this pattern organizes the catalog as a browsable hierarchy the agent walks
 
 - Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp
 
@@ -17377,11 +17453,13 @@ The issues compound in multi-step workflows:
 
 Implement multi-step retry with detailed error feedback and cross-step error accumulation. The agent learns from its validation failures across the entire workflow.
 
+Native server-side schema enforcement has become the default for major providers: OpenAI Structured Outputs and Anthropic structured outputs (JSON outputs plus strict tool use, generally available after a 2025-11-13 beta) constrain decoding so syntactic schema violations cannot occur. Reach for this client-side pattern when your provider lacks enforcement, when you validate constraints a JSON Schema cannot express (for example cross-field business rules), or in multi-step workflows that benefit from cross-step error learning.
+
 ### Core Mechanisms
 
 **1. Multi-attempt retry with detailed feedback:**
 
-Industry practice uses 2-3 retry attempts; research shows iterative refinement with feedback improves output quality by 15-45% (Self-Refine, ICLR 2024).
+Industry practice uses 2-3 retry attempts; the Self-Refine line of work (Madaan et al., ICLR 2024) shows that iterative refinement with feedback improves output quality, without quantifying a percentage.
 
 ```typescript
 const maxAttempts = 3;
@@ -17447,8 +17525,6 @@ if (recentErrors) {
 ```
 
 **3. Structured feedback loop:**
-
-**Alternative: Server-side validation** - OpenAI Structured Outputs and Anthropic Tool Use enforce schema compliance at the API level, eliminating the need for client-side retry loops.
 
 Each retry iteration provides specific, actionable feedback:
 
@@ -17660,7 +17736,10 @@ const context: AgentContext = {
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original implementation (see `src/agent/tools/agent.ts` lines 424-509)
 - [Zod Validation Documentation](https://zod.dev/) - Schema validation library
-- [Self-Refine: Improving Reasoning via Iterative Feedback](https://arxiv.org/abs/2303.11366) - ICLR 2024, Shinn et al.
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) - Madaan et al., ICLR 2024 (iterative refinement with feedback; no percentage claim)
+- [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) - server-side schema enforcement that removes the syntactic half of this pattern's job
+- [Anthropic Structured Outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) - JSON outputs plus strict tool use, generally available after a 2025-11-13 beta
+- Distinct from [Structured Output Specification](structured-output-specification.md): that pattern constrains output format at generation time, while this pattern retries validation failures and accumulates errors across steps when enforcement is unavailable or insufficient
 - Related patterns: [Structured Output Specification](structured-output-specification.md), [Action Caching & Replay](action-caching-replay.md)
 
 ---
@@ -18786,9 +18865,9 @@ on_tool_read(path, mode):
 ## Shell Command Contextualization
 
 **Status:** established
-**Category:** Tool Use & Environment
+**Category:** UX & Collaboration
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.nibzard.com/claude-code
+**Source:** https://code.claude.com/docs/en/interactive-mode
 
 ## Problem
 
@@ -18798,7 +18877,7 @@ When an AI agent interacts with a local development environment, it often needs 
 
 Provide a dedicated mechanism within the agent's interface (e.g., a special prefix like `!` or a specific command mode) that allows the user to directly issue a shell command to be executed in the local environment. Crucially, both the command itself and its full output (stdout and stderr) are automatically captured and injected into the agent's current conversational or working context.
 
-The `!` prefix syntax originates from IPython (2001) and has become the de facto standard across AI coding platforms (Claude Code, Cursor, GitHub Copilot, Continue.dev, Aider, Replit Agent).
+The `!` prefix syntax originates from IPython (2001). Among AI coding platforms, Claude Code documents it officially as shell mode; the examples below list other platforms' mechanisms, which are separate affordances and not a shared `!` convention.
 
 This ensures that the agent is immediately aware of the command that was run and its results, allowing it to seamlessly incorporate this information into its ongoing tasks without requiring manual data transfer by the user.
 
@@ -18821,8 +18900,10 @@ sequenceDiagram
 
 ## Example
 
--   In Claude Code, typing `!ls -la` would execute `ls -la` locally, and both the command `!ls -la` and its output would be added to Claude's context.
--   Similar implementations exist across major platforms: Cursor (UI-triggered execution), Continue.dev (terminal reading), Aider (direct terminal integration), and OpenAI Code Interpreter (Python cell execution).
+-   Claude Code: typing `!ls -la` in interactive mode executes `ls -la` locally, and the command plus its output enter the conversation context (officially documented as shell mode).
+-   Cursor: the agent can be granted terminal access and reads the results of commands it or the user runs in the IDE's integrated terminal - a UI-triggered mechanism, not a `!` prefix.
+-   Continue.dev: the assistant reads from the IDE's integrated terminal on demand, a different injection path again.
+-   OpenAI Code Interpreter: executes Python in a sandboxed cell and returns the output - same user-visible effect (command plus output become context), different mechanism.
 
 ## How to use it
 
@@ -18834,17 +18915,16 @@ sequenceDiagram
 
 ## Trade-offs
 
-* **Pros:** Eliminates manual copy-paste workflow; enables seamless context injection; universal adoption provides mature implementations; strong academic foundations (ToolFormer, ReAct, RAG).
+* **Pros:** Eliminates manual copy-paste workflow; enables seamless context injection; a documented first-party implementation (Claude Code shell mode) with a long IPython lineage; related tool-use foundations (ToolFormer, ReAct).
 * **Cons:** Introduces integration coupling and environment-specific upkeep; requires security considerations (validation, sandboxing); output size can impact token costs.
 
 ## References
 
--   Based on the `!` (Exclamation mark) keybinding for Bash mode in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
+-   [Claude Code interactive mode](https://code.claude.com/docs/en/interactive-mode) - official documentation of the `!` shell mode: run a command, add it and its output to the session (primary source)
+-   Based on the `!` (Exclamation mark) keybinding for Bash mode in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V (author's supplementary writeup, May 2025: https://www.nibzard.com/claude-code)
 -   Schick, T., et al. (2023). [ToolFormer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761). ICLR 2024.
 -   Yao, S., et al. (2022). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629). ICLR 2023.
 -   [IPython Documentation](https://ipython.org/) - Origin of `!` shell escape syntax (2001)
-
-[Source](https://www.nibzard.com/claude-code)
 
 ---
 
@@ -20136,7 +20216,7 @@ Constrain agent outputs using deterministic schemas that enforce structured, mac
 **Leverage framework structured output APIs:**
 
 - OpenAI's structured outputs with JSON schema (constrained decoding)
-- Anthropic's tool use for structured results
+- Anthropic's structured outputs: JSON outputs plus strict tool use (beta 2025-11-13, now generally available)
 - Vercel AI SDK's `generateObject` function
 - LangChain's output parsers
 - LlamaIndex Pydantic programs
@@ -20260,7 +20340,7 @@ else:
 - **Type safety:** Compile-time checking in typed languages
 - **Integration:** Seamless connection to databases, APIs, workflows
 - **Validation:** Built-in constraint enforcement
-- **Security:** Schema validation prevents prompt injection before execution
+- **Security (limited):** Output schemas constrain format, not content; they do not stop prompt injection carried inside field values
 - **Maintainability:** Explicit contracts between system components
 - **Testability:** Easy to verify output correctness
 
@@ -20283,10 +20363,13 @@ else:
 ## References
 
 - [Vercel: What We Learned Building Agents](https://vercel.com/blog/what-we-learned-building-agents-at-vercel) - Lead qualification using structured categorization
-- [OpenAI Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs) - JSON schema enforcement
+- [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) - JSON schema enforcement
+- [Anthropic Structured Outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) - JSON outputs plus strict tool use, generally available after a 2025-11-13 beta
+- [Anthropic Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) - Structured outputs via tool calling
 - [Vercel AI SDK generateObject](https://sdk.vercel.ai/docs/reference/ai-sdk-core/generate-object) - TypeScript-native structured generation
-- [Anthropic Tool Use](https://docs.anthropic.com/claude/docs/tool-use) - Structured outputs via tool calling
-- [JSONformer: A Structural Generation Framework for JSON](https://arxiv.org/abs/2306.05659) - Constrained decoding eliminating retry loops (Billings et al., 2023)
+- [JSONformer](https://github.com/1rgs/jsonformer) - Open-source constrained decoding library for JSON generation (GitHub project, not a paper)
+- [Outlines: Guided Generation for Instruction-Tuned LLMs](https://arxiv.org/abs/2307.09702) - Willard and Louf, 2023 - constrained decoding that guarantees schema-valid output
+- Distinct from [Schema Validation Retry with Cross-Step Learning](schema-validation-retry-cross-step-learning.md): this pattern enforces the output contract at generation time, while that pattern handles validation failures with retries and cross-step error learning
 - Related patterns: [Discrete Phase Separation](discrete-phase-separation.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)
 
 ---
@@ -20542,9 +20625,10 @@ Spawn **specialized "Compilation Subagents"** to independently build and verify 
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Self-Refine (Shinn et al., 2023) shows 15-45% quality improvements through iterative feedback loops
-  - CaMeL (Debenedetti et al., 2025) demonstrates static verification before execution as a safety pattern
-  - Industry tools (Cursor, Aider, OpenHands) implement similar compilation/test-checking workflows
+  - Will Brown's talk motivates decoupling long I/O-bound build steps from the main model's inference to avoid context explosion
+  - Self-Refine (Madaan et al., 2023) supports the value of iterative feedback loops, without quantified gains for this use case
+  - CaMeL (Debenedetti et al., 2025) demonstrates verification before execution as a safety pattern
+  - Claude Code documents first-party subagents that read files and run tools in their own context window, returning only findings
 - **Unverified / Unclear:** Quantitative impact on main agent context efficiency; optimal subagent parallelization strategies
 
 ## Example
@@ -20578,11 +20662,13 @@ sequenceDiagram
 
 ## References
 
-- Inspired by "Subagent Spawning" for code-related subtasks in the Open Source Agent RL talk (May 2025).
+- Inspired by subagent spawning for code-related subtasks in Will Brown's Open Source Agent RL talk (May 2025). The talk motivates the pattern but does not verifiably describe this compilation-checker variant in detail.
 - Will Brown's note on decoupling long I/O-bound steps from the main model's inference to avoid context explosion.
-- Shinn, N., et al. (2023). "Self-Refine: Improving Reasoning in Language Models via Iterative Feedback." *arXiv:2303.11366*
-- Debenedetti, E., et al. (2025). "CaMeL: Code-Augmented Language Model for Tool Use." *arXiv:2506.08837*
-
+- Madaan, A., et al. (2023). "Self-Refine: Iterative Refinement with Self-Feedback." *arXiv:2303.17651* (ICLR 2024)
+- Debenedetti, E., et al. (2025). "CaMeL: Defeating Prompt Injections by Design." *arXiv:2503.18813* (Google DeepMind)
+- Beurer-Kellner, L., et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." *arXiv:2506.08837*
+- [Claude Code subagents documentation](https://code.claude.com/docs/en/sub-agents) - first-party subagent mechanism with per-subagent context and tool scoping
+- Distinct from [Sub-Agent Spawning](sub-agent-spawning.md): that pattern covers general-purpose delegation to subagents, while this pattern specializes subagents for build and compile verification with structured error reports
 - Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
 
 ---
@@ -22907,7 +22993,7 @@ flowchart TD
 
 ## Workflow Evals with Mocked Tools
 
-**Status:** emerging
+**Status:** established
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://lethain.com/agents-evals/
@@ -22993,10 +23079,11 @@ Implement **workflow evals (simulations)** that test complete agent workflows wi
 
 ## Evidence
 
-- **Evidence Grade:** `emerging` - Early production adoption, primarily industry-driven
+- **Evidence Grade:** `established` - Independent practitioner report plus vendor-published evaluation frameworks (2026)
 - **Key Findings:**
   - Strong production use case: unit tests and linters don't validate prompt-tool integration effectively
   - Dual evaluation (objective + subjective) is standard across implementations
+  - Anthropic's "Demystifying evals for AI agents" (January 2026) codifies the grading side: code-based, model-based, and human graders applied to the trajectory or the final answer, which is the trajectory-level extension of this pattern
   - Non-determinism remains the primary challenge; best used for directional guidance
 - **Unclear:** Optimal mock fidelity requirements for valid evaluation
 
@@ -23099,7 +23186,7 @@ jobs:
 
 **Handling non-determinism:**
 
-The article notes evals are "not nearly as well as I hoped" due to non-determinism:
+The article notes evals are "not nearly as well as I hoped it would" due to non-determinism:
 
 - **Strong signal**: All pass or all fail
 - **Weak signal**: Mixed results
@@ -23126,7 +23213,7 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 **Operational challenges:**
 
-> "This is working well, but not nearly as well as I had hoped... there's very strong signal when they all fail, and strong signal when they all pass, but most runs are in between."
+> "Ok, this is working well, but not nearly as well as I hoped it would... there's very strong signal when they all fail, and strong signal when they all pass, but most runs are in between."
 
 > "Our reliance on prompt-driven workflows rather than code-driven workflows introduces a lot of non-determinism, which I don't have a way to solve without... prompt and mock tuning."
 
@@ -23140,7 +23227,8 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 ## References
 
-* [Building an internal agent: Evals to validate workflows](https://lethain.com/agents-evals/) - Will Larson (2025)
+* [Building an internal agent: Evals to validate workflows](https://lethain.com/agents-evals/) - Will Larson (December 2025)
+* [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) - Anthropic Engineering (January 2026); code-based, model-based, and human graders over trajectories or final answers
 * Sierra platform: Simulations approach for agent testing
 * [LangSmith Evaluation Platform](https://smith.langchain.com/) - Tool tracking and custom evaluators
 * [Promptfoo](https://github.com/promptfoo/promptfoo) - Mock API responses and assertion-based testing

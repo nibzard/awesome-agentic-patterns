@@ -182,7 +182,7 @@ URL: https://agentic-patterns.com/patterns/cli-native-agent-orchestration
 Markdown: https://agentic-patterns.com/patterns/cli-native-agent-orchestration.md
 
 ### code-first-tool-interface-pattern
-Code Mode MCP Tool Interface Improvement Pattern: LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with 10x+ token savings.
+Code Mode MCP Tool Interface Improvement Pattern: LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with large measured token savings.
 URL: https://agentic-patterns.com/patterns/code-first-tool-interface-pattern
 Markdown: https://agentic-patterns.com/patterns/code-first-tool-interface-pattern.md
 

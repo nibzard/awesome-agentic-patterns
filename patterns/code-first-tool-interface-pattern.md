@@ -21,10 +21,10 @@ id: code-mode-mcp-tool-interface-improvement-pattern
 summary: >-
   LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates,
   eliminating token-heavy round-trips and enabling efficient multi-step workflows
-  with 10x+ token savings.
+  with large measured token savings.
 signals: ["Workflow has a clear sequence of tool calls you can map out upfront", "Fan-out over many items would overflow context with direct tool calls", "Intermediate tool results are large JSON that the model does not need to see"]
 anti_signals: ["Open-ended research where each next step depends on the last result", "LLM reasoning is needed between tool calls, such as per-item personalization", "Single one-off tool calls or quick prototypes without sandbox infrastructure"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -265,7 +265,7 @@ User Request → LLM → Generated Code → V8 Isolate
 
 **Pros:**
 
-- **Dramatic token savings** on multi-step workflows (10-100x reduction; Anthropic reports 75x on 10K-row spreadsheets: 150K → 2K tokens)
+- **Dramatic token savings** on multi-step workflows (Anthropic reports 150K → 2K tokens, a 98.7% reduction, for tool definitions loaded on demand rather than upfront; Bifrost measures 58.2-92.8% input-token reductions for code-mode tool calling at 508 tools)
 - **Dramatic fan-out efficiency** - for loops over 100+ entries vs 100+ tool calls (speed + reliability at scale)
 - **Faster execution** through elimination of round-trips
 - **Enhanced security** - credentials stay in MCP servers, never in LLM
@@ -306,10 +306,13 @@ User Request → LLM → Generated Code → V8 Isolate
 
 ## References
 
-- [Cloudflare Code Mode Blog Post](https://blog.cloudflare.com/code-mode/) - Original announcement and technical details
-- [Anthropic Engineering: Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Code-Over-API pattern with data processing examples
-- [CaMeL: Code-Augmented Language Model (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837) - Formal verification and taint analysis for code-first tool use
+- [Cloudflare Code Mode Blog Post](https://blog.cloudflare.com/code-mode/) - Original announcement and technical details (September 26, 2025; qualitative benefits, no numeric claims)
+- [Anthropic Engineering: Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Code-Over-API pattern with data processing examples; the 150,000-to-2,000-token (98.7%) figure applies to tool definitions loaded on demand, and the spreadsheet example returns 5 of 10,000 rows
+- [Bifrost Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - third-party implementation measuring 58.2% to 92.8% input-token reductions with code-mode tool calling
+- [CaMeL: Defeating Prompt Injections by Design (Debenedetti et al., Google DeepMind, 2025)](https://arxiv.org/abs/2503.18813) - taint tracking and verification for code-first tool use
+- [Design Patterns for Securing LLM Agents against Prompt Injections (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837) - survey that names the Code-Then-Execute pattern
 - [Model Context Protocol](https://modelcontextprotocol.io/) - Background on traditional tool calling approaches
 - [Rafal Wilinski's Code Mode Analysis](https://x.com/rafalwilinski/status/1972362720579035146) - Real-world insights on Code Mode strengths and limitations
+- Division of labor with [Code-Over-API Pattern](code-over-api-pattern.md): this file documents Cloudflare's vendor implementation (V8 isolates, MCP bindings), while that file documents the general technique of moving data processing into a sandbox regardless of runtime
 
 [^1]: Phrase coined by Rafal Wilinski in his Code Mode analysis

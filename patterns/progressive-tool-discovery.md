@@ -17,7 +17,7 @@ id: progressive-tool-discovery
 summary: "Organizes tools in a browsable hierarchy and lets the agent load names, descriptions, or full schemas only for the tools it needs"
 signals: ["Agent has 20 or more tools or integrations", "Tool definitions take a large part of the context window", "MCP servers or plugin architectures expose many capabilities"]
 anti_signals: ["Agent needs most of its tools in every workflow", "Extra discovery calls before execution are not acceptable"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -26,7 +26,7 @@ When agents have access to large tool catalogs (dozens to thousands of available
 
 ## Solution
 
-Present tools through a filesystem-like hierarchy where agents discover capabilities on-demand by exploring the structure. This pattern scales to 1000+ tools and is production-validated across major platforms (MCP, Cloudflare Code Mode, OpenAI, LangChain).
+Present tools through a filesystem-like hierarchy where agents discover capabilities on-demand by exploring the structure. This pattern scales to 1000+ tools. Anthropic ships it in two first-party forms: hierarchical tool files with on-demand definition loading (documented in its MCP engineering guidance) and the Tool Search Tool with `defer_loading` (announced November 24, 2025); Claude Code exposes tool search in the Agent SDK.
 
 Implement a `search_tools` capability that allows agents to request different levels of detail:
 
@@ -88,7 +88,7 @@ servers/
 
 **Pros:**
 
-- Reduces initial context consumption by 70-90% (based on production data)
+- Reduces initial context consumption: Anthropic reports 98.7% (150K → 2K tokens) for tool definitions loaded on demand, and 85% token reduction with the Tool Search Tool
 - Scales to 1000+ tools efficiently
 - Agents learn about tool ecosystem through exploration
 - Natural mapping to code-based tool interfaces
@@ -103,10 +103,10 @@ servers/
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Model Context Protocol specification
-* Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (NeurIPS 2020)
-* Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)
-* Packer et al. "MemGPT: Towards LLMs as Operating Systems" (arXiv 2023)
+* Anthropic Engineering: [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (November 4, 2025) - hierarchical tool files; 150K → 2K tokens (98.7%) for definitions loaded on demand
+* Anthropic Engineering: [Advanced Tool Use](https://www.anthropic.com/engineering/advanced-tool-use) (November 24, 2025) - Tool Search Tool and `defer_loading`; 85% token reduction
+* Claude Code: [Tool search in the Agent SDK](https://code.claude.com/docs/en/agent-sdk/tool-search)
+* Model Context Protocol specification: https://modelcontextprotocol.io/
+* Distinct from [Tool Search Lazy Loading](tool-search-lazy-loading.md): that pattern retrieves tools by searching when needed, while this pattern organizes the catalog as a browsable hierarchy the agent walks
 
 - Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp

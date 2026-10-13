@@ -1,15 +1,15 @@
 ---
 title: Agent SDK for Programmatic Control
-status: emerging
+status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anthropic (Claude Code SDK example)"]
+based_on: ["Anthropic (Claude Agent SDK)"]
 category: Tool Use & Environment
-source: "https://www.nibzard.com/claude-code"
+source: "https://github.com/anthropics/claude-agent-sdk-python"
 tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless agent]
 summary: "Exposes agent functions through an SDK and CLI so code can run the agent headless with set tools, permissions, and resource limits"
 signals: ["Agent must run in CI/CD pipelines or scheduled jobs", "Batch processing across many files or projects", "Building custom apps or UIs on an agent backend"]
 anti_signals: ["Microservices architecture that prefers REST or gRPC APIs", "High-frequency calls or real-time streaming", "Task needs conversational clarification"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -29,6 +29,8 @@ Provide a Software Development Kit (SDK) that exposes the agent's core functiona
 -   Implement fine-grained permission management and authorization scopes.
 
 The SDK typically includes libraries, command-line interfaces (CLIs) for scripting, and documentation for headless or embedded use of the agent.
+
+As of 2026 this is mainstream vendor territory rather than a niche: Anthropic ships the Claude Agent SDK (renamed from "Claude Code SDK" in September 2025) with TypeScript and Python packages, and OpenAI (Agents SDK) and Google (Agent Development Kit) offer comparable programmatic agent control.
 
 ## Example (SDK integration)
 
@@ -50,7 +52,7 @@ flowchart TD
     G --> L[Custom Tools]
 ```
 
-## Example CLI Usage (Conceptual, from Claude Code SDK info):
+## Example CLI Usage (Conceptual, from Claude Agent SDK info):
 
 ```bash
 $ claude -p "what did i do this week?" \
@@ -87,8 +89,9 @@ $ claude -p "what did i do this week?" \
 
 ## References
 
--   Based on the description of the Claude Code SDK in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section VI.
--   OpenAI Agents SDK (Swarm framework): https://github.com/openai/openai-agents-python
+-   [Claude Agent SDK (Python)](https://github.com/anthropics/claude-agent-sdk-python) and [Claude Agent SDK (TypeScript)](https://github.com/anthropics/claude-agent-sdk-typescript) - official SDK packages; the SDK was renamed from "Claude Code SDK" in September 2025
+-   [Claude Code headless mode](https://code.claude.com/docs/en/headless) - official documentation for non-interactive CLI usage and output formats
+-   OpenAI Agents SDK: https://github.com/openai/openai-agents-python
 -   Google Agent Development Kit (ADK): https://github.com/google/adk-python
-
-[Source](https://www.nibzard.com/claude-code)
+-   Distinct from [CLI-Native Agent Orchestration](cli-native-agent-orchestration.md): that pattern scripts an existing interactive CLI from the outside, while this pattern embeds the agent engine as a library inside your application
+-   Supplementary practitioner overview (author's cheatsheet, May 2025): https://www.nibzard.com/claude-code

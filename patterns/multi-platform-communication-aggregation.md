@@ -4,7 +4,7 @@ status: emerging
 authors:
   - Lucas Carlson
 based_on:
-  - Anthropic (Claude Code)
+  - Lucas Carlson (practitioner-contributed skill setup)
 category: Tool Use & Environment
 source: 'https://github.com/anthropics/claude-code'
 tags:
@@ -18,7 +18,7 @@ id: multi-platform-communication-aggregation
 summary: "Queries every communication platform in parallel through adapters that share one schema, then merges, deduplicates, and ranks the results"
 signals: ["Users search for messages without knowing which platform holds them", "Each platform has a CLI or API with search support", "Cross-platform audit or compliance searches"]
 anti_signals: ["All communication is on one platform", "Privacy rules do not allow aggregating data across platforms"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -131,7 +131,7 @@ Results presented in unified table, grouped by platform.
 
 * Sub-Agent Spawning pattern for parallel execution
 * LLM Map-Reduce pattern for result aggregation
-* Claude Code `/search-all` skill implementation
-* **Academic**: Callan, J. (2020). *Federated Search: From Theory to Practice*
+* **Academic**: Shokouhi, M. (2013). *Federated Search*. Foundations and Trends in Information Retrieval 6(4-5) - the standard survey of federated search; the earlier "Callan (2020)" citation in this file could not be found in any index and has been removed
+* Practitioner-contributed: the aggregation design and the `/search-all` skill example come from the author's personal Claude Code skill setup; Anthropic documents no such built-in skill, and the source repository below is the CLI the skill runs in, not a description of this pattern
 
 - Primary source: https://github.com/anthropics/claude-code

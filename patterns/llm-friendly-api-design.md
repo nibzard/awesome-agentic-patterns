@@ -9,7 +9,7 @@ tags: [api-design, llm-interaction, tool-use, system-design, code-structure, age
 summary: "Designs APIs with visible versions, self-descriptive names and schemas, simple calls, actionable errors, and few indirection levels so LLMs call them correctly"
 signals: ["Agents call internal APIs or libraries as tools", "LLM often calls an API with the wrong version or parameters", "Error responses do not help the agent self-correct"]
 anti_signals: ["API is consumed only by humans", "Agent already uses a small, stable tool surface without errors"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -28,11 +28,13 @@ Design or adapt software APIs (including internal libraries and modules) with ex
 
 The aim is to create interfaces that are robust and intuitive for LLMs to interact with, thereby improving the reliability and effectiveness of agent tool use.
 
+The idea has since been embodied in ecosystem conventions: AGENTS.md gives agents a standard, visible entry point per repository (now stewarded by the Linux Foundation's Agentic AI Foundation), and llms.txt does the same for websites. Both exist because agents resolve versions and endpoints from what the interface itself exposes.
+
 ## How to use it
 
 - Use this when agent success depends on reliable tool invocation and environment setup.
 - Start with a narrow tool surface and explicit parameter validation.
-- Add observability around tool latency, failures, and fallback paths.
+- Publish machine-readable API context (OpenAPI schemas, an AGENTS.md file, or llms.txt) so agents resolve the right version and endpoint from the interface itself instead of guessing.
 
 ## Trade-offs
 
@@ -50,3 +52,11 @@ The aim is to create interfaces that are robust and intuitive for LLMs to intera
 - Gorilla: Fine-tuned LLMs for API Calls (Berkeley, 2023): https://arxiv.org/abs/2305.15334
 
 - Model Context Protocol (Anthropic): Standardized tool schemas for LLM consumption: https://modelcontextprotocol.io
+
+- AGENTS.md: https://agents.md - standard repository context file for agents; an Agentic AI Foundation project since December 2025
+
+- llms.txt: https://llmstxt.org - proposed standard for making website content legible to LLMs
+
+- InfoQ, [AGENTS.md research debate](https://www.infoq.com/news/2026/03/agents-context-file-value-review/) (March 2026) - ongoing evaluation of how much agent-facing context files help
+
+- Context7: https://github.com/upstash/context7 - serves version-specific, current documentation to coding agents, a direct consequence of this design principle

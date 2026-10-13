@@ -2,14 +2,14 @@
 title: AI Web Search Agent Loop
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Colin Flaherty (Muse)", "Amplify Partners Blog"]
+based_on: ["Justin Gage (Amplify Partners)", "Colin Flaherty (Muse)"]
 category: Tool Use & Environment
 source: https://www.amplifypartners.com/blog-posts/how-ai-web-search-works
 tags: [web-search, serp-api, citations, parallel-agents, query-translation, operators, grounding]
 summary: "Coordinator agent translates queries, spawns parallel search workers across domains and time ranges, refines iteratively, and answers with citations"
 signals: ["Assistant needs real-time information beyond the training cutoff", "Answers need source citations", "Research needs diverse, long-tail web results"]
 anti_signals: ["Internal model knowledge answers the query", "Latency and cost budgets cannot absorb multiple search rounds"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -82,7 +82,7 @@ flowchart TD
 
 **Implementation considerations:**
 
-- **SERP API limitations**: Current SERP APIs (Google, Bing, DuckDuckGo) are optimized for humans, not AI. They curate top 10 results rather than providing breadth/diversity
+- **SERP API limitations**: Classic SERP APIs (Google, Bing, DuckDuckGo) are optimized for humans, not AI. They curate top 10 results rather than providing breadth/diversity. Agent-native search APIs such as [Exa](https://exa.ai) and [Tavily](https://www.tavily.com) (established by 2026) address this gap directly and are the current alternative to raw SERP integration
 - **Caching strategy**: For performance, consider maintaining a cached web index for quick retrieval, using SERP APIs primarily for URL discovery and then pulling content directly
 - **Operator support**: Some SERP APIs have deprecated advanced operators, limiting refinement capabilities
 - **Parallelization**: Web search is easily parallelizable - spawn multiple workers for speed
@@ -114,7 +114,7 @@ Models should emulate human search behavior:
 
 **Cons:**
 
-- SERP APIs are not optimized for AI agents (keyword limits, curation bias)
+- SERP APIs are not optimized for AI agents (keyword limits, curation bias); agent-native search APIs such as Exa and Tavily reduce this cost
 - Complex system with multiple moving parts and external dependencies
 - Higher latency and cost than internal knowledge retrieval
 - Requires training models to make reliable tool calls
@@ -122,7 +122,9 @@ Models should emulate human search behavior:
 
 ## References
 
-* [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works)
+* [How AI web search works | Amplify Partners](https://www.amplifypartners.com/blog-posts/how-ai-web-search-works) - written by Justin Gage, published January 15, 2026
+* [Exa](https://exa.ai) and [Tavily](https://www.tavily.com) - agent-native search APIs that replace raw SERP integration
+* Distinct from [Agent-Driven Research](agent-driven-research.md): that pattern covers the full research workflow (iterative query planning, parallel multi-agent workers, reflection, cited synthesis), while this pattern focuses on the search loop mechanics - query translation, operators, and result diversification
 * [Retrieval-Augmented Generation (RAG) | Lewis et al., NeurIPS 2020](https://arxiv.org/abs/2005.11401)
 * [ReAct: Synergizing Reasoning and Acting | Yao et al., ICLR 2023](https://arxiv.org/abs/2210.03629)
 * [Toolformer | Schick et al., NeurIPS 2023](https://arxiv.org/abs/2302.04761)
