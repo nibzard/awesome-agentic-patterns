@@ -1,6 +1,6 @@
 ---
 title: "Deterministic Threat Rule Scanning"
-status: emerging
+status: proposed
 authors: ["eeee2345 (@eeee2345)"]
 based_on: ["Agent Threat Rules (open-source rule library)", "OWASP Agentic Top 10"]
 category: "Security & Safety"
@@ -12,8 +12,7 @@ summary: >-
 signals: ["Agent consumes tool descriptions, responses, or skill files from external MCP servers", "You need a detection layer that prompt injection cannot bypass", "You want to reserve LLM security review for ambiguous cases"]
 anti_signals: ["You need detection of novel attacks without rule updates", "No one can maintain the rule library as threats change"]
 evidence_grade: medium
-last_updated: "2026-03-31"
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -70,17 +69,17 @@ graph TD
     I[Tool Description] --> C
 ```
 
-The key insight is layered defense: deterministic rules catch known patterns with near-perfect precision, while LLM-based review handles novel or ambiguous threats as a second layer. The deterministic layer provides a floor of protection that does not degrade with adversarial prompt engineering.
+The key insight is layered defense: deterministic rules catch known patterns cheaply and consistently, while LLM-based review handles novel or ambiguous threats as a second layer. The deterministic layer provides a floor of protection that does not degrade with adversarial prompt engineering.
 
 ## Evidence
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - A regex-based rule library achieved 62.7% recall and 99.7% precision on the PINT prompt injection benchmark, demonstrating that deterministic rules reliably catch known patterns with very few false positives.
-  - Scanning 36,394 MCP server tool definitions with deterministic rules identified 182 CRITICAL and 1,124 HIGH severity findings, indicating measurable threat prevalence in real tool ecosystems.
+  - An open-source rule library of this shape exists and is maintained (29 YAML rules across 9 attack categories at the time of writing), so the approach is concretely implementable and testable.
   - Layering deterministic scanning before LLM-based review reduces cost and latency: regex runs in microseconds per rule, reserving expensive LLM calls for ambiguous cases only.
 - **Unverified / Unclear:**
-  - Recall on novel attack patterns not yet captured by rules is unknown; the 62.7% figure reflects coverage of known patterns only.
+  - No public benchmark evaluation of recall or precision for this rule set exists; an earlier revision of this file cited PINT benchmark numbers that do not trace to any published source, and they have been removed.
+  - Recall on novel attack patterns not yet captured by rules is unknown.
   - Effectiveness against adversarial evasion techniques (e.g., encoding variations, Unicode obfuscation) has not been systematically benchmarked.
 
 ## How to use it
@@ -122,6 +121,6 @@ The key insight is layered defense: deterministic rules catch known patterns wit
 
 ## References
 
-- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 76 deterministic detection rules covering prompt injection, tool poisoning, data exfiltration, and privilege escalation
-- [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing agent-specific security risks
-- [PINT Benchmark](https://arxiv.org/abs/2312.10997) — Prompt injection benchmark for evaluating detection systems
+- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 29 deterministic detection rules across 9 categories covering prompt injection, tool poisoning, data exfiltration, and privilege escalation; a small project (0 stars, 9 commits) whose README marks it RFC/experimental status
+- [OWASP Top 10 for Large Language Model Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing LLM application security risks
+- Related pattern: [Deterministic Security Scanning Build Loop](deterministic-security-scanning-build-loop.md) — the same deterministic-control idea applied to scanning the code the agent generates in its build loop, rather than scanning tool traffic directed at the agent

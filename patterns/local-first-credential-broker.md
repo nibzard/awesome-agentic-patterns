@@ -20,7 +20,7 @@ anti_signals:
 prerequisites:
   - "Local OS keychain or filesystem with permission to store an encrypted vault"
   - "Agent runtime that can route outbound HTTPS through a loopback proxy"
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -84,8 +84,8 @@ The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) names credential isolation via proxy as a recommended control for agent runtimes.
-  - OWASP's [Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/) lists "agent process never holds raw API keys" as a hardening principle.
+  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) recommends DID/VC-based agent identity with "Adapter Enforcement Middleware" injected into protocol gateways and just-in-time, short-lived credentials. That is adjacent rather than identical: the CSA design centralizes enforcement in protocol adapters, while this pattern runs the broker on the user's own loopback and keeps credentials off any third-party service.
+  - OWASP's [Securing Agentic Applications Guide 1.0](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/) does not state a "never holds raw API keys" principle; what it does say supports parts of this pattern — §3.1.3 advises against hardcoding secrets, and §3.2.8 recommends just-in-time access with short-lived, automatically expiring credentials (OAuth tokens, signed JWTs, temporary cloud credentials) instead of long-lived static credentials for tool invocations.
   - Multiple independent open-source implementations of this shape (Python, Rust, server-backed variants) shipped during 2025–2026, suggesting convergent design rather than a single-vendor pattern.
 - **Unverified / Unclear:**
   - Long-term behavior on shared developer machines (multi-user POSIX hosts, dev containers with shared loopback)
@@ -132,4 +132,4 @@ The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config
 - [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
 - Related pattern: [/patterns/external-credential-sync](external-credential-sync.md) — for syncing existing CLI credentials across tools rather than brokering new ones.
 - Related pattern: [/patterns/sandboxed-tool-authorization](sandboxed-tool-authorization.md) — for restricting which tools an agent can call once authenticated.
-- Known implementations (disclosed: author maintains the first): [agentrhq/authsome](https://github.com/agentrhq/authsome) (Python, local-only); [onecli/onecli](https://github.com/onecli/onecli) (Rust, per-agent scopes); [Infisical/agent-vault](https://github.com/Infisical/agent-vault) (server-backed variant).
+- Known implementations (disclosed: author maintains the first; star counts as of October 2026): [agentrhq/authsome](https://github.com/agentrhq/authsome) (Python, local-only, ~100 stars); [onecli/onecli](https://github.com/onecli/onecli) (Rust, per-agent scopes, ~3.6k stars); [Infisical/agent-vault](https://github.com/Infisical/agent-vault) (server-backed variant, ~2.3k stars).

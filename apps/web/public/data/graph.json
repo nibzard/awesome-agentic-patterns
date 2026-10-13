@@ -975,7 +975,7 @@
       "id": "denial-tracking-permission-escalation",
       "title": "Denial Tracking & Permission Escalation",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "denial-tracking-permission-escalation",
       "tags": [
         "permissions",
@@ -986,7 +986,7 @@
         "safety"
       ],
       "summary": "Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.",
-      "maturity": "maturing",
+      "maturity": "early",
       "domains": [
         "coding",
         "ops",
@@ -1050,7 +1050,7 @@
       "id": "deterministic-threat-rule-scanning",
       "title": "Deterministic Threat Rule Scanning",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "deterministic-threat-rule-scanning",
       "tags": [
         "security",
@@ -3282,7 +3282,7 @@
       "id": "zero-trust-agent-mesh",
       "title": "Zero-Trust Agent Mesh",
       "category": "Security & Safety",
-      "status": "established",
+      "status": "emerging",
       "slug": "zero-trust-agent-mesh",
       "tags": [
         "zero-trust",

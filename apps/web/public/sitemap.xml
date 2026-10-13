@@ -123,7 +123,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/black-box-skill-invocation</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</loc>
@@ -191,7 +191,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/consequence-family-coverage-audit</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource</loc>
@@ -235,7 +235,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/curated-code-context-window</loc>
@@ -259,7 +259,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/denial-tracking-permission-escalation</loc>
-    <lastmod>2026-04-03</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/design-time-file-partition</loc>
@@ -271,11 +271,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration</loc>
@@ -419,7 +419,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/iterative-multi-agent-brainstorming</loc>
@@ -463,7 +463,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/local-first-credential-broker</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/markdown-polis-coordination</loc>
@@ -555,7 +555,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/pii-tokenization</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/plan-then-execute-pattern</loc>
@@ -567,7 +567,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/policy-gated-tool-proxy</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/precomputed-code-graph-lookup</loc>
@@ -815,10 +815,10 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/zero-knowledge-verified-agent-egress</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/zero-trust-agent-mesh</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
 </urlset>

@@ -23,7 +23,7 @@ summary: >-
   access.
 signals: ["RL training runs many parallel rollouts of an agent with shell or other stateful tools", "One rollout's side effects could corrupt another rollout's reward", "Infrastructure can handle bursts of hundreds of VMs or containers"]
 anti_signals: ["Tools are read-only or stateless, so shared infrastructure is safe", "Budget or provider quotas cannot support one VM per concurrent rollout", "State can live in a database keyed by rollout ID with no filesystem tools"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -343,6 +343,10 @@ def execute_tool(self, rollout_id: str, tool: str, params: dict):
 - **Monitor failures**: Infrastructure errors causing zero rewards can collapse training
 - **Reuse production code**: "We use VMs because we could reuse the production Devon VM info"
 
+**Corroboration beyond the webinar (2026):**
+
+The Cognition case study remains the primary narrative source (the video's host introduces the speaker as "research engineer Sam Pretty at Cognition"), but the same isolation requirement now appears in open-source agent-RL trainers. Microsoft's [agent-lightning](https://github.com/microsoft/agent-lightning) runs each rollout agent as its own Kubernetes Job — "Run agents directly as Kubernetes Jobs without relying on external sandbox services" — giving pod-level per-rollout isolation as a built-in property of its rollout controller rather than a custom Modal setup.
+
 ## Trade-offs
 
 **Pros:**
@@ -383,6 +387,7 @@ def execute_tool(self, rollout_id: str, tool: str, params: dict):
 ## References
 
 - [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
+- [Microsoft agent-lightning](https://github.com/microsoft/agent-lightning) — open-source agent-RL trainer whose rollout controller runs each rollout as a Kubernetes Job, providing per-rollout pod isolation natively
 - Mnih et al. (2016). "Asynchronous Methods for Deep Reinforcement Learning". [arXiv:1602.01783](https://arxiv.org/abs/1602.01783) — A3C foundation for parallel isolated environments
 - Schulman et al. (2017). "Proximal Policy Optimization Algorithms". [arXiv:1707.06347](https://arxiv.org/abs/1707.06347) — PPO parallel rollout collection
 - Liang et al. (2018). "Ray RLLib: A Scalable Reinforcement Learning Library". [arXiv:1807.03343](https://arxiv.org/abs/1807.03343) — Actor-model isolation for RL

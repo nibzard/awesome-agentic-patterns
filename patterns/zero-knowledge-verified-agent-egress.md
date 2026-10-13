@@ -4,12 +4,12 @@ status: emerging
 authors: ["Provably (@aural-psynapse)"]
 based_on: ["Zero-knowledge proofs", "Zero trust architecture", "Trusted-endpoint allow-listing"]
 category: "Security & Safety"
-source: "https://csrc.nist.gov/pubs/sp/800/207/final"
+source: "https://github.com/ProvablyAI/sourcerykit"
 tags: [egress, zero-knowledge-proof, source-of-truth, allow-list, mcp, outbound-verification, runtime-protection]
 summary: "Intercepts each outbound HTTP or MCP call, proves its claims against a private source of truth with a zero-knowledge proof, and blocks calls that fail"
 signals: ["Agent makes high-value outbound calls such as payments", "Tampered tool arguments are a threat that domain allow-lists miss", "Source of truth must stay hidden from the agent and destination"]
 anti_signals: ["Agent makes no outbound calls with consequences", "Per-call proof latency is not acceptable", "No one can define and maintain a source of truth per flow"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -35,17 +35,18 @@ on_outbound_request(req):
     return ALLOW
 ```
 
-This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lockdown-no-exfiltration-channel.md): that pattern controls *where* an agent may send data at the network layer, while this one verifies that *what* the agent is sending is true before it goes.
+This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lockdown-no-exfiltration-channel.md): that pattern controls *where* an agent may send data at the network layer, while this one verifies that *what* the agent is sending is true before it goes. It also differs from [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md): the proxy decides whether a call is *allowed* against static policy rules, while this pattern proves the call's *content* matches a private source of truth at egress time.
 
 ## Evidence
 
 - **Evidence Grade:** medium
 - **Most Valuable Findings:**
-  - NIST SP 800-207 (Zero Trust Architecture) establishes per-request verification before granting access as a core tenet; this pattern applies the same tenet to an agent's outbound calls.
+  - NIST SP 800-207 (Zero Trust Architecture) establishes per-request verification before granting access as a core tenet; this pattern applies the same tenet to an agent's outbound calls. NIST SP 800-207 does not mention agents or egress content verification, so it serves as a conceptual basis, not a description of this pattern.
   - Zero-knowledge proofs let a verifier confirm a claim without seeing the secret behind it (Goldwasser, Micali & Rackoff, 1989), so the source of truth stays private from both the agent and the destination.
-  - The agentic-security literature classifies tool misuse and tampered tool arguments as a distinct threat class that network-layer egress controls do not cover (see the survey arXiv:2510.06445 and OWASP's Agentic AI threat taxonomy).
+  - Agent-security literature treats untrusted tool calls and prompt-injection-driven misuse as a first-class problem (see the agentic-security survey arXiv:2510.06445, OWASP's Agentic AI Threats and Mitigations guide, and CaMeL in "Defeating Prompt Injections by Design", which enforces security policies when tools are invoked through a capability mechanism). None of these describes content verification via zero-knowledge proofs at egress.
   - Hooking at the HTTP and MCP layer catches outbound calls regardless of which framework produced them.
 - **Unverified / Unclear:** Proof-generation latency and the operational cost of running the verification backend at high call volumes need more production data.
+- **Adoption caveat:** the only known implementation is from the pattern author's own company; no third-party deployment, adoption, or independent writeup exists yet.
 
 ## How to use it
 
@@ -55,7 +56,7 @@ This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lock
 - Route outbound calls through the layer; treat a failed proof or a non-allowlisted endpoint as a hard block.
 - Keep the signed logs for audit and incident review.
 
-An existing implementation of this pattern is [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (Python SDK, source-available), which hooks the HTTP libraries and runs the proof and source-of-truth check against a backend.
+An existing implementation of this pattern is [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (Python SDK, source-available under Business Source License 1.1, converting to GPL-3.0-or-later in 2029). Disclosure: it is the pattern author's own product — the Python SDK for Provably — and it depends on Provably's hosted backend, which holds the source of truth and produces the anchored verification proofs; interception happens locally, but verification is not fully offline.
 
 ## Trade-offs
 
@@ -64,9 +65,11 @@ An existing implementation of this pattern is [SourceryKit](https://github.com/P
 
 ## References
 
-- [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+- [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (implementation; pattern origin)
+- [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final) (conceptual basis)
 - [Goldwasser, Micali & Rackoff: The Knowledge Complexity of Interactive Proof Systems (SIAM J. Comput., 1989)](https://doi.org/10.1137/0218012)
 - [A Survey on Agentic Security (arXiv:2510.06445)](https://arxiv.org/abs/2510.06445)
+- [Debenedetti et al., "Defeating Prompt Injections by Design" (CaMeL, arXiv:2503.18813)](https://arxiv.org/abs/2503.18813)
 - [OWASP GenAI Security Project: Agentic AI - Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)
 - [Egress Lockdown (No-Exfiltration Channel)](egress-lockdown-no-exfiltration-channel.md)
-- [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (implementation)
+- [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md)

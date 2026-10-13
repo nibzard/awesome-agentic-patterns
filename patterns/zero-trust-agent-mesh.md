@@ -1,15 +1,15 @@
 ---
 title: Zero-Trust Agent Mesh
-status: established
+status: emerging
 authors: ["Imran Siddique (@imran-siddique)"]
-based_on: ["NIST SP 800-207 (Zero Trust Architecture)", "SPIFFE/SPIRE identity concepts", "AgentMesh (example implementation)"]
+based_on: ["NIST SP 800-207 (Zero Trust Architecture)", "SPIFFE/SPIRE identity concepts", "Microsoft Agent Governance Toolkit (AgentMesh component)"]
 category: "Security & Safety"
 source: "https://www.nist.gov/publications/zero-trust-architecture"
 tags: [zero-trust, identity, delegation, multi-agent, cryptography, ed25519, governance]
 summary: "Gives each agent a cryptographic identity and verifies identity, signed delegation tokens, and chain depth on every inter-agent request"
 signals: ["Multi-agent system where agents delegate tasks to each other", "Risk of agent impersonation or privilege confusion", "Delegation chains must be auditable"]
 anti_signals: ["Single agent with no inter-agent calls", "Team cannot operate key rotation and revocation"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -44,12 +44,12 @@ sequenceDiagram
 
 ## Evidence
 
-- **Evidence Grade:** `high`
+- **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Production-scale deployments exist: SPIFFE/SPIRE has 1000+ deployments and is CNCF-graduated (2020)
-  - Verification overhead is modest: ~0.05-0.15ms per request for single-hop and 3-hop chains
-  - Agent frameworks (LangChain, AutoGen, CrewAI) support zero-trust via tool authorization hooks
-- **Unverified / Unclear:** Native zero-trust support in major agent frameworks remains adapter-based, not first-class
+  - Workload identity at scale is proven infrastructure: SPIFFE/SPIRE joined CNCF in 2018, moved to incubating on 2020-06-22, and graduated on 2022-08-23 — but for service meshes and general workloads, not yet for production agent meshes
+  - The underlying primitives are standardized: NIST SP 800-207 defines per-request verification, and Ed25519 signatures are cheap enough for per-hop verification
+  - Inter-agent protocol support is arriving but incomplete: A2A (26k+ stars) still lists authorization schemes as future work
+- **Unverified / Unclear:** Native zero-trust support in major agent frameworks remains adapter-based, not first-class; no published benchmark measures the verification overhead of full identity-plus-delegation checks per inter-agent hop
 
 
 
@@ -72,6 +72,8 @@ sequenceDiagram
 - [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/publications/detail/sp/800-207/final)
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections" [arXiv:2506.08837](https://doi.org/10.48550/arXiv.2506.08837)
 - Greshake et al. (2023). "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications" [arXiv:2302.12173](https://doi.org/10.48550/arXiv.2302.12173)
-- [SPIFFE/SPIRE](https://spiffe.io/)
-- [AgentMesh (example implementation)](https://github.com/microsoft/agent-governance-toolkit)
-- [A2A Protocol](https://github.com/a2aproject/A2A)
+- [SPIFFE/SPIRE](https://spiffe.io/) and the [CNCF project page](https://www.cncf.io/projects/spiffe/) — graduated 2022-08-23
+- [Microsoft Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) — includes the AgentMesh component as one part of a broader governance toolkit (Public Preview)
+- [A2A Protocol](https://github.com/a2aproject/A2A) — inter-agent protocol; formalizing authorization schemes in the AgentCard is on its roadmap, not shipped
+- Adjacent pattern: [Transitive Vouch-Chain Trust](transitive-vouch-chain-trust.md) — derives trust from signed vouches between peers rather than verifying a cryptographic identity on every request
+- Adjacent pattern: [Soulbound Identity Verification](soulbound-identity-verification.md) — binds identity to a non-transferable credential for continuity, complementing per-request verification here
