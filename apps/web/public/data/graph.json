@@ -841,7 +841,7 @@
       "id": "cross-domain-agent-conflict-resolution",
       "title": "Cross-Domain Agent Conflict Resolution",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "cross-domain-agent-conflict-resolution",
       "tags": [
         "multi-agent",
@@ -1116,7 +1116,7 @@
       "id": "disposable-scaffolding-over-durable-features",
       "title": "Disposable Scaffolding Over Durable Features",
       "category": "Orchestration & Control",
-      "status": "best-practice",
+      "status": "emerging",
       "slug": "disposable-scaffolding-over-durable-features",
       "tags": [
         "bitter-lesson",
@@ -1565,7 +1565,7 @@
       "id": "inference-time-scaling",
       "title": "Inference-Time Scaling",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "established",
       "slug": "inference-time-scaling",
       "tags": [
         "scaling",

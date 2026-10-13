@@ -4,9 +4,9 @@ status: emerging
 authors:
   - Lucas Carlson
 based_on:
-  - Anthropic (Claude Code)
+  - Anthropic (Agent Skills)
 category: UX & Collaboration
-source: 'https://github.com/anthropics/claude-code'
+source: 'https://agentskills.io'
 tags:
   - ux
   - triggers
@@ -18,18 +18,20 @@ id: proactive-trigger-vocabulary
 summary: "Gives each skill an explicit, documented list of trigger phrases and patterns so input routes to skills predictably, with optional proactive activation"
 signals: ["Agent has many skills and must route input to the right one", "Users need to know which phrases activate which skill", "Some skills should activate without an explicit request"]
 anti_signals: ["Users phrase requests in many ways that a fixed list cannot cover", "Team cannot maintain trigger lists as vocabulary changes", "Users work in languages where the triggers do not translate"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
 
-Agents with many skills face a routing problem: given a user's natural language input, which skill should handle it? Solutions like embedding-based similarity or LLM classification work but are opaque—users don't know what phrases will activate which capabilities.
+Agents with many skills face a routing problem: given a user's natural language input, which skill should handle it? The recognized mechanism in current skill systems is model judgment over descriptions: each skill declares a name and description, and the agent decides from those whether to load the full skill (the Agent Skills standard calls this progressive disclosure). That mechanism is flexible but probabilistic—users cannot predict exactly which phrasing activates which capability.
 
 Additionally, agents may have skills that should activate *proactively* (without explicit request) when certain topics arise, but without explicit trigger lists, the agent may miss opportunities or activate inappropriately.
 
 ## Solution
 
 Define an explicit **trigger vocabulary** for each skill: a list of phrases, keywords, and patterns that should activate that skill. Document these triggers visibly so both humans and agents know the activation criteria.
+
+Treat trigger lists as a **complement to description-based routing**, not a replacement. Use them for deterministic, high-frequency commands where predictability matters ("sup", "check mail"), and let model judgment over skill descriptions handle paraphrase and long-tail input. Exact-match triggers short-circuit the probabilistic layer; they do not replace it.
 
 ```yaml
 # Skill definition with explicit triggers
@@ -134,18 +136,14 @@ Use the `priority-report` skill when user asks about:
 
 Combine explicit triggers with semantic fallback:
 1. Check explicit trigger matches first (fast, predictable)
-2. If no match, use embedding similarity (flexible, slower)
+2. If no match, use embedding similarity or model judgment over skill descriptions (flexible, slower)
 3. Log unmatched inputs to discover new trigger candidates
 
-This hybrid approach (exact match before semantic) is an industry best practice across chatbot platforms, combining predictability with flexibility.
+This hybrid keeps routing predictable for known phrases while the description-matching layer covers paraphrases.
 
 ## References
 
-* Claude Code CLAUDE.md skill documentation pattern
-* Intent classification in conversational AI
-* Chatbot trigger/response pattern matching
-* Slack workflow triggers
-
-- Pradhan et al. "Proactive Behavior in Conversational AI: A Survey." ACL 2022
-- Yang, Shuo, et al. "Should I Interrupt? Proactive Assistance in Human-AI Collaboration." CHI 2021
-- Primary source: https://github.com/anthropics/claude-code
+- [Agent Skills](https://agentskills.io) — the open standard for skill definitions. Documents the description-based activation model this pattern complements: agents load only skill names and descriptions at startup and read full instructions when a task matches a description.
+- [Extend Claude with skills (Claude Code docs)](https://code.claude.com/docs/en/skills) — shipping implementation of description-driven activation with progressive disclosure; also shows the control flags (`disable-model-invocation`, `user-invocable`) that govern proactive behavior.
+- [Skill Activation as Precision and Recall (this catalogue)](skill-activation-as-precision-recall.md) — measure routing quality with labeled prompts and CI thresholds, whether routing uses triggers, descriptions, or both.
+- Background: intent classification in conversational AI; chatbot trigger/response pattern matching; Slack workflow triggers.

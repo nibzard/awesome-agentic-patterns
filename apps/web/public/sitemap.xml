@@ -67,7 +67,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-first-tool-discovery</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</loc>
@@ -227,7 +227,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</loc>
@@ -291,7 +291,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/distributed-execution-cloud-workers</loc>
@@ -403,7 +403,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/inference-time-scaling</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/initializer-maintainer-dual-agent</loc>
@@ -579,7 +579,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/proactive-trigger-vocabulary</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution</loc>
@@ -679,7 +679,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/signal-driven-agent-activation</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/skill-activation-as-precision-recall</loc>
@@ -739,7 +739,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/three-stage-perception-architecture</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact</loc>
@@ -791,7 +791,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/versioned-constitution-governance</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/virtual-machine-operator-agent</loc>

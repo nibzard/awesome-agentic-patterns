@@ -412,12 +412,12 @@
       "Shane Cheek (@unitedideas, affiliated with Not Human Search)"
     ],
     "based_on": [
+      "MCP Registry (modelcontextprotocol.io)",
       "llms.txt community specification",
-      "MCP (Model Context Protocol)",
-      "Anthropic MCP Registry"
+      "Smithery"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports",
+    "source": "https://modelcontextprotocol.io/registry/about",
     "tags": [
       "tool-discovery",
       "mcp",
@@ -438,7 +438,7 @@
       "Tool set is fixed and known in advance",
       "Needed tools are private and not in any index"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nIndividual services can declare their agent-readiness via static manifests (`llms.txt`, `ai-plugin.json`, OpenAPI specs). But an agent that needs a new capability at runtime has no way to search *across* services to find, compare, and select the best match. Static manifests describe one service; they do not solve cross-service discovery.\n\nToday, tool catalogs are hardcoded into system prompts, manually curated in static lists, or require human-mediated searches through documentation designed for humans. When an agent needs a capability it does not have -- say, a calendar API or a code review tool -- there is no programmatic search that returns structured, verified results ranked by agent-relevant signals."
   },
   {
@@ -1864,16 +1864,17 @@
   },
   {
     "title": "Cross-Domain Agent Conflict Resolution",
-    "status": "emerging",
+    "status": "proposed",
     "authors": [
       "Narasimhan Ramani (@Narasimhan-Ramani)"
     ],
     "based_on": [
+      "Governance-as-a-Service (Gaurav et al. 2025)",
       "Open Policy Agent policy-as-code",
       "Multi-objective decision analysis"
     ],
     "category": "Orchestration & Control",
-    "source": "https://github.com/open-policy-agent/opa",
+    "source": "https://arxiv.org/abs/2508.18765",
     "tags": [
       "multi-agent",
       "conflict-resolution",
@@ -1894,7 +1895,7 @@
       "Only one agent acts on the resources",
       "Agents do not share a common resource identifier scheme"
     ],
-    "updated_at": "2026-08-21",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTeams increasingly run several independent, domain-specific agents against the\nsame environment or dataset — e.g., a cost-optimization agent, a reliability\nagent, a compliance agent, and a performance agent all assessing the same\ncloud infrastructure. Each agent is individually competent within its domain,\nbut none of them are aware the others exist.\n\nThis produces silent, unresolved conflicts: one agent recommends deallocating\nan idle resource to save cost, while another recommends adding redundancy to\nthe same resource for reliability, and a third recommends scaling it up for\nperformance. If recommendations are acted on independently (e.g., via\nauto-remediation), the result is thrashing, wasted work, or actively harmful\nchanges — with no record of *why* the conflict happened or *which*\nrecommendation should have won."
   },
   {
@@ -2461,15 +2462,15 @@
   },
   {
     "title": "Disposable Scaffolding Over Durable Features",
-    "status": "best-practice",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Thorsten Ball (Sourcegraph)"
+      "Thorsten Ball (Sourcegraph/Amp, Latent Space interview)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://www.sourcegraph.com",
+    "source": "https://www.youtube.com/watch?v=b4rOVZWLW6E",
     "tags": [
       "bitter-lesson",
       "temporary-tooling",
@@ -2490,7 +2491,7 @@
       "The team cannot track disposal triggers and would keep the debt forever",
       "The work compounds over time and does not depend on model limitations"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nIn a field where foundation models improve dramatically every few months, investing significant engineering effort into building complex, durable features *around* the model is extremely risky. A feature that takes three months to build, such as a sophisticated context compression or a custom tool-chain for code editing, could be rendered obsolete overnight by the next model generation that performs the task natively."
   },
   {
@@ -3480,19 +3481,19 @@
   },
   {
     "title": "Inference-Time Scaling",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Google DeepMind",
-      "OpenAI",
+      "Snell et al. (compute-optimal test-time scaling)",
+      "OpenAI (o1)",
       "Wei et al. (CoT)",
       "Wang et al. (Self-Consistency)",
       "Yao et al. (Tree-of-Thought)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://deepmind.google/research/",
+    "source": "https://arxiv.org/abs/2408.03314",
     "tags": [
       "scaling",
       "inference",
@@ -3517,7 +3518,7 @@
       "Latency-sensitive responses",
       "Inference budget cannot absorb higher per-request cost"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional language models are limited by their training-time capabilities. Once trained, their performance is essentially fixed, regardless of how much compute is available at inference time. This means that for particularly challenging problems, we cannot simply \"think harder\" by allocating more computational resources to find better solutions. This limitation becomes especially apparent in complex reasoning tasks where more deliberation could lead to better outcomes."
   },
   {
@@ -5142,10 +5143,10 @@
       "Lucas Carlson"
     ],
     "based_on": [
-      "Anthropic (Claude Code)"
+      "Anthropic (Agent Skills)"
     ],
     "category": "UX & Collaboration",
-    "source": "https://github.com/anthropics/claude-code",
+    "source": "https://agentskills.io",
     "tags": [
       "ux",
       "triggers",
@@ -5166,8 +5167,8 @@
       "Team cannot maintain trigger lists as vocabulary changes",
       "Users work in languages where the triggers do not translate"
     ],
-    "updated_at": "2026-01-05",
-    "excerpt": "\n## Problem\nAgents with many skills face a routing problem: given a user's natural language input, which skill should handle it? Solutions like embedding-based similarity or LLM classification work but are opaque—users don't know what phrases will activate which capabilities.\n\nAdditionally, agents may have skills that should activate *proactively* (without explicit request) when certain topics arise, but without explicit trigger lists, the agent may miss opportunities or activate inappropriately."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nAgents with many skills face a routing problem: given a user's natural language input, which skill should handle it? The recognized mechanism in current skill systems is model judgment over descriptions: each skill declares a name and description, and the agent decides from those whether to load the full skill (the Agent Skills standard calls this progressive disclosure). That mechanism is flexible but probabilistic—users cannot predict exactly which phrasing activates which capability.\n\nAdditionally, agents may have skills that should activate *proactively* (without explicit request) when certain topics arise, but without explicit trigger lists, the agent may miss opportunities or activate inappropriately."
   },
   {
     "title": "Progressive Autonomy with Model Evolution",
@@ -6027,8 +6028,11 @@
     "authors": [
       "Nicolas Finet (@nifinet)"
     ],
+    "based_on": [
+      "Will Larson (lethain.com)"
+    ],
     "category": "Orchestration & Control",
-    "source": "https://jorypestorious.com/blog/ai-engineer-spec/",
+    "source": "https://lethain.com/agents-triggers/",
     "tags": [
       "signals",
       "event-driven",
@@ -6048,7 +6052,7 @@
       "Signals are noisy with many false positives",
       "No cooldowns, rate limits, or kill switch to stop runaway activation"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMost agent workflows are **command-driven**: a user types a prompt, the agent acts. This creates a bottleneck — the agent only works when someone tells it to.\n\nIn domains like sales, security, DevOps, and finance, the right moment to act is determined by **external signals** (a prospect visits a pricing page, a CVE drops, a deployment fails, a stock hits a threshold). By the time a human notices and prompts the agent, the window has often closed.\n\nPolling dashboards or relying on human triage doesn't scale. The agent needs a mechanism to **watch for signals and self-activate** when conditions are met."
   },
   {
@@ -6559,11 +6563,10 @@
     ],
     "based_on": [
       "Sense-Plan-Act (Robotics)",
-      "ReAct Pattern (Yao et al. 2022)",
       "Information Processing Theory (Newell & Simon 1972)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://arxiv.org/abs/2210.03629",
+    "source": "https://arxiv.org/abs/2601.01743",
     "tags": [
       "architecture",
       "perception",
@@ -6584,7 +6587,7 @@
       "Simple task where extra stages add only complexity",
       "Latency budget cannot absorb stage transitions"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nComplex AI agents often struggle with unstructured inputs and need a systematic way to process information before taking action. Without a clear separation of concerns, agents can become monolithic and difficult to debug, extend, or optimize. Additionally, mixing perception, processing, and action logic makes it hard to swap out components or scale different parts of the system independently."
   },
   {
@@ -7077,11 +7080,11 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Hiveism (self-alignment loop)",
+      "OpenAI (Model Spec versioning)",
       "Anthropic (Constitutional AI)"
     ],
     "category": "Reliability & Eval",
-    "source": "https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web",
+    "source": "https://model-spec.openai.com/",
     "tags": [
       "constitution",
       "alignment",
@@ -7103,7 +7106,7 @@
       "Policy is fixed and never changes",
       "Team needs fast policy iteration without review gates"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen agents can modify policy/constitution text, safety regressions can be introduced gradually and go unnoticed. Without versioning, signatures, and policy review gates, teams cannot prove who changed what, why it changed, or whether critical safeguards were weakened."
   },
   {

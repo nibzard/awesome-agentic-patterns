@@ -2,14 +2,14 @@
 title: "Three-Stage Perception Architecture"
 status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Sense-Plan-Act (Robotics)", "ReAct Pattern (Yao et al. 2022)", "Information Processing Theory (Newell & Simon 1972)"]
+based_on: ["Sense-Plan-Act (Robotics)", "Information Processing Theory (Newell & Simon 1972)"]
 category: "Orchestration & Control"
-source: "https://arxiv.org/abs/2210.03629"
+source: "https://arxiv.org/abs/2601.01743"
 tags: [architecture, perception, processing, action, pipeline, modular-design]
 summary: "Splits the agent into separate perception, processing, and action stages so each stage can be built, tested, and scaled on its own"
 signals: ["Agent handles mixed input types such as text, images, and audio", "Monolithic agent is hard to debug or extend", "Different stages need different scaling or teams"]
 anti_signals: ["Simple task where extra stages add only complexity", "Latency budget cannot absorb stage transitions"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -39,10 +39,10 @@ Implement a three-stage pipeline architecture that cleanly separates an agent's 
 
 ## Evidence
 
-- **Evidence Grade:** `high`
-- **Academic foundations:** 50+ years in robotics (Sense-Plan-Act), cognitive science (Newell & Simon's information processing theory), and control theory
-- **Production validation:** Used at scale by Anthropic (Claude Code), Cursor, LangChain, OpenHands, AutoGen, and CrewAI
-- **Key research:** ReAct pattern (Yao et al. 2022, 4,500+ citations), ToolFormer (Schick et al. 2023, 2,000+ citations)
+- **Robotics and cognitive-science lineage:** the sense-plan-act control cycle and Newell and Simon's information-processing theory date back decades. Brooks (1986) critiqued strict staging in favor of layered control — the trade-off between staged pipelines and interleaved loops is old and still live.
+- **Modern surveys:** a 2026 agent-systems survey (arXiv:2601.01743) documents modular separation of perception, planning, and execution throughout current agent stacks — multimodal agents decompose perception into tools such as OCR, detection, and layout parsing, with an LLM planner integrating the results.
+- **Practitioner guides:** a 2026 MLflow developer guide states that effective agents "separate perception, reasoning, planning, memory, tool use, and oversight into explicit architectural layers," and identifies monolithic designs as the main maintainability failure mode.
+- **Multimodal absorption:** current multimodal models accept images and audio natively, so parts of the perception stage (OCR, speech-to-text, format conversion) increasingly move into the model itself. The stage shrinks but does not disappear — normalization and schema validation remain.
 
 ## Example
 
@@ -198,14 +198,17 @@ flowchart LR
 
 ## How to use it
 
-- Use this when tasks need explicit control flow between planning, execution, and fallback.
-- Start with one high-volume workflow before applying it across all agent lanes.
-- Define ownership for each phase so failures can be routed and recovered quickly.
+- Use when input handling, reasoning, and execution have different scaling needs, failure modes, or owning teams; the stage boundaries make each one independently testable.
+- Define typed interfaces between stages so each stage can be replaced without touching the others.
+- Let native multimodal input handle perception where the model already accepts the modality; keep only normalization and schema validation as explicit perception steps.
+- Distinct from [discrete-phase-separation.md](discrete-phase-separation.md): that pattern splits work into separate conversations (research, planning, implementation) with fresh context each; this pattern splits the runtime pipeline of a single agent run into perception, processing, and action stages.
 
 ## References
 
-- Yao, S., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." arXiv:2210.03629. [ICLR 2023]
-- Schick, T., et al. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." arXiv:2302.04761. [ICLR 2024]
+- Xu, B. (2026). "AI Agent Systems: Architectures, Applications, and Evaluation." [arXiv:2601.01743](https://arxiv.org/abs/2601.01743) — survey documenting modular separation of perception, planning, and execution in current agent stacks; the source for this pattern's modern framing.
+- [Types of AI Agent Architectures: 2026 Developer Guide (MLflow)](https://mlflow.org/articles/types-of-ai-agent-architectures-2026-developer-guide/) — practitioner guide recommending explicit architectural layers for perception, reasoning, planning, and oversight in production agents.
+- Yao, S., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." [arXiv:2210.03629](https://arxiv.org/abs/2210.03629) — contrasting related work: ReAct interleaves reasoning and action in a single loop rather than separating them into pipeline stages.
+- Schick, T., et al. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." [arXiv:2302.04761](https://arxiv.org/abs/2302.04761)
 - Newell, A., & Simon, H. A. (1972). "Human Problem Solving." Prentice-Hall
 - Brooks, R. A. (1986). "A robust layered control system for a mobile robot." IEEE Journal of Robotics and Automation
 - [Software Architecture Patterns](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/)

@@ -1368,7 +1368,7 @@ flowchart TD
 **Status:** emerging
 **Category:** Tool Use & Environment
 **Authors:** Shane Cheek (@unitedideas, affiliated with Not Human Search)
-**Source:** https://modelcontextprotocol.io/specification/2025-06-18/basic/transports
+**Source:** https://modelcontextprotocol.io/registry/about
 
 ## Problem
 
@@ -1412,11 +1412,13 @@ The workflow replaces the human loop of "search Google → read docs → evaluat
 - Active verification (probing endpoints, validating MCP handshakes) dramatically improves result quality over passive catalog approaches
 - Expose discovery via the same protocol the tools use -- if indexing MCP servers, offer discovery as an MCP tool itself
 - Include `llms.txt` and OpenAPI specs at well-known URLs so agents can discover the discovery service
+- Build on the official MCP Registry API where possible instead of crawling ad hoc: it already provides standardized `server.json` metadata, DNS-verified namespaces, and a REST API designed for clients and aggregators
 
 **Relationship to other patterns:**
 
 - Extends [Static Service Manifest for Agents](static-service-manifest-for-agents.md): manifests describe a single service; this pattern indexes across many services
 - Complements [Progressive Tool Discovery](progressive-tool-discovery.md): this pattern finds candidates; progressive discovery handles runtime detail-loading after selection
+- Overlaps [Cross-Protocol Agent Discovery](cross-protocol-agent-discovery.md): that pattern aggregates agent metadata across protocols (MCP, A2A, agents.txt) into one protocol-agnostic layer for finding agents. This pattern is consumer-oriented search over tools and services, with agentic ranking signals and active verification as the distinguishing core
 
 ## Trade-offs
 
@@ -1436,10 +1438,12 @@ The workflow replaces the human loop of "search Google → read docs → evaluat
 
 ## References
 
+- [The MCP Registry](https://modelcontextprotocol.io/registry/about) — primary source: the official centralized metadata repository for public MCP servers, backed by Anthropic, GitHub, Microsoft, and PulseMCP. Provides `server.json` metadata, namespace verification, and a REST API for clients and aggregators (currently in preview).
+- [Smithery](https://smithery.ai) — production registry that indexes MCP servers with structured metadata (descriptions, tools, auth, pricing) so agents can discover and install them; an example of the aggregator role the MCP Registry documentation describes.
+- [Introducing the Agents API (OpenAI, October 2026)](https://openai.com/index/introducing-the-agents-api) — adjacent 2026 evidence: a managed service whose built-in tool search loads relevant tool definitions as needed at runtime. It manages definitions within one provider rather than cross-registry discovery.
 - llms.txt community specification: https://llmstxt.org
 - Model Context Protocol (MCP): https://modelcontextprotocol.io
-- Not Human Search (known implementation): https://nothumansearch.ai
-- OpenAI ChatGPT Plugin manifest (prior art for machine-readable service description): https://platform.openai.com/docs/plugins
+- Community example (author-affiliated): https://nothumansearch.ai
 
 ---
 
@@ -5822,10 +5826,10 @@ mv memories/.consensus.tmp memories/consensus.md
 
 ## Cross-Domain Agent Conflict Resolution
 
-**Status:** emerging
+**Status:** proposed
 **Category:** Orchestration & Control
 **Authors:** Narasimhan Ramani (@Narasimhan-Ramani)
-**Source:** https://github.com/open-policy-agent/opa
+**Source:** https://arxiv.org/abs/2508.18765
 
 ## Problem
 
@@ -5875,6 +5879,21 @@ graph TD
     F --> H[Drift Monitor vs. Baseline]
 ```
 
+## Evidence
+
+- The runtime enforcement layer follows published work: the
+  [Governance-as-a-Service](https://arxiv.org/abs/2508.18765) framework
+  (Gaurav, Heikkonen, and Chaudhary, 2025) intercepts and scores the outputs
+  of multiple agents against declarative policies, without modifying the
+  agents. It was evaluated in simulation on content generation and financial
+  decision-making tasks.
+- That paper regulates individual agent outputs. It does not cross-reference
+  recommendations by resource ID, arbitrate between conflicting domain
+  recommendations, or monitor drift.
+- As of October 2026, no public implementation or deployment writeup of this
+  exact conflict-arbitration layer was found. Treat the composition above as
+  a proposal built from established parts, not as a deployed pattern.
+
 ## How to use it
 
 **Applicable when:**
@@ -5923,8 +5942,9 @@ graph TD
 
 ## References
 
-- [Open Policy Agent](https://github.com/open-policy-agent/opa) — general-purpose policy-as-code engine for explicit, versioned arbitration rules.
-- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — guidance for making trade-offs among competing objectives explicit and reviewable.
+- [Governance-as-a-Service: A Multi-Agent Framework for AI System Compliance and Policy Enforcement](https://arxiv.org/abs/2508.18765) (arXiv:2508.18765, 2025) — the closest published mechanism: a modular, policy-driven layer that intercepts and evaluates multi-agent outputs at runtime with declarative rules and trust scores. It covers policy enforcement, not resource-ID conflict arbitration or drift monitoring.
+- [Open Policy Agent](https://github.com/open-policy-agent/opa) — a general-purpose policy-as-code engine. Its documentation covers authorization for systems such as Kubernetes and Terraform; it supplies the tooling for explicit, versioned rules, but describes nothing about coordinating AI agents.
+- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — general guidance for making trade-offs among competing objectives explicit and reviewable. It is methodology support for the composite scoring step, not a source on agent conflict resolution.
 
 ---
 
@@ -7264,10 +7284,10 @@ graph LR
 
 ## Disposable Scaffolding Over Durable Features
 
-**Status:** best-practice
+**Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.sourcegraph.com
+**Source:** https://www.youtube.com/watch?v=b4rOVZWLW6E
 
 ## Problem
 
@@ -7314,11 +7334,11 @@ flowchart TD
 
 ## References
 
-- Described by Thorsten Ball: "What you want is... a scaffolding. Like you want to build a scaffolding around the model, a wooden scaffolding that if the model gets better or you have to switch it out, the scaffolding falls away. You know, like the bitter lesson like embrace that a lot of stuff might fall into the model as soon as the model gets better."
+- [Amp: The Emperor Has No Clothes — Thorsten Ball on Latent Space (September 25, 2025)](https://www.youtube.com/watch?v=b4rOVZWLW6E) — the quote origin, verified against the episode transcript: "What you want is... a scaffolding. Like you want to build a scaffolding around the model, a wooden scaffolding that if the model gets better or you have to switch it out, the scaffolding falls away. You know, like the bitter lesson. Like embrace that a lot of stuff might fall into the model as soon as the model gets better." Ball explains Amp deliberately restricts features added around the model so the harness stays replaceable.
 
-- Primary source: https://www.sourcegraph.com
+- [Extreme Harness Engineering for Token Billionaires — Latent Space (April 7, 2026)](https://www.latent.space/harness-eng) — 2026 evidence that the idea is current: reasoning models working without predefined scaffolds, with the harness reduced to a box the model orchestrates itself.
 
-- Cloudflare Code Mode: Ephemeral V8 isolates ("write once, vaporize immediately") for orchestrating MCP tool calls
+- Note: https://www.sourcegraph.com is a product homepage and describes none of this; the earlier citation pointed there in error.
 
 ---
 
@@ -10376,10 +10396,10 @@ return final_score, subscores, comments
 
 ## Inference-Time Scaling
 
-**Status:** emerging
+**Status:** established
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://deepmind.google/research/
+**Source:** https://arxiv.org/abs/2408.03314
 
 ## Problem
 
@@ -10572,8 +10592,9 @@ flowchart TD
 ## Real-World Evidence
 
 - **Academic Foundation**: Wei et al. (2022) established chain-of-thought prompting; Wang et al. (2022) demonstrated self-consistency gains via multiple sampling
+- **Compute-Optimal Scaling**: Snell et al. (2024) show that adapting test-time compute per prompt makes scaling markedly more efficient than uniform best-of-N, and can let a smaller model outperform a much larger one in FLOPs-matched settings
 - **Search-Based Methods**: Yao et al. (2023) showed Tree-of-Thought improves complex problem-solving through search over reasoning paths
-- **Production Models**: OpenAI o1 (September 2024) and Anthropic Claude Extended Thinking implement inference-time scaling with improved reasoning on math and coding tasks
+- **Production Models**: OpenAI o1 (September 2024) and Anthropic Claude Extended Thinking implement inference-time scaling natively, with improved reasoning on math and coding tasks
 - **Self-Refinement**: Shinn et al. (2023) Reflexion shows models can improve outputs through iterative self-critique
 
 ## Trade-offs
@@ -10593,12 +10614,14 @@ flowchart TD
 
 ## How to use it
 
-- Use this when tasks need explicit control flow between planning, execution, and fallback.
-- Start with one high-volume workflow before applying it across all agent lanes.
-- Define ownership for each phase so failures can be routed and recovered quickly.
+- Set a compute or latency ceiling per request before you scale, then measure quality per dollar at each budget step. Stop where returns flatten.
+- Match the strategy to verifiability. Best-of-N and self-consistency need a scorer or verifier to select among candidates. Sequential refinement needs the model to critique its own output credibly.
+- Adapt compute to difficulty instead of spending a fixed N on every prompt. Snell et al. (2024) show compute-optimal allocation beats uniform best-of-N at the same budget.
+- Check native reasoning models first. Frontier models now spend test-time compute internally (o1, Claude Extended Thinking). Hand-rolled best-of-N or search scaffolding may duplicate what the base model already provides. See [recursive-best-of-n-delegation.md](recursive-best-of-n-delegation.md) and [tree-of-thought-reasoning.md](tree-of-thought-reasoning.md) for when building it yourself still pays off.
 
 ## References
 
+- [Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters (Snell et al., 2024)](https://arxiv.org/abs/2408.03314) — the compute-optimal reference: adaptive per-prompt allocation of test-time compute versus best-of-N and parameter scaling
 - [Chain-of-Thought Prompting Elicits Reasoning (Wei et al., 2022)](https://arxiv.org/abs/2201.11903)
 - [Self-Consistency Improves CoT Reasoning (Wang et al., 2022)](https://arxiv.org/abs/2203.11171)
 - [Tree of Thoughts (Yao et al., 2023)](https://arxiv.org/abs/2305.10601)
@@ -15432,17 +15455,19 @@ Monitor self-documentation quality and supplement with external memory systems w
 **Status:** emerging
 **Category:** UX & Collaboration
 **Authors:** Lucas Carlson
-**Source:** https://github.com/anthropics/claude-code
+**Source:** https://agentskills.io
 
 ## Problem
 
-Agents with many skills face a routing problem: given a user's natural language input, which skill should handle it? Solutions like embedding-based similarity or LLM classification work but are opaque—users don't know what phrases will activate which capabilities.
+Agents with many skills face a routing problem: given a user's natural language input, which skill should handle it? The recognized mechanism in current skill systems is model judgment over descriptions: each skill declares a name and description, and the agent decides from those whether to load the full skill (the Agent Skills standard calls this progressive disclosure). That mechanism is flexible but probabilistic—users cannot predict exactly which phrasing activates which capability.
 
 Additionally, agents may have skills that should activate *proactively* (without explicit request) when certain topics arise, but without explicit trigger lists, the agent may miss opportunities or activate inappropriately.
 
 ## Solution
 
 Define an explicit **trigger vocabulary** for each skill: a list of phrases, keywords, and patterns that should activate that skill. Document these triggers visibly so both humans and agents know the activation criteria.
+
+Treat trigger lists as a **complement to description-based routing**, not a replacement. Use them for deterministic, high-frequency commands where predictability matters ("sup", "check mail"), and let model judgment over skill descriptions handle paraphrase and long-tail input. Exact-match triggers short-circuit the probabilistic layer; they do not replace it.
 
 ```yaml
 # Skill definition with explicit triggers
@@ -15547,21 +15572,17 @@ Use the `priority-report` skill when user asks about:
 
 Combine explicit triggers with semantic fallback:
 1. Check explicit trigger matches first (fast, predictable)
-2. If no match, use embedding similarity (flexible, slower)
+2. If no match, use embedding similarity or model judgment over skill descriptions (flexible, slower)
 3. Log unmatched inputs to discover new trigger candidates
 
-This hybrid approach (exact match before semantic) is an industry best practice across chatbot platforms, combining predictability with flexibility.
+This hybrid keeps routing predictable for known phrases while the description-matching layer covers paraphrases.
 
 ## References
 
-* Claude Code CLAUDE.md skill documentation pattern
-* Intent classification in conversational AI
-* Chatbot trigger/response pattern matching
-* Slack workflow triggers
-
-- Pradhan et al. "Proactive Behavior in Conversational AI: A Survey." ACL 2022
-- Yang, Shuo, et al. "Should I Interrupt? Proactive Assistance in Human-AI Collaboration." CHI 2021
-- Primary source: https://github.com/anthropics/claude-code
+- [Agent Skills](https://agentskills.io) — the open standard for skill definitions. Documents the description-based activation model this pattern complements: agents load only skill names and descriptions at startup and read full instructions when a task matches a description.
+- [Extend Claude with skills (Claude Code docs)](https://code.claude.com/docs/en/skills) — shipping implementation of description-driven activation with progressive disclosure; also shows the control flags (`disable-model-invocation`, `user-invocable`) that govern proactive behavior.
+- [Skill Activation as Precision and Recall (this catalogue)](skill-activation-as-precision-recall.md) — measure routing quality with labeled prompts and CI thresholds, whether routing uses triggers, descriptions, or both.
+- Background: intent classification in conversational AI; chatbot trigger/response pattern matching; Slack workflow triggers.
 
 ---
 
@@ -18856,7 +18877,7 @@ If you wait to see what happens before acting, you'll miss the window. The front
 **Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nicolas Finet (@nifinet)
-**Source:** https://jorypestorious.com/blog/ai-engineer-spec/
+**Source:** https://lethain.com/agents-triggers/
 
 # Signal-Driven Agent Activation
 
@@ -18942,6 +18963,7 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 
 ## Evidence
 
+- **Event-initiated agent workflows in production**: Will Larson's writeup of an internal agent (December 2025) documents triggers — Notion webhooks, Slack messages and reacji, Jira webhooks, and scheduled events — as the mechanism that starts agent workflows, and argues teams should maintain a library of easy-to-create triggers.
 - **Event-driven architectures** are well-established in distributed systems (AWS EventBridge, Kafka). This pattern applies the same principle to agent activation.
 - **Security orchestration (SOAR)** platforms like Splunk SOAR and Palo Alto XSOAR use signal-driven playbook activation as their core mechanism.
 - **Sales engagement platforms** increasingly use intent signals (6sense, Bombora) to trigger automated sequences, validating the signal-to-action pipeline in production.
@@ -18966,6 +18988,11 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 - Set conservative cooldowns initially — tighten as you validate
 - Implement a kill switch to pause all signal-driven activation
 
+**Related patterns:**
+
+- [Multi-Platform Webhook Triggers](multi-platform-webhook-triggers.md) covers building the trigger integrations themselves — Slack, Notion, and Jira webhooks, plus idempotency and signature checks. This pattern sits one level above: the declarative rule layer (thresholds, cooldowns, kill switch) that decides when a signal starts a workflow.
+- [Proactive Trigger Vocabulary](proactive-trigger-vocabulary.md) routes user input to skills by matching documented trigger phrases. This pattern instead activates workflows from external events, with no user input involved.
+
 ## Trade-offs
 
 **Advantages:**
@@ -18983,6 +19010,7 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 
 ## References
 
+- [Triggers for Agents — Will Larson, Irrational Exuberance (December 2025)](https://lethain.com/agents-triggers/) — primary source. Documents event-initiated triggers (webhooks, Slack messages and reacji, scheduled events) for starting agent workflows in a production internal agent. It covers trigger mechanics and adoption, not the declarative threshold/cooldown rule layer described here.
 - [Event-Driven Architecture (Martin Fowler)](https://martinfowler.com/articles/201701-event-driven.html)
 - [SOAR Playbook Activation (Gartner)](https://www.gartner.com/en/information-technology/glossary/security-orchestration-automation-response-soar)
 - [CLI-First Skill Design (this catalogue)](cli-first-skill-design.md)
@@ -20813,7 +20841,7 @@ Most platforms merge layered configs with local overrides taking precedence.
 **Status:** established
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://arxiv.org/abs/2210.03629
+**Source:** https://arxiv.org/abs/2601.01743
 
 ## Problem
 
@@ -20842,10 +20870,10 @@ Implement a three-stage pipeline architecture that cleanly separates an agent's 
 
 ## Evidence
 
-- **Evidence Grade:** `high`
-- **Academic foundations:** 50+ years in robotics (Sense-Plan-Act), cognitive science (Newell & Simon's information processing theory), and control theory
-- **Production validation:** Used at scale by Anthropic (Claude Code), Cursor, LangChain, OpenHands, AutoGen, and CrewAI
-- **Key research:** ReAct pattern (Yao et al. 2022, 4,500+ citations), ToolFormer (Schick et al. 2023, 2,000+ citations)
+- **Robotics and cognitive-science lineage:** the sense-plan-act control cycle and Newell and Simon's information-processing theory date back decades. Brooks (1986) critiqued strict staging in favor of layered control — the trade-off between staged pipelines and interleaved loops is old and still live.
+- **Modern surveys:** a 2026 agent-systems survey (arXiv:2601.01743) documents modular separation of perception, planning, and execution throughout current agent stacks — multimodal agents decompose perception into tools such as OCR, detection, and layout parsing, with an LLM planner integrating the results.
+- **Practitioner guides:** a 2026 MLflow developer guide states that effective agents "separate perception, reasoning, planning, memory, tool use, and oversight into explicit architectural layers," and identifies monolithic designs as the main maintainability failure mode.
+- **Multimodal absorption:** current multimodal models accept images and audio natively, so parts of the perception stage (OCR, speech-to-text, format conversion) increasingly move into the model itself. The stage shrinks but does not disappear — normalization and schema validation remain.
 
 ## Example
 
@@ -21001,14 +21029,17 @@ flowchart LR
 
 ## How to use it
 
-- Use this when tasks need explicit control flow between planning, execution, and fallback.
-- Start with one high-volume workflow before applying it across all agent lanes.
-- Define ownership for each phase so failures can be routed and recovered quickly.
+- Use when input handling, reasoning, and execution have different scaling needs, failure modes, or owning teams; the stage boundaries make each one independently testable.
+- Define typed interfaces between stages so each stage can be replaced without touching the others.
+- Let native multimodal input handle perception where the model already accepts the modality; keep only normalization and schema validation as explicit perception steps.
+- Distinct from [discrete-phase-separation.md](discrete-phase-separation.md): that pattern splits work into separate conversations (research, planning, implementation) with fresh context each; this pattern splits the runtime pipeline of a single agent run into perception, processing, and action stages.
 
 ## References
 
-- Yao, S., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." arXiv:2210.03629. [ICLR 2023]
-- Schick, T., et al. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." arXiv:2302.04761. [ICLR 2024]
+- Xu, B. (2026). "AI Agent Systems: Architectures, Applications, and Evaluation." [arXiv:2601.01743](https://arxiv.org/abs/2601.01743) — survey documenting modular separation of perception, planning, and execution in current agent stacks; the source for this pattern's modern framing.
+- [Types of AI Agent Architectures: 2026 Developer Guide (MLflow)](https://mlflow.org/articles/types-of-ai-agent-architectures-2026-developer-guide/) — practitioner guide recommending explicit architectural layers for perception, reasoning, planning, and oversight in production agents.
+- Yao, S., et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." [arXiv:2210.03629](https://arxiv.org/abs/2210.03629) — contrasting related work: ReAct interleaves reasoning and action in a single loop rather than separating them into pipeline stages.
+- Schick, T., et al. (2023). "ToolFormer: Language Models Can Teach Themselves to Use Tools." [arXiv:2302.04761](https://arxiv.org/abs/2302.04761)
 - Newell, A., & Simon, H. A. (1972). "Human Problem Solving." Prentice-Hall
 - Brooks, R. A. (1986). "A robust layered control system for a mobile robot." IEEE Journal of Robotics and Automation
 - [Software Architecture Patterns](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/)
@@ -22382,7 +22413,7 @@ sequenceDiagram
 **Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web
+**Source:** https://model-spec.openai.com/
 
 ## Problem
 
@@ -22400,6 +22431,12 @@ Store the constitution in a **version-controlled, signed repository**:
 
 Combine policy-as-code with release discipline: every constitutional change is diffable, reviewable, and test-gated before activation. This gives governance history, rollback capability, and auditable control over alignment policy evolution.
 
+## Evidence
+
+- As of October 2026, no public writeup describes this full mechanism (signed constitution repository, CI policy gates, semver for constitutions). The pattern composes practices that are individually established.
+- OpenAI publishes the Model Spec as dated, versioned releases with a public changelog — versioned publication of model-behavior policy in practice.
+- Signed commits and merge-time signature enforcement are standard Git practice, documented in Pro Git.
+
 ## How to use it
 
 - Require `git commit -S` or similar.  
@@ -22413,11 +22450,10 @@ Combine policy-as-code with release discipline: every constitutional change is d
 
 ## References
 
-- Anthropic, *Constitutional AI: Harmlessness from AI Feedback* (arXiv:2212.08073, 2022)
-- Hiveism, *Self-Alignment by Constitutional AI*
-- OpenAI, *Model Spec*
-
-- Primary source: https://substack.com/home/post/p-161422949?utm_campaign=post&utm_medium=web
+- [OpenAI Model Spec](https://model-spec.openai.com/) — primary source for versioned behavior policy: dated public releases with a changelog maintained in the [openai/model_spec](https://github.com/openai/model_spec) repository. It covers publication and versioning of a behavior spec, not signed-commit repo governance of a runtime constitution.
+- [Pro Git, "Signing Your Work"](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) — the mechanism this pattern relies on: GPG-signed commits, signature verification in history, and merge-time enforcement with `git merge --verify-signatures`.
+- Anthropic, *Constitutional AI: Harmlessness from AI Feedback* ([arXiv:2212.08073](https://arxiv.org/abs/2212.08073), 2022) — constitution-guided training; the "constitution" concept this pattern governs.
+- [Hiveism, "A path towards solving AI alignment"](https://hiveism.substack.com/p/a-path-towards-solving-ai-alignment) — contrast, not basis: the article proposes an alignment loop in which agents deliberate and rewrite their own constitution, and argues a company "would have no way to influence the direction the AI takes." It contains no Git, signing, reviewer, or CI content. The earlier front-matter attribution to this essay was wrong and is removed.
 
 ---
 

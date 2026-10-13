@@ -1,15 +1,15 @@
 ---
 title: Cross-Domain Agent Conflict Resolution
-status: emerging
+status: proposed
 authors: ["Narasimhan Ramani (@Narasimhan-Ramani)"]
-based_on: ["Open Policy Agent policy-as-code", "Multi-objective decision analysis"]
+based_on: ["Governance-as-a-Service (Gaurav et al. 2025)", "Open Policy Agent policy-as-code", "Multi-objective decision analysis"]
 category: "Orchestration & Control"
-source: "https://github.com/open-policy-agent/opa"
+source: "https://arxiv.org/abs/2508.18765"
 tags: [multi-agent, conflict-resolution, policy-as-code, governance, orchestration, drift-detection]
 summary: "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code."
 signals: ["Several domain agents assess or act on the same resources", "Conflicting recommendations have financial, operational, or compliance cost", "You need an auditable record of why one recommendation won"]
 anti_signals: ["Only one agent acts on the resources", "Agents do not share a common resource identifier scheme"]
-updated_at: '2026-08-21'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -60,6 +60,21 @@ graph TD
     F --> H[Drift Monitor vs. Baseline]
 ```
 
+## Evidence
+
+- The runtime enforcement layer follows published work: the
+  [Governance-as-a-Service](https://arxiv.org/abs/2508.18765) framework
+  (Gaurav, Heikkonen, and Chaudhary, 2025) intercepts and scores the outputs
+  of multiple agents against declarative policies, without modifying the
+  agents. It was evaluated in simulation on content generation and financial
+  decision-making tasks.
+- That paper regulates individual agent outputs. It does not cross-reference
+  recommendations by resource ID, arbitrate between conflicting domain
+  recommendations, or monitor drift.
+- As of October 2026, no public implementation or deployment writeup of this
+  exact conflict-arbitration layer was found. Treat the composition above as
+  a proposal built from established parts, not as a deployed pattern.
+
 ## How to use it
 
 **Applicable when:**
@@ -108,5 +123,6 @@ graph TD
 
 ## References
 
-- [Open Policy Agent](https://github.com/open-policy-agent/opa) — general-purpose policy-as-code engine for explicit, versioned arbitration rules.
-- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — guidance for making trade-offs among competing objectives explicit and reviewable.
+- [Governance-as-a-Service: A Multi-Agent Framework for AI System Compliance and Policy Enforcement](https://arxiv.org/abs/2508.18765) (arXiv:2508.18765, 2025) — the closest published mechanism: a modular, policy-driven layer that intercepts and evaluates multi-agent outputs at runtime with declarative rules and trust scores. It covers policy enforcement, not resource-ID conflict arbitration or drift monitoring.
+- [Open Policy Agent](https://github.com/open-policy-agent/opa) — a general-purpose policy-as-code engine. Its documentation covers authorization for systems such as Kubernetes and Terraform; it supplies the tooling for explicit, versioned rules, but describes nothing about coordinating AI agents.
+- [Multi-Criteria Decision Analysis](https://www.gov.uk/government/publications/multi-criteria-analysis-manual-for-making-government-policy) — general guidance for making trade-offs among competing objectives explicit and reviewable. It is methodology support for the composite scoring step, not a source on agent conflict resolution.

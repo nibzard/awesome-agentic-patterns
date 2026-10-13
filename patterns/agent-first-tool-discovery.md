@@ -2,15 +2,15 @@
 title: "Agent-First Tool Discovery"
 status: emerging
 authors: ["Shane Cheek (@unitedideas, affiliated with Not Human Search)"]
-based_on: ["llms.txt community specification", "MCP (Model Context Protocol)", "Anthropic MCP Registry"]
+based_on: ["MCP Registry (modelcontextprotocol.io)", "llms.txt community specification", "Smithery"]
 category: "Tool Use & Environment"
-source: "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports"
+source: "https://modelcontextprotocol.io/registry/about"
 tags: [tool-discovery, mcp, agent-search, service-registry, llms-txt, api-discovery, agent-infrastructure]
 slug: "agent-first-tool-discovery"
 summary: "Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics."
 signals: ["Agent must find and acquire new tools at runtime without human help", "Orchestrator routes tasks to tools by capability match"]
 anti_signals: ["Tool set is fixed and known in advance", "Needed tools are private and not in any index"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -55,11 +55,13 @@ The workflow replaces the human loop of "search Google → read docs → evaluat
 - Active verification (probing endpoints, validating MCP handshakes) dramatically improves result quality over passive catalog approaches
 - Expose discovery via the same protocol the tools use -- if indexing MCP servers, offer discovery as an MCP tool itself
 - Include `llms.txt` and OpenAPI specs at well-known URLs so agents can discover the discovery service
+- Build on the official MCP Registry API where possible instead of crawling ad hoc: it already provides standardized `server.json` metadata, DNS-verified namespaces, and a REST API designed for clients and aggregators
 
 **Relationship to other patterns:**
 
 - Extends [Static Service Manifest for Agents](static-service-manifest-for-agents.md): manifests describe a single service; this pattern indexes across many services
 - Complements [Progressive Tool Discovery](progressive-tool-discovery.md): this pattern finds candidates; progressive discovery handles runtime detail-loading after selection
+- Overlaps [Cross-Protocol Agent Discovery](cross-protocol-agent-discovery.md): that pattern aggregates agent metadata across protocols (MCP, A2A, agents.txt) into one protocol-agnostic layer for finding agents. This pattern is consumer-oriented search over tools and services, with agentic ranking signals and active verification as the distinguishing core
 
 ## Trade-offs
 
@@ -79,7 +81,9 @@ The workflow replaces the human loop of "search Google → read docs → evaluat
 
 ## References
 
+- [The MCP Registry](https://modelcontextprotocol.io/registry/about) — primary source: the official centralized metadata repository for public MCP servers, backed by Anthropic, GitHub, Microsoft, and PulseMCP. Provides `server.json` metadata, namespace verification, and a REST API for clients and aggregators (currently in preview).
+- [Smithery](https://smithery.ai) — production registry that indexes MCP servers with structured metadata (descriptions, tools, auth, pricing) so agents can discover and install them; an example of the aggregator role the MCP Registry documentation describes.
+- [Introducing the Agents API (OpenAI, October 2026)](https://openai.com/index/introducing-the-agents-api) — adjacent 2026 evidence: a managed service whose built-in tool search loads relevant tool definitions as needed at runtime. It manages definitions within one provider rather than cross-registry discovery.
 - llms.txt community specification: https://llmstxt.org
 - Model Context Protocol (MCP): https://modelcontextprotocol.io
-- Not Human Search (known implementation): https://nothumansearch.ai
-- OpenAI ChatGPT Plugin manifest (prior art for machine-readable service description): https://platform.openai.com/docs/plugins
+- Community example (author-affiliated): https://nothumansearch.ai
