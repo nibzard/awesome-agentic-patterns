@@ -9,7 +9,7 @@ tags: [hooks, automation, testing, determinism, success-criteria, continuous-exe
 summary: "Runs a stop hook after each agent turn that checks success criteria and makes the agent continue until tests or checks pass"
 signals: ["Agent stops before tests, builds, or linters pass", "Success criteria can be checked by a script", "Agent runs in a sandbox or container"]
 anti_signals: ["No reliable automated success check exists", "Criteria may be impossible to meet, which causes endless loops", "No timeout or token budget can be set"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -64,19 +64,34 @@ define_stop_hook() {
 3. If criteria fail, inject feedback and continue agent execution
 4. If criteria pass, return control to user
 
-**Claude Code SDK example:**
+**Claude Code configuration:**
 
-```javascript
-// Stop hook configuration
+Claude Code runs stop hooks on the **Stop** event, which fires when the main agent finishes responding. Configure the command in the settings JSON:
+
+```json
 {
   "hooks": {
-    "on_stop": {
-      "command": "./scripts/check_success.sh",
-      "auto_continue_on_failure": true
-    }
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "./scripts/check_success.sh" }
+        ]
+      }
+    ]
   }
 }
 ```
+
+The script continues the agent by printing a decision block with a reason:
+
+```json
+{
+  "decision": "block",
+  "reason": "Tests failed: 2 assertions. Fix these issues."
+}
+```
+
+Exit code 0 with no output lets the turn end. Stop hooks receive a `stop_hook_active` flag that is true when the agent is already continuing because of a stop hook; check it to avoid blocking on a condition that will never resolve. Claude Code also caps consecutive stop-hook continuations at eight.
 
 **Power user pattern (from transcript):**
 
@@ -105,6 +120,7 @@ Combine with dangerous mode in containers for autonomous operation:
 **Cons:**
 
 - **Runaway costs**: Agent might loop indefinitely if criteria impossible
+- **Models can ignore the hook**: practitioner reports describe models bypassing stop hooks, so treat auto-continue as best-effort rather than a guarantee ([Hacker News reports](https://news.ycombinator.com/item?id=47895029))
 - **Requires good criteria**: Bad success checks lead to infinite loops
 - **Container overhead**: Safest in sandboxed environments
 - **Debugging challenges**: Harder to inspect mid-execution state
@@ -126,3 +142,4 @@ Combine with dangerous mode in containers for autonomous operation:
 * Shinn et al. (2023). [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366). NeurIPS.
 * Madaan et al. (2023). [Self-Refine: Large Language Models Can Self-Correct with Self-Feedback](https://arxiv.org/abs/2303.08119). ICLR.
 * Beurer-Kellner et al. (2025). [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837).
+* Claude Code hooks documentation (Stop event, decision blocks, `stop_hook_active` loop guard): https://code.claude.com/docs/en/hooks

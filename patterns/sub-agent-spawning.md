@@ -4,12 +4,12 @@ status: validated-in-production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"]
 category: Orchestration & Control
-source: "https://www.nibzard.com/ampcode"
+source: "https://lethain.com/agents-subagents/"
 tags: [orchestration, context, scalability, subagents, yaml-configuration, virtual-files, subject-hygiene, parallel-delegation]
 summary: "Lets the main agent spawn sub-agents with fresh context and scoped tools to work on subtasks in parallel, then merges their results"
 signals: ["Large multi-file task overflows the main agent's context", "Subtasks are independent and can run in parallel", "Some work needs isolated tools or files for safety"]
 anti_signals: ["Small task that fits in one context window", "Subtasks depend on each other and need tight coordination", "Token budget cannot cover several agents at once"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -178,23 +178,7 @@ Some implementations treat every agent as a subagent, enabling flexible composit
 
 ## Advanced usage: Swarm migrations
 
-For massive parallelization (10+ subagents), see the **Swarm Migration Pattern** which extends this concept for large-scale code migrations.
-
-**Three spawning architecture scales:**
-
-- **Virtual File Isolation** (2-4 subagents): Same-process spawning with explicit file passing for context management
-- **Git Worktree Isolation** (10-100 subagents): Filesystem-level isolation using git worktrees for code migrations
-- **Cloud Worker Spawning** (100+ agents): Container/VM isolation for enterprise-scale distributed processing
-
-**Production implementations:**
-
-- **Cursor AI**: Hierarchical spawning (Planner → Sub-Planners → Workers) with hundreds of concurrent agents
-- **GitHub Agentic Workflows**: Event-driven agent spawning within CI infrastructure
-- **Anthropic Claude Code**: Users with high-volume workflows achieve 10x+ speedup on framework migrations
-
-**Quote from Boris Cherny (Anthropic):**
-
-> "There's an increasing number of people internally at Anthropic using a lot of credits every month. Spending over a thousand bucks. The common use case is code migration... The main agent makes a big to-do list for everything and map reduces over a bunch of subagents. You instruct Claude like start 10 agents and then just go 10 at a time and just migrate all the stuff over."
+For massive parallelization (10+ subagents) and large-scale code migrations, see the [Swarm Migration Pattern](swarm-migration-pattern.md).
 
 ## Trade-offs
 
@@ -224,7 +208,7 @@ For massive parallelization (10+ subagents), see the **Swarm Migration Pattern**
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis of 88 sessions emphasizing clear task subjects and parallel delegation patterns
+* Claude Code documentation, [Create custom subagents](https://code.claude.com/docs/en/subagents) - the official subagent configuration reference
 * Vezhnevets, A., et al. (2017). [Feudal Networks for Hierarchical Reinforcement Learning](https://arxiv.org/abs/1706.06121). ICML. - Manager-worker separation with goal-setting in latent space
 * Raising An Agent - Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
 * Boris Cherny (Anthropic) on swarm migrations for framework changes and lint rules
@@ -234,4 +218,4 @@ For massive parallelization (10+ subagents), see the **Swarm Migration Pattern**
 * [Building an internal agent: Subagent support](https://lethain.com/agents-subagents/) - Will Larson on YAML-configured subagents with virtual file isolation and code-driven LLM invocation
 * [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Hierarchical spawning with hundreds of concurrent agents validated in production
 
-[Source](https://www.nibzard.com/ampcode)
+[Author's session anecdote](https://www.nibzard.com/ampcode) - the four-parallel-subagent website refactor described above

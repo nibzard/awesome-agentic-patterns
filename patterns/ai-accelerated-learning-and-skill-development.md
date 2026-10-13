@@ -1,6 +1,6 @@
 ---
 title: AI-Accelerated Learning and Skill Development
-status: validated-in-production
+status: best-practice
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Lukas Möller (Cursor)", "Alex Albert (Anthropic)", "Jacob Jackson (Cursor)"]
 category: UX & Collaboration
@@ -9,7 +9,7 @@ tags: [developer-productivity, learning, skill-acquisition, iteration, feedback,
 summary: "Uses AI assistants as tutors that explain errors and concepts, offer alternatives, and fade support as the developer gains skill"
 signals: ["Junior developers need to build skills and code taste", "Developer is learning a new framework or domain"]
 anti_signals: ["Developer copies AI output without independent problem-solving", "Team cannot fade AI support as skills grow"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -31,6 +31,7 @@ Utilize AI agents as interactive learning tools that accelerate a developer's sk
 * **Skill Leveling Effect:** Less experienced developers benefit more from AI assistance, helping bridge gaps between junior and senior developers.
 * **Adaptive Scaffolding:** AI provides guidance at the edge of the learner's ability (Zone of Proximal Development), with support fading as competence grows.
 * **Deliberate Practice at Scale:** 24/7 availability enables goal-oriented, feedback-driven practice with infinite patience for repetition.
+* **Explanation-first caveat:** an Anthropic randomized study of 52 developers (January 2026) found AI assistance lowered comprehension scores except when developers used it to ask for explanations. Treat explanation-based tutoring, not code acceptance, as the supported learning mode.
 
 This creates an environment where developers, particularly those less experienced, can learn and refine their skills at an accelerated pace by having a powerful, responsive partner in the coding process.
 
@@ -54,5 +55,6 @@ This creates an environment where developers, particularly those less experience
 
 - "Teaching with AI: A Systematic Review" (Nature, 2025): Meta-analysis of 51 studies finding significant positive impact on learning outcomes, most effective in problem-based learning and skill-oriented courses.
 - Microsoft/Princeton/UPenn RCT Study (2025): 4,000+ developers; less experienced developers benefited more from AI assistance (skill leveling effect).
+- Anthropic, "How AI Assistance Impacts the Formation of Coding Skills" (randomized study of 52 developers, January 2026): [anthropic.com/research](https://www.anthropic.com/research) — comprehension gains appear only when the AI is used for explanations
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

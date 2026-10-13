@@ -21,7 +21,7 @@ id: progressive-autonomy-with-model-evolution
 summary: "Audits prompts and orchestration after each model upgrade and removes the scaffolding that evals show the new model no longer needs"
 signals: ["A newer, more capable model is in production", "System prompts hold instructions written for older model weaknesses", "Token cost or latency of scaffolding is noticeable"]
 anti_signals: ["No evals to detect quality loss after removal", "Instructions carry domain knowledge or safety constraints", "The new model is not yet proven stable in production"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -150,5 +150,5 @@ Write clean, tested code.
 * Cat Wu: "We build most things that we think would improve Claude Code's capabilities, even if that means we'll have to get rid of it in three months. If anything, we hope that we will get rid of it in three months."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * Rich Sutton, [The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) (2019)
-* Zhou et al., [Large Language Models Are Human-Level Prompt Engineers (APE)](https://arxiv.org/abs/2211.01910) (ICLR 2023)
-* Scrase et al., [Scratch Copilot: Supporting Youth Creative Coding](https://arxiv.org/abs/2505.03867v1) (IDC 2025)
+* Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — argues that smarter models require less prescriptive engineering, which is the core of this pattern
+* Related patterns: [Frontier-Focused Development](frontier-focused-development.md) targets state-of-the-art models and accepts periodic rework so scaffolding stays minimal, while this pattern trims existing scaffolding incrementally after each verified model upgrade.

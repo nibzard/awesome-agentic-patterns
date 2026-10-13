@@ -2,14 +2,14 @@
 title: Plan-Then-Execute Pattern
 status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Luca Beurer-Kellner et al. (2025)", "C. Parisien et al. (2024)"]
+based_on: ["Luca Beurer-Kellner et al. (2025)", "He et al. (2025)"]
 category: Orchestration & Control
 source: "https://arxiv.org/abs/2506.08837"
 tags: [planning, control-flow-integrity, prompt-injection]
 summary: "Has the LLM fix the full sequence of tool calls before it reads untrusted data, then runs that sequence so tool outputs change only parameters"
 signals: ["Tool outputs contain untrusted content that can carry prompt injections", "The set of actions is known up front but parameters vary", "Complex tasks benefit from a reviewed plan before execution"]
 anti_signals: ["The next action depends on what earlier tool results reveal", "Poisoned output content, such as a bad email body, is the main risk", "Simple task that a capable model can one-shot"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -25,7 +25,7 @@ Split reasoning into two phases:
 
 This separates strategic decisions from data-dependent execution. The planner commits to a bounded action graph up front, and the executor enforces that graph deterministically, which preserves flexibility on arguments while protecting control-flow integrity.
 
-**Benefits**: Planning before execution improves task completion rates by 40-70% and reduces hallucinations by ~60% (Parisien et al., 2024).
+**Benefits**: Fixing the action sequence up front keeps untrusted tool output out of control-flow decisions. He et al. (2025) study plan-then-execute daily-assistant agents empirically (N = 248) across tasks with different risk levels.
 
 ```pseudo
 plan = LLM.make_plan(prompt)      # frozen list of calls
@@ -61,18 +61,9 @@ The threshold of what requires planning changes with each model generation:
 
 This means simpler tasks that once required planning can now be one-shot with more capable models (e.g., Sonnet 4.5 vs. Opus 4.1).
 
-### LangChain Plan-and-Execute
+### LangGraph Plan-and-Execute
 
-LangChain implements this pattern with separate planner and executor agents:
-
-```python
-from langchain.experimental.plan_and_execute import PlanAndExecute
-
-agent = PlanAndExecute(
-    planner=planner,    # Generates step-by-step plan
-    executor=executor,  # Executes each step sequentially
-)
-```
+The archived `langchain.experimental.plan_and_execute` package has been superseded by LangGraph, which implements this pattern with separate planner and executor nodes over a shared state graph. See the [LangGraph plan-and-execute tutorial](https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-execute/).
 
 ## Trade-offs
 
@@ -82,7 +73,9 @@ agent = PlanAndExecute(
 ## References
 
 * Beurer-Kellner et al. (2025), §3.1 (2) Plan-Then-Execute.
-* Parisien et al. (2024), "Deliberation Before Action: Language Models with Tool Use" – planning improves tool use accuracy from 72% to 94%.
+* He et al. (2025), "Plan-Then-Execute: An Empirical Study of User Trust and Team Performance When Using LLM Agents As A Daily Assistant" – https://arxiv.org/abs/2502.01390
+* LangGraph plan-and-execute tutorial: https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-execute/
 * Boris Cherny (Anthropic): "Plan mode... you kind of have to understand the limits and where you get in the loop. Plan mode can 2-3x success rates pretty easily if you align on the plan first."
 * Boris Cherny: "The boundary changes with every model... newer models are more intelligent so the boundary of what you need plan mode for got pushed out."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* Related patterns: [Discrete Phase Separation](discrete-phase-separation.md) splits one task into separate research, planning, and implementation conversations with fresh context; this pattern freezes a single plan before untrusted tool output arrives.

@@ -68,7 +68,7 @@
       "No reliable way to confirm the abstraction matches the actual code",
       "Changes are small enough to review directly"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nReviewing AI-generated code line-by-line is time-intensive and cognitively demanding. Research shows developers prefer understanding *why* changes were made over *how* they were implemented—intent-level review is faster and more effective than syntax-level verification."
   },
   {
@@ -369,7 +369,7 @@
       "Complex business logic that needs deep domain expertise",
       "Highly regulated environment with strict compliance"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nStarting a new feature, module, or codebase often involves writing a significant amount of boilerplate or foundational code. This can be time-consuming and repetitive for developers."
   },
   {
@@ -479,7 +479,7 @@
   },
   {
     "title": "Agent-Friendly Workflow Design",
-    "status": "best-practice",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -507,7 +507,7 @@
       "Task needs exact prescribed steps with no agent choice",
       "Team cannot invest in explicit process design"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSimply providing an AI agent with a task is often not enough for optimal performance. If workflows are too rigid, or if humans micromanage the agent's technical decisions, the agent may struggle or produce suboptimal results. Agents perform best when given some degree of freedom and when the tasks are structured in a way that aligns with their strengths."
   },
   {
@@ -620,7 +620,7 @@
   },
   {
     "title": "AI-Accelerated Learning and Skill Development",
-    "status": "validated-in-production",
+    "status": "best-practice",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -652,7 +652,7 @@
       "Developer copies AI output without independent problem-solving",
       "Team cannot fade AI support as skills grow"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nDeveloping strong software engineering skills, including \"taste\" for clean and effective code, traditionally requires extensive experience, trial-and-error, and mentorship, which can be a slow process, especially for junior developers."
   },
   {
@@ -1153,7 +1153,7 @@
       "Agent runs fully unattended with no human watching",
       "Routine tasks where monitoring adds more load than it saves"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents can pursue misguided reasoning paths for extended periods before producing final outputs. By the time developers realize the approach is wrong, significant time and tokens have been wasted on a fundamentally flawed direction. Traditional \"fire and forget\" agent execution provides no opportunity for early course correction."
   },
   {
@@ -4563,7 +4563,7 @@
       "Simple decisions that need no debate",
       "Budget cannot cover 2x or more token cost"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSingle-agent decision making can suffer from:\n\n- **Confirmation bias**: Agent finds evidence supporting initial hypothesis\n- **Limited perspectives**: One context window misses alternative approaches\n- **Insufficient scrutiny**: No adversarial pressure to defend decisions\n- **Unexamined assumptions**: Agent doesn't challenge its own reasoning"
   },
   {
@@ -4573,7 +4573,7 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Sourcegraph Team"
+      "Quinn Slack and Thorsten Ball (Amp, 'Raising an Agent' S1E7)"
     ],
     "category": "Orchestration & Control",
     "source": "https://youtu.be/hAEmt-FMyHA?si=6iKcGnTavdQlQKUZ",
@@ -4595,7 +4595,7 @@
       "Tasks are routine and the worker model handles them alone",
       "Latency from model switching is not acceptable"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nRelying on a single AI model creates a trade-off between capability and cost. High-performance models are expensive for routine tasks, while cost-effective models may lack the reasoning power for complex problems."
   },
   {
@@ -4830,7 +4830,7 @@
       "Each tool result decides the next call",
       "Tools are slow or rate-limited"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents often execute tool calls sequentially even when they could run in parallel:\n\n- **Unnecessary latency**: Sequential calls add up when tool execution time dominates inference time\n- **Inefficient exploration**: Agent waits for one result before deciding the next action\n- **Poor tool utilization**: Multiple independent information needs handled one-by-one\n- **Suboptimal learned behavior**: Base models may not naturally parallelize without training signal\n\n**Example bottleneck:**\n\n```\nSequential (slow):\n1. search(\"Intel financial data\") → 2s\n2. read_file(\"2023_report.pdf\") → 1.5s\n3. search(\"return metrics\") → 2s\n4. read_file(\"returns_table.csv\") → 1.5s\n\nTotal: 7 seconds\n```\n\nCognition observed this with Devon: the baseline model would make 8-10 sequential tool calls during file planning, taking significant time even though many calls could have run in parallel."
   },
   {
@@ -4964,7 +4964,7 @@
     ],
     "based_on": [
       "Luca Beurer-Kellner et al. (2025)",
-      "C. Parisien et al. (2024)"
+      "He et al. (2025)"
     ],
     "category": "Orchestration & Control",
     "source": "https://arxiv.org/abs/2506.08837",
@@ -4986,17 +4986,17 @@
       "Poisoned output content, such as a bad email body, is the main risk",
       "Simple task that a capable model can one-shot"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen planning and execution are interleaved in one loop, untrusted tool outputs can influence which action is selected next. That makes the control flow itself attackable: a malicious intermediate result can redirect the agent into unsafe tools or unauthorized operations."
   },
   {
     "title": "Planner-Worker Separation for Long-Running Agents",
     "status": "emerging",
     "authors": [
-      "Cursor Team"
+      "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Cursor Engineering Team"
+      "Wilson Lin (Cursor)"
     ],
     "category": "Orchestration & Control",
     "source": "https://cursor.com/blog/scaling-agents",
@@ -5020,7 +5020,7 @@
       "No budget to run many concurrent agents",
       "No orchestration infrastructure for roles and task distribution"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nRunning multiple AI agents in parallel for complex, multi-week projects creates significant coordination challenges:\n\n- **Flat structures** lead to conflicts, duplicated work, and agents stepping on each other\n- **Dynamic coordination** through shared files with locking becomes a bottleneck - most agents spend time waiting rather than working\n- **Equal status** agents become risk-averse, avoiding difficult tasks and making only small, safe changes instead of tackling end-to-end implementation\n- **No agent takes ownership** of hard problems or overall project direction"
   },
   {
@@ -5206,7 +5206,7 @@
       "Instructions carry domain knowledge or safety constraints",
       "The new model is not yet proven stable in production"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgent scaffolding built for older models becomes unnecessary overhead as models improve:\n\n- **Prompt bloat**: System prompts accumulate instructions that newer models don't need\n- **Over-engineered flows**: Complex orchestration for tasks models can now handle directly\n- **Wasted tokens**: Paying for instructions the model already knows\n- **Slower execution**: Unnecessary steps add latency\n- **Maintenance burden**: More code to maintain for diminishing benefit\n\nModels improve faster than scaffolding is removed, creating technical debt."
   },
   {
@@ -5240,7 +5240,7 @@
       "Full automation value is needed immediately",
       "No metrics or monitoring to decide tier promotion"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nOrganizations deploy AI agents with overly ambitious capabilities from day one, leading to:\n\n- Unreliable outputs when agents tackle tasks beyond current model capabilities\n- Failed implementations that damage stakeholder confidence\n- Complex reasoning tasks producing inconsistent results\n- Wasted engineering effort building infrastructure for capabilities models can't yet deliver\n- Safety risks from autonomous execution of high-stakes operations\n\nThe gap between theoretical agent capabilities and practical reliability creates deployment failures."
   },
   {
@@ -5393,6 +5393,7 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
+      "nkkko (original Labruno creator)",
       "Labruno (GitHub)",
       "Daytona RLM Guide",
       "Recursive Language Models (arXiv 2512.24601)",
@@ -5423,7 +5424,7 @@
       "No objective checks exist and judge quality is weak",
       "Cost or latency budget cannot cover multiple attempts per subtask"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nRecursive delegation (parent agent → sub-agents → sub-sub-agents) decomposes big tasks, but has a failure mode:\n\n- A single weak sub-agent result can poison the parent's next steps (wrong assumption, missed file, bad patch)\n- Errors compound up the tree: \"one bad leaf\" can derail the whole rollout\n- Pure recursion underuses parallelism when a node is uncertain: you want multiple shots *right where the ambiguity is*\n\nMeanwhile, \"best-of-N\" parallel attempts help reliability, but without structure they waste compute by repeatedly solving the *same* problem instead of decomposing it. The pattern applies parallelism only where uncertainty exists—at the subtask level—while maintaining structured decomposition."
   },
   {
@@ -5880,7 +5881,7 @@
       "Safety-critical or regulated domain without human approval gates",
       "No guardrails to stop drift, prompt bloat, or jailbreaks"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nStatic system prompts become stale or overly brittle as an agent encounters new tasks and edge-cases. Manually editing them is slow and error-prone."
   },
   {
@@ -6208,7 +6209,7 @@
   },
   {
     "title": "Specification-Driven Agent Development",
-    "status": "proposed",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -6216,7 +6217,7 @@
       "Jory Pestorious (AI Engineer World's Fair 2025)"
     ],
     "category": "Orchestration & Control",
-    "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
+    "source": "https://jorypestorious.com/blog/ai-engineer-spec/",
     "tags": [
       "spec-first",
       "scaffolding",
@@ -6235,7 +6236,7 @@
       "Requirements are too coarse or unknown to specify",
       "Quick exploratory work where writing a spec costs more than it saves"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent."
   },
   {
@@ -6343,7 +6344,7 @@
       "Criteria may be impossible to meet, which causes endless loops",
       "No timeout or token budget can be set"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents complete their turn and return control to the user even when the task isn't truly done. Common scenarios:\n\n- Code compiles but tests fail\n- Changes made but quality checks haven't passed\n- Feature implemented but integration tests broken\n- Migrations run but verification steps not completed\n\nWithout intervention, the user must manually check and re-prompt the agent, creating friction."
   },
   {
@@ -6392,7 +6393,7 @@
       "Will Larson (lethain.com)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://www.nibzard.com/ampcode",
+    "source": "https://lethain.com/agents-subagents/",
     "tags": [
       "orchestration",
       "context",
@@ -6416,7 +6417,7 @@
       "Subtasks depend on each other and need tight coordination",
       "Token budget cannot cover several agents at once"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLarge multi-file tasks blow out the main agent's context window and reasoning budget. You need a way to delegate work to specialized agents with isolated contexts and tools."
   },
   {
@@ -6511,7 +6512,7 @@
     ],
     "slug": "swarm-migration-pattern",
     "id": "swarm-migration-pattern",
-    "summary": "Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations.",
+    "summary": "Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks for large-scale framework upgrades, lint rule rollouts, and API migrations.",
     "signals": [
       "Migration touches many files that can change independently",
       "Good test coverage can verify each chunk",
@@ -6522,7 +6523,7 @@
       "Files are tightly coupled and need coordinated changes",
       "Budget cannot cover many parallel agents"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLarge-scale code migrations are time-consuming when done sequentially:\n\n- **Framework upgrades** (e.g., testing library A → testing library B)\n- **Lint rule rollouts** across hundreds of files\n- **API migrations** when dependencies change\n- **Code modernization** (e.g., class components → hooks)\n- **Refactoring patterns** across the codebase\n\nHumans doing these manually is tedious; single agents doing them sequentially is slow."
   },
   {
@@ -6943,9 +6944,9 @@
     ],
     "anti_signals": [
       "Simple linear tasks",
-      "Tight latency or token budget (3-10x more tokens than chain-of-thought)"
+      "Tight latency or token budget (explicit trees cost substantially more tokens than chain-of-thought)"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLinear reasoning commits early to one path and can fail silently when intermediate assumptions are wrong. On complex planning or synthesis tasks, this causes premature convergence, weak recovery from mistakes, and missed alternatives that a broader search would discover."
   },
   {
@@ -7263,10 +7264,10 @@
       "John Xie (@johnxie)"
     ],
     "based_on": [
-      "Taskade AI Agents (example implementation)"
+      "Taskade AI Agents (example implementation; John Xie is Taskade's co-founder and CEO)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://taskade.com/agents",
+    "source": "https://doi.org/10.1145/6499.6503",
     "tags": [
       "multi-agent",
       "orchestration",
@@ -7290,7 +7291,7 @@
       "Team cannot accept coupling to one workspace platform",
       "Workflows need custom agent code the platform cannot run"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMany teams struggle to run agentic workflows because their agent tooling is separate from their day-to-day collaboration environment. The result is fragmented context, brittle integrations, and high setup overhead.\n\nCommon pain points include:\n\n- Agents are difficult to create and version for non-engineering users.\n- Context, memory, and knowledge sources are spread across ad hoc systems.\n- Multi-agent workflows require custom glue for routing, event triggers, and state transfer.\n- Integrating agents with operational tools (issue trackers, docs, chat, CRM) is expensive."
   },
   {

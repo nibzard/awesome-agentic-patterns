@@ -21,11 +21,11 @@ slug: swarm-migration-pattern
 id: swarm-migration-pattern
 summary: >-
   Main agent orchestrates 10+ parallel subagents working simultaneously on
-  independent migration chunks, achieving 10x+ speedup for large-scale framework
-  upgrades, lint rule rollouts, and API migrations.
+  independent migration chunks for large-scale framework upgrades, lint rule
+  rollouts, and API migrations.
 signals: ["Migration touches many files that can change independently", "Good test coverage can verify each chunk", "Clear, unambiguous migration rules exist"]
 anti_signals: ["Fewer than about 10 files to migrate", "Files are tightly coupled and need coordinated changes", "Budget cannot cover many parallel agents"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -114,10 +114,9 @@ for batch in batches:
 
 **Pros:**
 
-- **Massive parallelization**: 6-10x speedup vs. sequential migration (well-suited tasks)
+- **Massive parallelization**: Many chunks migrate concurrently instead of one at a time; no measured speedup figure is published for this pattern
 - **Easy verification**: Each subagent handles tractable chunk
 - **Fault isolation**: One subagent failing doesn't break others
-- **Cost-effective for scale**: 100x+ ROI despite 10x token cost increase
 - **Reproducible**: Same migration applied consistently across all files
 
 **Cons:**
@@ -140,13 +139,13 @@ for batch in batches:
 - **< 10 files**: Sequential execution is more efficient
 - **High coupling**: Files require coordinated changes
 - **Complex semantic changes**: Require holistic understanding
-- **High expected failure rate** (>30%): Better to iterate carefully
+- **High expected failure rate**: If chunks fail often, iterate carefully instead of fanning out
 - **Extremely constrained budget**: Token costs scale with parallelism
 
-**Optimization tips:**
+**Optimization tips (heuristics, not measured optima):**
 
-- **Batch size tuning**: Start with 10 files per agent; adjust 2-50 files based on complexity
-- **Optimal swarm size**: 10-20 agents for best ROI; diminishing returns beyond 20
+- **Batch size tuning**: Start with about 10 files per agent; adjust based on complexity
+- **Swarm size**: 10-20 agents is a common starting range; add only when verification keeps up
 - **Staged rollout**: Migrate 10% first, verify, then do the rest
 - **Failure handling**: Have main agent retry failed batches with refined instructions
 - **Resource limits**: Cap parallel agents to avoid overwhelming infrastructure
@@ -157,3 +156,7 @@ for batch in batches:
 * Boris Cherny: "Lint rules... there's some kind of lint rule you're rolling out, there's no auto fixer because static analysis can't really—it's too simplistic for it. Framework migrations... we just migrated from one testing framework to a different one. That's a pretty common one where it's super easy to verify the output."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * [Cursor Blog: Scaling Agents](https://cursor.com/blog/scaling-agents) — Production use with hundreds of concurrent agents; case studies include Solid→React migration (+266K/-193K edits)
+* [Environment-in-the-Loop: Rethinking Code Migration with LLM-based Agents](https://arxiv.org/html/2602.09944v1) (2026) — academic treatment of LLM migration agents
+* [AI codebase migration agents at scale](https://tianpan.co/blog/2026/04/17/ai-codebase-migration-agents-scale) (2026) — practitioner report on running migration agents across a large codebase
+* [LLM-powered code migration at scale](https://zylos.ai/research/2026-04-18-llm-powered-code-migration-at-scale) (2026) — second practitioner report published the same week
+* Related patterns: this is the large-scale specialization of [Sub-Agent Spawning](sub-agent-spawning.md), which covers the general delegation mechanics; [Adaptive Sandbox Fan-Out Controller](adaptive-sandbox-fanout-controller.md) tunes sandbox batch size from early signals.

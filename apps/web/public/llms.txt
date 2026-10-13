@@ -892,7 +892,7 @@ URL: https://agentic-patterns.com/patterns/subject-hygiene
 Markdown: https://agentic-patterns.com/patterns/subject-hygiene.md
 
 ### swarm-migration-pattern
-Swarm Migration Pattern: Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations.
+Swarm Migration Pattern: Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks for large-scale framework upgrades, lint rule rollouts, and API migrations.
 URL: https://agentic-patterns.com/patterns/swarm-migration-pattern
 Markdown: https://agentic-patterns.com/patterns/swarm-migration-pattern.md
 

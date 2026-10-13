@@ -142,7 +142,9 @@ Provide abstracted representations of code changes for human review:
 
 **Critical requirement:** Abstracted representations must have strong guarantees that they accurately map to actual code changes. Formal verification of this mapping remains an open research challenge; current implementations rely on confidence scoring and drill-down capability for verification.
 
-**Production examples:** GitHub Copilot Workspace (multi-stage workflows), Cursor AI (intent-based editing), Claude Code (plan-then-execute verification), PR summarization tools (Augment: 59% F-Score, Cursor Bugbot: 49%, Greptile: 45%, CodeRabbit: 39%, Claude Code: 31%, GitHub Copilot: 25%).
+**Scope:** this pattern is strictly about verified-abstraction and semantic-diff review. For the broader practice of AI tools flagging issues and summarizing change intent, see [AI-Assisted Code Review / Verification](ai-assisted-code-review-verification.md); that pattern summarizes changes for reviewers, while this one hinges on a guaranteed mapping between the abstraction shown and the real code.
+
+**Production examples:** GitHub Copilot Workspace (multi-stage workflows), Cursor AI (intent-based editing), Claude Code (plan-then-execute verification), PR review tools as scored by Augment's vendor benchmark for bug detection in AI review tools (Augment 59%, Cursor Bugbot 49%, Greptile 45%, CodeRabbit 39%, Claude Code 31%, GitHub Copilot 25%).
 
 ## Example
 
@@ -151,18 +153,19 @@ Instead of reviewing 50 lines of Python implementing a new sorting algorithm, re
 
 With drill-down capability to verify the underlying Python code matches the abstraction.
 
-**Enterprise impact:** Tekion achieved 60% faster merge times with intent-based summaries; Microsoft reviews 600K+ PRs/month using AI-assisted abstraction (13.6% fewer errors); Tencent reported 68% decrease in production incidents.
+**Enterprise signal:** Microsoft reports reviewing 600K+ PRs per month with AI assistance (Microsoft DevBlogs, July 2025).
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
+- Use this when reviewers must approve large AI-generated changes they cannot read line by line.
+- Pair every abstraction with drill-down to the real code so reviewers can sample-verify the mapping.
+- Treat the mapping guarantee as the central risk: confirm the abstraction matches the code before trusting the summary.
+- Prefer semantic or AST-aware diffs over textual diffs when reviewing behavior changes.
 
 ## Trade-offs
 
-* **Pros:** Creates clearer human-agent handoffs and better operational trust.
-* **Cons:** Needs explicit process design and coordination across teams.
+* **Pros:** Cuts review time for large mechanical changes; surfaces intent that textual diffs bury; fits the existing PR review flow.
+* **Cons:** An unfaithful abstraction hides defects, which is the mapping-guarantee problem; pseudocode can omit error handling and edge cases; reviewers may over-trust confident summaries.
 
 ## References
 
@@ -183,6 +186,12 @@ With drill-down capability to verify the underlying Python code matches the abst
 - Zhang et al. (arXiv 2026): EyeLayer—human attention patterns improve code summarization quality
 
 - Schäfer et al. (ICSE 2020): Semantic Differencing for Software Refactoring—behavioral vs. textual changes
+
+- [CodeRabbit: Introducing Semantic Diff](https://www.coderabbit.ai/blog/introducing-semantic-diff) — production semantic-diff tooling
+
+- [SemanticDiff](https://semanticdiff.com/) — language-aware diff tool that hides non-functional changes
+
+- [Evaluating AST-aware semantic diffing for code review at scale](https://rammehta1899.github.io/blog/2026/09/25/evaluating-ast-aware-semantic-diffing-for-code-review-at-scale/) (2026) — practitioner evaluation of the mapping problem at scale
 
 ---
 
@@ -1244,7 +1253,7 @@ This allows developers to:
 **Scaffolding Modes:**
 
 -   **Text-to-code:** Natural language descriptions generate code structure
--   **Design-to-code:** Figma, PSD, or design sketches convert to layouts (tools achieve ~92% layout accuracy)
+-   **Design-to-code:** Figma, PSD, or design sketches convert to layouts (for example [Sketch2Code](https://github.com/SALT-NLP/Sketch2Code))
 -   **Repository-aware:** Agents read existing codebases to scaffold compatible structures
 
 **Critical for Future AI Agent Work**: The scaffolded structure becomes crucial context for subsequent AI agent interactions. Well-structured scaffolding with clear file organization, naming conventions, and architectural patterns helps future agents understand the codebase layout and make more informed decisions when implementing features or making modifications.
@@ -1280,7 +1289,7 @@ flowchart TD
 ## Trade-offs
 
 * **Pros:** Faster time to first code, consistent project structure, reduced boilerplate.
-* **Cons:** Code reliability issues (36% of developers report problems), requires human review, struggles with legacy integration. Scaffolding is essential—without it, configurations lead to "massive overengineering" (SANER 2026).
+* **Cons:** Code reliability issues (46% of developers distrust AI answer accuracy and 66% report frustration with almost-right answers, per the [Stack Overflow 2025 survey](https://survey.stackoverflow.co/2025)), requires human review, struggles with legacy integration. Scaffolding matters at system level too: the app.build paper argues that without environment scaffolding, teams risk "massive overengineering" of AI models while ignoring the real bottleneck.
 
 ## References
 
@@ -1292,7 +1301,7 @@ flowchart TD
 
 - "Scratch Copilot: Supporting Youth Creative Coding with AI" (2025). arXiv:2505.03867v1 - Implements supportive scaffolding mechanisms for real-time ideation, code generation, and debugging.
 
-- "App.build: Scaffolding Environment-Aware Multi-Agent Systems" (2026). SANER 2026 Industrial Track, arXiv:2509.03310v2 - Ablation studies show configurations without scaffolding lead to "massive overengineering."
+- "app.build: A Production Framework for Scaling Agentic Prompt-to-App Generation with Environment Scaffolding" (arXiv preprint 2509.03310) - argues that without environment scaffolding, teams risk "massive overengineering" of AI models while ignoring the real bottleneck.
 
 ---
 
@@ -1528,7 +1537,7 @@ sequenceDiagram
 
 ## Agent-Friendly Workflow Design
 
-**Status:** best-practice
+**Status:** emerging
 **Category:** UX & Collaboration
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.nibzard.com/silent-revolution
@@ -1587,12 +1596,12 @@ flowchart TD
 
 ## References
 
-- Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
+- Derived from insights in Amjad Masad's talk "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
 
-[Source](https://www.nibzard.com/silent-revolution)
+[Secondary source: the pattern author's summary of the talk](https://www.nibzard.com/silent-revolution). Masad is on X as [@amasad](https://x.com/amasad); the talk itself has no stable public URL.
 
-- [OpenAI Swarm](https://github.com/openai/swarm) - Lightweight multi-agent orchestration with handoff patterns
-- [Agent Engineering: Deploy to Observe](https://www.anthropic.com/index/agent-engineering) - Production deployment patterns for reliable agent systems
+- [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) - guidance on structuring agent workflows
+- [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) - successor to the educational OpenAI Swarm sample, with handoff patterns
 
 ---
 
@@ -1869,7 +1878,7 @@ Models should emulate human search behavior:
 
 ## AI-Accelerated Learning and Skill Development
 
-**Status:** validated-in-production
+**Status:** best-practice
 **Category:** UX & Collaboration
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.youtube.com/watch?v=BGgsoIgbT_Y
@@ -1893,6 +1902,7 @@ Utilize AI agents as interactive learning tools that accelerate a developer's sk
 * **Skill Leveling Effect:** Less experienced developers benefit more from AI assistance, helping bridge gaps between junior and senior developers.
 * **Adaptive Scaffolding:** AI provides guidance at the edge of the learner's ability (Zone of Proximal Development), with support fading as competence grows.
 * **Deliberate Practice at Scale:** 24/7 availability enables goal-oriented, feedback-driven practice with infinite patience for repetition.
+* **Explanation-first caveat:** an Anthropic randomized study of 52 developers (January 2026) found AI assistance lowered comprehension scores except when developers used it to ask for explanations. Treat explanation-based tutoring, not code acceptance, as the supported learning mode.
 
 This creates an environment where developers, particularly those less experienced, can learn and refine their skills at an accelerated pace by having a powerful, responsive partner in the coding process.
 
@@ -1916,6 +1926,7 @@ This creates an environment where developers, particularly those less experience
 
 - "Teaching with AI: A Systematic Review" (Nature, 2025): Meta-analysis of 51 studies finding significant positive impact on learning outcomes, most effective in problem-based learning and skill-oriented courses.
 - Microsoft/Princeton/UPenn RCT Study (2025): 4,000+ developers; less experienced developers benefited more from AI assistance (skill leveling effect).
+- Anthropic, "How AI Assistance Impacts the Formation of Coding Skills" (randomized study of 52 developers, January 2026): [anthropic.com/research](https://www.anthropic.com/research) — comprehension gains appear only when the AI is used for explanations
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
 
@@ -3363,6 +3374,10 @@ sequenceDiagram
 - Ability to redirect with additional context
 - Resume capability after corrections
 
+**Shipped natively by harnesses:**
+
+Agent harnesses now build in mid-run steering, which absorbs part of the advice above: Claude Code streams reasoning with escape-to-interrupt and message-based redirection, and OpenAI Codex supports steering a running session. Custom framework work is mainly needed when you want programmatic triggers.
+
 **Best practices:**
 
 1. **Monitor first tool calls closely** - First actions reveal understanding
@@ -3388,13 +3403,15 @@ sequenceDiagram
 - May create dependency on human oversight for routine tasks
 - Adds cognitive load to monitor agent reasoning
 - Risk of over-correcting and preventing valid creative approaches
-- **Low faithfulness:** Current models' CoT frequently doesn't reflect true reasoning (Claude 3.7: ~25%, DeepSeek R1: ~39%)
+- **Low faithfulness:** Current models' CoT frequently doesn't reflect true reasoning (Claude 3.7: ~25%, DeepSeek R1: ~39%, per Chen et al., [Reasoning Models Don't Always Say What They Think](https://arxiv.org/abs/2505.05410))
 
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Tanner Jones (Vulcan) advises: "Have your finger on the trigger to escape and interrupt any bad behavior."
 - [Effectively Controlling Reasoning Models through Thinking Intervention](https://arxiv.org/pdf/2503.24370) (Princeton et al., March 2025) - "Thinking intervention" for strategically inserting/modifying thinking tokens during generation
 - [Dynamic Early Exit in Reasoning Models](https://arxiv.org/abs/2504.15895) (arXiv:2504.15895, April 2025) - Confidence-based early stopping; ~75% of samples contain early exit opportunities
+- [OpenAI on chain-of-thought monitoring](https://openai.com/chain-of-thought-monitoring) (2025) - the major CoT-monitoring reference, including the caveat that monitoring pressure can push models to obfuscate their reasoning
+- [Reasoning Models Don't Always Say What They Think](https://arxiv.org/abs/2505.05410) (Chen et al., 2025) - measured CoT faithfulness rates behind the percentages above
 - [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/) - Standard attributes for AI agent tracing
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Verbose Reasoning Transparency](verbose-reasoning-transparency.md)
 
@@ -13848,6 +13865,7 @@ Early Reddit thread showed subagents as: Frontend dev, Backend dev, Designer, Te
 
 - **2x+ token cost**: Multiple agents processing same information
 - **Slower execution**: Debate takes time compared to single decision
+- **Mixed empirical support**: Smit et al. find that debate does not consistently beat cheaper self-consistency baselines across tasks and models ([Should we be going MAD?](https://arxiv.org/abs/2311.17371))
 - **May produce conflict**: Agents might deadlock without resolution mechanism
 - **Requires synthesis**: Need method to reconcile opposing views
 - **Over-engineering for simple tasks**: Not every decision needs debate
@@ -13859,11 +13877,14 @@ Early Reddit thread showed subagents as: Frontend dev, Backend dev, Designer, Te
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 
 **Academic foundations:**
-* Dung, P. M. (1995). "On the Acceptability of Arguments and its Fundamental Role in Nonmonotonic Reasoning." *Artificial Intelligence*, 77(2), 321-357. — Established abstract argumentation frameworks (Dung's Framework)
+* Du et al. (2023), "Improving Factuality and Reasoning in Language Models through Multiagent Debate" — https://arxiv.org/abs/2305.19118
+* Motger et al. (2026), "Multi-Agent Debate Strategies: Survey, Taxonomy, and Challenges" — https://arxiv.org/abs/2607.26212
+* Smit et al., "Should we be going MAD? A Look at Multi-Agent Debate Strategies for LLMs" — https://arxiv.org/abs/2311.17371
 
 **Industry implementations:**
 * Microsoft AutoGen — Multi-agent conversations with critic/reviewer agents
-* Anthropic Constitutional AI — Self-critique against constitutional principles (RLAIF)
+
+* Related patterns: [Iterative Multi-Agent Brainstorming](iterative-multi-agent-brainstorming.md) spawns parallel role agents to generate divergent options, while this pattern pits two agents against each other adversarially; [Cross-Cycle Consensus Relay](cross-cycle-consensus-relay.md) coordinates sequential cycles through a shared relay document rather than resolving a single adversarial exchange.
 
 ---
 
@@ -13882,8 +13903,8 @@ Relying on a single AI model creates a trade-off between capability and cost. Hi
 
 Implement a two-tier system with specialized roles:
 
-- **The Worker (Claude Sonnet 4):** Fast, capable, and cost-effective agent handling bulk tool use and code generation
-- **The Oracle (OpenAI o3 / Gemini 2.5 Pro):** Powerful, expensive model reserved for high-level reasoning, architectural planning, and debugging complex issues
+- **The Worker:** A fast, capable, and cost-effective model that handles bulk tool use and code generation
+- **The Oracle:** A powerful, expensive model reserved for high-level reasoning, architectural planning, and debugging complex issues (Amp's implementation, as described in 2025 coverage, consulted OpenAI o3)
 
 The Worker can explicitly request Oracle consultation when stuck or needing better strategy. The Oracle reviews the Worker's approach and suggests course corrections without polluting the main agent's context.
 
@@ -13902,12 +13923,21 @@ graph TD
 ## Evidence
 
 - **Evidence Grade:** `emerging`
-- **Most Valuable Findings:** Validated in production at Sourcegraph (~90% cost reduction vs. all-frontier); academic foundation from model cascading research (FrugalGPT: up to 98% cost reduction with quality parity)
-- **Unverified:** Optimal Oracle invocation thresholds remain application-specific
+- **Most Valuable Findings:** Used in production by Amp, whose oracle subagent combines multiple LLMs (S1E7 of the "Raising an Agent" podcast); academic foundation from model cascading research (FrugalGPT: up to 98% cost reduction with quality parity)
+- **Unverified:** Amp has not published a cost-reduction figure for the oracle/worker split; optimal Oracle invocation thresholds remain application-specific
 
 ## How to use it
 
-Development environments, complex coding tasks, architectural decisions, debugging sessions where initial approaches fail. Also known in literature as model cascading, weak-strong model routing, or hierarchical model systems.
+Reach for this split when most requests are routine but some need frontier reasoning:
+
+1. Route all work to the worker model first.
+2. Give the worker an explicit escape hatch, such as a consult tool that forwards the stuck state to the oracle.
+3. Let the oracle review the approach and return course corrections, without joining the main context.
+4. Log oracle hit rates and tune the escalation trigger.
+
+Typical settings: development environments, complex coding tasks, architectural decisions, and debugging sessions where initial approaches fail. In the literature this idea appears as model cascading, weak-strong model routing, or hierarchical model systems.
+
+* Related patterns: [Budget-Aware Model Routing with Hard Cost Caps](budget-aware-model-routing-with-hard-cost-caps.md) routes every request by cost and quality gates rather than escalating on being stuck; [Multi-Model Orchestration for Complex Edits](multi-model-orchestration-for-complex-edits.md) assigns different models to fixed phases of one edit pipeline; [Failover-Aware Model Fallback](failover-aware-model-fallback.md) switches models only after a failure, not on demand.
 
 ## Trade-offs
 
@@ -13916,7 +13946,9 @@ Development environments, complex coding tasks, architectural decisions, debuggi
 
 ## References
 
-* Sourcegraph Team presentation on multi-model AI systems
+* Amp, "Raising an Agent," episode 7 (oracle subagent that combines multiple LLMs): https://ampcode.com/podcast
+* Isaac Flath, "Inside Amp Code" (documents the oracle using OpenAI o3): https://isaacflath.com/writing/inside-amp-code-how-sourcegraph-is-building-ai-powered-development
+* Sourcegraph on Amp becoming an independent company: https://sourcegraph.com/blog/why-sourcegraph-and-amp-are-becoming-independent-companies
 * FrugalGPT (Stanford, 2023): https://arxiv.org/abs/2305.05176
 * RouteLLM (ICLR 2024): https://arxiv.org/abs/2406.18665
 * LiteLLM Router: https://github.com/BerriAI/litellm
@@ -14413,7 +14445,7 @@ class ParallelToolExecutor:
 
 **Training Setup:**
 
-No special configuration needed - parallelization emerges naturally:
+No special configuration needed - parallelization emerges naturally. Illustrative setup (the Cognition case study fine-tuned GPT-5-family models):
 
 ```python
 # Standard Agent RFT setup
@@ -14580,8 +14612,7 @@ Total: 3-4 rounds (50% reduction in back-and-forth)
 **Additional Validation: Ambience Healthcare**
 
 - **Task**: Medical coding with ICD-10 code lookups
-- **Result**: 18% latency reduction after Agent RFT
-- **Pattern**: Parallel execution of independent code lookups reduced sequential rounds
+- **Result**: Average response time cut by 18% after Agent RFT. The video credits this drop to fine-tuning overall and does not attribute it to parallel code lookups specifically.
 
 ## When Parallelization Helps Most
 
@@ -14678,8 +14709,8 @@ graph TD
 ## References
 
 - [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
-- [Parallel Tool Execution Pattern](./parallel-tool-execution.md)
-- Related patterns: Agent Reinforcement Fine-Tuning, Tool Use Incentivization via Reward Shaping
+- W&D: [Scaling Parallel Tool Calling for Efficient Deep Research Agents](https://arxiv.org/abs/2602.07359) (2026) - scales agent "width" through parallel tool calling instead of multi-agent orchestration
+- Related patterns: [Parallel Tool Execution](parallel-tool-execution.md) batches already-issued tool calls in an orchestrator, while this pattern trains the model itself to issue independent calls in one round; see also Agent Reinforcement Fine-Tuning and Tool Use Incentivization via Reward Shaping
 
 ### Academic Foundations
 
@@ -15018,7 +15049,7 @@ Split reasoning into two phases:
 
 This separates strategic decisions from data-dependent execution. The planner commits to a bounded action graph up front, and the executor enforces that graph deterministically, which preserves flexibility on arguments while protecting control-flow integrity.
 
-**Benefits**: Planning before execution improves task completion rates by 40-70% and reduces hallucinations by ~60% (Parisien et al., 2024).
+**Benefits**: Fixing the action sequence up front keeps untrusted tool output out of control-flow decisions. He et al. (2025) study plan-then-execute daily-assistant agents empirically (N = 248) across tasks with different risk levels.
 
 ```pseudo
 plan = LLM.make_plan(prompt)      # frozen list of calls
@@ -15054,18 +15085,9 @@ The threshold of what requires planning changes with each model generation:
 
 This means simpler tasks that once required planning can now be one-shot with more capable models (e.g., Sonnet 4.5 vs. Opus 4.1).
 
-### LangChain Plan-and-Execute
+### LangGraph Plan-and-Execute
 
-LangChain implements this pattern with separate planner and executor agents:
-
-```python
-from langchain.experimental.plan_and_execute import PlanAndExecute
-
-agent = PlanAndExecute(
-    planner=planner,    # Generates step-by-step plan
-    executor=executor,  # Executes each step sequentially
-)
-```
+The archived `langchain.experimental.plan_and_execute` package has been superseded by LangGraph, which implements this pattern with separate planner and executor nodes over a shared state graph. See the [LangGraph plan-and-execute tutorial](https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-execute/).
 
 ## Trade-offs
 
@@ -15075,10 +15097,12 @@ agent = PlanAndExecute(
 ## References
 
 * Beurer-Kellner et al. (2025), §3.1 (2) Plan-Then-Execute.
-* Parisien et al. (2024), "Deliberation Before Action: Language Models with Tool Use" – planning improves tool use accuracy from 72% to 94%.
+* He et al. (2025), "Plan-Then-Execute: An Empirical Study of User Trust and Team Performance When Using LLM Agents As A Daily Assistant" – https://arxiv.org/abs/2502.01390
+* LangGraph plan-and-execute tutorial: https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/plan-and-execute/
 * Boris Cherny (Anthropic): "Plan mode... you kind of have to understand the limits and where you get in the loop. Plan mode can 2-3x success rates pretty easily if you align on the plan first."
 * Boris Cherny: "The boundary changes with every model... newer models are more intelligent so the boundary of what you need plan mode for got pushed out."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* Related patterns: [Discrete Phase Separation](discrete-phase-separation.md) splits one task into separate research, planning, and implementation conversations with fresh context; this pattern freezes a single plan before untrusted tool output arrives.
 
 ---
 
@@ -15086,7 +15110,7 @@ agent = PlanAndExecute(
 
 **Status:** emerging
 **Category:** Orchestration & Control
-**Authors:** Cursor Team
+**Authors:** Nikola Balic (@nibzard)
 **Source:** https://cursor.com/blog/scaling-agents
 
 ## Problem
@@ -15110,8 +15134,9 @@ This creates an iterative cycle where each iteration starts fresh, combating dri
 
 ## Evidence
 
-- **Evidence Grade:** `high` (production-validated at scale)
-- **Validated Findings:** Cursor demonstrated hundreds of concurrent agents running for weeks on massive codebases (1M+ lines of code)
+- **Evidence Grade:** `medium` (single vendor research blog; not independently verified)
+- **Reported Findings:** Cursor reports hundreds of concurrent agents running for weeks on massive codebases (1M+ lines of code)
+- **Disputed:** Community discussion questions whether the flagship browser repo compiles as published and whether its reported line counts are inflated ([Hacker News thread](https://news.ycombinator.com/item?id=46769965))
 - **Academic Foundation:** Decades of research in hierarchical RL (Feudal Networks, 2017; Options Framework, 1999) provide theoretical backing for planning-execution separation
 - **Multi-Source Validation:** Complementary implementations by Anthropic (initializer-maintainer), AMP (factory-over-assistant), and GitHub Agentic Workflows confirm pattern utility
 
@@ -15202,10 +15227,12 @@ graph TD
 ## References
 
 * [Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Cursor blog post on running hundreds of concurrent agents for weeks at a time
-* [Browser source code on GitHub](https://github.com/getcursor/browser) - 1M+ lines of agent-generated code
+* [fastrender (the browser experiment repo)](https://github.com/wilsonzlin/fastrender) - described as research into collaborative parallel AI coding agents; line counts are disputed
+* [Hacker News discussion](https://news.ycombinator.com/item?id=46769965) - independent reports questioning the repo's build state and line counts
 * [Feudal Networks (FuN)](https://arxiv.org/abs/1706.06121) - ICML 2017 paper introducing manager-worker separation in hierarchical RL (Vezhnevets et al.)
 * [The Options Framework](https://doi.org/10.1016/S0004-3702(99)00052-1) - Seminal work on temporal abstraction creating planning-execution hierarchy (Sutton et al., 1999)
 * [HIRO: Hierarchical RL with Off-Policy Correction](https://arxiv.org/abs/2005.08996) - ICML 2020 paper on high-level planners and low-level workers (Lee et al.)
+* Related patterns: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) splits one long-running agent into an initializer and a maintainer rather than a planner-worker-judge hierarchy; [Factory over Assistant](factory-over-assistant.md) runs parallel autonomous agents against automated feedback loops instead of explicit planner and judge roles.
 
 ---
 
@@ -15787,8 +15814,8 @@ Write clean, tested code.
 * Cat Wu: "We build most things that we think would improve Claude Code's capabilities, even if that means we'll have to get rid of it in three months. If anything, we hope that we will get rid of it in three months."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * Rich Sutton, [The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) (2019)
-* Zhou et al., [Large Language Models Are Human-Level Prompt Engineers (APE)](https://arxiv.org/abs/2211.01910) (ICLR 2023)
-* Scrase et al., [Scratch Copilot: Supporting Youth Creative Coding](https://arxiv.org/abs/2505.03867v1) (IDC 2025)
+* Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — argues that smarter models require less prescriptive engineering, which is the core of this pattern
+* Related patterns: [Frontier-Focused Development](frontier-focused-development.md) targets state-of-the-art models and accepts periodic rework so scaffolding stays minimal, while this pattern trims existing scaffolding incrementally after each verified model upgrade.
 
 ---
 
@@ -15820,7 +15847,7 @@ Design agent systems to start with low-complexity, high-reliability tasks and pr
 **Grounded in learning science:**
 
 - Draws from curriculum learning theory and scaffolding research
-- Optimal learning occurs at 70-90% success rate (Zone of Proximal Development)
+- Wilson et al. (2019) measure the optimal training signal at roughly 85% success (the "Eighty Five Percent Rule"); Vygotsky's Zone of Proximal Development contributes the related start-within-reach idea, not a percentage
 - Working memory limits require gradual complexity increase
 
 **Start with proven sweet spots:**
@@ -15864,6 +15891,8 @@ Tier 3 (Future unlock):
 - Human review gates before promoting to higher tiers
 - A/B testing new capabilities against baselines
 - Gradual rollout with monitoring
+
+**Scope note:** the Vercel source documents the start-simple principle; the capability tiers and promotion gates in this pattern are this catalogue's extrapolation, not Vercel's framework.
 
 **Example workflow evolution:**
 
@@ -15935,7 +15964,7 @@ class TaskComplexity:
     }
 ```
 
-**2. Define promotion criteria:**
+**2. Define promotion criteria (illustrative values, not recommended defaults; tune per domain):**
 
 ```yaml
 capability_gates:
@@ -15944,7 +15973,7 @@ capability_gates:
     - human_approval_rate: 0.90
     - volume_processed: 1000
     - time_in_production: 30_days
-    - success_rate_target: 0.70-0.90  # ZPD optimal zone
+    - success_rate_target: 0.70-0.90  # illustrative
 
   tier2_to_tier3:
     - accuracy_threshold: 0.98
@@ -16026,9 +16055,11 @@ class AgentCapabilities {
 - [Anthropic: Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - Task complexity and model capability matching
 - [OpenAI: GPT Best Practices](https://platform.openai.com/docs/guides/prompt-engineering) - Matching task complexity to model strengths
 - Bengio et al. ["Curriculum Learning"](https://www.icml.cc/2009/papers/54.pdf) (ICML 2009) - Easy-to-hard training improves generalization
-- Vygotsky, L. S. ["Mind in Society"](https://books.google.com/books?id=c3lAAAAAIAAJ) (1978) - Zone of Proximal Development: optimal learning at 70-90% success rate
+- Vygotsky, L. S. ["Mind in Society"](https://books.google.com/books?id=c3lAAAAAIAAJ) (1978) - Zone of Proximal Development: learning works best just beyond current independent ability
+- Wilson et al. ["The Eighty Five Percent Rule for optimal learning"](https://www.nature.com/articles/s41467-019-12552-4) (Nature Communications, 2019) - quantifies the optimal training error rate at about 15%
+- Dataiku, [Human-in-the-loop AI agents: governance design patterns](https://www.dataiku.com/blog/human-in-the-loop-ai-agents) (2026) - enterprise agent deployments as contained pilots with human review gates
 - Wood, Bruner, Ross ["The role of tutoring in problem solving"](https://doi.org/10.1111/j.1469-7610.1976.tb00381.x) (1976) - Scaffolding theory: temporary support that fades with competence
-- Related patterns: [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md), [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md)
+- Related patterns: [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md) removes scaffolding as models improve, while this pattern expands task scope as reliability is proven; see also [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md) and [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md)
 
 ---
 
@@ -16565,6 +16596,8 @@ Meanwhile, "best-of-N" parallel attempts help reliability, but without structure
 
 At *each node* in a recursive agent tree, run **best-of-N** for the current subtask before expanding further. This combines the structured decomposition of recursive delegation with the reliability of self-consistency sampling:
 
+**Provenance note:** the per-node best-of-N tree is a synthesis of self-consistency sampling and RLM-style recursion, not a documented implementation. The linked Labruno repo implements only single-level best-of-N with a judge (no recursion), and the Recursive Language Models paper targets long-context processing rather than per-node selection.
+
 1. **Decompose:** Parent turns task into sub-tasks (like normal recursive delegation)
 2. **Parallel candidates per subtask:** For each subtask, spawn **K candidate workers** in isolated sandboxes (K=2-5 typical)
 3. **Score candidates:** Use a judge that combines:
@@ -16631,11 +16664,11 @@ Practical defaults:
 ## References
 
 * [Self-Consistency (Wang et al. 2022): Foundation for best-of-N sampling via majority voting](https://arxiv.org/abs/2203.11171)
-* [Recursive Language Models (arXiv 2512.24601, 2025): Recursion as inference-time scaling](https://arxiv.org/abs/2512.24601)
+* [Recursive Language Models (arXiv 2512.24601, 2025): Recursive decomposition for long-context processing](https://arxiv.org/abs/2512.24601)
 * [Tree-of-Thoughts (Yao et al. 2023): Tree-based reasoning with evaluation mechanisms](https://arxiv.org/abs/2305.10601)
-* [Labruno (GitHub): Parallel sandboxes + LLM judge selects best implementation](https://github.com/nibzard/labruno-agent)
+* [Labruno (GitHub): Parallel sandboxes + LLM judge selects best implementation; single-level best-of-N only, README credits the original creator nkkko](https://github.com/nibzard/labruno-agent)
 * [Daytona RLM Guide: Recursive delegation with sandboxed execution](https://www.daytona.io/docs/en/recursive-language-models/)
-* Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)
+* Related patterns: [Adaptive Sandbox Fan-Out Controller](adaptive-sandbox-fanout-controller.md) tunes the size of one parallel sandbox batch from early signals, while this pattern fixes K candidates per node inside a recursive tree; see also [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), and [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)
 
 ---
 
@@ -18228,7 +18261,7 @@ if passes_guardrails(delta):
 ## Evidence
 
 - **Evidence Grade:** `high` (academic), `low` (direct production implementation)
-- **Key Findings:** Strong academic foundation from Reflexion, APE, Self-Refine, DSPy, and Constitutional AI. Direct autonomous implementations are rare in production due to safety concerns (drift, jailbreak risk). Industry prefers hybrid approaches with guardrails and human oversight.
+- **Key Findings:** Strong academic foundation from Reflexion, APE, Self-Refine, DSPy, and Constitutional AI. The 2025 automated-prompt-optimization line (GEPA, DSPy optimizers) productionizes prompt evolution at compile time instead of at runtime. No published 2025-2026 production example of a fully autonomous, runtime self-rewriting prompt loop was found; industry practice favors hybrid approaches with guardrails and human oversight.
 - **Best Practice:** Pair with canary rollouts, multi-layer guardrails, and version control integration.
 
 ## How to use it
@@ -18251,6 +18284,7 @@ if passes_guardrails(delta):
 * Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning*. arXiv:2303.11366 (2023)
 * Madaan et al., *Self-Refine: Large Language Models Can Self-Correct*. arXiv:2303.05125 (2023)
 * Khattab et al., *DSPy: Declarative Self-Improving Language Programs*. ([github.com/stanfordnlp/dspy](https://github.com/stanfordnlp/dspy))
+* GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning (2025). [arXiv:2507.19457](https://arxiv.org/abs/2507.19457) / [gepa-ai/gepa](https://github.com/gepa-ai/gepa) — evolutionary prompt and agent optimization, active through 2026
 
 ---
 
@@ -19624,10 +19658,10 @@ This creates a continuous feedback loop ensuring specification and implementatio
 
 ## Specification-Driven Agent Development
 
-**Status:** proposed
+**Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** http://jorypestorious.com/blog/ai-engineer-spec/
+**Source:** https://jorypestorious.com/blog/ai-engineer-spec/
 
 ## Problem
 
@@ -19649,9 +19683,12 @@ if new_feature_requested:
 ```
 
 **Core Framework (SPEC/EXPOSURE/TASK DELTA):**
+
 - **SPEC**: Version-controlled markdown capturing intent and values
 - **EXPOSURE**: What customers experience; spec is permanent, code is temporary
 - **TASK DELTA**: Continuous loop evaluating SPEC ↔ PRODUCT to identify gaps
+
+**Vendor tooling (2025-2026):** GitHub Spec Kit drives a `/specify → /plan → /tasks → /implement` command sequence from a constitution and spec documents, and AWS Kiro ships spec-driven agentic development in the editor.
 
 ## How to use it
 
@@ -19668,9 +19705,11 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 
 ## References
 
-- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
+- Primary source: https://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
 - Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
-- Parisien et al. (2024): "Deliberation Before Action" (ICLR 2024) - https://arxiv.org/abs/2403.05441
+- GitHub Spec Kit (spec-driven development toolkit, launched September 2025): https://github.com/github/spec-kit
+- AWS Kiro (spec-driven agentic development): https://kiro.dev
+- Related patterns: [Spec-As-Test Feedback Loop](spec-as-test-feedback-loop.md) turns the spec into executable tests on every commit, while this pattern uses the spec to drive initial construction; [Feature List as Immutable Contract](feature-list-as-immutable-contract.md) freezes a JSON feature list with acceptance steps rather than a full specification.
 
 ---
 
@@ -19926,19 +19965,34 @@ define_stop_hook() {
 3. If criteria fail, inject feedback and continue agent execution
 4. If criteria pass, return control to user
 
-**Claude Code SDK example:**
+**Claude Code configuration:**
 
-```javascript
-// Stop hook configuration
+Claude Code runs stop hooks on the **Stop** event, which fires when the main agent finishes responding. Configure the command in the settings JSON:
+
+```json
 {
   "hooks": {
-    "on_stop": {
-      "command": "./scripts/check_success.sh",
-      "auto_continue_on_failure": true
-    }
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "./scripts/check_success.sh" }
+        ]
+      }
+    ]
   }
 }
 ```
+
+The script continues the agent by printing a decision block with a reason:
+
+```json
+{
+  "decision": "block",
+  "reason": "Tests failed: 2 assertions. Fix these issues."
+}
+```
+
+Exit code 0 with no output lets the turn end. Stop hooks receive a `stop_hook_active` flag that is true when the agent is already continuing because of a stop hook; check it to avoid blocking on a condition that will never resolve. Claude Code also caps consecutive stop-hook continuations at eight.
 
 **Power user pattern (from transcript):**
 
@@ -19967,6 +20021,7 @@ Combine with dangerous mode in containers for autonomous operation:
 **Cons:**
 
 - **Runaway costs**: Agent might loop indefinitely if criteria impossible
+- **Models can ignore the hook**: practitioner reports describe models bypassing stop hooks, so treat auto-continue as best-effort rather than a guarantee ([Hacker News reports](https://news.ycombinator.com/item?id=47895029))
 - **Requires good criteria**: Bad success checks lead to infinite loops
 - **Container overhead**: Safest in sandboxed environments
 - **Debugging challenges**: Harder to inspect mid-execution state
@@ -19988,6 +20043,7 @@ Combine with dangerous mode in containers for autonomous operation:
 * Shinn et al. (2023). [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366). NeurIPS.
 * Madaan et al. (2023). [Self-Refine: Large Language Models Can Self-Correct with Self-Feedback](https://arxiv.org/abs/2303.08119). ICLR.
 * Beurer-Kellner et al. (2025). [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837).
+* Claude Code hooks documentation (Stop event, decision blocks, `stop_hook_active` loop guard): https://code.claude.com/docs/en/hooks
 
 ---
 
@@ -20186,7 +20242,7 @@ else:
 **Status:** validated-in-production
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.nibzard.com/ampcode
+**Source:** https://lethain.com/agents-subagents/
 
 ## Problem
 
@@ -20354,23 +20410,7 @@ Some implementations treat every agent as a subagent, enabling flexible composit
 
 ## Advanced usage: Swarm migrations
 
-For massive parallelization (10+ subagents), see the **Swarm Migration Pattern** which extends this concept for large-scale code migrations.
-
-**Three spawning architecture scales:**
-
-- **Virtual File Isolation** (2-4 subagents): Same-process spawning with explicit file passing for context management
-- **Git Worktree Isolation** (10-100 subagents): Filesystem-level isolation using git worktrees for code migrations
-- **Cloud Worker Spawning** (100+ agents): Container/VM isolation for enterprise-scale distributed processing
-
-**Production implementations:**
-
-- **Cursor AI**: Hierarchical spawning (Planner → Sub-Planners → Workers) with hundreds of concurrent agents
-- **GitHub Agentic Workflows**: Event-driven agent spawning within CI infrastructure
-- **Anthropic Claude Code**: Users with high-volume workflows achieve 10x+ speedup on framework migrations
-
-**Quote from Boris Cherny (Anthropic):**
-
-> "There's an increasing number of people internally at Anthropic using a lot of credits every month. Spending over a thousand bucks. The common use case is code migration... The main agent makes a big to-do list for everything and map reduces over a bunch of subagents. You instruct Claude like start 10 agents and then just go 10 at a time and just migrate all the stuff over."
+For massive parallelization (10+ subagents) and large-scale code migrations, see the [Swarm Migration Pattern](swarm-migration-pattern.md).
 
 ## Trade-offs
 
@@ -20400,7 +20440,7 @@ For massive parallelization (10+ subagents), see the **Swarm Migration Pattern**
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis of 88 sessions emphasizing clear task subjects and parallel delegation patterns
+* Claude Code documentation, [Create custom subagents](https://code.claude.com/docs/en/subagents) - the official subagent configuration reference
 * Vezhnevets, A., et al. (2017). [Feudal Networks for Hierarchical Reinforcement Learning](https://arxiv.org/abs/1706.06121). ICML. - Manager-worker separation with goal-setting in latent space
 * Raising An Agent - Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
 * Boris Cherny (Anthropic) on swarm migrations for framework changes and lint rules
@@ -20410,7 +20450,7 @@ For massive parallelization (10+ subagents), see the **Swarm Migration Pattern**
 * [Building an internal agent: Subagent support](https://lethain.com/agents-subagents/) - Will Larson on YAML-configured subagents with virtual file isolation and code-driven LLM invocation
 * [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Hierarchical spawning with hundreds of concurrent agents validated in production
 
-[Source](https://www.nibzard.com/ampcode)
+[Author's session anecdote](https://www.nibzard.com/ampcode) - the four-parallel-subagent website refactor described above
 
 ---
 
@@ -20713,10 +20753,9 @@ for batch in batches:
 
 **Pros:**
 
-- **Massive parallelization**: 6-10x speedup vs. sequential migration (well-suited tasks)
+- **Massive parallelization**: Many chunks migrate concurrently instead of one at a time; no measured speedup figure is published for this pattern
 - **Easy verification**: Each subagent handles tractable chunk
 - **Fault isolation**: One subagent failing doesn't break others
-- **Cost-effective for scale**: 100x+ ROI despite 10x token cost increase
 - **Reproducible**: Same migration applied consistently across all files
 
 **Cons:**
@@ -20739,13 +20778,13 @@ for batch in batches:
 - **< 10 files**: Sequential execution is more efficient
 - **High coupling**: Files require coordinated changes
 - **Complex semantic changes**: Require holistic understanding
-- **High expected failure rate** (>30%): Better to iterate carefully
+- **High expected failure rate**: If chunks fail often, iterate carefully instead of fanning out
 - **Extremely constrained budget**: Token costs scale with parallelism
 
-**Optimization tips:**
+**Optimization tips (heuristics, not measured optima):**
 
-- **Batch size tuning**: Start with 10 files per agent; adjust 2-50 files based on complexity
-- **Optimal swarm size**: 10-20 agents for best ROI; diminishing returns beyond 20
+- **Batch size tuning**: Start with about 10 files per agent; adjust based on complexity
+- **Swarm size**: 10-20 agents is a common starting range; add only when verification keeps up
 - **Staged rollout**: Migrate 10% first, verify, then do the rest
 - **Failure handling**: Have main agent retry failed batches with refined instructions
 - **Resource limits**: Cap parallel agents to avoid overwhelming infrastructure
@@ -20756,6 +20795,10 @@ for batch in batches:
 * Boris Cherny: "Lint rules... there's some kind of lint rule you're rolling out, there's no auto fixer because static analysis can't really—it's too simplistic for it. Framework migrations... we just migrated from one testing framework to a different one. That's a pretty common one where it's super easy to verify the output."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * [Cursor Blog: Scaling Agents](https://cursor.com/blog/scaling-agents) — Production use with hundreds of concurrent agents; case studies include Solid→React migration (+266K/-193K edits)
+* [Environment-in-the-Loop: Rethinking Code Migration with LLM-based Agents](https://arxiv.org/html/2602.09944v1) (2026) — academic treatment of LLM migration agents
+* [AI codebase migration agents at scale](https://tianpan.co/blog/2026/04/17/ai-codebase-migration-agents-scale) (2026) — practitioner report on running migration agents across a large codebase
+* [LLM-powered code migration at scale](https://zylos.ai/research/2026-04-18-llm-powered-code-migration-at-scale) (2026) — second practitioner report published the same week
+* Related patterns: this is the large-scale specialization of [Sub-Agent Spawning](sub-agent-spawning.md), which covers the general delegation mechanics; [Adaptive Sandbox Fan-Out Controller](adaptive-sandbox-fanout-controller.md) tunes sandbox batch size from early signals.
 
 ---
 
@@ -21956,10 +21999,12 @@ Apply when tasks benefit from exploring many potential strategies—puzzles, cod
 
 Algorithm variants: BFS for exhaustive exploration, DFS for deep paths with limited memory, Beam search for memory-constrained scenarios with good heuristics.
 
+**Reasoning-model context (2024-2026):** RL-trained reasoning models such as OpenAI's o1 and its successors internalize much of this deliberate search at inference time ([Learning to Reason with LLMs](https://openai.com/index/learning-to-reason-with-llms/)). This pushes explicit ToT scaffolds toward verifier-guided work (where an external evaluator still prunes branches) and non-frontier models. See [Language Agent Tree Search (LATS)](language-agent-tree-search-lats.md) and [Inference-Time Scaling](inference-time-scaling.md).
+
 ## Trade-offs
 
-* **Pros:** Covers more possibilities; improves reliability on hard tasks (22-28% over CoT on multi-step reasoning); enables explicit backtracking from failed paths.
-* **Cons:** Higher compute cost (3-10x more tokens than Chain-of-Thought); needs a good evaluation function to guide search; inherently slower latency. Best for complex planning, mathematical reasoning, and code generation—overkill for simple linear tasks.
+* **Pros:** Covers more possibilities; improves reliability on hard search tasks (on Game of 24, the paper reports 4% accuracy for chain-of-thought prompting versus 74% for ToT); enables explicit backtracking from failed paths.
+* **Cons:** Higher compute cost (substantially more tokens than chain-of-thought; the paper does not publish a token multiplier); needs a good evaluation function to guide search; inherently slower latency. Best for complex planning, mathematical reasoning, and code generation—overkill for simple linear tasks.
 
 ## References
 
@@ -23187,7 +23232,7 @@ stateDiagram-v2
 **Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** John Xie (@johnxie)
-**Source:** https://taskade.com/agents
+**Source:** https://doi.org/10.1145/6499.6503
 
 ## Problem
 
@@ -23248,12 +23293,12 @@ graph TD
 
 ## References
 
-- [Taskade AI Agents](https://taskade.com/agents)
-- [Taskade MCP Server](https://github.com/taskade/mcp)
-- [Taskade AI App Builder](https://taskade.com/ai/apps)
-- [Taskade Automations](https://taskade.com/automate)
+- Example implementation (vendor pages): [Taskade AI Agents](https://taskade.com/agents), [Taskade MCP Server](https://github.com/taskade/mcp)
+- [Model Context Protocol](https://modelcontextprotocol.io) — open standard for the standardized integration surface above
+- [Anthropic: Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
 - Nii, H. P. (1986). [Blackboard Systems: A Survey](https://doi.org/10.1145/6499.6503). AI Magazine.
 - Gelernter, D. (1985). [Generative Communication in Linda](https://doi.org/10.1145/2166.2168). ACM TOPLAS.
+- Related patterns: [Board-Mediated Async Inter-Agent Coordination](board-mediated-inter-agent-coordination.md) coordinates agents with each other through a shared board, while this pattern embeds agents in the human team workspace so people and agents share the same memory, triggers, and integrations.
 
 ---
 

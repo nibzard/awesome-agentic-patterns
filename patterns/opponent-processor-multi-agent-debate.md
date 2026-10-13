@@ -21,7 +21,7 @@ id: opponent-processor-multi-agent-debate-pattern
 summary: "Spawns agents with opposing roles on the same context, lets them critique each other, then synthesizes their positions to expose bias and blind spots"
 signals: ["High-stakes decision where confirmation bias is a risk", "Competing interests or perspectives must be weighed", "A synthesizer agent or human can resolve the debate"]
 anti_signals: ["Simple decisions that need no debate", "Budget cannot cover 2x or more token cost"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -103,6 +103,7 @@ Early Reddit thread showed subagents as: Frontend dev, Backend dev, Designer, Te
 
 - **2x+ token cost**: Multiple agents processing same information
 - **Slower execution**: Debate takes time compared to single decision
+- **Mixed empirical support**: Smit et al. find that debate does not consistently beat cheaper self-consistency baselines across tasks and models ([Should we be going MAD?](https://arxiv.org/abs/2311.17371))
 - **May produce conflict**: Agents might deadlock without resolution mechanism
 - **Requires synthesis**: Need method to reconcile opposing views
 - **Over-engineering for simple tasks**: Not every decision needs debate
@@ -114,8 +115,11 @@ Early Reddit thread showed subagents as: Frontend dev, Backend dev, Designer, Te
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 
 **Academic foundations:**
-* Dung, P. M. (1995). "On the Acceptability of Arguments and its Fundamental Role in Nonmonotonic Reasoning." *Artificial Intelligence*, 77(2), 321-357. — Established abstract argumentation frameworks (Dung's Framework)
+* Du et al. (2023), "Improving Factuality and Reasoning in Language Models through Multiagent Debate" — https://arxiv.org/abs/2305.19118
+* Motger et al. (2026), "Multi-Agent Debate Strategies: Survey, Taxonomy, and Challenges" — https://arxiv.org/abs/2607.26212
+* Smit et al., "Should we be going MAD? A Look at Multi-Agent Debate Strategies for LLMs" — https://arxiv.org/abs/2311.17371
 
 **Industry implementations:**
 * Microsoft AutoGen — Multi-agent conversations with critic/reviewer agents
-* Anthropic Constitutional AI — Self-critique against constitutional principles (RLAIF)
+
+* Related patterns: [Iterative Multi-Agent Brainstorming](iterative-multi-agent-brainstorming.md) spawns parallel role agents to generate divergent options, while this pattern pits two agents against each other adversarially; [Cross-Cycle Consensus Relay](cross-cycle-consensus-relay.md) coordinates sequential cycles through a shared relay document rather than resolving a single adversarial exchange.

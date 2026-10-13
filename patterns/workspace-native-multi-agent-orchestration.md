@@ -2,14 +2,14 @@
 title: Workspace-Native Multi-Agent Orchestration
 status: emerging
 authors: ["John Xie (@johnxie)"]
-based_on: ["Taskade AI Agents (example implementation)"]
+based_on: ["Taskade AI Agents (example implementation; John Xie is Taskade's co-founder and CEO)"]
 category: "Orchestration & Control"
-source: "https://taskade.com/agents"
+source: "https://doi.org/10.1145/6499.6503"
 tags: [multi-agent, orchestration, workflow-automation, workspace, mcp, knowledge-base, persistent-memory, integrations, collaboration]
 summary: "Runs agents inside the team's workspace platform so they share its memory, knowledge sources, event triggers, and integrations with humans"
 signals: ["Agent tooling is separate from where the team works", "Non-engineers need to create and version agents", "Multi-agent workflows need shared context and event triggers"]
 anti_signals: ["Team cannot accept coupling to one workspace platform", "Workflows need custom agent code the platform cannot run"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -71,9 +71,9 @@ graph TD
 
 ## References
 
-- [Taskade AI Agents](https://taskade.com/agents)
-- [Taskade MCP Server](https://github.com/taskade/mcp)
-- [Taskade AI App Builder](https://taskade.com/ai/apps)
-- [Taskade Automations](https://taskade.com/automate)
+- Example implementation (vendor pages): [Taskade AI Agents](https://taskade.com/agents), [Taskade MCP Server](https://github.com/taskade/mcp)
+- [Model Context Protocol](https://modelcontextprotocol.io) — open standard for the standardized integration surface above
+- [Anthropic: Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
 - Nii, H. P. (1986). [Blackboard Systems: A Survey](https://doi.org/10.1145/6499.6503). AI Magazine.
 - Gelernter, D. (1985). [Generative Communication in Linda](https://doi.org/10.1145/2166.2168). ACM TOPLAS.
+- Related patterns: [Board-Mediated Async Inter-Agent Coordination](board-mediated-inter-agent-coordination.md) coordinates agents with each other through a shared board, while this pattern embeds agents in the human team workspace so people and agents share the same memory, triggers, and integrations.
