@@ -586,10 +586,10 @@ Merged Code + Language Skill Model: Fine-tunes separate language and code specia
 URL: https://agentic-patterns.com/patterns/merged-code-language-skill-model
 Markdown: https://agentic-patterns.com/patterns/merged-code-language-skill-model.md
 
-### agentfund-crowdfunding
+### milestone-escrow-agent-funding
 Milestone Escrow for Agent Resource Funding: Holds agent funding in escrow and releases each payment only after independent verification of a measurable milestone
-URL: https://agentic-patterns.com/patterns/agentfund-crowdfunding
-Markdown: https://agentic-patterns.com/patterns/agentfund-crowdfunding.md
+URL: https://agentic-patterns.com/patterns/milestone-escrow-agent-funding
+Markdown: https://agentic-patterns.com/patterns/milestone-escrow-agent-funding.md
 
 ### multi-model-orchestration-for-complex-edits
 Multi-Model Orchestration for Complex Edits: Splits complex code edits across specialized models: a retrieval model gathers context, a large model writes the changes, and smaller models apply them

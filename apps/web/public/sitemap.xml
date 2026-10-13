@@ -187,7 +187,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/parallel-tool-execution</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/consequence-family-coverage-audit</loc>
@@ -219,7 +219,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cross-agent-lesson-sharing</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cross-cycle-consensus-relay</loc>
@@ -383,7 +383,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/hook-based-safety-guard-rails</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/human-in-loop-approval-framework</loc>
@@ -486,8 +486,8 @@
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/agentfund-crowdfunding</loc>
-    <lastmod>2026-03-11</lastmod>
+    <loc>https://agentic-patterns.com/patterns/milestone-escrow-agent-funding</loc>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/multi-model-orchestration-for-complex-edits</loc>
@@ -515,7 +515,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/one-os-user-per-agent</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate</loc>

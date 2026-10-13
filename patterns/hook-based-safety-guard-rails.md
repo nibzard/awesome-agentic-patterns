@@ -1,15 +1,15 @@
 ---
 title: "Hook-Based Safety Guard Rails for Autonomous Code Agents"
-status: "validated-in-production"
+status: validated-in-production
 authors: ["yurukusa (@yurukusa)"]
 based_on: ["Claude Code Hooks (Anthropic)", "claude-code-ops-starter (https://github.com/yurukusa/claude-code-ops-starter)"]
 category: "Security & Safety"
-source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
+source: "https://code.claude.com/docs/en/hooks"
 tags: [hooks, guard-rails, safety, autonomous-operation, destructive-command-blocking, context-monitoring, pre-tool-use, post-tool-use]
 summary: "Runs small shell scripts on PreToolUse and PostToolUse hooks to block destructive commands, lint edits, and warn on context use outside the agent's reasoning"
 signals: ["Code agents run unattended with shell and file write access", "Destructive commands or silent syntax errors are a risk", "The agent framework supports pre- and post-tool-use hooks"]
 anti_signals: ["The framework has no hook events", "You need complete protection, since pattern matching misses creative commands", "Every action already goes through human review"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -48,9 +48,9 @@ exit 0  # 0 = allow
 ## Evidence
 
 - **Evidence Grade:** `high`
-- **Academic Validation:** External governance layers are necessary — even top-tier models show 40-51% unsafe behavior without guard rails (OpenAgentSafety, 2025)
+- **Academic Validation:** External governance layers are necessary — OpenAgentSafety (2025) measures unsafe behavior on 51.2% of safety-vulnerable tasks with Claude-Sonnet-3.7, rising to 72.7% with o3-mini
 - **Runtime Governance:** MI9 framework (2025) validates that rule-based, telemetry-driven safety logic operating outside the agent's context can effectively constrain behavior
-- **Pre-Execution Validation:** CaMeL framework demonstrates that formal verification before code execution significantly improves security (Beurer-Kellner et al., 2025)
+- **Pre-Execution Validation:** CaMeL demonstrates that defeating prompt injections by design, with formally analyzed information flow around untrusted data, outperforms prompt-level defenses (Debenedetti et al., 2025)
 
 ## How to use it
 
@@ -58,6 +58,7 @@ exit 0  # 0 = allow
 - Each hook is a standalone shell script — no dependencies on the agent's internal state.
 - PreToolUse hooks receive the tool name and input as JSON on stdin. Return exit code 2 to block.
 - PostToolUse hooks receive the tool name, input, and output. Return exit code 0 (hooks can only warn, not block after execution).
+- Shell scripts are the simplest handler, not the only one: Claude Code hooks also support HTTP endpoints, MCP tool calls, single-turn model prompts, and experimental subagent handlers, across 30+ events (PreCompact, SubagentStop, PermissionRequest, and others) beyond the tool-use pair shown here.
 - Start with the dangerous command blocker (highest impact, lowest effort).
 
 ## Trade-offs
@@ -76,8 +77,9 @@ exit 0  # 0 = allow
 
 ## References
 
-- [Claude Code Hooks documentation](https://docs.anthropic.com/en/docs/claude-code/hooks) — Official hook system for Claude Code
+- [Claude Code Hooks documentation](https://code.claude.com/docs/en/hooks) — Official hook system for Claude Code: five handler types (command, HTTP, MCP tool, prompt, agent) and 30+ hook events
 - [claude-code-ops-starter](https://github.com/yurukusa/claude-code-ops-starter) — Open-source implementation of these 4 hooks with a risk-score diagnostic
 - [MI9: Runtime Governance Framework](https://arxiv.org/html/2508.03858v3) (2025) — Validating external governance layers for agentic AI
-- [OpenAgentSafety](https://arxiv.org/html/2507.06134v1) (2025) — Demonstrating 40-51% unsafe behavior without external guard rails
-- [CaMeL: Code-Augmented Language Model](https://arxiv.org/abs/2506.08837) (2025) — Formal verification framework for secure LLM agent execution
+- [OpenAgentSafety](https://arxiv.org/abs/2507.06134) (2025) — Measures unsafe behavior on 51.2% (Claude-Sonnet-3.7) to 72.7% (o3-mini) of safety-vulnerable tasks
+- [CaMeL: Defeating Prompt Injections by Design](https://arxiv.org/abs/2503.18813) (Debenedetti et al., 2025) — System-design defenses with formally analyzed information flow
+- [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., 2025) — A catalogue of architectural security patterns for agents
