@@ -9,7 +9,7 @@ tags: [map-reduce, sub-agents, isolation, untrusted-data]
 summary: "Processes each untrusted document in its own sandboxed LLM call with a constrained output, then aggregates the results with deterministic code"
 signals: ["Many untrusted documents feed one decision", "One malicious item must not influence results for other items", "Items are independent and each gets a constrained answer"]
 anti_signals: ["Decision needs context across items", "Only a few trusted items to process"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -37,7 +37,7 @@ final = reduce(results)  # no raw docs enter this step
 
 File triage, document summarization, resume filters, code migration verification—any N-to-1 decision where each item's influence should stay local.
 
-Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent, and aggregation is needed.
+Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent, and aggregation is needed. These thresholds are practitioner heuristics for when the orchestration overhead pays off, not guidance from the source paper.
 
 ## Trade-offs
 
@@ -46,7 +46,7 @@ Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent
 
 ## References
 
-* Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce.
+* Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce — [HTML full text, Section 3.1](https://arxiv.org/html/2506.08837v3).
 * Dean & Ghemawat (2008). MapReduce: Simplified Data Processing on Large Clusters.
 
 - Primary source: https://arxiv.org/abs/2506.08837

@@ -1,10 +1,10 @@
 ---
 title: Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution
 status: emerging
-authors: ["Yehuda Levy (@yehudalevy-collab)"]
-based_on: ["Polis Protocol (https://github.com/yehudalevy-collab/polis-protocol)"]
+authors: ["Yehuda Levy (@ymxlx)"]
+based_on: ["Polis Protocol (https://github.com/ymxlx/polis-protocol)"]
 category: "Orchestration & Control"
-source: "https://github.com/yehudalevy-collab/polis-protocol"
+source: "https://github.com/ymxlx/polis-protocol"
 tags: [multi-agent, coordination, markdown, bandit-routing, governance, vendor-agnostic]
 summary: "Coordinates agents from different vendors through versioned markdown files: capability cards, work contracts, and bandit routing that learns from settled work"
 maturity: maturing
@@ -14,14 +14,14 @@ impact: high
 signals: ["Multiple agents from different vendors need to share state on the same project", "Routing decisions should improve from past outcomes, not just static capability declarations", "Process rules need to evolve without breaking running work"]
 anti_signals: ["Single-agent solo session", "Pure RPC between two agents with no shared state", "Hard real-time coordination (sub-second latency requirements)"]
 prerequisites: ["A shared filesystem (git repo, shared drive) all agents can read and write", "Each agent can read structured markdown with YAML frontmatter"]
-related: [shared-blackboard-coordination, capability-card-discovery]
+related: [board-mediated-inter-agent-coordination, versioned-constitution-governance]
 domains: ["coding", "research", "ops", "documentation"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
-When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for "who's good at what," "what did we already try," or "what does this team consider done." Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes.
+When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for "who's good at what," "what did we already try," or "what does this team consider done." Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes. That alternative got stronger while this pattern was idle: [AGENTS.md](https://agents.md) is now a vendor-neutral instruction-file standard stewarded by the Agentic AI Foundation under the Linux Foundation and supported by dozens of tools, so bridge files are a reliable entry point even though they still do not learn.
 
 ## Solution
 
@@ -51,7 +51,7 @@ graph TD
 
 ## Evidence
 
-- **Evidence Grade:** `low` (pattern in early production use; one open-source reference implementation)
+- **Evidence Grade:** `low` (one open-source reference implementation with minimal external adoption so far)
 - **Most Valuable Findings:** A worked example with three citizens, a real routing leader-shift after a lesson, and a ratified amendment is published at `examples/research-team/` in the reference repo. Settlement-driven routing learning is the smallest unit of compounding the pattern produces — capability cards alone aren't enough.
 - **Unverified / Unclear:** Whether the amendment-vote mechanism scales past ~10 active citizens; whether bandit routing's exploration rate (default 15%) is right for low-volume contract streams.
 
@@ -77,6 +77,10 @@ Implementation outline:
 
 ## References
 
-- Reference implementation: [polis-protocol](https://github.com/yehudalevy-collab/polis-protocol) (MIT)
-- Worked example with 3 citizens, leader-shift after a lesson, and a ratified amendment: [`examples/research-team/`](https://github.com/yehudalevy-collab/polis-protocol/tree/main/examples/research-team)
-- Routing math: [`references/routing.md`](https://github.com/yehudalevy-collab/polis-protocol/blob/main/references/routing.md)
+- Reference implementation: [polis-protocol](https://github.com/ymxlx/polis-protocol) (MIT). The repository moved from `yehudalevy-collab/polis-protocol`, and old links still redirect there.
+- Worked example with 3 citizens, leader-shift after a lesson, and a ratified amendment: [`examples/research-team/`](https://github.com/ymxlx/polis-protocol/tree/main/examples/research-team)
+- Routing math: [`references/routing.md`](https://github.com/ymxlx/polis-protocol/blob/main/references/routing.md)
+- Ecosystem context: [AGENTS.md](https://agents.md) — the vendor-neutral instruction-file standard the bridge files build on
+- Related: [Board-Mediated Async Inter-Agent Coordination](board-mediated-inter-agent-coordination.md) — also coordinates separate agent sessions through a shared artifact. Distinct from that pattern: the polis coordinates through versioned contracts and learned routing, not a board's comment threads and inbox cards.
+- Related: [Versioned Constitution Governance](versioned-constitution-governance.md) — also evolves rules as versioned documents. Distinct from that pattern: amendments here also re-weight routing and review thresholds, not only policy text.
+- Related: [Cross-Agent Lesson Sharing](cross-agent-lesson-sharing.md) — also compounds lessons across agents. Distinct from that pattern: lessons here feed a bandit router that assigns the next contract.

@@ -9,7 +9,7 @@ tags: [multi-agent, state-management, persistence, long-running-tasks, orchestra
 summary: "Each loop cycle reads a structured relay document, does its work, and atomically writes back decisions, open questions, and the single next action"
 signals: ["Autonomous agent loops run across many cycles, hours, or days", "Context and decisions must survive crashes and restarts", "Agents re-debate settled questions or stall without shipping"]
 anti_signals: ["High-frequency loops faster than about one cycle per minute", "Single-session tasks that finish in one cycle", "State would include secrets that must not go in a file"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -31,10 +31,15 @@ The relay document is written to a temp file and atomically renamed to prevent p
 
 ```bash
 # auto-loop.sh — the minimal autonomous loop
+# Claude Code has no --context flag; the relay document is inlined
+# into the prompt text (this matches the real auto-loop.sh mechanism)
 while true; do
   # Each cycle reads the relay baton, executes, writes a new one
-  claude -p "$(cat PROMPT.md)" \
-    --context "$(cat memories/consensus.md)"
+  PROMPT="$(cat PROMPT.md)
+
+## Current Consensus (pre-loaded)
+$(cat memories/consensus.md)"
+  claude -p "$PROMPT"
   sleep $CYCLE_INTERVAL
 done
 ```
@@ -176,12 +181,14 @@ mv memories/.consensus.tmp memories/consensus.md
 
 ## Known Implementations
 
-- [auto-co framework](https://github.com/NikitaDmitrieff/auto-co-meta) — open-source autonomous loop framework using a relay document across repeated cycles
+- [auto-co framework](https://github.com/NikitaDmitrieff/auto-co-meta) — open-source autonomous loop framework using a relay document across repeated cycles. Its `auto-loop.sh` concatenates `memories/consensus.md` into the prompt text and writes updates atomically via a temp file plus rename.
 
 ## References
 
 - [Anthropic Engineering: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference) — no `--context` flag exists; the closest primitives are `--append-system-prompt-file`, `-c`/`--continue`, and `-r`/`--resume`
 - [BabyAGI](https://github.com/yoheinakajima/babyagi) — early task-loop example with persistent task artifacts
-- Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — for checkpointing within a single cycle
+- Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — for checkpointing within a single cycle. Distinct from that pattern: the relay document is a structured cross-cycle handoff with a directed next action, not a general state checkpoint.
+- Related: [Continuous Autonomous Task Loop Pattern](continuous-autonomous-task-loop-pattern.md) — that pattern runs the loop itself; this pattern defines what passes between cycles. Distinct from it: the relay document carries phase, decisions, and convergence state, not just task selection.
 - Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md) — for agents that self-initiate state writes
 - Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — for session handoff artifacts across repeated work cycles

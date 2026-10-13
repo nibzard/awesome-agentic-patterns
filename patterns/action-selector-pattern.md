@@ -9,7 +9,7 @@ tags: [prompt-injection, control-flow, safety, tool-use]
 summary: "LLM maps user intent to a pre-approved action ID with schema-validated parameters, and tool outputs never return to the selector"
 signals: ["Agent processes untrusted data such as emails, web pages, or API responses", "Allowed actions are finite and auditable", "Prompt injection must not change which action runs"]
 anti_signals: ["Tasks need open-ended tool use or frequent new capabilities", "Main risk is poisoned parameters passed to approved tools"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -35,10 +35,11 @@ execute(action)
 
 ## Evidence
 
-- **Evidence Grade:** `high` (academically grounded; industry adoption confirmed)
+- **Evidence Grade:** `medium` (academically grounded; the strict no-feedback variant has thin third-party adoption)
 - **Most Valuable Findings:**
   - Provides provable resistance to control-flow hijacking via separation of duties and no feedback loop
-  - Supported by major frameworks: LangChain (tool allowlists, Pydantic validation), Anthropic Claude (function calling with response schemas), OpenAI (function calling with JSON Schema)
+  - The source paper describes the pattern as an "LLM-modulated 'switch' statement" with no action feedback returned to the agent
+  - Caveat: mainstream function-calling APIs (OpenAI, Anthropic, LangChain) return tool outputs to the model, so they implement the allowlist-plus-schema-validation half of this pattern but not the no-feedback half
   - Does NOT protect against parameter poisoning—malicious data can still influence parameters passed to approved tools
 - **Unverified:** Detailed quantitative evaluation results from source paper
 
@@ -60,3 +61,5 @@ Provide a hard allowlist of actions (API calls, SQL templates, page links) and v
 - SecAlign (Chen et al., 2024): Preference optimization defense against prompt injection
 - StruQ (Chen et al., 2024): Structured query defense with type-safe construction
 - "Learning From Failure" (Wang et al., 2024): Categories of tool-use errors in LLM agents
+- [Defeating Prompt Injections by Design (CaMeL)](https://arxiv.org/abs/2503.18813) - Debenedetti et al., 2025: same research group; system-design defense with security guarantees, stricter than selector allowlists alone
+- [OWASP GenAI Security Project](https://genai.owasp.org/) - current industry guidance including the LLM Top 10 and agent control standards

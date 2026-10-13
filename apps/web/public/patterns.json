@@ -134,7 +134,7 @@
       "Tasks need open-ended tool use or frequent new capabilities",
       "Main risk is poisoned parameters passed to approved tools"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nIn tool-enabled agents, untrusted data from emails, web pages, and API responses is often fed back into the model between steps. That creates a control-flow vulnerability: injected text can influence which action the agent chooses next, enabling control-flow hijacking. Even if individual tools are safe, a compromised action-selection loop can trigger harmful sequences at the orchestration layer and enable cascading prompt injection attacks."
   },
   {
@@ -983,7 +983,7 @@
       "cross-cycle-consensus-relay",
       "memory-synthesis-from-execution-logs"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents running in separate sessions cannot communicate without a human routing messages between them.  Shared context windows do not survive session boundaries.  The standard workarounds -- a human copy-pasting between terminals, shared files, or a dedicated message queue -- all have failure modes: human bottleneck, no delivery guarantee, or a coordination system that is decoupled from the work being coordinated.\n\nThe coordination problem compounds when you want the exchange to be useful later.  A review comment posted in a Slack thread disappears from the work record.  A decision made in a separate file has no connection to the card that required it.  The work and the context that shaped it are separated."
   },
   {
@@ -1016,7 +1016,7 @@
       "Task complexity cannot be classified reliably",
       "Team cannot maintain an extra routing control plane"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgent systems often route every request to the strongest model by default, which quietly inflates cost and reduces throughput under load. Soft budget guidance in prompts is not enough because model selection happens in control code, not language outputs. Teams need deterministic guardrails that preserve quality for hard tasks while preventing runaway token spend for routine work."
   },
   {
@@ -1756,7 +1756,7 @@
       "Each task decision needs human oversight",
       "Elevated execution permissions are not allowed"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional development workflows require constant human intervention for task management:\n\n- **Manual Task Selection**: Developers spend time deciding what to work on next from todo lists\n- **Context Switching Overhead**: Moving between different types of tasks interrupts flow state\n- **Rate Limit Interruptions**: API rate limits break development momentum and require manual waiting\n- **Repetitive Git Operations**: Each task completion requires manual staging, committing, and status checking\n- **Error Recovery**: Failed tasks need manual diagnosis and restart\n\nThis manual orchestration reduces overall productivity and prevents developers from focusing on higher-level problem solving."
   },
   {
@@ -1860,7 +1860,7 @@
       "Single-session tasks that finish in one cycle",
       "State would include secrets that must not go in a file"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAutonomous multi-agent loops that run across many cycles (minutes, hours, or days) need a way to reliably transfer context, decisions, and next actions between cycles. In-memory state is lost on crash or restart. Generic checkpoint files don't encode the *structured reasoning* — what was decided, why, and what comes next — that agents need to make good decisions in subsequent cycles.\n\nWithout a structured relay mechanism, autonomous loops suffer from:\n- **Drift**: each cycle restarts without awareness of prior decisions\n- **Repetition**: agents re-debate already-settled questions\n- **Stalls**: no convergence signal — agents loop indefinitely without shipping"
   },
   {
@@ -2040,7 +2040,7 @@
       "Off-the-shelf agents already cover your generic tasks",
       "No devops capacity to build and maintain sandbox and WebSocket infrastructure"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nOff-the-shelf coding agents (e.g., Devin, Claude Code, Cursor) are either:\n\n- **Too generic** - Not deeply integrated with company-specific dev environments, tools, and workflows\n- **Vendor-locked** - Tightly coupled to one model provider, limiting flexibility and creating dependency\n- **Limited context** - Cannot access internal infrastructure, private repos, or company-specific tooling\n\nCompanies need coding agents that:\n\n- Work within their specific development environment\n- Can iterate with closed feedback loops (compiler, linter, tests)\n- Provide real-time visibility into agent progress\n- Are model-agnostic to switch providers as needed"
   },
   {
@@ -2111,7 +2111,7 @@
       "You need platform-specific features the declarative layer cannot express",
       "A single simple agent with no multi-agent topology"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMulti-agent systems today are wired imperatively: each framework has its own SDK, config format, and orchestration primitives. This creates several problems:\n\n- **Vendor lock-in**: A supervisor topology built for one framework must be rewritten from scratch to run on another.\n- **Implicit topology**: The agent graph — who talks to whom, what gates block progress, which flows fan out — is buried in code rather than visible at a glance.\n- **No single source of truth**: When the topology lives across scattered config files, prompts, and glue code, refactoring or auditing the system requires reading everything.\n- **Repeated scaffolding work**: Teams re-implement the same patterns (pipeline, fan-out, debate, human-in-the-loop gate) in every new project and every new framework."
   },
   {
@@ -2361,13 +2361,13 @@
   },
   {
     "title": "Deterministic Zero-LLM Orchestration",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "Alex Chernysh (@chernistry)"
     ],
     "based_on": [],
     "category": "Orchestration & Control",
-    "source": "https://github.com/chernistry/bernstein",
+    "source": "https://github.com/sipyourdrink-ltd/bernstein",
     "tags": [
       "orchestration",
       "multi-agent",
@@ -2378,7 +2378,7 @@
     ],
     "slug": "deterministic-zero-llm-orchestration",
     "id": "deterministic-zero-llm-orchestration",
-    "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending no LLM tokens on coordination",
+    "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending LLM tokens only on the one-time goal decomposition",
     "signals": [
       "Multi-agent coding system spends tokens on routing and coordination",
       "Project structure is well defined enough for rule-based planning",
@@ -2388,7 +2388,7 @@
       "Ambiguous goals need LLM judgment to split",
       "Novel task types need adaptive routing"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMulti-agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed."
   },
   {
@@ -2435,7 +2435,7 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Sam Stettner (Ambral)"
+      "Jack Stettner (Ambral)"
     ],
     "category": "Orchestration & Control",
     "source": "https://claude.com/blog/building-companies-with-claude-code",
@@ -2458,7 +2458,7 @@
       "Small tasks where phase handoffs add more overhead than value",
       "Latency or total token usage must stay low"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen AI agents attempt to simultaneously research, plan, and implement solutions, context contamination occurs. Competing priorities within a single conversation degrade output quality as the agent struggles to balance exploration, strategic thinking, and execution. This results in incomplete research, unclear plans, and suboptimal implementations."
   },
   {
@@ -2527,7 +2527,7 @@
       "Changes are tightly coupled and would cause constant merge conflicts",
       "Infrastructure complexity or parallel model cost is not acceptable"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSingle-session AI agent execution cannot scale to meet enterprise team demands. Complex projects require multiple simultaneous code changes across different parts of the codebase, but coordinating multiple agents introduces challenges around communication, conflict resolution, merge coordination, and infrastructure management."
   },
   {
@@ -2596,7 +2596,7 @@
       "All input comes from trusted sources",
       "The task needs the tool-calling model to reason over raw untrusted text"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen the same model both reads untrusted content and controls high-privilege tools, a single prompt-injection path can convert benign context into privileged actions. This coupling collapses trust boundaries and makes it hard to reason about where dangerous behavior originated."
   },
   {
@@ -3091,7 +3091,7 @@
       "Tasks need frequent human guidance or domain knowledge not written down",
       "Quick iterations where interactive feedback is faster"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nThe \"assistant\" model—working one-on-one with an agent in a sidebar, watching it work, ping-ponging back and forth—limits productivity and scalability. As models become more autonomous and capable, the human becomes the bottleneck as the feedback loop. You can only run one agent at a time when you're watching it in a sidebar."
   },
   {
@@ -3160,7 +3160,7 @@
       "Small, single-session tasks",
       "Requirements change rapidly during implementation"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLong-running agents exhibit several failure modes when tasked with building complete applications:\n\n- **Premature victory declaration**: Agent declares \"done\" after implementing a fraction of requirements\n- **Scope creep via test deletion**: Agent \"passes\" tests by deleting or weakening them rather than fixing code\n- **Hallucinated completeness**: Agent loses track of what was actually implemented versus planned\n- **Feature drift**: Without a fixed specification, agents may substitute easier features for harder ones\n- **Progress amnesia**: Across sessions, agents forget what's done vs. pending"
   },
   {
@@ -3409,7 +3409,7 @@
       "The task is deterministic from the start, so write code directly",
       "Highly exploratory tasks that always need the LLM"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLLM-driven workflows are **non-deterministic**—even well-crafted prompts can produce unpredictable results. For some tasks (e.g., adding emoji to Slack messages based on PR status), occasional errors are unacceptable. But LLM workflows are fast to prototype and work well for many cases. You need both: **flexibility when experimenting** and **determinism when it matters**."
   },
   {
@@ -3524,7 +3524,7 @@
   },
   {
     "title": "Initializer-Maintainer Dual Agent Architecture",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -3553,7 +3553,7 @@
       "Small, single-session tasks",
       "Exploratory or research projects with no clear feature list up front"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLong-running agent projects face distinct failure modes at different lifecycle stages:\n\n- **Project initialization** requires comprehensive setup: environment configuration, feature specification, test infrastructure, and progress tracking systems\n- **Incremental development** requires reading prior context, selecting the next task, implementing, and verifying—repeatedly across many sessions\n- Single-agent approaches either over-engineer each session (wasting setup time) or under-invest in foundations (leading to drift and confusion)\n- Session boundaries create context loss, causing agents to restart from scratch or lose track of project state"
   },
   {
@@ -3621,7 +3621,7 @@
       "Tasks have vague success criteria that need step-by-step human judgement",
       "Every step is high risk and needs explicit human approval"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nPrompt-as-puppeteer workflows force humans to micromanage each step, turning agents into expensive autocomplete tools. This limits throughput, creates brittle instructions that break on small context changes, and prevents agents from using their own planning capability."
   },
   {
@@ -3691,7 +3691,7 @@
       "Task has one clear correct answer",
       "Budget cannot cover several parallel agent runs"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nFor complex problems or creative ideation, a single AI agent instance might get stuck in a local optimum or fail to explore a diverse range of solutions. Generating a breadth of ideas can be challenging for a sequential, monolithic process."
   },
   {
@@ -3798,7 +3798,7 @@
       "Real-time response is required",
       "Cost-sensitive application"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nCurrent language agents often struggle with complex reasoning tasks that require exploration of multiple solution paths. Simple linear approaches like ReACT or basic reflection patterns can get stuck in local optima or fail to consider alternative strategies. This is particularly problematic for tasks requiring strategic planning, mathematical reasoning, or multi-step problem solving where early decisions significantly impact later outcomes."
   },
   {
@@ -3929,7 +3929,7 @@
       "Decision needs context across items",
       "Only a few trusted items to process"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen many untrusted documents are processed in a single reasoning context, one malicious item can influence global conclusions. This creates cross-document contamination where a single poisoned input affects unrelated items and final decisions."
   },
   {
@@ -4047,13 +4047,13 @@
     "title": "Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution",
     "status": "emerging",
     "authors": [
-      "Yehuda Levy (@yehudalevy-collab)"
+      "Yehuda Levy (@ymxlx)"
     ],
     "based_on": [
-      "Polis Protocol (https://github.com/yehudalevy-collab/polis-protocol)"
+      "Polis Protocol (https://github.com/ymxlx/polis-protocol)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://github.com/yehudalevy-collab/polis-protocol",
+    "source": "https://github.com/ymxlx/polis-protocol",
     "tags": [
       "multi-agent",
       "coordination",
@@ -4084,8 +4084,8 @@
       "Each agent can read structured markdown with YAML frontmatter"
     ],
     "related": [
-      "shared-blackboard-coordination",
-      "capability-card-discovery"
+      "board-mediated-inter-agent-coordination",
+      "versioned-constitution-governance"
     ],
     "domains": [
       "coding",
@@ -4093,8 +4093,8 @@
       "ops",
       "documentation"
     ],
-    "updated_at": "2026-07-23",
-    "excerpt": "\n## Problem\nWhen agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for \"who's good at what,\" \"what did we already try,\" or \"what does this team consider done.\" Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nWhen agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for \"who's good at what,\" \"what did we already try,\" or \"what does this team consider done.\" Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes. That alternative got stronger while this pattern was idle: [AGENTS.md](https://agents.md) is now a vendor-neutral instruction-file standard stewarded by the Agentic AI Foundation under the Linux Foundation and supported by dozens of tools, so bridge files are a reliable entry point even though they still do not learn."
   },
   {
     "title": "MCP Pattern Injection",

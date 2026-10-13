@@ -20,7 +20,7 @@ id: hybrid-llmcode-workflow-coordinator
 summary: "Lets each workflow pick an LLM or a code script as its coordinator, so teams prototype with the LLM and move to reviewed code when determinism matters"
 signals: ["Workflows start as quick LLM prototypes", "Some workflows cannot tolerate occasional LLM errors", "Critical workflow logic should go through code review"]
 anti_signals: ["The task is deterministic from the start, so write code directly", "Highly exploratory tasks that always need the LLM"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -136,7 +136,7 @@ def handler(trigger, tools, virtual_files, subagent):
 **Pros:**
 
 - **Best of both worlds**: LLM flexibility when prototyping, code determinism when mature
-- **Token efficiency**: Code-first processing reduces token usage by 75-99% for data-heavy tasks (Anthropic Code-Over-API, 2024)
+- **Token efficiency**: code execution instead of per-tool API calls can cut tokens dramatically; Anthropic reports one case of a 98.7% reduction (150,000 to 2,000 tokens) in its code-execution post. That figure is about code execution versus tool-by-tool API calls, not about the coordinator choice itself.
 - **Easy migration**: One-shot rewrite from prompt → script
 - **Same capabilities**: Scripts have access to all tools, can still use LLM via subagent
 - **Code review**: Critical workflows go through standard review process
@@ -155,7 +155,8 @@ def handler(trigger, tools, virtual_files, subagent):
 
 ## References
 
-* [Building an internal agent: Code-driven vs LLM-driven workflows](https://lethain.com/agents-coordinators/) - Will Larson (Imprint, 2025)
+* [Building an internal agent: Code-driven vs LLM-driven workflows](https://lethain.com/agents-coordinators/) - Will Larson (Imprint, December 31, 2025)
 * [PAL: Program-Aided Language Models](https://arxiv.org/abs/2211.10435) - Gao et al. (ICLR 2023)
-* [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Anthropic Engineering (2024)
-* Related: Code Mode MCP Tool Interface, Deterministic Security Scanning Build Loop
+* [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Anthropic Engineering (November 4, 2025): reports a single 98.7% token reduction (150,000 to 2,000 tokens) for code execution over API tool calls
+* Related: [Code-over-API Pattern](code-over-api-pattern.md) — the token argument for code over per-tool API calls, which this coordinator choice inherits. Distinct from that pattern: this one is about who coordinates the workflow, not how tools are called.
+* Related: [Deterministic Zero-LLM Orchestration](deterministic-zero-llm-orchestration.md) — goes further and removes the LLM coordinator entirely. Distinct from that pattern: this one keeps the LLM coordinator as the default for prototyping.

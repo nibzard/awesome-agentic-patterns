@@ -9,7 +9,7 @@ tags: [parallelism, autonomous-agents, factory, assistant, sidebar, orchestratio
 summary: "Spawns several autonomous agents in parallel with automated feedback loops such as tests and builds, and checks on them later instead of watching one agent"
 signals: ["Models can work autonomously for long periods", "Tests, builds, and linters can verify agent output without a human", "You have many independent tasks to run at once"]
 anti_signals: ["Exploratory work where you do not yet know what you want", "Tasks need frequent human guidance or domain knowledge not written down", "Quick iterations where interactive feedback is faster"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -68,7 +68,7 @@ graph TD
 
 **Key insight:** With models like GPT-5.2 that can work autonomously for 45+ minutes, watching them in a sidebar is wasteful. You should be able to spawn 10 such agents and check on them all later.
 
-**Academic support:** Multi-agent research (OpenDevin, AutoGen, CAMEL) validates parallel autonomous execution over single-assistant interaction.
+**Academic context:** Multi-agent research (OpenDevin, AutoGen, CAMEL) studies parallel autonomous execution, though none of these papers directly compares factory versus assistant effectiveness.
 
 ## How to use it
 
@@ -117,16 +117,20 @@ user → spawn(agent1) + spawn(agent2) + spawn(agent3)
 
 **Practical example from AMP:**
 
-AMP is killing their VS Code extension because they believe:
+AMP is sunsetting their editor extensions (VS Code and JetBrains) because they believe:
+
 - The 1% of developers on the frontier only need to do 20% of their work in an editor
 - They aim to get that to 10% or 1%
 - The sidebar is dead for frontier development
 - Factory model enables more effective use of autonomous models
 
 **Other production implementations:**
-- **Anthropic Claude Code**: Internal users report 10x+ speedups on framework migrations using map-reduce across 10+ parallel agents
+
+- **Anthropic Claude Code**: parallel agent sessions in isolated git worktrees via the `--worktree` flag
 - **GitHub Agentic Workflows**: Agents run in CI/CD with branch-per-task isolation
 - **Cursor Background Agent**: Cloud-based autonomous development with automatic PR creation
+
+Distinct from [Background Agent with CI Feedback](background-agent-ci.md): that pattern runs a single background agent verified by a CI loop, while this pattern is about spawning many agents in parallel and changing the human's role. Distinct from [Rich Feedback Loops](rich-feedback-loops.md): that pattern designs the feedback channel itself; this pattern assumes such loops exist and changes who runs how many agents.
 
 ## Trade-offs
 
@@ -165,8 +169,9 @@ The factory model is why AMP is killing their VS Code extension. The extension o
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2026-01-22); also at [ampcode.com/podcast/episode-9](https://ampcode.com/podcast/episode-9)
+* [Raising an Agent Episode 10](https://ampcode.com/podcast/episode-10) - AMP, 2026-02-05: announces the editor extension sunset ("the sidebar era is ending")
+* [The Coding Agent Is Dead](https://ampcode.com/news/the-coding-agent-is-dead) - AMP, 2026-02-19: written announcement that Amp for VS Code and Amp for JetBrains are being sunset
 * [Communicative Agents for Software Development (OpenDevin)](https://arxiv.org/abs/2407.16819) - Wang et al., 2024
 * [AutoGen: Enabling Multi-Agent LLM Applications](https://arxiv.org/abs/2308.08160) - Duan et al. (Microsoft Research), 2023
 * [CAMEL: Communicative Agents for Mind Exploration](https://arxiv.org/abs/2303.17760) - Li et al., 2023

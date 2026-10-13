@@ -9,7 +9,7 @@ tags: [background-agent, sandboxed, model-agnostic, real-time, websocket, custom
 summary: "Builds an in-house background coding agent that runs in sandboxed dev environments, streams progress over WebSocket, and iterates on compiler and test feedback"
 signals: ["Off-the-shelf agents cannot integrate with internal tools, private repos, or workflows", "You need model-agnostic infrastructure to switch providers", "Developers need real-time visibility into agent progress"]
 anti_signals: ["Off-the-shelf agents already cover your generic tasks", "No devops capacity to build and maintain sandbox and WebSocket infrastructure"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -114,6 +114,12 @@ flowchart TD
 - Off-the-shelf agents (Devin, Cursor) work great for generic tasks
 - But they can't deeply integrate with your company's specific infrastructure
 - Building custom lets you optimize for your workflows, tools, and security requirements
+
+**When off-the-shelf suffices (2026 update):** the integration gap has narrowed. Claude Code now supports self-hosted environments and cloud sessions on company infrastructure (`--environment ccpool_...`), and agent SDKs let you embed the agent loop in your own service. Before building, check whether a vendor agent plus your own runner gives you the sandbox control and internal access you need; build custom when you also need real-time streaming UX, model-agnostic switching, and bespoke feedback loops.
+
+**Sourced adoption evidence:** Ramp reports that roughly 30% of all pull requests merged to their frontend and backend repos are written by their in-house agent Inspect.
+
+Distinct from [Background Agent with CI Feedback](background-agent-ci.md): that pattern uses CI as the feedback channel on vendor-managed execution, while this pattern is about building and operating your own sandbox, streaming, and feedback infrastructure.
 
 ## Trade-offs
 

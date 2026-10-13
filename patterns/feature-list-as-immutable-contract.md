@@ -19,7 +19,7 @@ id: feature-list-as-immutable-contract
 summary: "Defines every feature up front in a JSON list with acceptance steps; the agent may only flip a feature to passing after it verifies it"
 signals: ["Long-running agents build complete applications with known requirements", "Agents declare done early or delete tests to pass", "Work spans many sessions and progress must stay measurable"]
 anti_signals: ["Exploratory prototyping or research with unclear scope", "Small, single-session tasks", "Requirements change rapidly during implementation"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -79,11 +79,6 @@ Enforce through prompt instructions:
 - Agent MAY NOT delete features from the list
 - Agent MAY NOT modify acceptance criteria/steps
 - Agent MAY NOT mark features as "not applicable"
-
-**Two implementation variations:**
-
-- **Static list**: Features hardcoded at compile time (maximum security, requires redeploy to change)
-- **Dynamic-but-immutable**: Features loaded at startup then frozen (config changes via restart, used by LangChain/CrewAI)
 
 **3. Verification Requirements**
 
@@ -156,14 +151,6 @@ CRITICAL RULES:
 - Rigid format doesn't accommodate changing requirements
 - Large feature lists can overwhelm agent context
 
-**Security implications:**
-
-| Guaranteed by Immutable Contract | Not Guaranteed (requires additional patterns) |
-|----------------------------------|----------------------------------------------|
-| No unauthorized tool access | Prompt injection in parameters |
-| Predictable attack surface | Authorization bypass |
-| Schema validation prevents injection | Output exfiltration |
-
 **When to use:**
 
 - Building complete applications with known requirements
@@ -181,7 +168,10 @@ CRITICAL RULES:
 ## References
 
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-* [Action-Selector Pattern (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837)
-* Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — extends this pattern with two-agent lifecycle
+* [GitHub Spec Kit](https://github.com/github/spec-kit) - spec-driven development toolkit that mainstreamed spec-as-contract for coding agents (specify, plan, tasks, implement)
+* [Kiro](https://kiro.dev/) - AWS agentic development platform built around specs turned into requirements, designs, and sequenced tasks
+* Related: [Specification-Driven Agent Development](specification-driven-agent-development.md) — the broader spec-first workflow this contract feeds. Distinct from that pattern: it fixes acceptance as an immutable, machine-readable checklist rather than a living spec document.
+* Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — the session lifecycle that creates and then consumes this contract. Distinct from that pattern: this file owns the artifact and its enforcement rules; that one owns who runs when.
+* Related: [Spec as Test Feedback Loop](spec-as-test-feedback-loop.md) — verifies work against a spec in a loop; this pattern freezes the spec up front instead.
 * Related: [Action-Selector Pattern](action-selector-pattern.md) — alternative approach using allowlists
 * Related: [Sandboxed Tool Authorization](sandboxed-tool-authorization.md) — complementary pattern for capability restriction

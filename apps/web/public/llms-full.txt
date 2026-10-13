@@ -467,10 +467,11 @@ execute(action)
 
 ## Evidence
 
-- **Evidence Grade:** `high` (academically grounded; industry adoption confirmed)
+- **Evidence Grade:** `medium` (academically grounded; the strict no-feedback variant has thin third-party adoption)
 - **Most Valuable Findings:**
   - Provides provable resistance to control-flow hijacking via separation of duties and no feedback loop
-  - Supported by major frameworks: LangChain (tool allowlists, Pydantic validation), Anthropic Claude (function calling with response schemas), OpenAI (function calling with JSON Schema)
+  - The source paper describes the pattern as an "LLM-modulated 'switch' statement" with no action feedback returned to the agent
+  - Caveat: mainstream function-calling APIs (OpenAI, Anthropic, LangChain) return tool outputs to the model, so they implement the allowlist-plus-schema-validation half of this pattern but not the no-feedback half
   - Does NOT protect against parameter poisoning—malicious data can still influence parameters passed to approved tools
 - **Unverified:** Detailed quantitative evaluation results from source paper
 
@@ -492,6 +493,8 @@ Provide a hard allowlist of actions (API calls, SQL templates, page links) and v
 - SecAlign (Chen et al., 2024): Preference optimization defense against prompt injection
 - StruQ (Chen et al., 2024): Structured query defense with type-safe construction
 - "Learning From Failure" (Wang et al., 2024): Categories of tool-use errors in LLM agents
+- [Defeating Prompt Injections by Design (CaMeL)](https://arxiv.org/abs/2503.18813) - Debenedetti et al., 2025: same research group; system-design defense with security guarantees, stricter than selector allowlists alone
+- [OWASP GenAI Security Project](https://genai.owasp.org/) - current industry guidance including the LLM Top 10 and agent control standards
 
 ---
 
@@ -2820,6 +2823,8 @@ sequenceDiagram
 
 **Cascade prevention:**  Agent responses use a modified prefix format (`[notification/Agent-X]`) that contains a slash.  The detection regex (`/\[([A-Za-z][A-Za-z0-9-]*)\]/`) does not match tokens containing slashes.  Responses do not trigger new inbox cards; only new requests do.
 
+The broader practice is not limited to this blueprint: independent 2026 tools use a board as the shared coordination layer for agents that run in separate sessions (see References).
+
 ## How to use it
 
 **Prerequisites:**
@@ -2890,6 +2895,8 @@ else:
 
 - [Agentic Kanban Blueprint](https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint) -- reference implementation including the Cloudflare Worker proxy, n8n handler, routing convention, polling fallback, and `/watch-card` protocol
 - [AKB docs: agent-communication.md](https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint/blob/main/docs/agent-communication.md) -- full implementation detail including failure modes, multiplicity rules, and initiative wakeup
+- [Hermes Agent Bot Mode vs Kanban: When to Use Each](https://dev.to/vivek_shetye/hermes-agent-bot-mode-vs-kanban-when-to-use-each-and-why-i-use-both-2che) -- Vivek Shetye, Aug 25, 2026: independent writeup using a Kanban board to structure parallel agent work and handoffs
+- [ai-agent-board](https://github.com/DanWahlin/ai-agent-board) -- open-source Kanban board (MIT) that delegates tasks to Claude Code, Copilot, Codex, and OpenCode agents
 
 ---
 
@@ -2941,6 +2948,7 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 - Start with high-volume workflows where quality targets are measurable.
 - Add routing telemetry: selected model, estimated cost, actual cost, escalation reason.
 - Define hard-fail behavior for cap breaches (defer, partial answer, or human handoff).
+- Check provider-native caps before building your own: for example Claude Code's `--max-budget-usd` flag stops a run once estimated API spend reaches a set amount.
 
 ## Trade-offs
 
@@ -2949,10 +2957,13 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 
 ## References
 
-- https://arxiv.org/abs/2305.05176 - FrugalGPT: Cost-Effective LLM Routing (Stanford, 2023)
-- https://simonwillison.net/2024/May/29/training-not-chatting/
+- https://arxiv.org/abs/2305.05176 - FrugalGPT (Stanford, 2023): learned query cascades; the hard-cap layer on top is this pattern's addition, not the paper's
 - https://arxiv.org/abs/2406.18665 - RouteLLM (ICLR 2024)
 - https://arxiv.org/html/2510.08439v1 - xRouter (2025)
+- https://arxiv.org/abs/2601.07206 - LLMRouterBench (2026): benchmark covering both performance-oriented and performance-cost routing
+- https://arxiv.org/abs/2609.37902 - Market-Aware Routing for Open-Weight LLM Inference (Sep 2026): routing must also pick the serving provider, not just the model
+- https://code.claude.com/docs/en/cli-reference - Claude Code CLI reference: `--max-budget-usd` as an example of a provider-native hard spend cap
+- https://developers.openai.com/api/docs/guides/rate-limits - OpenAI rate and spend limits: requests that exceed a project or organization budget cap fail hard with 429
 
 ---
 
@@ -5281,6 +5292,18 @@ STREAM_JSON=true           # Real-time progress tracking
 - Monitor execution logs for unexpected behavior
 - Start with small task batches to validate behavior
 
+### Native alternatives (2026)
+
+Much of the external while-loop is now available inside Claude Code itself, so check these before maintaining a shell script:
+
+- **Background sessions**: `claude --bg` starts a session as a background agent and returns immediately, printing the session ID and management commands.
+- **Budget caps**: `claude -p --max-budget-usd 5.00 "query"` stops the run once estimated API spend reaches the amount, including subagent spend.
+- **In-process stop-hook loops**: a Stop hook that restarts the agent when completion criteria are not met achieves the same unattended looping without an external script (see [Stop Hook Auto-Continue Pattern](stop-hook-auto-continue-pattern.md)).
+
+The external shell loop is still the right choice when you need cross-tool orchestration (mixing CLIs from different vendors), custom rate-limit policy across processes, or progress accounting over the todo file with plain Unix tooling.
+
+Distinct from [Stop Hook Auto-Continue Pattern](stop-hook-auto-continue-pattern.md): that pattern continues a single Claude Code session in-process via a Stop hook, while this pattern drives fresh CLI invocations from an external script.
+
 ## Trade-offs
 
 **Pros:**
@@ -5302,7 +5325,9 @@ STREAM_JSON=true           # Real-time progress tracking
 ## References
 
 - [Original Autonomous Task Processing Script](https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78) - Complete implementation example
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) - CLI agent capabilities
+- [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference) - native `--bg` background sessions and `--max-budget-usd` spend caps that absorb parts of the external loop
+- [Anthropic Engineering: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) - harness design for unattended, multi-session agent work
+- [The Ralph Loop: How I Run Autonomous AI Agents Overnight](https://blakecrosley.com/blog/ralph-agent-architecture) - Blake Crosley, Feb 2026: stop-hook-based autonomous loops as the in-process variant
 - [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) (NeurIPS 2022) - Yao et al. — establishes Thought→Action→Observation paradigm foundational to continuous task loops
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - Shinn et al. — episodic memory and self-reflection for continuous improvement
 
@@ -5686,10 +5711,15 @@ The relay document is written to a temp file and atomically renamed to prevent p
 
 ```bash
 # auto-loop.sh — the minimal autonomous loop
+# Claude Code has no --context flag; the relay document is inlined
+# into the prompt text (this matches the real auto-loop.sh mechanism)
 while true; do
   # Each cycle reads the relay baton, executes, writes a new one
-  claude -p "$(cat PROMPT.md)" \
-    --context "$(cat memories/consensus.md)"
+  PROMPT="$(cat PROMPT.md)
+
+## Current Consensus (pre-loaded)
+$(cat memories/consensus.md)"
+  claude -p "$PROMPT"
   sleep $CYCLE_INTERVAL
 done
 ```
@@ -5831,13 +5861,15 @@ mv memories/.consensus.tmp memories/consensus.md
 
 ## Known Implementations
 
-- [auto-co framework](https://github.com/NikitaDmitrieff/auto-co-meta) — open-source autonomous loop framework using a relay document across repeated cycles
+- [auto-co framework](https://github.com/NikitaDmitrieff/auto-co-meta) — open-source autonomous loop framework using a relay document across repeated cycles. Its `auto-loop.sh` concatenates `memories/consensus.md` into the prompt text and writes updates atomically via a temp file plus rename.
 
 ## References
 
 - [Anthropic Engineering: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference) — no `--context` flag exists; the closest primitives are `--append-system-prompt-file`, `-c`/`--continue`, and `-r`/`--resume`
 - [BabyAGI](https://github.com/yoheinakajima/babyagi) — early task-loop example with persistent task artifacts
-- Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — for checkpointing within a single cycle
+- Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — for checkpointing within a single cycle. Distinct from that pattern: the relay document is a structured cross-cycle handoff with a directed next action, not a general state checkpoint.
+- Related: [Continuous Autonomous Task Loop Pattern](continuous-autonomous-task-loop-pattern.md) — that pattern runs the loop itself; this pattern defines what passes between cycles. Distinct from it: the relay document carries phase, decisions, and convergence state, not just task selection.
 - Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md) — for agents that self-initiate state writes
 - Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — for session handoff artifacts across repeated work cycles
 
@@ -6266,6 +6298,12 @@ flowchart TD
 - But they can't deeply integrate with your company's specific infrastructure
 - Building custom lets you optimize for your workflows, tools, and security requirements
 
+**When off-the-shelf suffices (2026 update):** the integration gap has narrowed. Claude Code now supports self-hosted environments and cloud sessions on company infrastructure (`--environment ccpool_...`), and agent SDKs let you embed the agent loop in your own service. Before building, check whether a vendor agent plus your own runner gives you the sandbox control and internal access you need; build custom when you also need real-time streaming UX, model-agnostic switching, and bespoke feedback loops.
+
+**Sourced adoption evidence:** Ramp reports that roughly 30% of all pull requests merged to their frontend and backend repos are written by their in-house agent Inspect.
+
+Distinct from [Background Agent with CI Feedback](background-agent-ci.md): that pattern uses CI as the feedback channel on vendor-managed execution, while this pattern is about building and operating your own sandbox, streaming, and feedback infrastructure.
+
 ## Trade-offs
 
 * **Pros:**
@@ -6437,11 +6475,14 @@ graph TD
 - **Abstraction cost**: A declarative layer cannot expose every platform-specific feature; escape hatches or extensions are needed for advanced cases.
 - **Grammar learning curve**: Teams must learn a new syntax, though the goal is to keep it minimal and readable.
 - **Compiler fidelity**: Each binding must faithfully map declarative primitives to platform capabilities, which varies across targets.
-- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing.
+- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing. No cross-framework agent topology standard exists as of October 2026; adjacent efforts standardize other layers (see References).
 
 ## References
 
 - [AgenTopology](https://github.com/agentopology/agentopology) — Open-source reference implementation: parser, validator, CLI, visualizer, and bindings for multiple platform targets. Apache-2.0.
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — declarative graph-based agent workflows (`StateGraph`, nodes and edges) within one framework; the closest mainstream analogue, but not portable across frameworks.
+- [AGNTCY](https://agntcy.org/) — Linux Foundation project standardizing cross-vendor agent discovery, identity, messaging, and observability rather than topology definition.
+- [A2A protocol](https://a2a-protocol.org/) — open standard for cross-framework agent-to-agent discovery and collaboration, again at the protocol layer rather than the topology DSL layer.
 - Jennings, N. R. (2001). "An agent-based approach for building complex software systems". Communications of the ACM. — Foundational work on multi-agent system architectures and coordination patterns.
 - Wooldridge, M. (2009). *An Introduction to MultiAgent Systems*. Wiley. — Textbook covering agent communication languages, interaction protocols, and organizational structures.
 
@@ -6961,10 +7002,10 @@ The key insight is layered defense: deterministic rules catch known patterns wit
 
 ## Deterministic Zero-LLM Orchestration
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Alex Chernysh (@chernistry)
-**Source:** https://github.com/chernistry/bernstein
+**Source:** https://github.com/sipyourdrink-ltd/bernstein
 
 ## Problem
 
@@ -6972,14 +7013,16 @@ Multi-agent coding systems typically spend LLM tokens on coordination — decidi
 
 ## Solution
 
-Keep the orchestrator as **deterministic Python code** that spends zero LLM tokens on coordination. The LLM budget goes entirely to the agents doing actual work.
+Keep the orchestrator as **deterministic Python code** that spends almost no LLM tokens on coordination. Decomposition makes a single LLM call ("One LLM call, then plain Python from there"), and everything after it — assignment, verification, git — is plain code. The LLM budget goes almost entirely to the agents doing actual work.
 
 ```
-Goal → Decompose (deterministic) → Assign to parallel agents → Verify (tests) → Commit
+Goal → Decompose (one LLM call) → Assign to parallel agents → Verify (tests) → Commit
 ```
+
+For a fully LLM-free path, write the plan file yourself and run it directly with `bernstein run plan.yaml`, skipping LLM planning entirely.
 
 The orchestrator handles:
-- Task decomposition via rule-based planning
+- Task decomposition via one LLM call, then rule-based planning in code
 - Agent assignment and parallel spawning (Claude Code, Codex CLI, Gemini CLI)
 - Result verification through test execution
 - Git operations (branching, merging, committing)
@@ -6995,11 +7038,13 @@ Agents handle:
 # Single goal → parallel agents → verified commits
 bernstein -g "Add JWT auth with refresh tokens, tests, and API docs"
 
-# Headless for CI pipelines
-bernstein --headless
+# Fully LLM-free: execute a plan file directly, skipping LLM planning
+bernstein run plan.yaml
 
-# Self-evolution mode: propose and sandbox improvements
-bernstein --evolve --budget 5.00
+# Initialize a project, watch a run, stop it
+bernstein init
+bernstein live
+bernstein stop
 ```
 
 Key implementation choices:
@@ -7011,7 +7056,7 @@ Key implementation choices:
 ## Trade-offs
 
 **Pros:**
-- Predictable coordination cost (zero LLM tokens)
+- Predictable coordination cost (one LLM call at setup, then plain Python; zero with a hand-written plan file)
 - Deterministic behavior — same goal produces same task breakdown
 - Faster iteration — no waiting for LLM to decide what to do next
 - Supports heterogeneous agents (Claude Code, Codex CLI, Gemini CLI, Qwen)
@@ -7023,7 +7068,7 @@ Key implementation choices:
 
 ## References
 
-* [Bernstein](https://github.com/chernistry/bernstein) — Production implementation of this pattern
+* [Bernstein](https://github.com/sipyourdrink-ltd/bernstein) — reference implementation of this pattern (repo transferred from `chernistry/bernstein`, which now redirects). Status per its README: beta, solo-maintained, under active development.
 * See also: [Sub-Agent Spawning](sub-agent-spawning.md) for the general multi-agent delegation pattern
 * See also: [Plan-Then-Execute Pattern](plan-then-execute-pattern.md) for the planning phase approach
 
@@ -7210,30 +7255,32 @@ When AI agents attempt to simultaneously research, plan, and implement solutions
 
 Break development workflows into isolated phases with clean handoffs between them. Each phase runs in a separate conversation with a fresh context window, focusing exclusively on its objective:
 
-**Research Phase (Opus 4.1):**
+**Research Phase (frontier reasoning model):**
 
 - Deep exploration of requirements, existing code, and constraints
 - Comprehensive background investigation
 - No implementation concerns
 
-**Planning Phase (Opus 4.1):**
+**Planning Phase (frontier reasoning model):**
 
 - Create structured implementation roadmap
 - Define clear steps and dependencies
 - No coding distractions
 
-**Implementation Phase (Sonnet 4.5):**
+**Implementation Phase (fast coding model):**
 
 - Execute each plan step systematically
 - Focus purely on code quality and functionality
 - Leverage the distilled outputs from previous phases
 
+The source article pinned the then-current frontier and fast models; treat the model choice as a role decision (deep reasoning for research and planning, fast execution for implementation) rather than a pinned version.
+
 **Key principle:** Pass only distilled conclusions between phases, not full conversation history. This prevents context pollution while maintaining necessary information flow.
 
 ```mermaid
 graph LR
-    A[Research Phase<br/>Opus 4.1] -->|Distilled Findings| B[Planning Phase<br/>Opus 4.1]
-    B -->|Implementation Roadmap| C[Execution Phase<br/>Sonnet 4.5]
+    A[Research Phase<br/>deep reasoning model] -->|Distilled Findings| B[Planning Phase<br/>deep reasoning model]
+    B -->|Implementation Roadmap| C[Execution Phase<br/>fast coding model]
 
     style A fill:#e1f5ff
     style B fill:#fff4e1
@@ -7251,21 +7298,21 @@ graph LR
 
 **Implementation approach:**
 
-1. **Research phase** - Start fresh conversation with Opus 4.1:
-   
+1. **Research phase** - Start a fresh conversation with a deep reasoning model:
+
 - "Research the authentication system and document all OAuth flows"
    - Compile findings into a structured document
    - Close conversation
 
-2. **Planning phase** - New conversation with Opus 4.1:
-   
+2. **Planning phase** - New conversation with a deep reasoning model:
+
 - Provide distilled research findings (not full transcript)
    - "Create implementation plan for adding Google OAuth support"
    - Generate step-by-step roadmap
    - Close conversation
 
-3. **Execution phase** - New conversation with Sonnet 4.5:
-   
+3. **Execution phase** - New conversation with a fast coding model:
+
 - Provide the implementation plan
    - "Implement step 1: Create OAuth configuration module"
    - Execute systematically through each step
@@ -7282,23 +7329,21 @@ graph LR
 
 - Higher quality outputs in each phase due to focused attention
 - Prevents context contamination from competing objectives
-- Deliberation before action improves tool use accuracy from 72% to 94% (Parisien et al. 2024)
-- Leverages model-specific strengths (Opus for reasoning, Sonnet for execution)
+- Leverages model-specific strengths (deep reasoning for research and planning, fast execution for implementation)
 - Clearer mental model for complex projects
 - Easier to debug which phase introduced issues
 
 **Cons:**
 
 - Requires more explicit phase management and handoffs
-- Planning overhead adds ~35% latency (Parisien et al. 2024)
+- Planning overhead adds latency and total token usage
 - Requires discipline to maintain phase boundaries
 - Information loss risk if handoffs are poorly structured
 - Higher total token usage across multiple conversations
 
 ## References
 
-- [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Sam Stettner (Ambral) emphasizes: "Don't make Claude do research while it's trying to plan, while it's trying to implement."
-- [Deliberation Before Action: Language Models with Tool Use](https://arxiv.org/abs/2403.05441) - Parisien et al., ICLR 2024
+- [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Jack Stettner (CTO, Ambral) emphasizes: "Don't make Claude do research while it's trying to plan, while it's trying to implement."
 - [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) - Beurer-Kellner et al., 2025 (Section 3.1: Plan-Then-Execute)
 - Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Plan-Then-Execute Pattern](plan-then-execute-pattern.md)
 
@@ -7499,7 +7544,7 @@ Extends [Sub-Agent Spawning](sub-agent-spawning.md) and [Swarm Migration Pattern
 
 **Pros:**
 
-- Massive parallelization (10x-100x speedup for suitable tasks)
+- Massive parallelization for suitable tasks (throughput is bounded by the number of parallel workers, not by one session)
 - Scales to enterprise team needs
 - Centralizes agent management and monitoring
 - Enables team-wide AI adoption
@@ -7517,9 +7562,9 @@ Extends [Sub-Agent Spawning](sub-agent-spawning.md) and [Swarm Migration Pattern
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - HumanLayer's CodeLayer enables "teams run multiple Claude agent sessions in parallel"
-- [HumanLayer Documentation](https://docs.humanlayer.dev/) - Framework for human-in-the-loop agent coordination
-- Stone, P., & Veloso, M. (2000). Multiagent systems: A survey from a machine learning perspective. *Autonomous Robots*, 8(3), 345-383. DOI: 10.1023/A:1008930228068
-- Weiss, G. (Ed.). (2013). *Multiagent systems: a modern approach to distributed artificial intelligence*. MIT Press.
+- [HumanLayer](https://www.humanlayer.dev) - human-in-the-loop agent coordination (the former docs.humanlayer.dev subdomain serves an expired TLS certificate; use the apex domain)
+- [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference) - native parallel sessions via the `--worktree` flag, which starts Claude in an isolated git worktree per session
+- [Introducing the Agents API](https://openai.com/index/introducing-the-agents-api) - OpenAI, Sep 2026: managed cloud agents with long-running sessions for parallel work
 - Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)
 
 ---
@@ -7630,12 +7675,15 @@ Email/calendar assistants, booking agents, API-powered chatbots, or any system h
 
 * **Pros:** Clear trust boundary; compatible with static analysis.
 * **Cons:** Complexity; debugging across two minds.
+* **Security limits:** Dual LLM alone is not provably secure. CaMeL (Debenedetti et al., 2025) asks directly whether the pattern suffices and argues the data flow can still be manipulated even when control flow is protected.
 
 ## References
 
-* Willison, *Dual LLM Pattern* (Apr 2023); adopted in Beurer-Kellner et al., §3.1 (4).
+* Willison, [The Dual LLM pattern for building AI assistants that can resist prompt injection](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/) (Apr 2023); adopted in Beurer-Kellner et al., §3.1 (4).
 
 - Primary source: https://arxiv.org/abs/2506.08837
+- [Defeating Prompt Injections by Design (CaMeL)](https://arxiv.org/abs/2503.18813) - Debenedetti et al., 2025: system-design defense with security guarantees; questions whether Dual LLM alone is enough
+- [Designing AI agents to resist prompt injection](https://openai.com/index/designing-agents-to-resist-prompt-injection/) - OpenAI, 2026: same-space industry guidance on constraining risky actions in agent workflows
 
 ---
 
@@ -8713,7 +8761,7 @@ graph TD
 
 **Key insight:** With models like GPT-5.2 that can work autonomously for 45+ minutes, watching them in a sidebar is wasteful. You should be able to spawn 10 such agents and check on them all later.
 
-**Academic support:** Multi-agent research (OpenDevin, AutoGen, CAMEL) validates parallel autonomous execution over single-assistant interaction.
+**Academic context:** Multi-agent research (OpenDevin, AutoGen, CAMEL) studies parallel autonomous execution, though none of these papers directly compares factory versus assistant effectiveness.
 
 ## How to use it
 
@@ -8762,16 +8810,20 @@ user → spawn(agent1) + spawn(agent2) + spawn(agent3)
 
 **Practical example from AMP:**
 
-AMP is killing their VS Code extension because they believe:
+AMP is sunsetting their editor extensions (VS Code and JetBrains) because they believe:
+
 - The 1% of developers on the frontier only need to do 20% of their work in an editor
 - They aim to get that to 10% or 1%
 - The sidebar is dead for frontier development
 - Factory model enables more effective use of autonomous models
 
 **Other production implementations:**
-- **Anthropic Claude Code**: Internal users report 10x+ speedups on framework migrations using map-reduce across 10+ parallel agents
+
+- **Anthropic Claude Code**: parallel agent sessions in isolated git worktrees via the `--worktree` flag
 - **GitHub Agentic Workflows**: Agents run in CI/CD with branch-per-task isolation
 - **Cursor Background Agent**: Cloud-based autonomous development with automatic PR creation
+
+Distinct from [Background Agent with CI Feedback](background-agent-ci.md): that pattern runs a single background agent verified by a CI loop, while this pattern is about spawning many agents in parallel and changing the human's role. Distinct from [Rich Feedback Loops](rich-feedback-loops.md): that pattern designs the feedback channel itself; this pattern assumes such loops exist and changes who runs how many agents.
 
 ## Trade-offs
 
@@ -8810,8 +8862,9 @@ The factory model is why AMP is killing their VS Code extension. The extension o
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2026-01-22); also at [ampcode.com/podcast/episode-9](https://ampcode.com/podcast/episode-9)
+* [Raising an Agent Episode 10](https://ampcode.com/podcast/episode-10) - AMP, 2026-02-05: announces the editor extension sunset ("the sidebar era is ending")
+* [The Coding Agent Is Dead](https://ampcode.com/news/the-coding-agent-is-dead) - AMP, 2026-02-19: written announcement that Amp for VS Code and Amp for JetBrains are being sunset
 * [Communicative Agents for Software Development (OpenDevin)](https://arxiv.org/abs/2407.16819) - Wang et al., 2024
 * [AutoGen: Enabling Multi-Agent LLM Applications](https://arxiv.org/abs/2308.08160) - Duan et al. (Microsoft Research), 2023
 * [CAMEL: Communicative Agents for Mind Exploration](https://arxiv.org/abs/2303.17760) - Li et al., 2023
@@ -9040,11 +9093,6 @@ Enforce through prompt instructions:
 - Agent MAY NOT modify acceptance criteria/steps
 - Agent MAY NOT mark features as "not applicable"
 
-**Two implementation variations:**
-
-- **Static list**: Features hardcoded at compile time (maximum security, requires redeploy to change)
-- **Dynamic-but-immutable**: Features loaded at startup then frozen (config changes via restart, used by LangChain/CrewAI)
-
 **3. Verification Requirements**
 
 Features are only marked passing after:
@@ -9116,14 +9164,6 @@ CRITICAL RULES:
 - Rigid format doesn't accommodate changing requirements
 - Large feature lists can overwhelm agent context
 
-**Security implications:**
-
-| Guaranteed by Immutable Contract | Not Guaranteed (requires additional patterns) |
-|----------------------------------|----------------------------------------------|
-| No unauthorized tool access | Prompt injection in parameters |
-| Predictable attack surface | Authorization bypass |
-| Schema validation prevents injection | Output exfiltration |
-
 **When to use:**
 
 - Building complete applications with known requirements
@@ -9141,8 +9181,11 @@ CRITICAL RULES:
 ## References
 
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-* [Action-Selector Pattern (Beurer-Kellner et al., 2025)](https://arxiv.org/abs/2506.08837)
-* Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — extends this pattern with two-agent lifecycle
+* [GitHub Spec Kit](https://github.com/github/spec-kit) - spec-driven development toolkit that mainstreamed spec-as-contract for coding agents (specify, plan, tasks, implement)
+* [Kiro](https://kiro.dev/) - AWS agentic development platform built around specs turned into requirements, designs, and sequenced tasks
+* Related: [Specification-Driven Agent Development](specification-driven-agent-development.md) — the broader spec-first workflow this contract feeds. Distinct from that pattern: it fixes acceptance as an immutable, machine-readable checklist rather than a living spec document.
+* Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — the session lifecycle that creates and then consumes this contract. Distinct from that pattern: this file owns the artifact and its enforcement rules; that one owns who runs when.
+* Related: [Spec as Test Feedback Loop](spec-as-test-feedback-loop.md) — verifies work against a spec in a loop; this pattern freezes the spec up front instead.
 * Related: [Action-Selector Pattern](action-selector-pattern.md) — alternative approach using allowlists
 * Related: [Sandboxed Tool Authorization](sandboxed-tool-authorization.md) — complementary pattern for capability restriction
 
@@ -10234,7 +10277,7 @@ def handler(trigger, tools, virtual_files, subagent):
 **Pros:**
 
 - **Best of both worlds**: LLM flexibility when prototyping, code determinism when mature
-- **Token efficiency**: Code-first processing reduces token usage by 75-99% for data-heavy tasks (Anthropic Code-Over-API, 2024)
+- **Token efficiency**: code execution instead of per-tool API calls can cut tokens dramatically; Anthropic reports one case of a 98.7% reduction (150,000 to 2,000 tokens) in its code-execution post. That figure is about code execution versus tool-by-tool API calls, not about the coordinator choice itself.
 - **Easy migration**: One-shot rewrite from prompt → script
 - **Same capabilities**: Scripts have access to all tools, can still use LLM via subagent
 - **Code review**: Critical workflows go through standard review process
@@ -10253,10 +10296,11 @@ def handler(trigger, tools, virtual_files, subagent):
 
 ## References
 
-* [Building an internal agent: Code-driven vs LLM-driven workflows](https://lethain.com/agents-coordinators/) - Will Larson (Imprint, 2025)
+* [Building an internal agent: Code-driven vs LLM-driven workflows](https://lethain.com/agents-coordinators/) - Will Larson (Imprint, December 31, 2025)
 * [PAL: Program-Aided Language Models](https://arxiv.org/abs/2211.10435) - Gao et al. (ICLR 2023)
-* [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Anthropic Engineering (2024)
-* Related: Code Mode MCP Tool Interface, Deterministic Security Scanning Build Loop
+* [Code execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) - Anthropic Engineering (November 4, 2025): reports a single 98.7% token reduction (150,000 to 2,000 tokens) for code execution over API tool calls
+* Related: [Code-over-API Pattern](code-over-api-pattern.md) — the token argument for code over per-tool API calls, which this coordinator choice inherits. Distinct from that pattern: this one is about who coordinates the workflow, not how tools are called.
+* Related: [Deterministic Zero-LLM Orchestration](deterministic-zero-llm-orchestration.md) — goes further and removes the LLM coordinator entirely. Distinct from that pattern: this one keeps the LLM coordinator as the default for prototyping.
 
 ---
 
@@ -10654,7 +10698,7 @@ flowchart TD
 
 ## Initializer-Maintainer Dual Agent Architecture
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
@@ -10670,11 +10714,11 @@ Long-running agent projects face distinct failure modes at different lifecycle s
 
 ## Solution
 
-Implement a two-agent architecture with lifecycle-specialized responsibilities:
+Implement a two-agent architecture with lifecycle-specialized responsibilities. In the reference implementation both roles are the same harness with only a different initial user prompt (the system prompt, tools, and harness are identical); "two agents" is a prompt-level distinction, not two deployed systems.
 
 **1. Initializer Agent** (runs once at project start):
 
-- Creates comprehensive feature list with all requirements
+- Creates the immutable feature list with all requirements (the artifact and its enforcement rules are covered in [Feature List as Immutable Contract](feature-list-as-immutable-contract.md))
 - Establishes progress tracking artifacts (e.g., `progress.txt`)
 - Sets up environment bootstrap scripts (e.g., `init.sh`)
 - Configures testing infrastructure
@@ -10700,7 +10744,7 @@ sequenceDiagram
     participant Git as Git Repository
 
     Note over Init: Runs ONCE at project start
-    Init->>FS: Create feature-list.json (200+ items, all "passes: false")
+    Init->>FS: Create feature list (see Feature List as Immutable Contract)
     Init->>FS: Create init.sh (environment bootstrap)
     Init->>FS: Create progress.txt (empty log)
     Init->>Git: Initial commit with foundation
@@ -10742,14 +10786,7 @@ sequenceDiagram
    - Mandatory testing before marking complete
    - Commit discipline
 
-3. **Define the handoff artifacts**:
-   ```
-   project/
-   ├── feature-list.json    # All features with pass/fail status
-   ├── progress.txt         # Running log of decisions and work
-   ├── init.sh              # One-command environment startup
-   └── .git/                # Descriptive commits as context
-   ```
+3. **Define the handoff artifacts**: the feature list is specified in [Feature List as Immutable Contract](feature-list-as-immutable-contract.md); this pattern adds the progress log and the one-command bootstrap script on top of it.
 
 ## Trade-offs
 
@@ -10772,7 +10809,9 @@ sequenceDiagram
 ## References
 
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-* [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents)
+* [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) (January 14, 2026)
+* Related: [Feature List as Immutable Contract](feature-list-as-immutable-contract.md) — owns the feature-list artifact and its enforcement rules. Distinct from that pattern: this one owns the session lifecycle (who runs once, who runs repeatedly) around that artifact.
+* Related: [Planner-Worker Separation for Long-Running Agents](planner-worker-separation-for-long-running-agents.md) — splits planning from execution at runtime. Distinct from that pattern: this one separates project bootstrap from incremental delivery over the project's lifetime, and both roles share one harness.
 * Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 * Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md)
 
@@ -11064,11 +11103,10 @@ sequenceDiagram
 
 ## Evidence
 
-**Evidence Grade:** `high`
-
 **Most Valuable Findings:**
+
 - Academic validation from multiple 2025 papers (MI9 governance framework, Beurer-Kellner et al. security patterns) confirms external control layers are essential for agent safety
-- Production implementations report 2-10x developer leverage gains through autonomous execution with guardrails
+- The practice of letting the model decide which tools to run is now the common definition of an agent (see Willison's 2025 definitional post in References)
 
 ## How to use it
 
@@ -11084,9 +11122,11 @@ sequenceDiagram
 
 ## References
 
-* Raising An Agent - Episode 1, "It's a big bird, it can catch its own food."
+* [Raising An Agent - Episode 1](https://ampcode.com/podcast/episode-1), "It's a big bird, it can catch its own food." (AMP, March 6, 2025)
+* Simon Willison, [What is an agent?](https://simonwillison.net/2025/Sep/18/agents/) (September 18, 2025) — the model deciding which tools to run as the settled definition of an agent
 * MI9: Runtime Governance Framework (arXiv:2508.03858v3, 2025)
 * Beurer-Kellner et al., Design Patterns for Securing LLM Agents (arXiv:2506.08837, 2025)
+* Related: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md) — the calibrated-autonomy companion. Distinct from that pattern: it adjusts how much initiative the agent gets per task, while this one hands over orchestration wholesale inside guardrails.
 
 [Source](https://www.nibzard.com/ampcode)
 
@@ -11517,7 +11557,7 @@ flowchart TD
 
 - Use this when you need diverse perspectives or want to avoid local optimum trapping.
 - Assign distinct roles or perspectives to each agent (e.g., critic, optimist, technical realist).
-- Limit to 2-4 agents for manageable coordination; more than 6 adds exponential overhead.
+- Limit to 2-4 agents for manageable coordination (practitioner guidance, not a measured threshold); note that research on sampling-and-voting finds accuracy generally improves with more agents, so add agents when the task rewards coverage and you can afford the runs.
 - Use a coordinating agent or human to synthesize and deduplicate outputs.
 
 ## Trade-offs
@@ -11528,9 +11568,12 @@ flowchart TD
 ## References
 
 -   Inspired by the example of using parallel agents for brainstorming in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III.
--   AAAI 2024: "Collective Intelligence in Multi-Agent Brainstorming Systems" - heterogeneous agents achieve higher creativity scores
+-   [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171) - Wang et al., 2022: sampling multiple reasoning paths and taking the most consistent answer
+-   [More Agents Is All You Need](https://arxiv.org/abs/2402.05120) - Li et al., 2024: sampling-and-voting performance scales with the number of agents
 -   Microsoft AutoGen: https://github.com/microsoft/autogen
 -   MetaGPT: https://github.com/geekan/MetaGPT
+-   Related: [Recursive Best-of-N Delegation](recursive-best-of-n-delegation.md) — runs N attempts and picks the best one. Distinct from that pattern: brainstorming merges diverse ideas into options rather than selecting a single best output.
+-   Related: [Opponent-Processor Multi-Agent Debate](opponent-processor-multi-agent-debate.md) — agents argue opposing positions. Distinct from that pattern: brainstorming agents work independent perspectives in parallel instead of critiquing each other.
 
 [Source](https://www.nibzard.com/claude-code)
 
@@ -11932,6 +11975,7 @@ class LATSAgent:
 - Simple or linear tasks: use ReAct or Chain-of-Thought
 - Real-time response requirements: use single-pass with Reflection Loop
 - Cost-sensitive applications: use Tree-of-Thoughts with limited branching
+- Reasoning models with internalized search: frontier reasoning models already spend test-time compute on internal exploration, which competes with what LATS externalizes. Prefer LATS when you need the search tree to be inspectable and steerable (you can see and prune the branches), when the task benefits from explicit backtracking after feedback, or when adaptive branching clearly beats repeated sampling for your domain. Prefer a reasoning model when a single call is fast enough and you do not need the trace.
 
 **Implementation guidance:**
 - Start with fixed iterations (10-25) before tuning exploration constant c
@@ -11941,9 +11985,11 @@ class LATSAgent:
 ## References
 
 - [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406) - Zhou et al., 2023
+- [Wider or Deeper? Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search (AB-MCTS)](https://arxiv.org/abs/2503.04412) - Inoue et al., 2025: adaptive branching tree search versus repeated sampling for frontier reasoning models
 - [Monte Carlo Tree Search: A Survey](https://doi.org/10.1109/TCIAIG.2012.2206890) - Browne et al., 2012 (foundational MCTS theory)
 - [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
 - [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
+- Related siblings: [Tree-of-Thought Reasoning](tree-of-thought-reasoning.md) (search over reasoning steps without the agentic tool-use loop) and [Inference-Time Scaling](inference-time-scaling.md) (spending more compute at answer time in general). Distinct from Tree-of-Thought: LATS embeds the search in an agent loop with environment feedback and self-reflection.
 
 ---
 
@@ -12167,7 +12213,7 @@ final = reduce(results)  # no raw docs enter this step
 
 File triage, document summarization, resume filters, code migration verification—any N-to-1 decision where each item's influence should stay local.
 
-Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent, and aggregation is needed.
+Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent, and aggregation is needed. These thresholds are practitioner heuristics for when the orchestration overhead pays off, not guidance from the source paper.
 
 ## Trade-offs
 
@@ -12176,7 +12222,7 @@ Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent
 
 ## References
 
-* Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce.
+* Beurer-Kellner et al., §3.1 (3) LLM Map-Reduce — [HTML full text, Section 3.1](https://arxiv.org/html/2506.08837v3).
 * Dean & Ghemawat (2008). MapReduce: Simplified Data Processing on Large Clusters.
 
 - Primary source: https://arxiv.org/abs/2506.08837
@@ -12464,12 +12510,12 @@ The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config
 
 **Status:** emerging
 **Category:** Orchestration & Control
-**Authors:** Yehuda Levy (@yehudalevy-collab)
-**Source:** https://github.com/yehudalevy-collab/polis-protocol
+**Authors:** Yehuda Levy (@ymxlx)
+**Source:** https://github.com/ymxlx/polis-protocol
 
 ## Problem
 
-When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for "who's good at what," "what did we already try," or "what does this team consider done." Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes.
+When agents from different vendors (Claude Code, Codex, Gemini CLI, Cursor, local Ollama, etc.) work on the same long-lived project, they have no native channel for "who's good at what," "what did we already try," or "what does this team consider done." Each session starts cold. Hardcoded handoff prompts grow stale. The cheap-but-fragile alternative — declarative `AGENTS.md` rules — captures intent but never learns from outcomes. That alternative got stronger while this pattern was idle: [AGENTS.md](https://agents.md) is now a vendor-neutral instruction-file standard stewarded by the Agentic AI Foundation under the Linux Foundation and supported by dozens of tools, so bridge files are a reliable entry point even though they still do not learn.
 
 ## Solution
 
@@ -12499,7 +12545,7 @@ graph TD
 
 ## Evidence
 
-- **Evidence Grade:** `low` (pattern in early production use; one open-source reference implementation)
+- **Evidence Grade:** `low` (one open-source reference implementation with minimal external adoption so far)
 - **Most Valuable Findings:** A worked example with three citizens, a real routing leader-shift after a lesson, and a ratified amendment is published at `examples/research-team/` in the reference repo. Settlement-driven routing learning is the smallest unit of compounding the pattern produces — capability cards alone aren't enough.
 - **Unverified / Unclear:** Whether the amendment-vote mechanism scales past ~10 active citizens; whether bandit routing's exploration rate (default 15%) is right for low-volume contract streams.
 
@@ -12525,9 +12571,13 @@ Implementation outline:
 
 ## References
 
-- Reference implementation: [polis-protocol](https://github.com/yehudalevy-collab/polis-protocol) (MIT)
-- Worked example with 3 citizens, leader-shift after a lesson, and a ratified amendment: [`examples/research-team/`](https://github.com/yehudalevy-collab/polis-protocol/tree/main/examples/research-team)
-- Routing math: [`references/routing.md`](https://github.com/yehudalevy-collab/polis-protocol/blob/main/references/routing.md)
+- Reference implementation: [polis-protocol](https://github.com/ymxlx/polis-protocol) (MIT). The repository moved from `yehudalevy-collab/polis-protocol`, and old links still redirect there.
+- Worked example with 3 citizens, leader-shift after a lesson, and a ratified amendment: [`examples/research-team/`](https://github.com/ymxlx/polis-protocol/tree/main/examples/research-team)
+- Routing math: [`references/routing.md`](https://github.com/ymxlx/polis-protocol/blob/main/references/routing.md)
+- Ecosystem context: [AGENTS.md](https://agents.md) — the vendor-neutral instruction-file standard the bridge files build on
+- Related: [Board-Mediated Async Inter-Agent Coordination](board-mediated-inter-agent-coordination.md) — also coordinates separate agent sessions through a shared artifact. Distinct from that pattern: the polis coordinates through versioned contracts and learned routing, not a board's comment threads and inbox cards.
+- Related: [Versioned Constitution Governance](versioned-constitution-governance.md) — also evolves rules as versioned documents. Distinct from that pattern: amendments here also re-weight routing and review thresholds, not only policy text.
+- Related: [Cross-Agent Lesson Sharing](cross-agent-lesson-sharing.md) — also compounds lessons across agents. Distinct from that pattern: lessons here feed a bandit router that assigns the next contract.
 
 ---
 

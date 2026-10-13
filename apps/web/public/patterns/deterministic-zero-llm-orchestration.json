@@ -1,12 +1,12 @@
 {
   "title": "Deterministic Zero-LLM Orchestration",
-  "status": "validated-in-production",
+  "status": "emerging",
   "authors": [
     "Alex Chernysh (@chernistry)"
   ],
   "based_on": [],
   "category": "Orchestration & Control",
-  "source": "https://github.com/chernistry/bernstein",
+  "source": "https://github.com/sipyourdrink-ltd/bernstein",
   "tags": [
     "orchestration",
     "multi-agent",
@@ -17,7 +17,7 @@
   ],
   "slug": "deterministic-zero-llm-orchestration",
   "id": "deterministic-zero-llm-orchestration",
-  "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending no LLM tokens on coordination",
+  "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending LLM tokens only on the one-time goal decomposition",
   "signals": [
     "Multi-agent coding system spends tokens on routing and coordination",
     "Project structure is well defined enough for rule-based planning",
@@ -27,6 +27,6 @@
     "Ambiguous goals need LLM judgment to split",
     "Novel task types need adaptive routing"
   ],
-  "updated_at": "2026-07-23",
-  "body": "\n## Problem\n\nMulti-agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed.\n\n## Solution\n\nKeep the orchestrator as **deterministic Python code** that spends zero LLM tokens on coordination. The LLM budget goes entirely to the agents doing actual work.\n\n```\nGoal → Decompose (deterministic) → Assign to parallel agents → Verify (tests) → Commit\n```\n\nThe orchestrator handles:\n- Task decomposition via rule-based planning\n- Agent assignment and parallel spawning (Claude Code, Codex CLI, Gemini CLI)\n- Result verification through test execution\n- Git operations (branching, merging, committing)\n\nAgents handle:\n- Code generation\n- Problem solving\n- Implementation decisions\n\n## How to use it\n\n```bash\n# Single goal → parallel agents → verified commits\nbernstein -g \"Add JWT auth with refresh tokens, tests, and API docs\"\n\n# Headless for CI pipelines\nbernstein --headless\n\n# Self-evolution mode: propose and sandbox improvements\nbernstein --evolve --budget 5.00\n```\n\nKey implementation choices:\n- **No LLM router** — task-to-agent mapping is code, not prompts\n- **Test-driven verification** — a janitor process runs tests after each agent completes\n- **Git worktree isolation** — each agent works in its own worktree, no conflicts\n- **Circuit breaker** — halt on test regression, no silent failures\n\n## Trade-offs\n\n**Pros:**\n- Predictable coordination cost (zero LLM tokens)\n- Deterministic behavior — same goal produces same task breakdown\n- Faster iteration — no waiting for LLM to decide what to do next\n- Supports heterogeneous agents (Claude Code, Codex CLI, Gemini CLI, Qwen)\n\n**Cons:**\n- Rigid decomposition — can't handle ambiguous goals that need LLM judgment to split\n- Requires well-defined project structure for rule-based planning\n- Less adaptive than LLM-routed orchestration for novel task types\n\n## References\n\n* [Bernstein](https://github.com/chernistry/bernstein) — Production implementation of this pattern\n* See also: [Sub-Agent Spawning](sub-agent-spawning.md) for the general multi-agent delegation pattern\n* See also: [Plan-Then-Execute Pattern](plan-then-execute-pattern.md) for the planning phase approach\n"
+  "updated_at": "2026-10-13",
+  "body": "\n## Problem\n\nMulti-agent coding systems typically spend LLM tokens on coordination — deciding which agent works on what, routing tasks, merging results. This coordination overhead adds cost, latency, and non-determinism where none is needed.\n\n## Solution\n\nKeep the orchestrator as **deterministic Python code** that spends almost no LLM tokens on coordination. Decomposition makes a single LLM call (\"One LLM call, then plain Python from there\"), and everything after it — assignment, verification, git — is plain code. The LLM budget goes almost entirely to the agents doing actual work.\n\n```\nGoal → Decompose (one LLM call) → Assign to parallel agents → Verify (tests) → Commit\n```\n\nFor a fully LLM-free path, write the plan file yourself and run it directly with `bernstein run plan.yaml`, skipping LLM planning entirely.\n\nThe orchestrator handles:\n- Task decomposition via one LLM call, then rule-based planning in code\n- Agent assignment and parallel spawning (Claude Code, Codex CLI, Gemini CLI)\n- Result verification through test execution\n- Git operations (branching, merging, committing)\n\nAgents handle:\n- Code generation\n- Problem solving\n- Implementation decisions\n\n## How to use it\n\n```bash\n# Single goal → parallel agents → verified commits\nbernstein -g \"Add JWT auth with refresh tokens, tests, and API docs\"\n\n# Fully LLM-free: execute a plan file directly, skipping LLM planning\nbernstein run plan.yaml\n\n# Initialize a project, watch a run, stop it\nbernstein init\nbernstein live\nbernstein stop\n```\n\nKey implementation choices:\n- **No LLM router** — task-to-agent mapping is code, not prompts\n- **Test-driven verification** — a janitor process runs tests after each agent completes\n- **Git worktree isolation** — each agent works in its own worktree, no conflicts\n- **Circuit breaker** — halt on test regression, no silent failures\n\n## Trade-offs\n\n**Pros:**\n- Predictable coordination cost (one LLM call at setup, then plain Python; zero with a hand-written plan file)\n- Deterministic behavior — same goal produces same task breakdown\n- Faster iteration — no waiting for LLM to decide what to do next\n- Supports heterogeneous agents (Claude Code, Codex CLI, Gemini CLI, Qwen)\n\n**Cons:**\n- Rigid decomposition — can't handle ambiguous goals that need LLM judgment to split\n- Requires well-defined project structure for rule-based planning\n- Less adaptive than LLM-routed orchestration for novel task types\n\n## References\n\n* [Bernstein](https://github.com/sipyourdrink-ltd/bernstein) — reference implementation of this pattern (repo transferred from `chernistry/bernstein`, which now redirects). Status per its README: beta, solo-maintained, under active development.\n* See also: [Sub-Agent Spawning](sub-agent-spawning.md) for the general multi-agent delegation pattern\n* See also: [Plan-Then-Execute Pattern](plan-then-execute-pattern.md) for the planning phase approach\n"
 }
