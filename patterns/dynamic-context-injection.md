@@ -9,7 +9,7 @@ tags: [context management, dynamic context, lazy loading, slash commands, at-men
 summary: "Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands"
 signals: ["Interactive sessions need specific files or script output on demand", "Users often paste large text blocks or edit static context files", "Teams reuse the same complex instructions across sessions"]
 anti_signals: ["Non-interactive agents with no user in the session", "The needed context is static and fits in baseline configuration files", "You cannot enforce path allowlists and secret scanning on injected files"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -23,7 +23,7 @@ Implement mechanisms for users to dynamically inject context into the agent's wo
 - **File/Folder At-Mentions:** Allowing users to type a special character (e.g., `@`) followed by a file or folder path (e.g., `@src/components/Button.tsx` or `@app/tests/`). The agent then ingests the content of the specified file or a summary of the folder into its current context for the ongoing task.
 - **Custom Slash Commands:** Enabling users to define reusable, named prompts or instructions in separate files (e.g., in `~/.claude/commands/foo.md`). These can be invoked with a slash command (e.g., `/user:foo`), causing their content to be loaded into the agent's context. This is useful for frequently used complex instructions or context snippets.
 
-These methods allow for a more fluid and efficient way to provide targeted context exactly when needed.
+These methods allow for a more fluid and efficient way to provide targeted context exactly when needed. Current agent harnesses carry the same idea further: Claude Code supports `@` file references and `@server:resource` mentions for MCP resources, slash-command skills invoked with `/skill-name`, and Agent Skills whose `SKILL.md` metadata loads on demand with full instructions fetched only when used.
 
 ## Example (context injection flow)
 
@@ -51,26 +51,24 @@ sequenceDiagram
 ## Evidence
 
 - **Evidence Grade:** `established`
-- **Universal Adoption:** Implemented across all major AI coding platforms as the de facto standard
-- **Documented Gains:** 3x+ efficiency improvements in production systems
-- **Security-Critical:** Path traversal and credential exfiltration are primary concerns requiring allowlist validation and secret scanning
+- **Documented implementations:** `@` file references, `@server:resource` MCP resource mentions, and slash commands are documented product features of Claude Code (see References); equivalent at-mention mechanisms ship in other coding agents
+- **Security-critical:** injected files and command output are an injection surface, so allowlist validation and secret scanning matter
 
 ## How to use it
 
-- Use this when model quality depends on selecting or retaining the right context.
-- Start with strict context budgets and explicit memory retention rules.
-- Measure relevance and retrieval hit-rate before increasing memory breadth.
-- Implement security controls: allowlist-based directory access, regex-based credential scanning, file size limits
+- Use `@` mentions for specific files or folders the task needs now; reserve baseline configuration files for instructions that apply to every session.
+- Encapsulate repeated multi-step instructions as named slash commands or skills instead of pasting them each time.
+- Keep commands and skills version-controlled so the team shares one definition.
+- Enforce path allowlists, file size limits, and credential scanning on whatever the injection mechanism can pull in.
 
 ## Trade-offs
 
-* **Pros:** Raises answer quality by keeping context relevant and reducing retrieval noise.
-* **Cons:** Requires ongoing tuning of memory policies and indexing quality.
+* **Pros:** Delivers exactly the context the current step needs; keeps large files out of the baseline context; turns recurring instructions into reusable, reviewable commands.
+* **Cons:** Prompt tokens grow with each injection, so over-mentioning bloats the session; commands and skills need maintenance as workflows change; injected content is an injection and exfiltration surface.
 
 ## References
 
-- Based on the at-mention and slash command features described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
-- Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." NeurIPS 2020.
+- Claude Code docs: common workflows covering `@` file references, `@server:resource` MCP resource mentions, and slash-command usage: https://code.claude.com/docs/en/common-workflows
+- Claude Code docs: Agent Skills (progressive-disclosure `SKILL.md` invoked with `/skill-name`): https://code.claude.com/docs/en/skills
+- Boris Cherny on at-mentions and custom commands: [How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it) (secondary summary: [Mastering Claude Code](https://www.nibzard.com/claude-code))
 - Beurer-Kellner, M., et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837.
-
-[Source](https://www.nibzard.com/claude-code)

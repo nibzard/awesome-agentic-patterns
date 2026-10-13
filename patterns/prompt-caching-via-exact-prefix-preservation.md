@@ -9,7 +9,7 @@ tags: [prompt-caching, exact-prefix, performance, stateless, zero-data-retention
 summary: "Keeps static prompt content first in a fixed order and only appends new messages, including config changes, so each request reuses the cached prefix"
 signals: ["Long agent conversations with many tool calls", "Zero Data Retention rules out server-side conversation state", "Inference cost or latency grows as history grows"]
 anti_signals: ["Tool list or model must change mid-conversation", "Short single-turn requests with little repeated content"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -69,8 +69,8 @@ This preserves the exact prefix of all previous messages, maintaining cache hits
 
 **Provider variations:**
 
-- **OpenAI**: Automatic caching on exact prefix matches
-- **Anthropic**: Explicit cache-control headers, TTL-based invalidation (up to 5 minutes), 90% discount on cached tokens
+- **OpenAI**: Caching requires an exact rendered-prefix match ("Cache reuse requires the entire rendered prefix to match"). Older models cache implicitly at model-dependent intervals; newer models also support explicit cache breakpoints (up to four cache writes per request), with cached tokens discounted up to 95% (reads at 0.1x the uncached input rate on most models)
+- **Anthropic**: Explicit `cache_control` breakpoints plus automatic caching, a 5-minute default TTL with a 1-hour TTL option, cache reads at 0.1x the base input price (0.05x on Opus 5.5/Sonnet 5.5, 0.025x on Fable 5.1/Mythos 5.1), and a per-model minimum cacheable prefix length
 
 **Stateless design for ZDR:**
 
@@ -161,6 +161,10 @@ MCP servers can emit `notifications/tools/list_changed` to indicate tool list ch
 - Delay tool refresh until conversation boundary
 - Or accept the cache miss as necessary trade-off
 
+**Compaction:**
+
+The Codex post that documents this pattern also describes a `/responses/compact` endpoint for auto-compaction: the client posts the conversation and receives a `compaction` item with opaque `encrypted_content` that summarizes prior turns while keeping the request stateless, and `auto_compact_limit` controls when compaction triggers. Compaction trades context for a cache reset — everything after the compacted summary is new tokens.
+
 **Implementation sketch:**
 
 ```typescript
@@ -205,7 +209,6 @@ function handleConfigChange(
 - **ZDR-compatible**: Stateless design supports Zero Data Retention policies
 - **No server state**: Avoids `previous_response_id` complexity
 - **Simple conceptual model**: Exact prefix matching is easy to reason about
-- **Production-validated savings**: 43% cost reduction demonstrated at scale (HyperAgent, 9.4B tokens/month)
 
 **Cons:**
 
@@ -217,8 +220,8 @@ function handleConfigChange(
 
 ## References
 
-* [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/)
-* [Prompt Caching Documentation | OpenAI](https://platform.openai.com/docs/guides/prompt-caching)
-* [Context Caching | Anthropic](https://docs.anthropic.com/en/docs/build-with-claude/context-caching)
+* [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/) (September 11, 2026) — exact-prefix caching under ZDR, insert-don't-modify config changes, `tools/list_changed` cache misses, and the `/responses/compact` auto-compaction endpoint
+* [Prompt Caching Documentation | OpenAI](https://developers.openai.com/api/docs/guides/prompt-caching) — prefix-match rules, explicit breakpoints on newer models, cache pricing
+* [Prompt Caching | Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — `cache_control` breakpoints, TTLs, read pricing, minimum cacheable length
 * [Codex CLI | GitHub](https://github.com/openai/codex)
 * Related: [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)

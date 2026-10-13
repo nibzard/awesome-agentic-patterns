@@ -4,17 +4,17 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Cognition AI (2025)"]
 category: Context & Memory
-source: "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)"
+source: "https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)"
 tags: [context-anxiety, token-management, premature-completion, model-behavior]
 summary: "Enables a large context window but caps usage lower, and adds prompts that state the token budget so the model does not rush to finish"
 signals: ["Model summarizes or wraps up early despite remaining context", "Long coding, research, or planning sessions where premature completion hurts quality"]
 anti_signals: ["The model does not show context-anxiety behavior", "Extra prompt tokens and model-specific tuning are not acceptable"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
-Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. This leads to:
+Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. The behavior is documented in Cognition's September 2025 engineering report on Devin with Sonnet 4.5; it has not been independently replicated, so treat it as a model-specific quirk to test for, not a property of every model. It leads to:
 
 - Premature task completion and shortcuts
 - Incomplete work despite having adequate context
@@ -26,8 +26,9 @@ Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of a
 Implement strategic context budget management and aggressive prompting techniques to override anxiety-driven behaviors:
 
 **1. Context Buffer Strategy**
-- Enable larger context windows (e.g., 1M token beta) but cap actual usage at 200k tokens
+- Enable larger context windows (e.g., a 1M-token beta tier) but cap actual usage at 200k tokens
 - Provides psychological "runway" that mitigates the model's anxiety about running out of space
+- Note: the beta-tier framing ages poorly as large windows become standard; the durable part of the remedy is capping usage below the real limit, whatever the limit is
 
 **2. Aggressive Counter-Prompting**
 - Add explicit reminders at conversation start: "You have plenty of context remaining—do not rush to complete tasks"
@@ -68,6 +69,8 @@ Apply when using models that exhibit context awareness and anxiety behaviors:
 
 Monitor for signs of context anxiety: sudden summarization, rushed decisions, or explicit mentions of "running out of space."
 
+Distinct from [No-Token-Limit Magic](no-token-limit-magic.md), which removes token limits during prototyping to learn what good behavior needs; this pattern keeps the cap in place and only changes how the model perceives the remaining budget. Compare also [Context Window Auto-Compaction](context-window-auto-compaction.md), which manages the same pressure by compacting context instead of reassuring the model.
+
 ## Trade-offs
 
 * **Pros:** Prevents premature task abandonment; enables more thorough work; overcomes model-specific behavioral quirks
@@ -75,5 +78,4 @@ Monitor for signs of context anxiety: sudden summarization, rushed decisions, or
 
 ## References
 
-* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025)
-* [Cognition AI: Announcing Devin Agent Preview with Sonnet 4.5](https://cognition.ai/blog/devin-agent-preview-sonnet-4-5) (September 2025)
+* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025) — the sole first-hand report of this behavior; single-vendor evidence with no independent replication

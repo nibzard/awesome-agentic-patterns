@@ -22,7 +22,7 @@ id: memory-synthesis-from-execution-logs
 summary: "Has the agent write a structured diary per task, then runs synthesis agents over many diaries to turn recurring patterns into rules, commands, and tests"
 signals: ["Agent handles many similar tasks over time", "Lessons from single tasks are too specific to reuse directly", "Task logs can be stored and reviewed periodically"]
 anti_signals: ["Too few task logs to find recurring patterns", "Logs contain sensitive data that cannot be kept"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -83,6 +83,10 @@ Patterns discovered:
 ```
 
 Structured formats (event, outcome, rationale) outperform raw conversation logs—validated by Reflexion's "memory blob" structure and ParamMem's finding that structured records reduce repetition and improve synthesis.
+
+Adjacent automated capabilities now cover part of this loop: Claude Code's auto memory has the agent write its own typed learning notes (user, feedback, project, reference) that load into every session, and the Claude API memory tool gives applications a file-based store-and-retrieve primitive. This pattern adds the synthesis step—reviewing many entries and promoting recurring ones into rules, commands, and tests—that those features leave to you.
+
+Distinct from [Cross-Agent Lesson Sharing via Git](cross-agent-lesson-sharing.md), which spreads already-synthesized lessons between agents through a version-controlled file, and from [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), which retrieves past episodes as task hints rather than distilling them into new rules.
 
 ## How to use it
 
@@ -160,4 +164,8 @@ Feed synthesized insights back into:
 * Boris Cherny: "Synthesizing the memory from a lot of logs is a way to find these patterns more consistently... If I say make the button pink, I don't want you to remember to make all buttons pink in the future."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * Shinn et al. [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - episodic memory with self-reflection achieving 91% pass@1 on HumanEval
+* Yao et al. [ParamMem](https://arxiv.org/abs/2602.23320) (2026) - structured memory records reduce repetition and improve synthesis over raw conversation logs
 * Park et al. [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) (Stanford 2023) - reflection synthesis from multiple memories
+* Claude Code auto memory (agent-written learnings loaded into every session): https://code.claude.com/docs/en/memory
+* Claude memory tool (API store-and-retrieve primitive for cross-conversation memory): https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool
+* Related: [Cross-Agent Lesson Sharing via Git](cross-agent-lesson-sharing.md), [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md)

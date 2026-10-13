@@ -19,7 +19,7 @@ related: ["progressive-tool-discovery", "tool-search-lazy-loading", "tool-capabi
 anti_patterns: ["direct-api-integration-per-tool"]
 tools: ["mcp-servers", "api-gateway", "tool-registry"]
 domains: ["tool-use", "infrastructure", "ops"]
-updated_at: "2026-03-31"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -90,6 +90,7 @@ result = gateway.get_result(job.job_id)
 - **Credential management**: Users can bring their own API keys for specific providers (BYOK) to reduce costs, while the gateway provides default keys for convenience.
 - **Schema normalization**: Each provider's response is normalized to a consistent output schema so agents don't need provider-specific parsing logic.
 - **Rate limiting**: Apply per-user and per-tool rate limits at the gateway level to prevent abuse and manage costs.
+- **Policy enforcement**: When the gateway's main job is enforcing security policy rather than aggregation, see [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md); the two patterns share the proxy architecture, but that one is scoped to governance and access control.
 
 ## Trade-offs
 
@@ -111,7 +112,10 @@ result = gateway.get_result(job.job_id)
 
 ## References
 
-- [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — the microservices predecessor pattern that inspired this approach
-- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the emerging standard for agent-tool communication
-- [OpenAI Plugins Architecture](https://platform.openai.com/docs/plugins) — early exploration of unified tool access for agents
-- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern with 150+ tools accessible via MCP
+- [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — the classic microservices predecessor pattern that inspired this approach (no agent or MCP content)
+- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the standard for agent-tool communication that gateway implementations expose
+- [IBM ContextForge (mcp-context-forge)](https://github.com/IBM/mcp-context-forge) — open-source MCP gateway with routing, composition, and observability
+- [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) — managed gateway with MCP support, caching, rate limiting, and analytics
+- [Composio](https://composio.dev) — hosted tool aggregation platform with authenticated tool access for agents
+- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern listing 414 tools and 1,810 callable skills, reachable over MCP, CLI, and REST
+- Related: [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md) — the same proxy architecture applied to policy enforcement rather than aggregation

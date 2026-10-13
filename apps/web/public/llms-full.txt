@@ -1648,6 +1648,12 @@ sequenceDiagram
     Agent-->>Developer: "It's configured in `config/database.js` and used by the `UserService`."
 ```
 
+## Evidence
+
+- **Practitioner reports:** the Cursor founders describe Q&A and search as the main entry point when onboarding to an unfamiliar codebase (see quoted remarks in References)
+- **Shipped products:** agentic codebase Q&A is a standard capability of current coding agents, for example Cursor (https://cursor.com/docs) and Claude Code's codebase search workflows (https://code.claude.com/docs/en/common-workflows)
+- **Research:** RepoAgent generates repository-level documentation with LLMs (EMNLP 2024); SWE-agent shows agent-computer interfaces enable autonomous software engineering (NeurIPS 2024)
+
 ## How to use it
 
 - Use for onboarding to new codebases, exploring legacy systems, and answering repository-wide questions
@@ -1665,8 +1671,11 @@ sequenceDiagram
 - Lukas Möller (Cursor) at 0:03:58: "...when initially getting started with a codebase that one might not be too knowledgeable about, that's using kind of the QA features a lot, using a lot of search... doing research in a codebase and figuring out how certain things interact with each other."
 - Aman Sanger (Cursor) at 0:05:50: "...as you got to places where you're really unfamiliar, like Lucas was describing when you're kind of coming into a new codebase, it's just there's this massive step function that you get from using these models."
 - Luo, Q., et al. (2024). "RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation." [arXiv:2402.16667](https://arxiv.org/abs/2402.16667) - EMNLP 2024
-- Yang, J., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - arXiv preprint
+- Yang, J., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - NeurIPS 2024
+- Claude Code docs: codebase search and exploration workflows: https://code.claude.com/docs/en/common-workflows
+- Cursor documentation: https://cursor.com/docs
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
+- Related patterns: [Precomputed Code Graph Lookup](precomputed-code-graph-lookup.md) (graph store built offline, queried at run time) and [Agentic Search Over Vector Embeddings](agentic-search-over-vector-embeddings.md) (embedding index plus agentic retrieval) — this pattern covers the interactive Q&A workflow those retrieval mechanisms serve
 
 ---
 
@@ -4924,11 +4933,11 @@ Adopt once any file is auto-loaded into every session or any agent runs unattend
 **Status:** emerging
 **Category:** Context & Memory
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)
+**Source:** https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)
 
 ## Problem
 
-Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. This leads to:
+Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. The behavior is documented in Cognition's September 2025 engineering report on Devin with Sonnet 4.5; it has not been independently replicated, so treat it as a model-specific quirk to test for, not a property of every model. It leads to:
 
 - Premature task completion and shortcuts
 - Incomplete work despite having adequate context
@@ -4940,8 +4949,9 @@ Models like Claude Sonnet 4.5 exhibit "context anxiety"—they become aware of a
 Implement strategic context budget management and aggressive prompting techniques to override anxiety-driven behaviors:
 
 **1. Context Buffer Strategy**
-- Enable larger context windows (e.g., 1M token beta) but cap actual usage at 200k tokens
+- Enable larger context windows (e.g., a 1M-token beta tier) but cap actual usage at 200k tokens
 - Provides psychological "runway" that mitigates the model's anxiety about running out of space
+- Note: the beta-tier framing ages poorly as large windows become standard; the durable part of the remedy is capping usage below the real limit, whatever the limit is
 
 **2. Aggressive Counter-Prompting**
 - Add explicit reminders at conversation start: "You have plenty of context remaining—do not rush to complete tasks"
@@ -4982,6 +4992,8 @@ Apply when using models that exhibit context awareness and anxiety behaviors:
 
 Monitor for signs of context anxiety: sudden summarization, rushed decisions, or explicit mentions of "running out of space."
 
+Distinct from [No-Token-Limit Magic](no-token-limit-magic.md), which removes token limits during prototyping to learn what good behavior needs; this pattern keeps the cap in place and only changes how the model perceives the remaining budget. Compare also [Context Window Auto-Compaction](context-window-auto-compaction.md), which manages the same pressure by compacting context instead of reassuring the model.
+
 ## Trade-offs
 
 * **Pros:** Prevents premature task abandonment; enables more thorough work; overcomes model-specific behavioral quirks
@@ -4989,8 +5001,7 @@ Monitor for signs of context anxiety: sudden summarization, rushed decisions, or
 
 ## References
 
-* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025)
-* [Cognition AI: Announcing Devin Agent Preview with Sonnet 4.5](https://cognition.ai/blog/devin-agent-preview-sonnet-4-5) (September 2025)
+* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025) — the sole first-hand report of this behavior; single-vendor evidence with no independent replication
 
 ---
 
@@ -6250,8 +6261,12 @@ sequenceDiagram
 
 - "Context is sacred" principle from the Open Source Agent RL talk (May 2025).
 - Will Brown's commentary on "avoiding blowing up your context length" for long-horizon tasks.
-- [Thorsten Ball's "Raising An Agent - Episode 3"](https://www.nibzard.com/ampcode) - Production-validated implementation of dedicated search agent pattern.
-- [Sourcegraph: "What Sourcegraph learned building AI coding agents"](https://www.nibzard.com/ampcode) (May 2025) - Enterprise-scale AST-based codebase understanding.
+- [Thorsten Ball's "Raising An Agent - Episode 3"](https://www.youtube.com/watch?v=5A7MkiWeOjk) - Amp's video series documenting a production coding agent built around a dedicated search agent.
+- Sourcegraph (Amp) "Raising An Agent" series, the first-hand account of building enterprise coding agents: https://www.youtube.com/playlist?list=PL6zLuuRVa1_iUNbel-8MxxpqKIyesaubA (secondary summary: ["What Sourcegraph learned building AI coding agents"](https://www.nibzard.com/ampcode), May 2025).
+- [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (September 2025) - canonical current statement of just-in-time context retrieval and subagents that keep the main context clean.
+- Claude Code best practices, which call the context window "the most important resource to manage" and recommend subagents for focused work: https://code.claude.com/docs/en/best-practices
+
+Distinct from [Curated File Context Window](curated-file-context-window.md), which applies the same search-subagent-plus-snippet-injection solution at the level of picking the primary task files; that entry adds per-file loading-strategy detail (full load versus summary by size and relevance) that complements this one.
 
 ---
 
@@ -8108,7 +8123,7 @@ Implement mechanisms for users to dynamically inject context into the agent's wo
 - **File/Folder At-Mentions:** Allowing users to type a special character (e.g., `@`) followed by a file or folder path (e.g., `@src/components/Button.tsx` or `@app/tests/`). The agent then ingests the content of the specified file or a summary of the folder into its current context for the ongoing task.
 - **Custom Slash Commands:** Enabling users to define reusable, named prompts or instructions in separate files (e.g., in `~/.claude/commands/foo.md`). These can be invoked with a slash command (e.g., `/user:foo`), causing their content to be loaded into the agent's context. This is useful for frequently used complex instructions or context snippets.
 
-These methods allow for a more fluid and efficient way to provide targeted context exactly when needed.
+These methods allow for a more fluid and efficient way to provide targeted context exactly when needed. Current agent harnesses carry the same idea further: Claude Code supports `@` file references and `@server:resource` mentions for MCP resources, slash-command skills invoked with `/skill-name`, and Agent Skills whose `SKILL.md` metadata loads on demand with full instructions fetched only when used.
 
 ## Example (context injection flow)
 
@@ -8136,29 +8151,27 @@ sequenceDiagram
 ## Evidence
 
 - **Evidence Grade:** `established`
-- **Universal Adoption:** Implemented across all major AI coding platforms as the de facto standard
-- **Documented Gains:** 3x+ efficiency improvements in production systems
-- **Security-Critical:** Path traversal and credential exfiltration are primary concerns requiring allowlist validation and secret scanning
+- **Documented implementations:** `@` file references, `@server:resource` MCP resource mentions, and slash commands are documented product features of Claude Code (see References); equivalent at-mention mechanisms ship in other coding agents
+- **Security-critical:** injected files and command output are an injection surface, so allowlist validation and secret scanning matter
 
 ## How to use it
 
-- Use this when model quality depends on selecting or retaining the right context.
-- Start with strict context budgets and explicit memory retention rules.
-- Measure relevance and retrieval hit-rate before increasing memory breadth.
-- Implement security controls: allowlist-based directory access, regex-based credential scanning, file size limits
+- Use `@` mentions for specific files or folders the task needs now; reserve baseline configuration files for instructions that apply to every session.
+- Encapsulate repeated multi-step instructions as named slash commands or skills instead of pasting them each time.
+- Keep commands and skills version-controlled so the team shares one definition.
+- Enforce path allowlists, file size limits, and credential scanning on whatever the injection mechanism can pull in.
 
 ## Trade-offs
 
-* **Pros:** Raises answer quality by keeping context relevant and reducing retrieval noise.
-* **Cons:** Requires ongoing tuning of memory policies and indexing quality.
+* **Pros:** Delivers exactly the context the current step needs; keeps large files out of the baseline context; turns recurring instructions into reusable, reviewable commands.
+* **Cons:** Prompt tokens grow with each injection, so over-mentioning bloats the session; commands and skills need maintenance as workflows change; injected content is an injection and exfiltration surface.
 
 ## References
 
-- Based on the at-mention and slash command features described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
-- Lewis, P., et al. (2020). "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." NeurIPS 2020.
+- Claude Code docs: common workflows covering `@` file references, `@server:resource` MCP resource mentions, and slash-command usage: https://code.claude.com/docs/en/common-workflows
+- Claude Code docs: Agent Skills (progressive-disclosure `SKILL.md` invoked with `/skill-name`): https://code.claude.com/docs/en/skills
+- Boris Cherny on at-mentions and custom commands: [How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it) (secondary summary: [Mastering Claude Code](https://www.nibzard.com/claude-code))
 - Beurer-Kellner, M., et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837.
-
-[Source](https://www.nibzard.com/claude-code)
 
 ---
 
@@ -8214,10 +8227,10 @@ RUN iptables -A OUTPUT -d api.mycompany.internal -j ACCEPT
 
 ## Episodic Memory Retrieval & Injection
 
-**Status:** validated-in-production
+**Status:** established
 **Category:** Context & Memory
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021
+**Source:** https://help.openai.com/en/articles/8590148-memory-and-new-controls-for-chatgpt
 
 ## Problem
 
@@ -8248,12 +8261,11 @@ Design memory writes as structured records (decision, evidence, outcome, confide
 ## References
 
 - Reflexion (Shinn et al., NeurIPS 2023): https://arxiv.org/abs/2303.11366
-- ParamMem (Yao et al., 2026): https://arxiv.org/abs/2602.23320v1
+- ParamMem (Yao et al., 2026): https://arxiv.org/abs/2602.23320
 - MemGPT (Packer et al., UC Berkeley 2023): https://arxiv.org/abs/2310.08560
-- Cursor "10x-MCP" persistent memory layer
-- Windsurf Memories docs
-
-- Primary source: https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021
+- ChatGPT memory (shipped feature that saves and recalls user details across conversations): https://help.openai.com/en/articles/8590148-memory-and-new-controls-for-chatgpt
+- Letta documentation (open-source agent memory framework descended from MemGPT): https://docs.letta.com/
+- Claude memory tool (API tool for storing and retrieving information across conversations): https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool
 
 ---
 
@@ -9294,7 +9306,7 @@ Instead of treating state as transient prompt text, the workflow externalizes pr
 
 File-backed state also improves observability: humans can inspect checkpoints, compare intermediate outputs across retries, and diagnose where runs diverged.
 
-Some agents exhibit "proactive state externalization" — writing `SUMMARY.md` or `CHANGELOG.md` without explicit prompting when approaching context limits, treating the filesystem as extended working memory.
+Some agents exhibit "proactive state externalization" — writing `SUMMARY.md` or `CHANGELOG.md` without explicit prompting when approaching context limits. That model-driven behavior, and how to shape it, is covered as its own pattern in [Proactive Agent State Externalization](proactive-agent-state-externalization.md); this entry stays with deliberate, workflow-level checkpointing.
 
 **Core pattern:**
 
@@ -9409,7 +9421,9 @@ workspace/
 4. **Using framework primitives:**
 
    ```python
-   from langchain.storage import FileStore
+   # FileStore previously shipped as langchain.storage; current releases
+   # expose it through the langchain-classic package
+   from langchain_classic.storage import FileStore
    store = FileStore("agent_memory")
    store.mset([("step1", step1_data), ("step2", step2_data)])
    ```
@@ -9445,13 +9459,11 @@ workspace/
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Cognition AI: Devin's proactive state externalization to `SUMMARY.md`/`CHANGELOG.md` (2024)
-* LangChain: `FileStore` and `FileBasedCache` for persistent agent memory
-* Related: Episodic Memory pattern (for conversation-level persistence)
-
-- Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp
-- LangChain FileStore: https://github.com/langchain-ai/langchain
+* Anthropic Engineering: Code Execution with MCP (published November 4, 2025): https://www.anthropic.com/engineering/code-execution-with-mcp
+* Cognition AI: Devin's proactive state externalization to `SUMMARY.md`/`CHANGELOG.md` (posted September 2025): https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges
+* Claude Code memory (auto memory and CLAUDE.md as shipped file-backed memory): https://code.claude.com/docs/en/memory
+* LangChain: `FileStore` for persistent key-value state (now in the `langchain-classic` package): https://github.com/langchain-ai/langchain
+* Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md) (the model-initiated counterpart) and Episodic Memory Retrieval & Injection (conversation-level persistence)
 
 ---
 
@@ -12165,7 +12177,7 @@ Build products that are intentionally **hackable and extensible**, then observe 
 **Status:** established
 **Category:** Context & Memory
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.nibzard.com/claude-code
+**Source:** https://code.claude.com/docs/en/memory
 
 ## Problem
 
@@ -12181,6 +12193,13 @@ Implement a system of layered configuration files (e.g., named `CLAUDE.md` or a 
 -   **Project-Local Context:** A local, non-version-controlled file (`<project_root>/CLAUDE.local.md`) for individual overrides, temporary notes, or secrets relevant to the project for that user.
 
 The agent intelligently merges or prioritizes these context layers, providing a rich, tailored baseline of information without manual intervention in each query.
+
+Current Claude Code documentation extends the same layering with four mechanisms worth knowing:
+
+- **AGENTS.md interop**: Claude Code reads a repository's `AGENTS.md` in place of or alongside `CLAUDE.md`, so a repo set up for other coding agents works unchanged.
+- **Path-scoped rules**: `.claude/rules/*.md` files can carry a `paths` field so instructions load only when the agent works on matching files, keeping the baseline smaller.
+- **Imports**: `@path/to/import` in any memory file expands and loads the referenced file at launch (recursively, up to four hops).
+- **Auto memory**: alongside the layers you write, Claude writes its own learning notes per repository and loads them at the start of every session.
 
 ## Example (configuration hierarchy)
 
@@ -12201,9 +12220,9 @@ flowchart TD
 
 ## Evidence
 
-- **Evidence Grade:** `high`
-- **Industry Adoption:** Production-validated across Claude Code, Continue.dev, Cursor AI, and GitHub Copilot
-- **Origin:** Industry-practitioner pattern; limited formal academic literature
+- **Documented implementations:** layered memory files, AGENTS.md interop, `.claude/rules/` scoping, and `@` imports are documented features (Claude Code memory docs, linked below)
+- **Cross-tool convention:** AGENTS.md is an open format stewarded by the Agentic AI Foundation under the Linux Foundation, adopted by OpenAI Codex, Google Jules and Gemini CLI, GitHub Copilot's coding agent, Cursor, Devin, and others, with the project reporting over 60k open-source projects using it: https://agents.md
+- **Practitioner origin:** popularized by Boris Cherny's account of Claude Code's design (interview linked below); limited formal academic literature
 
 ## How to use it
 
@@ -12219,12 +12238,12 @@ flowchart TD
 
 ## References
 
-- Based on the `CLAUDE.md` system described in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section IV.
+- Claude Code memory documentation (CLAUDE.md hierarchy, AGENTS.md interop, `.claude/rules/`, imports, auto memory): https://code.claude.com/docs/en/memory
+- Boris Cherny on the CLAUDE.md system: [How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it) (secondary summary: [Mastering Claude Code](https://www.nibzard.com/claude-code))
+- AGENTS.md open format (adoption list and stewardship): https://agents.md
 - Claude Code: https://github.com/anthropics/claude-code
 - Continue.dev: https://github.com/continuedev/continue
-- Cursor AI: https://cursor.sh
-
-[Source](https://www.nibzard.com/claude-code)
+- Cursor rules: https://cursor.com/docs
 
 ---
 
@@ -12955,6 +12974,10 @@ Patterns discovered:
 
 Structured formats (event, outcome, rationale) outperform raw conversation logs—validated by Reflexion's "memory blob" structure and ParamMem's finding that structured records reduce repetition and improve synthesis.
 
+Adjacent automated capabilities now cover part of this loop: Claude Code's auto memory has the agent write its own typed learning notes (user, feedback, project, reference) that load into every session, and the Claude API memory tool gives applications a file-based store-and-retrieve primitive. This pattern adds the synthesis step—reviewing many entries and promoting recurring ones into rules, commands, and tests—that those features leave to you.
+
+Distinct from [Cross-Agent Lesson Sharing via Git](cross-agent-lesson-sharing.md), which spreads already-synthesized lessons between agents through a version-controlled file, and from [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), which retrieves past episodes as task hints rather than distilling them into new rules.
+
 ## How to use it
 
 **Implementation approach:**
@@ -13031,7 +13054,11 @@ Feed synthesized insights back into:
 * Boris Cherny: "Synthesizing the memory from a lot of logs is a way to find these patterns more consistently... If I say make the button pink, I don't want you to remember to make all buttons pink in the future."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
 * Shinn et al. [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - episodic memory with self-reflection achieving 91% pass@1 on HumanEval
+* Yao et al. [ParamMem](https://arxiv.org/abs/2602.23320) (2026) - structured memory records reduce repetition and improve synthesis over raw conversation logs
 * Park et al. [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) (Stanford 2023) - reflection synthesis from multiple memories
+* Claude Code auto memory (agent-written learnings loaded into every session): https://code.claude.com/docs/en/memory
+* Claude memory tool (API store-and-retrieve primitive for cross-conversation memory): https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool
+* Related: [Cross-Agent Lesson Sharing via Git](cross-agent-lesson-sharing.md), [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md)
 
 ---
 
@@ -15564,7 +15591,7 @@ A parser alone does not establish which tests execute a symbol. Attach coverage 
 **Status:** emerging
 **Category:** Context & Memory
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges
+**Source:** https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges
 
 ## Problem
 
@@ -15575,6 +15602,8 @@ Modern models like Claude Sonnet 4.5 proactively attempt to externalize their st
 - Performance can degrade when agents rely exclusively on their own summaries
 - Knowledge gaps emerge from inadequate self-documentation
 - Behavior intensifies near context window limits as a coping mechanism
+
+When the harness auto-compacts context (see [Context Window Auto-Compaction](context-window-auto-compaction.md)), the trigger changes: the agent no longer faces a hard wall that forces externalization, and compaction's own summary can lull it into skipping note-writing. If you rely on externalized notes, run compaction late or explicitly re-prompt for notes after each compaction event.
 
 ## Solution
 
@@ -15658,7 +15687,9 @@ Monitor self-documentation quality and supplement with external memory systems w
 
 ## References
 
-* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges)
+* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025)
+* Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — the deliberate, workflow-level counterpart that checkpoints state on purpose rather than reacting to context pressure
+* Related: [Context Window Auto-Compaction](context-window-auto-compaction.md) — the harness mechanism that changes when this behavior triggers
 * Related: [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md)
 
 ---
@@ -16253,8 +16284,7 @@ Apply **progressive disclosure**: load file metadata first, then provide tools t
 - `extract_file` should return simplified text (tables, text content)
 - Consider making `extract_file` return a virtual `file_id` for very large extractions
 - Preloading first N KB is optional - can give agent initial context without full load
-- Recommended preload amounts: text 10-50 KB, PDF first page/5 KB, images metadata only
-- Cache extracted content to avoid re-processing (TTL: text 24h, tables 7 days, metadata 1h)
+- Cache extracted content to avoid re-processing; pick TTLs to match how often the underlying files change
 
 **Tool design:**
 
@@ -16277,7 +16307,7 @@ def extract_file(file_id: str, extraction: str = "text") -> str:
 - Enables working with files much larger than context window
 - Agent has control over what/when to load
 - Reusable across workflows via `large_files` skill
-- Extracted content is often 100x smaller than original file
+- Extracted text is typically far smaller than the original file (a multi-megabyte PDF may hold only kilobytes of relevant text)
 
 **Cons:**
 
@@ -16293,10 +16323,10 @@ def extract_file(file_id: str, extraction: str = "text") -> str:
 
 ## References
 
-* [Building an internal agent: Progressive disclosure and handling large files](https://lethain.com/agents-large-files/) - Will Larson (2025)
-* Related: [Progressive Tool Discovery](progressive-tool-discovery.md) - Similar lazy-loading concept for tools
+* [Building an internal agent: Progressive disclosure and handling large files](https://lethain.com/agents-large-files/) - Will Larson (2025), the practitioner source for the metadata-plus-load/peek/extract core described above
+* Agent Skills use the same progressive-disclosure model for instructions: a `SKILL.md` with metadata loads up front and full instructions are read only on demand - https://code.claude.com/docs/en/skills
+* Related: [Progressive Tool Discovery](progressive-tool-discovery.md) - the same lazy-loading idea applied to tool definitions rather than file contents
 * Related: [Context-Minimization Pattern](context-minimization-pattern.md) - Complementary pattern for reducing context bloat
-* Yang et al. (2016). "Hierarchical Attention Networks for Document Classification." NAACL - Academic foundation for hierarchical processing
 * LangChain - Document loaders with metadata-first approach ([github.com/langchain-ai/langchain](https://github.com/langchain-ai/langchain))
 
 ---
@@ -16465,8 +16495,8 @@ This preserves the exact prefix of all previous messages, maintaining cache hits
 
 **Provider variations:**
 
-- **OpenAI**: Automatic caching on exact prefix matches
-- **Anthropic**: Explicit cache-control headers, TTL-based invalidation (up to 5 minutes), 90% discount on cached tokens
+- **OpenAI**: Caching requires an exact rendered-prefix match ("Cache reuse requires the entire rendered prefix to match"). Older models cache implicitly at model-dependent intervals; newer models also support explicit cache breakpoints (up to four cache writes per request), with cached tokens discounted up to 95% (reads at 0.1x the uncached input rate on most models)
+- **Anthropic**: Explicit `cache_control` breakpoints plus automatic caching, a 5-minute default TTL with a 1-hour TTL option, cache reads at 0.1x the base input price (0.05x on Opus 5.5/Sonnet 5.5, 0.025x on Fable 5.1/Mythos 5.1), and a per-model minimum cacheable prefix length
 
 **Stateless design for ZDR:**
 
@@ -16557,6 +16587,10 @@ MCP servers can emit `notifications/tools/list_changed` to indicate tool list ch
 - Delay tool refresh until conversation boundary
 - Or accept the cache miss as necessary trade-off
 
+**Compaction:**
+
+The Codex post that documents this pattern also describes a `/responses/compact` endpoint for auto-compaction: the client posts the conversation and receives a `compaction` item with opaque `encrypted_content` that summarizes prior turns while keeping the request stateless, and `auto_compact_limit` controls when compaction triggers. Compaction trades context for a cache reset — everything after the compacted summary is new tokens.
+
 **Implementation sketch:**
 
 ```typescript
@@ -16601,7 +16635,6 @@ function handleConfigChange(
 - **ZDR-compatible**: Stateless design supports Zero Data Retention policies
 - **No server state**: Avoids `previous_response_id` complexity
 - **Simple conceptual model**: Exact prefix matching is easy to reason about
-- **Production-validated savings**: 43% cost reduction demonstrated at scale (HyperAgent, 9.4B tokens/month)
 
 **Cons:**
 
@@ -16613,9 +16646,9 @@ function handleConfigChange(
 
 ## References
 
-* [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/)
-* [Prompt Caching Documentation | OpenAI](https://platform.openai.com/docs/guides/prompt-caching)
-* [Context Caching | Anthropic](https://docs.anthropic.com/en/docs/build-with-claude/context-caching)
+* [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/) (September 11, 2026) — exact-prefix caching under ZDR, insert-don't-modify config changes, `tools/list_changed` cache misses, and the `/responses/compact` auto-compaction endpoint
+* [Prompt Caching Documentation | OpenAI](https://developers.openai.com/api/docs/guides/prompt-caching) — prefix-match rules, explicit breakpoints on newer models, cache pricing
+* [Prompt Caching | Anthropic](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — `cache_control` breakpoints, TTLs, read pricing, minimum cacheable length
 * [Codex CLI | GitHub](https://github.com/openai/codex)
 * Related: [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)
 
@@ -17823,10 +17856,12 @@ The distinctive move is not "use a graph" by itself. It is **reusing one schema 
 
 ## Evidence
 
-- **Evidence Grade:** `mixed`
-- **Most Valuable Findings:** the repository contains concrete implementations of schema-guided decomposition, schema-type-aware retrieval, parallel sub-question execution, and schema evolution during extraction.
-- **Most Valuable Findings:** the project reports better cost/accuracy trade-offs than its chosen baselines and presents the pattern as production-oriented for domain transfer.
-- **Unverified / Unclear:** generality across domains, the exact contribution of each subsystem, and whether the reported gains hold outside the project's evaluation setup.
+- **Evidence Grade:** `high` (peer-reviewed)
+- **Peer review:** the Youtu-GraphRAG paper was accepted at ICLR 2026 (announced in the repository news, January 2026).
+- **Reported results:** the paper's abstract reports moving the Pareto frontier "with up to 90.71% saving of token costs and 16.62% higher accuracy" over state-of-the-art baselines across six benchmarks; the repository tagline quotes 33.6% lower token cost at the frontier.
+- **Most Valuable Findings:** the repository contains concrete implementations of schema-guided decomposition, schema-type-aware retrieval, parallel sub-question execution, and schema evolution during extraction, with news entries through February 2026.
+- **Supporting benchmark:** the project publishes AnonyRAG, a fair anonymous dataset built to test retrieval performance against knowledge leakage from LLM or embedding pretraining.
+- **Unverified / Unclear:** generality across domains and the exact contribution of each subsystem outside the project's evaluation setup.
 
 ## How to use it
 
@@ -17871,8 +17906,8 @@ Implementation guidance:
 
 ## References
 
-- [Youtu-GraphRAG repository](https://github.com/TencentCloudADP/youtu-graphrag)
-- [Youtu-GraphRAG paper entry on arXiv](https://arxiv.org/abs/2508.19855)
+- [Youtu-GraphRAG repository](https://github.com/TencentCloudADP/youtu-graphrag) (ICLR 2026; AnonyRAG anti-leakage benchmark; enterprise edition launched on Tencent Cloud ADP, February 2026)
+- [Youtu-GraphRAG paper entry on arXiv](https://arxiv.org/abs/2508.19855) (accepted at ICLR 2026; abstract reports up to 90.71% token-cost saving and 16.62% higher accuracy)
 - Related: [Agentic Search Over Vector Embeddings](agentic-search-over-vector-embeddings.md)
 - Related: [Agent-Driven Research](agent-driven-research.md)
 
@@ -18162,7 +18197,7 @@ flowchart TD
 **Status:** emerging
 **Category:** Context & Memory
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://docs.anthropic.com/en/docs/claude-code/hooks
+**Source:** https://code.claude.com/docs/en/hooks
 
 ## Problem
 
@@ -18180,8 +18215,10 @@ While episodic memory systems store past *experiences*, they don't address the n
 Implement **dual-hook architecture** for self-identity accumulation:
 
 1. **SessionStart Hook**: Inject accumulated identity/profile at session start
-2. **SessionEnd Hook**: Extract new insights and refine the profile after each session
+2. **Refinement hook (Stop or PostCompact)**: Extract new insights and refine the profile as the session runs
 3. **Identity Document**: A persistent file (e.g., WHO_AM_I.md, SOUL.md) that evolves over time
+
+Before building this, check what your harness already automates: Claude Code's auto memory has the agent save typed learning notes (`user`, `feedback`, `project`, `reference`) that load into every session, and the Claude API memory tool offers the same store-and-retrieve loop for applications. An explicit identity document is worth keeping when you want one curated, user-editable profile rather than the harness's accumulating notes.
 
 ```mermaid
 sequenceDiagram
@@ -18189,7 +18226,7 @@ sequenceDiagram
     participant IdentityFile as WHO_AM_I.md
     participant Agent
     participant User
-    participant SessionEnd
+    participant StopHook as Stop hook
 
     Note over SessionStart: New session begins
     SessionStart->>IdentityFile: Read profile
@@ -18202,10 +18239,9 @@ sequenceDiagram
     User->>Agent: Work together
     Agent->>User: Learn preferences
 
-    Note over SessionEnd: Session terminates
-    SessionEnd->>Agent: Extract insights from conversation
-    Agent->>IdentityFile: Update with new insights
-    IdentityFile-->>SessionEnd: Saved for next session
+    Note over StopHook: Turn ends
+    StopHook->>IdentityFile: Append new insights
+    IdentityFile-->>StopHook: Saved for next session
 ```
 
 **Core mechanism:**
@@ -18216,12 +18252,10 @@ def session_start_hook():
     profile = read_file("WHO_AM_I.md")
     inject_context(profile)
 
-# SessionEnd: Refine identity with new insights
-def session_end_hook(conversation):
-    new_insights = extract_insights(conversation)
-    current_profile = read_file("WHO_AM_I.md")
-    updated_profile = merge_insights(current_profile, new_insights)
-    write_file("WHO_AM_I.md", updated_profile)
+# Stop hook (side effect): append new insights to the profile
+def stop_hook(turn_payload):
+    new_insights = extract_insights(turn_payload["last_assistant_message"])
+    append_file("WHO_AM_I.md", new_insights)
 ```
 
 **Profile structure typically includes:**
@@ -18238,7 +18272,7 @@ def session_end_hook(conversation):
 - **Most Valuable Findings:**
   - Reflexion (Shinn et al., 2023) achieved 91% pass rate on HumanEval vs 80% baseline through episodic memory with self-reflection
   - MemGPT (Packer et al., 2023) demonstrates hierarchical memory systems with virtual context management in production
-  - Cursor AI's 10x-MCP persistent memory reported 26% improvement over OpenAI Memory with 90% token reduction (forum validation)
+  - Claude Code auto memory and the Claude memory tool ship adjacent capabilities (agent-written learnings loaded every session), showing the demand is real even where the identity document itself is not a product feature
 - **Unverified / Unclear:** Long-term identity accumulation studies (multi-month) and conflict resolution mechanisms for contradictory identity statements
 
 ## How to use it
@@ -18247,7 +18281,7 @@ def session_end_hook(conversation):
 
 1. Create identity document with initial structure
 2. Configure SessionStart hook to read and inject it
-3. Configure SessionEnd hook to refine it with new insights
+3. Configure a Stop or PostCompact hook to append new insights as the session runs
 4. Include instructions for when/how to update
 
 **Example SessionStart hook (Claude Code):**
@@ -18270,29 +18304,29 @@ if whoami_path.exists():
     }))
 ```
 
-**Example SessionEnd hook (Claude Code):**
+**Example refinement hook (Claude Code):**
 
-```python
-#!/usr/bin/env python3
-import subprocess
+SessionEnd is the wrong place for refinement: it runs after the session terminates, its stdout is discarded (only stderr reaches the user), and it shares a 1.5-second budget that per-hook `timeout` settings can raise to at most 60 seconds — too short for an LLM call that spawns another `claude --continue -p` session. Run refinement from a Stop hook instead, which fires when Claude finishes responding and can read `last_assistant_message` from its input:
 
-PROMPT = """
-Read WHO_AM_I.md and update it based on our conversation:
-1. Extract NEW insights about the user
-2. UPDATE each section (add new insights, keep existing)
-3. Write updated content back
-4. Update 'modified' date in frontmatter
-"""
-
-subprocess.run([
-    "claude", "--continue", "-p", PROMPT,
-    "--dangerously-skip-permissions"
-])
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/update_identity.py",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
-**Prompting for self-refinement:**
-
-The SessionEnd hook uses `--continue` to resume the conversation with a refinement prompt, allowing the agent to update its own identity document intelligently rather than through parsing.
+The script exits 0 and only appends distilled insights to `WHO_AM_I.md` as a side effect; reserve heavier consolidation (merging sections, pruning contradictions) for a periodic job you run yourself, or for the first SessionStart of a later session.
 
 ## Trade-offs
 
@@ -18356,7 +18390,9 @@ This document accumulates familiarity across sessions.
 
 - [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) - Park et al. (Stanford, 2023)
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) - Packer et al. (UC Berkeley, 2023)
-- [Claude Code Hooks Documentation](https://docs.anthropic.com/en/docs/claude-code/hooks)
+- [Claude Code Hooks Documentation](https://code.claude.com/docs/en/hooks) - hook events, budgets, and output handling (SessionEnd has no decision control and shares a 1.5-second budget, extendable to at most 60 seconds)
+- Claude Code auto memory (agent-written learnings loaded into every session): https://code.claude.com/docs/en/memory
+- Claude memory tool: https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool
 
 ---
 
@@ -18431,7 +18467,7 @@ if passes_guardrails(delta):
 
 Raw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.
 
-Research on boilerplate detection shows that **40-80% of web page content** is typically navigation, footers, ads, and other boilerplate that should be filtered before semantic processing (Kohlschütter et al., SIGIR 2010).
+Research on boilerplate detection shows that a large fraction of web page content is navigation, templates, ads, and other boilerplate that carries no page-specific signal, which is why shallow text features suffice to strip it (Kohlschütter et al., WSDM 2010).
 
 This creates several problems:
 
@@ -18662,7 +18698,7 @@ graph LR
     C --> G[LLM Processing]
 
     A -. "Noise removed" .-> B
-    B -. "10-100x reduction" .-> C
+    B -. "Large reduction" .-> C
 
     style C fill:#9f9,stroke:#333
     style A fill:#f99,stroke:#333
@@ -18670,13 +18706,15 @@ graph LR
 
 ### Key Benefits
 
-| Aspect | Raw Data | Semantic Filter | Improvement |
-|--------|----------|-----------------|-------------|
-| Token count | 10,000 | 100-1,000 | **10-100x reduction** |
-| LLM reasoning | Confused by noise | Focused on signal | **Better decisions** |
-| Cost | High | Low | **10-100x cheaper** |
-| Latency | Slow | Fast | **2-5x faster** |
-| Accuracy | Prone to errors | More reliable | **Higher success rate** |
+Illustrative comparison for the raw-HTML example above; actual ratios depend entirely on how verbose the source representation is:
+
+| Aspect | Raw Data | Semantic Filter |
+|--------|----------|-----------------|
+| Token count | 10,000+ (full DOM) | 100-1,000 (accessibility tree) |
+| LLM reasoning | Confused by noise | Focused on signal |
+| Cost | Scales with raw size | Scales with filtered size |
+| Latency | Slower with bigger context | Faster with smaller context |
+| Accuracy | Prone to errors | More reliable |
 
 ## How to use it
 
@@ -18772,7 +18810,7 @@ await page.click(element.xpath);
 
 **Pros:**
 
-- **Dramatic token reduction**: 10-100x smaller context
+- **Dramatic token reduction**: filtered representations are routinely an order of magnitude or more smaller than the raw source
 - **Better LLM reasoning**: Focus on signal, not noise
 - **Lower costs**: Fewer tokens = cheaper
 - **Faster inference**: Smaller context = faster generation
@@ -18804,11 +18842,13 @@ await page.click(element.xpath);
 
 ## References
 
-- [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original accessibility tree implementation
-- Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1835449.1835550), SIGIR 2010 - Foundational research showing 40-80% of web content is boilerplate
+- [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Accessibility-tree context with no screenshots and automatic ad-frame filtering
+- [Playwright MCP](https://github.com/microsoft/playwright-mcp) - browser automation server that exposes the accessibility tree instead of raw DOM or screenshots
+- Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1718487.1718542), WSDM 2010 - foundational research showing shallow text features detect boilerplate that carries no page-specific signal
 - Beurer-Kellner et al., ["Design Patterns for Securing LLM Agents"](https://arxiv.org/abs/2506.08837), arXiv 2025 - Context-Minimization Pattern (security framework)
 - [WAI-ARIA Accessibility Tree](https://www.w3.org/TR/core-aam-1.1/) - Browser accessibility API
 - Related patterns: [Context Window Anxiety Management](context-window-anxiety-management.md), [Curated Code Context Window](curated-code-context-window.md)
+- Distinct from [Context-Minimization Pattern](context-minimization-pattern.md): that pattern decides how much total context the agent keeps as a security and budget discipline, while this one transforms a specific raw input into its semantic elements before it reaches the context at all
 
 ---
 
@@ -18827,11 +18867,13 @@ Coding agents read the same files and command outputs many times per session. Ea
 
 Introduce a **context runtime** alongside the agent—commonly as an MCP server—that owns how workspace state enters the model:
 
-1. **Session-scoped cache** for read operations with cheap revalidation (for example, file mtime) so identical reads collapse to small cache hits instead of full payloads.
+1. **Cached reads** for read operations with cheap revalidation (for example, file mtime) so identical reads return compact references instead of full payloads.
 2. **Structured read modes** (for example, dependency maps, signatures, diffs, or task-filtered excerpts) so the agent requests the smallest representation that still supports the next decision.
 3. **Normalized tool channels** so shell and search results pass through compressing adapters where patterns are stable (for example, common `git` or package-manager shapes).
 
 The runtime sits between the IDE or host and the model: tools call into it first; it returns compact, typed context and records what is already hot in-session.
+
+The reference implementation has outgrown the session scope: lean-ctx now also persists session memory and a project knowledge graph across chats (task and fact history that survives compaction), exports that state as a portable `.ctxpkg` package, and enforces configured path permissions, content filters, and context budgets on calls that pass through it. Treat the pattern as a workspace-level context layer with a session-scoped cache, not a cache that dies with the session.
 
 ```pseudo
 on_tool_read(path, mode):
@@ -18853,12 +18895,14 @@ on_tool_read(path, mode):
 
 - **Pros:** Fewer redundant tokens on repeated exploration; easier enforcement of “structure-first” context; can centralize policy for what leaves the workspace.
 - **Cons:** Additional moving parts and correctness responsibility (cache staleness, mode selection bugs); host integration work; behavior differs from stock tools unless agents are pointed at the runtime consistently.
+- **Evidence caveat:** the only public implementation cited here is the tool author's own repository (3.9k stars); no independent production adoption has been verified, so treat the reported compression behavior as vendor-reported until you measure it.
 
 ## References
 
-- lean-ctx (Apache-2.0 reference implementation): https://github.com/yvgude/lean-ctx
+- lean-ctx (reference implementation; Trust Core under Apache-2.0): https://github.com/yvgude/lean-ctx
 - Model Context Protocol specification: https://modelcontextprotocol.io/
 - Related catalogue patterns: [MCP Pattern Injection](mcp-pattern-injection.md), [Context-Minimization Pattern](context-minimization-pattern.md), [Semantic Context Filtering Pattern](semantic-context-filtering.md)
+- Distinct from [Semantic Context Filtering Pattern](semantic-context-filtering.md): that pattern transforms one raw input (HTML, API response) into its semantic elements at the edge, while this one interposes a persistent runtime that caches and projects every workspace read across a session
 
 ---
 
@@ -19939,9 +19983,10 @@ Serve a static, machine-readable manifest at a well-known URL that describes the
 
 Two complementary formats have emerged:
 
-1. **`llms.txt`** (convention from [llmstxt.org](https://llmstxt.org)): A plain-text or markdown file served at `/llms.txt` that provides a human-and-machine-readable summary of what the site offers to LLMs. Analogous to `robots.txt` for crawlers, but inverted: it describes what is *available* rather than what is *restricted*.
+1. **`llms.txt`** (convention from [llmstxt.org](https://llmstxt.org)): A plain-text or markdown file served at `/llms.txt` that provides a human-and-machine-readable summary of what the site offers to LLMs. Analogous to `robots.txt` for crawlers, but inverted: it describes what is *available* rather than what is *restricted*. The proposal is now at v2 (modified August 10, 2026) and reports thousands of publishing sites.
 
-2. **`agent.json`** / **`ai-plugin.json`**: A structured JSON manifest (served at the root or `/.well-known/`) that declares service endpoints, authentication schemes, rate limits, and capability metadata in a schema agents can parse deterministically.
+2. **`agents.md`** ([agents.md](https://agents.md)): A markdown instruction file placed at the repository root for coding agents, now stewarded by the Agentic AI Foundation under the Linux Foundation. Adopted by OpenAI Codex, Google Jules and Gemini CLI, GitHub Copilot's coding agent, Cursor, Devin, and others; the project reports over 60k open-source projects using it. The older ChatGPT `ai-plugin.json` manifest was an earlier format of this kind, but ChatGPT plugins were deprecated and the documentation now redirects elsewhere.
+
 
 ```json
 // Example agent.json
@@ -20026,15 +20071,17 @@ The agent workflow becomes:
 
 **Cons:**
 
-- No established universal standard yet (multiple competing formats)
+- Standards have consolidated but differ by domain: `agents.md` is the settled convention for repository-level coding-agent instructions, while `llms.txt` (v2, 2026) has wide but voluntary adoption for websites and structured JSON manifests remain fragmented
+- Static manifests can drift from actual API state if not kept in sync
 - Static manifests can drift from actual API state if not kept in sync
 - Only describes *what* is available, not *how* to use each endpoint in detail (still need OpenAPI or MCP for full schemas)
 - May expose surface area to adversarial agents if not paired with proper auth
 
 ## References
 
-- llmstxt.org: Community specification for `llms.txt` convention: https://llmstxt.org
-- OpenAI ChatGPT Plugins manifest specification (`ai-plugin.json`): https://platform.openai.com/docs/plugins/getting-started/plugin-manifest
+- llmstxt.org: Community specification for the `llms.txt` convention, v2 (modified August 10, 2026): https://llmstxt.org
+- agents.md: Open format for guiding coding agents, stewarded by the Agentic AI Foundation under the Linux Foundation: https://agents.md
+- agents.md repository (spec, FAQ, and adopter list): https://github.com/agentsmd/agents.md
 - Anthropic Model Context Protocol: Complementary runtime tool protocol: https://modelcontextprotocol.io
 - `robots.txt` (RFC 9309): The original well-known convention file that inspired this pattern: https://www.rfc-editor.org/rfc/rfc9309
 
@@ -21445,14 +21492,14 @@ function validateToolChain(tools: string[]): boolean {
 
 ## Tool Search Lazy Loading
 
-**Status:** emerging
+**Status:** established
 **Category:** Context & Memory
 **Authors:** Niko
 **Source:** https://x.com/trq212/status/2011523109871108570
 
 ## Problem
 
-As the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools that consume significant context space. Documented setups with 7+ servers have been documented consuming 67k+ tokens just for tool descriptions. This creates a fundamental scalability issue:
+As the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools that consume significant context space. Setups with 7+ servers were reported consuming 67k+ tokens just for tool descriptions at the feature's launch announcement. This creates a fundamental scalability issue:
 
 * **Context bloat**: Preloading all tool descriptions consumes tokens that could be used for the actual task
 * **Latency**: More tools means more processing overhead on every request
@@ -21463,46 +21510,38 @@ As the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools 
 
 Implement Tool Search: a lazy-loading mechanism where tools are dynamically loaded into context via search only when needed, rather than preloaded on initialization.
 
-The pattern works by:
+Tool search is now default behavior rather than an opt-in optimization:
 
-1. **Threshold detection**: Monitor when tool descriptions would exceed a context threshold (e.g., 10% of context window)
-2. **Search interface**: Provide a ToolSearchTool that allows agents to search tool metadata and selectively load tools
-3. **Server instructions**: Leverage MCP server instruction fields to guide the agent on when to search for specific tools
-4. **Agentic search**: Use intelligent search rather than basic RAG to find relevant tools
+1. **On by default in Claude Code**: a `ToolSearch` tool loads tool definitions on demand; `ENABLE_TOOL_SEARCH=false` (or a custom `ANTHROPIC_BASE_URL`, or a pre-4.5-generation model on Google Cloud's Agent Platform) disables it, and without tool search Claude Code falls back to a `WaitForMcpServers` tool. The current MCP documentation states no activation threshold — the 10%-of-context threshold described at launch (January 2026) is no longer a documented gate.
+2. **First-party API support**: the Claude API ships a server-side tool search tool in two variants, `tool_search_tool_regex_20251119` (Claude writes Python regex patterns) and `tool_search_tool_bm25_20251119` (natural language queries). You still send every tool definition in the `tools` array, mark deferred ones with `defer_loading: true`, and the API returns `tool_reference` blocks that it expands into full definitions — up to 10,000 deferred tools per request, with the system prompt prefix untouched so prompt caching is preserved.
+3. **Server instructions**: MCP server instruction fields guide the agent on when to search for specific tools.
+4. **Agentic search**: use search over tool names, descriptions, argument names, and argument descriptions rather than a fixed embedding index.
 
 ```mermaid
 graph TD
-    A[Agent Request] --> B{Would tools exceed 10% context?}
-    B -->|No| C[Preload All Tools]
-    B -->|Yes| D[Enable Tool Search Mode]
-    D --> E[Load Tool Metadata Only]
-    E --> F[Agent Determines Tool Need]
-    F --> G[Search via ToolSearchTool]
-    G --> H[Load Specific Tool on Demand]
-    H --> I[Execute Tool]
-    C --> I
+    A[Agent Request] --> B[Tool Search Enabled by default]
+    B --> C[Only search tool + non-deferred tools in context]
+    C --> D[Agent Determines Tool Need]
+    D --> E[Search tool catalog]
+    E --> F[tool_reference blocks expand to full definitions]
+    F --> G[Execute Tool]
 ```
 
-**Implementation approach:**
+**Implementation approach (Claude API):**
 
 ```pseudo
-function initialize_mcp_servers(servers) {
-    total_tool_tokens = calculate_tool_tokens(servers)
-
-    if (total_tool_tokens > CONTEXT_THRESHOLD) {
-        // Lazy loading mode
-        tool_registry = load_tool_metadata_only(servers)
-        return ToolSearchTool(tool_registry)
-    } else {
-        // Traditional preload mode
-        return preload_all_tools(servers)
-    }
+function build_tools(all_tools) {
+    tools = [tool_search_tool_regex]          // never deferred
+    for tool in frequently_used(all_tools, n=3..5):
+        tools.push(tool)                       // stay non-deferred
+    for tool in rest(all_tools):
+        tools.push(tool with defer_loading=true)
+    return tools                              // API searches server-side
 }
 
-function tool_search(query: string, tool_registry) {
-    // Agentic search - not basic RAG
-    relevant_tools = agentically_search(tool_registry, query)
-    return load_tool_definitions(relevant_tools)
+function tool_search_result(response) {
+    // keep server_tool_use and tool_search_tool_result blocks in history;
+    // the API expands tool_reference blocks for Claude
 }
 ```
 
@@ -21518,8 +21557,8 @@ function tool_search(query: string, tool_registry) {
 
 * **Implement ToolSearchTool**: Provide a search interface for tool discovery
 * **Use agentic search**: Implement intelligent search rather than basic vector RAG
-* **Set appropriate thresholds**: Choose context thresholds based on your use case (Claude Code uses 10%)
-* **Provide opt-out**: Allow users to disable search if they prefer preloading
+* **Follow the documented enablement guidance**: enable tool search at 10+ tools, when definitions exceed 10k tokens, or when aggregating 200+ tools across MCP servers; standard tool calling is a better fit below 10 tools or under 100 tokens of definitions
+* **Provide opt-out**: Allow users to disable search if they prefer preloading (Claude Code exposes `ENABLE_TOOL_SEARCH=false`)
 
 **Usage scenarios:**
 
@@ -21530,10 +21569,10 @@ function tool_search(query: string, tool_registry) {
 ## Trade-offs
 
 * **Pros:**
-  * Dramatically reduces baseline context usage (67k+ tokens to just metadata)
-  * Enables scaling to 100+ tools without context issues
-  * Faster cold-start times when tools aren't needed
-  * Better tool discovery through intentional search
+  * Dramatically reduces baseline context usage: the API docs report a typical GitHub/Slack/Sentry/Grafana/Splunk multiserver setup consuming ~55k tokens in definitions, which tool search typically reduces by over 85% by loading only the 3-5 tools a request needs
+  * Enables scaling to thousands of deferred tools without context issues
+  * Keeps tool selection accuracy high past the 30-50 tool range where it normally degrades
+  * Preserves prompt caching, because deferred tools are excluded from the system-prompt prefix
   * Allows more MCP servers to be enabled simultaneously
 
 * **Cons:**
@@ -21545,13 +21584,16 @@ function tool_search(query: string, tool_registry) {
 
 ## References
 
-* [Original announcement tweet](https://x.com/trq212/status/2011523109871108570) by Thariq (@trq212)
-* [MCP Documentation](https://modelcontextprotocol.io/) for implementation details
-* GitHub issue references on lazy loading for MCP servers
+* [Original announcement tweet](https://x.com/trq212/status/2011523109871108570) by Thariq (@trq212), January 14, 2026 — reported 67k+ token setups and a 10% context threshold at launch
+* Claude Code MCP documentation (tool search on by default, `ENABLE_TOOL_SEARCH`, `WaitForMcpServers` fallback; no activation threshold stated): https://code.claude.com/docs/en/mcp
+* Claude API tool search tool (`tool_search_tool_regex_20251119` / `tool_search_tool_bm25_20251119`, `defer_loading`, `tool_reference` expansion, 10,000 deferred tools, >85% reduction, enablement guidance): https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool
+* Managing tool context (positions tool search as the standard answer for 20+ tool sets): https://platform.claude.com/docs/en/agents-and-tools/tool-use/manage-tool-context
+* MCP specification changelog (no `tools/search` primitive added through the 2025-11-25 spec, so client-side tool search remains the practice): https://modelcontextprotocol.io/specification/2025-11-25/changelog
+* Distinct from [Progressive Tool Discovery](progressive-tool-discovery.md): that pattern covers server-side techniques for exposing and paginating tool detail, while this one is the client- and API-side decision to search a catalog instead of preloading definitions
 
 ## Variations
 
-**Toggle-based forcing**: Allow users to force enable tool search even under the 10% threshold, for consistency or testing purposes.
+**Toggle-based forcing**: Allow users to force tool search on or off explicitly (`ENABLE_TOOL_SEARCH` in Claude Code), for consistency or testing purposes, instead of relying on defaults.
 
 **Caching strategies**: Implement LRU caching for recently used tools to minimize reload overhead.
 
@@ -21564,7 +21606,7 @@ function tool_search(query: string, tool_registry) {
 * **Poor server instructions**: Without clear guidance on when to search, agents may miss relevant tools
 * **Inadequate search**: Basic RAG may not capture tool capabilities effectively; agentic search is preferred
 * **Metadata neglect**: Failing to maintain rich, searchable tool descriptions defeats the purpose
-* **Threshold tuning**: Setting the context threshold too low or too high can negate benefits or create unnecessary overhead
+* **Deferring the wrong tools**: deferring every tool (including the search tool itself) is rejected; deferring your most frequently used tools forces a search before every call
 
 ---
 
@@ -21786,7 +21828,7 @@ trajectory.append((state, action, tool_output, local_reward))
 **Status:** best-practice
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.nibzard.com/claude-code
+**Source:** https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it
 
 ## Problem
 
@@ -21803,14 +21845,16 @@ Guide the agent's tool selection and execution through explicit natural language
 
 This pattern emphasizes the user's role in actively shaping the agent's behavior with respect to its available tools, rather than relying solely on autonomous tool selection.
 
-The technique is grounded in research showing that interleaving reasoning traces with action execution—where the model explicitly thinks about which tool to use before acting—significantly improves outcomes (Yao et al., 2022, ReAct).
+The technique is grounded in research showing that interleaving reasoning traces with action execution—where the model explicitly thinks about which tool to use before acting—improves outcomes (Yao et al., 2022, ReAct).
+
+Distinct from [Patch Steering via Prompted Tool Selection](patch-steering-via-prompted-tool-selection.md), which applies the same steering idea specifically to choosing among patching or refactoring tools with per-tool usage rules and a fallback order.
 
 ## Evidence
 
-- **Evidence Grade:** `high`
-- **Deliberation before action** improves tool selection success by 40-70% (Parisien et al., 2024)
-- **Smaller models** benefit disproportionately more from explicit guidance (Shen et al., 2024)
-- **Production validation:** All major AI agent platforms implement some form of tool steering
+- **Evidence Grade:** `medium`
+- **ReAct (Yao et al., ICLR 2023)**: interleaving reasoning traces with actions beats imitation and reinforcement learning baselines by an absolute success rate of 34% on ALFWorld and 10% on WebShop
+- **Practitioner report:** Boris Cherny recommends teaching the agent your team's tools and steering tool choice in prompts (Claude Code interview, see References)
+- **Community discussion:** the technique is reported to work, and is debated as a named pattern: https://news.ycombinator.com/item?id=46491244
 
 ## Example (tool guidance flow)
 
@@ -21835,23 +21879,22 @@ flowchart TD
 
 ## How to use it
 
-- Use when agent success depends on reliable tool invocation, especially with custom tools or smaller models (<7B parameters)
+- Use when agent success depends on reliable tool invocation, especially with custom or team-specific tools the base model does not know
 - Structure guidance hierarchically: task categorization first, then tool selection rules
 - Include decision frameworks (e.g., "if modifying existing code, use Edit; if creating new file, use Write")
 - Add verification gates: always run build/test after code changes to prevent error cascades
 
 ## Trade-offs
 
-* **Pros:** Improves execution success, reduces tool-call failures, enables context-preserving operations (Edit over Write = ~66% token reduction)
-* **Cons:** Introduces integration coupling, requires prompt maintenance as tool interfaces evolve, adds ~400-700 tokens per session overhead
+* **Pros:** Improves execution success, reduces tool-call failures, and favors surgical edits over rewriting whole files, which keeps more of the conversation cacheable
+* **Cons:** Introduces integration coupling, requires prompt maintenance as tool interfaces evolve, and spends prompt tokens on guidance in every session
 
 ## References
 
-- Based on examples and tips in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section III, particularly "Steering Claude to Use Tools" and "Tip #3: Teach Claude to use *your* team's tools."
-- Yao, S., et al. (2022). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — validates that interleaving reasoning with action execution improves tool use by 40-70%
-- Parisien, et al. (2024). [Deliberation Before Action](https://arxiv.org/abs/2403.05441) — shows 40-70% success rate improvement with natural language planning before tool execution
-
-[Source](https://www.nibzard.com/claude-code)
+- Boris Cherny on steering Claude toward specific tools and teaching it team-specific CLIs: [How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+- Secondary summary of the same material: [Mastering Claude Code: Boris Cherny's Guide & Cheatsheet](https://www.nibzard.com/claude-code)
+- Yao, S., et al. (2022). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (ICLR 2023) — reports absolute success-rate gains of 34% (ALFWorld) and 10% (WebShop) over imitation and reinforcement learning baselines
+- Community discussion of the technique: [Hacker News](https://news.ycombinator.com/item?id=46491244)
 
 ---
 
@@ -22238,6 +22281,7 @@ result = gateway.get_result(job.job_id)
 - **Credential management**: Users can bring their own API keys for specific providers (BYOK) to reduce costs, while the gateway provides default keys for convenience.
 - **Schema normalization**: Each provider's response is normalized to a consistent output schema so agents don't need provider-specific parsing logic.
 - **Rate limiting**: Apply per-user and per-tool rate limits at the gateway level to prevent abuse and manage costs.
+- **Policy enforcement**: When the gateway's main job is enforcing security policy rather than aggregation, see [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md); the two patterns share the proxy architecture, but that one is scoped to governance and access control.
 
 ## Trade-offs
 
@@ -22259,10 +22303,13 @@ result = gateway.get_result(job.job_id)
 
 ## References
 
-- [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — the microservices predecessor pattern that inspired this approach
-- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the emerging standard for agent-tool communication
-- [OpenAI Plugins Architecture](https://platform.openai.com/docs/plugins) — early exploration of unified tool access for agents
-- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern with 150+ tools accessible via MCP
+- [API Gateway Pattern](https://microservices.io/patterns/apigateway.html) — the classic microservices predecessor pattern that inspired this approach (no agent or MCP content)
+- [Model Context Protocol specification](https://modelcontextprotocol.io/) — the standard for agent-tool communication that gateway implementations expose
+- [IBM ContextForge (mcp-context-forge)](https://github.com/IBM/mcp-context-forge) — open-source MCP gateway with routing, composition, and observability
+- [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) — managed gateway with MCP support, caching, rate limiting, and analytics
+- [Composio](https://composio.dev) — hosted tool aggregation platform with authenticated tool access for agents
+- [ToolRouter](https://toolrouter.com) — a production implementation of this pattern listing 414 tools and 1,810 callable skills, reachable over MCP, CLI, and REST
+- Related: [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md) — the same proxy architecture applied to policy enforcement rather than aggregation
 
 ---
 
@@ -22781,22 +22828,26 @@ sequenceDiagram
 
 ## How to use it
 
-- Use this when agent success depends on reliable tool invocation and environment setup.
-- Start with a narrow tool surface and explicit parameter validation.
-- Add observability around tool latency, failures, and fallback paths.
-- Implement automatic cleanup via idle timeouts and hard execution limits.
-- Ensure state isolation: fresh filesystem per session, no shared network namespaces.
+- Pick the isolation level to match the workload: full VMs for untrusted or long-lived work, microVMs or containers for fast per-task sandboxes.
+- Give the agent a scoped entry point (shell, file API, or screen) rather than raw host access, and snapshot or reset the filesystem between sessions.
+- Budget for cold starts: keep warm pools or reuse a session for multi-step tasks instead of provisioning per call.
+- Log everything that runs inside the machine so results and failures can be audited after the fact.
+- Enforce hard execution limits (CPU, wall-clock, network egress) outside the VM, not by trusting the agent to stop.
 
 ## Trade-offs
 
-* **Pros:** Improves execution success and lowers tool-call failure rates.
-* **Cons:** Introduces integration coupling, environment-specific upkeep, and cold-start latency (1-120s depending on isolation level).
+* **Pros:** Gives the agent a full general-purpose environment (code execution, package installs, CLI tools) with strong isolation from the host; failures stay inside the disposable machine.
+* **Cons:** Cold-start latency and per-hour compute cost; environment upkeep (images, dependencies); screen- or shell-mediated operation is slower and more error-prone than purpose-built tools.
 
 ## References
 
-- Based on Amjad Masad's description of advanced computer use agents: "People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer." (Quote from the "How AI Agents Are Reshaping Creation" blog post).
+- Amjad Masad (Replit), speaking at a Village Global event: "People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer." Quoted as recounted in [How AI Agents Are Reshaping Creation](https://www.nibzard.com/silent-revolution), a secondary summary that states over 90% of its text was AI-generated; Amjad Masad: https://x.com/amasad
 
-[Source](https://www.nibzard.com/silent-revolution)
+- Anthropic computer use tool documentation - production API for agents that operate a computer (screenshots, cursor, keyboard): https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
+
+- E2B - sandbox microVM provider for running agent-generated code: https://e2b.dev
+
+- Modal - sandboxed cloud containers for agent code execution: https://modal.com
 
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents." arXiv:2506.08837 - Comprehensive framework for secure LLM agent execution including Action Selector and Code-Then-Execute patterns.
 

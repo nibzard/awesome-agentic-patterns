@@ -2,14 +2,14 @@
 title: Static Service Manifest for Agents
 status: emerging
 authors: ["Clawdia (@OzorOwn)"]
-based_on: ["llms.txt community specification", "OpenAI ChatGPT Plugin manifest (ai-plugin.json)"]
+based_on: ["llms.txt community specification (v2, 2026)", "AGENTS.md (stewarded by the Agentic AI Foundation under the Linux Foundation)"]
 category: Tool Use & Environment
 source: "https://llmstxt.org"
 tags: [service-discovery, agent-infrastructure, llms-txt, machine-readable, api-design, well-known, tool-discovery]
 summary: "Serves a static llms.txt or agent.json file at a well-known URL that lists services, auth, and limits so agents can plan before they call"
 signals: ["API platform exposes many services behind one base URL", "Agents must discover capabilities before planning", "Different API keys unlock different service subsets"]
 anti_signals: ["Single endpoint with no discovery need", "API changes too often to keep a static manifest in sync", "Agents need full per-endpoint schemas, not a summary"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -22,9 +22,10 @@ Serve a static, machine-readable manifest at a well-known URL that describes the
 
 Two complementary formats have emerged:
 
-1. **`llms.txt`** (convention from [llmstxt.org](https://llmstxt.org)): A plain-text or markdown file served at `/llms.txt` that provides a human-and-machine-readable summary of what the site offers to LLMs. Analogous to `robots.txt` for crawlers, but inverted: it describes what is *available* rather than what is *restricted*.
+1. **`llms.txt`** (convention from [llmstxt.org](https://llmstxt.org)): A plain-text or markdown file served at `/llms.txt` that provides a human-and-machine-readable summary of what the site offers to LLMs. Analogous to `robots.txt` for crawlers, but inverted: it describes what is *available* rather than what is *restricted*. The proposal is now at v2 (modified August 10, 2026) and reports thousands of publishing sites.
 
-2. **`agent.json`** / **`ai-plugin.json`**: A structured JSON manifest (served at the root or `/.well-known/`) that declares service endpoints, authentication schemes, rate limits, and capability metadata in a schema agents can parse deterministically.
+2. **`agents.md`** ([agents.md](https://agents.md)): A markdown instruction file placed at the repository root for coding agents, now stewarded by the Agentic AI Foundation under the Linux Foundation. Adopted by OpenAI Codex, Google Jules and Gemini CLI, GitHub Copilot's coding agent, Cursor, Devin, and others; the project reports over 60k open-source projects using it. The older ChatGPT `ai-plugin.json` manifest was an earlier format of this kind, but ChatGPT plugins were deprecated and the documentation now redirects elsewhere.
+
 
 ```json
 // Example agent.json
@@ -109,14 +110,16 @@ The agent workflow becomes:
 
 **Cons:**
 
-- No established universal standard yet (multiple competing formats)
+- Standards have consolidated but differ by domain: `agents.md` is the settled convention for repository-level coding-agent instructions, while `llms.txt` (v2, 2026) has wide but voluntary adoption for websites and structured JSON manifests remain fragmented
+- Static manifests can drift from actual API state if not kept in sync
 - Static manifests can drift from actual API state if not kept in sync
 - Only describes *what* is available, not *how* to use each endpoint in detail (still need OpenAPI or MCP for full schemas)
 - May expose surface area to adversarial agents if not paired with proper auth
 
 ## References
 
-- llmstxt.org: Community specification for `llms.txt` convention: https://llmstxt.org
-- OpenAI ChatGPT Plugins manifest specification (`ai-plugin.json`): https://platform.openai.com/docs/plugins/getting-started/plugin-manifest
+- llmstxt.org: Community specification for the `llms.txt` convention, v2 (modified August 10, 2026): https://llmstxt.org
+- agents.md: Open format for guiding coding agents, stewarded by the Agentic AI Foundation under the Linux Foundation: https://agents.md
+- agents.md repository (spec, FAQ, and adopter list): https://github.com/agentsmd/agents.md
 - Anthropic Model Context Protocol: Complementary runtime tool protocol: https://modelcontextprotocol.io
 - `robots.txt` (RFC 9309): The original well-known convention file that inspired this pattern: https://www.rfc-editor.org/rfc/rfc9309

@@ -6,7 +6,7 @@ authors:
 based_on:
   - Cognition AI (2025)
 category: Context & Memory
-source: 'https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges'
+source: 'https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges'
 tags:
   - state-externalization
   - memory-management
@@ -17,7 +17,7 @@ id: proactive-agent-state-externalization
 summary: "Gives agents note templates, completeness checks, and an external memory fallback so self-written notes keep objectives, decisions, and knowledge gaps"
 signals: ["Agent works on multi-hour or multi-session tasks", "Agent already writes its own summary or changelog files", "Main agent must pass state to subagents"]
 anti_signals: ["Short single-session tasks", "Documentation tokens cost more than the continuity they give"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -29,6 +29,8 @@ Modern models like Claude Sonnet 4.5 proactively attempt to externalize their st
 - Performance can degrade when agents rely exclusively on their own summaries
 - Knowledge gaps emerge from inadequate self-documentation
 - Behavior intensifies near context window limits as a coping mechanism
+
+When the harness auto-compacts context (see [Context Window Auto-Compaction](context-window-auto-compaction.md)), the trigger changes: the agent no longer faces a hard wall that forces externalization, and compaction's own summary can lull it into skipping note-writing. If you rely on externalized notes, run compaction late or explicitly re-prompt for notes after each compaction event.
 
 ## Solution
 
@@ -112,5 +114,7 @@ Monitor self-documentation quality and supplement with external memory systems w
 
 ## References
 
-* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges)
+* [Cognition AI: Devin & Claude Sonnet 4.5 - Lessons and Challenges](https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges) (September 2025)
+* Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md) — the deliberate, workflow-level counterpart that checkpoints state on purpose rather than reacting to context pressure
+* Related: [Context Window Auto-Compaction](context-window-auto-compaction.md) — the harness mechanism that changes when this behavior triggers
 * Related: [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md)

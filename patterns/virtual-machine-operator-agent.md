@@ -9,7 +9,7 @@ tags: [computer operation, virtual machine, execution environment, agent capabil
 summary: "Gives the agent a dedicated virtual machine where it can run code, install packages, use the file system, and operate CLI tools"
 signals: ["Tasks need code execution, package installs, or system tools", "Agent must work as a general-purpose computer operator", "Isolation from the host system is required"]
 anti_signals: ["Tasks are only text or code generation with no execution", "Cold-start latency of VMs or containers is not acceptable"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -54,22 +54,26 @@ sequenceDiagram
 
 ## How to use it
 
-- Use this when agent success depends on reliable tool invocation and environment setup.
-- Start with a narrow tool surface and explicit parameter validation.
-- Add observability around tool latency, failures, and fallback paths.
-- Implement automatic cleanup via idle timeouts and hard execution limits.
-- Ensure state isolation: fresh filesystem per session, no shared network namespaces.
+- Pick the isolation level to match the workload: full VMs for untrusted or long-lived work, microVMs or containers for fast per-task sandboxes.
+- Give the agent a scoped entry point (shell, file API, or screen) rather than raw host access, and snapshot or reset the filesystem between sessions.
+- Budget for cold starts: keep warm pools or reuse a session for multi-step tasks instead of provisioning per call.
+- Log everything that runs inside the machine so results and failures can be audited after the fact.
+- Enforce hard execution limits (CPU, wall-clock, network egress) outside the VM, not by trusting the agent to stop.
 
 ## Trade-offs
 
-* **Pros:** Improves execution success and lowers tool-call failure rates.
-* **Cons:** Introduces integration coupling, environment-specific upkeep, and cold-start latency (1-120s depending on isolation level).
+* **Pros:** Gives the agent a full general-purpose environment (code execution, package installs, CLI tools) with strong isolation from the host; failures stay inside the disposable machine.
+* **Cons:** Cold-start latency and per-hour compute cost; environment upkeep (images, dependencies); screen- or shell-mediated operation is slower and more error-prone than purpose-built tools.
 
 ## References
 
-- Based on Amjad Masad's description of advanced computer use agents: "People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer." (Quote from the "How AI Agents Are Reshaping Creation" blog post).
+- Amjad Masad (Replit), speaking at a Village Global event: "People think of computer use as something like an operator, but actually it is more like you give the model a virtual machine, and it knows how to execute code on it, install packages, write scripts, use apps, do as much as possible with the computer." Quoted as recounted in [How AI Agents Are Reshaping Creation](https://www.nibzard.com/silent-revolution), a secondary summary that states over 90% of its text was AI-generated; Amjad Masad: https://x.com/amasad
 
-[Source](https://www.nibzard.com/silent-revolution)
+- Anthropic computer use tool documentation - production API for agents that operate a computer (screenshots, cursor, keyboard): https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
+
+- E2B - sandbox microVM provider for running agent-generated code: https://e2b.dev
+
+- Modal - sandboxed cloud containers for agent code execution: https://modal.com
 
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents." arXiv:2506.08837 - Comprehensive framework for secure LLM agent execution including Action Selector and Code-Then-Execute patterns.
 
