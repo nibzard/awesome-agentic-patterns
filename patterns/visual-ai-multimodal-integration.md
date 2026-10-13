@@ -1,15 +1,15 @@
 ---
 title: "Visual AI Multimodal Integration"
-status: emerging
+status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Andrew Ng", "OpenAI", "Anthropic", "Google"]
+based_on: ["Anthropic computer use", "OpenAI", "Google"]
 category: "Tool Use & Environment"
-source: "https://openai.com/research/gpt-4v-system-card"
+source: "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool"
 tags: [multimodal, vision, video, image-processing, visual-understanding, agent-capabilities]
 summary: "Adds multimodal models to the agent so it can analyze images, video, and screenshots and combine them with text to reason and act"
 signals: ["Tasks involve screenshots, charts, diagrams, or video", "Agent must debug UIs or extract data from visual documents", "Users want to show a problem instead of describing it"]
 anti_signals: ["All inputs are text only", "Budget cannot cover higher visual processing costs", "Visual data carries privacy risks that cannot be controlled"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -18,9 +18,9 @@ Many real-world tasks require understanding and processing visual information al
 
 ## Solution
 
-Integrate large multimodal models (LMMs) into agent architectures to enable visual understanding capabilities. This pattern involves:
+Integrate large multimodal models (LMMs) into agent architectures to enable visual understanding capabilities. Vision input is now a default capability of frontier models, so the pattern is the integration architecture around it — input pipelines, the screenshot-driven agent loop, and cost control — not the presence of vision itself. This pattern involves:
 
-1. **Visual Input Handling**: Accept images, videos, or screenshots as input alongside text. Images are typically resized and base64-encoded or provided via URL. Video may require frame extraction (except Gemini which supports native video processing).
+1. **Visual Input Handling**: Accept images, videos, or screenshots as input alongside text. Images are typically resized and base64-encoded or provided via URL. Video often requires frame extraction unless the chosen provider accepts video natively.
 
 2. **Visual Analysis**: Use multimodal models to extract information, identify objects, read text (OCR), understand spatial relationships, and interpret diagrams or charts.
 
@@ -28,7 +28,7 @@ Integrate large multimodal models (LMMs) into agent architectures to enable visu
 
 4. **Visual-Guided Actions**: Take actions based on visual understanding (clicking UI elements, describing scenes, counting objects).
 
-**Provider Selection**: Different providers excel at different tasks—Anthropic Claude for UI understanding and code generation, Google Gemini for native video processing, OpenAI GPT-4o for general-purpose tasks, Meta LLaVA for open-source needs.
+**Provider Selection**: Current frontier models from Anthropic, Google, and OpenAI all accept image input, so select by task fit and current benchmarks rather than by vision support alone. For screenshot-driven computer use, Anthropic ships a documented computer-use tool (see References); open-source multimodal models such as LLaVA remain an option for self-hosted deployments.
 
 ## Example
 
@@ -179,14 +179,13 @@ flowchart TD
 
 - Use when tasks require visual understanding—UI debugging, document processing, image analysis, video comprehension, or code generation from screenshots.
 
-- **Choose provider by use case**: Anthropic Claude for UI understanding and screenshot-to-code; Google Gemini for native video processing; OpenAI GPT-4o for general-purpose tasks; Meta LLaVA for open-source/self-hosted needs; Mistral for EU/GDPR compliance.
+- **Choose provider by use case**: all frontier providers accept images, so pick by task fit and verify current capability against the provider's own documentation (for example Anthropic's computer-use tool for screenshot-driven agents, or an open-source multimodal model for self-hosting).
 
 - **Optimize for costs**: Resize images to minimum viable size, use appropriate detail levels (low for general understanding, high for OCR), and consider cascading approaches (smaller models first, escalate when needed).
 
 ## References
 
-- [Andrew Ng on Visual AI and Agentic Workflows (2024)](https://www.deeplearning.ai/the-batch/)
-- [GPT-4V(ision) System Card](https://openai.com/research/gpt-4v-system-card)
-- [Claude 3 Vision Capabilities](https://www.anthropic.com/claude)
-- [Google Gemini Multimodal Features](https://deepmind.google/technologies/gemini/)
-- [LLaVA: Visual Instruction Tuning (Liu et al., 2023)](https://arxiv.org/abs/2304.08485) - Foundational multimodal instruction-following model
+- Primary source: [Claude computer-use tool documentation](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool) — describes a shipped, screenshot-driven multimodal agent loop: the agent returns tool-use blocks such as screenshot, click, and type; the host executes them in a sandbox and returns tool results, repeating until the task completes.
+- [GPT-4V(ision) System Card](https://openai.com/research/gpt-4v-system-card) — OpenAI's 2023 safety analysis of an early vision model; useful background on visual-capability risks, not a description of this pattern.
+- [LLaVA: Visual Instruction Tuning (Liu et al., 2023)](https://arxiv.org/abs/2304.08485) — early open-source multimodal instruction-following model; historical baseline for self-hosted visual agents.
+- Earlier revisions linked a generic newsletter index and provider marketing pages in place of pattern sources; they were removed or replaced with the pages above.

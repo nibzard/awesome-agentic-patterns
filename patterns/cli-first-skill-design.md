@@ -4,10 +4,10 @@ status: emerging
 authors:
   - Lucas Carlson
 based_on:
-  - Anthropic (Claude Code)
+  - Agent Skills format (Anthropic)
   - Unix Philosophy
 category: Tool Use & Environment
-source: 'https://github.com/anthropics/claude-code'
+source: 'https://code.claude.com/docs/en/skills'
 tags:
   - cli
   - skills
@@ -20,7 +20,7 @@ id: cli-first-skill-design
 summary: "Builds each skill as a standalone CLI with JSON output and exit codes so humans and agents use the same interface"
 signals: ["Skills must be usable by both humans and agents", "Teams maintain separate API and GUI interfaces for one skill", "Skills need to compose with Unix tools and scripts"]
 anti_signals: ["High-frequency calls above about 100 per second", "Complex object graphs or real-time streaming"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -35,6 +35,8 @@ Teams end up building two interfaces or choosing one audience over the other.
 ## Solution
 
 Design all skills as **CLI tools first**. A well-designed CLI is naturally dual-use: humans can invoke it from the terminal, and agents can invoke it via shell commands.
+
+The standardized **Agent Skills format** (a folder with a `SKILL.md` file plus optional `scripts/`, references, and assets) defines the container: where the skill lives and how the agent discovers and loads it. The CLI-first rule in this pattern governs what you put in that container — bundled capabilities that behave like well-behaved Unix commands. The CLI-first framing itself is the contributing author's practice; the cited sources below document the skills format and agent tool design, not a published skills-as-CLI methodology.
 
 ```mermaid
 graph LR
@@ -55,7 +57,7 @@ graph LR
 6. **Default non-interactive**: Avoid prompts; provide `--yes` or `--force` flags instead
 
 ```bash
-# Example: Trello skill as CLI
+# Illustrative example: a Trello skill as a CLI (written for this pattern, not taken from a cited source)
 trello.sh boards                    # List all boards
 trello.sh cards <BOARD_ID>          # List cards on board
 trello.sh create <LIST_ID> "Title"  # Create card
@@ -143,12 +145,10 @@ echo "-- Asana --"
 
 ## References
 
-* Unix Philosophy (Doug McIlroy): "Write programs that do one thing and do it well"
-* POSIX exit code conventions: IEEE Std 1003.1
-* Dual-Use Tool Design pattern
-* Intelligent Bash Tool Execution pattern
-* 12-Factor App: Config via environment
-* Claude Code skills directory structure
-
-- Primary source: https://github.com/anthropics/claude-code
-- anthropics/skills: https://github.com/anthropics/skills
+- Primary source: [Claude Code skills documentation](https://code.claude.com/docs/en/skills) — documents the skill layout used above: a `SKILL.md` folder per skill under `~/.claude/skills/`, with optional `scripts/` that the agent executes rather than loads into context.
+- [Agent Skills open format](https://agentskills.io) and [anthropics/skills](https://github.com/anthropics/skills) — the open standard and Anthropic's repository for skills. Skills there are folders of instructions, scripts, and resources; the sources define the format, not a CLI-first design rule.
+- [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) (Anthropic, 2025) — guidance on agent-facing tool design: consolidated high-signal tools, namespacing, response formats, and actionable error messages. It covers tool design generally, not skills-as-CLI specifically.
+- Unix Philosophy (Doug McIlroy): "Write programs that do one thing and do it well"
+- POSIX exit code conventions: IEEE Std 1003.1
+- 12-Factor App: Config via environment
+- Boundary with related patterns: [Dual-Use Tool Design](dual-use-tool-design.md) states the general principle (one interface for humans and agents); this pattern applies it to how skills are built. [CLI-Native Agent Orchestration](cli-native-agent-orchestration.md) scripts the agent itself through its CLI rather than building skills.

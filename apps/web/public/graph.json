@@ -564,15 +564,16 @@
       "id": "cli-native-agent-orchestration",
       "title": "CLI-Native Agent Orchestration",
       "category": "Tool Use & Environment",
-      "status": "proposed",
+      "status": "established",
       "slug": "cli-native-agent-orchestration",
       "tags": [
         "cli",
         "automation",
         "local-dev",
-        "headless"
+        "headless",
+        "ci"
       ],
-      "summary": "Exposes agent capabilities as CLI commands with JSON output and exit codes so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs"
+      "summary": "Drives agents through their non-interactive CLI mode (claude -p with JSON output and exit codes) so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs"
     },
     {
       "id": "code-mode-mcp-tool-interface-improvement-pattern",
@@ -857,7 +858,7 @@
       "id": "cross-protocol-agent-discovery",
       "title": "Cross-Protocol Agent Discovery",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "cross-protocol-agent-discovery",
       "tags": [
         "agent-discovery",
@@ -868,7 +869,7 @@
         "a2a",
         "agents-txt"
       ],
-      "summary": "Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer."
+      "summary": "Aggregates agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer (proposed; no neutral implementation verified)"
     },
     {
       "id": "cryptographic-governance-audit-trail",
@@ -2166,7 +2167,7 @@
       "id": "patch-steering-via-prompted-tool-selection",
       "title": "Patch Steering via Prompted Tool Selection",
       "category": "Tool Use & Environment",
-      "status": "best-practice",
+      "status": "emerging",
       "slug": "patch-steering-via-prompted-tool-selection",
       "tags": [
         "patching",
@@ -2174,7 +2175,7 @@
         "tool-selection",
         "coding-agent"
       ],
-      "summary": "Tells the agent in the prompt which patch or refactoring tool to use, with usage examples, negative rules, and a fallback order"
+      "summary": "Tells the agent in the prompt which patch tool or edit format to use, with usage examples, negative rules, and a fallback order"
     },
     {
       "id": "persistent-test-memory-feedback-loop",
@@ -3195,7 +3196,7 @@
       "id": "visual-ai-multimodal-integration",
       "title": "Visual AI Multimodal Integration",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "established",
       "slug": "visual-ai-multimodal-integration",
       "tags": [
         "multimodal",

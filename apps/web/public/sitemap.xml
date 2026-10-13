@@ -155,11 +155,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cli-first-skill-design</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cli-native-agent-orchestration</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/code-first-tool-interface-pattern</loc>
@@ -231,7 +231,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail</loc>
@@ -507,7 +507,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/non-custodial-spending-controls</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/non-generative-judgment-routing</loc>
@@ -547,7 +547,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop</loc>
@@ -691,7 +691,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/soulbound-identity-verification</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/spec-as-test-feedback-loop</loc>
@@ -799,7 +799,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/visual-ai-multimodal-integration</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</loc>
