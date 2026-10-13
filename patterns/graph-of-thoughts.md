@@ -9,7 +9,7 @@ tags: [reasoning, graph-based, problem-solving, thought-exploration, backtrackin
 summary: "Represents reasoning as a directed graph of thoughts so the model can branch, aggregate, refine, and revisit reasoning paths"
 signals: ["Problems need several solution approaches merged into one", "Early decisions may need revision based on later insights", "Reasoning steps have interdependencies that do not fit a chain or tree"]
 anti_signals: ["Straightforward problems with a single viable solution path", "Compute is limited, since cost is much higher than linear reasoning", "Reasoning branches never need to recombine"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -37,23 +37,30 @@ This enables operations like:
 ## Example
 
 ```python
+import networkx as nx
+
 class GraphOfThoughts:
     def __init__(self, llm, max_thoughts=50):
         self.llm = llm
         self.max_thoughts = max_thoughts
         self.thought_graph = nx.DiGraph()
         self.thought_scores = {}
-        
+
     def solve(self, problem):
         # Initialize with root thought
         root = self.generate_initial_thought(problem)
         self.add_thought(root, score=1.0)
-        
+
         # Iteratively expand the graph
         while len(self.thought_graph) < self.max_thoughts:
             # Select promising thoughts to expand
             thoughts_to_expand = self.select_thoughts_for_expansion()
-            
+
+            # Score each candidate before expansion so selection is driven
+            # by evaluate_thought rather than insertion order
+            for thought in thoughts_to_expand:
+                self.thought_scores[thought] = self.evaluate_thought(thought, problem)
+
             for thought in thoughts_to_expand:
                 # Generate new thoughts through different operations
                 self.branch_thought(thought, problem)
@@ -199,7 +206,7 @@ graph TD
 - More expressive than linear or tree-based approaches
 
 **Cons:**
-- Significantly higher computational cost (5-20x vs. linear reasoning)
+- Higher computational cost than a single reasoning path; how much higher depends on graph size and branching, not a fixed multiplier
 - Complex to implement and debug
 - May generate many redundant thoughts
 - Requires sophisticated scoring and path-finding algorithms
@@ -207,7 +214,9 @@ graph TD
 
 ## How to use it
 
-Use for complex problems where multiple solution approaches need to be merged or where early decisions may need revision based on later insights. LangGraph provides native support for GoT-like workflows with cycles and backtracking.
+Use for complex problems where multiple solution approaches need to be merged or where early decisions may need revision based on later insights.
+
+Currency note (2026): native reasoning models now internalize much of the single-model test-time structuring that GoT was designed to prompt for by hand, so hand-rolled GoT prompting pays off mainly on open or smaller models. The pattern's live relevance is at the agent level: graph-based orchestration with cycles and backtracking, as in [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview).
 
 Use simpler approaches (CoT, ToT) for:
 - Straightforward problems with single viable solution paths
@@ -216,6 +225,7 @@ Use simpler approaches (CoT, ToT) for:
 
 ## References
 
-- [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687) - Besta et al., ETH Zurich
+- [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687) - Besta et al., ETH Zurich. On the paper's sorting task, GoT improved quality over Tree-of-Thoughts by 62% while lowering cost by over 31%; the paper does not claim a fixed compute multiplier over linear reasoning.
+- [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023 - the tree-search special case GoT extends with merge operations
 - [Code Implementation](https://github.com/spcl/graph-of-thoughts)
 - [LangGraph - Graph-based Agent Workflows](https://www.langchain.com/langgraph)

@@ -9,7 +9,7 @@ tags: [feedback, testing, reliability, user-feedback, positive-reinforcement, co
 summary: "Returns compiler errors, test failures, lint output, and human feedback to the agent after each tool call so it can plan fixes and self-correct"
 signals: ["Agent quality improves only after iterative critique or retries", "Tools can emit structured errors, exit codes, or test results", "Users give frequent positive or corrective feedback"]
 anti_signals: ["No objective signal or tool output to feed back", "Runtime and cost of iterative passes are not acceptable"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -32,18 +32,11 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 
 **Tool design matters:** Structured outputs (JSON, exit codes, error objects) are more effective than natural language for agent self-correction.
 
-**Evidence from 88 session analysis:**
-
-| Project | Positive | Corrections | Success Rate |
-|---------|----------|-------------|--------------|
-| nibzard-web | 8 | 2 | High (80%) |
-| 2025-intro-swe | 1 | 0 | High (100%) |
-| awesome-agentic-patterns | 1 | 5 | Low (17%) |
-| skills-marketplace | 0 | 2 | Low (0%) |
-
-**Key insight**: Projects with more positive feedback had better outcomes. Reinforcement works—it's training data that teaches the agent what *to* do, whereas corrections only teach what *not* to do.
+**Observed correlation (small sample):** in the author's own review of roughly 88 sessions across four personal projects, the projects with more positive feedback events (0-8 per project) ended with better outcomes than the correction-heavy ones. Treat this as a correlation in a tiny, non-random sample, not as evidence that reinforcement *causes* better outcomes. The earlier per-project table and its source analysis are no longer online and have been removed.
 
 Modern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).
+
+Distinct from [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md), which feeds CI results back through the repo, and from [Output Verification Loop](output-verification-loop.md), which verifies final output against criteria: this pattern is about rich feedback from every tool call plus human reactions within the session.
 
 ## Example
 
@@ -70,10 +63,9 @@ sequenceDiagram
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis showing positive feedback correlation with better session outcomes (nibzard-web: 8 positive, 2 corrections vs. awesome-agentic-patterns: 1 positive, 5 corrections)
-* Raising An Agent - Episode 1 & 3 discussions on "give it errors, not bigger prompts."
-* [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops
+* [Raising An Agent - Episode 1 (March 2025)](https://ampcode.com/podcast/episode-1) and [Episode 3 (March 2025)](https://ampcode.com/podcast/episode-3) - discussions on "give it errors, not bigger prompts."
+* [Cognition: Rebuilding Devin for Claude Sonnet 4.5](https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., 2023) - agents learn from past failures through self-reflection and memory
-* [Self-Refine: LLMs Can Self-Correct Through Self-Feedback](https://arxiv.org/abs/2303.08972) (Madaan et al., 2023) - iterative refinement with self-generated critique
+* [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) (Madaan et al., 2023) - iterative refinement with self-generated critique
 
 [Source](https://www.nibzard.com/ampcode)

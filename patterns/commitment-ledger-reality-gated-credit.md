@@ -17,7 +17,7 @@ prerequisites: ["Persistent ledger", "Outcome verifier", "Memory retrieval prove
 related: ["episodic-memory-retrieval-injection", "memory-reinforcement-learning-memrl", "incident-to-eval-synthesis"]
 tools: ["memory-store", "verifier", "ledger"]
 domains: ["coding", "research", "operations"]
-updated_at: "2026-06-15"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -70,12 +70,14 @@ This separates "the agent predicted this would help" from "reality confirmed it 
 
 ## Evidence
 
-- **Evidence Grade:** `medium`
+- **Evidence Grade:** `low`
+- **Sourcing caveat:** the only implementation so far is the pattern author's own repository, whose implementing engine is closed-source ("the engine source is private" per its README), so the mechanism is self-reported and unverifiable, and this file is author-self-sourced.
 - **Most Valuable Findings:**
   - Reflexion shows that explicit episodic feedback can improve repeated task performance without model weight updates.
   - SWE-bench-style evaluation demonstrates the value of real repository tests as settlement signals for coding agents.
   - SRE postmortem practice supports converting real outcomes into durable learning artifacts rather than relying on unaudited recollection.
-- **Unverified / Unclear:** How to assign fractional credit across many retrieved memories remains implementation-specific.
+  - Independent of that implementation, outcome-driven utility updates on memory are an active technique: MemRL updates per-memory utility scores from task outcomes with the LLM frozen ([arXiv 2601.03192](https://arxiv.org/abs/2601.03192)).
+- **Unverified / Unclear:** How to assign fractional credit across many retrieved memories remains implementation-specific; the reference implementation has no counterfactual harness yet.
 
 ## How to use it
 
@@ -113,7 +115,8 @@ Common applications:
 
 ## References
 
-- AccInt uses this pattern as an implementation example: https://github.com/maxbaluev/accreted-intelligence
+- AccInt uses this pattern as an implementation example: https://github.com/maxbaluev/accreted-intelligence (closed-source engine; self-reported results)
 - Reflexion: Language Agents with Verbal Reinforcement Learning: https://arxiv.org/abs/2303.11366
+- MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory: https://arxiv.org/abs/2601.03192 - independent evidence that outcome-driven memory utility updates are an active technique. Distinct from [Memory Reinforcement Learning (MemRL)](memory-reinforcement-learning-memrl.md), which learns utility scores inside one memory system: this pattern's contribution is the commitment ledger and provenance tiers that gate when credit may be applied.
 - SWE-bench: Can Language Models Resolve Real-World GitHub Issues?: https://arxiv.org/abs/2310.06770
 - Google SRE Book, Postmortem Culture: https://sre.google/sre-book/postmortem-culture/

@@ -4,8 +4,8 @@ status: emerging
 authors:
   - Nikola Balic (@nibzard)
 based_on:
-  - Will Brown (OpenAI)
-  - Theo (OpenAI Solutions Architect)
+  - Theophile Sautory (OpenAI)
+  - William Hang (OpenAI)
 category: Learning & Adaptation
 source: 'https://youtu.be/1s_7RMG4O4U'
 tags:
@@ -20,7 +20,7 @@ id: agent-reinforcement-fine-tuning-agent-rft
 summary: "Trains model weights with reinforcement learning on real tool calls and custom graders to improve domain-specific tool use and multi-step reasoning"
 signals: ["Agent still underperforms on domain tasks after prompt optimization", "Agent makes too many or wrong tool calls", "Task has agreed correct answers and non-zero baseline performance"]
 anti_signals: ["Base model never solves the task", "Team cannot host tool and grader endpoints that mirror production", "No consensus on what a correct answer is"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -43,6 +43,10 @@ Traditional fine-tuning approaches don't work well because they can't train the 
 3. **Learn multi-step reasoning**: The agent learns to reason across tool outputs in the context window
 4. **Optimize for your metrics**: Reduce tool calls, improve accuracy, or balance both based on your reward function
 
+> Provider status (October 2026): OpenAI is winding down its fine-tuning platform; it is "no longer accessible to new users," and current RFT docs support o-series reasoning models only (o4-mini), with graders scoring tool-call contents in the training data rather than calling live endpoints during rollouts. Treat the OpenAI flow below as the demoed path from the Build Hour, now deprecated/limited, and use provider-agnostic frameworks such as [TRL](https://github.com/huggingface/trl) (GRPO/DPO trainers) or [verl](https://github.com/volcengine/verl) (PPO/GRPO/DAPO with tool rollout support) for new work.
+
+This is the umbrella pattern for the loop; see the distinct-from note under References for how the four sibling patterns mined from the same video split it.
+
 **Key Components:**
 
 - **Tool Endpoints**: Host your tools (same as production) that the model calls during training
@@ -57,7 +61,7 @@ Traditional fine-tuning approaches don't work well because they can't train the 
 - **Multi-dimensional evaluation**: Consider correctness, format compliance, efficiency, and safety
 
 ```python
-# Agent RFT Training Setup
+# Agent RFT Training Setup (OpenAI demo path; see provider status note above)
 from openai import OpenAI
 
 client = OpenAI()
@@ -142,7 +146,7 @@ job = client.fine_tuning.jobs.create(
 **What Agent RFT Optimizes:**
 
 - **ML Performance**: Better final answer quality through improved reasoning and tool use
-- **Latency**: Fewer tool calls and reasoning tokens (e.g., 50% reduction common)
+- **Latency**: Fewer tool calls and reasoning tokens (in the Build Hour demo: tool calls per rollout fell from 6.9 to 4.2 and latency dropped roughly 10%)
 - **Sample Efficiency**: Can achieve strong results with as few as 100 quality samples
 
 **Tool Call Optimization Patterns:**
@@ -173,13 +177,13 @@ graph TD
 
 ## Real-World Examples
 
-**Cognition (Devon AI)**
+**Cognition (Devin)**
 
 - Task: File planning agent to identify which files to edit
 - Tools: `read_file`, `shell` (grep, find)
 - Results:
-  
-- Reduced planning time by 50% (8-10 tool calls → 4 tool calls)
+
+- Cut planning back-and-forths from 8-10 to 4
   - Learned to parallelize tool calls automatically
   - Improved F1 score on file identification
 
@@ -233,9 +237,13 @@ graph TD
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U)
-- [OpenAI Fine-tuning Guide](https://platform.openai.com/docs/guides/fine-tuning)
+- [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U) - presented by Theophile Sautory and William Hang
+- [OpenAI fine-tuning guide](https://developers.openai.com/api/docs/guides/fine-tuning) - documents the platform wind-down ("no longer accessible to new users")
+- [OpenAI reinforcement fine-tuning docs](https://developers.openai.com/api/docs/guides/reinforcement-fine-tuning) - grader design, o4-mini-only support, tool-call grading in data
+- [TRL (Transformers Reinforcement Learning)](https://github.com/huggingface/trl) - open-source SFT/GRPO/DPO trainers
+- [verl](https://github.com/volcengine/verl) - open-source RL post-training framework with multi-turn tool rollout support
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., ICLR 2023)
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., NeurIPS 2023)
 - [DeepSeekMath: GRPO for Mathematical Reasoning](https://arxiv.org/abs/2402.03300) (Shao et al., 2024)
-- Related patterns: RLAIF, Tool Use Incentivization via Reward Shaping, Inference-Healed Code Review Reward, Memory Reinforcement Learning
+
+Distinct from the four sibling patterns mined from the same video: [Tool Use Incentivization via Reward Shaping](tool-use-incentivization-via-reward-shaping.md) (dense per-tool rewards), [Parallel Tool Call Learning](parallel-tool-call-learning.md) (batching rewards), [Variance-Based RL Sample Selection](variance-based-rl-sample-selection.md) (choosing which samples to train on), and [Isolated VM per RL Rollout](isolated-vm-per-rl-rollout.md) (rollout infrastructure) each isolate one design decision of this loop.

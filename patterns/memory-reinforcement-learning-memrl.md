@@ -8,7 +8,7 @@ based_on:
     Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian
     University, MemTensor)
 category: Learning & Adaptation
-source: 'https://arxiv.org/html/2601.03192v1'
+source: 'https://arxiv.org/abs/2601.03192'
 tags:
   - reinforcement-learning
   - episodic-memory
@@ -21,7 +21,7 @@ id: memory-reinforcement-learning-memrl
 summary: "Stores memories with learned utility scores, retrieves by similarity then re-ranks by utility, and updates scores from outcomes while the LLM stays frozen"
 signals: ["Multi-step tasks with clear success or failure signals", "Similar past solutions retrieved by RAG often fail", "Fine-tuning is too expensive"]
 anti_signals: ["Single-turn queries", "No clear reward signal", "Tasks are highly diverse with no repeating patterns"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -140,7 +140,8 @@ graph LR
 
 ## References
 
-* [Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](https://arxiv.org/html/2601.03192v1) - Shengtao Zhang, Jiaqian Wang, et al. (2025)
+* [MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](https://arxiv.org/abs/2601.03192) - Shengtao Zhang, Jiaqian Wang, et al. (v1 January 2026; [v2](https://arxiv.org/abs/2601.03192v2) February 2026 is the current revision)
 * [Neural Episodic Control](https://arxiv.org/abs/1703.01988) - Pritzel et al. (2017) - Foundation for episodic memory in RL
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (2023) - Demonstrates episodic memory value (91% vs 80% on HumanEval)
-* Related patterns: Episodic Memory Retrieval & Injection (extends), Memory Synthesis from Execution Logs (complements), Agent Reinforcement Fine-Tuning (alternative to)
+
+Distinct from [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), which retrieves past episodes by similarity alone: MemRL adds learned utility scores that reorder what gets retrieved, with the LLM frozen. Related patterns: Memory Synthesis from Execution Logs (complements), Agent Reinforcement Fine-Tuning (alternative to).

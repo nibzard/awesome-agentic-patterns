@@ -3,13 +3,13 @@ title: "Self-Discover: LLM Self-Composed Reasoning Structures"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Google DeepMind", "USC"]
-category: "Feedback Loops"
+category: "Learning & Adaptation"
 source: "https://arxiv.org/abs/2402.03620"
 tags: [reasoning, self-improvement, meta-learning, problem-solving, task-specific, optimization]
 summary: "Has the LLM select, adapt, and compose reasoning modules into a task-specific reasoning structure, then solve the task by following that structure"
 signals: ["Complex reasoning tasks need different strategies per problem", "Performance gains justify extra LLM calls", "Interpretability of the reasoning approach is valuable"]
 anti_signals: ["Simple problems that single-pass Chain-of-Thought handles well", "Budget cannot cover about 2-3x the cost of Chain-of-Thought"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -138,9 +138,11 @@ flowchart TD
 
 **Cons:**
 - Computational overhead: approximately 2-3x the cost of single-pass Chain-of-Thought due to multiple LLM calls
-- Requires a diverse set of reasoning modules (typically 20-30 for good coverage)
+- Requires a diverse module library (the paper uses 39 reasoning modules adopted from Fernando et al. 2023, Promptbreeder)
 - May over-engineer simple problems
 - Structure quality depends on task analysis accuracy
+
+Currency note (2026): frontier reasoning models with test-time compute now supply adaptive multi-step reasoning out of the box, so this pattern is mainly worth the overhead on open or smaller models, or when you need an explicit, inspectable reasoning structure.
 
 ## How to use it
 
@@ -151,7 +153,8 @@ flowchart TD
 
 ## References
 
-- [Self-Discover: Large Language Models Self-Compose Reasoning Structures (2024)](https://arxiv.org/abs/2402.03620) - Google DeepMind & USC, arXiv:2402.03620
+- [Self-Discover: Large Language Models Self-Compose Reasoning Structures (2024)](https://arxiv.org/abs/2402.03620) - Google DeepMind & USC, arXiv:2402.03620; [Table 2](https://ar5iv.labs.arxiv.org/html/2402.03620) lists the 39 reasoning modules adopted from Fernando et al. 2023
+- [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](https://arxiv.org/abs/2309.16797) - Fernando et al., 2023 - source of the reasoning-module library
 - [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (2022)](https://arxiv.org/abs/2201.11903) - Wei et al., NeurIPS 2022
 - [Reflexion: Language Agents with Verbal Reinforcement Learning (2023)](https://arxiv.org/abs/2303.11366) - Shinn et al., NeurIPS 2023
 - [Tree of Thoughts: Deliberate Problem Solving with Large Language Models (2023)](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023

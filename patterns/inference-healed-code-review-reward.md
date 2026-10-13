@@ -9,7 +9,7 @@ tags: [reward-modeling, code-review, inference-healing, quality-assessment]
 summary: "Replaces a binary tests-passed reward with a critic that scores correctness, style, performance, and security, explains low scores, and combines them"
 signals: ["RL coding agents pass tests but produce low-quality patches", "The agent needs to know which quality aspect caused a low reward", "Linters, benchmarks, and static analyzers are available to feed sub-scores"]
 anti_signals: ["Test pass/fail fully captures what you care about", "Reward latency and compute from extra checks is not acceptable", "No labeled patch data to train or calibrate the critic"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -22,6 +22,10 @@ Simple reward functions that only check for "all tests passed" fail to capture n
 ## Solution
 
 Use an **inference-healed reward model**—a code-review critic that:
+
+> Naming note: "inference healing" is this catalogue's coinage. The source talk's auto-captions render the phrase as "inference feeling," and the concept actually discussed is inference-time scaling for reward models that reason over sub-criteria rubrics. In the literature this family is called generative or rubric-based reward models.
+
+The concrete instantiation below (linter/benchmark/security sub-scores with these weights and a 1-2B critic) is an extrapolation for code review, not something the cited work describes.
 
 **1. Decomposes Code Quality into Subcriteria**
 - **Correctness:** Does the code pass all existing and newly added tests?
@@ -88,9 +92,9 @@ return final_score, subscores, comments
 
 ## References
 
-- Derived from "inference healing" in reward modeling, as discussed in the Open Source Agent RL talk (May 2025) and by Will Brown (Prime Intellect).
-- Similar principles in "Criterion-Led Reward Models" (DeepMind blog, April 2025).
-- Related academic work: "CodeRL: Mastering Code Generation through Pretrained Models and Deep Reinforcement Learning" (NeurIPS 2022) introduces critic-based reward signals for code generation.
-- Industry validation: Multi-criteria code review deployed at scale by Microsoft (600K+ PRs/month), Tencent (325M lines/month), and Tekion (60% faster time to merge).
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw (Will Brown, Prime Intellect, "Open Questions in Agentic RL") - reward models as reasoners that break tasks into numerically scored sub-criteria rubrics; credits a recent DeepSeek paper.
+- [Inference-Time Scaling for Generalist Reward Modeling](https://arxiv.org/abs/2504.02495) (DeepSeek-GRM, 2025) - the rubric-based generalist reward model line the talk credits.
+- [Generative Verifiers: Reward Modeling as Next-Token Prediction](https://arxiv.org/abs/2408.15240) (DeepMind, ICLR 2025) - verifiers that generate reasoning before scoring.
+- "CodeRL: Mastering Code Generation through Pretrained Models and Deep Reinforcement Learning" ([arXiv 2207.01780](https://arxiv.org/abs/2207.01780), NeurIPS 2022) - critic-based reward signals for code generation.
 
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
+Distinct from [Anti-Reward-Hacking Grader Design](anti-reward-hacking-grader-design.md), which is about making graders hard to game, and from [CriticGPT-Style Code Review](criticgpt-style-evaluation.md), which trains a critique model for human-facing review rather than for an RL reward signal.

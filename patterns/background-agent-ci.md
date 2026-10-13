@@ -6,7 +6,7 @@ authors:
 based_on:
   - Quinn Slack
 category: Feedback Loops
-source: 'https://ampcode.com/manual#background'
+source: 'https://ampcode.com/docs/orbs'
 tags:
   - asynchronous
   - ci
@@ -27,7 +27,7 @@ Long-running refactors and flaky-fix cycles force developers into synchronous su
 
 Run the agent asynchronously in the background with CI as the objective feedback channel. The agent pushes a branch, waits for CI results, patches failures, and repeats until policy-defined stopping conditions are met. Users are only pulled back in for approvals, ambiguous failures, or final review.
 
-Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands.
+Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands. On the Amp side this shows up as Orbs: cloud machines per thread that keep working after you disconnect ([Amp Orbs docs](https://ampcode.com/docs/orbs)). Distinct from [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md), which is about designing the agent and repo so CI output is usable feedback; this pattern is about running the whole retry loop unattended in the background.
 
 Key mechanics:
 - Branch-per-task isolation (often via cloud-based execution or git worktrees).
@@ -66,8 +66,9 @@ sequenceDiagram
 
 ## References
 
-* Raising An Agent - Episode 6: Background agents use existing CI as the feedback loop.
-* GitHub Agentic Workflows (2026) - Agents run within GitHub Actions with safety controls.
-* OpenHands - Open-source platform achieving 72% on SWE-bench Verified.
+* [Raising An Agent - Episode 6 (May 2025)](https://ampcode.com/podcast/episode-6) - Background agents use existing CI as the feedback loop.
+* [GitHub Agentic Workflows public preview (June 2026)](https://github.blog/changelog/2026-06-11-github-agentic-workflows-is-now-in-public-preview) - Agents run within GitHub Actions with safety controls, automating tasks such as issue triage and CI failure analysis. Technical preview announced [February 2026](https://github.blog/changelog/2026-02-13-github-agentic-workflows-are-now-in-technical-preview).
+* [Amp Orbs](https://ampcode.com/docs/orbs) - Background execution model: one cloud machine per thread that keeps working after you disconnect.
+* OpenHands - Open-source agent platform with background/cloud execution support.
 
-[Source](https://ampcode.com/manual#background)
+[Source](https://ampcode.com/docs/orbs)

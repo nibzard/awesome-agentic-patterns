@@ -1,6 +1,6 @@
 ---
 title: AI-Assisted Code Review / Verification
-status: emerging
+status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Aman Sanger (Cursor)"]
 category: Feedback Loops
@@ -9,7 +9,7 @@ tags: [code-review, verification, quality-assurance, human-ai-collaboration, tru
 summary: "Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic"
 signals: ["AI generates more code than humans can review line by line", "Code review is the development bottleneck"]
 anti_signals: ["Team cannot tolerate false positives and alert fatigue", "Architectural decisions that need human-only judgment"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -24,8 +24,11 @@ Develop and employ AI-powered tools and processes specifically designed to assis
 -   Tools that help summarize the intent or impact of code changes, making it easier for human reviewers to understand.
 -   Interactive systems where reviewers can ask the AI to explain parts of the code or justify certain decisions made during generation.
 -   Mechanisms to ensure the AI's output aligns with the user's "mind's eye" or high-level intent, even if the initial specification was ambiguous.
--   Multi-agent approaches where one agent generates code while another critiques and verifies it, iterating until convergence.
 -   Three-layer workflows stratifying tasks by complexity: AI-only for style/documentation, AI-human collaboration for logic/security, and human-only for architectural decisions.
+
+The multi-agent variant (one agent generates while another critiques and verifies) is covered in depth by the [CriticGPT-Style Code Review](criticgpt-style-evaluation.md) pattern, and reviewing abstracted representations of changes instead of raw diffs is covered by [Abstracted Code Representation for Review](abstracted-code-representation-for-review.md).
+
+This is no longer only an emerging idea: commercial AI reviewers such as [Cursor Bugbot](https://cursor.com/bugbot) and GitHub Copilot code review run as paid pre-merge checks for thousands of teams.
 
 The goal is to make the code review process more efficient and reliable, building confidence in the (AI-assisted) codebase.
 
@@ -48,4 +51,4 @@ The goal is to make the code review process more efficient and reliable, buildin
 
 - "Evaluating Large Language Models for Code Review" (arXiv 2505.20206, May 2025): GPT-4o achieved 68.50% classification accuracy with problem descriptions; performance declines significantly without context
 
-- "Automated Code Review In Practice" (arXiv 2412.18531, December 2024): Industry case study examining LLM-based automated code review tools including Qodo, GitHub Copilot, and Coderabbit
+- "Automated Code Review In Practice" (arXiv 2412.18531, December 2024, ICSE 2025 SEIP): Industry case study of one internal tool built on Qodo's PR-Agent; median PR closure time rose from 5h52m to 8h20m after rollout. GitHub Copilot and CodeRabbit appear only as examples of the tool category, not as studied deployments.

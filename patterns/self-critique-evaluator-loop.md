@@ -9,7 +9,7 @@ tags: [self-critique, evaluator, reward-model, synthetic-data, reflexion, rlaif]
 summary: "Trains a judge model on its own synthetic comparisons of candidate outputs and uses it as a reward model or quality gate for the main agent"
 signals: ["Human-labeled preference data is too expensive or goes stale", "Evaluation must keep pace with model and domain changes", "A small human-labeled anchor set is available for checks"]
 anti_signals: ["No human anchor set or adversarial tests to detect evaluator collusion", "Judge criteria for the domain cannot be defined objectively"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -26,14 +26,9 @@ Train a **self-taught evaluator** that bootstraps from synthetic data:
 4. Use the judge as a reward model or quality gate for the main agent.
 5. Periodically refresh with new synthetic debates to stay ahead of model drift.
 
-**Dual-model variant** (RLAIF): Use a separate critic model to evaluate the generator, reducing bias at higher cost.
+**Dual-model variant:** using a separate critic model to evaluate the generator (reducing bias at higher cost) is the [RLAIF](rlaif-reinforcement-learning-from-ai-feedback.md) pattern; see that entry rather than restating it here.
 
 To prevent evaluator collapse, keep evaluation prompts and generation prompts partially decoupled, inject adversarial counterexamples, and benchmark against a small human-labeled anchor set.
-
-## Pros & Cons
-
-- **Pros:** near-human eval accuracy without labels; scales with compute; ~100x cost reduction vs human labels (RLAIF).
-- **Cons:** risk of evaluator-model collusion; needs adversarial tests and human anchors.
 
 ## How to use it
 
@@ -45,15 +40,15 @@ To prevent evaluator collapse, keep evaluation prompts and generation prompts pa
 
 ## Trade-offs
 
-* **Pros:** Scales evaluation coverage quickly and reduces dependence on expensive human labeling.
-* **Cons:** Can overfit to synthetic preferences and needs careful anti-collusion safeguards.
+* **Pros:** Scales evaluation coverage quickly and reduces dependence on expensive human labeling; trains the judge from synthetic comparisons only.
+* **Cons:** Can overfit to synthetic preferences and needs careful anti-collusion safeguards; risk of evaluator-model collusion.
 
 ## References
 
-- Wang et al., *Self-Taught Evaluators* (2024)
+- [Self-Taught Evaluators](https://arxiv.org/abs/2408.02666) - Wang et al., 2024 (primary source)
 
-- Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning* (2023)
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
 
-- Bai et al., *Constitutional AI: Harmlessness from AI Feedback* (2022)
+- [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al., 2022
 
-- Primary source: https://arxiv.org/abs/2408.02666
+Distinct from [RLAIF](rlaif-reinforcement-learning-from-ai-feedback.md): RLAIF uses AI feedback as the training signal for the generator; this pattern trains the judge itself on its own synthetic comparisons.

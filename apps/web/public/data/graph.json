@@ -306,7 +306,7 @@
       "id": "ai-assisted-code-review-verification",
       "title": "AI-Assisted Code Review / Verification",
       "category": "Feedback Loops",
-      "status": "emerging",
+      "status": "established",
       "slug": "ai-assisted-code-review-verification",
       "tags": [
         "code-review",
@@ -1662,7 +1662,7 @@
       "id": "iterative-prompt-skill-refinement",
       "title": "Iterative Prompt & Skill Refinement",
       "category": "Feedback Loops",
-      "status": "established",
+      "status": "emerging",
       "slug": "iterative-prompt-skill-refinement",
       "tags": [
         "refinement",
@@ -2588,7 +2588,7 @@
     {
       "id": "self-discover-llm-self-composed-reasoning-structures",
       "title": "Self-Discover: LLM Self-Composed Reasoning Structures",
-      "category": "Feedback Loops",
+      "category": "Learning & Adaptation",
       "status": "emerging",
       "slug": "self-discover-reasoning-structures",
       "tags": [
@@ -3134,7 +3134,7 @@
       "id": "variance-based-rl-sample-selection",
       "title": "Variance-Based RL Sample Selection",
       "category": "Learning & Adaptation",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "variance-based-rl-sample-selection",
       "tags": [
         "reinforcement-learning",
