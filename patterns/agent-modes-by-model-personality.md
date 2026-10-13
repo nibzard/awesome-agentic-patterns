@@ -9,12 +9,12 @@ tags: [model-personality, interaction-modes, multi-model, ux-design, agent-behav
 summary: "Offers separate working modes, each with its own prompts, tools, UI, and expectations, tuned to one model's working style"
 signals: ["Product uses several models with different working styles", "Some tasks need fast interaction and others need long autonomous research"]
 anti_signals: ["Product uses one model for all tasks", "Users only want to pick the best model", "Team cannot test and maintain several modes"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
-Different AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are "trigger happy" and want to run commands immediately, while models like GPT-5.2 are "lazy" and prefer thorough research before acting.
+Different AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are "trigger happy" and want to run commands immediately, while models like GPT-5.2 are "lazy" and prefer thorough research before acting. The specific model names below are the ones AMP happened to run at the time of the episode; personalities shift with every model release, so re-test them as models change.
 
 ## Solution
 
@@ -26,7 +26,7 @@ Design **different agent modes** optimized for each model's personality rather t
 
 **Key insight:** It's not about model selection—it's about **different ways of working**.
 
-**Model personalities identified:**
+**Model personalities identified** (as observed in the AMP episode; re-test for each new model version):
 
 | Model | Personality | Working Style | Best For |
 |-------|-------------|---------------|----------|
@@ -81,6 +81,7 @@ The team explicitly avoids a "model selector" dropdown and instead presents thes
   - Industry platforms implement personality modes via system prompts and temperature parameters (Anthropic: Normal/Concise/Explanatory/Formal; OpenAI: Default/Cynic/Robot/Listener/Nerd)
   - Multi-agent frameworks (AutoGen, CrewAI) support role-based personality configuration through `system_message` and backstory parameters
 - **Unverified:** Long-term stability of personality-based modes as models evolve
+- **Currency (October 2026):** The episode evidence is from early 2026. Amp's second season (premiered September 2026) pivoted the product toward remote-controllable parallel agents, so the specific mode lineup above may no longer match the product. Treat the mode-to-model mapping as version-specific: re-run your own personality tests whenever you upgrade a model, and expect to retune modes when models change.
 
 ## How to use it
 
@@ -151,7 +152,7 @@ The fundamental challenge: Different modes require fundamentally different user 
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent, Season 1, Episode 10](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack). The episode itself is untitled; "the assistant is dead, long live the factory" is the theme of the preceding episode in the series.
 * [Anthropic: Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - System prompt patterns and persona configuration (2024)
 * [OpenAI: Prompt Engineering Best Practices](https://platform.openai.com/docs/guides/prompt-engineering) - System prompts and personality modes (2024)
 * Related: [Oracle and Worker Multi-Model Approach](oracle-and-worker-multi-model.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)

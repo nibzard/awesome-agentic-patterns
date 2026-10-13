@@ -7,7 +7,7 @@ category: "Reliability & Eval"
 source: "https://martinfowler.com/bliki/CircuitBreaker.html"
 tags: [circuit-breaker, fault-tolerance, tool-reliability, graceful-degradation, resilience]
 summary: "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints"
-maturity: "maturing"
+maturity: "early"
 complexity: "medium"
 effort: hours
 impact: "high"
@@ -18,7 +18,7 @@ related: ["failover-aware-model-fallback", "action-caching-replay"]
 anti_patterns: ["infinite-retry-loop"]
 tools: ["api-clients", "tool-executors"]
 domains: ["coding", "ops", "research"]
-updated_at: "2026-03-26"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -98,9 +98,8 @@ class AgentCircuitBreaker:
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
   - Circuit breakers are validated-in-production in microservice architectures (Netflix Hystrix, Resilience4j, Polly) and the pattern translates directly to agent tool calls
-  - Production agent systems report 40-60% token savings when circuit breakers prevent retry loops on degraded tools
-  - Anthropic's agent reliability research emphasizes "fail fast" strategies over retry-heavy approaches
-- **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile
+  - Agent-specific 2025-26 practitioner coverage (Maxim's production guide, ToolRoute's reliability-patterns write-up) recommends circuit breakers for LLM application and agent tool failures
+- **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile. No published measurements of token savings from circuit breakers in agent systems were found; the token-waste benefit is currently qualitative
 
 ## How to use it
 
@@ -163,5 +162,7 @@ def execute_tool(tool_name, *args):
 - [Release It! (Michael Nygard, 2007)](https://pragprog.com/titles/mnee2/release-it-second-edition/) — original production pattern
 - [Netflix Hystrix](https://github.com/Netflix/Hystrix) — production implementation at scale
 - [Resilience4j](https://resilience4j.readme.io/) — lightweight Java implementation
+- [Retries, Fallbacks, and Circuit Breakers in LLM Apps: A Production Guide (Maxim)](https://www.getmaxim.ai/articles/retries-fallbacks-and-circuit-breakers-in-llm-apps-a-production-guide) — agent-era practitioner coverage
+- [How AI Agents Handle Tool Failures: Reliability Patterns for Production (ToolRoute)](https://www.toolroute.ai/blog/how-ai-agents-handle-tool-failures) — circuit breakers for agent tool calls (2026)
 - Related: [Failover-Aware Model Fallback](failover-aware-model-fallback.md) — handles model-provider failures (complementary)
 - Related: [Action Caching & Replay](action-caching-replay.md) — cached results can serve as circuit-open fallbacks

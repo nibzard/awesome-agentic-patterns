@@ -195,7 +195,7 @@
     "slug": "agent-circuit-breaker",
     "id": "agent-circuit-breaker",
     "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
-    "maturity": "maturing",
+    "maturity": "early",
     "complexity": "medium",
     "effort": "hours",
     "impact": "high",
@@ -228,7 +228,7 @@
       "ops",
       "research"
     ],
-    "updated_at": "2026-03-26",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents that use external tools — APIs, databases, web scrapers, code executors — face a common failure mode: a tool endpoint becomes degraded or unavailable, and the agent **keeps calling it**, burning tokens on retries that will never succeed.\n\nThis creates three cascading problems:\n\n- **Token waste**: Each failed tool call costs input/output tokens, and the agent often generates lengthy retry reasoning\n- **Latency amplification**: Sequential retries on a dead endpoint add seconds or minutes with no progress\n- **Cascading failure**: If one tool is down (e.g., a search API), the agent may stall entirely instead of using alternative approaches\n\nUnlike model-level failover (switching between GPT-4 and Claude when one provider is down), tool-level failures require a different strategy — the agent needs to learn, mid-session, that a specific tool is broken and **stop using it**."
   },
   {
@@ -263,8 +263,8 @@
       "Users only want to pick the best model",
       "Team cannot test and maintain several modes"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nDifferent AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are \"trigger happy\" and want to run commands immediately, while models like GPT-5.2 are \"lazy\" and prefer thorough research before acting."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nDifferent AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are \"trigger happy\" and want to run commands immediately, while models like GPT-5.2 are \"lazy\" and prefer thorough research before acting. The specific model names below are the ones AMP happened to run at the time of the episode; personalities shift with every model release, so re-test them as models change."
   },
   {
     "title": "Agent Reinforcement Fine-Tuning (Agent RFT)",
@@ -845,7 +845,7 @@
   },
   {
     "title": "Autonomous Workflow Agent Architecture",
-    "status": "established",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -864,7 +864,7 @@
     ],
     "slug": "autonomous-workflow-agent-architecture",
     "id": "autonomous-workflow-agent-architecture",
-    "summary": "Runs multi-step engineering workflows in containers with tmux sessions, adaptive monitoring, checkpoints, and context-aware error recovery",
+    "summary": "Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery",
     "signals": [
       "Long-running engineering workflows such as training pipelines or deployments",
       "Workflows fail at intermediate steps and need manual restart",
@@ -875,7 +875,7 @@
       "Workflow is too long for the agent context window",
       "Short one-off task that does not justify container and monitoring setup"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nComplex, long-running engineering workflows traditionally require extensive human oversight and intervention. Tasks like model training pipelines, infrastructure configuration, and multi-step deployment processes involve:\n\n- Manual coordination of multiple tools and systems\n- Constant monitoring for errors and edge cases  \n- Time-consuming context switching between different workflow stages\n- Risk of human error in repetitive tasks\n- Difficulty scaling engineering processes across teams\n\nEngineers spend significant time on operational overhead rather than core development work, and workflows often fail at intermediate steps requiring manual debugging and restart."
   },
   {
@@ -1052,7 +1052,7 @@
       "No clear alternative exists or the new way is unproven",
       "Change gives agents irreversible operations with broad permissions"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nIn fast-moving AI development, holding onto features or workflows that are \"working fine\" prevents teams from fully embracing new paradigms. The comfort of existing functionality becomes an anchor that holds back innovation—even when you know the old approach is obsolete."
   },
   {
@@ -5586,8 +5586,8 @@
       "Automated evals and metrics already find root causes",
       "Team will not run the full triage sequence first"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nRAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.\n\nTeams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.\n\nThis pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths. Research shows structured incident data correlates with better reliability outcomes (ACM SIGOPS 2022, IEEE ISSRE 2019)."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nRAG pipelines and agent systems often fail in ways that are hard to diagnose: missing context, unstable retrieval, brittle tool contracts, and flaky behavior after data updates.\n\nTeams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.\n\nThis pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths."
   },
   {
     "title": "Rendered UI Finish Gate",

@@ -122,7 +122,7 @@ URL: https://agentic-patterns.com/patterns/authenticated-authority-channel
 Markdown: https://agentic-patterns.com/patterns/authenticated-authority-channel.md
 
 ### autonomous-workflow-agent-architecture
-Autonomous Workflow Agent Architecture: Runs multi-step engineering workflows in containers with tmux sessions, adaptive monitoring, checkpoints, and context-aware error recovery
+Autonomous Workflow Agent Architecture: Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery
 URL: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture
 Markdown: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture.md
 

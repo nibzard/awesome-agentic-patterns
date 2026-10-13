@@ -9,7 +9,7 @@ tags: [reliability, evaluation, rag, agents, debugging, failure-modes, checklist
 summary: "Runs a fixed 16-question failure checklist on each RAG or agent incident, maps the result to repair actions, and re-tests the same failing case"
 signals: ["RAG or agent failures are hard to diagnose", "Team fixes incidents by changing prompts at random", "Team needs a shared vocabulary for failure modes"]
 anti_signals: ["Automated evals and metrics already find root causes", "Team will not run the full triage sequence first"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -18,7 +18,7 @@ RAG pipelines and agent systems often fail in ways that are hard to diagnose: mi
 
 Teams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.
 
-This pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths. Research shows structured incident data correlates with better reliability outcomes (ACM SIGOPS 2022, IEEE ISSRE 2019).
+This pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths.
 
 ## Solution
 
@@ -73,9 +73,9 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 1. Run through the checklist and identify Problem #1 (Hallucination & Chunk Drift) and Problem #5 (Semantic != Embedding)
 2. For Problem #1: Apply Delta S meter to measure semantic tension (>0.6 indicates failure), use lambda_observe to flag divergent logic flow
 3. For Problem #5: Apply BBMC residue minimization to compute semantic residue, reject chunks with high tension
-4. Re-run the same query and verify Delta S <= 0.45, coverage >= 0.70
+4. Re-run the same query and check it against the project's own targets (Delta S <= 0.45, coverage >= 0.70)
 
-**Result:** The system now explicitly rejects misleading chunks before generation, creating a "semantic firewall" rather than patching after output.
+**Result:** In the project's own telling, the system now explicitly rejects misleading chunks before generation, creating a "semantic firewall" rather than patching after output.
 
 ## Technical Details
 
@@ -104,7 +104,9 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 
 ### Core WFGY Instruments
 
-- **Delta S (ΔS):** Measures semantic tension (threshold: ≤0.45 good, >0.60 failure)
+These instruments are project-internal concepts defined by a single personal project. They have no independent validation, and the numeric thresholds below are the project's own self-reported values, which the README itself hedges as internal and setup-dependent. Treat them as one team's vocabulary, not as validated measurement tools.
+
+- **Delta S (ΔS):** Measures semantic tension (self-reported thresholds: ≤0.45 good, >0.60 failure)
 - **lambda_observe:** Monitors logic directionality (convergent, divergent, chaotic)
 - **epsilon_resonance:** Domain-level harmony tuning
 - **BBMC:** Minimizes semantic residue
@@ -115,7 +117,7 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 
 ### Key Insight
 
-WFGY implements a "semantic firewall" that validates semantic stability **before** generation rather than patching after output. Once a failure mode is clearly mapped and monitored, it tends to stay fixed for that configuration. This checklist-based triage approach represents a novel contribution—no direct academic or industry research exists on RAG/agent-specific debugging with this four-area taxonomy.
+WFGY implements a "semantic firewall" that validates semantic stability **before** generation rather than patching after output. Once a failure mode is clearly mapped and monitored, it tends to stay fixed for that configuration. This checklist-based triage approach is not novel in kind: direct academic and industry prior work exists on RAG/agent-specific failure taxonomies, most prominently Barnett et al.'s "Seven Failure Points When Engineering a Retrieval Augmented Generation System" (arXiv:2401.05856). WFGY's four-area, 16-mode taxonomy and its instruments are a personal-project contribution on top of that prior work, not a first.
 
 ## References
 
@@ -124,4 +126,5 @@ WFGY implements a "semantic firewall" that validates semantic stability **before
 - [Technical Deep Dive Report](https://github.com/nibzard/awesome-agentic-patterns/blob/main/research/wfgy-reliability-problem-map-technical-deep-dive.md)
 - [Semantic Clinic Index](https://github.com/onestardao/WFGY/blob/main/ProblemMap/SemanticClinicIndex.md)
 - [Grandma's Clinic (Beginner-Friendly)](https://github.com/onestardao/WFGY/blob/main/ProblemMap/GrandmaClinic/README.md)
+- Barnett et al., "Seven Failure Points When Engineering a Retrieval Augmented Generation System" ([arXiv:2401.05856](https://arxiv.org/abs/2401.05856), 2024) — prior academic work on RAG failure taxonomies
 - "Agentic Retrieval-Augmented Generation: A Survey" (arXiv:2501.09136, 2025)

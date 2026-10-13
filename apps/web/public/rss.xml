@@ -4,8 +4,80 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 26 Sep 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 13 Oct 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Agent Circuit Breaker]]></title>
+            <description><![CDATA[Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-circuit-breaker</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-circuit-breaker</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[circuit-breaker]]></category>
+            <category><![CDATA[fault-tolerance]]></category>
+            <category><![CDATA[tool-reliability]]></category>
+            <category><![CDATA[graceful-degradation]]></category>
+            <category><![CDATA[resilience]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent Modes by Model Personality]]></title>
+            <description><![CDATA[Offers separate working modes, each with its own prompts, tools, UI, and expectations, tuned to one model's working style]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-modes-by-model-personality</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-modes-by-model-personality</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[model-personality]]></category>
+            <category><![CDATA[interaction-modes]]></category>
+            <category><![CDATA[multi-model]]></category>
+            <category><![CDATA[ux-design]]></category>
+            <category><![CDATA[agent-behavior]]></category>
+            <category><![CDATA[opus]]></category>
+            <category><![CDATA[gpt-52]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Autonomous Workflow Agent Architecture]]></title>
+            <description><![CDATA[Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery]]></description>
+            <link>https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[workflow-automation]]></category>
+            <category><![CDATA[containerization]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[engineering-tasks]]></category>
+            <category><![CDATA[tmux]]></category>
+            <category><![CDATA[error-recovery]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Burn the Boats]]></title>
+            <description><![CDATA[Removes working but obsolete features on a hard, announced deadline so the team and users move to the new approach]]></description>
+            <link>https://agentic-patterns.com/patterns/burn-the-boats</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/burn-the-boats</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[feature-killing]]></category>
+            <category><![CDATA[forced-evolution]]></category>
+            <category><![CDATA[courage]]></category>
+            <category><![CDATA[focus]]></category>
+            <category><![CDATA[self-destruct]]></category>
+            <category><![CDATA[obsolescence]]></category>
+            <category><![CDATA[product-strategy]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Reliability Problem Map Checklist for RAG and Agents]]></title>
+            <description><![CDATA[Runs a fixed 16-question failure checklist on each RAG or agent incident, maps the result to repair actions, and re-tests the same failing case]]></description>
+            <link>https://agentic-patterns.com/patterns/wfgy-reliability-problem-map</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/wfgy-reliability-problem-map</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[reliability]]></category>
+            <category><![CDATA[evaluation]]></category>
+            <category><![CDATA[rag]]></category>
+            <category><![CDATA[agents]]></category>
+            <category><![CDATA[debugging]]></category>
+            <category><![CDATA[failure-modes]]></category>
+            <category><![CDATA[checklist]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[402-First Machine Payments (Price-Before-Work Tool Purchases)]]></title>
             <description><![CDATA[Server returns an HTTP 402 price quote before doing work, and the agent pays the exact amount only if it fits its budget cap]]></description>
@@ -220,75 +292,6 @@
             <category><![CDATA[TOCTOU]]></category>
             <category><![CDATA[receipts]]></category>
             <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Filesystem-Mediated Host Delegation]]></title>
-            <description><![CDATA[Lets a sandboxed agent write request files to a shared spool directory that a host daemon runs against a whitelist, with idempotent results the agent polls for]]></description>
-            <link>https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[sandbox-escape]]></category>
-            <category><![CDATA[host-execution]]></category>
-            <category><![CDATA[async-rpc]]></category>
-            <category><![CDATA[idempotency]]></category>
-            <category><![CDATA[spool-directory]]></category>
-            <category><![CDATA[durability]]></category>
-            <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Own-Check Fault Injection]]></title>
-            <description><![CDATA[Plant a controlled fault inside a running agent pipeline and score whether the pipeline's own checks emit a detection act, keeping detected, reacted and recovered as separate verdicts.]]></description>
-            <link>https://agentic-patterns.com/patterns/own-check-fault-injection</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/own-check-fault-injection</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[fault-injection]]></category>
-            <category><![CDATA[evals]]></category>
-            <category><![CDATA[reliability]]></category>
-            <category><![CDATA[self-verification]]></category>
-            <category><![CDATA[guardrails]]></category>
-            <category><![CDATA[chaos-engineering]]></category>
-            <category><![CDATA[observability]]></category>
-            <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Rendered UI Finish Gate]]></title>
-            <description><![CDATA[Verify an agent-built interface against its intended design contract, required states, interaction semantics, and rendered output before merging.]]></description>
-            <link>https://agentic-patterns.com/patterns/rendered-ui-finish-gate</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/rendered-ui-finish-gate</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[ui-quality]]></category>
-            <category><![CDATA[frontend]]></category>
-            <category><![CDATA[coding-agents]]></category>
-            <category><![CDATA[verification]]></category>
-            <category><![CDATA[design-systems]]></category>
-            <category><![CDATA[feedback-loops]]></category>
-            <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Persistent Test Memory Feedback Loop]]></title>
-            <description><![CDATA[Preserve validated test lessons so an agent can reuse successful paths, recognize recurring failures, and retire stale knowledge.]]></description>
-            <link>https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop</guid>
-            <category><![CDATA[Learning & Adaptation]]></category>
-            <category><![CDATA[testing-agents]]></category>
-            <category><![CDATA[persistent-memory]]></category>
-            <category><![CDATA[feedback-loop]]></category>
-            <category><![CDATA[self-healing]]></category>
-            <category><![CDATA[regression-testing]]></category>
-            <pubDate>Sun, 16 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Consequence-Family Coverage Audit]]></title>
-            <description><![CDATA[Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest]]></description>
-            <link>https://agentic-patterns.com/patterns/consequence-family-coverage-audit</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/consequence-family-coverage-audit</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[risk-classification]]></category>
-            <category><![CDATA[policy-authoring]]></category>
-            <category><![CDATA[coverage-testing]]></category>
-            <category><![CDATA[admission-control]]></category>
-            <category><![CDATA[blind-spots]]></category>
-            <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

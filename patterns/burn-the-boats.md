@@ -9,7 +9,7 @@ tags: [feature-killing, forced-evolution, courage, focus, self-destruct, obsoles
 summary: "Removes working but obsolete features on a hard, announced deadline so the team and users move to the new approach"
 signals: ["The paradigm shifted and an old feature is now obsolete", "Maintaining the old feature splits team focus", "Feature is kept only for comfort"]
 anti_signals: ["Feature is core to the value proposition", "No clear alternative exists or the new way is unproven", "Change gives agents irreversible operations with broad permissions"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -32,12 +32,12 @@ graph LR
     B -->|No, Keep It| C[Team Uses Old Way]
     C --> D[Users Expect Old Way]
     D --> E[Harder to Change Later]
-    E --> F[Selected for Laggers]
+    E --> F[Users Settle On Old Way]
 
     B -->|Yes, Kill It| G[Forced Evolution]
     G --> H[Team Builds New Way]
     H --> I[Users Adapt or Leave]
-    I --> J[Selected for Frontier]
+    I --> J[Users Move To New Way]
 
     style C fill:#ffcdd2,stroke:#c62828
     style E fill:#ffcdd2,stroke:#c62828
@@ -48,9 +48,11 @@ graph LR
 
 **Real example from AMP:**
 
-AMP announced they're killing their VS Code extension (and Cursor support) in ~60 days:
+AMP announced they are killing their editor extension — the old sidebar-based VS Code extension — roughly 60 days out, and encouraged users to switch to the Amp CLI in the meantime. The target is the obsolete sidebar-based extension, not editor users; the hosts say they do not yet know what will replace it. Cursor is never mentioned in the episode:
 
-> "We will be killing our editor extension, the AMP VS Code extension and cursor and so on. We're going to be killing it. We're going to be killing it because we think it's no longer the future. We think the sidebar is dead."
+> "We will be killing our editor extension. We're going to be killing it because we think it's no longer the future. We think the sidebar is dead."
+
+> "We really strongly encourage you in the meantime to switch to the Amp CLI."
 
 **Why not just deprioritize it?**
 
@@ -60,7 +62,6 @@ If you keep the old feature around:
 - Users will keep using it
 - You'll feel pressure to maintain it
 - Your team splits attention between old and new
-- Your user base self-selects for "laggers" rather than frontier users
 
 ## How to use it
 
@@ -69,7 +70,7 @@ If you keep the old feature around:
 1. **The paradigm has shifted**: The fundamental approach has changed (e.g., assistant → factory)
 2. **It limits your users**: The feature holds users back from better ways of working
 3. **It splits your focus**: Maintaining it distracts from the truly important work
-4. **Your future users won't use it**: The 1% of frontier users don't need it
+4. **Your future users won't use it**: "The 1% of developers that want to be most ahead" need the editor for a shrinking share of their work
 5. **You're only keeping it for comfort**: Not because it's strategically important
 
 **Implementation:**
@@ -81,8 +82,8 @@ feature_kill_plan:
   feature: "VS Code Extension"
   deadline: "~60 days from announcement"
   message: "Will self-destruct in approximately 60 days"
-  migration_path: "Use AMP CLI instead"
-  rationale: "Sidebar is dead, long live the factory"
+  migration_path: "Use the Amp CLI in the meantime"
+  rationale: "We think the sidebar is dead"
 ```
 
 **2. Give users migration guidance:**
@@ -96,15 +97,13 @@ feature_kill_plan:
 
 From AMP's announcement:
 
-> "We might make it so we just delete this entire directory in our source tree and we're getting together in Singapore in a few weeks and just rewrite it from scratch."
-
-> "We have to totally reearn all of the usage of AMP today, all of the revenue that we're doing, all the customers we have... every 3 months."
+> "All of the usage of Amp today, all the revenue we're doing, we have to totally re-earn that every three months."
 
 **4. Accept user churn:**
 
-Some users will leave. That's OK. You're selecting for the frontier:
+Some users will leave. AMP accepts this and builds for the frontier:
 
-> "Our user base will start to become selected not for as it is today the people that are building on the frontier... but our user base will be selected for the laggers and that will make it even harder for us to change."
+> "We've always wanted Amp to be on the frontier... we want to exclusively make Amp for the people willing to put in that investment."
 
 ## Trade-offs
 
@@ -113,7 +112,7 @@ Some users will leave. That's OK. You're selecting for the frontier:
 - **Forces internal innovation**: No safety net, must build the new way
 - **Signals commitment**: Shows users and team you're serious
 - **Avoids split focus**: No resources diverted to maintaining obsolete features
-- **Selects for the right users**: Frontier users stay, lagers leave (or upgrade)
+- **Selects for the right users**: The frontier users you build for stay; AMP explicitly targets "the 1% of developers that want to be most ahead"
 - **Prevents stagnation**: Can't get comfortable resting on laurels
 
 **Cons:**
@@ -128,7 +127,7 @@ Some users will leave. That's OK. You're selecting for the frontier:
 
 AMP implemented a literal self-destruct timer in their VS Code extension:
 
-> "It will self-destruct in about 60 days from now. We don't know exactly when. We'll put the timer. You'll see it."
+> "It will self-destruct in about 60 days from now. We don't know exactly when, we'll put a timer."
 
 This creates urgency and inevitability. Users can't ignore it.
 
@@ -143,13 +142,11 @@ This creates urgency and inevitability. Users can't ignore it.
 
 **Related principle: Re-earn revenue every quarter**
 
-> "All of the usage of AMP today, all of the revenue that we're doing, all the customers we have, we have to totally reearn that like every 3 months. The product is going to look different. You're going to use it for different things in different ways. You're going to pay us for different things."
-
-Burning boats is part of this mindset: nothing is sacred, everything must be re-earned.
+AMP treats all current usage and revenue as something they must re-earn roughly every quarter. Burning boats is one expression of that mindset; the full principle is covered in [Frontier-Focused Development](frontier-focused-development.md).
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent, Season 1, Episode 10](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack). The episode is untitled; "the assistant is dead, long live the factory" is the theme the hosts attribute to the preceding episode. Transcript: [ampcode.com/podcast/episode-10](https://ampcode.com/podcast/episode-10)
 * Thomas Schelling, *The Strategy of Conflict* (1960) - Foundational work on credible commitment
 * Cohen & Levesque, "Intention is Choice with Commitment" (1990) - Formal framework for AI agent commitment
 * [Measuring Agents in Production (UC Berkeley, 2025)](https://arxiv.org/html/2512.04123v1) - Industry rejects "no fallback" for bounded autonomy
