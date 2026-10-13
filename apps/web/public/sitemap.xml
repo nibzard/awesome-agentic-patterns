@@ -119,7 +119,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/background-agent-ci</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/black-box-skill-invocation</loc>
@@ -143,7 +143,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/capability-escrow-receipt</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption</loc>
@@ -175,10 +175,6 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/codebase-optimization-for-agents</loc>
-    <lastmod>2026-03-11</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/coding-agent-ci-feedback-loop</loc>
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>
@@ -243,10 +239,6 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/curated-code-context-window</loc>
-    <lastmod>2026-03-11</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/curated-file-context-window</loc>
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>
@@ -327,10 +319,6 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dynamic-context-injection</loc>
-    <lastmod>2026-03-11</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/economic-value-signaling-multi-agent</loc>
     <lastmod>2026-03-11</lastmod>
   </url>
   <url>

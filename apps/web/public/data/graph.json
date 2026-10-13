@@ -640,21 +640,6 @@
       "summary": "Optimizes tooling, CLIs, tests, and docs for agents first, with one-command verify loops and machine-readable output, even if human DX regresses"
     },
     {
-      "id": "coding-agent-ci-feedback-loop",
-      "title": "Coding Agent CI Feedback Loop",
-      "category": "Feedback Loops",
-      "status": "best-practice",
-      "slug": "coding-agent-ci-feedback-loop",
-      "tags": [
-        "CI",
-        "coding-agent",
-        "asynchronous",
-        "test-driven",
-        "feedback"
-      ],
-      "summary": "Agent pushes a branch, polls CI for partial failures, patches the failing files within a retry budget, and notifies when all tests pass"
-    },
-    {
       "id": "commitment-ledger-with-reality-gated-credit",
       "title": "Commitment Ledger with Reality-Gated Credit",
       "category": "Learning & Adaptation",
@@ -915,20 +900,6 @@
         "noise-reduction"
       ],
       "summary": "A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context"
-    },
-    {
-      "id": "curated-file-context-window",
-      "title": "Curated File Context Window",
-      "category": "Context & Memory",
-      "status": "best-practice",
-      "slug": "curated-file-context-window",
-      "tags": [
-        "code-context",
-        "file-scope",
-        "relevance",
-        "memory-management"
-      ],
-      "summary": "Loads only the primary task files into the main context and has a search sub-agent rank and summarize secondary files before adding them"
     },
     {
       "id": "custom-sandboxed-background-agent",
@@ -1264,22 +1235,6 @@
         "interactive context"
       ],
       "summary": "Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands"
-    },
-    {
-      "id": "economic-value-signaling-in-multi-agent-networks",
-      "title": "Economic Value Signaling in Multi-Agent Networks",
-      "category": "Orchestration & Control",
-      "status": "experimental-but-awesome",
-      "slug": "economic-value-signaling-multi-agent",
-      "tags": [
-        "multi-agent",
-        "coordination",
-        "incentives",
-        "economic-signaling",
-        "peer-discovery",
-        "value-transfer"
-      ],
-      "summary": "Attaches a token value to inter-agent requests so recipients prioritize by value, with a peer registry for discovery and ledger settlement"
     },
     {
       "id": "egress-lockdown-no-exfiltration-channel",

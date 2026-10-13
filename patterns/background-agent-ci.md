@@ -16,7 +16,7 @@ id: background-agent-with-ci-feedback
 summary: "Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked"
 signals: ["Long-running refactors or dependency upgrades", "Developers wait and poll for CI results", "CI gives objective pass or fail signals"]
 anti_signals: ["No reliable CI suite exists", "Task needs frequent human decisions during the work"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -32,6 +32,7 @@ Production implementations include GitHub Agentic Workflows, Cursor Background A
 Key mechanics:
 - Branch-per-task isolation (often via cloud-based execution or git worktrees).
 - CI log ingestion into structured failure signals.
+- Partial feedback: start patching from early failure subsets before the full suite finishes.
 - Retry budget and stop rules to avoid infinite churn.
 - Notification on terminal states (`green`, `blocked`, `needs-human`).
 
