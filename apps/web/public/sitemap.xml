@@ -203,7 +203,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/context-window-auto-compaction</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/context-minimization-pattern</loc>
@@ -351,7 +351,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/external-credential-sync</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/factory-over-assistant</loc>
@@ -359,7 +359,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/failover-aware-model-fallback</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/feature-list-as-immutable-contract</loc>
@@ -411,7 +411,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/intelligent-bash-tool-execution</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/inversion-of-control</loc>
@@ -431,7 +431,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/lane-based-execution-queueing</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/language-agent-tree-search-lats</loc>
@@ -631,7 +631,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/sandboxed-tool-authorization</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/schema-validation-retry-cross-step-learning</loc>

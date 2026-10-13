@@ -4899,8 +4899,8 @@ Monitor for signs of context anxiety: sudden summarization, rushed decisions, or
 
 **Status:** validated-in-production
 **Category:** Context & Memory
-**Authors:** Clawdbot Contributors
-**Source:** https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts
+**Authors:** OpenClaw Contributors
+**Source:** https://github.com/openclaw/openclaw/blob/main/src/agents/embedded-agent-runner/compact.ts
 
 ## Problem
 
@@ -4910,7 +4910,7 @@ Context overflow is a silent killer of agent reliability. When accumulated conve
 - **Manual intervention**: Operators must truncate transcripts, losing valuable context
 - **Retry complexity**: Detecting overflow and retrying with compaction is error-prone
 
-Agents need automatic compaction that preserves essential information while staying within token limits, with model-specific validation and reserve token floors to prevent immediate re-overflow.
+Agents need automatic compaction that preserves essential information while staying within token limits, with model-specific validation and capped reserve headroom to prevent immediate re-overflow.
 
 ## Solution
 
@@ -4920,7 +4920,7 @@ Automatic session compaction triggered by context overflow errors, with smart re
 
 - **Overflow detection**: Catches API errors indicating context length exceeded (`context_length_exceeded`, `prompt is too long`, etc.).
 - **Auto-retry with compaction**: On overflow, the session is compacted and the request is retried automatically.
-- **Reserve token floor**: Post-compaction, ensures a minimum number of tokens (default 20k) remain available to prevent immediate re-overflow.
+- **Reserve headroom cap**: Post-compaction reserve tokens are capped at 25% of the context budget, so prompts retain at least three quarters of the model window.
 - **Lane-aware compaction**: Uses hierarchical lane queuing (session → global) to prevent deadlocks during compaction.
 - **Post-compaction verification**: Estimates token count after compaction and verifies it's less than the pre-compaction count.
 - **Model-specific validation**: Anthropic models require strict turn ordering; Gemini models have different transcript requirements.
@@ -4936,10 +4936,10 @@ async function compactEmbeddedPiSession(params: {
   const sessionManager = SessionManager.open(params.sessionFile);
   const settingsManager = SettingsManager.create(workspaceDir, agentDir);
 
-  // Ensure minimum reserve tokens (default 20k)
-  ensurePiCompactionReserveTokens({
-    settingsManager,
-    minReserveTokens: resolveCompactionReserveTokensFloor(params.config),
+  // Cap reserve tokens at 25% of the context budget
+  const reserveTokens = resolveEffectiveCompactionReserveTokens({
+    contextTokenBudget: resolveContextTokenBudget(params.config),
+    reserveTokens: settingsManager.getCompactionReserveTokens(),
   });
 
   // 2. Sanitize session history for model API
@@ -4986,29 +4986,27 @@ async function compactEmbeddedPiSession(params: {
 }
 ```
 
-**Reserve token enforcement:**
+**Reserve headroom and attempt budget:**
 
 ```typescript
-const DEFAULT_PI_COMPACTION_RESERVE_TOKENS_FLOOR = 20_000;
+// Reserve summary/housekeeping headroom without letting it
+// dominate small model windows.
+const MAX_COMPACTION_RESERVE_RATIO = 0.25;
 
-function ensurePiCompactionReserveTokens(params: {
-  settingsManager: SettingsManager;
-  minReserveTokens?: number;
-}): { didOverride: boolean; reserveTokens: number } {
-  const minReserveTokens = params.minReserveTokens ?? DEFAULT_PI_COMPACTION_RESERVE_TOKENS_FLOOR;
-  const current = params.settingsManager.getCompactionReserveTokens();
-
-  if (current >= minReserveTokens) {
-    return { didOverride: false, reserveTokens: current };
-  }
-
-  // Override to ensure minimum floor
-  params.settingsManager.applyOverrides({
-    compaction: { reserveTokens: minReserveTokens },
-  });
-
-  return { didOverride: true, reserveTokens: minReserveTokens };
+/** Caps compaction headroom so prompts retain at least three quarters of the model window. */
+function resolveEffectiveCompactionReserveTokens(params: {
+  contextTokenBudget: number;
+  reserveTokens: number;
+}): number {
+  const contextTokenBudget = Math.max(1, Math.floor(params.contextTokenBudget));
+  return Math.min(
+    Math.max(0, Math.floor(params.reserveTokens)),
+    Math.floor(contextTokenBudget * MAX_COMPACTION_RESERVE_RATIO),
+  );
 }
+
+// Overflow-triggered compaction retries stop after this many attempts.
+export const MAX_OVERFLOW_COMPACTION_ATTEMPTS = 3;
 ```
 
 **API-based compaction (OpenAI Responses API):**
@@ -5056,16 +5054,17 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
 
 ## Evidence
 
-- **Evidence Grade:** `high` (validated-in-production implementations)
+- **Evidence Grade:** `high` (documented production implementations)
 - **Key Findings:**
-  - Academic research on dialogue summarization shows 60-80% token reduction is achievable while preserving critical information (Liu & Lapata, ACL 2022)
-  - Context minimization can reduce token consumption by 40-90% through proactive untrusted data removal (Beurer-Kellner et al., 2025)
-  - Despite its importance, auto-compaction has limited public implementations; Clawdbot and Pi Coding Agent remain the most complete open-source examples
-- **Unverified:** Commercial products (Cursor, GitHub Copilot) do not publish compaction strategies, treating them as proprietary
+  - OpenAI documents server-side compaction for Codex through the `/responses/compact` design (September 2026): a `compaction` item with `encrypted_content` preserves the model's compressed representation of the conversation, and `auto_compact_limit` triggers compaction automatically
+  - OpenClaw implements reactive, client-side compaction: overflow detection, a reserve cap of 25% of the context budget, and at most 3 overflow compaction attempts
+  - The Pi coding agent (earendil-works/pi) supplies the embedded session compaction core that OpenClaw's runner builds on
+  - Beurer-Kellner et al. (2025) catalog context minimization as a complementary defense that removes untrusted content from context; they report no quantitative token-reduction figure
+- **Unverified:** Whether other commercial products (Cursor, GitHub Copilot) publish their compaction strategies
 
 ## How to use it
 
-1. **Configure reserve floor**: Set `compaction.reserveTokensFloor` to ensure headroom after compaction (default 20k).
+1. **Configure reserve headroom**: Set compaction reserve tokens, and cap them at a fraction of the context budget (OpenClaw uses 25%) so headroom cannot crowd out the prompt.
 2. **Handle overflow errors**: Catch API errors, detect overflow via error message matching, then trigger compaction.
 3. **Validate transcripts**: Apply model-specific validation (Anthropic turns, Gemini ordering) before retry.
 4. **Estimate post-compaction tokens**: Verify that compaction actually reduced token count before retrying.
@@ -5076,7 +5075,7 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
 - **Aggressive floor setting**: Reserve tokens too high may leave insufficient room for actual conversation content.
 - **Missing model validation**: Skipping model-specific transcript validation can cause API errors on retry.
 - **Token estimation drift**: Estimation heuristics may diverge from actual token counts; treat estimates as sanity checks only.
-- **Infinite compaction loops**: If compaction fails to reduce tokens, avoid infinite retry loops. Max out at 1-2 attempts.
+- **Infinite compaction loops**: If compaction fails to reduce tokens, avoid infinite retry loops. OpenClaw caps overflow compaction at 3 attempts.
 
 ## Trade-offs
 
@@ -5096,12 +5095,12 @@ async function compactEmbeddedPiSession(params: CompactParams): Promise<CompactR
 
 ## References
 
-- [Clawdbot compact.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts) - Compaction orchestration
-- [Clawdbot pi-settings.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-settings.ts) - Reserve token configuration
-- [Clawdbot context-window-guard.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/context-window-guard.ts) - Context evaluation
-- [Pi Coding Agent SessionManager](https://github.com/mariozechner/pi-coding-agent) - Core compaction logic
+- [OpenClaw compact.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/embedded-agent-runner/compact.ts) - Compaction orchestration
+- [OpenClaw agent-compaction-constants.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/agent-compaction-constants.ts) - Reserve ratio cap and overflow attempt limit
+- [OpenClaw context-window-guard.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/context-window-guard.ts) - Context evaluation
+- [Pi coding agent](https://github.com/earendil-works/pi) - Embedded session compaction core; formerly `mariozechner/pi-coding-agent`, now the earendil-works/pi monorepo
 - [Unrolling the Codex agent loop | OpenAI Blog](https://openai.com/index/unrolling-the-codex-agent-loop/) - API-based `/responses/compact` endpoint approach
-- [Efficient Transformer-Based Long-Form Dialogue Summarization](https://aclanthology.org/2022.acl-long.41/) - Liu & Lapata (ACL 2022): 60-80% token reduction via extractive-then-abstractive summarization
+- Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." [arXiv:2506.08837](https://arxiv.org/abs/2506.08837) - Context minimization as a complementary defense
 - Related: [Context Window Anxiety Management](/patterns/context-window-anxiety-management) for proactive management
 - Related: [Prompt Caching via Exact Prefix Preservation](/patterns/prompt-caching-via-exact-prefix-preservation)
 
@@ -8476,10 +8475,10 @@ gantt
 
 ## External Credential Sync
 
-**Status:** validated-in-production
+**Status:** established
 **Category:** Security & Safety
-**Authors:** Clawdbot Contributors
-**Source:** https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts
+**Authors:** OpenClaw Contributors
+**Source:** https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts
 
 ## Problem
 
@@ -8493,93 +8492,72 @@ Agents need automatic credential synchronization to reduce authentication fricti
 
 ## Solution
 
-Cross-credential-source synchronization with near-expiry detection, type-aware upgrades, and duplicate detection. The system reads credentials from external tool stores (keychain, config files) and syncs them into the agent's credential store, with intelligent merging and freshness tracking.
+Cross-credential-source synchronization with freshness tracking, type-aware preference, and persisted ownership. The system reads credentials from external tool stores (keychain, config files) and syncs them into the agent's credential store, with careful rules for when an external snapshot may replace a stored profile.
+
+In OpenClaw (renamed from Clawdbot in early 2026), one sync owner handles the MiniMax CLI, and per-provider plugins own every other external auth source. The core ideas below describe the pattern; the sketch reflects the current MiniMax owner, with a note on the earlier multi-source revision.
 
 **Core concepts:**
 
-- **Source plugins**: Each external tool (Claude CLI, Codex CLI, Qwen Portal) implements a credential reader that accesses its secure storage (keychain, encrypted config).
-- **Near-expiry detection**: Credentials within ~10 minutes of expiration trigger proactive refresh, preventing auth failures during active sessions.
-- **Type-aware upgrades**: OAuth credentials are preferred over token-only credentials. When sync detects an OAuth credential for a profile that previously had a token-only credential, it upgrades to enable auto-refresh.
+- **Source readers**: Each external tool implements a credential reader that accesses its secure storage. Current OpenClaw readers cover the Codex CLI (macOS keychain or `~/.codex/auth.json`, presence used only as a discovery hint), the MiniMax CLI (`~/.minimax/oauth_creds.json`), and the Gemini CLI (`~/.gemini/oauth_creds.json`); other providers are owned by their plugins.
+- **Bounded sync ownership**: A sync owner refreshes only the provider IDs it is responsible for. This keeps one tool's import rules from overriding another provider's plugin logic.
+- **Refresh fences**: An external snapshot has no generation ordering proof. It must not clear a refresh fence and make an older single-use refresh token replayable.
+- **Type-aware preference**: OAuth credentials are preferred over token-only credentials. Sync never downgrades OAuth to token-only, because that would lose auto-refresh.
 - **Duplicate detection**: Compares credential values (access tokens, refresh tokens) to avoid creating duplicate profiles for the same underlying account.
-- **TTL-based caching**: External reads are cached (~15 minutes) to avoid excessive keychain access while maintaining freshness.
-- **Immutable profile IDs**: Each external source maps to a fixed profile ID (e.g., `anthropic:claude-cli`, `openai-codex:codex-cli`), allowing stable references across sync cycles.
+- **TTL-based caching**: External reads are cached (`EXTERNAL_CLI_SYNC_TTL_MS`, 15 minutes) to avoid excessive keychain access while maintaining freshness.
+- **Immutable profile IDs**: Each external source maps to a fixed profile ID (for example `minimax-cli` for the MiniMax CLI), allowing stable references across sync cycles.
 
 **Implementation sketch:**
 
 ```typescript
-const EXTERNAL_CLI_NEAR_EXPIRY_MS = 10 * 60 * 1000;  // 10 minutes
-const EXTERNAL_CLI_SYNC_TTL_MS = 15 * 60 * 1000;      // 15 minutes cache
+const EXTERNAL_CLI_SYNC_TTL_MS = 15 * 60 * 1000;  // 15 minutes cache
 
-function isExternalProfileFresh(cred: Credential, now: number): boolean {
-  if (cred.type !== "oauth" && cred.type !== "token") return false;
-  if (!["anthropic", "openai-codex", "qwen-portal"].includes(cred.provider)) return false;
-  if (typeof cred.expires !== "number") return true;  // No expiry = assume fresh
-  return cred.expires > now + EXTERNAL_CLI_NEAR_EXPIRY_MS;
+/** Provider ids whose external CLI credentials can be refreshed by this owner. */
+function listExternalCliSyncProviderIds(): string[] {
+  return ["minimax-portal", "minimax", "minimax-cli"];
 }
 
-function syncExternalCliCredentials(store: CredentialStore): boolean {
-  let mutated = false;
-  const now = Date.now();
-
-  // Sync from Claude Code CLI
-  const existingClaude = store.profiles["claude-cli"];
-  const shouldSyncClaude = !existingClaude || !isExternalProfileFresh(existingClaude, now);
-
-  if (shouldSyncClaude) {
-    const claudeCreds = readClaudeCliCredentialsCached({
-      ttlMs: EXTERNAL_CLI_SYNC_TTL_MS,
-    });
-    if (claudeCreds) {
-      // Upgrade token->oauth if CLI now has OAuth
-      const shouldUpgrade = existingClaude?.type === "token" && claudeCreds.type === "oauth";
-      const isMoreRecent = claudeCreds.expires > (existingClaude?.expires ?? 0);
-
-      if (shouldUpgrade || isMoreRecent) {
-        store.profiles["claude-cli"] = claudeCreds;
-        mutated = true;
-      }
-    }
+/** Read a CLI credential only for safe bootstrap of an unusable local profile. */
+function readExternalCliBootstrapCredential(params: {
+  profileId: string;
+  credential: OAuthCredential;
+}): OAuthCredential | null {
+  if (!isMiniMaxCliProfile(params)) return null;
+  const imported = readMiniMaxCliCredentialsCached({
+    ttlMs: EXTERNAL_CLI_SYNC_TTL_MS,
+  });
+  if (imported && isOAuthRefreshFence(params.credential)) {
+    // An external snapshot has no generation ordering proof. It must not
+    // clear a fence and make an older single-use refresh token replayable.
+    return null;
   }
-
-  // Repeat for other sources (Codex CLI, Qwen Portal)...
-  return mutated;
+  return imported;
 }
 ```
 
-**Duplicate detection for Codex CLI:**
+**Persisted ownership marking:**
 
 ```typescript
-function findDuplicateCodexProfile(store: CredentialStore, creds: OAuthCredential): string | undefined {
-  for (const [profileId, profile] of Object.entries(store.profiles)) {
-    if (profileId === "codex-cli") continue;
-    if (profile.provider !== "openai-codex") continue;
-    if (profile.access === creds.access && profile.refresh === creds.refresh) {
-      return profileId;  // Same credentials exist under different profile
-    }
-  }
-  return undefined;
+const PERSISTED_EXTERNAL_CLI_AUTH_FLOW = "external-cli";
+
+/** True when durable metadata assigns this stored profile to an external CLI owner. */
+function isPersistedExternalCliAuthProfile(params: {
+  profileId: string;
+  credential: OAuthCredential;
+}): boolean {
+  if (!isMiniMaxCliProfile(params)) return false;
+  // Historical native logins and CLI imports share an unmarked shape.
+  // Only exact CLI token backfill may assign durable external ownership.
+  return params.credential.authFlow === PERSISTED_EXTERNAL_CLI_AUTH_FLOW;
 }
 ```
 
-**Type upgrade preference:**
-
-```typescript
-// Prefer OAuth over token-only (enables auto-refresh)
-if (existing?.type === "token" && claudeCreds.type === "oauth") {
-  store.profiles[CLAUDE_CLI_PROFILE_ID] = claudeCreds;
-  mutated = true;
-}
-// Never downgrade OAuth to token
-if (existing?.type === "oauth" && claudeCreds.type === "token") {
-  // Skip update; preserve OAuth capability
-}
-```
+**Historical revision:** Earlier Clawdbot releases synced Claude Code, Codex CLI, and Qwen Portal credentials directly, with near-expiry triggers (~10 minutes), token-to-OAuth upgrades, and duplicate detection inside one sync pass. That logic now lives in per-provider plugins; only the MiniMax owner keeps the direct path shown above.
 
 ## How to use it
 
 1. **Identify credential sources**: Map external tools that store credentials for the same providers (Anthropic, OpenAI, etc.).
 2. **Implement credential readers**: For each source, write a function that reads credentials from its secure store (keychain, config file).
-3. **Define profile IDs**: Assign stable compound IDs to each external source (e.g., `anthropic:claude-cli`, `openai-codex:codex-cli`).
+3. **Define profile IDs**: Assign stable IDs to each external source (e.g., `minimax-cli`, one profile per provider plugin).
 4. **Sync on startup and timer**: Run sync when the agent starts and periodically (e.g., every hour) to refresh near-expiry credentials.
 5. **Handle upgrade paths**: When OAuth becomes available for a token-only profile, upgrade automatically.
 6. **Detect duplicates**: Before creating a new profile, check for existing profiles with the same credential values.
@@ -8587,7 +8565,7 @@ if (existing?.type === "oauth" && claudeCreds.type === "token") {
 **Pitfalls to avoid:**
 
 - **Excessive keychain reads**: Cache external reads (~15 minutes) to avoid triggering OS security prompts too frequently.
-- **Missing expiry handling**: Some credentials don't carry expiry (Codex CLI). Use file mtime as a heuristic.
+- **Missing expiry handling**: Some credentials don't carry expiry (Codex CLI auth records). Use a conservative fallback window; OpenClaw gives imported Codex credentials a one-hour fallback.
 - **OAuth downgrade risk**: Never replace OAuth credentials with token-only credentials; this loses auto-refresh capability.
 - **Race conditions**: Multiple syncs running concurrently can overwrite credentials. Use file locks with exponential backoff.
 
@@ -8609,11 +8587,11 @@ if (existing?.type === "oauth" && claudeCreds.type === "token") {
 
 ## References
 
-- [Clawdbot external-cli-sync.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts) - Sync logic
-- [Clawdbot CLI credential readers](https://github.com/clawdbot/clawdbot/blob/main/src/agents/cli-credentials.ts) - Keychain access
-- [Clawdbot credential types](https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/types.ts) - Type definitions
+- [OpenClaw external-cli-sync.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts) - MiniMax CLI bootstrap and persisted ownership
+- [OpenClaw CLI credential readers](https://github.com/openclaw/openclaw/blob/main/src/agents/cli-credentials.ts) - Codex, MiniMax, and Gemini readers
+- [OpenClaw credential types](https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/types.ts) - Type definitions
 - RFC 6749: [OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749) - Refresh token semantics
-- RFC 6819: [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/rfc6819) - Token expiry handling
+- RFC 9700: [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/rfc9700) - Token storage, expiry, and protection guidance
 - Related: [PII Tokenization](/patterns/pii-tokenization) for credential security patterns
 
 ---
@@ -8791,8 +8769,8 @@ The factory model is why AMP is killing their VS Code extension. The extension o
 
 **Status:** validated-in-production
 **Category:** Reliability & Eval
-**Authors:** Clawdbot Contributors
-**Source:** https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts
+**Authors:** OpenClaw Contributors
+**Source:** https://github.com/openclaw/openclaw/blob/main/src/agents/model-fallback-runner.ts
 
 ## Problem
 
@@ -8934,10 +8912,11 @@ agents:
 
 ## References
 
-- [Clawdbot model-fallback.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts) - Fallback orchestration
+- [OpenClaw model-fallback-runner.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/model-fallback-runner.ts) - Fallback orchestration (`runWithModelFallback`)
 - [Release It!](https://www.pragmaticprogrammer.com/titles/mnee2) by Michael Nygard (2007) - Circuit Breaker pattern foundation
-- [Clawdbot failover-error.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/failover-error.ts) - Error classification
-- [Clawdbot error helpers](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-helpers/errors.ts) - Reason classification logic
+- [OpenClaw failover-error.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/failover-error.ts) - Error classification wrapper
+- [OpenClaw classification-rules.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/failover/classification-rules.ts) - Reason classification rules for billing, rate limit, and overflow signals
+- [LiteLLM routing](https://docs.litellm.ai/docs/routing) - Independent implementation: router cooldowns, retries, and provider failover
 - Related: [Extended Coherence Work Sessions](/patterns/extended-coherence-work-sessions) for reliability patterns
 
 ---
@@ -10744,8 +10723,8 @@ sequenceDiagram
 
 **Status:** validated-in-production
 **Category:** Tool Use & Environment
-**Authors:** Clawdbot Contributors
-**Source:** https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts
+**Authors:** OpenClaw Contributors
+**Source:** https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-run.ts
 
 ## Problem
 
@@ -10985,9 +10964,10 @@ function killSession(session: ProcessSession) {
 
 ## References
 
-- [Clawdbot bash-tools.exec.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts) - Execution modes
-- [Clawdbot bash-tools.process.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.process.ts) - Process management
-- [Clawdbot bash-process-registry.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-process-registry.ts) - Background registry
+- [OpenClaw bash-tools.exec-run.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-run.ts) - Command execution; the original `bash-tools.exec.ts` was split into the current `bash-tools.exec-*` modules after the Clawdbot-to-OpenClaw rename
+- [OpenClaw bash-tools.exec-host-spawn.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-host-spawn.ts) - PTY versus child spawn modes
+- [OpenClaw bash-process-registry.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-process-registry.ts) - Background registry
+- [OpenClaw bash-tools.exec-approval-request.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-approval-request.ts) - Approval workflow
 - [Claude Code](https://claude.ai/code) - Tool-mediated bash execution with `run_in_background` support
 - [Model Context Protocol](https://modelcontextprotocol.io) - Structured tool definition standard
 - Related: [Virtual Machine Operator Agent](/patterns/virtual-machine-operator-agent) for remote execution patterns
@@ -11629,8 +11609,8 @@ Include subjective eval after each run:
 
 **Status:** validated-in-production
 **Category:** Orchestration & Control
-**Authors:** Clawdbot Contributors
-**Source:** https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts
+**Authors:** OpenClaw Contributors
+**Source:** https://github.com/openclaw/openclaw/blob/main/src/process/command-queue.ts
 
 ## Problem
 
@@ -11651,7 +11631,7 @@ Isolated execution lanes with independent queues and configurable concurrency pe
 - **Session lanes**: Per-conversation queues prevent message interleaving. Each user session gets an isolated lane (e.g., `session:telegram:user123`).
 - **Global lanes**: Background tasks (cron jobs, health checks) execute in dedicated lanes (e.g., `cron`, `subagent`) without blocking session lanes.
 - **Hierarchical composition**: Operations can nest lanes (session → global) via queue chaining. The outer lane waits for the inner lane, preventing deadlocks through structured queuing.
-- **Configurable concurrency**: Each lane supports `maxConcurrent` workers (default 1). High-throughput lanes can run parallel tasks; serial lanes preserve ordering.
+- **Configurable concurrency**: Each lane supports a `maxConcurrent` cap. Unconfigured lanes default to 1 (serial); the `main` lane defaults to `max(8, available CPU parallelism × 4)` and is bounded by `agents.defaults.maxConcurrent`.
 - **Wait-time warnings**: Tasks that sit queued too long trigger warnings and callbacks, surfacing performance issues.
 
 **Implementation sketch:**
@@ -11702,12 +11682,15 @@ await enqueueCommandInLane(sessionLane, () =>
 // Outer promise resolves when inner completes; no circular wait
 ```
 
-**Lane examples from Clawdbot:**
+**Lane examples from OpenClaw:**
 
-- `main`: Default serial lane for CLI commands
-- `cron`: Scheduled tasks, isolated from user interactions
-- `subagent`: Spawned agent work, parallelizable with parent
-- `session:<id>`: Per-user auto-reply queues
+- `main`: Inbound interactive turns; concurrency defaults to `max(8, available CPU parallelism × 4)`
+- `system-agent` and `system-agent-inference`: Internal agent work, isolated from user traffic
+- `cron` and `cron-nested`: Scheduled turns; an isolated cron turn holds a `cron` slot while its inner agent execution uses `cron-nested`
+- `hook-dispatch`: External hook agent-run dispatch, in its own lane rather than the cron budget
+- `background`, `active-memory`, `nested`: Housekeeping work that must not block user lanes
+- `subagent:<session>`: Per-session spawned-agent queues (default 8 per spawning session); `subagent:swarm:<group>` collectors default to 32
+- `session:<key>`: Per-session serial queues shared by CLI, embedded, and CLI-backend runs
 
 ## How to use it
 
@@ -11743,9 +11726,9 @@ await enqueueCommandInLane(sessionLane, () =>
 
 ## References
 
-- [Clawdbot command-queue.ts](https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts) - Core queue implementation
-- [Clawdbot lanes.ts](https://github.com/clawdbot/clawdbot/blob/main/src/process/lanes.ts) - Lane definitions
-- [Clawdbot lane resolution](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/lanes.ts) - Runtime lane mapping
+- [OpenClaw command-queue.ts](https://github.com/openclaw/openclaw/blob/main/src/process/command-queue.ts) - Core queue implementation
+- [OpenClaw lanes.ts](https://github.com/openclaw/openclaw/blob/main/src/process/lanes.ts) - Lane enum: main, system-agent, cron, cron-nested, hook-dispatch, background, subagent, active-memory, nested
+- [OpenClaw queue documentation](https://docs.openclaw.ai/concepts/queue) - Lane concurrency defaults and session lanes
 - Related: [Parallel Tool Execution](/patterns/parallel-tool-execution) for tool-level parallelism
 - Academic foundations: Actor Model (IJCAI '73), Work-Stealing (SOSP '95), CALM Theorem (PODS '11)
 - Industry analogs: Sidekiq queues, BullMQ isolation, Airflow pools
@@ -16968,8 +16951,8 @@ class RLAIFAgent:
 
 **Status:** validated-in-production
 **Category:** Security & Safety
-**Authors:** Clawdbot Contributors
-**Source:** https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts
+**Authors:** OpenClaw Contributors
+**Source:** https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy.ts
 
 ## Problem
 
@@ -16980,21 +16963,21 @@ Tool authorization needs flexibility but also security. Static allowlists don't 
 - **Hierarchical delegation**: Subagents should inherit restrictions from parents but with additional constraints
 - **Plugin ecosystems**: External tools need dynamic inclusion without manual allowlist updates
 
-Agents need a policy system that supports pattern matching, deny-by-default semantics, and hierarchical inheritance.
+Agents need a policy system that supports pattern matching, deny precedence, opt-in restriction, and hierarchical inheritance.
 
 ## Solution
 
-Pattern-based policies with deny-by-default and inheritance. Tools are authorized by matching against compiled patterns (exact, regex, wildcard), with deny lists taking precedence over allow lists. Subagents inherit parent policies with additional restrictions, and profile-based tiers provide presets for common agent types.
+Pattern-based policies with deny precedence and inheritance. Tools are allowed by default: an empty allow list permits every tool, and restrictive allowlists are opt-in. Deny lists are evaluated first, so a matching deny pattern blocks a tool regardless of allow entries. Delegated (subagent) sessions inherit the requester's denylist and can only narrow it, and profile-based tiers provide presets for common agent types.
 
 This approach aligns with the academic Action Selector pattern (Beurer-Kellner et al., 2025), which treats the LLM as an instruction decoder rather than a live controller, validating tool parameters against strict schemas before execution and preventing tool outputs from re-entering the selector prompt without additional validation.
 
 **Core concepts:**
 
 - **Pattern matching**: Supports exact matches (`exec`), wildcards (`fs:*`), and regex-like patterns (`*test*`).
-- **Deny-by-default**: Empty allow list denies all tools; explicit allow list permits only matched tools.
+- **Allow by default**: An empty allow list permits every tool; restriction is opt-in. A wildcard stays allow-all even when additive entries are present, so extra allow entries cannot accidentally narrow a delegated session.
 - **Deny precedence**: Deny lists are evaluated first; matching deny patterns block tools regardless of allow list.
 - **Related tool inheritance**: Some tools implicitly grant related permissions (e.g., `exec` allows `apply_patch`).
-- **Hierarchical policy inheritance**: Subagent policies inherit from parent with additional deny rules.
+- **Hierarchical policy inheritance**: Delegated (subagent) sessions inherit the requester's denylist and add restrictions on top; a captured deny floor survives requester config changes.
 - **Profile-based tiers**: Predefined profiles (`minimal`, `coding`, `messaging`, `full`) provide quick configuration.
 
 **Implementation sketch:**
@@ -17035,7 +17018,7 @@ function makeToolPolicyMatcher(policy: ToolPolicy) {
     const normalized = normalizeToolName(name);
     // Deny takes precedence
     if (matchesAny(normalized, deny)) return false;
-    // Empty allow = allow all (deny-by-default handled by caller)
+    // Empty allow = allow all; restriction is opt-in
     if (allow.length === 0) return true;
     // Explicit allow required
     if (matchesAny(normalized, allow)) return true;
@@ -17084,36 +17067,28 @@ const TOOL_GROUPS: Record<string, string[]> = {
   "group:fs": ["read", "write", "edit", "apply_patch"],
   "group:runtime": ["exec", "process"],
   "group:sessions": ["sessions_list", "sessions_history", "sessions_send", "sessions_spawn"],
-  "group:clawdbot": ["browser", "canvas", "nodes", "cron", "message", "gateway", /* ... */],
+  "group:openclaw": ["browser", "canvas", "nodes", "cron", "message", "gateway", /* ... */],
 };
 ```
 
-**Subagent policy inheritance:**
+**Delegated (subagent) policy inheritance:**
 
 ```typescript
-const DEFAULT_SUBAGENT_TOOL_DENY = [
-  // Session management - main agent orchestrates
-  "sessions_list",
-  "sessions_history",
-  "sessions_send",
-  "sessions_spawn",
-  // System admin - dangerous from subagent
-  "gateway",
-  "agents_list",
-  // Status/scheduling - main agent coordinates
-  "session_status",
-  "cron",
-];
+type DelegatedToolPolicy = {
+  requesterSessionKey: string;
+  targetAgentId: string;
+  inheritedToolDenylist?: string[];   // Denies inherited from the requester
+  delegatedToolDenyFloor?: {          // Prepared by the host before flattening;
+    policyAgentId: string;            // never accepted from tool arguments
+    deny: string[];
+  };
+  requesterToolDenylist?: string[];   // Immediate requester snapshot
+};
 
-function resolveSubagentToolPolicy(config?: Config): ToolPolicy {
-  const configured = config?.tools?.subagents?.tools;
-  const deny = [
-    ...DEFAULT_SUBAGENT_TOOL_DENY,      // Base restrictions
-    ...(configured?.deny ?? []),        // Additional restrictions
-  ];
-  const allow = configured?.allow;       // Optional allowlist
-  return { allow, deny };
-}
+// The delegated session's effective deny set is the union of the floor,
+// the inherited denylist, and the requester snapshot. Delegation can only
+// narrow the parent surface, never widen it, and the floor keeps earlier
+// revocations in force even if the requester config changes mid-run.
 ```
 
 **Policy resolution across multiple layers:**
@@ -17169,7 +17144,7 @@ function resolveEffectiveToolPolicy(params: {
 **Pros:**
 
 - **Flexible patterns**: Wildcards and groups enable concise policies for large tool sets.
-- **Security by default**: Deny-by-default semantics prevent accidental permission grants.
+- **Security by precedence**: Deny rules cannot be bypassed by allow rules, and opt-in allowlists narrow the default surface when a role needs it.
 - **Hierarchical control**: Subagents can be restricted further without modifying parent policies.
 - **Profile presets**: Common agent types (coding, messaging) have pre-configured policies.
 - **Plugin support**: Tool groups can include plugin tools via dynamic discovery.
@@ -17183,11 +17158,12 @@ function resolveEffectiveToolPolicy(params: {
 
 ## References
 
-- [Clawdbot tool-policy.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts) - Policy resolution
-- [Clawdbot pi-tools.policy.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-tools.policy.ts) - Policy enforcement
-- [Clawdbot sandbox policies](https://github.com/clawdbot/clawdbot/tree/main/src/agents/sandbox) - Sandbox-specific policies
+- [OpenClaw tool-policy.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy.ts) - Policy resolution and restrictive-allow analysis (`hasRestrictiveAllowPolicy`)
+- [OpenClaw tool-policy-shared.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy-shared.ts) - Pattern matching and `resolveToolProfilePolicy` re-export
+- [OpenClaw delegated-tool-policy.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/delegated-tool-policy.ts) - Subagent/delegated inheritance and deny floors
+- [OpenClaw sandbox policies](https://github.com/openclaw/openclaw/tree/main/src/agents/sandbox) - Sandbox-specific policies
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837 - Action Selector pattern academic foundation
-- [Model Context Protocol](https://modelcontextprotocol.io) - Production standard for tool authorization (Anthropic, 2025)
+- [Model Context Protocol](https://modelcontextprotocol.io) - Protocol standard for tool interoperability (Anthropic, 2025); tool authorization itself stays application-level
 - Related: [Egress Lockdown (No-Exfiltration Channel)](/patterns/egress-lockdown-no-exfiltration-channel) for security patterns
 
 ---

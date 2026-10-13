@@ -1,15 +1,15 @@
 ---
 title: "External Credential Sync"
-status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
+status: "established"
+authors: ["OpenClaw Contributors"]
+based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Security & Safety"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts"
+source: "https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts"
 tags: [credentials, oauth, token-sync, keychain, cli-integration, auth-reuse]
-summary: "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with near-expiry refresh, OAuth upgrade, and dedupe"
+summary: "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership"
 signals: ["Users already sign in to the same providers through other CLIs or tools", "Stale or expired tokens cause auth failures during sessions", "Credentials drift between tools"]
 anti_signals: ["Headless environments with no OS keychain access", "The agent is the only tool that holds credentials for the provider", "Policy forbids reading credentials owned by other tools"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -24,93 +24,72 @@ Agents need automatic credential synchronization to reduce authentication fricti
 
 ## Solution
 
-Cross-credential-source synchronization with near-expiry detection, type-aware upgrades, and duplicate detection. The system reads credentials from external tool stores (keychain, config files) and syncs them into the agent's credential store, with intelligent merging and freshness tracking.
+Cross-credential-source synchronization with freshness tracking, type-aware preference, and persisted ownership. The system reads credentials from external tool stores (keychain, config files) and syncs them into the agent's credential store, with careful rules for when an external snapshot may replace a stored profile.
+
+In OpenClaw (renamed from Clawdbot in early 2026), one sync owner handles the MiniMax CLI, and per-provider plugins own every other external auth source. The core ideas below describe the pattern; the sketch reflects the current MiniMax owner, with a note on the earlier multi-source revision.
 
 **Core concepts:**
 
-- **Source plugins**: Each external tool (Claude CLI, Codex CLI, Qwen Portal) implements a credential reader that accesses its secure storage (keychain, encrypted config).
-- **Near-expiry detection**: Credentials within ~10 minutes of expiration trigger proactive refresh, preventing auth failures during active sessions.
-- **Type-aware upgrades**: OAuth credentials are preferred over token-only credentials. When sync detects an OAuth credential for a profile that previously had a token-only credential, it upgrades to enable auto-refresh.
+- **Source readers**: Each external tool implements a credential reader that accesses its secure storage. Current OpenClaw readers cover the Codex CLI (macOS keychain or `~/.codex/auth.json`, presence used only as a discovery hint), the MiniMax CLI (`~/.minimax/oauth_creds.json`), and the Gemini CLI (`~/.gemini/oauth_creds.json`); other providers are owned by their plugins.
+- **Bounded sync ownership**: A sync owner refreshes only the provider IDs it is responsible for. This keeps one tool's import rules from overriding another provider's plugin logic.
+- **Refresh fences**: An external snapshot has no generation ordering proof. It must not clear a refresh fence and make an older single-use refresh token replayable.
+- **Type-aware preference**: OAuth credentials are preferred over token-only credentials. Sync never downgrades OAuth to token-only, because that would lose auto-refresh.
 - **Duplicate detection**: Compares credential values (access tokens, refresh tokens) to avoid creating duplicate profiles for the same underlying account.
-- **TTL-based caching**: External reads are cached (~15 minutes) to avoid excessive keychain access while maintaining freshness.
-- **Immutable profile IDs**: Each external source maps to a fixed profile ID (e.g., `anthropic:claude-cli`, `openai-codex:codex-cli`), allowing stable references across sync cycles.
+- **TTL-based caching**: External reads are cached (`EXTERNAL_CLI_SYNC_TTL_MS`, 15 minutes) to avoid excessive keychain access while maintaining freshness.
+- **Immutable profile IDs**: Each external source maps to a fixed profile ID (for example `minimax-cli` for the MiniMax CLI), allowing stable references across sync cycles.
 
 **Implementation sketch:**
 
 ```typescript
-const EXTERNAL_CLI_NEAR_EXPIRY_MS = 10 * 60 * 1000;  // 10 minutes
-const EXTERNAL_CLI_SYNC_TTL_MS = 15 * 60 * 1000;      // 15 minutes cache
+const EXTERNAL_CLI_SYNC_TTL_MS = 15 * 60 * 1000;  // 15 minutes cache
 
-function isExternalProfileFresh(cred: Credential, now: number): boolean {
-  if (cred.type !== "oauth" && cred.type !== "token") return false;
-  if (!["anthropic", "openai-codex", "qwen-portal"].includes(cred.provider)) return false;
-  if (typeof cred.expires !== "number") return true;  // No expiry = assume fresh
-  return cred.expires > now + EXTERNAL_CLI_NEAR_EXPIRY_MS;
+/** Provider ids whose external CLI credentials can be refreshed by this owner. */
+function listExternalCliSyncProviderIds(): string[] {
+  return ["minimax-portal", "minimax", "minimax-cli"];
 }
 
-function syncExternalCliCredentials(store: CredentialStore): boolean {
-  let mutated = false;
-  const now = Date.now();
-
-  // Sync from Claude Code CLI
-  const existingClaude = store.profiles["claude-cli"];
-  const shouldSyncClaude = !existingClaude || !isExternalProfileFresh(existingClaude, now);
-
-  if (shouldSyncClaude) {
-    const claudeCreds = readClaudeCliCredentialsCached({
-      ttlMs: EXTERNAL_CLI_SYNC_TTL_MS,
-    });
-    if (claudeCreds) {
-      // Upgrade token->oauth if CLI now has OAuth
-      const shouldUpgrade = existingClaude?.type === "token" && claudeCreds.type === "oauth";
-      const isMoreRecent = claudeCreds.expires > (existingClaude?.expires ?? 0);
-
-      if (shouldUpgrade || isMoreRecent) {
-        store.profiles["claude-cli"] = claudeCreds;
-        mutated = true;
-      }
-    }
+/** Read a CLI credential only for safe bootstrap of an unusable local profile. */
+function readExternalCliBootstrapCredential(params: {
+  profileId: string;
+  credential: OAuthCredential;
+}): OAuthCredential | null {
+  if (!isMiniMaxCliProfile(params)) return null;
+  const imported = readMiniMaxCliCredentialsCached({
+    ttlMs: EXTERNAL_CLI_SYNC_TTL_MS,
+  });
+  if (imported && isOAuthRefreshFence(params.credential)) {
+    // An external snapshot has no generation ordering proof. It must not
+    // clear a fence and make an older single-use refresh token replayable.
+    return null;
   }
-
-  // Repeat for other sources (Codex CLI, Qwen Portal)...
-  return mutated;
+  return imported;
 }
 ```
 
-**Duplicate detection for Codex CLI:**
+**Persisted ownership marking:**
 
 ```typescript
-function findDuplicateCodexProfile(store: CredentialStore, creds: OAuthCredential): string | undefined {
-  for (const [profileId, profile] of Object.entries(store.profiles)) {
-    if (profileId === "codex-cli") continue;
-    if (profile.provider !== "openai-codex") continue;
-    if (profile.access === creds.access && profile.refresh === creds.refresh) {
-      return profileId;  // Same credentials exist under different profile
-    }
-  }
-  return undefined;
+const PERSISTED_EXTERNAL_CLI_AUTH_FLOW = "external-cli";
+
+/** True when durable metadata assigns this stored profile to an external CLI owner. */
+function isPersistedExternalCliAuthProfile(params: {
+  profileId: string;
+  credential: OAuthCredential;
+}): boolean {
+  if (!isMiniMaxCliProfile(params)) return false;
+  // Historical native logins and CLI imports share an unmarked shape.
+  // Only exact CLI token backfill may assign durable external ownership.
+  return params.credential.authFlow === PERSISTED_EXTERNAL_CLI_AUTH_FLOW;
 }
 ```
 
-**Type upgrade preference:**
-
-```typescript
-// Prefer OAuth over token-only (enables auto-refresh)
-if (existing?.type === "token" && claudeCreds.type === "oauth") {
-  store.profiles[CLAUDE_CLI_PROFILE_ID] = claudeCreds;
-  mutated = true;
-}
-// Never downgrade OAuth to token
-if (existing?.type === "oauth" && claudeCreds.type === "token") {
-  // Skip update; preserve OAuth capability
-}
-```
+**Historical revision:** Earlier Clawdbot releases synced Claude Code, Codex CLI, and Qwen Portal credentials directly, with near-expiry triggers (~10 minutes), token-to-OAuth upgrades, and duplicate detection inside one sync pass. That logic now lives in per-provider plugins; only the MiniMax owner keeps the direct path shown above.
 
 ## How to use it
 
 1. **Identify credential sources**: Map external tools that store credentials for the same providers (Anthropic, OpenAI, etc.).
 2. **Implement credential readers**: For each source, write a function that reads credentials from its secure store (keychain, config file).
-3. **Define profile IDs**: Assign stable compound IDs to each external source (e.g., `anthropic:claude-cli`, `openai-codex:codex-cli`).
+3. **Define profile IDs**: Assign stable IDs to each external source (e.g., `minimax-cli`, one profile per provider plugin).
 4. **Sync on startup and timer**: Run sync when the agent starts and periodically (e.g., every hour) to refresh near-expiry credentials.
 5. **Handle upgrade paths**: When OAuth becomes available for a token-only profile, upgrade automatically.
 6. **Detect duplicates**: Before creating a new profile, check for existing profiles with the same credential values.
@@ -118,7 +97,7 @@ if (existing?.type === "oauth" && claudeCreds.type === "token") {
 **Pitfalls to avoid:**
 
 - **Excessive keychain reads**: Cache external reads (~15 minutes) to avoid triggering OS security prompts too frequently.
-- **Missing expiry handling**: Some credentials don't carry expiry (Codex CLI). Use file mtime as a heuristic.
+- **Missing expiry handling**: Some credentials don't carry expiry (Codex CLI auth records). Use a conservative fallback window; OpenClaw gives imported Codex credentials a one-hour fallback.
 - **OAuth downgrade risk**: Never replace OAuth credentials with token-only credentials; this loses auto-refresh capability.
 - **Race conditions**: Multiple syncs running concurrently can overwrite credentials. Use file locks with exponential backoff.
 
@@ -140,9 +119,9 @@ if (existing?.type === "oauth" && claudeCreds.type === "token") {
 
 ## References
 
-- [Clawdbot external-cli-sync.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts) - Sync logic
-- [Clawdbot CLI credential readers](https://github.com/clawdbot/clawdbot/blob/main/src/agents/cli-credentials.ts) - Keychain access
-- [Clawdbot credential types](https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/types.ts) - Type definitions
+- [OpenClaw external-cli-sync.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts) - MiniMax CLI bootstrap and persisted ownership
+- [OpenClaw CLI credential readers](https://github.com/openclaw/openclaw/blob/main/src/agents/cli-credentials.ts) - Codex, MiniMax, and Gemini readers
+- [OpenClaw credential types](https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/types.ts) - Type definitions
 - RFC 6749: [OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749) - Refresh token semantics
-- RFC 6819: [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/rfc6819) - Token expiry handling
+- RFC 9700: [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/rfc9700) - Token storage, expiry, and protection guidance
 - Related: [PII Tokenization](/patterns/pii-tokenization) for credential security patterns
