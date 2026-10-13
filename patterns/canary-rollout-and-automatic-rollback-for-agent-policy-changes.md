@@ -9,7 +9,7 @@ tags: [canary, rollback, reliability, policy, evaluation]
 summary: "Ships agent policy changes to a small traffic slice first, monitors guardrail metrics, and rolls back to the last stable version automatically"
 signals: ["Prompts, tool policies, or routing rules change often", "Small policy edits can cause regressions in cost, latency, safety, or quality"]
 anti_signals: ["No real-time telemetry to detect regressions", "Policies are not versioned, so rollback cannot restore a known-good state"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -27,7 +27,7 @@ Core components:
 - Rollback automation that restores the previous stable policy without manual intervention.
 - Optional shadow mode: validate technical stability before user exposure.
 
-Recommended stages:
+Illustrative stages — no cited source prescribes these percentages for agent policies, so tune them to your traffic and risk:
 1. `1%` traffic canary for fast anomaly detection.
 2. `5-10%` validation phase with stricter thresholds.
 3. `25-50%` soak period for stability under mixed load.
@@ -63,3 +63,4 @@ if monitors.breach(policy.version):
 - https://sre.google/sre-book/monitoring-distributed-systems/
 - https://arxiv.org/html/2508.03858v3 - MI9 Runtime Governance Framework (2025)
 - https://arxiv.org/html/2512.03180v1 - AGENTSAFE Safety Evaluation (2025)
+- https://langfuse.com/docs - Langfuse prompt management: versioned prompts with evaluation gates, an LLM-ops implementation of staged prompt rollouts (open source: https://github.com/langfuse/langfuse)

@@ -9,7 +9,7 @@ tags: [background-agent, human-in-the-loop, task-handoff, interactive-refinement
 summary: "Lets a user take over a background agent's unfinished work in the foreground, with the agent's branch, PR, and summaries carried over as context"
 signals: ["Background agents finish most of a task but not all of it", "Remaining work needs human judgment or finesse", "Agent output lands in durable artifacts such as branches or draft PRs"]
 anti_signals: ["Background agent output is usually fully correct", "No infrastructure to preserve context or show progress at the handoff"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -28,12 +28,14 @@ Design the agent system to allow for a seamless transition from background (auto
 
 **Core mechanisms for seamless handoff:**
 
-- **Context preservation**: Background agents generate distilled summaries and artifacts (PRs, branches, decision logs) rather than transferring full conversation history, achieving 10:1 to 100:1 context compression.
-- **Real-time progress visibility**: WebSocket streaming of agent progress enables users to identify optimal handoff moments and maintain trust during autonomous execution.
+- **Context preservation**: Background agents generate distilled summaries and artifacts (PRs, branches, decision logs) rather than transferring the full conversation history.
+- **Progress visibility**: A live view of what the background agent is doing (activity feeds, running updates, open draft PRs) lets users spot the right moment to take over and keeps trust intact during autonomous execution.
 - **Artifact-based coordination**: Git-based workflows with branch-per-task and draft PRs provide durable handoff points that survive process boundaries.
 - **Tool parity**: Background agents use the same tools as developers (IDE terminals, codebase annotations), ensuring workspace-native execution and eliminating context translation.
 
 This pattern ensures that developers can leverage the power of autonomous background processing while retaining the ability to easily intervene and apply their expertise for the final touches, without losing context or efficiency.
+
+**Distinct from** [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), which is about choosing among autonomy levels: this pattern is about the mechanics of picking up a background agent's unfinished work in the foreground.
 
 ## Example
 
@@ -50,9 +52,10 @@ flowchart TD
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
+- Make background output land in durable artifacts (branch, draft PR, written summary) so a takeover never depends on the agent still running.
+- Keep tool parity between background and foreground: the user who takes over should work in the same repo, terminal, and agent features the background run used.
+- Show progress while the agent works, so the user can decide early whether to wait or take over.
+- On takeover, load the agent's summary and diff into the foreground session before editing, so the finishing work starts from the agent's context.
 
 ## Trade-offs
 
@@ -68,3 +71,5 @@ flowchart TD
 - Allen, J. R., & Guinn, C. I. (2000). Mixed-Initiative Systems: A Survey and Framework. AI Magazine. (Foundational theory for control transfer)
 
 - Zou, H. P., Huang, W.-C., Wu, Y., et al. (2025). A Survey on Large Language Model based Human-Agent Systems. arXiv:2505.00753 (Validates human-in-the-loop as primary paradigm over full autonomy)
+
+- Cursor's background agents are now documented as [Cloud Agents](https://cursor.com/docs/cloud-agent), the current product name for this background-to-foreground workflow.

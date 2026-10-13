@@ -24,7 +24,7 @@ summary: >-
   PRs and code review.
 signals: ["Several engineers use the same agent on one repository", "Team members get the same permission prompts again and again", "Team needs standard rules for files the agent must not touch"]
 anti_signals: ["Solo developer with no shared repository", "Config would need secrets that cannot be committed"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -44,39 +44,44 @@ When each engineer configures their AI agent independently:
 
 **Key configuration elements:**
 
-1. **Pre-allowed commands**: Tools that don't need permission prompts
-2. **Blocked files/directories**: What the agent must never touch
-3. **Default subagents**: Team-standard specialized agents
+1. **Permission rules**: `permissions.allow`, `permissions.ask`, and `permissions.deny`, evaluated deny first, then ask, then allow
+2. **Hooks**: Event-triggered automation such as `PreToolUse` checks
+3. **Subagents**: Team-standard specialized agents, stored as `.claude/agents/*.md` files
 4. **Slash commands**: Shared workflows everyone can use
-5. **Hooks**: Standardized automation triggers
+5. **Settings layering**: Repo-level settings plus gitignored local overrides for personal additions
 
 ```json
 // .claude/settings.json (checked into repo)
 {
   "permissions": {
-    "pre_allowed": [
-      "git add",
-      "git commit",
-      "git push",
-      "npm test",
-      "npm run lint"
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm run lint:*)"
     ],
-    "blocked_paths": [
-      ".env",
-      "secrets/",
-      "*.key",
-      "credentials.json"
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(secrets/**)",
+      "Read(**/*.key)"
     ]
   },
-  "subagents": {
-    "security-review": "./agents/security.md",
-    "migration-helper": "./agents/migration.md"
-  },
   "hooks": {
-    "pre_commit": "./hooks/run_tests.sh"
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "./scripts/check-bash.sh" }
+        ]
+      }
+    ]
   }
 }
 ```
+
+Subagents are not entries in this file: each is a Markdown definition under `.claude/agents/` (for example `.claude/agents/security-review.md`), which the harness picks up automatically. Alongside the JSON config, keep an [`AGENTS.md`](https://agents.md) file for the prose rules — setup commands, test commands, code style. AGENTS.md is the cross-tool standard now read by Codex, Cursor, Gemini CLI, Claude Code, and other agents.
 
 ## How to use it
 
@@ -116,7 +121,7 @@ Use gitignored local files for individual customization:
 # .claude/settings.local.json (gitignored)
 {
   "permissions": {
-    "pre_allowed": ["docker build"]  // personal additions
+    "allow": ["Bash(docker build:*)"]  // personal additions
   }
 }
 ```
@@ -156,7 +161,7 @@ Most platforms merge layered configs with local overrides taking precedence.
 
 - **Separate local overrides**: Support `.claude/settings.local.json` (gitignored) for personal customization
 - **Schema validation**: Use JSON Schema validation to catch configuration errors before runtime
-- **Document configuration**: Explain why things are pre-allowed/blocked
+- **Document configuration**: Explain why commands are allowed, gated with `ask`, or denied
 - **Regular review**: Audit config quarterly as tools/threats evolve
 - **Gradual adoption**: Start minimal, expand based on team pain points
 - **Secrets management**: Never commit credentials; use environment variables or local-only config files
@@ -165,4 +170,7 @@ Most platforms merge layered configs with local overrides taking precedence.
 
 * Boris Cherny: "Companies that have really big deployments of Claude Code... having settings.json that you check into the code base is really important because you can use this to pre-allow certain commands so you don't get permission prompted every time. And also to block certain commands... and this way as an engineer I don't get prompted and I can check this in and share it with the whole team so everyone gets to use it."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Claude Code permissions](https://code.claude.com/docs/en/permissions) — the documented allow/ask/deny rule schema and evaluation order
+* [Claude Code settings reference](https://code.claude.com/docs/en/settings-reference) — the documented settings file schema, including hooks events such as `PreToolUse`
+* [AGENTS.md](https://agents.md) — the cross-agent instruction standard (Codex, Cursor, Gemini CLI, Claude Code, and more)
 * Alazawi et al. (2021). "Infrastructure as Code: A Systematic Mapping Study". IEEE Access. — Academic foundation for treating configuration as version-controlled code with emphasis on repeatability and collaborative review.

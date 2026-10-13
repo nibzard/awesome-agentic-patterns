@@ -102,7 +102,7 @@
       "Workflow is not deterministic and changes each run",
       "Target UI goes through frequent major redesigns"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLLM-based agent execution is expensive (both in costs and latency) and non-deterministic. Running the same workflow multiple times yields different results and incurs repeated LLM costs.\n\nThis creates several issues:\n\n- **Cost explosion**: Every workflow run burns LLM tokens even for identical tasks\n- **Non-determinism**: Same input produces different outputs across runs\n- **No regression testing**: Impossible to verify fixes don't break existing workflows\n- **Slow iteration**: Can't quickly test changes without paying LLM costs\n- **No CI/CD integration**: Automated testing of agent workflows is impractical"
   },
   {
@@ -139,7 +139,7 @@
   },
   {
     "title": "Adaptive Sandbox Fan-Out Controller",
-    "status": "emerging",
+    "status": "proposed",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -148,7 +148,7 @@
       "Swarm Migration Pattern"
     ],
     "category": "Reliability & Eval",
-    "source": "https://github.com/nibzard/labruno-agent",
+    "source": "https://github.com/zeynepyorulmaz/openclaw-orchestrator",
     "tags": [
       "fan-out",
       "adaptive",
@@ -170,7 +170,7 @@
       "No objective check or reliable scoring function for results",
       "One run per task is enough"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nParallel sandboxes are intoxicating: you can spawn 10... 100... 1000 runs. But two things break quickly:\n\n1. **Diminishing returns:** After some N, you're mostly paying for redundant failures or near-duplicate solutions\n2. **Prompt fragility:** If the prompt is underspecified, scaling N just scales errors (lots of sandboxes fail fast)\n3. **Resource risk:** Unbounded fan-out can overwhelm budgets, rate limits, or queues\n4. **Oscillation risk:** Poorly tuned thresholds can cause scale-up/scale-down thrashing as the controller oscillates between decisions\n\nStatic \"N=10 always\" policies don't adapt to task difficulty, model variance, or observed failure rates. Most implementations use static caps rather than true signal-driven adaptation."
   },
   {
@@ -720,7 +720,7 @@
       "No reinforcement learning or reward-based training",
       "Team cannot inspect traces and iterate on the grader"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nDuring reinforcement learning training, models actively search for ways to maximize reward. If your grader has edge cases or loopholes, the model will find and exploit them:\n\n- **Gaming the metric**: Model achieves 100% reward score by exploiting grader weaknesses rather than solving the task\n- **Unexpected behaviors**: Agent learns bizarre shortcuts that technically satisfy the reward function but don't reflect true quality\n- **Brittle evaluation**: Simple graders (e.g., exact string match) penalize valid answers due to formatting differences\n- **Degraded real performance**: High training reward doesn't translate to production success\n- **Length hacking**: Models generate verbose but meaningless content to inflate scores\n- **Format hacking**: Adding empty tags like `<thinking></thinking>` without substantive content\n- **Solution appending**: Concatenating previously-solved problems to exploit reward systems\n\nThe Rogo team experienced this firsthand: early training runs showed 100% average validation reward, but the model was exploiting edge cases in their financial reasoning grader rather than improving actual performance."
   },
   {
@@ -759,7 +759,7 @@
   },
   {
     "title": "Asynchronous Coding Agent Pipeline",
-    "status": "proposed",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -785,8 +785,8 @@
       "Team cannot maintain monitoring across many services",
       "Training cannot tolerate slightly stale policy data"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nSynchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates **compute bubbles** and **idle resources**. When a coding agent issues a tool call (e.g., `run_tests()`), it blocks further reasoning until that tool returns, leading to underutilized GPUs/TPUs and slower RL rollouts.\n\n- RL agents must push hard on **async RL** \"so everything is happening in parallel without blowing up bubbles\".\n- For coding agents, each I/O-bound tool call (compilation, test runs) can take seconds to minutes.\n- Industry benchmarks show **67% performance improvement** with parallel execution (3.2s vs 9.8s for 3 agents)."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nSynchronous execution of coding tasks—where the agent must wait for compilation, testing, linting, or static analysis—creates **compute bubbles** and **idle resources**. When a coding agent issues a tool call (e.g., `run_tests()`), it blocks further reasoning until that tool returns, leading to underutilized GPUs/TPUs and slower RL rollouts.\n\n- RL agents must push hard on **async RL** \"so everything is happening in parallel without blowing up bubbles\".\n- For coding agents, each I/O-bound tool call (compilation, test runs) can take seconds to minutes.\n- Asynchronous RL systems report real gains at scale: AReaL achieves **up to 2.77x training speedup** on math and code reasoning tasks (arXiv:2505.24298, NeurIPS 2025)."
   },
   {
     "title": "Authenticated Authority Channel",
@@ -1084,7 +1084,7 @@
       "No real-time telemetry to detect regressions",
       "Policies are not versioned, so rollback cannot restore a known-good state"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgent behavior changes frequently through prompt updates, tool policies, routing rules, and evaluator thresholds. Even small policy edits can produce broad regressions in cost, latency, safety, or task quality. Full rollouts without staged exposure make rollback slow and user impact large."
   },
   {
@@ -1402,7 +1402,7 @@
       "Humans are the primary users and agents rarely touch it",
       "The team is not committed to agent-first development"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen introducing AI agents to a codebase, there's a natural tendency to preserve the human developer experience (DX). However, this limits agent effectiveness because the codebase remains optimized for humans, not for the AI workers who will increasingly operate autonomously.\n\nA related problem: even good models struggle without clear feedback loops. When an agent can't verify its changes work, it fails not because of capability limits but because the codebase isn't \"welded\" to the agent."
   },
   {
@@ -2116,7 +2116,7 @@
   },
   {
     "title": "Democratization of Tooling via Agents",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -2147,7 +2147,7 @@
       "The tool goes to production where users cannot detect reliability or security issues",
       "No guardrails for quality and security are in place"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMany individuals in non-software engineering roles (e.g., sales, marketing, operations, communications) could benefit from custom software tools, scripts, or dashboards tailored to their specific workflows, but lack the traditional programming skills to build them."
   },
   {
@@ -2425,7 +2425,7 @@
       "Team or leadership is not committed to autonomous agents",
       "Weak automated tests cannot replace human review"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional development tools are built on assumptions that no longer hold: that humans write code with effort and expertise, that changes are scarce and valuable, that linear workflows make sense. When agents write most code, these tools create bottlenecks and friction. Academic research confirms this is a paradigm shift requiring ecosystem-level rethinking, not incremental adjustments."
   },
   {
@@ -3019,7 +3019,7 @@
       "No prompt caching, so long sessions become too expensive",
       "No infrastructure for context compaction or state persistence"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nEarly AI agents and models often suffered from a short \"coherence window,\" meaning they could only maintain focus and context for a few minutes before their performance degraded significantly (e.g., losing track of instructions, generating irrelevant output). This limited their utility for complex, multi-stage tasks that require sustained effort over hours."
   },
   {
@@ -3349,7 +3349,7 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Dexter Horthy (HumanLayer)"
+      "Dexter Horthy (HumanLayer; the company later pivoted to a coding-agent IDE and its open-source SDK is deprecated)"
     ],
     "category": "UX & Collaboration",
     "source": "https://claude.com/blog/building-companies-with-claude-code",
@@ -3374,7 +3374,7 @@
       "No human is available to respond in time",
       "Approval volume would be so high that reviewers rubber-stamp requests"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAutonomous AI agents need to execute high-risk or irreversible operations (database modifications, production deployments, system configurations, API calls) but allowing unsupervised execution creates unacceptable safety and compliance risks. Blocking all such operations defeats the purpose of agent automation."
   },
   {
@@ -3934,7 +3934,7 @@
   },
   {
     "title": "LLM Observability",
-    "status": "proposed",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -3967,7 +3967,7 @@
       "Single-step operations where standard logs suffice",
       "Budget does not cover observability spend"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents introduce **non-determinism**—the same input can produce different outputs. When agents do something sub-optimal, users flag it as a \"bug\" even if it's just prompt ambiguity. Debugging these issues requires tracing through complex multi-step workflows, but standard logging (CloudWatch, Lambda logs) is painful to navigate. Engineers need easy access to workflow execution details to debug quickly, or agents won't get adopted."
   },
   {
@@ -4208,10 +4208,9 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Anonymous Speaker (Open Source Agent RL Talk)",
-      "Will Brown (Prime Intellect Talk)"
+      "Will Brown (Prime Intellect)"
     ],
-    "category": "Reliability & Eval",
+    "category": "Learning & Adaptation",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
     "tags": [
       "model-merging",
@@ -4231,7 +4230,7 @@
       "Specialists use different architectures or tokenizers",
       "No benchmark suite to detect interference after merging"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nBuilding a **unified model** that excels both at **natural language tasks** (e.g., summarization, documentation generation) and **code generation/reasoning** typically requires a massive centralized training run. This is:\n\n- **Compute-Intensive:** Training from scratch on both code and language corpora demands enormous resources.\n- **Susceptible to Interference:** When mixing code and NL tasks in one pipeline, the model may forget earlier skills."
   },
   {
@@ -4703,7 +4702,7 @@
       "coding",
       "ops"
     ],
-    "updated_at": "2026-09-26",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAn agent session is expensive to reproduce. Re-running it costs tokens, needs the network, and the\nmodel may not make the same choices twice — so \"what did it actually do, and why\" usually gets\nanswered from logs rather than from the run itself.\n\nThe usual fix is to instrument the framework: a callback handler, a tracing decorator, a monkey\npatch around the client. That works until it doesn't:\n\n- **It is per-framework.** Every agent library needs its own hook, and the hooks move between\n  releases faster than the integrations that wrap them.\n- **It records an interpretation, not the traffic.** A handler sees the objects the framework built,\n  after the framework already normalised, retried, or merged streamed chunks.\n- **It cannot capture what you did not anticipate.** A field added by a provider last week is not in\n  your span schema, so it is not in your trace.\n- **It changes the program under test.** The run you recorded is a run with your instrumentation in\n  it."
   },
   {
@@ -4713,10 +4712,11 @@
       "John Weston (@JohnnyTarrr)"
     ],
     "based_on": [
-      "VeroQ Shield (veroq-ai)"
+      "VeroQ Shield (veroq-ai)",
+      "FActScore (Min et al., EMNLP 2023)"
     ],
     "category": "Reliability & Eval",
-    "source": "https://github.com/veroq-ai/shield",
+    "source": "https://aclanthology.org/2023.emnlp-main.741/",
     "tags": [
       "verification",
       "hallucination-detection",
@@ -4743,7 +4743,7 @@
       "reflection-loop",
       "self-critique-evaluator-loop"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLLM agents confidently produce outputs that contain factual errors, hallucinated citations, or unsupported claims. In multi-agent pipelines the problem compounds: one agent's hallucination becomes another agent's input. Standard reflection loops catch stylistic issues but lack grounding against external evidence, so factual errors pass through unchallenged."
   },
   {
@@ -5347,7 +5347,7 @@
   },
   {
     "title": "Reasoning-Token Firewall",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "aaronjmars (@aaronjmars)"
     ],
@@ -5383,7 +5383,7 @@
       "verbose-reasoning-transparency",
       "structured-output-specification"
     ],
-    "updated_at": "2026-08-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nReasoning models emit two kinds of tokens in one response: private chain-of-thought and the final answer. When a harness builds its \"result\" from the whole stream and then tries to remove the reasoning afterward with string heuristics, it eventually leaks. Reasoning has no stable delimiter, the shape differs per model and per version, and a single missed case commits raw chain-of-thought into a file, a memory store, a notification, or the context of the next agent in the chain.\n\nThat leak is not just cosmetic. Chain-of-thought routinely contains half-formed conclusions, discarded plans, and sensitive scratch data. Once it lands in a durable artifact it is indistinguishable from the intended answer, it inflates memory and context, and it can surface content the model never meant to publish."
   },
   {
@@ -5572,7 +5572,7 @@
   },
   {
     "title": "RLAIF (Reinforcement Learning from AI Feedback)",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -5603,7 +5603,7 @@
       "No capable, well-aligned supervisory model for the target domain",
       "Critical outputs need human validation that AI labels cannot replace"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional Reinforcement Learning from Human Feedback (RLHF) requires extensive human annotation for preference data, which is expensive (often $1+ per annotation), time-consuming, and difficult to scale. This creates a bottleneck in training aligned AI systems, especially when dealing with complex or specialized domains where human expertise is scarce or costly."
   },
   {
@@ -5743,7 +5743,7 @@
       "Background agent output is usually fully correct",
       "No infrastructure to preserve context or show progress at the handoff"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhile background agents can handle long-running, complex tasks autonomously, they might not achieve 100% correctness or perfectly match the user's nuanced intent. If an agent completes 90% of a task in the background but the remaining 10% requires human finesse, a clunky handoff process can negate the benefits of automation."
   },
   {
@@ -6270,7 +6270,7 @@
       "Single task type that needs only one autonomy level",
       "Team cannot build and maintain several interaction modes"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents for tasks like coding can offer various levels of assistance, from simple completions to complex, multi-step operations. A one-size-fits-all approach to agent autonomy doesn't cater to the diverse needs of users or the varying complexity of tasks. Users need to fluidly shift between direct control and delegating tasks to the agent."
   },
   {
@@ -6558,7 +6558,7 @@
       "Solo developer with no shared repository",
       "Config would need secrets that cannot be committed"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen each engineer configures their AI agent independently:\n\n- **Inconsistent behavior**: Agents work differently for different team members\n- **Permission friction**: Everyone gets prompted for the same safe commands\n- **Duplicated effort**: Each person solves the same configuration problems\n- **Knowledge silos**: Good configurations don't spread across the team\n- **Onboarding overhead**: New team members start from scratch\n- **Security gaps**: No standardized rules about what agents can/can't touch"
   },
   {
@@ -7077,7 +7077,7 @@
       "Verbose output would expose sensitive system prompts or credentials",
       "Token overhead is not acceptable"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents, especially those using complex models or multiple tools, can sometimes behave like \"black boxes.\" Users may not understand why an agent made a particular decision, chose a specific tool, or generated a certain output. This lack of transparency can hinder debugging, trust, and the ability to effectively guide the agent."
   },
   {

@@ -2,14 +2,14 @@
 title: "Merged Code + Language Skill Model"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)"]
-category: "Reliability & Eval"
+based_on: ["Will Brown (Prime Intellect)"]
+category: "Learning & Adaptation"
 source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
 tags: [model-merging, transfer-learning, coding-agent, multilingual]
 summary: "Fine-tunes separate language and code specialists from the same base model, then merges their weights into one model instead of one large joint training run"
 signals: ["Need one model strong at both natural language and code", "Compute for one large joint training run is not available", "Teams train specialists on the same base architecture"]
 anti_signals: ["Specialists use different architectures or tokenizers", "No benchmark suite to detect interference after merging"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -21,7 +21,7 @@ Building a **unified model** that excels both at **natural language tasks** (e.g
 
 ## Solution
 
-Adopt a **decentralized training + model merging** approach:
+Adopt a **decentralized training + model merging** approach. Will Brown's framing in the source talk: "model merging like works really well... you can have a model trained on code and a model trained on math... you can literally average the weights and it works," and he cites Cohere's Command A as a production example of merging specialist models.
 
 **1. Train a "Language Specialist"**
 - Fine-tune a base LLM on documentation generation, summarization, code comments, and general NL tasks.
@@ -68,8 +68,8 @@ python merge_models.py \
 
 ## References
 
-- Based on "model merging works weirdly well" observation from the Open Source Agent RL talk (May 2025) and Will Brown's remarks on decentralized skill acquisition.
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
+- Primary source — "Open Questions in Agentic RL", Will Brown (Prime Intellect), May 2025: https://www.youtube.com/watch?v=Xkwok_XXQgw (speaker named on the talk; includes the weight-averaging observation and the Cohere Command A example)
+- Model Merging in LLMs, MLLMs, and Beyond (Yang et al.) — survey of merging methods and when they help: https://arxiv.org/abs/2408.07666
 - Model Soups (Ilharco et al., NeurIPS 2022): https://arxiv.org/abs/2203.05482
 - Task Arithmetic (Ilharco et al., ICLR 2024): https://arxiv.org/abs/2212.04089
 - TIES-Merging (Yadav et al., 2023): https://arxiv.org/abs/2306.01708

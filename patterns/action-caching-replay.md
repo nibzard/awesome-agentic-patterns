@@ -9,7 +9,7 @@ tags: [caching, replay, regression-testing, cost-reduction, deterministic, xpath
 summary: "Records each agent action with XPath and frame metadata so later runs replay it without LLM calls, with LLM fallback when replay fails"
 signals: ["Same browser workflow runs many times", "LLM cost or latency per run is too high", "Agent workflows need deterministic regression tests in CI"]
 anti_signals: ["Workflow is not deterministic and changes each run", "Target UI goes through frequent major redesigns"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -224,9 +224,9 @@ npx hyperagent script workflows/login-cache.json > login.test.ts
 
 **Pros:**
 
-- **Dramatic cost reduction**: Replay costs near-zero (no LLM calls) if XPaths work; documented cost reductions range from 43-97% across implementations; cache hit rates of 85%+ indicate excellent effectiveness
+- **Dramatic cost reduction**: Replay costs near-zero LLM spend when cached XPaths still resolve; the closest measured analogue, plan caching for agent serving, reports 50.31% average cost reduction (arXiv:2506.14852)
 - **Deterministic regression testing**: Verify fixes don't break existing workflows
-- **Performance**: Cached replays are 10-100x faster than LLM execution
+- **Performance**: Replays skip LLM inference entirely, so they run at browser-automation speed rather than model latency
 - **Debugging**: Cache provides complete execution history
 - **Script generation**: Export workflows as standalone automation scripts
 - **Graceful degradation**: LLM fallback handles page structure changes
@@ -250,6 +250,7 @@ npx hyperagent script workflows/login-cache.json > login.test.ts
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original implementation
 - [HyperAgent Documentation](https://docs.hyperbrowser.ai/hyperagent/introduction) - Usage guide
-- [Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching](https://arxiv.org/abs/2506.14852) (Zhang et al., 2025) - Academic foundation showing 46.62% average cost reduction
+- [Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching](https://arxiv.org/abs/2506.14852) (Zhang et al., 2025) - Academic foundation reporting 50.31% average cost and 27.28% latency reduction from reusing cached plans
+- [Deterministic Replay for AI Agent Systems](https://arxiv.org/abs/2607.16200) (2026) - independent 2026 evidence for replaying agent runs by reusing recorded external interactions
 - [Docker Cagent](https://github.com/docker/cagent) - Proxy-and-cassette model for deterministic agent testing
 - Related patterns: [Structured Output Specification](structured-output-specification.md), [Schema Validation Retry](schema-validation-retry-cross-step-learning.md)

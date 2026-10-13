@@ -22,7 +22,7 @@ summary: >-
   actual task quality.
 signals: ["Training a model with reinforcement learning against a grader", "Training reward rises while real performance does not", "Simple graders penalize valid answers for format differences"]
 anti_signals: ["No reinforcement learning or reward-based training", "Team cannot inspect traces and iterate on the grader"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -246,7 +246,7 @@ Process-aware rewards without strict format constraints lead to catastrophic exp
 2. **Sample traces**: Manually review high-reward examples to verify quality
 3. **Compare distributions**: Validation reward should track training reward
 4. **Check real metrics**: Validate that business KPIs improve, not just reward
-5. **Calibrate graders**: Use Cohen's Kappa (κ ≥ 0.6) to measure human-grader agreement
+5. **Calibrate graders**: Measure agreement between the grader and human reviewers (for example with Cohen's Kappa) and investigate before scaling when agreement is low
 
 **Phase 4: Iterative Hardening**
 
@@ -304,4 +304,6 @@ Process-aware rewards without strict format constraints lead to catastrophic exp
 - [Specification Gaming in AI (DeepMind)](https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/)
 - [Let's Verify Step by Step (OpenAI, 2023)](https://arxiv.org/abs/2305.20050) - Process Reward Models
 - [LLMs Cannot Reliably Judge (Yet?) (2025)](https://arxiv.org/abs/2506.09443) - Adversarial attacks
+- [Reward Hacking in Rubric-Based Reinforcement Learning (2026)](https://arxiv.org/abs/2605.12474) - reward hacking against detailed rubrics
+- [A Survey of Reward Hacking in Agentic Large Language Models (2026)](https://link.springer.com/article/10.1007/s44163-026-01980-z) - Springer survey of the field
 - Related patterns: Inference-Healed Code Review Reward, Agent Reinforcement Fine-Tuning, RLAIF

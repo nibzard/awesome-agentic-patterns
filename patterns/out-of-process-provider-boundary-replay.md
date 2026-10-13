@@ -17,7 +17,7 @@ prerequisites: ["The client reads its origin from configuration or the environme
 related: ["action-caching-replay", "workflow-evals-with-mocked-tools"]
 tools: ["proxy", "test-harness"]
 domains: ["coding", "ops"]
-updated_at: "2026-09-26"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -44,7 +44,9 @@ Record one layer lower and one process out: at the **HTTP boundary between the a
 provider**, from a proxy the agent does not know about.
 
 This is the old HTTP-fixture pattern — VCR's cassettes, Polly.JS's recordings — applied at the one
-boundary that every agent framework has in common.
+boundary that every agent framework has in common. **Distinct from** [Action Caching & Replay](action-caching-replay.md),
+which replays recorded UI actions in a browser: here the agent's own logic re-executes, and only the
+provider's responses come from the trace.
 
 1. **Launch the agent as a child process** and set the provider-origin variables *for that process
    only* (`OPENAI_BASE_URL`, `ANTHROPIC_BASE_URL`, or whatever the client reads). Nothing is
@@ -72,6 +74,11 @@ exactly, how many diverged, how many requests had no recorded counterpart at all
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
+  - Independent implementations exist beyond the author's tool: [Deterministic Replay for AI Agent
+    Systems](https://arxiv.org/abs/2607.16200) (2026) presents the same idea academically, and
+    [culpa](https://github.com/AnshKanyadi/culpa) and
+    [mock-server's AI traffic inspection](https://www.mock-server.com/mock_server/ai_traffic_inspection.html)
+    record and replay agent traffic in the wild.
   - The boundary generalises where instrumentation does not: the same proxy captures agent
     frameworks written in different languages, because the thing it hooks is HTTP, not an API.
   - Byte-level matching is what makes a replay falsifiable. If the harness normalises the request
@@ -126,4 +133,6 @@ run in CI, or a bug report that reproduces on a machine with no API key.
 - [VCR](https://github.com/vcr/vcr) — the original record/replay HTTP fixture library.
 - [Polly.JS](https://github.com/Netflix/pollyjs) — the same idea for JavaScript, with request matching rules.
 - [Docker Cagent](https://github.com/docker/cagent) — a proxy-and-cassette model for deterministic agent testing.
-- [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) — an implementation at the agent's provider boundary, including the divergence verdict described above; maintained by this pattern’s author.
+- [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) — an implementation at the agent's provider boundary, including the divergence verdict described above; maintained by this pattern’s author. Beyond the plain HTTP proxy, it now captures through a PATH shim for shell tool calls, a shadow git index for per-turn workspace state, and an opt-in `--tls-intercept` mode for agents whose origin cannot be redirected.
+- [Deterministic Replay for AI Agent Systems](https://arxiv.org/abs/2607.16200) (arXiv, 2026) — independent academic treatment of replaying agent executions via their external interactions.
+- [culpa](https://github.com/AnshKanyadi/culpa) — an independent record/replay implementation for agent traffic.

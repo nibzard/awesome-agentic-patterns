@@ -69,7 +69,7 @@
       "id": "adaptive-sandbox-fan-out-controller",
       "title": "Adaptive Sandbox Fan-Out Controller",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "adaptive-sandbox-fanout-controller",
       "tags": [
         "fan-out",
@@ -354,7 +354,7 @@
       "id": "asynchronous-coding-agent-pipeline",
       "title": "Asynchronous Coding Agent Pipeline",
       "category": "Reliability & Eval",
-      "status": "proposed",
+      "status": "emerging",
       "slug": "asynchronous-coding-agent-pipeline",
       "tags": [
         "asynchronous",
@@ -958,7 +958,7 @@
       "id": "democratization-of-tooling-via-agents",
       "title": "Democratization of Tooling via Agents",
       "category": "UX & Collaboration",
-      "status": "emerging",
+      "status": "established",
       "slug": "democratization-of-tooling-via-agents",
       "tags": [
         "no-code",
@@ -1771,7 +1771,7 @@
       "id": "llm-observability",
       "title": "LLM Observability",
       "category": "Reliability & Eval",
-      "status": "proposed",
+      "status": "emerging",
       "slug": "llm-observability",
       "tags": [
         "observability",
@@ -1892,7 +1892,7 @@
     {
       "id": "merged-code-language-skill-model",
       "title": "Merged Code + Language Skill Model",
-      "category": "Reliability & Eval",
+      "category": "Learning & Adaptation",
       "status": "emerging",
       "slug": "merged-code-language-skill-model",
       "tags": [
@@ -2389,7 +2389,7 @@
       "id": "reasoning-token-firewall",
       "title": "Reasoning-Token Firewall",
       "category": "Reliability & Eval",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "reasoning-token-firewall",
       "tags": [
         "reasoning",
@@ -2490,7 +2490,7 @@
       "id": "rlaif-reinforcement-learning-from-ai-feedback",
       "title": "RLAIF (Reinforcement Learning from AI Feedback)",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "established",
       "slug": "rlaif-reinforcement-learning-from-ai-feedback",
       "tags": [
         "rlhf",

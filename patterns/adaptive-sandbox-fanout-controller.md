@@ -1,15 +1,15 @@
 ---
 title: "Adaptive Sandbox Fan-Out Controller"
-status: emerging
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Labruno (GitHub)", "Swarm Migration Pattern"]
 category: "Reliability & Eval"
-source: "https://github.com/nibzard/labruno-agent"
+source: "https://github.com/zeynepyorulmaz/openclaw-orchestrator"
 tags: [fan-out, adaptive, parallel-sandboxes, early-stopping, controller, variance, prompt-refinement]
 summary: "Starts a small batch of parallel sandboxes, then scales up, stops early, or refines the prompt based on early success, variance, and error signals"
 signals: ["Running best-of-N code generation in parallel sandboxes", "Cheap objective checks such as unit tests exist", "A fixed N wastes cost and latency"]
 anti_signals: ["No objective check or reliable scoring function for results", "One run per task is enough"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -26,6 +26,8 @@ Static "N=10 always" policies don't adapt to task difficulty, model variance, or
 ## Solution
 
 Add a controller that *adapts fan-out in real time* based on observed signals from early runs.
+
+**Distinct from** [Recursive Best-of-N Delegation](recursive-best-of-n-delegation.md) (parallel candidates plus a judge, with N fixed per level) and [Inference-Time Scaling](inference-time-scaling.md) (spending more compute per query): this pattern is the runtime controller that decides N from early success, variance, and error signals.
 
 **Core loop:**
 
@@ -98,4 +100,6 @@ Concrete heuristics (example):
 * [Labruno: Scaling number of parallel sandboxes + judging winners (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0) — **Note: Uses static `MAX_SANDBOXES` rather than true signal-driven adaptation**
 * [Labruno (GitHub)](https://github.com/nibzard/labruno-agent) — Parallel execution with post-hoc judging, not adaptive fanout
 * [OpenClaw Orchestrator](https://github.com/zeynepyorulmaz/openclaw-orchestrator) — Closest verified implementation; LLM decides next steps based on accumulated results
+* [BEACON: Bayesian Optimal Stopping for Efficient LLM Sampling](https://arxiv.org/abs/2510.15945) (October 2025) — decides when to stop sampling instead of running a fixed N
+* [Optimal Stopping vs Best-of-N for Inference Time Optimization](https://arxiv.org/abs/2510.01394) (Dughmi et al., October 2025) — reports 15-35% compute savings for adaptive best-of-N over fixed best-of-N
 * Related patterns: [Swarm Migration Pattern](swarm-migration-pattern.md) (batch tuning, resource caps), [Sub-Agent Spawning](sub-agent-spawning.md) (switch to decomposition when needed)

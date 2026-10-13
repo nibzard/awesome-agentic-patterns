@@ -414,9 +414,9 @@ npx hyperagent script workflows/login-cache.json > login.test.ts
 
 **Pros:**
 
-- **Dramatic cost reduction**: Replay costs near-zero (no LLM calls) if XPaths work; documented cost reductions range from 43-97% across implementations; cache hit rates of 85%+ indicate excellent effectiveness
+- **Dramatic cost reduction**: Replay costs near-zero LLM spend when cached XPaths still resolve; the closest measured analogue, plan caching for agent serving, reports 50.31% average cost reduction (arXiv:2506.14852)
 - **Deterministic regression testing**: Verify fixes don't break existing workflows
-- **Performance**: Cached replays are 10-100x faster than LLM execution
+- **Performance**: Replays skip LLM inference entirely, so they run at browser-automation speed rather than model latency
 - **Debugging**: Cache provides complete execution history
 - **Script generation**: Export workflows as standalone automation scripts
 - **Graceful degradation**: LLM fallback handles page structure changes
@@ -440,7 +440,8 @@ npx hyperagent script workflows/login-cache.json > login.test.ts
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original implementation
 - [HyperAgent Documentation](https://docs.hyperbrowser.ai/hyperagent/introduction) - Usage guide
-- [Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching](https://arxiv.org/abs/2506.14852) (Zhang et al., 2025) - Academic foundation showing 46.62% average cost reduction
+- [Cost-Efficient Serving of LLM Agents via Test-Time Plan Caching](https://arxiv.org/abs/2506.14852) (Zhang et al., 2025) - Academic foundation reporting 50.31% average cost and 27.28% latency reduction from reusing cached plans
+- [Deterministic Replay for AI Agent Systems](https://arxiv.org/abs/2607.16200) (2026) - independent 2026 evidence for replaying agent runs by reusing recorded external interactions
 - [Docker Cagent](https://github.com/docker/cagent) - Proxy-and-cassette model for deterministic agent testing
 - Related patterns: [Structured Output Specification](structured-output-specification.md), [Schema Validation Retry](schema-validation-retry-cross-step-learning.md)
 
@@ -509,10 +510,10 @@ Provide a hard allowlist of actions (API calls, SQL templates, page links) and v
 
 ## Adaptive Sandbox Fan-Out Controller
 
-**Status:** emerging
+**Status:** proposed
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://github.com/nibzard/labruno-agent
+**Source:** https://github.com/zeynepyorulmaz/openclaw-orchestrator
 
 ## Problem
 
@@ -528,6 +529,8 @@ Static "N=10 always" policies don't adapt to task difficulty, model variance, or
 ## Solution
 
 Add a controller that *adapts fan-out in real time* based on observed signals from early runs.
+
+**Distinct from** [Recursive Best-of-N Delegation](recursive-best-of-n-delegation.md) (parallel candidates plus a judge, with N fixed per level) and [Inference-Time Scaling](inference-time-scaling.md) (spending more compute per query): this pattern is the runtime controller that decides N from early success, variance, and error signals.
 
 **Core loop:**
 
@@ -600,6 +603,8 @@ Concrete heuristics (example):
 * [Labruno: Scaling number of parallel sandboxes + judging winners (video)](https://www.youtube.com/watch?v=zuhHQ9aMHV0) — **Note: Uses static `MAX_SANDBOXES` rather than true signal-driven adaptation**
 * [Labruno (GitHub)](https://github.com/nibzard/labruno-agent) — Parallel execution with post-hoc judging, not adaptive fanout
 * [OpenClaw Orchestrator](https://github.com/zeynepyorulmaz/openclaw-orchestrator) — Closest verified implementation; LLM decides next steps based on accumulated results
+* [BEACON: Bayesian Optimal Stopping for Efficient LLM Sampling](https://arxiv.org/abs/2510.15945) (October 2025) — decides when to stop sampling instead of running a fixed N
+* [Optimal Stopping vs Best-of-N for Inference Time Optimization](https://arxiv.org/abs/2510.01394) (Dughmi et al., October 2025) — reports 15-35% compute savings for adaptive best-of-N over fixed best-of-N
 * Related patterns: [Swarm Migration Pattern](swarm-migration-pattern.md) (batch tuning, resource caps), [Sub-Agent Spawning](sub-agent-spawning.md) (switch to decomposition when needed)
 
 ---
@@ -2207,7 +2212,7 @@ Process-aware rewards without strict format constraints lead to catastrophic exp
 2. **Sample traces**: Manually review high-reward examples to verify quality
 3. **Compare distributions**: Validation reward should track training reward
 4. **Check real metrics**: Validate that business KPIs improve, not just reward
-5. **Calibrate graders**: Use Cohen's Kappa (κ ≥ 0.6) to measure human-grader agreement
+5. **Calibrate graders**: Measure agreement between the grader and human reviewers (for example with Cohen's Kappa) and investigate before scaling when agreement is low
 
 **Phase 4: Iterative Hardening**
 
@@ -2265,6 +2270,8 @@ Process-aware rewards without strict format constraints lead to catastrophic exp
 - [Specification Gaming in AI (DeepMind)](https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/)
 - [Let's Verify Step by Step (OpenAI, 2023)](https://arxiv.org/abs/2305.20050) - Process Reward Models
 - [LLMs Cannot Reliably Judge (Yet?) (2025)](https://arxiv.org/abs/2506.09443) - Adversarial attacks
+- [Reward Hacking in Rubric-Based Reinforcement Learning (2026)](https://arxiv.org/abs/2605.12474) - reward hacking against detailed rubrics
+- [A Survey of Reward Hacking in Agentic Large Language Models (2026)](https://link.springer.com/article/10.1007/s44163-026-01980-z) - Springer survey of the field
 - Related patterns: Inference-Healed Code Review Reward, Agent Reinforcement Fine-Tuning, RLAIF
 
 ---
@@ -2361,7 +2368,7 @@ The agent acts as both the scheduler (deciding what to run and when) and the int
 
 ## Asynchronous Coding Agent Pipeline
 
-**Status:** proposed
+**Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.youtube.com/watch?v=Xkwok_XXQgw
@@ -2372,7 +2379,7 @@ Synchronous execution of coding tasks—where the agent must wait for compilatio
 
 - RL agents must push hard on **async RL** "so everything is happening in parallel without blowing up bubbles".
 - For coding agents, each I/O-bound tool call (compilation, test runs) can take seconds to minutes.
-- Industry benchmarks show **67% performance improvement** with parallel execution (3.2s vs 9.8s for 3 agents).
+- Asynchronous RL systems report real gains at scale: AReaL achieves **up to 2.77x training speedup** on math and code reasoning tasks (arXiv:2505.24298, NeurIPS 2025).
 
 ## Solution
 
@@ -2429,7 +2436,7 @@ graph LR
 - **Pros:**
   - **High Utilization:** GPUs remain busy running inference or learning while CPU-bound tasks run in parallel.
   - **Scalable Compute:** Can independently scale inference, tool execution, and reward modeling.
-  - **Performance Gains:** Producer-consumer async workflows achieve 1.59-2.03x throughput improvement; parallel tool calls reduce latency by up to 90%.
+  - **Performance Gains:** AsyncFlow reports a 1.59x average throughput improvement for producer-consumer agent workflows (arXiv:2507.01663); AReaL reports up to 2.77x training speedup (arXiv:2505.24298).
 - **Cons/Considerations:**
   - **Complex System Maintenance:** Requires robust monitoring, logging, and alerting across multiple services.
   - **Staleness Management:** Policies may train on slightly outdated data; hyperparameters must account for acceptable staleness windows (e.g., 5–20 minutes).
@@ -2438,8 +2445,9 @@ graph LR
 
 - Will Brown's emphasis on "everything being async and overlapped" to hide latencies in multi-hour RL tasks.
 - "IMPALA: Scalable Distributed Deep-RL" for a precedent in actor-learner pipelines.
-- AsyncFlow (arXiv:2507.01663, 2025): Producer-consumer async workflows with TransferQueue for distributed data transfer.
-- AREAL (arXiv:2505.24298, 2025): Asynchronous RL achieving 2.77x training acceleration on math and code reasoning tasks.
+- AsyncFlow (arXiv:2507.01663, 2025): Producer-consumer async workflows with TransferQueue for distributed data transfer; 1.59x average throughput gain.
+- AREAL (arXiv:2505.24298, 2025): Asynchronous RL achieving up to 2.77x training acceleration on math and code reasoning tasks (NeurIPS 2025).
+- [Co-operative time-slicing for RL in llm-d](https://cloud.google.com/blog/products/containers-kubernetes/introducing-co-operative-time-slicing-for-rl-in-llm-d) (Google Cloud, July 2026): production GPU-sharing for agent RL, noting generation stays the bottleneck while tool execution idles GPUs.
 
 - Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
 
@@ -3149,7 +3157,7 @@ Core components:
 - Rollback automation that restores the previous stable policy without manual intervention.
 - Optional shadow mode: validate technical stability before user exposure.
 
-Recommended stages:
+Illustrative stages — no cited source prescribes these percentages for agent policies, so tune them to your traffic and risk:
 1. `1%` traffic canary for fast anomaly detection.
 2. `5-10%` validation phase with stricter thresholds.
 3. `25-50%` soak period for stability under mixed load.
@@ -3185,6 +3193,7 @@ if monitors.breach(policy.version):
 - https://sre.google/sre-book/monitoring-distributed-systems/
 - https://arxiv.org/html/2508.03858v3 - MI9 Runtime Governance Framework (2025)
 - https://arxiv.org/html/2512.03180v1 - AGENTSAFE Safety Evaluation (2025)
+- https://langfuse.com/docs - Langfuse prompt management: versioned prompts with evaluation gates, an LLM-ops implementation of staged prompt rollouts (open source: https://github.com/langfuse/langfuse)
 
 ---
 
@@ -4183,7 +4192,7 @@ A related problem: even good models struggle without clear feedback loops. When 
 
 The team built Zveltch (Zig implementation of spelt-check) to make spell-check fast for agents. This actually made the VS Code experience worse for humans. They had a difficult decision: preserve human DX or optimize for agents?
 
-They ultimately chose to optimize for agents, leading to a "snowball effect":
+They leaned agent-first, then briefly rolled Zveltch back to preserve the human experience (Episode 10: "we did end up briefly rolling it back"). The trade-off is revisited in practice, not settled once. The agent-first direction still drives a "snowball effect":
 - Agent tooling gets better
 - Humans use agents more
 - Humans use editors less
@@ -4222,6 +4231,8 @@ Practical examples:
 - **Terminal emulator with screenshot flag**: Added `--capture-to` flag so agent could take screenshots and verify rendering fixes
 - **CLI data-only output**: Created new subcommand that outputs raw data (no UI formatting) so agent can parse results programmatically
 - **Test commands**: Single-command test execution (`pnpm test`) with cached results
+
+**Scope note:** The concrete techniques hinted at above — machine-readable CLI output, unified logging, and JSON flags — belong to [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md), and shaping whole workflows for agents is [Agent-Friendly Workflow Design](agent-friendly-workflow-design.md); this pattern is the decision to optimize for agents first and the human-DX trade-off that follows, not the tooling catalogue.
 
 ## How to use it
 
@@ -4293,7 +4304,7 @@ Create `AGENTS.md` or similar documentation that explains:
 - What feedback mechanisms to use
 - Special considerations for automated interaction
 
-**Related pattern:** `CLAUDE.md` (Anthropic) is emerging as a complementary standard for agent guidance with project-specific instructions and tooling conventions.
+**Standard:** [AGENTS.md](https://agents.md) is now the adopted open format for guiding coding agents, used by over 60,000 open-source projects and read by Codex, Cursor, Gemini CLI, Amp, and others; it is stewarded by the Agentic AI Foundation under the Linux Foundation. `CLAUDE.md` (Anthropic) plays the same role for Claude Code.
 
 **The "Agent-Native Codebase" Checklist (2026 version of Joel Spolsky's test):**
 
@@ -4367,6 +4378,7 @@ Agents excel with simple, reliable, dumb tools. Complex tools designed for human
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [ESAA: Event Sourcing for Autonomous Agents](https://arxiv.org/abs/2602.23193v1) - Elzo Brito dos Santos Filho (arXiv 2026-02) — validates unified logging pattern
+* [AGENTS.md](https://agents.md) - open format for guiding coding agents, used by 60,000+ open-source projects
 * Related: [Skill Library Evolution](skill-library-evolution.md), [Factory over Assistant](factory-over-assistant.md)
 
 ---
@@ -6507,7 +6519,7 @@ graph TD
 
 ## Democratization of Tooling via Agents
 
-**Status:** emerging
+**Status:** established
 **Category:** UX & Collaboration
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.youtube.com/watch?v=BGgsoIgbT_Y
@@ -6526,6 +6538,8 @@ Empower a broader range of users, including those without deep coding expertise,
 
 This pattern lowers the barrier to software creation, allowing domain experts in various fields to build their own productivity tools, thereby "democratizing" software development to some extent.
 
+By 2026 this practice is mainstream under the name "vibe coding": describing software in natural language and iterating with an agent until it works. Consumer products ship it directly, for example Google AI Studio's [vibe-code app](https://aistudio.google.com/vibe-code), and Simon Willison [traces how vibe coding and agentic engineering are converging](https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/) as the tooling matures.
+
 ## Example
 
 A sales team member uses an AI agent to create a custom dashboard that pulls data from multiple sources to track their specific KPIs, without needing to write complex SQL or frontend code themselves. Or a communications team member uses an agent to fix a small bug on a company webpage.
@@ -6542,13 +6556,19 @@ A sales team member uses an AI agent to create a custom dashboard that pulls dat
 * **Pros:** Enables domain experts to build their own tools; reduces engineering bottlenecks; creates learning feedback loops where users develop technical intuition through exposure.
 * **Cons:** Generated code may have reliability issues that non-technical users cannot detect; production deployment remains challenging; quality and security require guardrails rather than training.
 
+**Risks and guardrails:**
+
+Reporting through 2026 documents a backlash against vibe-coded software. The [vibe coding article on Wikipedia](https://en.wikipedia.org/wiki/Vibe_coding) tracks criticism of reliability and security in AI-generated apps, and Willison's May 2026 post argues the practice needs agentic-engineering discipline as it converges with professional tool use. Treat agent-built internal tools as prototypes: keep approval workflows for destructive operations, and put someone accountable for review before anything reaches production.
+
 ## References
 
 - Jacob Jackson (Cursor) at 0:27:52: "...you're going to see people building software, people in organizational functions building software who were not previously building software. You know, like people in sales who would not have built their own tools before will now be building, for example, dashboards to track what's important to them..."
 - Alex Albert (Anthropic) at 0:28:10, referencing a comms team member: "...he's actually been like shipping bug fixes to claude.ai... he pops in with like a PR and he's like asking for a stamp."
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
-- MetaGPT: Multi-agent system assigning PM, engineer, architect roles to agents, making full SDLC accessible through simple prompts—https://arxiv.org/abs/2308.00309
+- Vibe coding (Wikipedia): adoption history and criticism of AI-generated software — https://en.wikipedia.org/wiki/Vibe_coding
+- Google AI Studio vibe-code app — https://aistudio.google.com/vibe-code
+- Simon Willison, "Vibe coding and agentic engineering" (May 6, 2026) — https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/
 
 ---
 
@@ -7106,6 +7126,8 @@ Traditional development tools are built on assumptions that no longer hold: that
 
 **Re-examine dev tooling assumptions** from first principles. When agents write most code, the perceived value of changes drops dramatically, and workflows optimized for human effort become inefficient.
 
+**Boundary:** [Codebase Optimization for Agents](codebase-optimization-for-agents.md) is about making one codebase agent-friendly, and [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md) catalogs the machine-readable tooling; this pattern is about replacing the process tools — tickets, PR ceremony, sprints — whose human-effort assumptions no longer hold.
+
 **Core insight:**
 
 > "A lot of the dev tooling we have is not going to cut it because a lot of the tooling we have is based on the assumption that the human wrote code, that the human put a lot of effort and time and expertise into writing a given piece of code."
@@ -7210,9 +7232,7 @@ This requires new mental models and new interfaces:
 
 **Industry examples:**
 - **Model Context Protocol (MCP)**: Universal "USB-C for AI" standard replacing proprietary tool integrations
-- **Unified logging** (Sourcegraph): Single JSONL stream for all system events, optimized for agent consumption
-- **Code-first interfaces** (Cloudflare): LLMs write code to call tools, reducing tokens 10-100x
-- **CLI-first design**: Tools with `--json` flags for machine-readable output
+- **Unified logging, code-first tool interfaces, and CLI JSON output**: these techniques are catalogued in [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md), which owns that scope
 
 ## Trade-offs
 
@@ -7231,6 +7251,8 @@ This requires new mental models and new interfaces:
 - **Team resistance**: Developers attached to familiar workflows
 - **New risks**: More automation means blast radius increases
 - **Transition pain**: Hybrid human/agent workflows are awkward
+
+**2026 counterpoint:** "tests over reviews" is a directional shift, not a full replacement. Practitioners still report that agent-written code needs deliberate human review for hard-to-spot bugs — see Cal Newport's ["On AI Coding and Its Discontents"](https://calnewport.com/on-ai-coding-and-its-discontents/) (August 2026). Keep a review path for changes with production blast radius even as ceremony drops.
 
 **When to reset assumptions:**
 
@@ -7253,6 +7275,7 @@ This requires new mental models and new interfaces:
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Toward an Agentic Infused Software Ecosystem](https://arxiv.org/abs/2602.20979) - Mark Marron, 2026
 * [EditFlow: Benchmarking Code Edit Recommendation Systems](https://arxiv.org/abs/2602.21697) - Chenyan Liu et al., 2026
+* [On AI Coding and Its Discontents](https://calnewport.com/on-ai-coding-and-its-discontents/) - Cal Newport, August 2026 — human review persists for agent-written code
 * Related: [Factory over Assistant](factory-over-assistant.md), [Codebase Optimization for Agents](codebase-optimization-for-agents.md), [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md)
 
 ---
@@ -8549,7 +8572,7 @@ Early AI agents and models often suffered from a short "coherence window," meani
 
 Utilize AI models and agent architectures that maintain coherence over extended periods (hours rather than minutes). This involves:
 
-- **Model Selection**: Newer foundation models demonstrate approximately 2x coherence improvement every 7 months.
+- **Model Selection**: METR measures the time horizon of autonomous task completion doubling roughly every 7 months since 2019 (arXiv:2503.14499); the Time Horizon 1.1 methodology (January 2026) and 2026 results refine that estimate, and some analyses now report faster growth.
 - **Context Management**: Larger context windows alone don't guarantee coherence—combine with auto-compaction, prompt caching, and curated context to mitigate the "lost in the middle" effect where models struggle with information in middle positions (Liu et al., 2023).
 - **Complementary Patterns**: Works synergistically with context auto-compaction, episodic memory, filesystem-based state, and planner-worker separation.
 
@@ -8586,9 +8609,10 @@ gantt
 
 ## References
 
-- Highlighted in "How AI Agents Are Reshaping Creation": "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." Described as a "qualitative shift." [Source](https://www.nibzard.com/silent-revolution)
-- Liu et al. (2023). "Lost in the Middle: How Language Models Use Long Contexts." arXiv:2307.03172—Establishes U-shaped performance curve; information at beginning/end of context is accessed 20-30% more reliably than middle positions.
-- Nagaraj et al. (2023). "MemGPT: Towards LLMs as Operating Systems." arXiv:2310.08560—Hierarchical memory architecture (primary context, secondary memory, archival) for extended sessions.
+- Primary source for the trend: METR, "Measuring AI Ability to Complete Long Tasks" (arXiv:2503.14499, NeurIPS 2025; revised July 2026) — task time horizons double roughly every 7 months. See also the [time-horizons results page](https://metr.org/time-horizons) (updated September 2026) and the [Time Horizon 1.1 methodology](https://metr.org/blog/2026-1-29-time-horizon-1-1) (January 2026).
+- Secondary color, quoted in a largely AI-generated blog post: "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." Described as a "qualitative shift." [Source](https://www.nibzard.com/silent-revolution)
+- Liu et al. (2023). "Lost in the Middle: How Language Models Use Long Contexts." arXiv:2307.03172—Establishes a U-shaped performance curve: information at the beginning and end of context is used more reliably than information in the middle.
+- Packer et al. (2023). "MemGPT: Towards LLMs as Operating Systems." arXiv:2310.08560—Hierarchical memory architecture (primary context, secondary memory, archival) for extended sessions.
 
 ---
 
@@ -10080,23 +10104,20 @@ sequenceDiagram
 
 **Implementation examples:**
 
-**Decorator pattern (HumanLayer):**
+**Permission rules (Claude Code settings):**
 
-```python
-from humanlayer import HumanLayer
-
-hl = HumanLayer()
-
-@hl.require_approval(channel="slack")
-def delete_user_data(user_id: str):
-    """Delete all data for user - requires approval"""
-    return db.users.delete(user_id)
-
-# Agent calls function normally
-delete_user_data("user_123")
-# Execution pauses, approval request sent to Slack
-# Resumes after human approval/rejection
+```json
+// .claude/settings.json — rules are evaluated deny, then ask, then allow
+{
+  "permissions": {
+    "allow": ["Bash(git add:*)", "Bash(npm test:*)"],
+    "ask": ["Bash(git push:*)"],
+    "deny": ["Read(.env)", "Read(secrets/**)"]
+  }
+}
 ```
+
+Commands on the `ask` list pause the agent until a human answers the permission prompt, which is the same gate-then-resume flow the Slack-based implementations use.
 
 **Interrupt pattern (LangGraph):**
 
@@ -10113,6 +10134,10 @@ def risky_operation(state):
 # Compile with checkpointer for state preservation
 app = workflow.compile(checkpointer=MemorySaver())
 ```
+
+**Protocol-level elicitation (MCP):**
+
+An MCP server can pause mid-flow and send an `elicitation/create` request to the client, which renders the question and schema to the user and returns the answer to the agent. This gives any MCP-connected client the same interrupt semantics without a bespoke approval service.
 
 **2. Configure approval channels:**
 
@@ -10167,8 +10192,10 @@ approval_channels:
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - HumanLayer's core product coordinates agent actions with "human approval steps" via Slack
-- [HumanLayer Documentation](https://docs.humanlayer.dev/) - Framework and examples for human-in-the-loop agent workflows
-- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) - Principles for production agent systems including human oversight patterns
+- [HumanLayer on GitHub](https://github.com/humanlayer/humanlayer) - the open-source SDK is now largely deprecated ("the code here is pretty much all deprecated"); the company pivoted to a coding-agent IDE ([humanlayer.dev](https://www.humanlayer.dev))
+- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) - Factor 7 covers contacting humans via tool calls
+- [Claude Code permissions](https://code.claude.com/docs/en/permissions) - permission modes plus allow/ask/deny rules as a maintained standard implementation
+- [MCP elicitation specification](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation) - protocol-level mid-flow approval requests
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)
 
@@ -12249,7 +12276,7 @@ Best fit when: N ≥ 10 items, processing time > 30s/item, items are independent
 
 ## LLM Observability
 
-**Status:** proposed
+**Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://lethain.com/agents-logging/
@@ -12267,8 +12294,9 @@ Integrate **LLM observability platforms** (Datadog LLM Observability, LangSmith,
 - **Span visualization**: See each LLM call, tool use, and intermediate result
 - **Workflow linking**: Trace from user input through all sub-steps to final output
 - **Dashboarding**: Aggregate metrics on cost, latency, success rates
-- **Accessible debugging**: Non-engineers can debug without log access
+- **Accessible debugging**: Non-engineers can inspect runs without raw log access (in the source deployment, Datadog access was still limited to the technology organization)
 - **Event sourcing**: Structured logs enable replay, state reconstruction, and verification
+- **Vendor-neutral tracing**: OpenTelemetry GenAI semantic conventions and OpenInference define portable span attributes, so traces are not locked to one platform
 
 **Evolution from standard logging:**
 
@@ -12326,7 +12354,7 @@ def run_agent(query):
 **Pros:**
 
 - **Fast debugging**: Navigate complex workflows visually
-- **Accessible**: Non-engineers can debug without log permissions
+- **Accessible**: Broader teams can debug without log permissions; the source deployment still limited access to the technology organization
 - **Aggregated metrics**: See patterns across many runs
 - **Span-level detail**: Drill into any step of execution
 
@@ -12346,7 +12374,9 @@ def run_agent(query):
 ## References
 
 * [Building an internal agent: Logging and debugability](https://lethain.com/agents-logging/) - Will Larson (Imprint, 2025)
-* [Chain of Thought Monitoring](https://openai.com/research/thought-monitoring) - OpenAI Research (March 2025)
+* [Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation](https://arxiv.org/abs/2503.11926) - OpenAI (March 2025); the reasoning-monitoring evidence behind CoT observability
+* [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/gen-ai) - vendor-neutral span attributes for LLM and agent calls (in development)
+* [OpenInference](https://github.com/Arize-ai/openinference) - open instrumentation standard for LLM/agent tracing
 * [ESAA: Event Sourcing for Autonomous Agents](https://arxiv.org/abs/2602.23193v1) - Elzo Brito dos Santos Filho et al. (February 2026)
 * [Chain of Thought Monitorability: A Fragile Opportunity](https://arxiv.org/abs/2510.19476) - Korbak et al. (October 2025)
 * Datadog LLM Observability documentation
@@ -12934,7 +12964,7 @@ Feed synthesized insights back into:
 ## Merged Code + Language Skill Model
 
 **Status:** emerging
-**Category:** Reliability & Eval
+**Category:** Learning & Adaptation
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.youtube.com/watch?v=Xkwok_XXQgw
 
@@ -12947,7 +12977,7 @@ Building a **unified model** that excels both at **natural language tasks** (e.g
 
 ## Solution
 
-Adopt a **decentralized training + model merging** approach:
+Adopt a **decentralized training + model merging** approach. Will Brown's framing in the source talk: "model merging like works really well... you can have a model trained on code and a model trained on math... you can literally average the weights and it works," and he cites Cohere's Command A as a production example of merging specialist models.
 
 **1. Train a "Language Specialist"**
 - Fine-tune a base LLM on documentation generation, summarization, code comments, and general NL tasks.
@@ -12994,8 +13024,8 @@ python merge_models.py \
 
 ## References
 
-- Based on "model merging works weirdly well" observation from the Open Source Agent RL talk (May 2025) and Will Brown's remarks on decentralized skill acquisition.
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
+- Primary source — "Open Questions in Agentic RL", Will Brown (Prime Intellect), May 2025: https://www.youtube.com/watch?v=Xkwok_XXQgw (speaker named on the talk; includes the weight-averaging observation and the Cohere Command A example)
+- Model Merging in LLMs, MLLMs, and Beyond (Yang et al.) — survey of merging methods and when they help: https://arxiv.org/abs/2408.07666
 - Model Soups (Ilharco et al., NeurIPS 2022): https://arxiv.org/abs/2203.05482
 - Task Arithmetic (Ilharco et al., ICLR 2024): https://arxiv.org/abs/2212.04089
 - TIES-Merging (Yadav et al., 2023): https://arxiv.org/abs/2306.01708
@@ -14061,7 +14091,9 @@ Record one layer lower and one process out: at the **HTTP boundary between the a
 provider**, from a proxy the agent does not know about.
 
 This is the old HTTP-fixture pattern — VCR's cassettes, Polly.JS's recordings — applied at the one
-boundary that every agent framework has in common.
+boundary that every agent framework has in common. **Distinct from** [Action Caching & Replay](action-caching-replay.md),
+which replays recorded UI actions in a browser: here the agent's own logic re-executes, and only the
+provider's responses come from the trace.
 
 1. **Launch the agent as a child process** and set the provider-origin variables *for that process
    only* (`OPENAI_BASE_URL`, `ANTHROPIC_BASE_URL`, or whatever the client reads). Nothing is
@@ -14089,6 +14121,11 @@ exactly, how many diverged, how many requests had no recorded counterpart at all
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
+  - Independent implementations exist beyond the author's tool: [Deterministic Replay for AI Agent
+    Systems](https://arxiv.org/abs/2607.16200) (2026) presents the same idea academically, and
+    [culpa](https://github.com/AnshKanyadi/culpa) and
+    [mock-server's AI traffic inspection](https://www.mock-server.com/mock_server/ai_traffic_inspection.html)
+    record and replay agent traffic in the wild.
   - The boundary generalises where instrumentation does not: the same proxy captures agent
     frameworks written in different languages, because the thing it hooks is HTTP, not an API.
   - Byte-level matching is what makes a replay falsifiable. If the harness normalises the request
@@ -14143,7 +14180,9 @@ run in CI, or a bug report that reproduces on a machine with no API key.
 - [VCR](https://github.com/vcr/vcr) — the original record/replay HTTP fixture library.
 - [Polly.JS](https://github.com/Netflix/pollyjs) — the same idea for JavaScript, with request matching rules.
 - [Docker Cagent](https://github.com/docker/cagent) — a proxy-and-cassette model for deterministic agent testing.
-- [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) — an implementation at the agent's provider boundary, including the divergence verdict described above; maintained by this pattern’s author.
+- [OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay) — an implementation at the agent's provider boundary, including the divergence verdict described above; maintained by this pattern’s author. Beyond the plain HTTP proxy, it now captures through a PATH shim for shell tool calls, a shadow git index for per-turn workspace state, and an opt-in `--tls-intercept` mode for agents whose origin cannot be redirected.
+- [Deterministic Replay for AI Agent Systems](https://arxiv.org/abs/2607.16200) (arXiv, 2026) — independent academic treatment of replaying agent executions via their external interactions.
+- [culpa](https://github.com/AnshKanyadi/culpa) — an independent record/replay implementation for agent traffic.
 
 ---
 
@@ -14152,7 +14191,7 @@ run in CI, or a bug report that reproduces on a machine with no API key.
 **Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** John Weston (@JohnnyTarrr)
-**Source:** https://github.com/veroq-ai/shield
+**Source:** https://aclanthology.org/2023.emnlp-main.741/
 
 ## Problem
 
@@ -14189,7 +14228,8 @@ In multi-agent systems, run verification at each hand-off between agents so erro
 
 ### Known implementations
 
-- [VeroQ Shield](https://github.com/veroq-ai/shield) -- claim-level verification with evidence chains, Python and TypeScript SDKs. Self-hosted Docker option for air-gapped deployments.
+- [VeroQ Shield](https://github.com/veroq-ai/shield) -- claim-level verification with evidence chains, Python and TypeScript SDKs. Self-hosted Docker option for air-gapped deployments. An early-stage vendor project (a handful of commits, no releases, paid SaaS tiers from $24 to $399 per month); no affiliation between the pattern author and veroq-ai is disclosed.
+- [OpenFactCheck](https://arxiv.org/abs/2405.05583) -- open-source library for the same claim-decomposition plus evidence-retrieval pipeline.
 
 ## Trade-offs
 
@@ -14199,6 +14239,8 @@ In multi-agent systems, run verification at each hand-off between agents so erro
 ## References
 
 - [VeroQ Shield -- LLM output verification](https://github.com/veroq-ai/shield)
+- [FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation](https://aclanthology.org/2023.emnlp-main.741/) (Min et al., EMNLP 2023) -- established the decomposition-into-atomic-claims plus evidence-check lineage this pattern follows
+- [OpenFactCheck: Building, Benchmarking Customized Fact-Checking Systems and Evaluating the Factuality of Claims and LLMs](https://arxiv.org/abs/2405.05583) (2024) -- open-source, maintained implementation of the pipeline
 - [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.11366) -- related but lacks external evidence grounding
 - [FacTool: Factuality Detection in Generative AI](https://arxiv.org/abs/2307.13528) -- academic approach to claim-level verification
 
@@ -16505,7 +16547,7 @@ function handleConfigChange(
 
 ## Reasoning-Token Firewall
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** aaronjmars (@aaronjmars)
 **Source:** https://github.com/aeonfun/aeon/tree/main/harness-adapter
@@ -16546,7 +16588,7 @@ graph LR
 
 - **Evidence Grade:** medium
 - **Most valuable findings:**
-  - In a public multi-harness adapter (`aeonfun/aeon`), the xAI path builds `.result` only from `type=="text"` chunks and never reads `type=="thought"`; the Mistral-Vibe path takes the assistant `content` and never `reasoning_content`; the Codex path takes the final `agent_message`, not reasoning. One firewall, six harnesses.
+  - In a public multi-harness adapter (`aeonfun/aeon`), the xAI path builds `.result` only from `type=="text"` chunks and never reads `type=="thought"`; the Mistral-Vibe path takes the assistant `content` and never `reasoning_content`; the Codex path takes the final `agent_message`, not reasoning. One firewall contract across nine coding-agent harnesses; the repo documents six of them round-tripped on real CLIs.
   - That project's run history leaked chain-of-thought precisely when the result was built from the whole stream. Switching to structural answer-only selection removed the leak as a class rather than case by case.
 - **Unverified / Unclear:** prevalence of this leak across other frameworks, and whether every provider guarantees a clean type label in every mode (streaming vs non-streaming, tool calls, refusals).
 
@@ -16570,7 +16612,9 @@ graph LR
 
 ## References
 
-- Aeon harness-adapter, a six-harness implementation of the firewall: https://github.com/aeonfun/aeon/tree/main/harness-adapter
+- Aeon harness-adapter, a nine-harness implementation of the firewall: https://github.com/aeonfun/aeon/tree/main/harness-adapter
+- DeepSeek reasoning model API, which returns `reasoning_content` separately from `content`: https://api-docs.deepseek.com/guides/reasoning_model
+- Anthropic extended thinking, where thinking blocks are a distinct block type from text blocks: https://platform.claude.com/docs/en/build-with-claude/extended-thinking
 - Related and complementary: `chain-of-thought-monitoring-interruption` (watches CoT for safety mid-run; different intent, same channel).
 
 ---
@@ -16986,7 +17030,7 @@ sequenceDiagram
 
 ## RLAIF (Reinforcement Learning from AI Feedback)
 
-**Status:** emerging
+**Status:** established
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://arxiv.org/abs/2212.08073
@@ -16997,7 +17041,7 @@ Traditional Reinforcement Learning from Human Feedback (RLHF) requires extensive
 
 ## Solution
 
-RLAIF replaces human annotators with a supervisory AI model that generates preference labels, which train a reward model that optimizes the policy via PPO (or similar RL algorithms). The approach involves:
+RLAIF replaces human annotators with a supervisory AI model that generates preference labels, which train a reward model that optimizes the policy via PPO (or similar RL algorithms). DPO-family optimizers can also consume the AI-labeled preference pairs directly, with no separate reward model (Rafailov et al., arXiv:2305.18290). The approach involves:
 
 1. **AI-Generated Critiques**: Use a language model to evaluate outputs based on a set of principles or constitution
 2. **Preference Data Generation**: Have the AI model compare pairs of responses and select the better one according to specified criteria
@@ -17058,7 +17102,7 @@ class RLAIFAgent:
 ## Trade-offs
 
 **Pros:**
-- **Cost Efficiency**: 100x cheaper than human feedback ($0.01 vs $1+)
+- **Cost Efficiency**: Shifts labeling spend from human annotation to inference; the RLAIF paper reports alignment performance comparable to RLHF using AI-generated preferences
 - **Scalability**: Can generate unlimited feedback data without human bottlenecks
 - **Consistency**: AI feedback is more consistent than varying human annotators
 - **Speed**: Near-instantaneous feedback generation
@@ -17068,6 +17112,8 @@ class RLAIFAgent:
 - **Alignment Dependency**: Inherits alignment properties of the supervisory model
 - **Chicken-and-Egg Problem**: Requires a capable supervisory model to train frontier models
 - **Principle Design**: Requires careful crafting of constitutional principles
+
+**Where AI feedback still fits (2026):** reinforcement learning from verifiable rewards (RLVR) now dominates domains with checkable answers, such as math and code. Learned AI-feedback rewards persist mainly in open-ended domains — writing quality, tone, safety — where no programmatic verifier exists.
 
 ## How to use it
 
@@ -17080,6 +17126,8 @@ class RLAIFAgent:
 
 - [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073)
 - [RLAIF: Scaling Reinforcement Learning from Human Feedback with AI Feedback (Google DeepMind, 2023)](https://arxiv.org/abs/2309.00267)
+- [Direct Preference Optimization: Your Language Model is Secretly a Reward Model (Rafailov et al., 2023)](https://arxiv.org/abs/2305.18290)
+- [The RLHF Book](https://rlhfbook.com/) — documents production adoption of AI-feedback and preference pipelines through 2025-2026
 - [Self-Taught Evaluators (Meta AI, 2024)](https://arxiv.org/abs/2408.02666)
 - [OpenAI's CriticGPT announcement (July 2024)](https://openai.com/research/criticgpt)
 
@@ -17774,12 +17822,14 @@ Design the agent system to allow for a seamless transition from background (auto
 
 **Core mechanisms for seamless handoff:**
 
-- **Context preservation**: Background agents generate distilled summaries and artifacts (PRs, branches, decision logs) rather than transferring full conversation history, achieving 10:1 to 100:1 context compression.
-- **Real-time progress visibility**: WebSocket streaming of agent progress enables users to identify optimal handoff moments and maintain trust during autonomous execution.
+- **Context preservation**: Background agents generate distilled summaries and artifacts (PRs, branches, decision logs) rather than transferring the full conversation history.
+- **Progress visibility**: A live view of what the background agent is doing (activity feeds, running updates, open draft PRs) lets users spot the right moment to take over and keeps trust intact during autonomous execution.
 - **Artifact-based coordination**: Git-based workflows with branch-per-task and draft PRs provide durable handoff points that survive process boundaries.
 - **Tool parity**: Background agents use the same tools as developers (IDE terminals, codebase annotations), ensuring workspace-native execution and eliminating context translation.
 
 This pattern ensures that developers can leverage the power of autonomous background processing while retaining the ability to easily intervene and apply their expertise for the final touches, without losing context or efficiency.
+
+**Distinct from** [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), which is about choosing among autonomy levels: this pattern is about the mechanics of picking up a background agent's unfinished work in the foreground.
 
 ## Example
 
@@ -17796,9 +17846,10 @@ flowchart TD
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
+- Make background output land in durable artifacts (branch, draft PR, written summary) so a takeover never depends on the agent still running.
+- Keep tool parity between background and foreground: the user who takes over should work in the same repo, terminal, and agent features the background run used.
+- Show progress while the agent works, so the user can decide early whether to wait or take over.
+- On takeover, load the agent's summary and diff into the foreground session before editing, so the finishing work starts from the agent's context.
 
 ## Trade-offs
 
@@ -17814,6 +17865,8 @@ flowchart TD
 - Allen, J. R., & Guinn, C. I. (2000). Mixed-Initiative Systems: A Survey and Framework. AI Magazine. (Foundational theory for control transfer)
 
 - Zou, H. P., Huang, W.-C., Wu, Y., et al. (2025). A Survey on Large Language Model based Human-Agent Systems. arXiv:2505.00753 (Validates human-in-the-loop as primary paradigm over full autonomy)
+
+- Cursor's background agents are now documented as [Cloud Agents](https://cursor.com/docs/cloud-agent), the current product name for this background-to-foreground workflow.
 
 ---
 
@@ -19735,6 +19788,8 @@ Design the human-agent interaction to support a spectrum of control, allowing us
 
 Users can seamlessly switch between these modes depending on their needs, allowing for a "blended initiative" where both human and AI contribute effectively.
 
+**Distinct from** [Seamless Background-to-Foreground Handoff](seamless-background-to-foreground-handoff.md), which covers the takeover mechanics for one unfinished background task: this pattern is the menu of autonomy levels itself and how users move between them.
+
 ## Evidence
 
 - **Evidence Grade:** `high`
@@ -19766,11 +19821,10 @@ flowchart LR
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
-- Implement mode-switching controls (keyboard shortcuts, UI toggles) for explicit autonomy level selection.
-- Pair with human-in-the-loop approval at higher autonomy levels for high-risk operations.
+- Offer several distinct autonomy levels (inline completion, scoped edit, multi-file agent, background agent) rather than one continuous slider.
+- Make mode switching explicit and cheap: keyboard shortcuts or UI toggles that name the level being selected.
+- Let users pick the level per task, and default unfamiliar code or risky changes to the lower levels.
+- Pair the highest autonomy levels with human-in-the-loop approval for high-risk operations.
 
 ## Trade-offs
 
@@ -19780,9 +19834,9 @@ flowchart LR
 ## References
 
 - Aman Sanger (Cursor) extensively discusses this spectrum at 0:05:16-0:06:44, detailing different features like tab completion, Command K, Agent for multi-file edits, and Background Agent for entire PRs, describing it as "almost a spectrum."
-- Sheridan, T. B., & Verplank, W. L. (1978). Human and Computer Control of Undersea Teleoperators. https://doi.org/10.1109/THMS.1978.4309360
+- Sheridan, T. B., & Verplank, W. L. (1978). Human and Computer Control of Undersea Teleoperators. MIT Man-Machine Systems Laboratory technical report, available at https://ntrs.nasa.gov/citations/19790007441 (this report has no IEEE journal DOI)
 - Parasuraman, R., et al. (2000). A Model for Types and Levels of Human Interaction with Automation. https://doi.org/10.1109/3477.866864
-- Horvitz, J. (1999). Principles of mixed-initiative user interfaces. CHI '99. https://doi.org/10.1145/303426.303426
+- Horvitz, Eric (1999). Principles of Mixed-Initiative User Interfaces. CHI '99. https://doi.org/10.1145/302979.303030
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
 
@@ -20826,39 +20880,44 @@ When each engineer configures their AI agent independently:
 
 **Key configuration elements:**
 
-1. **Pre-allowed commands**: Tools that don't need permission prompts
-2. **Blocked files/directories**: What the agent must never touch
-3. **Default subagents**: Team-standard specialized agents
+1. **Permission rules**: `permissions.allow`, `permissions.ask`, and `permissions.deny`, evaluated deny first, then ask, then allow
+2. **Hooks**: Event-triggered automation such as `PreToolUse` checks
+3. **Subagents**: Team-standard specialized agents, stored as `.claude/agents/*.md` files
 4. **Slash commands**: Shared workflows everyone can use
-5. **Hooks**: Standardized automation triggers
+5. **Settings layering**: Repo-level settings plus gitignored local overrides for personal additions
 
 ```json
 // .claude/settings.json (checked into repo)
 {
   "permissions": {
-    "pre_allowed": [
-      "git add",
-      "git commit",
-      "git push",
-      "npm test",
-      "npm run lint"
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(npm run lint:*)"
     ],
-    "blocked_paths": [
-      ".env",
-      "secrets/",
-      "*.key",
-      "credentials.json"
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(secrets/**)",
+      "Read(**/*.key)"
     ]
   },
-  "subagents": {
-    "security-review": "./agents/security.md",
-    "migration-helper": "./agents/migration.md"
-  },
   "hooks": {
-    "pre_commit": "./hooks/run_tests.sh"
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "./scripts/check-bash.sh" }
+        ]
+      }
+    ]
   }
 }
 ```
+
+Subagents are not entries in this file: each is a Markdown definition under `.claude/agents/` (for example `.claude/agents/security-review.md`), which the harness picks up automatically. Alongside the JSON config, keep an [`AGENTS.md`](https://agents.md) file for the prose rules — setup commands, test commands, code style. AGENTS.md is the cross-tool standard now read by Codex, Cursor, Gemini CLI, Claude Code, and other agents.
 
 ## How to use it
 
@@ -20898,7 +20957,7 @@ Use gitignored local files for individual customization:
 # .claude/settings.local.json (gitignored)
 {
   "permissions": {
-    "pre_allowed": ["docker build"]  // personal additions
+    "allow": ["Bash(docker build:*)"]  // personal additions
   }
 }
 ```
@@ -20938,7 +20997,7 @@ Most platforms merge layered configs with local overrides taking precedence.
 
 - **Separate local overrides**: Support `.claude/settings.local.json` (gitignored) for personal customization
 - **Schema validation**: Use JSON Schema validation to catch configuration errors before runtime
-- **Document configuration**: Explain why things are pre-allowed/blocked
+- **Document configuration**: Explain why commands are allowed, gated with `ask`, or denied
 - **Regular review**: Audit config quarterly as tools/threats evolve
 - **Gradual adoption**: Start minimal, expand based on team pain points
 - **Secrets management**: Never commit credentials; use environment variables or local-only config files
@@ -20947,6 +21006,9 @@ Most platforms merge layered configs with local overrides taking precedence.
 
 * Boris Cherny: "Companies that have really big deployments of Claude Code... having settings.json that you check into the code base is really important because you can use this to pre-allow certain commands so you don't get permission prompted every time. And also to block certain commands... and this way as an engineer I don't get prompted and I can check this in and share it with the whole team so everyone gets to use it."
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [Claude Code permissions](https://code.claude.com/docs/en/permissions) — the documented allow/ask/deny rule schema and evaluation order
+* [Claude Code settings reference](https://code.claude.com/docs/en/settings-reference) — the documented settings file schema, including hooks events such as `PreToolUse`
+* [AGENTS.md](https://agents.md) — the cross-agent instruction standard (Codex, Cursor, Gemini CLI, Claude Code, and more)
 * Alazawi et al. (2021). "Infrastructure as Code: A Systematic Mapping Study". IEEE Access. — Academic foundation for treating configuration as version-controlled code with emphasis on repeatability and collaborative review.
 
 ---
@@ -22474,7 +22536,7 @@ AI agents, especially those using complex models or multiple tools, can sometime
 
 ## Solution
 
-Implement a feature that allows users to inspect the agent's internal "thought process" or reasoning steps on demand. This could be triggered by a keybinding (e.g., `Ctrl+R` in Claude Code) or a command.
+Implement a feature that allows users to inspect the agent's internal "thought process" or reasoning steps on demand. In Claude Code, `Ctrl+O` toggles the transcript viewer, which shows detailed tool usage and execution per assistant message; the `--verbose` flag (and the matching `verbose` setting) raises output detail for a session.
 
 When activated, the verbose output might reveal:
 
@@ -22482,10 +22544,14 @@ When activated, the verbose output might reveal:
 -   Alternative actions or tools it considered.
 -   The specific tool(s) it selected and why (if available).
 -   Intermediate steps or sub-tasks it performed.
--   Confidence scores or internal states.
+-   Confidence scores or internal states, where a harness exposes them (Claude Code does not).
 -   Raw outputs from tools before they are processed or summarized.
 
 This transparency helps users understand the agent's decision-making process, identify issues if the agent is stuck or producing incorrect results, and learn how to prompt more effectively.
+
+**Faithfulness caveat:** displayed reasoning is not guaranteed to be what actually drove the answer. Anthropic finds that reasoning models often do not verbalize their real reasoning ([Reasoning models don't say they think](https://www.anthropic.com/research/reasoning-models-dont-say-they-think)), and OpenAI reports that models under monitoring can learn to obfuscate ([arXiv:2503.11926](https://arxiv.org/abs/2503.11926)). Use verbose views to debug behavior; do not treat them as proof of the model's intent.
+
+**Distinct from** [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md), which watches the reasoning stream continuously for safety: this pattern is a human opening the view on demand to debug or learn.
 
 ## Example (transparency activation)
 
@@ -22499,11 +22565,10 @@ sequenceDiagram
     Agent->>Agent: Process internally
     Agent-->>User: Standard output
 
-    User->>UI: Ctrl+R (or verbose command)
+    User->>UI: Ctrl+O (transcript viewer)
     UI->>Agent: Request verbose details
     Agent-->>UI: Internal reasoning steps
     Agent-->>UI: Tool selection rationale
-    Agent-->>UI: Confidence scores
     Agent-->>UI: Raw tool outputs
     UI-->>User: Detailed transparency view
 ```
@@ -22518,11 +22583,13 @@ sequenceDiagram
 ## Trade-offs
 
 * **Pros:** Enables debugging of unexpected agent behavior, supports prompt engineering, and builds trust through explainability.
-* **Cons:** Adds modest performance overhead (+10-30% tokens) and requires careful handling of sensitive information (system prompts, credentials).
+* **Cons:** Requires careful handling of sensitive information (system prompts, credentials); displayed reasoning can be unfaithful to the model's actual computation (see the caveat above), so it can mislead as well as explain.
 
 ## References
 
--   Based on the `Ctrl+R` keybinding for showing verbose output in "Mastering Claude Code: Boris Cherny's Guide & Cheatsheet," section V.
+-   [Claude Code interactive mode](https://code.claude.com/docs/en/interactive-mode) — `Ctrl+O` toggles the transcript viewer (detailed tool usage and execution); `Ctrl+R` is reverse command history search.
+-   [Reasoning models don't say they think](https://www.anthropic.com/research/reasoning-models-dont-say-they-think) — Anthropic (2025): displayed chain of thought often omits the real reasoning.
+-   [Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation](https://arxiv.org/abs/2503.11926) — OpenAI (2025): monitoring reasoning can reward obfuscation.
 -   Wei et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *NeurIPS*. https://arxiv.org/abs/2201.11903
 -   Mohseni et al. (2021). "HCI Guidelines for Explainable AI." *arXiv:2108.05206*. https://arxiv.org/abs/2108.05206
 

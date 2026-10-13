@@ -9,7 +9,7 @@ tags: [agent-first, human-dx, regression, optimization, tooling, codebase-design
 summary: "Optimizes tooling, CLIs, tests, and docs for agents first, with one-command verify loops and machine-readable output, even if human DX regresses"
 signals: ["Agents will use a workflow about 10x more than humans", "Agents cannot verify their own changes automatically", "The workflow is automatable and well-defined"]
 anti_signals: ["The workflow needs human creativity or judgment", "Humans are the primary users and agents rarely touch it", "The team is not committed to agent-first development"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -28,7 +28,7 @@ A related problem: even good models struggle without clear feedback loops. When 
 
 The team built Zveltch (Zig implementation of spelt-check) to make spell-check fast for agents. This actually made the VS Code experience worse for humans. They had a difficult decision: preserve human DX or optimize for agents?
 
-They ultimately chose to optimize for agents, leading to a "snowball effect":
+They leaned agent-first, then briefly rolled Zveltch back to preserve the human experience (Episode 10: "we did end up briefly rolling it back"). The trade-off is revisited in practice, not settled once. The agent-first direction still drives a "snowball effect":
 - Agent tooling gets better
 - Humans use agents more
 - Humans use editors less
@@ -67,6 +67,8 @@ Practical examples:
 - **Terminal emulator with screenshot flag**: Added `--capture-to` flag so agent could take screenshots and verify rendering fixes
 - **CLI data-only output**: Created new subcommand that outputs raw data (no UI formatting) so agent can parse results programmatically
 - **Test commands**: Single-command test execution (`pnpm test`) with cached results
+
+**Scope note:** The concrete techniques hinted at above — machine-readable CLI output, unified logging, and JSON flags — belong to [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md), and shaping whole workflows for agents is [Agent-Friendly Workflow Design](agent-friendly-workflow-design.md); this pattern is the decision to optimize for agents first and the human-DX trade-off that follows, not the tooling catalogue.
 
 ## How to use it
 
@@ -138,7 +140,7 @@ Create `AGENTS.md` or similar documentation that explains:
 - What feedback mechanisms to use
 - Special considerations for automated interaction
 
-**Related pattern:** `CLAUDE.md` (Anthropic) is emerging as a complementary standard for agent guidance with project-specific instructions and tooling conventions.
+**Standard:** [AGENTS.md](https://agents.md) is now the adopted open format for guiding coding agents, used by over 60,000 open-source projects and read by Codex, Cursor, Gemini CLI, Amp, and others; it is stewarded by the Agentic AI Foundation under the Linux Foundation. `CLAUDE.md` (Anthropic) plays the same role for Claude Code.
 
 **The "Agent-Native Codebase" Checklist (2026 version of Joel Spolsky's test):**
 
@@ -212,4 +214,5 @@ Agents excel with simple, reliable, dumb tools. Complex tools designed for human
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [ESAA: Event Sourcing for Autonomous Agents](https://arxiv.org/abs/2602.23193v1) - Elzo Brito dos Santos Filho (arXiv 2026-02) — validates unified logging pattern
+* [AGENTS.md](https://agents.md) - open format for guiding coding agents, used by 60,000+ open-source projects
 * Related: [Skill Library Evolution](skill-library-evolution.md), [Factory over Assistant](factory-over-assistant.md)

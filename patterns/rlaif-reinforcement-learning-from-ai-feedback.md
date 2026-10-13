@@ -1,6 +1,6 @@
 ---
 title: "RLAIF (Reinforcement Learning from AI Feedback)"
-status: emerging
+status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anthropic", "Google DeepMind"]
 category: "Reliability & Eval"
@@ -9,7 +9,7 @@ tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, eval
 summary: "Uses an AI model guided by written principles to critique outputs and label preferences, which train a reward model that optimizes the policy"
 signals: ["Human preference annotation is too expensive or slow to scale", "Domain experts for labeling are scarce", "Evaluation criteria can be written as explicit principles"]
 anti_signals: ["No capable, well-aligned supervisory model for the target domain", "Critical outputs need human validation that AI labels cannot replace"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -18,7 +18,7 @@ Traditional Reinforcement Learning from Human Feedback (RLHF) requires extensive
 
 ## Solution
 
-RLAIF replaces human annotators with a supervisory AI model that generates preference labels, which train a reward model that optimizes the policy via PPO (or similar RL algorithms). The approach involves:
+RLAIF replaces human annotators with a supervisory AI model that generates preference labels, which train a reward model that optimizes the policy via PPO (or similar RL algorithms). DPO-family optimizers can also consume the AI-labeled preference pairs directly, with no separate reward model (Rafailov et al., arXiv:2305.18290). The approach involves:
 
 1. **AI-Generated Critiques**: Use a language model to evaluate outputs based on a set of principles or constitution
 2. **Preference Data Generation**: Have the AI model compare pairs of responses and select the better one according to specified criteria
@@ -79,7 +79,7 @@ class RLAIFAgent:
 ## Trade-offs
 
 **Pros:**
-- **Cost Efficiency**: 100x cheaper than human feedback ($0.01 vs $1+)
+- **Cost Efficiency**: Shifts labeling spend from human annotation to inference; the RLAIF paper reports alignment performance comparable to RLHF using AI-generated preferences
 - **Scalability**: Can generate unlimited feedback data without human bottlenecks
 - **Consistency**: AI feedback is more consistent than varying human annotators
 - **Speed**: Near-instantaneous feedback generation
@@ -89,6 +89,8 @@ class RLAIFAgent:
 - **Alignment Dependency**: Inherits alignment properties of the supervisory model
 - **Chicken-and-Egg Problem**: Requires a capable supervisory model to train frontier models
 - **Principle Design**: Requires careful crafting of constitutional principles
+
+**Where AI feedback still fits (2026):** reinforcement learning from verifiable rewards (RLVR) now dominates domains with checkable answers, such as math and code. Learned AI-feedback rewards persist mainly in open-ended domains — writing quality, tone, safety — where no programmatic verifier exists.
 
 ## How to use it
 
@@ -101,5 +103,7 @@ class RLAIFAgent:
 
 - [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073)
 - [RLAIF: Scaling Reinforcement Learning from Human Feedback with AI Feedback (Google DeepMind, 2023)](https://arxiv.org/abs/2309.00267)
+- [Direct Preference Optimization: Your Language Model is Secretly a Reward Model (Rafailov et al., 2023)](https://arxiv.org/abs/2305.18290)
+- [The RLHF Book](https://rlhfbook.com/) — documents production adoption of AI-feedback and preference pipelines through 2025-2026
 - [Self-Taught Evaluators (Meta AI, 2024)](https://arxiv.org/abs/2408.02666)
 - [OpenAI's CriticGPT announcement (July 2024)](https://openai.com/research/criticgpt)

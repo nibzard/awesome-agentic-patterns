@@ -1,6 +1,6 @@
 ---
 title: LLM Observability
-status: proposed
+status: emerging
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -22,7 +22,7 @@ id: llm-observability
 summary: "Sends agent runs to an LLM observability platform for span-level traces of each LLM call and tool use, plus aggregate cost, latency, and success metrics"
 signals: ["Multi-step agent workflows are hard to debug from raw logs", "Non-engineers need to inspect workflow runs", "Team needs cost, latency, and success metrics across runs"]
 anti_signals: ["Simple, deterministic tools with no agent behavior", "Single-step operations where standard logs suffice", "Budget does not cover observability spend"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -38,8 +38,9 @@ Integrate **LLM observability platforms** (Datadog LLM Observability, LangSmith,
 - **Span visualization**: See each LLM call, tool use, and intermediate result
 - **Workflow linking**: Trace from user input through all sub-steps to final output
 - **Dashboarding**: Aggregate metrics on cost, latency, success rates
-- **Accessible debugging**: Non-engineers can debug without log access
+- **Accessible debugging**: Non-engineers can inspect runs without raw log access (in the source deployment, Datadog access was still limited to the technology organization)
 - **Event sourcing**: Structured logs enable replay, state reconstruction, and verification
+- **Vendor-neutral tracing**: OpenTelemetry GenAI semantic conventions and OpenInference define portable span attributes, so traces are not locked to one platform
 
 **Evolution from standard logging:**
 
@@ -97,7 +98,7 @@ def run_agent(query):
 **Pros:**
 
 - **Fast debugging**: Navigate complex workflows visually
-- **Accessible**: Non-engineers can debug without log permissions
+- **Accessible**: Broader teams can debug without log permissions; the source deployment still limited access to the technology organization
 - **Aggregated metrics**: See patterns across many runs
 - **Span-level detail**: Drill into any step of execution
 
@@ -117,7 +118,9 @@ def run_agent(query):
 ## References
 
 * [Building an internal agent: Logging and debugability](https://lethain.com/agents-logging/) - Will Larson (Imprint, 2025)
-* [Chain of Thought Monitoring](https://openai.com/research/thought-monitoring) - OpenAI Research (March 2025)
+* [Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation](https://arxiv.org/abs/2503.11926) - OpenAI (March 2025); the reasoning-monitoring evidence behind CoT observability
+* [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/gen-ai) - vendor-neutral span attributes for LLM and agent calls (in development)
+* [OpenInference](https://github.com/Arize-ai/openinference) - open instrumentation standard for LLM/agent tracing
 * [ESAA: Event Sourcing for Autonomous Agents](https://arxiv.org/abs/2602.23193v1) - Elzo Brito dos Santos Filho et al. (February 2026)
 * [Chain of Thought Monitorability: A Fragile Opportunity](https://arxiv.org/abs/2510.19476) - Korbak et al. (October 2025)
 * Datadog LLM Observability documentation
