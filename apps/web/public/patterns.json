@@ -383,7 +383,7 @@
       "Connie Fan"
     ],
     "category": "Orchestration & Control",
-    "source": "https://www.youtube.com/watch?v=u85G2aV_5rQ",
+    "source": "https://eu.36kr.com/en/p/3352908436796289",
     "tags": [
       "research",
       "information retrieval",
@@ -402,7 +402,7 @@
       "A single retrieval round answers the question",
       "Token cost or latency budget is tight"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional research methods often lack the ability to adapt search strategies based on emerging results, limiting efficiency and potential discoveries. Complex research tasks require multi-round investigation, cross-source synthesis, and dynamic strategy adjustment that static retrieval systems cannot provide."
   },
   {
@@ -1097,7 +1097,7 @@
       "Voidly Pay (contributor-owned reference implementation)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://github.com/voidly-ai/voidly-pay",
+    "source": "https://voidly.ai/developers",
     "tags": [
       "multi-agent",
       "coordination",
@@ -1761,15 +1761,15 @@
   },
   {
     "title": "CriticGPT-Style Code Review",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "OpenAI"
+      "OpenAI (McAleese et al., 2024)"
     ],
     "category": "Reliability & Eval",
-    "source": "https://openai.com/research/criticgpt",
+    "source": "https://arxiv.org/abs/2407.00215",
     "tags": [
       "evaluation",
       "code-review",
@@ -1791,7 +1791,7 @@
       "You cannot afford human verification of false positives",
       "Low commit volume where human review is sufficient"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAs AI-generated code becomes more sophisticated, it becomes increasingly difficult for human reviewers to catch subtle bugs, security issues, or quality problems. Traditional code review processes may miss issues in AI-generated code because:\n\n- The volume of generated code can overwhelm human reviewers\n- Subtle bugs may appear correct at first glance\n- Security vulnerabilities may be non-obvious\n- Style and best practice violations may be inconsistent"
   },
   {
@@ -3877,8 +3877,8 @@
     "based_on": [
       "Simon Willison"
     ],
-    "category": "Reliability & Eval",
-    "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
+    "category": "Security & Safety",
+    "source": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
     "tags": [
       "security",
       "prompt-injection",
@@ -3897,7 +3897,7 @@
       "Agent has no access to private data",
       "Agent has no way to communicate externally"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nCombining three agent capabilities—\n1. **Access to private data**\n2. **Exposure to untrusted content**\n3. **Ability to externally communicate**\n\n—creates a straightforward path for prompt-injection attackers to steal sensitive information.  \nLLMs cannot reliably distinguish \"good\" instructions from malicious ones once they appear in the same context window."
   },
   {
@@ -6455,15 +6455,16 @@
   },
   {
     "title": "Subject Hygiene for Task Delegation",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"
+      "Analysis of 88 Claude conversation sessions (author's own analysis, now offline)",
+      "Anthropic Claude Code subagent guidance"
     ],
     "category": "Orchestration & Control",
-    "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
+    "source": "https://code.claude.com/docs/en/sub-agents",
     "tags": [
       "subagents",
       "delegation",
@@ -6484,8 +6485,8 @@
       "No subagent delegation in the workflow",
       "Single short delegation that nobody will reference again"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nWhen delegating work to subagents via the Task tool, empty or generic task subjects make conversations:\n\n- **Untraceable**: Cannot identify what a subagent was working on\n- **Unreferencable**: Cannot discuss specific subagent work later\n- **Confusing**: Multiple subagents with empty subjects are indistinguishable\n\nFrom 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point. This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce)."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nWhen delegating work to subagents via the Task tool, empty or generic task subjects make conversations:\n\n- **Untraceable**: Cannot identify what a subagent was working on\n- **Unreferencable**: Cannot discuss specific subagent work later\n- **Confusing**: Multiple subagents with empty subjects are indistinguishable\n\nFrom 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point (the author's own session analysis; the repository that hosted it is no longer online, so treat the counts as anecdotal). This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce)."
   },
   {
     "title": "Swarm Migration Pattern",
@@ -6642,7 +6643,7 @@
       "Simon Willison (MCP critique)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
+    "source": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
     "tags": [
       "capability-segregation",
       "least-privilege",
@@ -6660,7 +6661,7 @@
       "All tools are read-only and local",
       "Team cannot maintain per-tool permission manifests"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nModel Context Protocol (MCP) and agent frameworks often combine three capability classes in a single tool: private-data readers (email, filesystem), web fetchers (HTTP clients), and writers (API mutators). This creates the \"lethal trifecta\"—malicious input can trigger chains that read sensitive data, exfiltrate it, and modify systems in one operation."
   },
   {
@@ -6727,10 +6728,11 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Analysis of 88 Claude conversation sessions (nibzard-web, skills-marketplace, awesome-agentic-patterns, marginshot, 2025-intro-swe)"
+      "Analysis of 88 Claude conversation sessions (author's own analysis, now offline)",
+      "Anthropic Claude Code best practices"
     ],
     "category": "Orchestration & Control",
-    "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
+    "source": "https://www.anthropic.com/engineering/claude-code-best-practices",
     "tags": [
       "tools",
       "workflow",
@@ -6752,8 +6754,8 @@
       "Agent has only one or two tools",
       "Simple one-off tasks where the workflow adds overhead"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nAI agents often struggle to select the optimal tool for a given task, leading to inefficient workflows. Common anti-patterns include:\n\n- Using `Write` when `Edit` would be more appropriate\n- Launching subagents for simple exploration tasks\n- Skipping build verification after code changes\n- Performing sequential exploration when parallel would be faster\n\nThese ineff compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nAI agents often struggle to select the optimal tool for a given task, leading to inefficient workflows. Common anti-patterns include:\n\n- Using `Write` when `Edit` would be more appropriate\n- Launching subagents for simple exploration tasks\n- Skipping build verification after code changes\n- Performing sequential exploration when parallel would be faster\n\nThese inefficiencies compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections."
   },
   {
     "title": "Tool Use Incentivization via Reward Shaping",
@@ -6888,7 +6890,7 @@
       "Ed25519 digital signatures"
     ],
     "category": "Security & Safety",
-    "source": "https://github.com/nickzsche/aip-identity",
+    "source": "https://github.com/The-Nexus-Guard/aip",
     "tags": [
       "trust",
       "identity",
@@ -6912,7 +6914,7 @@
       "New agents need trust at once with no vouches (cold start)",
       "Identities are cheap to create and Sybil attacks are a risk"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen autonomous agents interact without a central authority, trust decisions are binary: either you trust an agent completely or you do not trust it at all. There is no mechanism to derive partial, evidence-based trust from indirect relationships.\n\nTraditional approaches fail in different ways:\n- **Central registries** create single points of failure and require all agents to trust the same authority.\n- **Self-asserted identity** (claiming \"I am X\") provides no verification — any agent can claim any identity.\n- **Binary web-of-trust** (PGP model) only answers \"is this key valid?\" but not \"how much should I trust this agent's competence or intent?\"\n\nAgents need a way to build trust networks where trust propagates through verified relationships, decays with distance, and remains auditable end-to-end."
   },
   {
@@ -7219,16 +7221,17 @@
     "excerpt": "\n## Problem\nUnit tests, linters, and typecheckers validate individual components but don't test agent workflows end-to-end. It's easy to create prompts that don't work well despite all underlying pieces being correct.\n\nYou need to validate that prompts and tools work together effectively as a system."
   },
   {
-    "title": "Working Memory via TodoWrite",
+    "title": "Working Memory via Task Tracking",
     "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Analysis of 88 Claude conversation sessions"
+      "Analysis of 88 Claude conversation sessions (author's own analysis, now offline)",
+      "Anthropic context engineering guidance"
     ],
     "category": "Context & Memory",
-    "source": "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS",
+    "source": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
     "tags": [
       "context",
       "memory",
@@ -7239,8 +7242,8 @@
       "session-management"
     ],
     "slug": "working-memory-via-todos",
-    "id": "working-memory-via-todowrite",
-    "summary": "Keeps an explicit todo list with status, blockers, and next steps during the session so agent and user can track progress",
+    "id": "working-memory-via-task-tracking",
+    "summary": "Keeps an explicit task list with status, blockers, and next steps during the session so agent and user can track progress",
     "signals": [
       "Complex multi-step tasks with dependencies",
       "Agent forgets or repeats tasks after context switches",
@@ -7250,7 +7253,7 @@
       "Simple single-step tasks",
       "Tasks that finish in seconds or quick questions"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nDuring complex multi-step tasks, AI agents lose track of:\n- What tasks are pending, in progress, or completed\n- Which tasks are blocked by dependencies\n- Verification steps that need to run\n- Next actions after context switches\n\nThis leads to redundant work, forgotten tasks, and confused users."
   },
   {

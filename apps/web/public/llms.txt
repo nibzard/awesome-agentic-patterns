@@ -987,7 +987,7 @@ URL: https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools
 Markdown: https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools.md
 
 ### working-memory-via-todos
-Working Memory via TodoWrite: Keeps an explicit todo list with status, blockers, and next steps during the session so agent and user can track progress
+Working Memory via Task Tracking: Keeps an explicit task list with status, blockers, and next steps during the session so agent and user can track progress
 URL: https://agentic-patterns.com/patterns/working-memory-via-todos
 Markdown: https://agentic-patterns.com/patterns/working-memory-via-todos.md
 

@@ -4,7 +4,7 @@ status: "experimental-but-awesome"
 authors: ["Dillon Sexton (@EmperorMew)"]
 based_on: ["Voidly Pay (contributor-owned reference implementation)"]
 category: "Orchestration & Control"
-source: "https://github.com/voidly-ai/voidly-pay"
+source: "https://voidly.ai/developers"
 tags: [multi-agent, coordination, payments, escrow, receipts, capabilities, atomic-hire]
 summary: "Binds a signed capability listing, an atomic escrow-plus-hire step, and a signed work receipt into one loop for agent-to-agent payment"
 signals: ["Agents pay other agents for bounded, verifiable work units", "Budget hold and hire record must not drift apart", "Parties cross organizational trust boundaries"]
@@ -95,7 +95,7 @@ Every object carries an Ed25519 signature (or equivalent). The ledger never deci
 
 ## References
 
-- [Voidly Pay](https://github.com/voidly-ai/voidly-pay) — reference implementation of this pattern (contributor-owned, disclosed per guidelines). Implements capability, atomic-hire, signed-receipt, escrow-release/refund, and faucet primitives with 9 framework adapters (LangChain, CrewAI, AutoGen, LlamaIndex, Haystack, Vercel AI, OpenAI-compatible, x402, A2A).
+- [Voidly developer docs](https://voidly.ai/developers) — live documentation for the contributor's implementation (contributor-owned, disclosed per guidelines): the Voidpay MCP tools, the x402 agent-wallet flow, and a public x402 services catalog. The original reference repository (`github.com/voidly-ai/voidly-pay`, which packaged the capability, atomic-hire, signed-receipt, escrow-release/refund, and faucet primitives with 9 framework adapters) is no longer available (HTTP 404), so the developer docs are the reachable implementation surface.
 - [402-First Machine Payments](402-first-machine-payments.md) — sibling pattern where the quoted price doubles as a priority signal (not settlement).
 - [Milestone Escrow for Agent Resource Funding](milestone-escrow-agent-funding.md) — adjacent pattern for funding agents across long milestones (vs. per-task hire).
-- [x402 payment-required HTTP status](https://github.com/coinbase/x402) — HTTP-level expression of the same shape (request → 402 + price → signed payment → fulfilled response).
+- [x402 payment-required HTTP status](https://github.com/x402-foundation/x402) — HTTP-level expression of the same shape (request → 402 + price → signed payment → fulfilled response). Development moved from `coinbase/x402` to the x402 Foundation repository.
