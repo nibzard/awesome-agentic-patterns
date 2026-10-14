@@ -335,6 +335,30 @@
       "summary": "Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality."
     },
     {
+      "id": "approval-bound-transactional-write",
+      "title": "Approval-Bound Transactional Write",
+      "category": "Reliability & Eval",
+      "status": "emerging",
+      "slug": "approval-bound-transactional-write",
+      "tags": [
+        "idempotency",
+        "human-approval",
+        "transactions",
+        "postconditions",
+        "drift-detection",
+        "agent-writes",
+        "retries"
+      ],
+      "summary": "Binds a human approval to one exact plan version, then applies the write, checks the postcondition and records the idempotency key in a single database transaction",
+      "maturity": "early",
+      "domains": [
+        "finance",
+        "inventory",
+        "erp",
+        "operations"
+      ]
+    },
+    {
       "id": "artifact-driven-analysis-pipeline-orchestration",
       "title": "Artifact-Driven Analysis Pipeline Orchestration",
       "category": "Orchestration & Control",
@@ -3323,6 +3347,16 @@
     {
       "source": "agent-circuit-breaker",
       "target": "failover-aware-model-fallback",
+      "type": "related"
+    },
+    {
+      "source": "approval-bound-transactional-write",
+      "target": "plan-then-execute-pattern",
+      "type": "related"
+    },
+    {
+      "source": "approval-bound-transactional-write",
+      "target": "sandboxed-tool-authorization",
       "type": "related"
     },
     {
