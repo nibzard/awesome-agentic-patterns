@@ -3,6 +3,7 @@
 // ABOUTME: Renders the same catalog as the homepage with the canonical URL set to /.
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import Catalog from '../../components/Catalog.astro';
+import MobileNewsletterBanner from '../../components/MobileNewsletterBanner.astro';
 import { getAllPatterns } from '../../lib/patterns';
 
 const patterns = await getAllPatterns();
@@ -13,5 +14,7 @@ const patterns = await getAllPatterns();
   description={`Browse ${patterns.length} design patterns for building AI agents.`}
   canonicalPath="/"
 >
-  <Catalog {patterns} />
+  <Catalog {patterns}>
+    <MobileNewsletterBanner slot="after-intro" />
+  </Catalog>
 </DocsLayout>

@@ -1,6 +1,6 @@
 ---
 // ABOUTME: Pattern catalog: live text filter, maturity chips, sort control, and a dense list of all patterns.
-// ABOUTME: Filters read and write URL parameters (category, status, tag, domain, maturity, complexity, q, code, sort).
+// ABOUTME: Mobile viewports paginate the list with a show-more button; filters read and write URL parameters (category, status, tag, domain, maturity, complexity, q, code, sort).
 import type { PatternEntry } from '../types';
 import { hasCodeExample } from '../lib/code-example';
 
@@ -47,6 +47,8 @@ const label = (status: string) => status.replace(/-/g, ' ');
       >.
     </p>
   </header>
+
+  <slot name="after-intro" />
 
   <div class="catalog-controls" role="search">
     <label class="catalog-filter">
@@ -122,6 +124,13 @@ const label = (status: string) => status.replace(/-/g, ' ');
     }
   </ol>
 
+  <div class="catalog-more" id="catalog-more" hidden>
+    <button type="button" class="catalog-more-button" data-catalog-more>
+      Show more patterns
+    </button>
+    <p class="catalog-more-status" id="catalog-more-status"></p>
+  </div>
+
   <div class="catalog-empty" id="catalog-empty" hidden>
     <p>No patterns match these filters.</p>
     <a href="/" class="button button--secondary">Clear filters</a>
@@ -142,6 +151,15 @@ const label = (status: string) => status.replace(/-/g, ' ');
   const countEl = document.getElementById('catalog-count');
   const emptyEl = document.getElementById('catalog-empty');
   const resetEl = document.querySelector<HTMLElement>('[data-catalog-reset]');
+  const moreWrap = document.getElementById('catalog-more');
+  const moreBtn = document.querySelector<HTMLButtonElement>('[data-catalog-more]');
+  const moreStatus = document.getElementById('catalog-more-status');
+
+  // Mobile-only step pagination. Desktop viewports always show every row.
+  const PAGE_SIZE = 30;
+  const mobileMedia = window.matchMedia('(max-width: 960px)');
+  let paginationActive = mobileMedia.matches;
+  let shownCount = PAGE_SIZE;
 
   const params = new URLSearchParams(window.location.search);
   if (filterInput) filterInput.value = params.get('q') || '';
@@ -210,6 +228,33 @@ const label = (status: string) => status.replace(/-/g, ' ');
     if (resetEl) resetEl.hidden = Array.from(params.keys()).every((key) => key === 'sort');
     syncChips();
     syncSidebar();
+    applyPagination(visible);
+  }
+
+  // Runs after applyFilters' filter pass: row.hidden already holds filter
+  // truth, so this only trims matched rows beyond the mobile page limit.
+  // Walks list.children in DOM order because sortRows() reorders the DOM,
+  // not the rows array.
+  function applyPagination(matchedCount: number) {
+    if (!list) return;
+    const limit = paginationActive ? shownCount : Infinity;
+    let matched = 0;
+    Array.from(list.children).forEach((child) => {
+      const row = child as HTMLElement;
+      if (row.hidden) return;
+      matched += 1;
+      row.hidden = matched > limit;
+    });
+    if (moreWrap) moreWrap.hidden = !paginationActive || matchedCount <= shownCount;
+    if (moreStatus) {
+      moreStatus.textContent = `Showing ${Math.min(matchedCount, limit)} of ${matchedCount} patterns`;
+    }
+  }
+
+  // Filter, search, and sort changes restart paging from the first page.
+  function applyFiltersFromStart() {
+    shownCount = PAGE_SIZE;
+    applyFilters();
   }
 
   function writeUrl() {
@@ -222,7 +267,7 @@ const label = (status: string) => status.replace(/-/g, ' ');
     if (value) params.set('q', value);
     else params.delete('q');
     writeUrl();
-    applyFilters();
+    applyFiltersFromStart();
   });
 
   sortSelect?.addEventListener('change', () => {
@@ -230,6 +275,7 @@ const label = (status: string) => status.replace(/-/g, ' ');
     else params.delete('sort');
     writeUrl();
     sortRows();
+    applyFiltersFromStart();
   });
 
   statusChips.forEach((chip) => {
@@ -242,7 +288,7 @@ const label = (status: string) => status.replace(/-/g, ' ');
         : [...current, status];
       next.forEach((s) => params.append('status', s));
       writeUrl();
-      applyFilters();
+      applyFiltersFromStart();
     });
   });
 
@@ -250,6 +296,11 @@ const label = (status: string) => status.replace(/-/g, ' ');
     if (params.get('code') === '1') params.delete('code');
     else params.set('code', '1');
     writeUrl();
+    applyFiltersFromStart();
+  });
+
+  moreBtn?.addEventListener('click', () => {
+    shownCount += PAGE_SIZE;
     applyFilters();
   });
 
@@ -262,13 +313,20 @@ const label = (status: string) => status.replace(/-/g, ' ');
       params.delete('category');
       if (category) params.set('category', category);
       writeUrl();
-      applyFilters();
+      applyFiltersFromStart();
       link.closest('[data-docs-sidebar]')?.classList.remove('open');
     });
   });
 
   sortRows();
   applyFilters();
+
+  // Registered after init so an old browser lacking MediaQueryList
+  // addEventListener still gets the initial filter pass above.
+  mobileMedia.addEventListener('change', () => {
+    paginationActive = mobileMedia.matches;
+    applyFiltersFromStart();
+  });
 </script>
 
 <style>
@@ -444,6 +502,36 @@ const label = (status: string) => status.replace(/-/g, ' ');
     color: var(--color-text-muted);
   }
 
+  .catalog-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem 0 1rem;
+  }
+
+  .catalog-more-button {
+    padding: 0.55rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .catalog-more-button:hover {
+    border-color: var(--color-divider);
+  }
+
+  .catalog-more-status {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
   .visually-hidden {
     position: absolute;
     width: 1px;
@@ -460,6 +548,15 @@ const label = (status: string) => status.replace(/-/g, ' ');
 
     .catalog-row-category {
       display: none;
+    }
+  }
+
+  /* iOS Safari zooms the page when an input under 16px gains focus, at any
+     viewport width (iPad landscape included). 16px, not 1rem: the root font
+     size is 15px. */
+  @media (pointer: coarse) {
+    .catalog-filter input {
+      font-size: 16px;
     }
   }
 

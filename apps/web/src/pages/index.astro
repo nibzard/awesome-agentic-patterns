@@ -3,6 +3,7 @@
 // ABOUTME: /patterns renders the same catalog and points its canonical URL here.
 import DocsLayout from '../layouts/DocsLayout.astro';
 import Catalog from '../components/Catalog.astro';
+import MobileNewsletterBanner from '../components/MobileNewsletterBanner.astro';
 import { getAllPatterns } from '../lib/patterns';
 
 const patterns = await getAllPatterns();
@@ -12,5 +13,7 @@ const patterns = await getAllPatterns();
   title="Agentic Patterns: design patterns for building AI agents"
   description={`An open catalogue of ${patterns.length} design patterns for building AI agents, as plain Markdown for people and agents.`}
 >
-  <Catalog {patterns} />
+  <Catalog {patterns}>
+    <MobileNewsletterBanner slot="after-intro" />
+  </Catalog>
 </DocsLayout>
