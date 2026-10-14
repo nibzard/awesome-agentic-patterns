@@ -14,7 +14,7 @@ complexity: medium
 effort: days
 impact: high
 prerequisites: ["A transactional store that holds both the target data and the bookkeeping tables", "A structured plan format the approver can read", "A way to identify the approver that the agent cannot forge"]
-related: ["human-in-the-loop-approval-framework", "plan-then-execute-pattern", "sandboxed-tool-authorization"]
+related: ["human-in-loop-approval-framework", "plan-then-execute-pattern", "sandboxed-tool-authorization"]
 domains: ["finance", "inventory", "erp", "operations"]
 updated_at: "2026-10-08"
 ---
