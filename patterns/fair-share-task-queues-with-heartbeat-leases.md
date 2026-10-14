@@ -61,7 +61,7 @@ The reconciler loop is what turns a plain scheduler into a fault-tolerant one: r
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Deficit round-robin is a established scheduling discipline (Shreedhar & Varghese, 1995) that provides fair bandwidth allocation with O(1) per-task work; applying it to agent task dispatch preserves those properties.
+  - Deficit round-robin is an established scheduling discipline (Shreedhar & Varghese, 1995) that provides fair bandwidth allocation with O(1) per-task work; applying it to agent task dispatch preserves those properties.
   - Lease-with-heartbeat recovery is the same mechanism used by ZooKeeper sessions and Kubernetes node leases, adapted here to per-task granularity.
   - Dead-letter queues are standard practice in message systems; bounding reclaim attempts prevents the poison-task retry storm.
 - **Unverified / Unclear:** Behavior under adversarial workers (a worker that renews its lease but never progresses the task) needs a progress-acknowledgment signal beyond the heartbeat itself.
@@ -88,7 +88,7 @@ The reconciler loop is what turns a plain scheduler into a fault-tolerant one: r
 
 ## References
 
-- Reference implementation: [agent-decentralized-task-allocation-framework](https://github.com/Retsumdk/agent-decentralized-task-allocation-framework) — TypeScript, zero-dependency, MIT.
+- Reference implementation: [agent-decentralized-task-allocation-framework](https://github.com/Retsumdk/agent-decentralized-task-allocation-framework) — TypeScript, zero-dependency, MIT (contributor-owned, disclosed).
 - Shreedhar, M. & Varghese, G., "Efficient Fair Queuing using Deficit Round Robin" (SIGCOMM '95) — origin of deficit round-robin.
 - Kleppmann, M., *Designing Data-Intensive Applications* — lease and fencing discussion (Ch. 8).
 - Related pattern in this catalogue: [Dead Man's Switch for Scheduled Agent Jobs](dead-mans-switch-for-scheduled-agent-jobs.md).
