@@ -1,6 +1,6 @@
 ---
 title: "Asynchronous Coding Agent Pipeline"
-status: proposed
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Will Brown (Prime Intellect Talk)"]
 category: "Reliability & Eval"
@@ -9,7 +9,7 @@ tags: [asynchronous, pipeline, code-agent, parallelism]
 summary: "Splits inference, tool execution, reward modeling, and learning into asynchronous workers linked by message queues so GPUs stay busy"
 signals: ["RL rollouts for coding agents block on slow compile or test calls", "GPUs sit idle while CPU-bound tools run"]
 anti_signals: ["Team cannot maintain monitoring across many services", "Training cannot tolerate slightly stale policy data"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -18,7 +18,7 @@ Synchronous execution of coding tasks—where the agent must wait for compilatio
 
 - RL agents must push hard on **async RL** "so everything is happening in parallel without blowing up bubbles".
 - For coding agents, each I/O-bound tool call (compilation, test runs) can take seconds to minutes.
-- Industry benchmarks show **67% performance improvement** with parallel execution (3.2s vs 9.8s for 3 agents).
+- Asynchronous RL systems report real gains at scale: AReaL achieves **up to 2.77x training speedup** on math and code reasoning tasks (arXiv:2505.24298, NeurIPS 2025).
 
 ## Solution
 
@@ -75,7 +75,7 @@ graph LR
 - **Pros:**
   - **High Utilization:** GPUs remain busy running inference or learning while CPU-bound tasks run in parallel.
   - **Scalable Compute:** Can independently scale inference, tool execution, and reward modeling.
-  - **Performance Gains:** Producer-consumer async workflows achieve 1.59-2.03x throughput improvement; parallel tool calls reduce latency by up to 90%.
+  - **Performance Gains:** AsyncFlow reports a 1.59x average throughput improvement for producer-consumer agent workflows (arXiv:2507.01663); AReaL reports up to 2.77x training speedup (arXiv:2505.24298).
 - **Cons/Considerations:**
   - **Complex System Maintenance:** Requires robust monitoring, logging, and alerting across multiple services.
   - **Staleness Management:** Policies may train on slightly outdated data; hyperparameters must account for acceptable staleness windows (e.g., 5–20 minutes).
@@ -84,7 +84,8 @@ graph LR
 
 - Will Brown's emphasis on "everything being async and overlapped" to hide latencies in multi-hour RL tasks.
 - "IMPALA: Scalable Distributed Deep-RL" for a precedent in actor-learner pipelines.
-- AsyncFlow (arXiv:2507.01663, 2025): Producer-consumer async workflows with TransferQueue for distributed data transfer.
-- AREAL (arXiv:2505.24298, 2025): Asynchronous RL achieving 2.77x training acceleration on math and code reasoning tasks.
+- AsyncFlow (arXiv:2507.01663, 2025): Producer-consumer async workflows with TransferQueue for distributed data transfer; 1.59x average throughput gain.
+- AREAL (arXiv:2505.24298, 2025): Asynchronous RL achieving up to 2.77x training acceleration on math and code reasoning tasks (NeurIPS 2025).
+- [Co-operative time-slicing for RL in llm-d](https://cloud.google.com/blog/products/containers-kubernetes/introducing-co-operative-time-slicing-for-rl-in-llm-d) (Google Cloud, July 2026): production GPU-sharing for agent RL, noting generation stays the bottleneck while tool execution idles GPUs.
 
 - Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw

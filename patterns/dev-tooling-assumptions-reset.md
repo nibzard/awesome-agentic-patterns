@@ -9,7 +9,7 @@ tags: [dev-tools, assumptions, github, tickets, code-review, tooling, agent-work
 summary: "Audits dev tools for human-effort assumptions and replaces tickets, PR ceremony, and sprints with immediate agent dispatch, variations, and automated tests"
 signals: ["Agents write most of the code (50% or more)", "Codebase has good automated testing", "Tickets, reviews, or sprint queues delay work agents could start now"]
 anti_signals: ["Humans still write most code", "Team or leadership is not committed to autonomous agents", "Weak automated tests cannot replace human review"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -19,6 +19,8 @@ Traditional development tools are built on assumptions that no longer hold: that
 ## Solution
 
 **Re-examine dev tooling assumptions** from first principles. When agents write most code, the perceived value of changes drops dramatically, and workflows optimized for human effort become inefficient.
+
+**Boundary:** [Codebase Optimization for Agents](codebase-optimization-for-agents.md) is about making one codebase agent-friendly, and [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md) catalogs the machine-readable tooling; this pattern is about replacing the process tools — tickets, PR ceremony, sprints — whose human-effort assumptions no longer hold.
 
 **Core insight:**
 
@@ -124,9 +126,7 @@ This requires new mental models and new interfaces:
 
 **Industry examples:**
 - **Model Context Protocol (MCP)**: Universal "USB-C for AI" standard replacing proprietary tool integrations
-- **Unified logging** (Sourcegraph): Single JSONL stream for all system events, optimized for agent consumption
-- **Code-first interfaces** (Cloudflare): LLMs write code to call tools, reducing tokens 10-100x
-- **CLI-first design**: Tools with `--json` flags for machine-readable output
+- **Unified logging, code-first tool interfaces, and CLI JSON output**: these techniques are catalogued in [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md), which owns that scope
 
 ## Trade-offs
 
@@ -145,6 +145,8 @@ This requires new mental models and new interfaces:
 - **Team resistance**: Developers attached to familiar workflows
 - **New risks**: More automation means blast radius increases
 - **Transition pain**: Hybrid human/agent workflows are awkward
+
+**2026 counterpoint:** "tests over reviews" is a directional shift, not a full replacement. Practitioners still report that agent-written code needs deliberate human review for hard-to-spot bugs — see Cal Newport's ["On AI Coding and Its Discontents"](https://calnewport.com/on-ai-coding-and-its-discontents/) (August 2026). Keep a review path for changes with production blast radius even as ceremony drops.
 
 **When to reset assumptions:**
 
@@ -167,4 +169,5 @@ This requires new mental models and new interfaces:
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
 * [Toward an Agentic Infused Software Ecosystem](https://arxiv.org/abs/2602.20979) - Mark Marron, 2026
 * [EditFlow: Benchmarking Code Edit Recommendation Systems](https://arxiv.org/abs/2602.21697) - Chenyan Liu et al., 2026
+* [On AI Coding and Its Discontents](https://calnewport.com/on-ai-coding-and-its-discontents/) - Cal Newport, August 2026 — human review persists for agent-written code
 * Related: [Factory over Assistant](factory-over-assistant.md), [Codebase Optimization for Agents](codebase-optimization-for-agents.md), [Agent-First Tooling and Logging](agent-first-tooling-and-logging.md)

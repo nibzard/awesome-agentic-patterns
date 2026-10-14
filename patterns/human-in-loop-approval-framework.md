@@ -4,7 +4,7 @@ status: validated-in-production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
-  - Dexter Horthy (HumanLayer)
+  - Dexter Horthy (HumanLayer; the company later pivoted to a coding-agent IDE and its open-source SDK is deprecated)
 category: UX & Collaboration
 source: 'https://claude.com/blog/building-companies-with-claude-code'
 tags:
@@ -22,7 +22,7 @@ summary: >-
   interfaces and comprehensive audit trails.
 signals: ["Agents run high-risk or irreversible operations such as production DB writes, payments, or deploys", "Compliance requires a record of who approved each sensitive action", "Humans can respond fast enough through Slack, email, or a dashboard"]
 anti_signals: ["All agent actions are safe or easily reversible", "No human is available to respond in time", "Approval volume would be so high that reviewers rubber-stamp requests"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -101,23 +101,20 @@ sequenceDiagram
 
 **Implementation examples:**
 
-**Decorator pattern (HumanLayer):**
+**Permission rules (Claude Code settings):**
 
-```python
-from humanlayer import HumanLayer
-
-hl = HumanLayer()
-
-@hl.require_approval(channel="slack")
-def delete_user_data(user_id: str):
-    """Delete all data for user - requires approval"""
-    return db.users.delete(user_id)
-
-# Agent calls function normally
-delete_user_data("user_123")
-# Execution pauses, approval request sent to Slack
-# Resumes after human approval/rejection
+```json
+// .claude/settings.json — rules are evaluated deny, then ask, then allow
+{
+  "permissions": {
+    "allow": ["Bash(git add:*)", "Bash(npm test:*)"],
+    "ask": ["Bash(git push:*)"],
+    "deny": ["Read(.env)", "Read(secrets/**)"]
+  }
+}
 ```
+
+Commands on the `ask` list pause the agent until a human answers the permission prompt, which is the same gate-then-resume flow the Slack-based implementations use.
 
 **Interrupt pattern (LangGraph):**
 
@@ -134,6 +131,10 @@ def risky_operation(state):
 # Compile with checkpointer for state preservation
 app = workflow.compile(checkpointer=MemorySaver())
 ```
+
+**Protocol-level elicitation (MCP):**
+
+An MCP server can pause mid-flow and send an `elicitation/create` request to the client, which renders the question and schema to the user and returns the answer to the agent. This gives any MCP-connected client the same interrupt semantics without a bespoke approval service.
 
 **2. Configure approval channels:**
 
@@ -188,7 +189,9 @@ approval_channels:
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - HumanLayer's core product coordinates agent actions with "human approval steps" via Slack
-- [HumanLayer Documentation](https://docs.humanlayer.dev/) - Framework and examples for human-in-the-loop agent workflows
-- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) - Principles for production agent systems including human oversight patterns
+- [HumanLayer on GitHub](https://github.com/humanlayer/humanlayer) - the open-source SDK is now largely deprecated ("the code here is pretty much all deprecated"); the company pivoted to a coding-agent IDE ([humanlayer.dev](https://www.humanlayer.dev))
+- [12-Factor Agents](https://github.com/humanlayer/12-factor-agents) - Factor 7 covers contacting humans via tool calls
+- [Claude Code permissions](https://code.claude.com/docs/en/permissions) - permission modes plus allow/ask/deny rules as a maintained standard implementation
+- [MCP elicitation specification](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation) - protocol-level mid-flow approval requests
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)

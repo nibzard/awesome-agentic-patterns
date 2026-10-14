@@ -9,7 +9,7 @@ tags: [coherence, long-running tasks, agent capability, llm, complex projects]
 summary: "Combines models with long coherence windows with context compaction, prompt caching, and persisted state so agents stay on task for hours"
 signals: ["Tasks take hours, such as multi-hour coding or research sessions", "Agent output degrades with goal drift, contradictions, or loops in long sessions", "You can add context management and state persistence"]
 anti_signals: ["Short tasks that finish in a few turns", "No prompt caching, so long sessions become too expensive", "No infrastructure for context compaction or state persistence"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -20,7 +20,7 @@ Early AI agents and models often suffered from a short "coherence window," meani
 
 Utilize AI models and agent architectures that maintain coherence over extended periods (hours rather than minutes). This involves:
 
-- **Model Selection**: Newer foundation models demonstrate approximately 2x coherence improvement every 7 months.
+- **Model Selection**: METR measures the time horizon of autonomous task completion doubling roughly every 7 months since 2019 (arXiv:2503.14499); the Time Horizon 1.1 methodology (January 2026) and 2026 results refine that estimate, and some analyses now report faster growth.
 - **Context Management**: Larger context windows alone don't guarantee coherence—combine with auto-compaction, prompt caching, and curated context to mitigate the "lost in the middle" effect where models struggle with information in middle positions (Liu et al., 2023).
 - **Complementary Patterns**: Works synergistically with context auto-compaction, episodic memory, filesystem-based state, and planner-worker separation.
 
@@ -57,6 +57,7 @@ gantt
 
 ## References
 
-- Highlighted in "How AI Agents Are Reshaping Creation": "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." Described as a "qualitative shift." [Source](https://www.nibzard.com/silent-revolution)
-- Liu et al. (2023). "Lost in the Middle: How Language Models Use Long Contexts." arXiv:2307.03172—Establishes U-shaped performance curve; information at beginning/end of context is accessed 20-30% more reliably than middle positions.
-- Nagaraj et al. (2023). "MemGPT: Towards LLMs as Operating Systems." arXiv:2310.08560—Hierarchical memory architecture (primary context, secondary memory, archival) for extended sessions.
+- Primary source for the trend: METR, "Measuring AI Ability to Complete Long Tasks" (arXiv:2503.14499, NeurIPS 2025; revised July 2026) — task time horizons double roughly every 7 months. See also the [time-horizons results page](https://metr.org/time-horizons) (updated September 2026) and the [Time Horizon 1.1 methodology](https://metr.org/blog/2026-1-29-time-horizon-1-1) (January 2026).
+- Secondary color, quoted in a largely AI-generated blog post: "Every seven months, we're actually doubling the number of minutes that the AI can work and stay coherent... The latest models can maintain coherence for hours." Described as a "qualitative shift." [Source](https://www.nibzard.com/silent-revolution)
+- Liu et al. (2023). "Lost in the Middle: How Language Models Use Long Contexts." arXiv:2307.03172—Establishes a U-shaped performance curve: information at the beginning and end of context is used more reliably than information in the middle.
+- Packer et al. (2023). "MemGPT: Towards LLMs as Operating Systems." arXiv:2310.08560—Hierarchical memory architecture (primary context, secondary memory, archival) for extended sessions.

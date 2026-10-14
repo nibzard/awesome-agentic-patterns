@@ -9,7 +9,7 @@ tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-d
 summary: "Gives users several autonomy modes, from inline completion to background agents, and lets them switch modes per task"
 signals: ["Tasks range from small edits to multi-file features", "Users need to move between direct control and delegation", "Coding tool or IDE with room for several interaction paths"]
 anti_signals: ["Single task type that needs only one autonomy level", "Team cannot build and maintain several interaction modes"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -26,6 +26,8 @@ Design the human-agent interaction to support a spectrum of control, allowing us
 -   **Very High Autonomy (Asynchronous):** Background agents that can take on entire complex tasks like implementing a feature or fixing a set of bugs and creating a pull request, operating largely independently.
 
 Users can seamlessly switch between these modes depending on their needs, allowing for a "blended initiative" where both human and AI contribute effectively.
+
+**Distinct from** [Seamless Background-to-Foreground Handoff](seamless-background-to-foreground-handoff.md), which covers the takeover mechanics for one unfinished background task: this pattern is the menu of autonomy levels itself and how users move between them.
 
 ## Evidence
 
@@ -58,11 +60,10 @@ flowchart LR
 
 ## How to use it
 
-- Use this when humans and agents share ownership of work across handoffs.
-- Start with clear interaction contracts for approvals, overrides, and escalation.
-- Capture user feedback in structured form so prompts and workflows can improve.
-- Implement mode-switching controls (keyboard shortcuts, UI toggles) for explicit autonomy level selection.
-- Pair with human-in-the-loop approval at higher autonomy levels for high-risk operations.
+- Offer several distinct autonomy levels (inline completion, scoped edit, multi-file agent, background agent) rather than one continuous slider.
+- Make mode switching explicit and cheap: keyboard shortcuts or UI toggles that name the level being selected.
+- Let users pick the level per task, and default unfamiliar code or risky changes to the lower levels.
+- Pair the highest autonomy levels with human-in-the-loop approval for high-risk operations.
 
 ## Trade-offs
 
@@ -72,8 +73,8 @@ flowchart LR
 ## References
 
 - Aman Sanger (Cursor) extensively discusses this spectrum at 0:05:16-0:06:44, detailing different features like tab completion, Command K, Agent for multi-file edits, and Background Agent for entire PRs, describing it as "almost a spectrum."
-- Sheridan, T. B., & Verplank, W. L. (1978). Human and Computer Control of Undersea Teleoperators. https://doi.org/10.1109/THMS.1978.4309360
+- Sheridan, T. B., & Verplank, W. L. (1978). Human and Computer Control of Undersea Teleoperators. MIT Man-Machine Systems Laboratory technical report, available at https://ntrs.nasa.gov/citations/19790007441 (this report has no IEEE journal DOI)
 - Parasuraman, R., et al. (2000). A Model for Types and Levels of Human Interaction with Automation. https://doi.org/10.1109/3477.866864
-- Horvitz, J. (1999). Principles of mixed-initiative user interfaces. CHI '99. https://doi.org/10.1145/303426.303426
+- Horvitz, Eric (1999). Principles of Mixed-Initiative User Interfaces. CHI '99. https://doi.org/10.1145/302979.303030
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

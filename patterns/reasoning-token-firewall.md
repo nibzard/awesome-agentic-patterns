@@ -1,6 +1,6 @@
 ---
 title: "Reasoning-Token Firewall"
-status: validated-in-production
+status: emerging
 authors: ["aaronjmars (@aaronjmars)"]
 based_on: ["Aeon harness-adapter (aeonfun/aeon)"]
 category: "Reliability & Eval"
@@ -13,7 +13,7 @@ impact: "high"
 signals: ["The harness streams reasoning and answer tokens in one response", "The agent's output is committed, stored in memory, or forwarded to users or other agents"]
 anti_signals: ["The model returns a single non-streamed answer with no separate reasoning channel", "The provider does not label reasoning and answer chunks reliably"]
 related: ["chain-of-thought-monitoring-interruption", "verbose-reasoning-transparency", "structured-output-specification"]
-updated_at: "2026-08-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -52,7 +52,7 @@ graph LR
 
 - **Evidence Grade:** medium
 - **Most valuable findings:**
-  - In a public multi-harness adapter (`aeonfun/aeon`), the xAI path builds `.result` only from `type=="text"` chunks and never reads `type=="thought"`; the Mistral-Vibe path takes the assistant `content` and never `reasoning_content`; the Codex path takes the final `agent_message`, not reasoning. One firewall, six harnesses.
+  - In a public multi-harness adapter (`aeonfun/aeon`), the xAI path builds `.result` only from `type=="text"` chunks and never reads `type=="thought"`; the Mistral-Vibe path takes the assistant `content` and never `reasoning_content`; the Codex path takes the final `agent_message`, not reasoning. One firewall contract across nine coding-agent harnesses; the repo documents six of them round-tripped on real CLIs.
   - That project's run history leaked chain-of-thought precisely when the result was built from the whole stream. Switching to structural answer-only selection removed the leak as a class rather than case by case.
 - **Unverified / Unclear:** prevalence of this leak across other frameworks, and whether every provider guarantees a clean type label in every mode (streaming vs non-streaming, tool calls, refusals).
 
@@ -76,5 +76,7 @@ graph LR
 
 ## References
 
-- Aeon harness-adapter, a six-harness implementation of the firewall: https://github.com/aeonfun/aeon/tree/main/harness-adapter
+- Aeon harness-adapter, a nine-harness implementation of the firewall: https://github.com/aeonfun/aeon/tree/main/harness-adapter
+- DeepSeek reasoning model API, which returns `reasoning_content` separately from `content`: https://api-docs.deepseek.com/guides/reasoning_model
+- Anthropic extended thinking, where thinking blocks are a distinct block type from text blocks: https://platform.claude.com/docs/en/build-with-claude/extended-thinking
 - Related and complementary: `chain-of-thought-monitoring-interruption` (watches CoT for safety mid-run; different intent, same channel).
