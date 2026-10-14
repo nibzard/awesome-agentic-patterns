@@ -1415,6 +1415,21 @@
       "summary": "Classifies each model failure by reason and falls back along a model chain only for retryable errors, failing fast on auth, billing, and user aborts"
     },
     {
+      "id": "fair-share-task-queues-with-heartbeat-leases",
+      "title": "Fair-Share Task Queues with Heartbeat Leases",
+      "category": "Orchestration & Control",
+      "status": "proposed",
+      "slug": "fair-share-task-queues-with-heartbeat-leases",
+      "tags": [
+        "task-queue",
+        "load-balancing",
+        "fault-tolerance",
+        "multi-agent",
+        "scheduling"
+      ],
+      "summary": "Distributes tasks across a shared agent fleet using weighted deficit-round-robin scheduling, with heartbeat leases and dead-letter retries to recover from crashed workers"
+    },
+    {
       "id": "feature-list-as-immutable-contract",
       "title": "Feature List as Immutable Contract",
       "category": "Orchestration & Control",

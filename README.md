@@ -145,6 +145,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Dual-Rail Message Delivery](patterns/dual-rail-message-delivery.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
 - [Factory over Assistant](patterns/factory-over-assistant.md)
+- [Fair-Share Task Queues with Heartbeat Leases](patterns/fair-share-task-queues-with-heartbeat-leases.md)
 - [Feature List as Immutable Contract](patterns/feature-list-as-immutable-contract.md)
 - [Hybrid LLM/Code Workflow Coordinator](patterns/hybrid-llm-code-workflow-coordinator.md)
 - [Inference-Time Scaling](patterns/inference-time-scaling.md)

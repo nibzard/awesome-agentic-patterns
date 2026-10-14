@@ -431,6 +431,11 @@ Failover-Aware Model Fallback: Classifies each model failure by reason and falls
 URL: https://agentic-patterns.com/patterns/failover-aware-model-fallback
 Markdown: https://agentic-patterns.com/patterns/failover-aware-model-fallback.md
 
+### fair-share-task-queues-with-heartbeat-leases
+Fair-Share Task Queues with Heartbeat Leases: Distributes tasks across a shared agent fleet using weighted deficit-round-robin scheduling, with heartbeat leases and dead-letter retries to recover from crashed workers
+URL: https://agentic-patterns.com/patterns/fair-share-task-queues-with-heartbeat-leases
+Markdown: https://agentic-patterns.com/patterns/fair-share-task-queues-with-heartbeat-leases.md
+
 ### feature-list-as-immutable-contract
 Feature List as Immutable Contract: Defines every feature up front in a JSON list with acceptance steps; the agent may only flip a feature to passing after it verifies it
 URL: https://agentic-patterns.com/patterns/feature-list-as-immutable-contract
