@@ -49,6 +49,17 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Background Agent with CI Feedback]]></title>
+            <description><![CDATA[Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked]]></description>
+            <link>https://agentic-patterns.com/patterns/background-agent-ci</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/background-agent-ci</guid>
+            <category><![CDATA[Feedback Loops]]></category>
+            <category><![CDATA[asynchronous]]></category>
+            <category><![CDATA[ci]]></category>
+            <category><![CDATA[feedback]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Burn the Boats]]></title>
             <description><![CDATA[Removes working but obsolete features on a hard, announced deadline so the team and users move to the new approach]]></description>
             <link>https://agentic-patterns.com/patterns/burn-the-boats</link>
@@ -61,6 +72,21 @@
             <category><![CDATA[self-destruct]]></category>
             <category><![CDATA[obsolescence]]></category>
             <category><![CDATA[product-strategy]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Capability-Escrow-Receipt]]></title>
+            <description><![CDATA[Binds a signed capability listing, an atomic escrow-plus-hire step, and a signed work receipt into one loop for agent-to-agent payment]]></description>
+            <link>https://agentic-patterns.com/patterns/capability-escrow-receipt</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/capability-escrow-receipt</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[coordination]]></category>
+            <category><![CDATA[payments]]></category>
+            <category><![CDATA[escrow]]></category>
+            <category><![CDATA[receipts]]></category>
+            <category><![CDATA[capabilities]]></category>
+            <category><![CDATA[atomic-hire]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -264,33 +290,6 @@
             <category><![CDATA[fault-detection]]></category>
             <category><![CDATA[human-in-the-loop]]></category>
             <category><![CDATA[distributed-systems]]></category>
-            <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Evidence-Layered Evaluation for Interactive Agents]]></title>
-            <description><![CDATA[Scores interactive agent runs on a task outcome assertion and links each result to layered evidence: actions, screenshots, replays, network, and messages]]></description>
-            <link>https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[evaluation]]></category>
-            <category><![CDATA[browser-agents]]></category>
-            <category><![CDATA[computer-use]]></category>
-            <category><![CDATA[reproducibility]]></category>
-            <category><![CDATA[observability]]></category>
-            <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Exact-Action Authorization Binding]]></title>
-            <description><![CDATA[Bind a short-lived approval to the complete action presented to the reviewer, then rederive and compare that identity at the acting boundary before execution.]]></description>
-            <link>https://agentic-patterns.com/patterns/exact-action-authorization-binding</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/exact-action-authorization-binding</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[authorization]]></category>
-            <category><![CDATA[approval]]></category>
-            <category><![CDATA[tool-use]]></category>
-            <category><![CDATA[action-binding]]></category>
-            <category><![CDATA[TOCTOU]]></category>
-            <category><![CDATA[receipts]]></category>
             <pubDate>Fri, 21 Aug 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
