@@ -35,6 +35,21 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent-First Tool Discovery]]></title>
+            <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-first-tool-discovery</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tool-discovery</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[tool-discovery]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[agent-search]]></category>
+            <category><![CDATA[service-registry]]></category>
+            <category><![CDATA[llms-txt]]></category>
+            <category><![CDATA[api-discovery]]></category>
+            <category><![CDATA[agent-infrastructure]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Autonomous Workflow Agent Architecture]]></title>
             <description><![CDATA[Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery]]></description>
             <link>https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture</link>
@@ -133,6 +148,33 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Cross-Domain Agent Conflict Resolution]]></title>
+            <description><![CDATA[A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.]]></description>
+            <link>https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[conflict-resolution]]></category>
+            <category><![CDATA[policy-as-code]]></category>
+            <category><![CDATA[governance]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[drift-detection]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Disposable Scaffolding Over Durable Features]]></title>
+            <description><![CDATA[Treats code around the model as temporary scaffolding: build the simplest thing that works now, mark it disposable, and remove it when models improve]]></description>
+            <link>https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[bitter-lesson]]></category>
+            <category><![CDATA[temporary-tooling]]></category>
+            <category><![CDATA[model-centric]]></category>
+            <category><![CDATA[adaptability]]></category>
+            <category><![CDATA[future-proofing]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[External Credential Sync]]></title>
             <description><![CDATA[Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership]]></description>
             <link>https://agentic-patterns.com/patterns/external-credential-sync</link>
@@ -174,6 +216,23 @@
             <category><![CDATA[context-monitoring]]></category>
             <category><![CDATA[pre-tool-use]]></category>
             <category><![CDATA[post-tool-use]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Inference-Time Scaling]]></title>
+            <description><![CDATA[Spends extra compute at inference time with best-of-N sampling, longer reasoning, self-refinement, search, and verification to improve output quality]]></description>
+            <link>https://agentic-patterns.com/patterns/inference-time-scaling</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/inference-time-scaling</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[scaling]]></category>
+            <category><![CDATA[inference]]></category>
+            <category><![CDATA[compute]]></category>
+            <category><![CDATA[reasoning]]></category>
+            <category><![CDATA[performance]]></category>
+            <category><![CDATA[o1-model]]></category>
+            <category><![CDATA[test-time-compute]]></category>
+            <category><![CDATA[search]]></category>
+            <category><![CDATA[verification]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -232,63 +291,6 @@
             <category><![CDATA[long-running-agents]]></category>
             <category><![CDATA[audit-trail]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Reliability Problem Map Checklist for RAG and Agents]]></title>
-            <description><![CDATA[Runs a fixed 16-question failure checklist on each RAG or agent incident, maps the result to repair actions, and re-tests the same failing case]]></description>
-            <link>https://agentic-patterns.com/patterns/wfgy-reliability-problem-map</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/wfgy-reliability-problem-map</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[reliability]]></category>
-            <category><![CDATA[evaluation]]></category>
-            <category><![CDATA[rag]]></category>
-            <category><![CDATA[agents]]></category>
-            <category><![CDATA[debugging]]></category>
-            <category><![CDATA[failure-modes]]></category>
-            <category><![CDATA[checklist]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Sandboxed Tool Authorization]]></title>
-            <description><![CDATA[Filters an agent's tools through deny-first allow and deny patterns, profile presets, and subagent policies that inherit parent restrictions]]></description>
-            <link>https://agentic-patterns.com/patterns/sandboxed-tool-authorization</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/sandboxed-tool-authorization</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[authorization]]></category>
-            <category><![CDATA[policy]]></category>
-            <category><![CDATA[allowlist]]></category>
-            <category><![CDATA[policy-inheritance]]></category>
-            <category><![CDATA[pattern-matching]]></category>
-            <category><![CDATA[subagent-security]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[402-First Machine Payments (Price-Before-Work Tool Purchases)]]></title>
-            <description><![CDATA[Server returns an HTTP 402 price quote before doing work, and the agent pays the exact amount only if it fits its budget cap]]></description>
-            <link>https://agentic-patterns.com/patterns/402-first-machine-payments</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/402-first-machine-payments</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[payments]]></category>
-            <category><![CDATA[micropayments]]></category>
-            <category><![CDATA[x402]]></category>
-            <category><![CDATA[http-402]]></category>
-            <category><![CDATA[agent-commerce]]></category>
-            <category><![CDATA[tool-use]]></category>
-            <category><![CDATA[budget-guards]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Classify-Then-Act for Background Agents]]></title>
-            <description><![CDATA[Sorts each task into has-default, needs-intent, or out-of-scope, builds only has-default work in a sandbox, and queues it for human review]]></description>
-            <link>https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[background-agents]]></category>
-            <category><![CDATA[task-triage]]></category>
-            <category><![CDATA[sandboxed-build]]></category>
-            <category><![CDATA[review-queue]]></category>
-            <category><![CDATA[autonomy-boundary]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>
