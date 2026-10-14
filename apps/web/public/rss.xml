@@ -7,6 +7,18 @@
         <lastBuildDate>Tue, 13 Oct 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
+            <title><![CDATA[Action-Selector Pattern]]></title>
+            <description><![CDATA[LLM maps user intent to a pre-approved action ID with schema-validated parameters, and tool outputs never return to the selector]]></description>
+            <link>https://agentic-patterns.com/patterns/action-selector-pattern</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/action-selector-pattern</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[prompt-injection]]></category>
+            <category><![CDATA[control-flow]]></category>
+            <category><![CDATA[safety]]></category>
+            <category><![CDATA[tool-use]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Agent Circuit Breaker]]></title>
             <description><![CDATA[Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints]]></description>
             <link>https://agentic-patterns.com/patterns/agent-circuit-breaker</link>
@@ -85,6 +97,36 @@
             <category><![CDATA[asynchronous]]></category>
             <category><![CDATA[ci]]></category>
             <category><![CDATA[feedback]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Board-Mediated Async Inter-Agent Coordination]]></title>
+            <description><![CDATA[Routes agent-to-agent messages through comment threads on board cards, with a prefix that creates an inbox card to notify the target agent]]></description>
+            <link>https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[coordination]]></category>
+            <category><![CDATA[async]]></category>
+            <category><![CDATA[kanban]]></category>
+            <category><![CDATA[board]]></category>
+            <category><![CDATA[message-routing]]></category>
+            <category><![CDATA[inbox]]></category>
+            <category><![CDATA[session-continuity]]></category>
+            <category><![CDATA[audit-trail]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Budget-Aware Model Routing with Hard Cost Caps]]></title>
+            <description><![CDATA[Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail]]></description>
+            <link>https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[routing]]></category>
+            <category><![CDATA[cost-control]]></category>
+            <category><![CDATA[multi-model]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[reliability]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -175,6 +217,20 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Continuous Autonomous Task Loop Pattern]]></title>
+            <description><![CDATA[Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits]]></description>
+            <link>https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[autonomous-execution]]></category>
+            <category><![CDATA[task-loop]]></category>
+            <category><![CDATA[rate-limiting]]></category>
+            <category><![CDATA[git-automation]]></category>
+            <category><![CDATA[cli-driven]]></category>
+            <category><![CDATA[stream-processing]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[CriticGPT-Style Code Review]]></title>
             <description><![CDATA[Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration]]></description>
             <link>https://agentic-patterns.com/patterns/criticgpt-style-evaluation</link>
@@ -202,6 +258,20 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Cross-Cycle Consensus Relay]]></title>
+            <description><![CDATA[Each loop cycle reads a structured relay document, does its work, and atomically writes back decisions, open questions, and the single next action]]></description>
+            <link>https://agentic-patterns.com/patterns/cross-cycle-consensus-relay</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-cycle-consensus-relay</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[state-management]]></category>
+            <category><![CDATA[persistence]]></category>
+            <category><![CDATA[long-running-tasks]]></category>
+            <category><![CDATA[orchestration]]></category>
+            <category><![CDATA[autonomous-loops]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Cross-Domain Agent Conflict Resolution]]></title>
             <description><![CDATA[A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.]]></description>
             <link>https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</link>
@@ -213,78 +283,6 @@
             <category><![CDATA[governance]]></category>
             <category><![CDATA[orchestration]]></category>
             <category><![CDATA[drift-detection]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Cross-Protocol Agent Discovery]]></title>
-            <description><![CDATA[Aggregates agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer (proposed; no neutral implementation verified)]]></description>
-            <link>https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[agent-discovery]]></category>
-            <category><![CDATA[mcp]]></category>
-            <category><![CDATA[registry]]></category>
-            <category><![CDATA[interoperability]]></category>
-            <category><![CDATA[protocol-agnostic]]></category>
-            <category><![CDATA[a2a]]></category>
-            <category><![CDATA[agents-txt]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Disposable Scaffolding Over Durable Features]]></title>
-            <description><![CDATA[Treats code around the model as temporary scaffolding: build the simplest thing that works now, mark it disposable, and remove it when models improve]]></description>
-            <link>https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[bitter-lesson]]></category>
-            <category><![CDATA[temporary-tooling]]></category>
-            <category><![CDATA[model-centric]]></category>
-            <category><![CDATA[adaptability]]></category>
-            <category><![CDATA[future-proofing]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[External Credential Sync]]></title>
-            <description><![CDATA[Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership]]></description>
-            <link>https://agentic-patterns.com/patterns/external-credential-sync</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/external-credential-sync</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[credentials]]></category>
-            <category><![CDATA[oauth]]></category>
-            <category><![CDATA[token-sync]]></category>
-            <category><![CDATA[keychain]]></category>
-            <category><![CDATA[cli-integration]]></category>
-            <category><![CDATA[auth-reuse]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Failover-Aware Model Fallback]]></title>
-            <description><![CDATA[Classifies each model failure by reason and falls back along a model chain only for retryable errors, failing fast on auth, billing, and user aborts]]></description>
-            <link>https://agentic-patterns.com/patterns/failover-aware-model-fallback</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/failover-aware-model-fallback</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[fallback]]></category>
-            <category><![CDATA[reliability]]></category>
-            <category><![CDATA[error-classification]]></category>
-            <category><![CDATA[multi-model]]></category>
-            <category><![CDATA[failover]]></category>
-            <category><![CDATA[resilience]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Hook-Based Safety Guard Rails for Autonomous Code Agents]]></title>
-            <description><![CDATA[Runs small shell scripts on PreToolUse and PostToolUse hooks to block destructive commands, lint edits, and warn on context use outside the agent's reasoning]]></description>
-            <link>https://agentic-patterns.com/patterns/hook-based-safety-guard-rails</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/hook-based-safety-guard-rails</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[hooks]]></category>
-            <category><![CDATA[guard-rails]]></category>
-            <category><![CDATA[safety]]></category>
-            <category><![CDATA[autonomous-operation]]></category>
-            <category><![CDATA[destructive-command-blocking]]></category>
-            <category><![CDATA[context-monitoring]]></category>
-            <category><![CDATA[pre-tool-use]]></category>
-            <category><![CDATA[post-tool-use]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
