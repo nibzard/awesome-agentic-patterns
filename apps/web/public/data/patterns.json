@@ -3155,6 +3155,37 @@
     "excerpt": "\n## Problem\nAI model requests fail for varied and often opaque reasons. Simple retry logic fails to distinguish between:\n\n- **Transient failures** (timeouts, rate limits) that benefit from retry with backoff\n- **Semantic failures** (auth errors, billing issues) where retry is futile\n- **User aborts** where retry wastes resources and frustrates users\n\nAgents using multiple models or providers need intelligent fallback strategies that respect failure semantics, avoid retry loops, and provide clear diagnostics."
   },
   {
+    "title": "Fair-Share Task Queues with Heartbeat Leases",
+    "status": "proposed",
+    "authors": [
+      "Retsumdk (@Retsumdk)"
+    ],
+    "based_on": [],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/Retsumdk/agent-decentralized-task-allocation-framework",
+    "tags": [
+      "task-queue",
+      "load-balancing",
+      "fault-tolerance",
+      "multi-agent",
+      "scheduling"
+    ],
+    "slug": "fair-share-task-queues-with-heartbeat-leases",
+    "id": "fair-share-task-queues-with-heartbeat-leases",
+    "summary": "Distributes tasks across a shared agent fleet using weighted deficit-round-robin scheduling, with heartbeat leases and dead-letter retries to recover from crashed workers",
+    "signals": [
+      "Multiple stateless or semi-stateless agents consume from one shared task queue",
+      "Tasks differ in cost and workers differ in capacity, so naive round-robin starves some workers or floods others",
+      "Workers crash or hang mid-task and tasks must be reassigned without human intervention"
+    ],
+    "anti_signals": [
+      "A single agent processes tasks sequentially and the queue is short-lived",
+      "Tasks require affinity to a specific worker's local state that cannot be externalized"
+    ],
+    "updated_at": "2026-10-14",
+    "excerpt": "\n## Problem\nWhen a fleet of autonomous agents pulls work from a shared task queue, three failure modes show up in combination:\n\n1. **Unfair distribution.** Plain round-robin assigns tasks evenly by count, not by cost. A worker that drew two long tasks falls behind while an idle worker receives the next one anyway.\n2. **Lost leases.** A worker that crashes mid-task leaves its task claimed forever. Without a timeout-and-recovery mechanism the task is never retried and the queue silently stalls.\n3. **Poison tasks.** A task that fails repeatedly gets retried forever, consuming fleet capacity and masking the underlying bug.\n\nTraditional job systems (Celery, Sidekiq, SQS) solve these for processes, but agent fleets have an additional wrinkle: tasks are long-running, non-idempotent by default, and the \"worker\" may be an LLM-driven agent whose failure mode is a hang rather than a clean exception."
+  },
+  {
     "title": "Feature List as Immutable Contract",
     "status": "emerging",
     "authors": [
