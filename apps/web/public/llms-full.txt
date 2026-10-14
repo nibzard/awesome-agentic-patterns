@@ -2730,7 +2730,7 @@ Long-running refactors and flaky-fix cycles force developers into synchronous su
 
 Run the agent asynchronously in the background with CI as the objective feedback channel. The agent pushes a branch, waits for CI results, patches failures, and repeats until policy-defined stopping conditions are met. Users are only pulled back in for approvals, ambiguous failures, or final review.
 
-Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands. On the Amp side this shows up as Orbs: cloud machines per thread that keep working after you disconnect ([Amp Orbs docs](https://ampcode.com/docs/orbs)). Distinct from [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md), which is about designing the agent and repo so CI output is usable feedback; this pattern is about running the whole retry loop unattended in the background.
+Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands. On the Amp side this shows up as Orbs: cloud machines per thread that keep working after you disconnect ([Amp Orbs docs](https://ampcode.com/docs/orbs)). This pattern is about running the whole retry loop unattended in the background, not about designing the agent and repo so CI output is usable feedback.
 
 Key mechanics:
 - Branch-per-task isolation (often via cloud-based execution or git worktrees).
@@ -17139,7 +17139,7 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 
 Modern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).
 
-Distinct from [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md), which feeds CI results back through the repo, and from [Output Verification Loop](output-verification-loop.md), which verifies final output against criteria: this pattern is about rich feedback from every tool call plus human reactions within the session.
+Distinct from [Output Verification Loop](output-verification-loop.md), which verifies final output against criteria: this pattern is about rich feedback from every tool call plus human reactions within the session.
 
 ## Example
 
@@ -19173,7 +19173,7 @@ If you wait to see what happens before acting, you'll miss the window. The front
 ## References
 
 * [Raising an Agent - Episode 10 (February 2026)](https://www.youtube.com/watch?v=4rx36wc9ugw) - Amp, Inc.; also at [ampcode.com/podcast/episode-10](https://ampcode.com/podcast/episode-10)
-* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-007-0061-3) - Kohavi, Henne, Sommerfield (2007) - reports roughly two-thirds of ideas failing at Microsoft, not the 80-90% figure sometimes quoted from later Kohavi talks
+* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-008-0114-1) - Kohavi, Longbotham, Sommerfield, Henne (Data Mining and Knowledge Discovery, 2007) - reports roughly two-thirds of ideas failing at Microsoft, not the 80-90% figure sometimes quoted from later Kohavi talks
 * Distinct from [Burn the Boats](burn-the-boats.md) (removing working features on a deadline) and [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md) (treating surrounding code as temporary): this pattern is the ship-to-learn stance that motivates both.
 * Related: [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)
 

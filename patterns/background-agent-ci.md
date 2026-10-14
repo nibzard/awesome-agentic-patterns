@@ -27,7 +27,7 @@ Long-running refactors and flaky-fix cycles force developers into synchronous su
 
 Run the agent asynchronously in the background with CI as the objective feedback channel. The agent pushes a branch, waits for CI results, patches failures, and repeats until policy-defined stopping conditions are met. Users are only pulled back in for approvals, ambiguous failures, or final review.
 
-Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands. On the Amp side this shows up as Orbs: cloud machines per thread that keep working after you disconnect ([Amp Orbs docs](https://ampcode.com/docs/orbs)). Distinct from [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md), which is about designing the agent and repo so CI output is usable feedback; this pattern is about running the whole retry loop unattended in the background.
+Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands. On the Amp side this shows up as Orbs: cloud machines per thread that keep working after you disconnect ([Amp Orbs docs](https://ampcode.com/docs/orbs)). This pattern is about running the whole retry loop unattended in the background, not about designing the agent and repo so CI output is usable feedback.
 
 Key mechanics:
 - Branch-per-task isolation (often via cloud-based execution or git worktrees).

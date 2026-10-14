@@ -170,6 +170,6 @@ If you wait to see what happens before acting, you'll miss the window. The front
 ## References
 
 * [Raising an Agent - Episode 10 (February 2026)](https://www.youtube.com/watch?v=4rx36wc9ugw) - Amp, Inc.; also at [ampcode.com/podcast/episode-10](https://ampcode.com/podcast/episode-10)
-* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-007-0061-3) - Kohavi, Henne, Sommerfield (2007) - reports roughly two-thirds of ideas failing at Microsoft, not the 80-90% figure sometimes quoted from later Kohavi talks
+* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-008-0114-1) - Kohavi, Longbotham, Sommerfield, Henne (Data Mining and Knowledge Discovery, 2007) - reports roughly two-thirds of ideas failing at Microsoft, not the 80-90% figure sometimes quoted from later Kohavi talks
 * Distinct from [Burn the Boats](burn-the-boats.md) (removing working features on a deadline) and [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md) (treating surrounding code as temporary): this pattern is the ship-to-learn stance that motivates both.
 * Related: [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)

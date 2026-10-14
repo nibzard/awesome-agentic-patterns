@@ -36,7 +36,7 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 
 Modern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).
 
-Distinct from [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md), which feeds CI results back through the repo, and from [Output Verification Loop](output-verification-loop.md), which verifies final output against criteria: this pattern is about rich feedback from every tool call plus human reactions within the session.
+Distinct from [Output Verification Loop](output-verification-loop.md), which verifies final output against criteria: this pattern is about rich feedback from every tool call plus human reactions within the session.
 
 ## Example
 
