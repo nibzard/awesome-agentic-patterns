@@ -70,7 +70,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Context-Minimization Pattern](patterns/context-minimization-pattern.md)
 - [Cross-Agent Lesson Sharing via Git](patterns/cross-agent-lesson-sharing.md)
 - [Curated Code Context Window](patterns/curated-code-context-window.md)
-- [Curated File Context Window](patterns/curated-file-context-window.md)
 - [Dynamic Context Injection](patterns/dynamic-context-injection.md)
 - [Episodic Memory Retrieval & Injection](patterns/episodic-memory-retrieval-injection.md)
 - [Filesystem-Based Agent State](patterns/filesystem-based-agent-state.md)
@@ -90,7 +89,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [AI-Assisted Code Review / Verification](patterns/ai-assisted-code-review-verification.md)
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
-- [Coding Agent CI Feedback Loop](patterns/coding-agent-ci-feedback-loop.md)
 - [Deterministic Grader in the Loop](patterns/deterministic-grader-in-the-loop.md)
 - [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md)
 - [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md)
@@ -143,7 +141,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Distributed Execution with Cloud Workers](patterns/distributed-execution-cloud-workers.md)
 - [Dual LLM Pattern](patterns/dual-llm-pattern.md)
 - [Dual-Rail Message Delivery](patterns/dual-rail-message-delivery.md)
-- [Economic Value Signaling in Multi-Agent Networks](patterns/economic-value-signaling-multi-agent.md)
 - [Explicit Posterior-Sampling Planner](patterns/explicit-posterior-sampling-planner.md)
 - [Factory over Assistant](patterns/factory-over-assistant.md)
 - [Feature List as Immutable Contract](patterns/feature-list-as-immutable-contract.md)

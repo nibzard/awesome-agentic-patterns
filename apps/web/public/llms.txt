@@ -201,11 +201,6 @@ Codebase Optimization for Agents: Optimizes tooling, CLIs, tests, and docs for a
 URL: https://agentic-patterns.com/patterns/codebase-optimization-for-agents
 Markdown: https://agentic-patterns.com/patterns/codebase-optimization-for-agents.md
 
-### coding-agent-ci-feedback-loop
-Coding Agent CI Feedback Loop: Agent pushes a branch, polls CI for partial failures, patches the failing files within a retry budget, and notifies when all tests pass
-URL: https://agentic-patterns.com/patterns/coding-agent-ci-feedback-loop
-Markdown: https://agentic-patterns.com/patterns/coding-agent-ci-feedback-loop.md
-
 ### commitment-ledger-reality-gated-credit
 Commitment Ledger with Reality-Gated Credit: Records agent promises and credits retrieved memory only after an externally verifiable outcome settles.
 URL: https://agentic-patterns.com/patterns/commitment-ledger-reality-gated-credit
@@ -285,11 +280,6 @@ Markdown: https://agentic-patterns.com/patterns/cryptographic-governance-audit-t
 Curated Code Context Window: A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context
 URL: https://agentic-patterns.com/patterns/curated-code-context-window
 Markdown: https://agentic-patterns.com/patterns/curated-code-context-window.md
-
-### curated-file-context-window
-Curated File Context Window: Loads only the primary task files into the main context and has a search sub-agent rank and summarize secondary files before adding them
-URL: https://agentic-patterns.com/patterns/curated-file-context-window
-Markdown: https://agentic-patterns.com/patterns/curated-file-context-window.md
 
 ### custom-sandboxed-background-agent
 Custom Sandboxed Background Agent: Builds an in-house background coding agent that runs in sandboxed dev environments, streams progress over WebSocket, and iterates on compiler and test feedback
@@ -390,11 +380,6 @@ Markdown: https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand
 Dynamic Context Injection: Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands
 URL: https://agentic-patterns.com/patterns/dynamic-context-injection
 Markdown: https://agentic-patterns.com/patterns/dynamic-context-injection.md
-
-### economic-value-signaling-multi-agent
-Economic Value Signaling in Multi-Agent Networks: Attaches a token value to inter-agent requests so recipients prioritize by value, with a peer registry for discovery and ledger settlement
-URL: https://agentic-patterns.com/patterns/economic-value-signaling-multi-agent
-Markdown: https://agentic-patterns.com/patterns/economic-value-signaling-multi-agent.md
 
 ### egress-lockdown-no-exfiltration-channel
 Egress Lockdown (No-Exfiltration Channel): Puts the agent behind a default-deny egress firewall with allowlisted destinations so stolen data has no outbound channel
