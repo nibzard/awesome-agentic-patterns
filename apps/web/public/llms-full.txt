@@ -10382,6 +10382,7 @@ approval_channels:
 - [Claude Code permissions](https://code.claude.com/docs/en/permissions) - permission modes plus allow/ask/deny rules as a maintained standard implementation
 - [MCP elicitation specification](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation) - protocol-level mid-flow approval requests
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
+- [Impri](https://github.com/sekera-radim/impri) - Self-hostable, framework-agnostic implementation of this pattern (contributor-owned, disclosed): agents propose actions via MCP or REST, a human approves/edits/rejects from a web inbox, Slack, Telegram, or phone, then the agent executes. MIT-licensed open-core, included as a concrete alternative to the vendor-SDK references above.
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)
 
 ---
