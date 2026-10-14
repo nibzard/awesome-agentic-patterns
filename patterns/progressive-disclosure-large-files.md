@@ -20,7 +20,7 @@ id: progressive-disclosure-for-large-files
 summary: "Puts only file metadata in the prompt and gives the agent load, peek, and extract tools to pull file content into context on demand"
 signals: ["Agent works with large PDFs, DOCX files, or images", "Files are much bigger than the relevant text they contain", "Workflows compare documents or read ticket attachments"]
 anti_signals: ["Files are small enough to load in full", "Extra tool round-trips are not acceptable"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -88,8 +88,7 @@ Apply **progressive disclosure**: load file metadata first, then provide tools t
 - `extract_file` should return simplified text (tables, text content)
 - Consider making `extract_file` return a virtual `file_id` for very large extractions
 - Preloading first N KB is optional - can give agent initial context without full load
-- Recommended preload amounts: text 10-50 KB, PDF first page/5 KB, images metadata only
-- Cache extracted content to avoid re-processing (TTL: text 24h, tables 7 days, metadata 1h)
+- Cache extracted content to avoid re-processing; pick TTLs to match how often the underlying files change
 
 **Tool design:**
 
@@ -112,7 +111,7 @@ def extract_file(file_id: str, extraction: str = "text") -> str:
 - Enables working with files much larger than context window
 - Agent has control over what/when to load
 - Reusable across workflows via `large_files` skill
-- Extracted content is often 100x smaller than original file
+- Extracted text is typically far smaller than the original file (a multi-megabyte PDF may hold only kilobytes of relevant text)
 
 **Cons:**
 
@@ -128,8 +127,8 @@ def extract_file(file_id: str, extraction: str = "text") -> str:
 
 ## References
 
-* [Building an internal agent: Progressive disclosure and handling large files](https://lethain.com/agents-large-files/) - Will Larson (2025)
-* Related: [Progressive Tool Discovery](progressive-tool-discovery.md) - Similar lazy-loading concept for tools
+* [Building an internal agent: Progressive disclosure and handling large files](https://lethain.com/agents-large-files/) - Will Larson (2025), the practitioner source for the metadata-plus-load/peek/extract core described above
+* Agent Skills use the same progressive-disclosure model for instructions: a `SKILL.md` with metadata loads up front and full instructions are read only on demand - https://code.claude.com/docs/en/skills
+* Related: [Progressive Tool Discovery](progressive-tool-discovery.md) - the same lazy-loading idea applied to tool definitions rather than file contents
 * Related: [Context-Minimization Pattern](context-minimization-pattern.md) - Complementary pattern for reducing context bloat
-* Yang et al. (2016). "Hierarchical Attention Networks for Document Classification." NAACL - Academic foundation for hierarchical processing
 * LangChain - Document loaders with metadata-first approach ([github.com/langchain-ai/langchain](https://github.com/langchain-ai/langchain))

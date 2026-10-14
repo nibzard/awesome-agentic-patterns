@@ -4,15 +4,14 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Claude Code Hooks System"]
 category: "Context & Memory"
-source: "https://docs.anthropic.com/en/docs/claude-code/hooks"
+source: "https://code.claude.com/docs/en/hooks"
 tags: [self-identity, persona, session-hooks, familiarity, cross-session, profile, soul-document, agent-personality]
 summary: "Injects a persistent identity document at session start and updates it with new user insights at session end through lifecycle hooks"
 signals: ["Users re-explain preferences and goals every session", "Agent works with the same user over many sessions", "Host supports session start and end hooks"]
 anti_signals: ["Agent must stay general rather than specialize to one user", "No lifecycle hook infrastructure", "Per-session token budget cannot hold the profile"]
 evidence_grade: medium
-evidence_snapshot: "Dual-hook validated in production; MemGPT/Reflexion show 91% vs 80% HumanEval via reflection"
-last_updated: "2026-02-28"
-updated_at: "2026-03-11"
+evidence_snapshot: "Practitioner pattern; Reflexion shows 91% vs 80% HumanEval via reflection; overlaps shipped auto-memory features"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -31,8 +30,10 @@ While episodic memory systems store past *experiences*, they don't address the n
 Implement **dual-hook architecture** for self-identity accumulation:
 
 1. **SessionStart Hook**: Inject accumulated identity/profile at session start
-2. **SessionEnd Hook**: Extract new insights and refine the profile after each session
+2. **Refinement hook (Stop or PostCompact)**: Extract new insights and refine the profile as the session runs
 3. **Identity Document**: A persistent file (e.g., WHO_AM_I.md, SOUL.md) that evolves over time
+
+Before building this, check what your harness already automates: Claude Code's auto memory has the agent save typed learning notes (`user`, `feedback`, `project`, `reference`) that load into every session, and the Claude API memory tool offers the same store-and-retrieve loop for applications. An explicit identity document is worth keeping when you want one curated, user-editable profile rather than the harness's accumulating notes.
 
 ```mermaid
 sequenceDiagram
@@ -40,7 +41,7 @@ sequenceDiagram
     participant IdentityFile as WHO_AM_I.md
     participant Agent
     participant User
-    participant SessionEnd
+    participant StopHook as Stop hook
 
     Note over SessionStart: New session begins
     SessionStart->>IdentityFile: Read profile
@@ -53,10 +54,9 @@ sequenceDiagram
     User->>Agent: Work together
     Agent->>User: Learn preferences
 
-    Note over SessionEnd: Session terminates
-    SessionEnd->>Agent: Extract insights from conversation
-    Agent->>IdentityFile: Update with new insights
-    IdentityFile-->>SessionEnd: Saved for next session
+    Note over StopHook: Turn ends
+    StopHook->>IdentityFile: Append new insights
+    IdentityFile-->>StopHook: Saved for next session
 ```
 
 **Core mechanism:**
@@ -67,12 +67,10 @@ def session_start_hook():
     profile = read_file("WHO_AM_I.md")
     inject_context(profile)
 
-# SessionEnd: Refine identity with new insights
-def session_end_hook(conversation):
-    new_insights = extract_insights(conversation)
-    current_profile = read_file("WHO_AM_I.md")
-    updated_profile = merge_insights(current_profile, new_insights)
-    write_file("WHO_AM_I.md", updated_profile)
+# Stop hook (side effect): append new insights to the profile
+def stop_hook(turn_payload):
+    new_insights = extract_insights(turn_payload["last_assistant_message"])
+    append_file("WHO_AM_I.md", new_insights)
 ```
 
 **Profile structure typically includes:**
@@ -89,7 +87,7 @@ def session_end_hook(conversation):
 - **Most Valuable Findings:**
   - Reflexion (Shinn et al., 2023) achieved 91% pass rate on HumanEval vs 80% baseline through episodic memory with self-reflection
   - MemGPT (Packer et al., 2023) demonstrates hierarchical memory systems with virtual context management in production
-  - Cursor AI's 10x-MCP persistent memory reported 26% improvement over OpenAI Memory with 90% token reduction (forum validation)
+  - Claude Code auto memory and the Claude memory tool ship adjacent capabilities (agent-written learnings loaded every session), showing the demand is real even where the identity document itself is not a product feature
 - **Unverified / Unclear:** Long-term identity accumulation studies (multi-month) and conflict resolution mechanisms for contradictory identity statements
 
 ## How to use it
@@ -98,7 +96,7 @@ def session_end_hook(conversation):
 
 1. Create identity document with initial structure
 2. Configure SessionStart hook to read and inject it
-3. Configure SessionEnd hook to refine it with new insights
+3. Configure a Stop or PostCompact hook to append new insights as the session runs
 4. Include instructions for when/how to update
 
 **Example SessionStart hook (Claude Code):**
@@ -121,29 +119,29 @@ if whoami_path.exists():
     }))
 ```
 
-**Example SessionEnd hook (Claude Code):**
+**Example refinement hook (Claude Code):**
 
-```python
-#!/usr/bin/env python3
-import subprocess
+SessionEnd is the wrong place for refinement: it runs after the session terminates, its stdout is discarded (only stderr reaches the user), and it shares a 1.5-second budget that per-hook `timeout` settings can raise to at most 60 seconds — too short for an LLM call that spawns another `claude --continue -p` session. Run refinement from a Stop hook instead, which fires when Claude finishes responding and can read `last_assistant_message` from its input:
 
-PROMPT = """
-Read WHO_AM_I.md and update it based on our conversation:
-1. Extract NEW insights about the user
-2. UPDATE each section (add new insights, keep existing)
-3. Write updated content back
-4. Update 'modified' date in frontmatter
-"""
-
-subprocess.run([
-    "claude", "--continue", "-p", PROMPT,
-    "--dangerously-skip-permissions"
-])
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/update_identity.py",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
-**Prompting for self-refinement:**
-
-The SessionEnd hook uses `--continue` to resume the conversation with a refinement prompt, allowing the agent to update its own identity document intelligently rather than through parsing.
+The script exits 0 and only appends distilled insights to `WHO_AM_I.md` as a side effect; reserve heavier consolidation (merging sections, pruning contradictions) for a periodic job you run yourself, or for the first SessionStart of a later session.
 
 ## Trade-offs
 
@@ -207,4 +205,6 @@ This document accumulates familiarity across sessions.
 
 - [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) - Park et al. (Stanford, 2023)
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) - Packer et al. (UC Berkeley, 2023)
-- [Claude Code Hooks Documentation](https://docs.anthropic.com/en/docs/claude-code/hooks)
+- [Claude Code Hooks Documentation](https://code.claude.com/docs/en/hooks) - hook events, budgets, and output handling (SessionEnd has no decision control and shares a 1.5-second budget, extendable to at most 60 seconds)
+- Claude Code auto memory (agent-written learnings loaded into every session): https://code.claude.com/docs/en/memory
+- Claude memory tool: https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool

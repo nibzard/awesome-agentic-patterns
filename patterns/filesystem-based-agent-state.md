@@ -20,7 +20,7 @@ summary: >-
   for long-running tasks.
 signals: ["Multi-step workflows with expensive operations such as API calls or data processing", "Tasks may be interrupted or exceed single-session context limits", "Several agents or sessions build on earlier work"]
 anti_signals: ["Short tasks that finish in one session with cheap steps", "The execution environment has no persistent storage", "Concurrent writers with no file locking or atomic writes"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -35,7 +35,7 @@ Instead of treating state as transient prompt text, the workflow externalizes pr
 
 File-backed state also improves observability: humans can inspect checkpoints, compare intermediate outputs across retries, and diagnose where runs diverged.
 
-Some agents exhibit "proactive state externalization" — writing `SUMMARY.md` or `CHANGELOG.md` without explicit prompting when approaching context limits, treating the filesystem as extended working memory.
+Some agents exhibit "proactive state externalization" — writing `SUMMARY.md` or `CHANGELOG.md` without explicit prompting when approaching context limits. That model-driven behavior, and how to shape it, is covered as its own pattern in [Proactive Agent State Externalization](proactive-agent-state-externalization.md); this entry stays with deliberate, workflow-level checkpointing.
 
 **Core pattern:**
 
@@ -150,7 +150,9 @@ workspace/
 4. **Using framework primitives:**
 
    ```python
-   from langchain.storage import FileStore
+   # FileStore previously shipped as langchain.storage; current releases
+   # expose it through the langchain-classic package
+   from langchain_classic.storage import FileStore
    store = FileStore("agent_memory")
    store.mset([("step1", step1_data), ("step2", step2_data)])
    ```
@@ -186,10 +188,8 @@ workspace/
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Cognition AI: Devin's proactive state externalization to `SUMMARY.md`/`CHANGELOG.md` (2024)
-* LangChain: `FileStore` and `FileBasedCache` for persistent agent memory
-* Related: Episodic Memory pattern (for conversation-level persistence)
-
-- Primary source: https://www.anthropic.com/engineering/code-execution-with-mcp
-- LangChain FileStore: https://github.com/langchain-ai/langchain
+* Anthropic Engineering: Code Execution with MCP (published November 4, 2025): https://www.anthropic.com/engineering/code-execution-with-mcp
+* Cognition AI: Devin's proactive state externalization to `SUMMARY.md`/`CHANGELOG.md` (posted September 2025): https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges
+* Claude Code memory (auto memory and CLAUDE.md as shipped file-backed memory): https://code.claude.com/docs/en/memory
+* LangChain: `FileStore` for persistent key-value state (now in the `langchain-classic` package): https://github.com/langchain-ai/langchain
+* Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md) (the model-initiated counterpart) and Episodic Memory Retrieval & Injection (conversation-level persistence)

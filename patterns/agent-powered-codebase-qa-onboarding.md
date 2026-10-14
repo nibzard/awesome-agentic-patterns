@@ -9,7 +9,7 @@ tags: [code-understanding, onboarding, q&a, retrieval, search, context-awareness
 summary: "Agent indexes the codebase with embeddings and code graphs and answers natural-language questions about where code is and how it behaves"
 signals: ["Developers onboard to a large or unfamiliar codebase", "Team explores legacy systems or asks repository-wide questions"]
 anti_signals: ["Codebase is small enough to read directly", "Team cannot keep indexes current as code changes"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -36,6 +36,12 @@ sequenceDiagram
     Agent-->>Developer: "It's configured in `config/database.js` and used by the `UserService`."
 ```
 
+## Evidence
+
+- **Practitioner reports:** the Cursor founders describe Q&A and search as the main entry point when onboarding to an unfamiliar codebase (see quoted remarks in References)
+- **Shipped products:** agentic codebase Q&A is a standard capability of current coding agents, for example Cursor (https://cursor.com/docs) and Claude Code's codebase search workflows (https://code.claude.com/docs/en/common-workflows)
+- **Research:** RepoAgent generates repository-level documentation with LLMs (EMNLP 2024); SWE-agent shows agent-computer interfaces enable autonomous software engineering (NeurIPS 2024)
+
 ## How to use it
 
 - Use for onboarding to new codebases, exploring legacy systems, and answering repository-wide questions
@@ -53,5 +59,8 @@ sequenceDiagram
 - Lukas Möller (Cursor) at 0:03:58: "...when initially getting started with a codebase that one might not be too knowledgeable about, that's using kind of the QA features a lot, using a lot of search... doing research in a codebase and figuring out how certain things interact with each other."
 - Aman Sanger (Cursor) at 0:05:50: "...as you got to places where you're really unfamiliar, like Lucas was describing when you're kind of coming into a new codebase, it's just there's this massive step function that you get from using these models."
 - Luo, Q., et al. (2024). "RepoAgent: An LLM-Powered Open-Source Framework for Repository-level Code Documentation Generation." [arXiv:2402.16667](https://arxiv.org/abs/2402.16667) - EMNLP 2024
-- Yang, J., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - arXiv preprint
+- Yang, J., et al. (2024). "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering." [arXiv:2405.15793](https://arxiv.org/abs/2405.15793) - NeurIPS 2024
+- Claude Code docs: codebase search and exploration workflows: https://code.claude.com/docs/en/common-workflows
+- Cursor documentation: https://cursor.com/docs
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y
+- Related patterns: [Precomputed Code Graph Lookup](precomputed-code-graph-lookup.md) (graph store built offline, queried at run time) and [Agentic Search Over Vector Embeddings](agentic-search-over-vector-embeddings.md) (embedding index plus agentic retrieval) — this pattern covers the interactive Q&A workflow those retrieval mechanisms serve

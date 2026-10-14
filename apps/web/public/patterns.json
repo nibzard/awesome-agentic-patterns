@@ -542,7 +542,7 @@
       "Codebase is small enough to read directly",
       "Team cannot keep indexes current as code changes"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nUnderstanding a large or unfamiliar codebase can be a significant challenge for developers, especially when onboarding to a new project or trying to debug a complex system. Manually searching and tracing code paths is time-consuming."
   },
   {
@@ -1636,7 +1636,7 @@
       "Cognition AI (2025)"
     ],
     "category": "Context & Memory",
-    "source": "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)",
+    "source": "https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)",
     "tags": [
       "context-anxiety",
       "token-management",
@@ -1654,8 +1654,8 @@
       "The model does not show context-anxiety behavior",
       "Extra prompt tokens and model-specific tuning are not acceptable"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nModels like Claude Sonnet 4.5 exhibit \"context anxiety\"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. This leads to:\n\n- Premature task completion and shortcuts\n- Incomplete work despite having adequate context\n- Underestimation of remaining token capacity (consistently incorrect estimates)\n- Self-imposed pressure to \"wrap up\" rather than continue working"
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nModels like Claude Sonnet 4.5 exhibit \"context anxiety\"—they become aware of approaching context window limits and proactively summarize progress or make decisive moves to close tasks, even when sufficient context remains. The behavior is documented in Cognition's September 2025 engineering report on Devin with Sonnet 4.5; it has not been independently replicated, so treat it as a model-specific quirk to test for, not a property of every model. It leads to:\n\n- Premature task completion and shortcuts\n- Incomplete work despite having adequate context\n- Underestimation of remaining token capacity (consistently incorrect estimates)\n- Self-imposed pressure to \"wrap up\" rather than continue working"
   },
   {
     "title": "Context Window Auto-Compaction",
@@ -2004,7 +2004,7 @@
       "Small codebase that fits in context",
       "A frequently changing code index cannot be kept fresh"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLoading **all source files** or dumping entire repositories into the agent's context overwhelms the model, introduces noise, and slows inference. Coding agents need to focus on **only the most relevant modules** to efficiently reason about changes or generate new functionality.\n\n- Including every file biases the agent with irrelevant code; it \"loses coherence\" over large contexts.\n- Large contexts inflate token usage, slowing down multi-turn RL training."
   },
   {
@@ -2737,7 +2737,7 @@
       "The needed context is static and fits in baseline configuration files",
       "You cannot enforce path allowlists and secret scanning on injected files"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhile layered configuration files provide good baseline context, agents often need specific pieces of information (e.g., contents of a particular file, output of a script, predefined complex prompt) on-demand during an interactive session. Constantly editing static context files or pasting large chunks of text into prompts is inefficient."
   },
   {
@@ -2776,16 +2776,16 @@
   },
   {
     "title": "Episodic Memory Retrieval & Injection",
-    "status": "validated-in-production",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Cursor AI (MCP)",
-      "Windsurf Flows"
+      "Reflexion (Shinn et al., NeurIPS 2023)",
+      "MemGPT (Packer et al., 2023)"
     ],
     "category": "Context & Memory",
-    "source": "https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021",
+    "source": "https://help.openai.com/en/articles/8590148-memory-and-new-controls-for-chatgpt",
     "tags": [
       "episodic-memory",
       "vector-db",
@@ -2805,7 +2805,7 @@
       "You cannot review or prune memories, so noise would build up",
       "Storage or retrieval cost is not acceptable for the workload"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nStateless request handling causes agents to repeatedly rediscover decisions, constraints, and prior failures. Over multi-session workflows this leads to redundant work, inconsistent behavior, and shallow planning because each turn lacks durable historical context."
   },
   {
@@ -3193,7 +3193,7 @@
       "The execution environment has no persistent storage",
       "Concurrent writers with no file locking or atomic writes"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMany agent workflows are long-running or may be interrupted (by errors, timeouts, or user intervention). Keeping all intermediate state in the model's context window is fragile and doesn't persist across sessions. When failures occur or when agents hit context limits, work is lost and must restart from scratch."
   },
   {
@@ -3845,7 +3845,7 @@
       "Boris Cherny (via Claude Code)"
     ],
     "category": "Context & Memory",
-    "source": "https://www.nibzard.com/claude-code",
+    "source": "https://code.claude.com/docs/en/memory",
     "tags": [
       "context management",
       "configuration",
@@ -3865,7 +3865,7 @@
       "One-off tasks that need no persistent context",
       "Context window is too small to hold several layers"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents require relevant context to perform effectively. Providing this context manually in every prompt is cumbersome, and a one-size-fits-all global context is often too broad or too narrow. Different projects, users, and organizational policies may require different baseline information for the agent."
   },
   {
@@ -4198,7 +4198,7 @@
       "Too few task logs to find recurring patterns",
       "Logs contain sensitive data that cannot be kept"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nIndividual task execution transcripts contain valuable learnings, but:\n\n- **Too specific**: \"Make this button pink\" isn't useful as general guidance\n- **Unknown relevance**: Hard to predict which learnings apply to future tasks\n- **Scattered knowledge**: Insights buried across hundreds of conversation logs\n- **Abstraction challenge**: Difficult to know the right level of generality\n\nSimply memorizing everything creates noise; ignoring everything loses valuable patterns."
   },
   {
@@ -5117,7 +5117,7 @@
       "Cognition AI (2025)"
     ],
     "category": "Context & Memory",
-    "source": "https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges",
+    "source": "https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges",
     "tags": [
       "state-externalization",
       "memory-management",
@@ -5136,8 +5136,8 @@
       "Short single-session tasks",
       "Documentation tokens cost more than the continuity they give"
     ],
-    "updated_at": "2026-01-05",
-    "excerpt": "\n## Problem\nModern models like Claude Sonnet 4.5 proactively attempt to externalize their state by writing summaries and notes (e.g., `CHANGELOG.md`, `SUMMARY.md`) to the file system without explicit prompting. However:\n\n- Self-generated notes are often incomplete or miss crucial context\n- Models may spend more tokens on documentation than actual problem-solving\n- Performance can degrade when agents rely exclusively on their own summaries\n- Knowledge gaps emerge from inadequate self-documentation\n- Behavior intensifies near context window limits as a coping mechanism"
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nModern models like Claude Sonnet 4.5 proactively attempt to externalize their state by writing summaries and notes (e.g., `CHANGELOG.md`, `SUMMARY.md`) to the file system without explicit prompting. However:\n\n- Self-generated notes are often incomplete or miss crucial context\n- Models may spend more tokens on documentation than actual problem-solving\n- Performance can degrade when agents rely exclusively on their own summaries\n- Knowledge gaps emerge from inadequate self-documentation\n- Behavior intensifies near context window limits as a coping mechanism\n\nWhen the harness auto-compacts context (see [Context Window Auto-Compaction](context-window-auto-compaction.md)), the trigger changes: the agent no longer faces a hard wall that forces externalization, and compaction's own summary can lull it into skipping note-writing. If you rely on externalized notes, run compaction late or explicitly re-prompt for notes after each compaction event."
   },
   {
     "title": "Proactive Trigger Vocabulary",
@@ -5275,7 +5275,7 @@
       "Files are small enough to load in full",
       "Extra tool round-trips are not acceptable"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLarge files (PDFs, DOCXs, images) overwhelm the context window when loaded naively. A 5-10MB PDF may contain only 10-20KB of relevant text/tables, but the entire file is often shoved into context, wasting tokens and degrading performance."
   },
   {
@@ -5342,7 +5342,7 @@
       "Tool list or model must change mid-conversation",
       "Short single-turn requests with little repeated content"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLong-running agent conversations with many tool calls can suffer from **quadratic performance degradation**:\n\n- **Growing JSON payloads**: Each iteration sends the entire conversation history to the API\n- **Expensive re-computation**: Without caching, the model re-processes the same static content repeatedly\n- **ZDR constraints**: Zero Data Retention (ZDR) policies prevent server-side state, ruling out `previous_response_id` optimization\n- **Configuration changes**: Mid-conversation changes (sandbox, tools, working directory) can break cache efficiency\n\nAs conversations grow, inference costs and latency increase quadratically without proper caching strategies."
   },
   {
@@ -5709,7 +5709,7 @@
       "Simple vector search already gives enough precision",
       "No capacity for upfront schema design and ongoing governance"
     ],
-    "updated_at": "2026-03-27",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nComplex QA over private or domain-specific corpora often needs more structure than flat chunk retrieval, but naive GraphRAG systems still fail in predictable ways:\n\n- **Retrieval is too broad:** entity, relation, keyword, and summary nodes all compete during search, so evidence gets noisy.\n- **Question decomposition is disconnected from storage:** the planner breaks a query into sub-questions without knowing which entity types or relations actually exist in the graph.\n- **Domain transfer is expensive:** each new corpus needs hand-tuned ontology work or brittle prompt rewrites.\n- **Large graphs become hard to navigate:** even when the graph is correct, retrieval quality drops as the system lacks higher-level abstractions for routing.\n\nThe core issue is misalignment. Construction, retrieval, and reasoning each use different assumptions about the domain, so the graph accumulates structure that the retriever cannot reliably exploit."
   },
   {
@@ -5825,7 +5825,7 @@
       "Claude Code Hooks System"
     ],
     "category": "Context & Memory",
-    "source": "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    "source": "https://code.claude.com/docs/en/hooks",
     "tags": [
       "self-identity",
       "persona",
@@ -5849,7 +5849,7 @@
       "No lifecycle hook infrastructure",
       "Per-session token budget cannot hold the profile"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents lack continuous memory across sessions. Each conversation starts from zero, causing:\n\n- **Lost familiarity**: The agent doesn't remember user preferences, goals, or working patterns\n- **Repetitive explanations**: Users must re-explain context and preferences each session\n- **Shallow relationships**: Agent cannot build deeper understanding of user's needs over time\n- **Generic responses**: Without accumulated context, agents default to generic behaviors\n\nWhile episodic memory systems store past *experiences*, they don't address the need for an evolving *self-identity*—who the agent is in relation to the user."
   },
   {
@@ -5913,8 +5913,8 @@
       "Source data is already compact and relevant",
       "Hidden or dynamic content that filters can remove is essential to the task"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nRaw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.\n\nResearch on boilerplate detection shows that **40-80% of web page content** is typically navigation, footers, ads, and other boilerplate that should be filtered before semantic processing (Kohlschütter et al., SIGIR 2010).\n\nThis creates several problems:\n\n- **Token explosion**: Raw data exceeds context limits or becomes prohibitively expensive\n- **Poor signal-to-noise**: LLM wastes reasoning capacity on irrelevant details\n- **Slower inference**: More tokens = slower generation and higher costs\n- **Confused reasoning**: Noise leads to hallucinations or wrong conclusions\n\nThe issue appears across domains:\n\n- **Web scraping**: Full HTML DOM includes scripts, styles, tracking iframes\n- **API responses**: JSON with nested metadata, internal fields, debug info\n- **Document processing**: Headers, footers, navigation, boilerplate text\n- **Code analysis**: Comments, whitespace, boilerplate code"
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nRaw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.\n\nResearch on boilerplate detection shows that a large fraction of web page content is navigation, templates, ads, and other boilerplate that carries no page-specific signal, which is why shallow text features suffice to strip it (Kohlschütter et al., WSDM 2010).\n\nThis creates several problems:\n\n- **Token explosion**: Raw data exceeds context limits or becomes prohibitively expensive\n- **Poor signal-to-noise**: LLM wastes reasoning capacity on irrelevant details\n- **Slower inference**: More tokens = slower generation and higher costs\n- **Confused reasoning**: Noise leads to hallucinations or wrong conclusions\n\nThe issue appears across domains:\n\n- **Web scraping**: Full HTML DOM includes scripts, styles, tracking iframes\n- **API responses**: JSON with nested metadata, internal fields, debug info\n- **Document processing**: Headers, footers, navigation, boilerplate text\n- **Code analysis**: Comments, whitespace, boilerplate code"
   },
   {
     "title": "Session-Scoped Context Runtime for Agent Tools",
@@ -5953,7 +5953,7 @@
     "domains": [
       "coding"
     ],
-    "updated_at": "2026-04-29",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nCoding agents read the same files and command outputs many times per session. Each hop typically pastes full text into the model context, so cost and latency grow with repetition and verbosity even when the underlying artifact has not changed."
   },
   {
@@ -6280,8 +6280,8 @@
       "Clawdia (@OzorOwn)"
     ],
     "based_on": [
-      "llms.txt community specification",
-      "OpenAI ChatGPT Plugin manifest (ai-plugin.json)"
+      "llms.txt community specification (v2, 2026)",
+      "AGENTS.md (stewarded by the Agentic AI Foundation under the Linux Foundation)"
     ],
     "category": "Tool Use & Environment",
     "source": "https://llmstxt.org",
@@ -6307,7 +6307,7 @@
       "API changes too often to keep a static manifest in sync",
       "Agents need full per-endpoint schemas, not a summary"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nBefore an agent can use an API, it needs to know what the API offers. Today, agents typically learn about available services through hardcoded tool lists in their system prompt, runtime exploration of tool catalogs, or human-written documentation that must be parsed and interpreted. None of these scale well when agents need to interact with unfamiliar platforms that expose many services. The agent either wastes context window on a full catalog it may not need, or has no way to learn about the platform at all without human intervention."
   },
   {
@@ -6666,7 +6666,7 @@
   },
   {
     "title": "Tool Search Lazy Loading",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Niko"
     ],
@@ -6718,8 +6718,8 @@
       "tool-use",
       "context-optimization"
     ],
-    "updated_at": "2026-01-14",
-    "excerpt": "\n## Problem\nAs the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools that consume significant context space. Documented setups with 7+ servers have been documented consuming 67k+ tokens just for tool descriptions. This creates a fundamental scalability issue:\n\n* **Context bloat**: Preloading all tool descriptions consumes tokens that could be used for the actual task\n* **Latency**: More tools means more processing overhead on every request\n* **Discovery challenges**: Agents must scan through many irrelevant tools to find relevant ones\n* **Memory pressure**: Large tool catalogs can exceed practical context limits"
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nAs the Model Context Protocol (MCP) has grown, MCP servers may expose 50+ tools that consume significant context space. Setups with 7+ servers were reported consuming 67k+ tokens just for tool descriptions at the feature's launch announcement. This creates a fundamental scalability issue:\n\n* **Context bloat**: Preloading all tool descriptions consumes tokens that could be used for the actual task\n* **Latency**: More tools means more processing overhead on every request\n* **Discovery challenges**: Agents must scan through many irrelevant tools to find relevant ones\n* **Memory pressure**: Large tool catalogs can exceed practical context limits"
   },
   {
     "title": "Tool Selection Guide",
@@ -6799,7 +6799,7 @@
       "Boris Cherny (via Claude Code examples)"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://www.nibzard.com/claude-code",
+    "source": "https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it",
     "tags": [
       "tool use",
       "prompting",
@@ -6820,7 +6820,7 @@
       "Agent has few tools and picks them correctly on its own",
       "Tool interfaces change too often to keep prompts current"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents equipped with multiple tools (e.g., shell access, file system operations, web search, custom CLIs) need clear guidance on when, why, and how to use these tools effectively. Simply having tools available doesn't guarantee they will be used appropriately for the task at hand, especially for tools unfamiliar to the base model or specific to a team's workflow."
   },
   {
@@ -7008,7 +7008,7 @@
       "infrastructure",
       "ops"
     ],
-    "updated_at": "2026-03-31",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAs agent capabilities grow, they need access to an expanding set of external tools — web search, image generation, competitor research, security scanning, video production, and more. Each tool typically requires its own API key, authentication flow, rate-limiting logic, and billing integration.\n\nThis creates several compounding problems:\n\n* **Credential sprawl**: Agents or their operators must manage dozens of API keys across different providers, each with different authentication schemes.\n* **Integration tax**: Every new tool requires custom integration code — error handling, retries, schema translation, and response normalization.\n* **Billing fragmentation**: Usage is scattered across many provider dashboards, making cost tracking and budget enforcement difficult.\n* **Discovery overhead**: Agents have no unified way to find what tools are available or what capabilities they can access."
   },
   {
@@ -7144,7 +7144,7 @@
       "Tasks are only text or code generation with no execution",
       "Cold-start latency of VMs or containers is not acceptable"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents need to perform complex tasks beyond simple code generation or text manipulation. They require the ability to interact with a full computer environment to execute code, manage system resources, install software, and operate various applications."
   },
   {

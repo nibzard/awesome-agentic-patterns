@@ -1,15 +1,15 @@
 ---
 title: Episodic Memory Retrieval & Injection
-status: validated-in-production
+status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Cursor AI (MCP)", "Windsurf Flows"]
+based_on: ["Reflexion (Shinn et al., NeurIPS 2023)", "MemGPT (Packer et al., 2023)"]
 category: Context & Memory
-source: "https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021"
+source: "https://help.openai.com/en/articles/8590148-memory-and-new-controls-for-chatgpt"
 tags: [episodic-memory, vector-db, retrieval-augmented, context-hint]
 summary: "Writes a structured memory record after each episode and injects the top-k similar past memories as hints when a new task starts"
 signals: ["Agent works across multiple sessions on the same repo, user, or project", "Agent repeats past mistakes or rediscovers earlier decisions", "You can store and curate memory records with task and time metadata"]
 anti_signals: ["Single-shot tasks with no continuity between sessions", "You cannot review or prune memories, so noise would build up", "Storage or retrieval cost is not acceptable for the workload"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -41,9 +41,8 @@ Design memory writes as structured records (decision, evidence, outcome, confide
 ## References
 
 - Reflexion (Shinn et al., NeurIPS 2023): https://arxiv.org/abs/2303.11366
-- ParamMem (Yao et al., 2026): https://arxiv.org/abs/2602.23320v1
+- ParamMem (Yao et al., 2026): https://arxiv.org/abs/2602.23320
 - MemGPT (Packer et al., UC Berkeley 2023): https://arxiv.org/abs/2310.08560
-- Cursor "10x-MCP" persistent memory layer
-- Windsurf Memories docs
-
-- Primary source: https://forum.cursor.com/t/agentic-memory-management-for-cursor/78021
+- ChatGPT memory (shipped feature that saves and recalls user details across conversations): https://help.openai.com/en/articles/8590148-memory-and-new-controls-for-chatgpt
+- Letta documentation (open-source agent memory framework descended from MemGPT): https://docs.letta.com/
+- Claude memory tool (API tool for storing and retrieving information across conversations): https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool

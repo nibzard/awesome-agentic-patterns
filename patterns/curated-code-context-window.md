@@ -9,7 +9,7 @@ tags: [context-management, code-agent, file-selection, noise-reduction]
 summary: "A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context"
 signals: ["Coding agent works in a large repository", "Loading all files adds noise and inflates token usage", "Long-horizon tasks risk blowing up context length"]
 anti_signals: ["Small codebase that fits in context", "A frequently changing code index cannot be kept fresh"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -69,5 +69,9 @@ sequenceDiagram
 
 - "Context is sacred" principle from the Open Source Agent RL talk (May 2025).
 - Will Brown's commentary on "avoiding blowing up your context length" for long-horizon tasks.
-- [Thorsten Ball's "Raising An Agent - Episode 3"](https://www.nibzard.com/ampcode) - Production-validated implementation of dedicated search agent pattern.
-- [Sourcegraph: "What Sourcegraph learned building AI coding agents"](https://www.nibzard.com/ampcode) (May 2025) - Enterprise-scale AST-based codebase understanding.
+- [Thorsten Ball's "Raising An Agent - Episode 3"](https://www.youtube.com/watch?v=5A7MkiWeOjk) - Amp's video series documenting a production coding agent built around a dedicated search agent.
+- Sourcegraph (Amp) "Raising An Agent" series, the first-hand account of building enterprise coding agents: https://www.youtube.com/playlist?list=PL6zLuuRVa1_iUNbel-8MxxpqKIyesaubA (secondary summary: ["What Sourcegraph learned building AI coding agents"](https://www.nibzard.com/ampcode), May 2025).
+- [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (September 2025) - canonical current statement of just-in-time context retrieval and subagents that keep the main context clean.
+- Claude Code best practices, which call the context window "the most important resource to manage" and recommend subagents for focused work: https://code.claude.com/docs/en/best-practices
+
+Distinct from [Curated File Context Window](curated-file-context-window.md), which applies the same search-subagent-plus-snippet-injection solution at the level of picking the primary task files; that entry adds per-file loading-strategy detail (full load versus summary by size and relevance) that complements this one.

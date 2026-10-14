@@ -1255,7 +1255,7 @@
       "id": "episodic-memory-retrieval-injection",
       "title": "Episodic Memory Retrieval & Injection",
       "category": "Context & Memory",
-      "status": "validated-in-production",
+      "status": "established",
       "slug": "episodic-memory-retrieval-injection",
       "tags": [
         "episodic-memory",
@@ -2990,7 +2990,7 @@
       "id": "tool-search-lazy-loading",
       "title": "Tool Search Lazy Loading",
       "category": "Context & Memory",
-      "status": "emerging",
+      "status": "established",
       "slug": "tool-search-lazy-loading",
       "tags": [
         "mcp",

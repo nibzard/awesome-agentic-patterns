@@ -9,14 +9,14 @@ tags: [context-filtering, token-optimization, semantic-extraction, noise-reducti
 summary: "Extracts only the semantic or interactive parts of raw data, such as accessibility trees or relevant fields, before sending it to the LLM"
 signals: ["Raw HTML, API responses, or documents exceed context or cost budgets", "Boilerplate and noise confuse the model's reasoning", "Agent acts on elements that must map back to the original source"]
 anti_signals: ["Source data is already compact and relevant", "Hidden or dynamic content that filters can remove is essential to the task"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
 Raw data sources are too verbose and noisy for effective LLM consumption. Full representations include invisible elements, implementation details, and irrelevant information that bloat context and confuse reasoning.
 
-Research on boilerplate detection shows that **40-80% of web page content** is typically navigation, footers, ads, and other boilerplate that should be filtered before semantic processing (Kohlschütter et al., SIGIR 2010).
+Research on boilerplate detection shows that a large fraction of web page content is navigation, templates, ads, and other boilerplate that carries no page-specific signal, which is why shallow text features suffice to strip it (Kohlschütter et al., WSDM 2010).
 
 This creates several problems:
 
@@ -247,7 +247,7 @@ graph LR
     C --> G[LLM Processing]
 
     A -. "Noise removed" .-> B
-    B -. "10-100x reduction" .-> C
+    B -. "Large reduction" .-> C
 
     style C fill:#9f9,stroke:#333
     style A fill:#f99,stroke:#333
@@ -255,13 +255,15 @@ graph LR
 
 ### Key Benefits
 
-| Aspect | Raw Data | Semantic Filter | Improvement |
-|--------|----------|-----------------|-------------|
-| Token count | 10,000 | 100-1,000 | **10-100x reduction** |
-| LLM reasoning | Confused by noise | Focused on signal | **Better decisions** |
-| Cost | High | Low | **10-100x cheaper** |
-| Latency | Slow | Fast | **2-5x faster** |
-| Accuracy | Prone to errors | More reliable | **Higher success rate** |
+Illustrative comparison for the raw-HTML example above; actual ratios depend entirely on how verbose the source representation is:
+
+| Aspect | Raw Data | Semantic Filter |
+|--------|----------|-----------------|
+| Token count | 10,000+ (full DOM) | 100-1,000 (accessibility tree) |
+| LLM reasoning | Confused by noise | Focused on signal |
+| Cost | Scales with raw size | Scales with filtered size |
+| Latency | Slower with bigger context | Faster with smaller context |
+| Accuracy | Prone to errors | More reliable |
 
 ## How to use it
 
@@ -357,7 +359,7 @@ await page.click(element.xpath);
 
 **Pros:**
 
-- **Dramatic token reduction**: 10-100x smaller context
+- **Dramatic token reduction**: filtered representations are routinely an order of magnitude or more smaller than the raw source
 - **Better LLM reasoning**: Focus on signal, not noise
 - **Lower costs**: Fewer tokens = cheaper
 - **Faster inference**: Smaller context = faster generation
@@ -389,8 +391,10 @@ await page.click(element.xpath);
 
 ## References
 
-- [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original accessibility tree implementation
-- Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1835449.1835550), SIGIR 2010 - Foundational research showing 40-80% of web content is boilerplate
+- [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Accessibility-tree context with no screenshots and automatic ad-frame filtering
+- [Playwright MCP](https://github.com/microsoft/playwright-mcp) - browser automation server that exposes the accessibility tree instead of raw DOM or screenshots
+- Kohlschütter et al., ["Boilerplate Detection using Shallow Text Features"](https://doi.org/10.1145/1718487.1718542), WSDM 2010 - foundational research showing shallow text features detect boilerplate that carries no page-specific signal
 - Beurer-Kellner et al., ["Design Patterns for Securing LLM Agents"](https://arxiv.org/abs/2506.08837), arXiv 2025 - Context-Minimization Pattern (security framework)
 - [WAI-ARIA Accessibility Tree](https://www.w3.org/TR/core-aam-1.1/) - Browser accessibility API
 - Related patterns: [Context Window Anxiety Management](context-window-anxiety-management.md), [Curated Code Context Window](curated-code-context-window.md)
+- Distinct from [Context-Minimization Pattern](context-minimization-pattern.md): that pattern decides how much total context the agent keeps as a security and budget discipline, while this one transforms a specific raw input into its semantic elements before it reaches the context at all

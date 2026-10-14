@@ -79,7 +79,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings</loc>
@@ -199,7 +199,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/context-window-anxiety-management</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/context-window-auto-compaction</loc>
@@ -239,7 +239,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/curated-code-context-window</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/custom-sandboxed-background-agent</loc>
@@ -319,7 +319,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dynamic-context-injection</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</loc>
@@ -327,7 +327,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</loc>
@@ -367,7 +367,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/filesystem-based-agent-state</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation</loc>
@@ -443,7 +443,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/layered-configuration-context</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/lethal-trifecta-threat-model</loc>
@@ -479,7 +479,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/memory-synthesis-from-execution-logs</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/merged-code-language-skill-model</loc>
@@ -575,7 +575,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/proactive-agent-state-externalization</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/proactive-trigger-vocabulary</loc>
@@ -591,7 +591,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-disclosure-large-files</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-tool-discovery</loc>
@@ -599,7 +599,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/prompt-caching-via-exact-prefix-preservation</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/reasoning-token-firewall</loc>
@@ -639,7 +639,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/schema-guided-graph-retrieval</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/seamless-background-to-foreground-handoff</loc>
@@ -655,7 +655,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/self-identity-accumulation</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop</loc>
@@ -663,11 +663,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/semantic-context-filtering</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/shell-command-contextualization</loc>
@@ -707,7 +707,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/static-service-manifest-for-agents</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</loc>
@@ -751,7 +751,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tool-search-lazy-loading</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tool-selection-guide</loc>
@@ -763,7 +763,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tool-use-steering-via-prompting</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation</loc>
@@ -779,7 +779,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/unified-tool-gateway</loc>
-    <lastmod>2026-03-31</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/variance-based-rl-sample-selection</loc>
@@ -795,7 +795,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/virtual-machine-operator-agent</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/visual-ai-multimodal-integration</loc>

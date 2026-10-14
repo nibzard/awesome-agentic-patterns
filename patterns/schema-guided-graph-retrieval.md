@@ -23,7 +23,7 @@ summary: >-
   knowledge stays precise as domains change.
 signals: ["Multi-hop questions over private or domain-specific knowledge", "Flat chunk retrieval returns too much irrelevant context", "Domain ontology is stable enough to define types up front"]
 anti_signals: ["Simple vector search already gives enough precision", "No capacity for upfront schema design and ongoing governance"]
-updated_at: '2026-03-27'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -98,10 +98,12 @@ The distinctive move is not "use a graph" by itself. It is **reusing one schema 
 
 ## Evidence
 
-- **Evidence Grade:** `mixed`
-- **Most Valuable Findings:** the repository contains concrete implementations of schema-guided decomposition, schema-type-aware retrieval, parallel sub-question execution, and schema evolution during extraction.
-- **Most Valuable Findings:** the project reports better cost/accuracy trade-offs than its chosen baselines and presents the pattern as production-oriented for domain transfer.
-- **Unverified / Unclear:** generality across domains, the exact contribution of each subsystem, and whether the reported gains hold outside the project's evaluation setup.
+- **Evidence Grade:** `high` (peer-reviewed)
+- **Peer review:** the Youtu-GraphRAG paper was accepted at ICLR 2026 (announced in the repository news, January 2026).
+- **Reported results:** the paper's abstract reports moving the Pareto frontier "with up to 90.71% saving of token costs and 16.62% higher accuracy" over state-of-the-art baselines across six benchmarks; the repository tagline quotes 33.6% lower token cost at the frontier.
+- **Most Valuable Findings:** the repository contains concrete implementations of schema-guided decomposition, schema-type-aware retrieval, parallel sub-question execution, and schema evolution during extraction, with news entries through February 2026.
+- **Supporting benchmark:** the project publishes AnonyRAG, a fair anonymous dataset built to test retrieval performance against knowledge leakage from LLM or embedding pretraining.
+- **Unverified / Unclear:** generality across domains and the exact contribution of each subsystem outside the project's evaluation setup.
 
 ## How to use it
 
@@ -146,7 +148,7 @@ Implementation guidance:
 
 ## References
 
-- [Youtu-GraphRAG repository](https://github.com/TencentCloudADP/youtu-graphrag)
-- [Youtu-GraphRAG paper entry on arXiv](https://arxiv.org/abs/2508.19855)
+- [Youtu-GraphRAG repository](https://github.com/TencentCloudADP/youtu-graphrag) (ICLR 2026; AnonyRAG anti-leakage benchmark; enterprise edition launched on Tencent Cloud ADP, February 2026)
+- [Youtu-GraphRAG paper entry on arXiv](https://arxiv.org/abs/2508.19855) (accepted at ICLR 2026; abstract reports up to 90.71% token-cost saving and 16.62% higher accuracy)
 - Related: [Agentic Search Over Vector Embeddings](agentic-search-over-vector-embeddings.md)
 - Related: [Agent-Driven Research](agent-driven-research.md)
