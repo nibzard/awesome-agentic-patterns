@@ -1208,20 +1208,6 @@
       "summary": "Builds each tool with one interface and implementation that both humans and agents can call, with the same output, permissions, and logs"
     },
     {
-      "id": "dynamic-code-injection-on-demand-file-fetch",
-      "title": "Dynamic Code Injection (On-Demand File Fetch)",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "dynamic-code-injection-on-demand-file-fetch",
-      "tags": [
-        "file-injection",
-        "at-mention",
-        "slash-commands",
-        "IDE-integration"
-      ],
-      "summary": "Expands @file or /load tokens in the prompt into file contents, line ranges, or summaries so the agent sees code without manual copy and paste"
-    },
-    {
       "id": "dynamic-context-injection",
       "title": "Dynamic Context Injection",
       "category": "Context & Memory",

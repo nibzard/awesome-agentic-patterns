@@ -239,7 +239,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/curated-code-context-window</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-14</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/custom-sandboxed-background-agent</loc>
@@ -314,12 +314,8 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand-file-fetch</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/dynamic-context-injection</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-14</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</loc>

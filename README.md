@@ -248,7 +248,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Code-Then-Execute Pattern](patterns/code-then-execute-pattern.md)
 - [Cross-Protocol Agent Discovery](patterns/cross-protocol-agent-discovery.md)
 - [Dual-Use Tool Design](patterns/dual-use-tool-design.md)
-- [Dynamic Code Injection (On-Demand File Fetch)](patterns/dynamic-code-injection-on-demand-file-fetch.md)
 - [Egress Lockdown (No-Exfiltration Channel)](patterns/egress-lockdown-no-exfiltration-channel.md)
 - [Filesystem-Mediated Host Delegation](patterns/filesystem-mediated-host-delegation.md)
 - [Intelligent Bash Tool Execution](patterns/intelligent-bash-tool-execution.md)

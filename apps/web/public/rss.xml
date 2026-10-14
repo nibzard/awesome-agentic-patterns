@@ -4,8 +4,34 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 13 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 Oct 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Curated Code Context Window]]></title>
+            <description><![CDATA[A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context]]></description>
+            <link>https://agentic-patterns.com/patterns/curated-code-context-window</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/curated-code-context-window</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[context-management]]></category>
+            <category><![CDATA[code-agent]]></category>
+            <category><![CDATA[file-selection]]></category>
+            <category><![CDATA[noise-reduction]]></category>
+            <pubDate>Wed, 14 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Dynamic Context Injection]]></title>
+            <description><![CDATA[Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands]]></description>
+            <link>https://agentic-patterns.com/patterns/dynamic-context-injection</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/dynamic-context-injection</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[context management]]></category>
+            <category><![CDATA[dynamic context]]></category>
+            <category><![CDATA[lazy loading]]></category>
+            <category><![CDATA[slash commands]]></category>
+            <category><![CDATA[at-mention]]></category>
+            <category><![CDATA[interactive context]]></category>
+            <pubDate>Wed, 14 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Abstracted Code Representation for Review]]></title>
             <description><![CDATA[Shows reviewers pseudocode, intent summaries, and logical diffs of code changes, with drill-down to the real code to confirm the mapping]]></description>
@@ -262,32 +288,6 @@
             <category><![CDATA[reinforcement-learning]]></category>
             <category><![CDATA[adversarial-robustness]]></category>
             <category><![CDATA[agent-rft]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Asynchronous Coding Agent Pipeline]]></title>
-            <description><![CDATA[Splits inference, tool execution, reward modeling, and learning into asynchronous workers linked by message queues so GPUs stay busy]]></description>
-            <link>https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[asynchronous]]></category>
-            <category><![CDATA[pipeline]]></category>
-            <category><![CDATA[code-agent]]></category>
-            <category><![CDATA[parallelism]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Autonomous Workflow Agent Architecture]]></title>
-            <description><![CDATA[Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery]]></description>
-            <link>https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[workflow-automation]]></category>
-            <category><![CDATA[containerization]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[engineering-tasks]]></category>
-            <category><![CDATA[tmux]]></category>
-            <category><![CDATA[error-recovery]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

@@ -9,7 +9,7 @@ tags: [context-management, code-agent, file-selection, noise-reduction]
 summary: "A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context"
 signals: ["Coding agent works in a large repository", "Loading all files adds noise and inflates token usage", "Long-horizon tasks risk blowing up context length"]
 anti_signals: ["Small codebase that fits in context", "A frequently changing code index cannot be kept fresh"]
-updated_at: "2026-10-13"
+updated_at: "2026-10-14"
 ---
 
 ## Problem
@@ -51,6 +51,8 @@ sequenceDiagram
 
 - **Indexing Stage (Offline):** Build a simple **code index** (e.g., with `ripgrep`, `tree-sitter` AST parsing, or a vector store) to map function/class names to file paths.
 - **Subagent Definition:** Define `SearchSubagent` as a function that queries the code index and uses a small LLM to filter and rank matches. Modern implementations often skip vector embeddings entirely, using standard tools (`grep`, `find`, file traversal) for cleaner deployment and always-current results.
+- **Loading strategy per file:** Load small files in full; load selected sections of medium, high-relevance files; load only summaries, function signatures, or class structure for large or peripheral files. (Ported from the retired Curated File Context Window entry; the size bands are practitioner guidance, not measured thresholds.)
+- **Relevance gate before injection:** Prefer files that share symbols with the primary task files or sit within one or two dependency hops. Same provenance: heuristic guidance, not validated thresholds.
 - **Context Management Library:** Create a wrapper (e.g., `CuratedContextManager`) that automatically invokes `SearchSubagent` when the main agent asks for relevant code.
 
 ## Trade-offs

@@ -2004,7 +2004,7 @@
       "Small codebase that fits in context",
       "A frequently changing code index cannot be kept fresh"
     ],
-    "updated_at": "2026-10-13",
+    "updated_at": "2026-10-14",
     "excerpt": "\n## Problem\nLoading **all source files** or dumping entire repositories into the agent's context overwhelms the model, introduces noise, and slows inference. Coding agents need to focus on **only the most relevant modules** to efficiently reason about changes or generate new functionality.\n\n- Including every file biases the agent with irrelevant code; it \"loses coherence\" over large contexts.\n- Large contexts inflate token usage, slowing down multi-turn RL training."
   },
   {
@@ -2673,39 +2673,6 @@
     "excerpt": "\n## Problem\nBuilding separate tools for humans and AI agents creates:\n\n- **Maintenance overhead**: Two implementations of similar functionality\n- **Inconsistent behavior**: Human tools work differently than agent tools\n- **Learning curve**: Users must learn one interface, agents another\n- **Feature drift**: Human and agent capabilities diverge over time\n- **Testing burden**: Must validate both interfaces separately"
   },
   {
-    "title": "Dynamic Code Injection (On-Demand File Fetch)",
-    "status": "established",
-    "authors": [
-      "Nikola Balic (@nibzard)"
-    ],
-    "based_on": [
-      "Internal AI Dev Team"
-    ],
-    "category": "Tool Use & Environment",
-    "source": "https://code.claude.com/docs/en/common-workflows",
-    "tags": [
-      "file-injection",
-      "at-mention",
-      "slash-commands",
-      "IDE-integration"
-    ],
-    "slug": "dynamic-code-injection-on-demand-file-fetch",
-    "id": "dynamic-code-injection-on-demand-file-fetch",
-    "summary": "Expands @file or /load tokens in the prompt into file contents, line ranges, or summaries so the agent sees code without manual copy and paste",
-    "signals": [
-      "Interactive coding sessions need files that were not loaded at the start",
-      "Users copy and paste large files into chat",
-      "The chat front end or proxy has local file system access"
-    ],
-    "anti_signals": [
-      "The interface cannot access the local file system",
-      "You cannot enforce path validation and sensitive file blocking",
-      "The agent must see full files and summaries would drop needed context"
-    ],
-    "updated_at": "2026-10-13",
-    "excerpt": "\n## Problem\nDuring an interactive coding session, a user or agent may need to inspect or modify files **not originally loaded** into the main context. Manually copying/pasting entire files into the prompt is:\n\n- Tedious and error-prone.\n- Wastes tokens on boilerplate (e.g., large config files).\n- Interrupts workflow momentum when switching between the editor and chat."
-  },
-  {
     "title": "Dynamic Context Injection",
     "status": "established",
     "authors": [
@@ -2737,7 +2704,7 @@
       "The needed context is static and fits in baseline configuration files",
       "You cannot enforce path allowlists and secret scanning on injected files"
     ],
-    "updated_at": "2026-10-13",
+    "updated_at": "2026-10-14",
     "excerpt": "\n## Problem\nWhile layered configuration files provide good baseline context, agents often need specific pieces of information (e.g., contents of a particular file, output of a script, predefined complex prompt) on-demand during an interactive session. Constantly editing static context files or pasting large chunks of text into prompts is inefficient."
   },
   {

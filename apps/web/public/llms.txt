@@ -371,11 +371,6 @@ Dual-Use Tool Design: Builds each tool with one interface and implementation tha
 URL: https://agentic-patterns.com/patterns/dual-use-tool-design
 Markdown: https://agentic-patterns.com/patterns/dual-use-tool-design.md
 
-### dynamic-code-injection-on-demand-file-fetch
-Dynamic Code Injection (On-Demand File Fetch): Expands @file or /load tokens in the prompt into file contents, line ranges, or summaries so the agent sees code without manual copy and paste
-URL: https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand-file-fetch
-Markdown: https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand-file-fetch.md
-
 ### dynamic-context-injection
 Dynamic Context Injection: Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands
 URL: https://agentic-patterns.com/patterns/dynamic-context-injection
