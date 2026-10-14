@@ -3252,7 +3252,7 @@ Every object carries an Ed25519 signature (or equivalent). The ledger never deci
 
 - [Voidly Pay](https://github.com/voidly-ai/voidly-pay) — reference implementation of this pattern (contributor-owned, disclosed per guidelines). Implements capability, atomic-hire, signed-receipt, escrow-release/refund, and faucet primitives with 9 framework adapters (LangChain, CrewAI, AutoGen, LlamaIndex, Haystack, Vercel AI, OpenAI-compatible, x402, A2A).
 - [402-First Machine Payments](402-first-machine-payments.md) — sibling pattern where the quoted price doubles as a priority signal (not settlement).
-- [Milestone Escrow for Agent Resource Funding](agentfund-crowdfunding.md) — adjacent pattern for funding agents across long milestones (vs. per-task hire).
+- [Milestone Escrow for Agent Resource Funding](milestone-escrow-agent-funding.md) — adjacent pattern for funding agents across long milestones (vs. per-task hire).
 - [x402 payment-required HTTP status](https://github.com/coinbase/x402) — HTTP-level expression of the same shape (request → 402 + price → signed payment → fulfilled response).
 
 ---
@@ -4572,7 +4572,7 @@ flowchart TD
 ## Trade-offs
 
 -   **Pros:**
-    -   Significantly improves performance for sequences of read-only tool calls; 40-50% latency reduction is typical (Anthropic Claude documentation).
+    -   Significantly improves performance for sequences of read-only tool calls; the source chapter reports that combining parallel reads "can turn minutes of waiting into seconds of processing" in large codebases.
     -   Maintains safety and prevents race conditions by serializing operations that modify state.
     -   Simpler to implement than full dependency graph analysis for tool execution, while still offering substantial benefits.
     -   **Model Behavior Alignment:** Some models (e.g., Claude Sonnet 4.5) naturally exhibit parallel tool execution behavior, making this pattern feel more natural and efficient.
@@ -4587,7 +4587,7 @@ flowchart TD
 -   This pattern is detailed in the book ["Building an Agentic System"](https://gerred.github.io/building-an-agentic-system/) by Gerred Dillon, particularly in the "Parallel Tool Execution" section and the "Tool Execution Strategy" part of the "Core Architecture" section.
 -   The book describes this pattern in the context of the `anon-kode` / `Claude Code` agentic system: *"The system solves this by classifying operations as read-only or stateful, applying different execution strategies to each."* (from `src/parallel-tool-execution.md`) and *"Read vs. Write Classification... Smart Concurrency Control: Parallel for read operations... Sequential for write operations"* (from `src/core-architecture.md`).
 -   The concept is based on the idea that read operations are generally idempotent and free of side-effects when run concurrently, while write operations require careful sequencing.
--   The Model Context Protocol (MCP) provides standardized tool schemas that support this classification pattern across 1000+ community tool servers.
+-   The Model Context Protocol (MCP) provides standardized tool schemas that can carry this read-only/write classification across community tool servers.
 -   [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) observes that Sonnet 4.5 naturally maximizes actions per context window through parallel tool execution.
 
 ---
@@ -5564,7 +5564,7 @@ sequenceDiagram
 
 ## Cross-Agent Lesson Sharing via Git
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Context & Memory
 **Authors:** MisakaNet community
 **Source:** https://github.com/Ikalus1988/MisakaNet
@@ -5578,8 +5578,8 @@ AI agents working in isolation waste hours debugging issues that other agents ha
 Use **Git as the shared memory substrate** and **GitHub Issues as the message bus** for cross-agent knowledge sharing:
 
 1. When an agent solves a non-trivial problem, it writes a structured "lesson" (markdown with problem/fix/verify sections) and pushes to a shared `lessons/` directory.
-2. Other agents pull the repo and search lessons before debugging — `grep` or semantic search over markdown files.
-3. GitHub Issues serve as the coordination layer: agents post proposals, humans (or hub agents) review and merge.
+2. Other agents pull the repo and search lessons before debugging — MisakaNet retrieves with BM25 keyword search over the markdown files, built on the Python standard library with no vector database or embedding model.
+3. Intake flows through an MCP tool (`misakanet_submit_intake`) or a GitHub Issue template: agents submit a short failure note, and lessons are reviewed like code with DCO-signed commits before they merge.
 4. Each node maintains a full copy of the knowledge base, enabling offline operation and natural conflict resolution via Git merge.
 
 Key design decisions:
@@ -5593,35 +5593,47 @@ Example lesson structure:
 ---
 title: ChromaDB crashes on NTFS
 domain: devops
+tags: [chromadb, wsl, ntfs]
 status: published
-confidence: 0.9
+evidence_level: "E2"
 ---
 
 ## Problem
 ChromaDB fails with "Invalid cross-device link" on NTFS-mounted WSL paths.
 
-## Fix
+## Root Cause
+The cache directory sits on a filesystem that does not support the link
+operations ChromaDB uses.
+
+## Solution
 Set `CHROMA_CACHE_DIR` to a native ext4 path:
 export CHROMA_CACHE_DIR=/tmp/chroma-cache
 
-## Verify
+## Verification
 python3 -c "import chromadb; chromadb.Client()"
 ```
-
-## Trade-offs
-
-**Pros:** Every debugging session benefits the entire fleet; knowledge compounds over time; works offline; no additional infrastructure beyond GitHub.
-**Cons:** Requires discipline to write lessons; stale lessons can mislead; merge conflicts possible (but rare for append-heavy workloads); GitHub rate limits on API access.
 
 ## How to use it
 
 1. Set up a shared Git repository with a `lessons/` directory.
 2. Define a lesson template (problem/fix/verify with YAML frontmatter for metadata).
 3. After solving a non-trivial problem, agents write a lesson and push via PR or direct commit.
-4. Before debugging, agents search the lessons directory: `grep -r "keyword" lessons/` or use semantic search.
+4. Before debugging, agents search the lessons corpus: MisakaNet uses BM25 keyword search; a plain `grep -r "keyword" lessons/` is the minimal local equivalent.
 5. Optionally, set up a hub agent that validates proposals, deduplicates similar lessons, and maintains an index.
 
-For a production implementation, see [MisakaNet](https://github.com/Ikalus1988/MisakaNet) — 104+ shared lessons across 7 domains, 21+ registered nodes.
+For a reference implementation, see [MisakaNet](https://github.com/Ikalus1988/MisakaNet). Its README carries a live lesson-count badge, and its corpus spans domains such as rag, devops, docker, mcp, network, ci, and wsl. The project publishes its own maturity caveats, noting that whether search finds the right lesson for a described failure "is measured nowhere yet".
+
+## Trade-offs
+
+**Pros:** Every debugging session benefits the entire fleet; knowledge compounds over time; works offline; no additional infrastructure beyond GitHub.
+**Cons:** Requires discipline to write lessons; stale lessons can mislead; merge conflicts possible (but rare for append-heavy workloads); GitHub rate limits on API access.
+
+## References
+
+- [MisakaNet](https://github.com/Ikalus1988/MisakaNet) — the reference implementation: a git-backed lesson corpus retrieved with BM25 over the Python standard library, plus an MCP intake tool (`misakanet_submit_intake`)
+- [Lesson template](https://github.com/Ikalus1988/MisakaNet/blob/main/lessons/TEMPLATE.md) — the required front-matter fields (`title`, `domain`, `tags`, `status`, `evidence_level`) and the Problem → Root Cause → Solution → Verification section order
+- [New-lesson issue template](https://github.com/Ikalus1988/MisakaNet/blob/main/.github/ISSUE_TEMPLATE/new-lesson.yml) — the GitHub Issue intake path for a short failure note
+- [Limitations](https://github.com/Ikalus1988/MisakaNet/blob/main/docs/LIMITATIONS.md) — the project's own honesty caveats about evidence levels and unmeasured retrieval quality
 
 ---
 
@@ -9807,7 +9819,7 @@ Use simpler approaches (CoT, ToT) for:
 **Status:** validated-in-production
 **Category:** Security & Safety
 **Authors:** yurukusa (@yurukusa)
-**Source:** https://docs.anthropic.com/en/docs/claude-code/hooks
+**Source:** https://code.claude.com/docs/en/hooks
 
 ## Problem
 
@@ -9845,9 +9857,9 @@ exit 0  # 0 = allow
 ## Evidence
 
 - **Evidence Grade:** `high`
-- **Academic Validation:** External governance layers are necessary — even top-tier models show 40-51% unsafe behavior without guard rails (OpenAgentSafety, 2025)
+- **Academic Validation:** External governance layers are necessary — OpenAgentSafety (2025) measures unsafe behavior on 51.2% of safety-vulnerable tasks with Claude-Sonnet-3.7, rising to 72.7% with o3-mini
 - **Runtime Governance:** MI9 framework (2025) validates that rule-based, telemetry-driven safety logic operating outside the agent's context can effectively constrain behavior
-- **Pre-Execution Validation:** CaMeL framework demonstrates that formal verification before code execution significantly improves security (Beurer-Kellner et al., 2025)
+- **Pre-Execution Validation:** CaMeL demonstrates that defeating prompt injections by design, with formally analyzed information flow around untrusted data, outperforms prompt-level defenses (Debenedetti et al., 2025)
 
 ## How to use it
 
@@ -9855,6 +9867,7 @@ exit 0  # 0 = allow
 - Each hook is a standalone shell script — no dependencies on the agent's internal state.
 - PreToolUse hooks receive the tool name and input as JSON on stdin. Return exit code 2 to block.
 - PostToolUse hooks receive the tool name, input, and output. Return exit code 0 (hooks can only warn, not block after execution).
+- Shell scripts are the simplest handler, not the only one: Claude Code hooks also support HTTP endpoints, MCP tool calls, single-turn model prompts, and experimental subagent handlers, across 30+ events (PreCompact, SubagentStop, PermissionRequest, and others) beyond the tool-use pair shown here.
 - Start with the dangerous command blocker (highest impact, lowest effort).
 
 ## Trade-offs
@@ -9873,11 +9886,12 @@ exit 0  # 0 = allow
 
 ## References
 
-- [Claude Code Hooks documentation](https://docs.anthropic.com/en/docs/claude-code/hooks) — Official hook system for Claude Code
+- [Claude Code Hooks documentation](https://code.claude.com/docs/en/hooks) — Official hook system for Claude Code: five handler types (command, HTTP, MCP tool, prompt, agent) and 30+ hook events
 - [claude-code-ops-starter](https://github.com/yurukusa/claude-code-ops-starter) — Open-source implementation of these 4 hooks with a risk-score diagnostic
 - [MI9: Runtime Governance Framework](https://arxiv.org/html/2508.03858v3) (2025) — Validating external governance layers for agentic AI
-- [OpenAgentSafety](https://arxiv.org/html/2507.06134v1) (2025) — Demonstrating 40-51% unsafe behavior without external guard rails
-- [CaMeL: Code-Augmented Language Model](https://arxiv.org/abs/2506.08837) (2025) — Formal verification framework for secure LLM agent execution
+- [OpenAgentSafety](https://arxiv.org/abs/2507.06134) (2025) — Measures unsafe behavior on 51.2% (Claude-Sonnet-3.7) to 72.7% (o3-mini) of safety-vulnerable tasks
+- [CaMeL: Defeating Prompt Injections by Design](https://arxiv.org/abs/2503.18813) (Debenedetti et al., 2025) — System-design defenses with formally analyzed information flow
+- [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., 2025) — A catalogue of architectural security patterns for agents
 
 ---
 
@@ -12881,7 +12895,7 @@ python merge_models.py \
 
 ## Milestone Escrow for Agent Resource Funding
 
-**Status:** emerging
+**Status:** proposed
 **Category:** UX & Collaboration
 **Authors:** RioTheGreat-ai (@RioTheGreat-ai)
 **Source:** https://github.com/RioTheGreat-ai/agentfund-skill
@@ -12900,12 +12914,15 @@ Use milestone-based escrow with verifiable release conditions.
 4. Release payment only after independent verification of each milestone.
 5. Keep remaining funds locked until the next milestone threshold is met.
 
+This pattern funds one team's ongoing resource spend across verified milestones. It differs from [Capability-Escrow-Receipt](capability-escrow-receipt.md), which settles per-task hires between agents through an atomic hire plus a signed proof-of-work receipt.
+
 ## How to use it
 
 - Use only for work that can be partitioned into auditable milestones.
 - Keep milestones small and objective.
 - Publish clear proof formats in advance (logs, checkpoints, outputs, receipts).
 - Define reject/review/appeal paths before launch.
+- Treat the reference implementation as a sketch, not a vetted escrow service: it is a small personal project (13 stars as of October 2026) and its payment contract has no published security audit.
 
 ## Trade-offs
 
@@ -12917,9 +12934,8 @@ Use milestone-based escrow with verifiable release conditions.
 
 ## References
 
-- [agentfund-skill](https://github.com/RioTheGreat-ai/agentfund-skill)
-- [agentfund-mcp](https://github.com/RioTheGreat-ai/agentfund-mcp)
-- [Coral Protocol](https://arxiv.org/html/2505.00749v2) - Academic foundation for trustless multi-agent escrow with autonomous verification (2025)
+- [agentfund-skill](https://github.com/RioTheGreat-ai/agentfund-skill) — skill-based reference implementation
+- [agentfund-mcp](https://github.com/RioTheGreat-ai/agentfund-mcp) — MCP server for the same flow
 
 ---
 

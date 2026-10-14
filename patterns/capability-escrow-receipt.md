@@ -97,5 +97,5 @@ Every object carries an Ed25519 signature (or equivalent). The ledger never deci
 
 - [Voidly Pay](https://github.com/voidly-ai/voidly-pay) — reference implementation of this pattern (contributor-owned, disclosed per guidelines). Implements capability, atomic-hire, signed-receipt, escrow-release/refund, and faucet primitives with 9 framework adapters (LangChain, CrewAI, AutoGen, LlamaIndex, Haystack, Vercel AI, OpenAI-compatible, x402, A2A).
 - [402-First Machine Payments](402-first-machine-payments.md) — sibling pattern where the quoted price doubles as a priority signal (not settlement).
-- [Milestone Escrow for Agent Resource Funding](agentfund-crowdfunding.md) — adjacent pattern for funding agents across long milestones (vs. per-task hire).
+- [Milestone Escrow for Agent Resource Funding](milestone-escrow-agent-funding.md) — adjacent pattern for funding agents across long milestones (vs. per-task hire).
 - [x402 payment-required HTTP status](https://github.com/coinbase/x402) — HTTP-level expression of the same shape (request → 402 + price → signed payment → fulfilled response).

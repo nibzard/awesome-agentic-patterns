@@ -810,7 +810,7 @@
       "id": "cross-agent-lesson-sharing-via-git",
       "title": "Cross-Agent Lesson Sharing via Git",
       "category": "Context & Memory",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "cross-agent-lesson-sharing",
       "tags": [
         "distributed-memory",
@@ -1906,8 +1906,8 @@
       "id": "milestone-escrow-for-agent-resource-funding",
       "title": "Milestone Escrow for Agent Resource Funding",
       "category": "UX & Collaboration",
-      "status": "emerging",
-      "slug": "agentfund-crowdfunding",
+      "status": "proposed",
+      "slug": "milestone-escrow-agent-funding",
       "tags": [
         "resource-funding",
         "escrow",

@@ -278,7 +278,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Dev Tooling Assumptions Reset](patterns/dev-tooling-assumptions-reset.md)
 - [Human-in-the-Loop Approval Framework](patterns/human-in-loop-approval-framework.md)
 - [Latent Demand Product Discovery](patterns/latent-demand-product-discovery.md)
-- [Milestone Escrow for Agent Resource Funding](patterns/agentfund-crowdfunding.md)
+- [Milestone Escrow for Agent Resource Funding](patterns/milestone-escrow-agent-funding.md)
 - [Proactive Trigger Vocabulary](patterns/proactive-trigger-vocabulary.md)
 - [Seamless Background-to-Foreground Handoff](patterns/seamless-background-to-foreground-handoff.md)
 - [Spectrum of Control / Blended Initiative](patterns/spectrum-of-control-blended-initiative.md)

@@ -1,7 +1,7 @@
 ---
 title: "One OS User per Agent"
 slug: "one-os-user-per-agent"
-status: "validated-in-production"
+status: validated-in-production
 authors: ["5dive contributors (@5dive-bot)"]
 category: "Security & Safety"
 source: "https://github.com/5dive-ai/5dive/blob/main/systemd/5dive-agent%40.service"
@@ -22,7 +22,7 @@ prerequisites:
   - "An init system with templated units (systemd, or an equivalent supervisor)"
   - "Root on the host to create users and install units"
 related: ["local-first-credential-broker", "custom-sandboxed-background-agent", "isolated-vm-per-rl-rollout"]
-updated_at: "2026-09-26"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
