@@ -6305,8 +6305,6 @@ sequenceDiagram
 - [Anthropic: Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (September 2025) - canonical current statement of just-in-time context retrieval and subagents that keep the main context clean.
 - Claude Code best practices, which call the context window "the most important resource to manage" and recommend subagents for focused work: https://code.claude.com/docs/en/best-practices
 
-Distinct from [Curated File Context Window](curated-file-context-window.md), which applies the same search-subagent-plus-snippet-injection solution at the level of picking the primary task files; that entry adds per-file loading-strategy detail (full load versus summary by size and relevance) that complements this one.
-
 ---
 
 ## Custom Sandboxed Background Agent
