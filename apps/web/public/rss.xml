@@ -105,6 +105,33 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[CLI-First Skill Design]]></title>
+            <description><![CDATA[Builds each skill as a standalone CLI with JSON output and exit codes so humans and agents use the same interface]]></description>
+            <link>https://agentic-patterns.com/patterns/cli-first-skill-design</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cli-first-skill-design</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[cli]]></category>
+            <category><![CDATA[skills]]></category>
+            <category><![CDATA[shell]]></category>
+            <category><![CDATA[dual-use]]></category>
+            <category><![CDATA[composability]]></category>
+            <category><![CDATA[unix-philosophy]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[CLI-Native Agent Orchestration]]></title>
+            <description><![CDATA[Drives agents through their non-interactive CLI mode (claude -p with JSON output and exit codes) so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs]]></description>
+            <link>https://agentic-patterns.com/patterns/cli-native-agent-orchestration</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cli-native-agent-orchestration</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[cli]]></category>
+            <category><![CDATA[automation]]></category>
+            <category><![CDATA[local-dev]]></category>
+            <category><![CDATA[headless]]></category>
+            <category><![CDATA[ci]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Conditional Parallel Tool Execution]]></title>
             <description><![CDATA[Runs a batch of tool calls in parallel when all are read-only and in sequence when any modifies state, then returns results in request order]]></description>
             <link>https://agentic-patterns.com/patterns/parallel-tool-execution</link>
@@ -159,6 +186,21 @@
             <category><![CDATA[governance]]></category>
             <category><![CDATA[orchestration]]></category>
             <category><![CDATA[drift-detection]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Cross-Protocol Agent Discovery]]></title>
+            <description><![CDATA[Aggregates agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer (proposed; no neutral implementation verified)]]></description>
+            <link>https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[agent-discovery]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[registry]]></category>
+            <category><![CDATA[interoperability]]></category>
+            <category><![CDATA[protocol-agnostic]]></category>
+            <category><![CDATA[a2a]]></category>
+            <category><![CDATA[agents-txt]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -248,48 +290,6 @@
             <category><![CDATA[security]]></category>
             <category><![CDATA[process-management]]></category>
             <category><![CDATA[sandboxing]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Lane-Based Execution Queueing]]></title>
-            <description><![CDATA[Routes work into named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users]]></description>
-            <link>https://agentic-patterns.com/patterns/lane-based-execution-queueing</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/lane-based-execution-queueing</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[queueing]]></category>
-            <category><![CDATA[concurrency]]></category>
-            <category><![CDATA[lanes]]></category>
-            <category><![CDATA[isolation]]></category>
-            <category><![CDATA[parallelism]]></category>
-            <category><![CDATA[deadlock-prevention]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Milestone Escrow for Agent Resource Funding]]></title>
-            <description><![CDATA[Holds agent funding in escrow and releases each payment only after independent verification of a measurable milestone]]></description>
-            <link>https://agentic-patterns.com/patterns/milestone-escrow-agent-funding</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/milestone-escrow-agent-funding</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[resource-funding]]></category>
-            <category><![CDATA[escrow]]></category>
-            <category><![CDATA[milestones]]></category>
-            <category><![CDATA[agent-governance]]></category>
-            <category><![CDATA[budget-controls]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[One OS User per Agent]]></title>
-            <description><![CDATA[Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.]]></description>
-            <link>https://agentic-patterns.com/patterns/one-os-user-per-agent</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/one-os-user-per-agent</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[isolation]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[systemd]]></category>
-            <category><![CDATA[process-identity]]></category>
-            <category><![CDATA[least-privilege]]></category>
-            <category><![CDATA[long-running-agents]]></category>
-            <category><![CDATA[audit-trail]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
