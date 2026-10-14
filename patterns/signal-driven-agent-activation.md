@@ -3,8 +3,10 @@ title: Signal-Driven Agent Activation
 status: emerging
 authors:
   - Nicolas Finet (@nifinet)
+based_on:
+  - Will Larson (lethain.com)
 category: Orchestration & Control
-source: https://jorypestorious.com/blog/ai-engineer-spec/
+source: https://lethain.com/agents-triggers/
 tags:
   - signals
   - event-driven
@@ -14,7 +16,7 @@ tags:
 summary: "Watches external sources for structured signals and starts predefined agent workflows when declarative rules with thresholds and cooldowns match"
 signals: ["The right time to act depends on external events such as failed deploys or new CVEs", "Signal volume is too high for human triage", "Structured signal sources and clear activation thresholds exist"]
 anti_signals: ["Signals are noisy with many false positives", "No cooldowns, rate limits, or kill switch to stop runaway activation"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 # Signal-Driven Agent Activation
@@ -101,6 +103,7 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 
 ## Evidence
 
+- **Event-initiated agent workflows in production**: Will Larson's writeup of an internal agent (December 2025) documents triggers — Notion webhooks, Slack messages and reacji, Jira webhooks, and scheduled events — as the mechanism that starts agent workflows, and argues teams should maintain a library of easy-to-create triggers.
 - **Event-driven architectures** are well-established in distributed systems (AWS EventBridge, Kafka). This pattern applies the same principle to agent activation.
 - **Security orchestration (SOAR)** platforms like Splunk SOAR and Palo Alto XSOAR use signal-driven playbook activation as their core mechanism.
 - **Sales engagement platforms** increasingly use intent signals (6sense, Bombora) to trigger automated sequences, validating the signal-to-action pipeline in production.
@@ -125,6 +128,11 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 - Set conservative cooldowns initially — tighten as you validate
 - Implement a kill switch to pause all signal-driven activation
 
+**Related patterns:**
+
+- [Multi-Platform Webhook Triggers](multi-platform-webhook-triggers.md) covers building the trigger integrations themselves — Slack, Notion, and Jira webhooks, plus idempotency and signature checks. This pattern sits one level above: the declarative rule layer (thresholds, cooldowns, kill switch) that decides when a signal starts a workflow.
+- [Proactive Trigger Vocabulary](proactive-trigger-vocabulary.md) routes user input to skills by matching documented trigger phrases. This pattern instead activates workflows from external events, with no user input involved.
+
 ## Trade-offs
 
 **Advantages:**
@@ -142,6 +150,7 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 
 ## References
 
+- [Triggers for Agents — Will Larson, Irrational Exuberance (December 2025)](https://lethain.com/agents-triggers/) — primary source. Documents event-initiated triggers (webhooks, Slack messages and reacji, scheduled events) for starting agent workflows in a production internal agent. It covers trigger mechanics and adoption, not the declarative threshold/cooldown rule layer described here.
 - [Event-Driven Architecture (Martin Fowler)](https://martinfowler.com/articles/201701-event-driven.html)
 - [SOAR Playbook Activation (Gartner)](https://www.gartner.com/en/information-technology/glossary/security-orchestration-automation-response-soar)
 - [CLI-First Skill Design (this catalogue)](cli-first-skill-design.md)

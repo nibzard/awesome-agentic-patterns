@@ -1,15 +1,15 @@
 ---
 title: "Inference-Time Scaling"
-status: emerging
+status: established
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Google DeepMind", "OpenAI", "Wei et al. (CoT)", "Wang et al. (Self-Consistency)", "Yao et al. (Tree-of-Thought)"]
+based_on: ["Snell et al. (compute-optimal test-time scaling)", "OpenAI (o1)", "Wei et al. (CoT)", "Wang et al. (Self-Consistency)", "Yao et al. (Tree-of-Thought)"]
 category: "Orchestration & Control"
-source: "https://deepmind.google/research/"
+source: "https://arxiv.org/abs/2408.03314"
 tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-compute, search, verification]
 summary: "Spends extra compute at inference time with best-of-N sampling, longer reasoning, self-refinement, search, and verification to improve output quality"
 signals: ["Complex reasoning tasks such as math or coding where more deliberation helps", "Output quality matters more than latency and cost", "You want a smaller model to match a larger one on hard tasks"]
 anti_signals: ["Simple tasks that gain nothing from extra compute", "Latency-sensitive responses", "Inference budget cannot absorb higher per-request cost"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -203,8 +203,9 @@ flowchart TD
 ## Real-World Evidence
 
 - **Academic Foundation**: Wei et al. (2022) established chain-of-thought prompting; Wang et al. (2022) demonstrated self-consistency gains via multiple sampling
+- **Compute-Optimal Scaling**: Snell et al. (2024) show that adapting test-time compute per prompt makes scaling markedly more efficient than uniform best-of-N, and can let a smaller model outperform a much larger one in FLOPs-matched settings
 - **Search-Based Methods**: Yao et al. (2023) showed Tree-of-Thought improves complex problem-solving through search over reasoning paths
-- **Production Models**: OpenAI o1 (September 2024) and Anthropic Claude Extended Thinking implement inference-time scaling with improved reasoning on math and coding tasks
+- **Production Models**: OpenAI o1 (September 2024) and Anthropic Claude Extended Thinking implement inference-time scaling natively, with improved reasoning on math and coding tasks
 - **Self-Refinement**: Shinn et al. (2023) Reflexion shows models can improve outputs through iterative self-critique
 
 ## Trade-offs
@@ -224,12 +225,14 @@ flowchart TD
 
 ## How to use it
 
-- Use this when tasks need explicit control flow between planning, execution, and fallback.
-- Start with one high-volume workflow before applying it across all agent lanes.
-- Define ownership for each phase so failures can be routed and recovered quickly.
+- Set a compute or latency ceiling per request before you scale, then measure quality per dollar at each budget step. Stop where returns flatten.
+- Match the strategy to verifiability. Best-of-N and self-consistency need a scorer or verifier to select among candidates. Sequential refinement needs the model to critique its own output credibly.
+- Adapt compute to difficulty instead of spending a fixed N on every prompt. Snell et al. (2024) show compute-optimal allocation beats uniform best-of-N at the same budget.
+- Check native reasoning models first. Frontier models now spend test-time compute internally (o1, Claude Extended Thinking). Hand-rolled best-of-N or search scaffolding may duplicate what the base model already provides. See [recursive-best-of-n-delegation.md](recursive-best-of-n-delegation.md) and [tree-of-thought-reasoning.md](tree-of-thought-reasoning.md) for when building it yourself still pays off.
 
 ## References
 
+- [Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters (Snell et al., 2024)](https://arxiv.org/abs/2408.03314) — the compute-optimal reference: adaptive per-prompt allocation of test-time compute versus best-of-N and parameter scaling
 - [Chain-of-Thought Prompting Elicits Reasoning (Wei et al., 2022)](https://arxiv.org/abs/2201.11903)
 - [Self-Consistency Improves CoT Reasoning (Wang et al., 2022)](https://arxiv.org/abs/2203.11171)
 - [Tree of Thoughts (Yao et al., 2023)](https://arxiv.org/abs/2305.10601)

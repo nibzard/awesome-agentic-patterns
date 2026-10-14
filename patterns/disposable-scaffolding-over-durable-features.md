@@ -1,15 +1,15 @@
 ---
 title: "Disposable Scaffolding Over Durable Features"
-status: best-practice
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Thorsten Ball (Sourcegraph)"]
+based_on: ["Thorsten Ball (Sourcegraph/Amp, Latent Space interview)"]
 category: "Orchestration & Control"
-source: "https://www.sourcegraph.com"
+source: "https://www.youtube.com/watch?v=b4rOVZWLW6E"
 tags: [bitter-lesson, temporary-tooling, model-centric, adaptability, future-proofing]
 summary: "Treats code around the model as temporary scaffolding: build the simplest thing that works now, mark it disposable, and remove it when models improve"
 signals: ["You plan tooling that compensates for a current model weakness", "The feature would likely fail a test of being useful in 6 months", "Fast reaction to new model releases matters more than long-term polish"]
 anti_signals: ["The code is durable business value such as domain logic or unique integrations", "The team cannot track disposal triggers and would keep the debt forever", "The work compounds over time and does not depend on model limitations"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -57,8 +57,8 @@ flowchart TD
 
 ## References
 
-- Described by Thorsten Ball: "What you want is... a scaffolding. Like you want to build a scaffolding around the model, a wooden scaffolding that if the model gets better or you have to switch it out, the scaffolding falls away. You know, like the bitter lesson like embrace that a lot of stuff might fall into the model as soon as the model gets better."
+- [Amp: The Emperor Has No Clothes — Thorsten Ball on Latent Space (September 25, 2025)](https://www.youtube.com/watch?v=b4rOVZWLW6E) — the quote origin, verified against the episode transcript: "What you want is... a scaffolding. Like you want to build a scaffolding around the model, a wooden scaffolding that if the model gets better or you have to switch it out, the scaffolding falls away. You know, like the bitter lesson. Like embrace that a lot of stuff might fall into the model as soon as the model gets better." Ball explains Amp deliberately restricts features added around the model so the harness stays replaceable.
 
-- Primary source: https://www.sourcegraph.com
+- [Extreme Harness Engineering for Token Billionaires — Latent Space (April 7, 2026)](https://www.latent.space/harness-eng) — 2026 evidence that the idea is current: reasoning models working without predefined scaffolds, with the harness reduced to a box the model orchestrates itself.
 
-- Cloudflare Code Mode: Ephemeral V8 isolates ("write once, vaporize immediately") for orchestrating MCP tool calls
+- Note: https://www.sourcegraph.com is a product homepage and describes none of this; the earlier citation pointed there in error.
