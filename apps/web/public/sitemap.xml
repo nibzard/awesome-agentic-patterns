@@ -43,11 +43,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-circuit-breaker</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-modes-by-model-personality</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning</loc>
@@ -115,7 +115,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/background-agent-ci</loc>
@@ -135,7 +135,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/burn-the-boats</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes</loc>
@@ -627,7 +627,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/wfgy-reliability-problem-map</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/rendered-ui-finish-gate</loc>

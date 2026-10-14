@@ -676,9 +676,8 @@ class AgentCircuitBreaker:
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
   - Circuit breakers are validated-in-production in microservice architectures (Netflix Hystrix, Resilience4j, Polly) and the pattern translates directly to agent tool calls
-  - Production agent systems report 40-60% token savings when circuit breakers prevent retry loops on degraded tools
-  - Anthropic's agent reliability research emphasizes "fail fast" strategies over retry-heavy approaches
-- **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile
+  - Agent-specific 2025-26 practitioner coverage (Maxim's production guide, ToolRoute's reliability-patterns write-up) recommends circuit breakers for LLM application and agent tool failures
+- **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile. No published measurements of token savings from circuit breakers in agent systems were found; the token-waste benefit is currently qualitative
 
 ## How to use it
 
@@ -741,6 +740,8 @@ def execute_tool(tool_name, *args):
 - [Release It! (Michael Nygard, 2007)](https://pragprog.com/titles/mnee2/release-it-second-edition/) — original production pattern
 - [Netflix Hystrix](https://github.com/Netflix/Hystrix) — production implementation at scale
 - [Resilience4j](https://resilience4j.readme.io/) — lightweight Java implementation
+- [Retries, Fallbacks, and Circuit Breakers in LLM Apps: A Production Guide (Maxim)](https://www.getmaxim.ai/articles/retries-fallbacks-and-circuit-breakers-in-llm-apps-a-production-guide) — agent-era practitioner coverage
+- [How AI Agents Handle Tool Failures: Reliability Patterns for Production (ToolRoute)](https://www.toolroute.ai/blog/how-ai-agents-handle-tool-failures) — circuit breakers for agent tool calls (2026)
 - Related: [Failover-Aware Model Fallback](failover-aware-model-fallback.md) — handles model-provider failures (complementary)
 - Related: [Action Caching & Replay](action-caching-replay.md) — cached results can serve as circuit-open fallbacks
 
@@ -755,7 +756,7 @@ def execute_tool(tool_name, *args):
 
 ## Problem
 
-Different AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are "trigger happy" and want to run commands immediately, while models like GPT-5.2 are "lazy" and prefer thorough research before acting.
+Different AI models have fundamentally different personalities and working styles. Treating all models the same—expecting them to work identically—leads to suboptimal outcomes. Users expect a consistent interface, but models like Opus 4.5 are "trigger happy" and want to run commands immediately, while models like GPT-5.2 are "lazy" and prefer thorough research before acting. The specific model names below are the ones AMP happened to run at the time of the episode; personalities shift with every model release, so re-test them as models change.
 
 ## Solution
 
@@ -767,7 +768,7 @@ Design **different agent modes** optimized for each model's personality rather t
 
 **Key insight:** It's not about model selection—it's about **different ways of working**.
 
-**Model personalities identified:**
+**Model personalities identified** (as observed in the AMP episode; re-test for each new model version):
 
 | Model | Personality | Working Style | Best For |
 |-------|-------------|---------------|----------|
@@ -822,6 +823,7 @@ The team explicitly avoids a "model selector" dropdown and instead presents thes
   - Industry platforms implement personality modes via system prompts and temperature parameters (Anthropic: Normal/Concise/Explanatory/Formal; OpenAI: Default/Cynic/Robot/Listener/Nerd)
   - Multi-agent frameworks (AutoGen, CrewAI) support role-based personality configuration through `system_message` and backstory parameters
 - **Unverified:** Long-term stability of personality-based modes as models evolve
+- **Currency (October 2026):** The episode evidence is from early 2026. Amp's second season (premiered September 2026) pivoted the product toward remote-controllable parallel agents, so the specific mode lineup above may no longer match the product. Treat the mode-to-model mapping as version-specific: re-run your own personality tests whenever you upgrade a model, and expect to retune modes when models change.
 
 ## How to use it
 
@@ -892,7 +894,7 @@ The fundamental challenge: Different modes require fundamentally different user 
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent, Season 1, Episode 10](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack). The episode itself is untitled; "the assistant is dead, long live the factory" is the theme of the preceding episode in the series.
 * [Anthropic: Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - System prompt patterns and persona configuration (2024)
 * [OpenAI: Prompt Engineering Best Practices](https://platform.openai.com/docs/guides/prompt-engineering) - System prompts and personality modes (2024)
 * Related: [Oracle and Worker Multi-Model Approach](oracle-and-worker-multi-model.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)
@@ -2496,7 +2498,7 @@ This pattern complements narrower controls in the catalog. Action Selector remov
 
 ## Autonomous Workflow Agent Architecture
 
-**Status:** established
+**Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks
@@ -2521,7 +2523,7 @@ Autonomous Workflow Agent Architecture creates AI agents with sophisticated work
 
 - **Containerized Execution Environments**: Isolated, reproducible environments for safe workflow execution
 - **Session Management**: tmux-based parallel process coordination
-- **Intelligent Monitoring**: Adaptive wait/sleep mechanisms and progress tracking  
+- **Sleep-Based Monitoring**: The agent sleeps while a process runs instead of polling it (the source describes fully adaptive monitoring as future work, not a shipped component)
 - **Error Recovery**: Robust error handling with context-aware retry strategies
 - **Documentation Integration**: Comprehensive logging and workflow documentation
 
@@ -2537,7 +2539,7 @@ graph TD
     B --> C[Containerized Execution]
     C --> D[Session Management]
     D --> E[Parallel Process Coordination]
-    E --> F[Intelligent Monitoring]
+    E --> F[Sleep-Based Monitoring]
     F --> G[Error Detection]
     G --> H{Error Found?}
     H -->|Yes| I[Adaptive Recovery]
@@ -2557,7 +2559,7 @@ Traditional workflow automation follows a pre-defined script; autonomous agents 
 
 1. **Infrastructure Setup**: Create containerized environments with necessary tools and dependencies
 2. **Process Orchestration**: Use tmux sessions to manage parallel execution streams
-3. **Adaptive Monitoring**: Implement intelligent wait mechanisms that adapt to process completion times
+3. **Sleep-Based Monitoring**: Have the agent sleep while processes run instead of polling them (the source lists fully adaptive monitoring as a future improvement)
 4. **Checkpoint Management**: Regular state preservation for recovery scenarios
 5. **Context-Aware Recovery**: Error analysis with appropriate retry or alternative path selection
 
@@ -2567,6 +2569,12 @@ Traditional workflow automation follows a pre-defined script; autonomous agents 
 - Implement explicit checkpoints at risky boundaries
 - Design for recoverability at each step
 - Maintain comprehensive logging throughout
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- The evidence base is a single vendor case study (Together AI, August 2025). No independent replications of this exact architecture exist in the references, hence the `emerging` status.
+- The 1.22x-1.37x figure in the source post is the inference tokens-per-second speedup of the 32B target model achieved by the speculative-decoding model the pipeline trained. It is not a measurement of workflow-execution or token-processing gains from this agent architecture.
 
 ## How to use it
 
@@ -2625,7 +2633,6 @@ class WorkflowAgent:
 
 **Pros:**
 
-- **Significant Speedup**: 1.22x-1.37x improvement in token processing and workflow execution
 - **Reduced Human Intervention**: Agents can handle most routine workflow steps autonomously
 - **Consistent Execution**: Eliminates human error in repetitive tasks
 - **Scalability**: Can run multiple workflows in parallel across different environments  
@@ -2643,7 +2650,7 @@ class WorkflowAgent:
 
 ## References
 
-* [AI Agents to Automate Complex Engineering Tasks - Together AI Blog](https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks)
+* [AI Agents to Automate Complex Engineering Tasks - Together AI Blog](https://www.together.ai/blog/ai-agents-to-automate-complex-engineering-tasks) (August 2025; the 1.22x-1.37x number in this post measures the trained speculator's inference speedup, not agent workflow gains)
 * [Building Effective Agents - Anthropic Engineering](https://www.anthropic.com/engineering/building-effective-agents) (2024)
 * [Deep Research Agents: A Systematic Examination And Roadmap - arXiv 2506.18096v1](https://arxiv.org/html/2506.18096v1) (2025)
 * [OpenHands Agent Framework](https://github.com/All-Hands-AI/OpenHands)
@@ -2969,12 +2976,12 @@ graph LR
     B -->|No, Keep It| C[Team Uses Old Way]
     C --> D[Users Expect Old Way]
     D --> E[Harder to Change Later]
-    E --> F[Selected for Laggers]
+    E --> F[Users Settle On Old Way]
 
     B -->|Yes, Kill It| G[Forced Evolution]
     G --> H[Team Builds New Way]
     H --> I[Users Adapt or Leave]
-    I --> J[Selected for Frontier]
+    I --> J[Users Move To New Way]
 
     style C fill:#ffcdd2,stroke:#c62828
     style E fill:#ffcdd2,stroke:#c62828
@@ -2985,9 +2992,11 @@ graph LR
 
 **Real example from AMP:**
 
-AMP announced they're killing their VS Code extension (and Cursor support) in ~60 days:
+AMP announced they are killing their editor extension — the old sidebar-based VS Code extension — roughly 60 days out, and encouraged users to switch to the Amp CLI in the meantime. The target is the obsolete sidebar-based extension, not editor users; the hosts say they do not yet know what will replace it. Cursor is never mentioned in the episode:
 
-> "We will be killing our editor extension, the AMP VS Code extension and cursor and so on. We're going to be killing it. We're going to be killing it because we think it's no longer the future. We think the sidebar is dead."
+> "We will be killing our editor extension. We're going to be killing it because we think it's no longer the future. We think the sidebar is dead."
+
+> "We really strongly encourage you in the meantime to switch to the Amp CLI."
 
 **Why not just deprioritize it?**
 
@@ -2997,7 +3006,6 @@ If you keep the old feature around:
 - Users will keep using it
 - You'll feel pressure to maintain it
 - Your team splits attention between old and new
-- Your user base self-selects for "laggers" rather than frontier users
 
 ## How to use it
 
@@ -3006,7 +3014,7 @@ If you keep the old feature around:
 1. **The paradigm has shifted**: The fundamental approach has changed (e.g., assistant → factory)
 2. **It limits your users**: The feature holds users back from better ways of working
 3. **It splits your focus**: Maintaining it distracts from the truly important work
-4. **Your future users won't use it**: The 1% of frontier users don't need it
+4. **Your future users won't use it**: "The 1% of developers that want to be most ahead" need the editor for a shrinking share of their work
 5. **You're only keeping it for comfort**: Not because it's strategically important
 
 **Implementation:**
@@ -3018,8 +3026,8 @@ feature_kill_plan:
   feature: "VS Code Extension"
   deadline: "~60 days from announcement"
   message: "Will self-destruct in approximately 60 days"
-  migration_path: "Use AMP CLI instead"
-  rationale: "Sidebar is dead, long live the factory"
+  migration_path: "Use the Amp CLI in the meantime"
+  rationale: "We think the sidebar is dead"
 ```
 
 **2. Give users migration guidance:**
@@ -3033,15 +3041,13 @@ feature_kill_plan:
 
 From AMP's announcement:
 
-> "We might make it so we just delete this entire directory in our source tree and we're getting together in Singapore in a few weeks and just rewrite it from scratch."
-
-> "We have to totally reearn all of the usage of AMP today, all of the revenue that we're doing, all the customers we have... every 3 months."
+> "All of the usage of Amp today, all the revenue we're doing, we have to totally re-earn that every three months."
 
 **4. Accept user churn:**
 
-Some users will leave. That's OK. You're selecting for the frontier:
+Some users will leave. AMP accepts this and builds for the frontier:
 
-> "Our user base will start to become selected not for as it is today the people that are building on the frontier... but our user base will be selected for the laggers and that will make it even harder for us to change."
+> "We've always wanted Amp to be on the frontier... we want to exclusively make Amp for the people willing to put in that investment."
 
 ## Trade-offs
 
@@ -3050,7 +3056,7 @@ Some users will leave. That's OK. You're selecting for the frontier:
 - **Forces internal innovation**: No safety net, must build the new way
 - **Signals commitment**: Shows users and team you're serious
 - **Avoids split focus**: No resources diverted to maintaining obsolete features
-- **Selects for the right users**: Frontier users stay, lagers leave (or upgrade)
+- **Selects for the right users**: The frontier users you build for stay; AMP explicitly targets "the 1% of developers that want to be most ahead"
 - **Prevents stagnation**: Can't get comfortable resting on laurels
 
 **Cons:**
@@ -3065,7 +3071,7 @@ Some users will leave. That's OK. You're selecting for the frontier:
 
 AMP implemented a literal self-destruct timer in their VS Code extension:
 
-> "It will self-destruct in about 60 days from now. We don't know exactly when. We'll put the timer. You'll see it."
+> "It will self-destruct in about 60 days from now. We don't know exactly when, we'll put a timer."
 
 This creates urgency and inevitability. Users can't ignore it.
 
@@ -3080,13 +3086,11 @@ This creates urgency and inevitability. Users can't ignore it.
 
 **Related principle: Re-earn revenue every quarter**
 
-> "All of the usage of AMP today, all of the revenue that we're doing, all the customers we have, we have to totally reearn that like every 3 months. The product is going to look different. You're going to use it for different things in different ways. You're going to pay us for different things."
-
-Burning boats is part of this mindset: nothing is sacred, everything must be re-earned.
+AMP treats all current usage and revenue as something they must re-earn roughly every quarter. Burning boats is one expression of that mindset; the full principle is covered in [Frontier-Focused Development](frontier-focused-development.md).
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent, Season 1, Episode 10](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack). The episode is untitled; "the assistant is dead, long live the factory" is the theme the hosts attribute to the preceding episode. Transcript: [ampcode.com/podcast/episode-10](https://ampcode.com/podcast/episode-10)
 * Thomas Schelling, *The Strategy of Conflict* (1960) - Foundational work on credible commitment
 * Cohen & Levesque, "Intention is Choice with Commitment" (1990) - Formal framework for AI agent commitment
 * [Measuring Agents in Production (UC Berkeley, 2025)](https://arxiv.org/html/2512.04123v1) - Industry rejects "no fallback" for bounded autonomy
@@ -16838,7 +16842,7 @@ RAG pipelines and agent systems often fail in ways that are hard to diagnose: mi
 
 Teams frequently address these failures by iterating on prompts or tuning model settings first, which makes incidents feel random and expensive to fix.
 
-This pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths. Research shows structured incident data correlates with better reliability outcomes (ACM SIGOPS 2022, IEEE ISSRE 2019).
+This pattern addresses the need for a shared, repeatable triage routine that turns vague failures into actionable repair paths.
 
 ## Solution
 
@@ -16893,9 +16897,9 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 1. Run through the checklist and identify Problem #1 (Hallucination & Chunk Drift) and Problem #5 (Semantic != Embedding)
 2. For Problem #1: Apply Delta S meter to measure semantic tension (>0.6 indicates failure), use lambda_observe to flag divergent logic flow
 3. For Problem #5: Apply BBMC residue minimization to compute semantic residue, reject chunks with high tension
-4. Re-run the same query and verify Delta S <= 0.45, coverage >= 0.70
+4. Re-run the same query and check it against the project's own targets (Delta S <= 0.45, coverage >= 0.70)
 
-**Result:** The system now explicitly rejects misleading chunks before generation, creating a "semantic firewall" rather than patching after output.
+**Result:** In the project's own telling, the system now explicitly rejects misleading chunks before generation, creating a "semantic firewall" rather than patching after output.
 
 ## Technical Details
 
@@ -16924,7 +16928,9 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 
 ### Core WFGY Instruments
 
-- **Delta S (ΔS):** Measures semantic tension (threshold: ≤0.45 good, >0.60 failure)
+These instruments are project-internal concepts defined by a single personal project. They have no independent validation, and the numeric thresholds below are the project's own self-reported values, which the README itself hedges as internal and setup-dependent. Treat them as one team's vocabulary, not as validated measurement tools.
+
+- **Delta S (ΔS):** Measures semantic tension (self-reported thresholds: ≤0.45 good, >0.60 failure)
 - **lambda_observe:** Monitors logic directionality (convergent, divergent, chaotic)
 - **epsilon_resonance:** Domain-level harmony tuning
 - **BBMC:** Minimizes semantic residue
@@ -16935,7 +16941,7 @@ Consider a RAG system where answers cite the wrong snippet despite high vector s
 
 ### Key Insight
 
-WFGY implements a "semantic firewall" that validates semantic stability **before** generation rather than patching after output. Once a failure mode is clearly mapped and monitored, it tends to stay fixed for that configuration. This checklist-based triage approach represents a novel contribution—no direct academic or industry research exists on RAG/agent-specific debugging with this four-area taxonomy.
+WFGY implements a "semantic firewall" that validates semantic stability **before** generation rather than patching after output. Once a failure mode is clearly mapped and monitored, it tends to stay fixed for that configuration. This checklist-based triage approach is not novel in kind: direct academic and industry prior work exists on RAG/agent-specific failure taxonomies, most prominently Barnett et al.'s "Seven Failure Points When Engineering a Retrieval Augmented Generation System" (arXiv:2401.05856). WFGY's four-area, 16-mode taxonomy and its instruments are a personal-project contribution on top of that prior work, not a first.
 
 ## References
 
@@ -16944,6 +16950,7 @@ WFGY implements a "semantic firewall" that validates semantic stability **before
 - [Technical Deep Dive Report](https://github.com/nibzard/awesome-agentic-patterns/blob/main/research/wfgy-reliability-problem-map-technical-deep-dive.md)
 - [Semantic Clinic Index](https://github.com/onestardao/WFGY/blob/main/ProblemMap/SemanticClinicIndex.md)
 - [Grandma's Clinic (Beginner-Friendly)](https://github.com/onestardao/WFGY/blob/main/ProblemMap/GrandmaClinic/README.md)
+- Barnett et al., "Seven Failure Points When Engineering a Retrieval Augmented Generation System" ([arXiv:2401.05856](https://arxiv.org/abs/2401.05856), 2024) — prior academic work on RAG failure taxonomies
 - "Agentic Retrieval-Augmented Generation: A Survey" (arXiv:2501.09136, 2025)
 
 ---

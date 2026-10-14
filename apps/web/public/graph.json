@@ -96,7 +96,7 @@
         "resilience"
       ],
       "summary": "Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints",
-      "maturity": "maturing",
+      "maturity": "early",
       "domains": [
         "coding",
         "ops",
@@ -389,7 +389,7 @@
       "id": "autonomous-workflow-agent-architecture",
       "title": "Autonomous Workflow Agent Architecture",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "emerging",
       "slug": "autonomous-workflow-agent-architecture",
       "tags": [
         "workflow-automation",
@@ -399,7 +399,7 @@
         "tmux",
         "error-recovery"
       ],
-      "summary": "Runs multi-step engineering workflows in containers with tmux sessions, adaptive monitoring, checkpoints, and context-aware error recovery"
+      "summary": "Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery"
     },
     {
       "id": "background-agent-with-ci-feedback",
