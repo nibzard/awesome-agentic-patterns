@@ -2802,12 +2802,17 @@ Separate **what a skill can do** from **how it works** at the protocol level:
 
 The attack surface shrinks from "the entire LLM context" to "the function parameter boundary."
 
+**How this differs from ordinary remote tool invocation.** Protocols such as MCP, A2A, and plain tool APIs already give callers schema-only discovery of a remote capability that executes on the provider side, so schema-only remote execution alone is not new. The delta is what never crosses the boundary and how long trust lasts: in those protocols the provider's prompts, tool descriptions, and often source-visible logic are shared with the caller and access is granted until revoked, whereas here the provider's code and prompts never leave the provider, and trust tiers expire automatically when the collaboration's objective completes.
+
 ## How to use it
 
-- Agents from different organizations need to collaborate without exposing proprietary logic
-- A skill provider wants to monetize capabilities without revealing implementation
-- Collaboration is temporary and trust should not persist indefinitely
-- Prompt injection defense is needed at the architectural level (not just prompt-level filtering)
+Adopt it as a protocol between two agents you control on each side:
+
+1. **Publish skills as schemas.** For each skill you want to share, expose only its name, description, input/output schema, and minimum trust tier. Keep implementation, prompts, and model configuration off the wire.
+2. **Execute on the provider side.** Accept structured input from the peer, run the skill locally, and return structured output. Never send intermediate state or chain-of-thought back.
+3. **Collapse error cases.** Return one generic "Unknown skill" error for hidden, nonexistent, and trust-insufficient skills, so the caller cannot enumerate what exists.
+4. **Grant trust per collaboration.** Map peers to trust tiers (for example untrusted, known, internal, privileged) and downgrade automatically when the task objective completes.
+5. **Verify the boundary.** Test that no prompt text, code, or model artifact appears in outbound traffic, and that a lapsed tier yields the same error as a nonexistent skill.
 
 ## Trade-offs
 
@@ -2816,7 +2821,7 @@ The attack surface shrinks from "the entire LLM context" to "the function parame
 
 ## References
 
-- CoWorker Protocol (reference implementation): https://github.com/ZiwayZhao/agent-coworker
+- CoWorker Protocol (reference implementation): https://github.com/ZiwayZhao/agent-coworker — a single-project proof of concept (21 stars at the time of writing), not a widely adopted standard; its README also carries self-reported ecosystem statistics that this pattern file does not rely on
 - Capability-Based Security: Dennis, J. B., & Van Horn, E. C. (1966). "Programming Semantics for Multiprogrammed Computations." *Communications of the ACM*.
 - Remote Procedure Call: Birrell, A. D., & Nelson, B. J. (1984). "Implementing Remote Procedure Calls." *ACM TOCS*.
 - Related catalogue patterns: [Zero-Trust Agent Mesh](zero-trust-agent-mesh.md), [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md), [Tool Capability Compartmentalization](tool-capability-compartmentalization.md)
@@ -4813,13 +4818,19 @@ Three questions per family:
 
 ## Evidence
 
+All measurements below are the vendor's own, single-source results from Tulip
+Labs (the pattern author), published on their research page and not
+independently replicated. Treat them as a self-report, not as third-party
+evaluation.
+
 The pattern was derived from three hand-written gates, and then tested against
 a model trained specifically to classify admission decisions — on the theory
 that if the blindness were only an artifact of human authorship, a trained
 model would not reproduce it.
 
-It reproduced. On 8,989 held-out rows the classifier had a **0.74% false-allow
-rate overall**, but the errors were not spread evenly:
+It reproduced. On 8,989 held-out rows the classifier had a **0.74%
+row-weighted false-allow rate** (1.88% after deduplicating near-identical
+rows), but the errors were not spread evenly:
 
 | family | risky rows | let through |
 |---|---|---|
@@ -4895,10 +4906,12 @@ table above — this returns six of the eight families.
 
 - [The family of harm your agent policy cannot see](https://tulipagents.ai/research/policy-blindness/)
   — the three gates, the measured instance, and the seven-model comparison
+  (published 2026-08-13, revised 2026-09-21)
 - [Writing a policy that holds](https://tulipagents.ai/concepts/policy-authoring/)
   — the method with a runnable coverage probe
-- Datasets and eval scripts:
-  [tuliplabs-ai/sdk-python/examples/research](https://github.com/tuliplabs-ai/sdk-python/tree/main/examples/research)
+- [tuliplabs-ai/tulip-agents](https://github.com/tuliplabs-ai/tulip-agents)
+  — the vendor's open-source repository; the datasets and eval scripts behind
+  the figures above were not published there at the time of writing
 
 ---
 
@@ -6181,7 +6194,7 @@ As of October 2026 we could not verify a neutral, cross-registry implementation 
 
 ## Problem
 
-When AI agents execute tool calls autonomously, there is no tamper-evident record of what happened. Traditional logging is mutable - logs can be altered after the fact. In regulated environments (finance, healthcare, EU AI Act), teams need to prove exactly what an agent did, when, and whether it operated within policy. Without cryptographic guarantees, audit trails have no legal or compliance weight.
+When AI agents execute tool calls autonomously, there is no tamper-evident record of what happened. Traditional logging is mutable - logs can be altered after the fact. In regulated environments (finance, healthcare, EU AI Act), teams need to prove exactly what an agent did, when, and whether it operated within policy. Conventional logs already carry compliance weight (SOC 2 and EU AI Act Article 12 accept conventional record-keeping); what they lack is tamper-evidence and resistance to after-the-fact repudiation, which is what cryptographic signing adds.
 
 ## Solution
 
@@ -6198,7 +6211,7 @@ The governance layer operates as middleware that wraps the agent tool-calling in
 - **Evidence Grade:** medium
 - **Most Valuable Findings:**
   - SCITT architecture (IETF RFC 9334) validates the append-only signed receipt pattern for supply chain integrity
-  - OWASP Agentic Top 10 lists lack of audit trail as a top vulnerability for agent systems
+  - OWASP's Agentic AI Threats and Mitigations guide (February 2025) covers logging and traceability as part of agent security hygiene, though neither it nor the OWASP Top 10 for Agentic Applications (ASI01-ASI10) lists lack of an audit trail as a named top vulnerability
 - **Unverified / Unclear:** Long-term storage and verification overhead at scale needs more production data
 
 ## How to use it
@@ -6215,10 +6228,11 @@ The governance layer operates as middleware that wraps the agent tool-calling in
 
 ## References
 
-- [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation
+- [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation. Disclosure: this SDK is a client for the author's own commercial signing service at asqav.com (Elastic License 2.0, Free/Pro/Enterprise plans); ML-DSA signing runs server-side in that service, and Ed25519/ES256 cover locally signed receipts, so "sign at the point of execution" is the pattern's design goal rather than a description of how this SDK's cloud-issued receipts are produced
 - [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture
-- [OWASP Agentic Top 10](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks
+- [OWASP Agentic AI Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks (the OWASP Top 10 for Agentic Applications is a separate document)
 - [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard
+- Related pattern: [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md) - covers the same policy-checking middleware and immutable audit trail; this pattern adds cryptographic tamper-evidence and non-repudiation on top, where the proxy pattern leaves the audit log unsigned
 
 ---
 
@@ -6652,7 +6666,7 @@ Reporting through 2026 documents a backlash against vibe-coded software. The [vi
 
 ## Denial Tracking & Permission Escalation
 
-**Status:** emerging
+**Status:** proposed
 **Category:** Security & Safety
 **Authors:** Murilo Scigliano (@muriloscigliano)
 **Source:** https://github.com/muriloscigliano/ai-playbook
@@ -6685,7 +6699,7 @@ class DenialTracker:
         counts.delete(tool_name)   // reset on success
 ```
 
-When escalation triggers and the user grants blanket permission, add the tool to `alwaysAllowRules` for the remainder of the session and reset the counter.
+When escalation triggers and the user grants blanket permission, add the tool to the harness's persistent-allow list for the remainder of the session and reset the counter. The `alwaysAllowRules` name above follows Cline and Roo Code configuration terminology; other harnesses have equivalents (Claude Code permission rules in settings files).
 
 ```mermaid
 graph TD
@@ -6714,6 +6728,10 @@ graph TD
 - CI/CD agents that need certain tools to complete their task
 - Long-running interactive sessions where approval fatigue is likely
 
+**Harness context (as of October 2026):**
+
+Mainstream harnesses ship the ingredients but not the loop. Claude Code offers permission modes (including `dontAsk`, which denies anything that would need approval when running unattended) and persistent permission rules, but no repeated-denial auto-escalation; its documentation describes permission configuration only. Cline and Roo Code expose auto-approval tiers and `alwaysAllowRules`. No framework surveyed ships denial-count escalation natively, so expect to implement the counter yourself in a tool-permission hook or middleware.
+
 ## Trade-offs
 
 - **Pros:** Prevents wasted iteration loops; surfaces the real blocker early; reduces approval fatigue in interactive mode; trivial to implement (a counter and a branch).
@@ -6721,7 +6739,8 @@ graph TD
 
 ## References
 
-- [AI Agent Patterns Playbook — Pattern 70: Denial Tracking](https://github.com/muriloscigliano/ai-playbook) — production-hardened pattern catalogue covering 78 agent engineering patterns
+- [AI Agent Patterns Playbook — Pattern 70: Denial Tracking](https://github.com/muriloscigliano/ai-playbook) — the playbook that proposes this technique (Pattern 70 of 78); a personal repository with no other known adoption, so treat it as one author's proposal rather than a field-tested practice
+- [Claude Code permissions documentation](https://code.claude.com/docs/en/permission-modes) — permission modes and persistent rules, including `dontAsk` for unattended runs; no denial-count escalation
 - Related: [Human-in-the-Loop Approval Framework](/patterns/human-in-loop-approval-framework) — complementary pattern for initial approval gates
 - Related: [Hook-Based Safety Guard Rails](/patterns/hook-based-safety-guard-rails) — external interceptors that can enforce denial policies
 - Related: [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization) — scoped permissions that limit what escalation can grant
@@ -6931,7 +6950,7 @@ security-scan:
     @exit $?
 ```
 
-Configure agent instructions to mandate build execution:
+Configure agent instructions to mandate build execution. Note that harnesses treat such instructions as advisory: a model can skip them, so they are a request rather than a guarantee.
 
 ```markdown
 # Agent Instructions
@@ -6942,6 +6961,22 @@ After every code change, you MUST:
 
 1. Run `make all` to verify that the code builds successfully and tests pass.
 2. IMPORTANT: You MUST resolve any security issues identified during compilation.
+```
+
+For deterministic enforcement, gate the stop of the turn instead of the prompt. Claude Code Stop hooks run a check as a script and block the turn from ending until it passes; the official guidance states that unlike CLAUDE.md instructions, which are advisory, hooks are deterministic. Wiring `make security-scan` into a Stop hook makes the scanner impossible to skip:
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "make security-scan" }
+        ]
+      }
+    ]
+  }
+}
 ```
 
 ```mermaid
@@ -6988,17 +7023,20 @@ graph TD
 
 ## References
 
-* [Geoffrey Huntley's blog post on secure code generation](https://ghuntley.com/secure-codegen/)
+* [Geoffrey Huntley's blog post on secure code generation](https://ghuntley.com/secure-codegen/) (2025-09-03) - primary source; full content is behind a subscription paywall, so the specific build-loop advice cannot be verified publicly
+* [Claude Code best practices](https://code.claude.com/docs/en/best-practices) - public corroboration of the gating mechanism: "Give Claude a check it can run: tests, a build" and "a Stop hook runs your check as a script and blocks the turn from ending until it passes"; "Unlike CLAUDE.md instructions which are advisory, hooks are deterministic"
 * [SLSA (Supply-chain Levels for Software Artifacts)](https://slsa.dev) - Framework for supply chain security
 * [Build Systems a la Carte (Mokhov, Mitchell, Peyton Jones, POPL 2020)](https://dl.acm.org/doi/10.1145/3371091) - Formal build system theory including backpressure
 * [Reproducible Builds Project](https://reproducible-builds.org) - Community initiative for verifiable builds
+* Related pattern: [Background Agent with CI Feedback](background-agent-ci.md) - the outer loop; this pattern is the per-change inner loop that runs in the agent's own workspace, while CI feedback covers the slower pipeline after the branch is pushed
+* Related pattern: [Deterministic Threat Rule Scanning](deterministic-threat-rule-scanning.md) - the same deterministic-control idea applied to scanning agent tool traffic for injected threats, rather than scanning generated code
 * This generalizes beyond security to any code quality or pattern enforcement
 
 ---
 
 ## Deterministic Threat Rule Scanning
 
-**Status:** emerging
+**Status:** proposed
 **Category:** Security & Safety
 **Authors:** eeee2345 (@eeee2345)
 **Source:** https://github.com/panguard-ai/agent-threat-rules
@@ -7057,17 +7095,17 @@ graph TD
     I[Tool Description] --> C
 ```
 
-The key insight is layered defense: deterministic rules catch known patterns with near-perfect precision, while LLM-based review handles novel or ambiguous threats as a second layer. The deterministic layer provides a floor of protection that does not degrade with adversarial prompt engineering.
+The key insight is layered defense: deterministic rules catch known patterns cheaply and consistently, while LLM-based review handles novel or ambiguous threats as a second layer. The deterministic layer provides a floor of protection that does not degrade with adversarial prompt engineering.
 
 ## Evidence
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - A regex-based rule library achieved 62.7% recall and 99.7% precision on the PINT prompt injection benchmark, demonstrating that deterministic rules reliably catch known patterns with very few false positives.
-  - Scanning 36,394 MCP server tool definitions with deterministic rules identified 182 CRITICAL and 1,124 HIGH severity findings, indicating measurable threat prevalence in real tool ecosystems.
+  - An open-source rule library of this shape exists and is maintained (29 YAML rules across 9 attack categories at the time of writing), so the approach is concretely implementable and testable.
   - Layering deterministic scanning before LLM-based review reduces cost and latency: regex runs in microseconds per rule, reserving expensive LLM calls for ambiguous cases only.
 - **Unverified / Unclear:**
-  - Recall on novel attack patterns not yet captured by rules is unknown; the 62.7% figure reflects coverage of known patterns only.
+  - No public benchmark evaluation of recall or precision for this rule set exists; an earlier revision of this file cited PINT benchmark numbers that do not trace to any published source, and they have been removed.
+  - Recall on novel attack patterns not yet captured by rules is unknown.
   - Effectiveness against adversarial evasion techniques (e.g., encoding variations, Unicode obfuscation) has not been systematically benchmarked.
 
 ## How to use it
@@ -7109,9 +7147,9 @@ The key insight is layered defense: deterministic rules catch known patterns wit
 
 ## References
 
-- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 76 deterministic detection rules covering prompt injection, tool poisoning, data exfiltration, and privilege escalation
-- [OWASP Top 10 for Agentic Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing agent-specific security risks
-- [PINT Benchmark](https://arxiv.org/abs/2312.10997) — Prompt injection benchmark for evaluating detection systems
+- [Agent Threat Rules (ATR)](https://github.com/panguard-ai/agent-threat-rules) — Open-source rule library with 29 deterministic detection rules across 9 categories covering prompt injection, tool poisoning, data exfiltration, and privilege escalation; a small project (0 stars, 9 commits) whose README marks it RFC/experimental status
+- [OWASP Top 10 for Large Language Model Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Industry framework categorizing LLM application security risks
+- Related pattern: [Deterministic Security Scanning Build Loop](deterministic-security-scanning-build-loop.md) — the same deterministic-control idea applied to scanning the code the agent generates in its build loop, rather than scanning tool traffic directed at the agent
 
 ---
 
@@ -11615,6 +11653,10 @@ def execute_tool(self, rollout_id: str, tool: str, params: dict):
 - **Monitor failures**: Infrastructure errors causing zero rewards can collapse training
 - **Reuse production code**: "We use VMs because we could reuse the production Devon VM info"
 
+**Corroboration beyond the webinar (2026):**
+
+The Cognition case study remains the primary narrative source (the video's host introduces the speaker as "research engineer Sam Pretty at Cognition"), but the same isolation requirement now appears in open-source agent-RL trainers. Microsoft's [agent-lightning](https://github.com/microsoft/agent-lightning) runs each rollout agent as its own Kubernetes Job — "Run agents directly as Kubernetes Jobs without relying on external sandbox services" — giving pod-level per-rollout isolation as a built-in property of its rollout controller rather than a custom Modal setup.
+
 ## Trade-offs
 
 **Pros:**
@@ -11655,6 +11697,7 @@ def execute_tool(self, rollout_id: str, tool: str, params: dict):
 ## References
 
 - [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
+- [Microsoft agent-lightning](https://github.com/microsoft/agent-lightning) — open-source agent-RL trainer whose rollout controller runs each rollout as a Kubernetes Job, providing per-rollout pod isolation natively
 - Mnih et al. (2016). "Asynchronous Methods for Deep Reinforcement Learning". [arXiv:1602.01783](https://arxiv.org/abs/1602.01783) — A3C foundation for parallel isolated environments
 - Schulman et al. (2017). "Proximal Policy Optimization Algorithms". [arXiv:1707.06347](https://arxiv.org/abs/1707.06347) — PPO parallel rollout collection
 - Liang et al. (2018). "Ray RLLib: A Scalable Reinforcement Learning Library". [arXiv:1807.03343](https://arxiv.org/abs/1807.03343) — Actor-model isolation for RL
@@ -12635,8 +12678,8 @@ The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) names credential isolation via proxy as a recommended control for agent runtimes.
-  - OWASP's [Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/) lists "agent process never holds raw API keys" as a hardening principle.
+  - Cloud Security Alliance's [Agentic AI Identity & Access Management](https://cloudsecurityalliance.org/artifacts/agentic-ai-identity-and-access-management-a-new-approach) report (2025-08) recommends DID/VC-based agent identity with "Adapter Enforcement Middleware" injected into protocol gateways and just-in-time, short-lived credentials. That is adjacent rather than identical: the CSA design centralizes enforcement in protocol adapters, while this pattern runs the broker on the user's own loopback and keeps credentials off any third-party service.
+  - OWASP's [Securing Agentic Applications Guide 1.0](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/) does not state a "never holds raw API keys" principle; what it does say supports parts of this pattern — §3.1.3 advises against hardcoding secrets, and §3.2.8 recommends just-in-time access with short-lived, automatically expiring credentials (OAuth tokens, signed JWTs, temporary cloud credentials) instead of long-lived static credentials for tool invocations.
   - Multiple independent open-source implementations of this shape (Python, Rust, server-backed variants) shipped during 2025–2026, suggesting convergent design rather than a single-vendor pattern.
 - **Unverified / Unclear:**
   - Long-term behavior on shared developer machines (multi-user POSIX hosts, dev containers with shared loopback)
@@ -12683,7 +12726,7 @@ The agent only needs to know that its `HTTPS_PROXY` (or equivalent client config
 - [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
 - Related pattern: [/patterns/external-credential-sync](external-credential-sync.md) — for syncing existing CLI credentials across tools rather than brokering new ones.
 - Related pattern: [/patterns/sandboxed-tool-authorization](sandboxed-tool-authorization.md) — for restricting which tools an agent can call once authenticated.
-- Known implementations (disclosed: author maintains the first): [agentrhq/authsome](https://github.com/agentrhq/authsome) (Python, local-only); [onecli/onecli](https://github.com/onecli/onecli) (Rust, per-agent scopes); [Infisical/agent-vault](https://github.com/Infisical/agent-vault) (server-backed variant).
+- Known implementations (disclosed: author maintains the first; star counts as of October 2026): [agentrhq/authsome](https://github.com/agentrhq/authsome) (Python, local-only, ~100 stars); [onecli/onecli](https://github.com/onecli/onecli) (Rust, per-agent scopes, ~3.6k stars); [Infisical/agent-vault](https://github.com/Infisical/agent-vault) (server-backed variant, ~2.3k stars).
 
 ---
 
@@ -15164,7 +15207,7 @@ send_email(
    - Regex patterns for common PII (email, phone, SSN, credit cards)
    - Named entity recognition models for names, addresses
    - Custom rules for domain-specific sensitive data
-   - Hybrid approach: regex for fast path (< 5ms), ML for semantic PII (50-200ms)
+   - Hybrid approach: regex for the fast path, ML models for semantic PII
 
 2. **Token mapping storage:**
    - Secure mapping of tokens to real values
@@ -15211,8 +15254,8 @@ Most effective when implemented in the MCP client layer, so it's transparent to 
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Microsoft Presidio: Open-source PII detection and anonymization framework
+* Anthropic Engineering: Code Execution with MCP (published 2025-11-04)
+* [Microsoft Presidio: Open-source PII detection and anonymization framework](https://microsoft.github.io/presidio/)
 * GDPR Article 4(5): Pseudonymization definition
 * NIST Privacy Framework
 
@@ -15432,7 +15475,7 @@ graph TD
 **Status:** emerging
 **Category:** Security & Safety
 **Authors:** SidClaw Team (@sidclawhq)
-**Source:** https://arxiv.org/abs/2506.08837
+**Source:** https://github.com/e2b-dev/awesome-mcp-gateways
 
 ## Problem
 
@@ -15542,9 +15585,10 @@ rules:
 
 ## References
 
-- [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) -- formalizes separation of proposal and execution in agent security
 - [Awesome MCP Gateways](https://github.com/e2b-dev/awesome-mcp-gateways) -- catalog of proxy/gateway implementations for MCP
-- [SidClaw](https://github.com/sidclawhq/platform) -- open-source implementation of this pattern for MCP servers with hash-chain audit trails
+- [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) -- formalizes separation of proposal and execution in agent security, though it does not describe a policy-gated proxy itself
+- [SidClaw](https://github.com/sidclawhq/platform) -- open-source implementation of this pattern for MCP servers with hash-chain audit trails (disclosed: authored by this pattern's authors)
+- Related pattern: [Unified Tool Gateway](unified-tool-gateway.md) -- routes every tool call through one interposition point too, but for integration concerns (discovery, authentication, billing, execution); this pattern governs the same chokepoint with a policy engine, approval routing, and an audit trail
 - Related pattern: [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)
 - Related pattern: [Sandboxed Tool Authorization](sandboxed-tool-authorization.md)
 
@@ -23543,7 +23587,7 @@ graph TD
 **Status:** emerging
 **Category:** Security & Safety
 **Authors:** Provably (@aural-psynapse)
-**Source:** https://csrc.nist.gov/pubs/sp/800/207/final
+**Source:** https://github.com/ProvablyAI/sourcerykit
 
 ## Problem
 
@@ -23568,17 +23612,18 @@ on_outbound_request(req):
     return ALLOW
 ```
 
-This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lockdown-no-exfiltration-channel.md): that pattern controls *where* an agent may send data at the network layer, while this one verifies that *what* the agent is sending is true before it goes.
+This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lockdown-no-exfiltration-channel.md): that pattern controls *where* an agent may send data at the network layer, while this one verifies that *what* the agent is sending is true before it goes. It also differs from [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md): the proxy decides whether a call is *allowed* against static policy rules, while this pattern proves the call's *content* matches a private source of truth at egress time.
 
 ## Evidence
 
 - **Evidence Grade:** medium
 - **Most Valuable Findings:**
-  - NIST SP 800-207 (Zero Trust Architecture) establishes per-request verification before granting access as a core tenet; this pattern applies the same tenet to an agent's outbound calls.
+  - NIST SP 800-207 (Zero Trust Architecture) establishes per-request verification before granting access as a core tenet; this pattern applies the same tenet to an agent's outbound calls. NIST SP 800-207 does not mention agents or egress content verification, so it serves as a conceptual basis, not a description of this pattern.
   - Zero-knowledge proofs let a verifier confirm a claim without seeing the secret behind it (Goldwasser, Micali & Rackoff, 1989), so the source of truth stays private from both the agent and the destination.
-  - The agentic-security literature classifies tool misuse and tampered tool arguments as a distinct threat class that network-layer egress controls do not cover (see the survey arXiv:2510.06445 and OWASP's Agentic AI threat taxonomy).
+  - Agent-security literature treats untrusted tool calls and prompt-injection-driven misuse as a first-class problem (see the agentic-security survey arXiv:2510.06445, OWASP's Agentic AI Threats and Mitigations guide, and CaMeL in "Defeating Prompt Injections by Design", which enforces security policies when tools are invoked through a capability mechanism). None of these describes content verification via zero-knowledge proofs at egress.
   - Hooking at the HTTP and MCP layer catches outbound calls regardless of which framework produced them.
 - **Unverified / Unclear:** Proof-generation latency and the operational cost of running the verification backend at high call volumes need more production data.
+- **Adoption caveat:** the only known implementation is from the pattern author's own company; no third-party deployment, adoption, or independent writeup exists yet.
 
 ## How to use it
 
@@ -23588,7 +23633,7 @@ This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lock
 - Route outbound calls through the layer; treat a failed proof or a non-allowlisted endpoint as a hard block.
 - Keep the signed logs for audit and incident review.
 
-An existing implementation of this pattern is [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (Python SDK, source-available), which hooks the HTTP libraries and runs the proof and source-of-truth check against a backend.
+An existing implementation of this pattern is [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (Python SDK, source-available under Business Source License 1.1, converting to GPL-3.0-or-later in 2029). Disclosure: it is the pattern author's own product — the Python SDK for Provably — and it depends on Provably's hosted backend, which holds the source of truth and produces the anchored verification proofs; interception happens locally, but verification is not fully offline.
 
 ## Trade-offs
 
@@ -23597,18 +23642,20 @@ An existing implementation of this pattern is [SourceryKit](https://github.com/P
 
 ## References
 
-- [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+- [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (implementation; pattern origin)
+- [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final) (conceptual basis)
 - [Goldwasser, Micali & Rackoff: The Knowledge Complexity of Interactive Proof Systems (SIAM J. Comput., 1989)](https://doi.org/10.1137/0218012)
 - [A Survey on Agentic Security (arXiv:2510.06445)](https://arxiv.org/abs/2510.06445)
+- [Debenedetti et al., "Defeating Prompt Injections by Design" (CaMeL, arXiv:2503.18813)](https://arxiv.org/abs/2503.18813)
 - [OWASP GenAI Security Project: Agentic AI - Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)
 - [Egress Lockdown (No-Exfiltration Channel)](egress-lockdown-no-exfiltration-channel.md)
-- [SourceryKit](https://github.com/ProvablyAI/sourcerykit) (implementation)
+- [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md)
 
 ---
 
 ## Zero-Trust Agent Mesh
 
-**Status:** established
+**Status:** emerging
 **Category:** Security & Safety
 **Authors:** Imran Siddique (@imran-siddique)
 **Source:** https://www.nist.gov/publications/zero-trust-architecture
@@ -23645,12 +23692,12 @@ sequenceDiagram
 
 ## Evidence
 
-- **Evidence Grade:** `high`
+- **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Production-scale deployments exist: SPIFFE/SPIRE has 1000+ deployments and is CNCF-graduated (2020)
-  - Verification overhead is modest: ~0.05-0.15ms per request for single-hop and 3-hop chains
-  - Agent frameworks (LangChain, AutoGen, CrewAI) support zero-trust via tool authorization hooks
-- **Unverified / Unclear:** Native zero-trust support in major agent frameworks remains adapter-based, not first-class
+  - Workload identity at scale is proven infrastructure: SPIFFE/SPIRE joined CNCF in 2018, moved to incubating on 2020-06-22, and graduated on 2022-08-23 — but for service meshes and general workloads, not yet for production agent meshes
+  - The underlying primitives are standardized: NIST SP 800-207 defines per-request verification, and Ed25519 signatures are cheap enough for per-hop verification
+  - Inter-agent protocol support is arriving but incomplete: A2A (26k+ stars) still lists authorization schemes as future work
+- **Unverified / Unclear:** Native zero-trust support in major agent frameworks remains adapter-based, not first-class; no published benchmark measures the verification overhead of full identity-plus-delegation checks per inter-agent hop
 
 
 
@@ -23673,6 +23720,8 @@ sequenceDiagram
 - [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/publications/detail/sp/800-207/final)
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections" [arXiv:2506.08837](https://doi.org/10.48550/arXiv.2506.08837)
 - Greshake et al. (2023). "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications" [arXiv:2302.12173](https://doi.org/10.48550/arXiv.2302.12173)
-- [SPIFFE/SPIRE](https://spiffe.io/)
-- [AgentMesh (example implementation)](https://github.com/microsoft/agent-governance-toolkit)
-- [A2A Protocol](https://github.com/a2aproject/A2A)
+- [SPIFFE/SPIRE](https://spiffe.io/) and the [CNCF project page](https://www.cncf.io/projects/spiffe/) — graduated 2022-08-23
+- [Microsoft Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) — includes the AgentMesh component as one part of a broader governance toolkit (Public Preview)
+- [A2A Protocol](https://github.com/a2aproject/A2A) — inter-agent protocol; formalizing authorization schemes in the AgentCard is on its roadmap, not shipped
+- Adjacent pattern: [Transitive Vouch-Chain Trust](transitive-vouch-chain-trust.md) — derives trust from signed vouches between peers rather than verifying a cryptographic identity on every request
+- Adjacent pattern: [Soulbound Identity Verification](soulbound-identity-verification.md) — binds identity to a non-transferable credential for continuity, complementing per-request verification here

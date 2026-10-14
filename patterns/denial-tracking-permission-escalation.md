@@ -1,6 +1,6 @@
 ---
 title: Denial Tracking & Permission Escalation
-status: emerging
+status: proposed
 authors:
   - Murilo Scigliano (@muriloscigliano)
 based_on:
@@ -17,7 +17,7 @@ tags:
 summary: >-
   Track repeated tool denials and auto-escalate to blanket permission prompts or
   fallback strategies, preventing wasted iterations in non-interactive contexts.
-maturity: maturing
+maturity: early
 complexity: low
 effort: hours
 impact: high
@@ -39,7 +39,7 @@ domains:
   - coding
   - ops
   - automation
-updated_at: "2026-04-03"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -70,7 +70,7 @@ class DenialTracker:
         counts.delete(tool_name)   // reset on success
 ```
 
-When escalation triggers and the user grants blanket permission, add the tool to `alwaysAllowRules` for the remainder of the session and reset the counter.
+When escalation triggers and the user grants blanket permission, add the tool to the harness's persistent-allow list for the remainder of the session and reset the counter. The `alwaysAllowRules` name above follows Cline and Roo Code configuration terminology; other harnesses have equivalents (Claude Code permission rules in settings files).
 
 ```mermaid
 graph TD
@@ -99,6 +99,10 @@ graph TD
 - CI/CD agents that need certain tools to complete their task
 - Long-running interactive sessions where approval fatigue is likely
 
+**Harness context (as of October 2026):**
+
+Mainstream harnesses ship the ingredients but not the loop. Claude Code offers permission modes (including `dontAsk`, which denies anything that would need approval when running unattended) and persistent permission rules, but no repeated-denial auto-escalation; its documentation describes permission configuration only. Cline and Roo Code expose auto-approval tiers and `alwaysAllowRules`. No framework surveyed ships denial-count escalation natively, so expect to implement the counter yourself in a tool-permission hook or middleware.
+
 ## Trade-offs
 
 - **Pros:** Prevents wasted iteration loops; surfaces the real blocker early; reduces approval fatigue in interactive mode; trivial to implement (a counter and a branch).
@@ -106,7 +110,8 @@ graph TD
 
 ## References
 
-- [AI Agent Patterns Playbook — Pattern 70: Denial Tracking](https://github.com/muriloscigliano/ai-playbook) — production-hardened pattern catalogue covering 78 agent engineering patterns
+- [AI Agent Patterns Playbook — Pattern 70: Denial Tracking](https://github.com/muriloscigliano/ai-playbook) — the playbook that proposes this technique (Pattern 70 of 78); a personal repository with no other known adoption, so treat it as one author's proposal rather than a field-tested practice
+- [Claude Code permissions documentation](https://code.claude.com/docs/en/permission-modes) — permission modes and persistent rules, including `dontAsk` for unattended runs; no denial-count escalation
 - Related: [Human-in-the-Loop Approval Framework](/patterns/human-in-loop-approval-framework) — complementary pattern for initial approval gates
 - Related: [Hook-Based Safety Guard Rails](/patterns/hook-based-safety-guard-rails) — external interceptors that can enforce denial policies
 - Related: [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization) — scoped permissions that limit what escalation can grant

@@ -17,7 +17,7 @@ prerequisites: ["An enumerable tool catalog", "A risk classifier or policy to au
 related: ["policy-gated-tool-proxy", "human-in-loop-approval-framework", "sandboxed-tool-authorization"]
 tools: ["policy-engines", "tool-registries"]
 domains: ["ops", "security", "fintech"]
-updated_at: "2026-08-13"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -101,13 +101,19 @@ Three questions per family:
 
 ## Evidence
 
+All measurements below are the vendor's own, single-source results from Tulip
+Labs (the pattern author), published on their research page and not
+independently replicated. Treat them as a self-report, not as third-party
+evaluation.
+
 The pattern was derived from three hand-written gates, and then tested against
 a model trained specifically to classify admission decisions — on the theory
 that if the blindness were only an artifact of human authorship, a trained
 model would not reproduce it.
 
-It reproduced. On 8,989 held-out rows the classifier had a **0.74% false-allow
-rate overall**, but the errors were not spread evenly:
+It reproduced. On 8,989 held-out rows the classifier had a **0.74%
+row-weighted false-allow rate** (1.88% after deduplicating near-identical
+rows), but the errors were not spread evenly:
 
 | family | risky rows | let through |
 |---|---|---|
@@ -183,7 +189,9 @@ table above — this returns six of the eight families.
 
 - [The family of harm your agent policy cannot see](https://tulipagents.ai/research/policy-blindness/)
   — the three gates, the measured instance, and the seven-model comparison
+  (published 2026-08-13, revised 2026-09-21)
 - [Writing a policy that holds](https://tulipagents.ai/concepts/policy-authoring/)
   — the method with a runnable coverage probe
-- Datasets and eval scripts:
-  [tuliplabs-ai/sdk-python/examples/research](https://github.com/tuliplabs-ai/sdk-python/tree/main/examples/research)
+- [tuliplabs-ai/tulip-agents](https://github.com/tuliplabs-ai/tulip-agents)
+  — the vendor's open-source repository; the datasets and eval scripts behind
+  the figures above were not published there at the time of writing

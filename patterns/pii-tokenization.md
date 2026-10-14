@@ -18,7 +18,7 @@ id: pii-tokenization
 summary: "Replaces PII in tool results with placeholder tokens before the model sees them and restores the real values in outgoing tool calls"
 signals: ["Agent workflows handle customer, HR, or medical records", "Compliance rules such as GDPR, HIPAA, or CCPA apply", "Agent routes data between tools without needing to read raw values"]
 anti_signals: ["Agent must reason over the actual content of the sensitive values", "Data contains no PII", "Tokenization would replace access controls and encryption instead of adding to them"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -89,7 +89,7 @@ send_email(
    - Regex patterns for common PII (email, phone, SSN, credit cards)
    - Named entity recognition models for names, addresses
    - Custom rules for domain-specific sensitive data
-   - Hybrid approach: regex for fast path (< 5ms), ML for semantic PII (50-200ms)
+   - Hybrid approach: regex for the fast path, ML models for semantic PII
 
 2. **Token mapping storage:**
    - Secure mapping of tokens to real values
@@ -136,8 +136,8 @@ Most effective when implemented in the MCP client layer, so it's transparent to 
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Microsoft Presidio: Open-source PII detection and anonymization framework
+* Anthropic Engineering: Code Execution with MCP (published 2025-11-04)
+* [Microsoft Presidio: Open-source PII detection and anonymization framework](https://microsoft.github.io/presidio/)
 * GDPR Article 4(5): Pseudonymization definition
 * NIST Privacy Framework
 

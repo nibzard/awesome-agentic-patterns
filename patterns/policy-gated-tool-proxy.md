@@ -7,7 +7,7 @@ based_on:
   - MCP Gateway pattern (e2b-dev/awesome-mcp-gateways)
   - Design Patterns for Securing LLM Agents (Beurer-Kellner et al., ETH Zurich, 2025)
 category: Security & Safety
-source: "https://arxiv.org/abs/2506.08837"
+source: "https://github.com/e2b-dev/awesome-mcp-gateways"
 tags:
   - governance
   - policy-engine
@@ -22,7 +22,7 @@ summary: >-
   immutable audit trail of all decisions.
 signals: ["Different agents need different tool permissions", "Regulated environment needs an audit trail of tool calls", "Some tool calls need human sign-off before they run", "Tool calls go through an interceptable protocol such as MCP, REST, or gRPC"]
 anti_signals: ["Governance rules cannot be defined in advance", "Violations only show up across sequences of tool calls", "Added latency on every tool call is not acceptable"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -133,8 +133,9 @@ rules:
 
 ## References
 
-- [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) -- formalizes separation of proposal and execution in agent security
 - [Awesome MCP Gateways](https://github.com/e2b-dev/awesome-mcp-gateways) -- catalog of proxy/gateway implementations for MCP
-- [SidClaw](https://github.com/sidclawhq/platform) -- open-source implementation of this pattern for MCP servers with hash-chain audit trails
+- [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) -- formalizes separation of proposal and execution in agent security, though it does not describe a policy-gated proxy itself
+- [SidClaw](https://github.com/sidclawhq/platform) -- open-source implementation of this pattern for MCP servers with hash-chain audit trails (disclosed: authored by this pattern's authors)
+- Related pattern: [Unified Tool Gateway](unified-tool-gateway.md) -- routes every tool call through one interposition point too, but for integration concerns (discovery, authentication, billing, execution); this pattern governs the same chokepoint with a policy engine, approval routing, and an audit trail
 - Related pattern: [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)
 - Related pattern: [Sandboxed Tool Authorization](sandboxed-tool-authorization.md)
