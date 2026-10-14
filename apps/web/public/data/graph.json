@@ -1663,6 +1663,27 @@
       "summary": "Combines a feedback channel, editable prompt documents, log-driven skill fixes, and usage dashboards to improve agent prompts and skills continuously"
     },
     {
+      "id": "judge-gated-finding-exchange-between-parallel-sub-agents",
+      "title": "Judge-Gated Finding Exchange Between Parallel Sub-Agents",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "judge-gated-finding-exchange-between-sub-agents",
+      "tags": [
+        "multi-agent",
+        "sub-agents",
+        "blackboard",
+        "knowledge-sharing",
+        "judge",
+        "context-isolation",
+        "corrections"
+      ],
+      "summary": "Puts an append-only board between parallel sub-agents and lets a small judge decide what goes on it, who receives each note, and when a later note retracts an earlier one",
+      "domains": [
+        "coding",
+        "research"
+      ]
+    },
+    {
       "id": "lane-based-execution-queueing",
       "title": "Lane-Based Execution Queueing",
       "category": "Orchestration & Control",
@@ -3417,6 +3438,11 @@
     {
       "source": "exact-action-authorization-binding",
       "target": "cryptographic-governance-audit-trail",
+      "type": "related"
+    },
+    {
+      "source": "judge-gated-finding-exchange-between-parallel-sub-agents",
+      "target": "sub-agent-spawning",
       "type": "related"
     },
     {

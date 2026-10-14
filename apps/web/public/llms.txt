@@ -511,6 +511,11 @@ Iterative Prompt & Skill Refinement: Combines a feedback channel, editable promp
 URL: https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement
 Markdown: https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement.md
 
+### judge-gated-finding-exchange-between-sub-agents
+Judge-Gated Finding Exchange Between Parallel Sub-Agents: Puts an append-only board between parallel sub-agents and lets a small judge decide what goes on it, who receives each note, and when a later note retracts an earlier one
+URL: https://agentic-patterns.com/patterns/judge-gated-finding-exchange-between-sub-agents
+Markdown: https://agentic-patterns.com/patterns/judge-gated-finding-exchange-between-sub-agents.md
+
 ### lane-based-execution-queueing
 Lane-Based Execution Queueing: Routes work into named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users
 URL: https://agentic-patterns.com/patterns/lane-based-execution-queueing

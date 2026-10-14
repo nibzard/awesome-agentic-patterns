@@ -3698,6 +3698,55 @@
     "excerpt": "\n## Problem\nAgent usage reveals gaps in prompts, skills, and tools—but how do you systematically improve them? When a workflow fails or behaves sub-optimally, you need multiple mechanisms to capture feedback and iterate. Single approaches aren't enough; you need a **multi-pronged refinement strategy**."
   },
   {
+    "title": "Judge-Gated Finding Exchange Between Parallel Sub-Agents",
+    "status": "emerging",
+    "authors": [
+      "qybaihe (@qybaihe)"
+    ],
+    "based_on": [
+      "mu hive (@qybaihe)",
+      "Erman et al., Hearsay-II blackboard architecture (1980)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/qybaihe/mu#the-hive",
+    "tags": [
+      "multi-agent",
+      "sub-agents",
+      "blackboard",
+      "knowledge-sharing",
+      "judge",
+      "context-isolation",
+      "corrections"
+    ],
+    "slug": "judge-gated-finding-exchange-between-sub-agents",
+    "id": "judge-gated-finding-exchange-between-parallel-sub-agents",
+    "summary": "Puts an append-only board between parallel sub-agents and lets a small judge decide what goes on it, who receives each note, and when a later note retracts an earlier one",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "medium",
+    "signals": [
+      "Several sub-agents work on one goal in parallel, each in its own context window",
+      "Sub-agents repeat each other's dead ends or keep acting on something a sibling already disproved",
+      "Forwarding everything to everyone would bury each sub-agent in the others' chatter"
+    ],
+    "anti_signals": [
+      "A single agent, or sub-agents whose tasks do not overlap",
+      "Sub-agents finish in one short step, so there is nothing to share mid-run",
+      "You cannot log the judge's answers and read them on real runs"
+    ],
+    "related": [
+      "board-mediated-inter-agent-coordination",
+      "non-generative-judgment-routing",
+      "sub-agent-spawning"
+    ],
+    "domains": [
+      "coding",
+      "research"
+    ],
+    "updated_at": "2026-10-07",
+    "excerpt": "\n## Problem\nSay you hand one bug to three sub-agents with three different angles: one reads the CI config, one tries to reproduce it locally, one goes through recent commits. When the reports come back, you find the second one spent half its run fighting something the first had already figured out.\n\nSeparate context windows are the reason parallel sub-agents are worth having. Each one thinks about its own slice without wading through the others' output. They are also the reason this keeps happening: nothing one of them learns reaches the others until the parent reads the final reports, and by then it is too late to help.\n\nThe obvious fixes each break something else. Report only to the parent, and findings arrive after the run. Put everyone in one shared chat, and every context fills up with other people's progress updates. Let each sub-agent's own model decide what to tell whom, and every such decision costs a full turn, which a busy model mostly skips anyway. Forward anything tagged \"finding\" by rule, and the rule cannot tell a fact one sibling badly needs from a status update nobody does.\n\nA shared board has a quieter problem too: notes stay up after they stop being true. One sub-agent posts \"the test suite can't run in this sandbox\". A few minutes later it notices an inherited environment variable, unsets it, and the tests run fine. Everyone who read the first note is still working around it."
+  },
+  {
     "title": "Lane-Based Execution Queueing",
     "status": "validated-in-production",
     "authors": [

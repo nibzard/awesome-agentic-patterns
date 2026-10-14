@@ -151,6 +151,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Initializer-Maintainer Dual Agent Architecture](patterns/initializer-maintainer-dual-agent.md)
 - [Inversion of Control](patterns/inversion-of-control.md)
 - [Iterative Multi-Agent Brainstorming](patterns/iterative-multi-agent-brainstorming.md)
+- [Judge-Gated Finding Exchange Between Parallel Sub-Agents](patterns/judge-gated-finding-exchange-between-sub-agents.md)
 - [Lane-Based Execution Queueing](patterns/lane-based-execution-queueing.md)
 - [Language Agent Tree Search (LATS)](patterns/language-agent-tree-search-lats.md)
 - [LLM Map-Reduce Pattern](patterns/llm-map-reduce-pattern.md)
