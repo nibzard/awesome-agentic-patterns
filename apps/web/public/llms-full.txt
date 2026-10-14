@@ -1298,7 +1298,7 @@ flowchart TD
 **Status:** established
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.youtube.com/watch?v=u85G2aV_5rQ
+**Source:** https://eu.36kr.com/en/p/3352908436796289
 
 ## Problem
 
@@ -1319,6 +1319,8 @@ Allow AI agents to independently conduct the entire research process. Given a re
 The key mechanism is a self-reflective iteration loop: after each search cycle, the agent evaluates results against its research goals and autonomously determines the next exploration direction. Production implementations typically combine four subsystems: planning (task decomposition), memory (context + vector store), action (tool orchestration), and reflection (quality evaluation).
 
 A common variant uses parallel multi-agent teams, where different agents simultaneously pursue different research angles and later synthesize findings.
+
+**Relationship to AI Web Search Agent Loop:** [AI Web Search Agent Loop](ai-web-search-agent-loop.md) applies the same iterate-until-satisfied loop to real-time web question answering, with an emphasis on query translation, search operators, and inline citations. This pattern is the general form: an end-to-end research workflow over arbitrary sources (web, databases, documents) with explicit planning, memory, and reflection subsystems that ends in a written, sourced report.
 
 ## Example (flow)
 
@@ -1345,11 +1347,11 @@ flowchart TD
 ## Trade-offs
 
 * **Pros:** Enables autonomous multi-round investigation; adapts strategy based on findings; produces comprehensive, well-sourced outputs; superior for complex analytical tasks.
-* **Cons:** Higher token cost (5-10x vs. single-round retrieval); increased latency from multiple LLM calls; planning stability challenges; orchestration complexity adds states to debug.
+* **Cons:** Higher token cost — operators commonly estimate 5-10x versus single-round retrieval, though this is an estimate rather than a benchmarked figure; increased latency from multiple LLM calls; planning stability challenges; orchestration complexity adds states to debug.
 
 ## References
 
-- "How AI Agents Are Reshaping Creation": "That question goes to the agent, the agent formulates the searches in the form of tool calls. So it'll search the Web, it'll search some existing index or what have you, and it'll iterate until it's sort of satisfied with the amount of information that it gets, and then summarizes the output for you."
+- Primary source: [36kr interview with Connie Fan and Danny Tarlow (Gemini team) on agentic coding and search](https://eu.36kr.com/en/p/3352908436796289) — Tarlow on how developers work in a large codebase: "You would use code search, look at the file structure, click around, read some code" and "The agentic model mimics this approach." The interview describes a dual-track approach: longer context plus an agentic programming model that searches and reasons autonomously.
 
 - ReAct (Reasoning + Acting): Foundational pattern establishing the Thought → Action → Observation loop; Yao et al., Princeton University & Google Research, ICLR 2023
 
@@ -1357,9 +1359,9 @@ flowchart TD
 
 - "From AI for Science to Agentic Science: A Survey on Autonomous Scientific Discovery": Survey of autonomous research agents and scientific discovery systems; Shanghai AI Lab, arXiv:2508.14111, 2025
 
-- Tongyi DeepResearch: Open-source agent-driven research system with 60% inference cost reduction; Alibaba Tongyi Lab, arXiv:2510.24701, 2025
+- Tongyi DeepResearch: Open-source agent-driven research system with 60% inference cost reduction; Alibaba Tongyi Lab, [arXiv:2510.24701](https://arxiv.org/abs/2510.24701), 2025; code at [Alibaba-NLP/DeepResearch](https://github.com/Alibaba-NLP/DeepResearch)
 
-- Primary source: https://www.youtube.com/watch?v=u85G2aV_5rQ
+- [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) (Anthropic) — orchestrator and agent-loop patterns behind production research agents
 
 ---
 
@@ -3169,7 +3171,7 @@ if monitors.breach(policy.version):
 **Status:** experimental-but-awesome
 **Category:** Orchestration & Control
 **Authors:** Dillon Sexton (@EmperorMew)
-**Source:** https://github.com/voidly-ai/voidly-pay
+**Source:** https://voidly.ai/developers
 
 ## Problem
 
@@ -3254,10 +3256,10 @@ Every object carries an Ed25519 signature (or equivalent). The ledger never deci
 
 ## References
 
-- [Voidly Pay](https://github.com/voidly-ai/voidly-pay) — reference implementation of this pattern (contributor-owned, disclosed per guidelines). Implements capability, atomic-hire, signed-receipt, escrow-release/refund, and faucet primitives with 9 framework adapters (LangChain, CrewAI, AutoGen, LlamaIndex, Haystack, Vercel AI, OpenAI-compatible, x402, A2A).
+- [Voidly developer docs](https://voidly.ai/developers) — live documentation for the contributor's implementation (contributor-owned, disclosed per guidelines): the Voidpay MCP tools, the x402 agent-wallet flow, and a public x402 services catalog. The original reference repository (`github.com/voidly-ai/voidly-pay`, which packaged the capability, atomic-hire, signed-receipt, escrow-release/refund, and faucet primitives with 9 framework adapters) is no longer available (HTTP 404), so the developer docs are the reachable implementation surface.
 - [402-First Machine Payments](402-first-machine-payments.md) — sibling pattern where the quoted price doubles as a priority signal (not settlement).
 - [Milestone Escrow for Agent Resource Funding](milestone-escrow-agent-funding.md) — adjacent pattern for funding agents across long milestones (vs. per-task hire).
-- [x402 payment-required HTTP status](https://github.com/coinbase/x402) — HTTP-level expression of the same shape (request → 402 + price → signed payment → fulfilled response).
+- [x402 payment-required HTTP status](https://github.com/x402-foundation/x402) — HTTP-level expression of the same shape (request → 402 + price → signed payment → fulfilled response). Development moved from `coinbase/x402` to the x402 Foundation repository.
 
 ---
 
@@ -5308,10 +5310,10 @@ STREAM_JSON=true           # Real-time progress tracking
 
 ## CriticGPT-Style Code Review
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Reliability & Eval
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://openai.com/research/criticgpt
+**Source:** https://arxiv.org/abs/2407.00215
 
 ## Problem
 
@@ -5324,7 +5326,9 @@ As AI-generated code becomes more sophisticated, it becomes increasingly difficu
 
 ## Solution
 
-Deploy specialized AI models trained specifically for code critique and evaluation. This approach builds on RLAIF (Reinforcement Learning from AI Feedback), which achieves ~100x cost reduction compared to human-only annotation. These models act as automated code reviewers that can:
+Train or deploy a specialized critic model whose only job is finding problems in code output. CriticGPT, the reference instance, is a GPT-4-based critic trained with reinforcement learning from human feedback to write natural-language critiques of ChatGPT code answers. In the paper it supports human RLHF evaluators, who preferred its critiques over purely human-written critiques 63% of the time and found more real bugs with it. Two caveats travel with the result: the critic sometimes writes convincing critiques of bugs that do not exist, and human-plus-critic teams hallucinate fewer such bugs than the critic alone — so the human stays in the loop by design.
+
+A critic used this way can:
 
 1. **Identify bugs** that human reviewers might miss
 2. **Detect security vulnerabilities** in generated code
@@ -5332,7 +5336,7 @@ Deploy specialized AI models trained specifically for code critique and evaluati
 4. **Verify correctness** of implemented solutions
 5. **Check adherence** to coding standards and best practices
 
-The critic model works alongside code generation models, providing an additional layer of quality assurance before code reaches human review or production.
+**Scope note:** the published evidence covers critics assisting human evaluators on model outputs, not a standalone reviewer. Running such a critic as an autonomous CI/CD gate, as sketched below, is an extrapolation of the paper's results; treat its findings as input to human review rather than a verdict. For the broader technique of AI flagging issues during human review, see the sibling pattern [AI-Assisted Code Review / Verification](ai-assisted-code-review-verification.md) — the difference is that this pattern uses a model trained specifically for critique, while that one uses general-purpose review agents.
 
 ## Example
 
@@ -5566,7 +5570,7 @@ sequenceDiagram
 ## How to use it
 
 - Use for automated code review workflows with high commit volumes
-- Deploy in CI/CD pipelines for pre-commit quality checks
+- Deploy in CI/CD pipelines for pre-commit quality checks, with critic findings routed to a human as review input
 - Apply to security-sensitive code requiring vulnerability detection
 - Integrate via git webhooks (GitHub, GitLab) for event-driven review
 - Use 3-4 iterations of critique-refinement loops for complex changes
@@ -5574,8 +5578,8 @@ sequenceDiagram
 
 ## References
 
-- [OpenAI's CriticGPT Announcement (July 2024)](https://openai.com/research/criticgpt)
-- [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073) - RLAIF foundation with 100x cost reduction vs human annotation
+- McAleese et al., [LLM Critics Help Catch LLM Bugs](https://arxiv.org/abs/2407.00215) (arXiv:2407.00215, June 2024, incl. Jan Leike) — the CriticGPT paper: RL-trained GPT-4 critic assisting human RLHF evaluators; 63% preference over human critiques, hallucinated-bug caveats. (The original `openai.com/research/criticgpt` announcement page is no longer available.)
+- [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073) - RLAIF foundation: replacing human annotation with AI feedback at lower cost
 - [Self-Taught Evaluators (Meta AI, 2024)](https://arxiv.org/abs/2408.02666) - Bootstrap critic models from synthetic data
 - [Evaluating LLMs for Code Review (2025)](https://arxiv.org/abs/2505.20206) - GPT-4o: 68.50% classification accuracy with context
 
@@ -12077,9 +12081,9 @@ flowchart TD
 ## Lethal Trifecta Threat Model
 
 **Status:** best-practice
-**Category:** Reliability & Eval
+**Category:** Security & Safety
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://simonwillison.net/2025/Jun/16/lethal-trifecta/
+**Source:** https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
 
 ## Problem
 
@@ -12124,11 +12128,8 @@ if tool.can_externally_communicate and
 
 ## References
 
-* Willison, *The Lethal Trifecta for AI Agents* (June 16 2025).
-* Beurer-Kellner et al., *Design Patterns for Securing LLM Agents against Prompt Injections* (arXiv:2506.08837, June 2025).
-
-- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/
-- Academic source: https://doi.org/10.48550/arXiv.2506.08837
+- Primary source: Simon Willison, [The lethal trifecta for AI agents: private data, untrusted content, and external communication](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) (June 16, 2025; the previously cited `/lethal-trifecta` slug was a dead 404 URL)
+- Academic source: Beurer-Kellner et al., *Design Patterns for Securing LLM Agents against Prompt Injections* ([arXiv:2506.08837](https://arxiv.org/abs/2506.08837), June 2025; [doi:10.48550/arXiv.2506.08837](https://doi.org/10.48550/arXiv.2506.08837))
 
 > **Note on terminology**: This pattern describes Simon Willison's prompt injection threat model (private data + untrusted content + external communication), distinct from the AI safety literature's "lethal trifecta" (advanced capabilities + agentic behavior + situational awareness).
 
@@ -20444,10 +20445,10 @@ sequenceDiagram
 
 ## Subject Hygiene for Task Delegation
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://github.com/nibzard/SKILLS-AGENTIC-LESSONS
+**Source:** https://code.claude.com/docs/en/sub-agents
 
 ## Problem
 
@@ -20457,7 +20458,7 @@ When delegating work to subagents via the Task tool, empty or generic task subje
 - **Unreferencable**: Cannot discuss specific subagent work later
 - **Confusing**: Multiple subagents with empty subjects are indistinguishable
 
-From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point. This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce).
+From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point (the author's own session analysis; the repository that hosted it is no longer online, so treat the counts as anecdotal). This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce).
 
 ## Solution
 
@@ -20526,15 +20527,15 @@ Examples:
 
 Prevents "Empty Subject Anti-Pattern" which makes conversations untraceable and subagent work indistinguishable.
 
-**Real-world impact:**
+**Observed example:**
 
-Validated in production across Claude Code, Cursor, AMP, LangChain, AutoGen, and CrewAI. From nibzard-web session with 4 parallel subagents:
+From the author's nibzard-web session with 4 parallel subagents (self-reported; underlying data no longer published):
 - agent-a7911db: "Newsletter component exploration"
 - agent-adeac17: "Modal pattern discovery"
 - agent-a03b9c9: "Search implementation research"
 - agent-b84c3d1: "Log page analysis"
 
-Clear subjects enabled the main agent to synthesize findings from each subagent effectively.
+Clear subjects let the main agent synthesize findings from each subagent. The general practice matches Anthropic's subagent guidance, which tells agents to write specific, task-scoped descriptions when delegating. No independent cross-tool validation exists: treat this as practical guidance, not a measured result.
 
 ## Trade-offs
 
@@ -20561,7 +20562,8 @@ Clear subjects enabled the main agent to synthesize findings from each subagent 
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+* [Claude Code sub-agents documentation](https://code.claude.com/docs/en/sub-agents) — official guidance on creating subagents and writing task-specific descriptions (live replacement for the original analysis)
+* Original evidence base: the author's 88-session Claude analysis (`github.com/nibzard/SKILLS-AGENTIC-LESSONS`) is no longer available (HTTP 404), so the session counts above cannot be independently verified
 * FIPA. "FIPA ACL Communicative Act Library Specification." 2002 - Agent communication language with conversation-id for task traceability
 * Smith, R. G. "The contract net protocol." IEEE Transactions on Computers 1980 - Task identification in distributed delegation
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Parallel Tool Call Learning](parallel-tool-call-learning.md)
@@ -21130,7 +21132,7 @@ Worth adopting anywhere a system proposes changes to its own configuration or co
 **Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://simonwillison.net/2025/Jun/16/lethal-trifecta/
+**Source:** https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
 
 ## Problem
 
@@ -21145,6 +21147,8 @@ Adopt **capability compartmentalization** at the tool layer:
 - Run each class in an isolated subprocess with scoped API keys and file permissions.
 
 Treat each capability class as a separate trust zone with its own runtime identity and policy checks. Cross-zone composition should require explicit policy evaluation and short-lived delegation tokens so the agent cannot silently chain read+fetch+write into a high-risk path.
+
+**Scope note:** Willison's post diagnoses the trifecta and prescribes keeping at least one of the three capabilities out of any execution path; it does not propose reader/processor/writer splitting or manifests. The micro-tool splitting below is this pattern's extrapolation of his principle. The call-time blocking rule itself belongs to the sibling pattern [Lethal Trifecta Threat Model](lethal-trifecta-threat-model.md); what this pattern adds is the per-class isolation and manifest machinery that makes such a rule enforceable.
 
 ```yaml
 # tool-manifest.yml
@@ -21190,9 +21194,10 @@ function validateToolChain(tools: string[]): boolean {
 
 * Willison's warning that "one MCP mixed all three patterns in a single tool."
 
-- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/
-- Clawdbot (validated-in-production reference implementation with profile-based policies): https://github.com/clawdbot/clawdbot
-- Action Selector pattern (Beurer-Kellner et al., 2025): https://arxiv.org/abs/2506.08837
+- Primary source: [The lethal trifecta for AI agents: private data, untrusted content, and external communication](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) (Simon Willison, June 16, 2025)
+- [MCP security best practices](https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices) — official Model Context Protocol guidance on least-privilege tool design and attack vectors
+- [OpenClaw](https://github.com/openclaw/openclaw) (formerly Clawdbot) — open-source agent with profile-based tool policies; `github.com/clawdbot/clawdbot` now redirects here
+- Beurer-Kellner et al., [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (arXiv:2506.08837, June 2025) — academic catalog of agent security patterns, including capability-based isolation
 - NVIDIA NeMo Guardrails (policy-based enforcement): https://github.com/NVIDIA/NeMo-Guardrails
 
 ---
@@ -21327,7 +21332,7 @@ function tool_search(query: string, tool_registry) {
 **Status:** emerging
 **Category:** Orchestration & Control
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://github.com/nibzard/SKILLS-AGENTIC-LESSONS
+**Source:** https://www.anthropic.com/engineering/claude-code-best-practices
 
 ## Problem
 
@@ -21338,21 +21343,21 @@ AI agents often struggle to select the optimal tool for a given task, leading to
 - Skipping build verification after code changes
 - Performing sequential exploration when parallel would be faster
 
-These ineff compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections.
+These inefficiencies compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections.
 
 ## Solution
 
-Encode data-driven tool selection patterns that emerged from analysis of 88 real-world Claude conversation sessions. By matching task type to optimal tool, agents can follow proven workflows.
+Encode tool selection patterns that emerged from the author's analysis of 88 real-world Claude conversation sessions and that align with Anthropic's published Claude Code guidance (read files before editing, verify changes with shell commands). By matching task type to the right tool, agents can follow proven workflows.
 
-**Tool preference patterns from actual usage data:**
+**Tool preference patterns from observed usage** (session counts come from the author's analysis, whose repository is no longer online — treat them as illustrative, not reproducible):
 
 | Task Type | Recommended Tool | Evidence |
 |-----------|-----------------|----------|
-| Codebase exploration | Read → Grep → Glob | Consistent pattern across all projects |
-| Code modification | Edit (not Write) | 3.4:1 Edit:Write ratio in nibzard-web |
+| Codebase exploration | Read → Grep → Glob | Consistent pattern across all analyzed projects |
+| Code modification | Edit (not Write) | Edits far outnumbered Writes in the analyzed sessions |
 | New file creation | Write | Appropriate use case |
-| Build verification | Bash | 324 uses in nibzard-web, 276 in patterns |
-| Research delegation | Task (with clear subject) | 48 invocations across sessions |
+| Build verification | Bash | The most frequently used tool in the analyzed sessions |
+| Research delegation | Task (with clear subject) | Used repeatedly, always with a subject |
 
 **Key selection criteria:**
 
@@ -21362,7 +21367,7 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
    - Use `Read` for targeted file inspection
 
 2. **Code modification tasks** (changing existing code):
-   - **Prefer `Edit` over `Write`** - preserves existing context and comments, saves ~66% tokens
+   - **Prefer `Edit` over `Write`** - preserves existing context and comments, and a partial diff costs far fewer tokens than a full file rewrite
    - Only use `Write` for brand new files or complete rewrites (with permission)
    - Use `Write` when changing >50% of a file; otherwise use `Edit`
    - Always `Read` the file before editing
@@ -21376,7 +21381,7 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
    - Use `Task` tool for subagent delegation
    - **Always provide clear task subjects** (no empty strings)
    - Prefer parallel over sequential for independent exploration
-   - Parallel delegation can provide 10x+ speedup for independent tasks (e.g., framework migrations)
+   - Parallel delegation can provide order-of-magnitude speedups for independent tasks (e.g., framework migrations), per the original session analysis
 
 ```mermaid
 flowchart TD
@@ -21431,7 +21436,7 @@ flowchart TD
 
 **Pros:**
 
-- Data-driven from 88 real sessions
+- Grounded in observed sessions and consistent with Anthropic's published guidance
 - Reduces token waste and user corrections
 - Faster workflow completion
 - Clear mental model for tool selection
@@ -21446,7 +21451,8 @@ flowchart TD
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+* [Claude Code: Best Practices for Agentic Coding](https://www.anthropic.com/engineering/claude-code-best-practices) (Anthropic) — published guidance that matches the core rules: explore before editing, read files before changes, and verify work with shell commands (live replacement for the original analysis)
+* Original evidence base: the author's 88-session Claude analysis (`github.com/nibzard/SKILLS-AGENTIC-LESSONS`) is no longer available (HTTP 404), so the per-project counts cited above cannot be independently reproduced
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Discrete Phase Separation](discrete-phase-separation.md), [Subject Hygiene](subject-hygiene.md)
 * ToolFormer: [Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (Schick et al., 2023)
 * ReAct: [Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., 2022)
@@ -21742,7 +21748,7 @@ on turn_end(item):
 **Status:** emerging
 **Category:** Security & Safety
 **Authors:** The-Nexus-Guard (@The-Nexus-Guard)
-**Source:** https://github.com/nickzsche/aip-identity
+**Source:** https://github.com/The-Nexus-Guard/aip
 
 ## Problem
 
@@ -21853,7 +21859,8 @@ The key difference from PGP's web of trust: vouch chains carry semantic weight (
 
 ## Known Implementations
 
-- [AIP (Agent Identity Protocol)](https://github.com/nickzsche/aip-identity) — Python SDK implementing Ed25519-based identity, signed vouches, and chain verification for AI agents.
+- [AIP (Agent Identity Protocol)](https://github.com/The-Nexus-Guard/aip) — Python SDK (`pip install aip-identity`) implementing Ed25519-based identity, signed vouches, and chain verification for AI agents. The repository moved from `github.com/nickzsche/aip-identity` (now HTTP 404) to the author's own organization; it is a small, contributor-owned project, so the evidence grade stays low.
+- Independent 2026 work exploring the same problem: [forge-mcp](https://github.com/pm577/forge-mcp) (Agent Reputation Protocol with `forge_vouch` and trust-score tools) and the [OpenA2A Agent Identity Protocol](https://github.com/opena2a-standards/agent-identity-protocol) (IETF Internet-Draft for agent identity, capabilities, and multi-factor trust). No interoperable standard exists yet.
 
 ## References
 
@@ -22980,12 +22987,12 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 ---
 
-## Working Memory via TodoWrite
+## Working Memory via Task Tracking
 
 **Status:** emerging
 **Category:** Context & Memory
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://github.com/nibzard/SKILLS-AGENTIC-LESSONS
+**Source:** https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
 
 ## Problem
 
@@ -22999,7 +23006,7 @@ This leads to redundant work, forgotten tasks, and confused users.
 
 ## Solution
 
-Use `TodoWrite` (or equivalent state externalization) to maintain explicit working memory throughout the session. This serves as both agent and user visibility into session state.
+Use session task-tracking tools (in Claude Code: `TaskCreate`, `TaskGet`, `TaskUpdate`, and `TaskList`; earlier versions exposed a single `TodoWrite` tool) to maintain explicit working memory throughout the session. This serves as both agent and user visibility into session state.
 
 **Theoretical foundation:** Externalizes working memory per Baddeley's episodic buffer model and Miller's 7±2 capacity limit—humans and LLMs both struggle to track more than a handful of items internally.
 
@@ -23010,9 +23017,9 @@ Use `TodoWrite` (or equivalent state externalization) to maintain explicit worki
 3. **Verification steps**: Tests or checks needed
 4. **Next actions**: What to do next
 
-**Usage patterns from data:**
+**Usage patterns from the author's session analysis** (self-reported; the repository that hosted the analysis is no longer online, so treat the table as anecdotal):
 
-| Project | TodoWrite Uses | Session Quality |
+| Project | Task-list uses | Session quality |
 |---------|---------------|-----------------|
 | nibzard-web | 52 | High (8 positive, 2 corrections) |
 | awesome-agentic-patterns | 60 | Medium (1 positive, 5 corrections) |
@@ -23021,10 +23028,12 @@ Use `TodoWrite` (or equivalent state externalization) to maintain explicit worki
 
 **Key insights:**
 
-- TodoWrite usage correlates with smoother sessions
+- In that (unverifiable) analysis, task-list use accompanied smoother sessions; this is an observation, not a controlled result
 - It serves as working memory for both agent and user
 - Essential for complex multi-step tasks
 - Less critical for simple, straightforward work
+
+**Current tooling note:** since Claude Code v2.1.268 (Agent SDK v0.3.268), newer models track multi-step work without a written todo list, so todo tools are opt-in (`CLAUDE_CODE_ENABLE_TODO_TOOLS=1`), mainly to render progress for the user; the legacy `TodoWrite` tool remains only as a fallback (`CLAUDE_CODE_ENABLE_TASKS=0`). The underlying practice — externalizing task state for long-horizon work — is still recommended in Anthropic's context engineering guidance.
 
 ```mermaid
 stateDiagram-v2
@@ -23036,7 +23045,7 @@ stateDiagram-v2
     Completed --> [*]
 
     note right of Pending
-        Create via TodoWrite
+        Create via task tool
         with clear subject
     end note
 
@@ -23062,7 +23071,7 @@ stateDiagram-v2
 
 **Implementation approach:**
 
-1. **Create tasks proactively**: When you identify work, create a TodoWrite entry
+1. **Create tasks proactively**: When you identify work, create a task entry
 2. **Update status as you go**: Mark tasks in_progress when starting
 3. **Maintain single active task**: Exactly ONE task should be in_progress at a time
 4. **Document dependencies**: Use `blocks`/`blockedBy` relationships
@@ -23073,7 +23082,7 @@ stateDiagram-v2
 
 ```
 1. User: "Add OAuth login and fix the search bug"
-2. Agent creates 2 tasks with TodoWrite
+2. Agent creates 2 tasks with the task-tracking tool
 3. Agent marks OAuth task in_progress, starts work
 4. Agent realizes OAuth needs database schema change
 5. Agent blocks OAuth task, creates schema task
@@ -23114,8 +23123,10 @@ stateDiagram-v2
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
-* Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Task List Pattern](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/task-lists)
+* [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic) — recommends agentic memory such as notes and todo lists for long-horizon tasks, including Claude Code's to-do list
+* [Todo tracking (Claude Agent SDK docs)](https://code.claude.com/docs/en/agent-sdk/todo-tracking) — current behavior: task-tracking tools by model, opt-in flags, and the `TodoWrite` legacy fallback (replaces the dead `docs.anthropic.com` task-lists page)
+* Original evidence base: the author's 88-session Claude analysis (`github.com/nibzard/SKILLS-AGENTIC-LESSONS`) is no longer available (HTTP 404), so the usage table above cannot be independently verified
+* Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 * Baddeley, A. (2000). "The Episodic Buffer: A New Component of Working Memory?" *Trends in Cognitive Sciences*, 4(11), 417-423.
 * Miller, G. A. (1956). "The Magical Number Seven, Plus or Minus Two." *Psychological Review*, 63(2), 81-97.
 
