@@ -186,6 +186,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Adaptive Sandbox Fan-Out Controller](patterns/adaptive-sandbox-fanout-controller.md)
 - [Agent Circuit Breaker](patterns/agent-circuit-breaker.md)
 - [Anti-Reward-Hacking Grader Design](patterns/anti-reward-hacking-grader-design.md)
+- [Approval-Bound Transactional Write](patterns/approval-bound-transactional-write.md)
 - [Asynchronous Coding Agent Pipeline](patterns/asynchronous-coding-agent-pipeline.md)
 - [Canary Rollout and Automatic Rollback for Agent Policy Changes](patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes.md)
 - [CriticGPT-Style Code Review](patterns/criticgpt-style-evaluation.md)

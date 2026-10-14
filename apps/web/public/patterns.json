@@ -724,6 +724,64 @@
     "excerpt": "\n## Problem\nDuring reinforcement learning training, models actively search for ways to maximize reward. If your grader has edge cases or loopholes, the model will find and exploit them:\n\n- **Gaming the metric**: Model achieves 100% reward score by exploiting grader weaknesses rather than solving the task\n- **Unexpected behaviors**: Agent learns bizarre shortcuts that technically satisfy the reward function but don't reflect true quality\n- **Brittle evaluation**: Simple graders (e.g., exact string match) penalize valid answers due to formatting differences\n- **Degraded real performance**: High training reward doesn't translate to production success\n- **Length hacking**: Models generate verbose but meaningless content to inflate scores\n- **Format hacking**: Adding empty tags like `<thinking></thinking>` without substantive content\n- **Solution appending**: Concatenating previously-solved problems to exploit reward systems\n\nThe Rogo team experienced this firsthand: early training runs showed 100% average validation reward, but the model was exploiting edge cases in their financial reasoning grader rather than improving actual performance."
   },
   {
+    "title": "Approval-Bound Transactional Write",
+    "status": "emerging",
+    "authors": [
+      "Valent Tansuri (@Val1-IT)"
+    ],
+    "based_on": [
+      "Idempotency keys in Postgres (Brandur Leach, 2017)",
+      "LedgerGuard (Val1-IT, contributor-owned, disclosed)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://brandur.org/idempotency-keys",
+    "tags": [
+      "idempotency",
+      "human-approval",
+      "transactions",
+      "postconditions",
+      "drift-detection",
+      "agent-writes",
+      "retries"
+    ],
+    "slug": "approval-bound-transactional-write",
+    "id": "approval-bound-transactional-write",
+    "summary": "Binds a human approval to one exact plan version, then applies the write, checks the postcondition and records the idempotency key in a single database transaction",
+    "maturity": "early",
+    "complexity": "medium",
+    "effort": "days",
+    "impact": "high",
+    "signals": [
+      "An agent proposes changes to a system of record that a person must approve",
+      "Agent runs can be retried, resumed or replayed after a crash or timeout",
+      "Time passes between approval and execution, so the target can change in between",
+      "The write and the bookkeeping can live in the same transactional database"
+    ],
+    "anti_signals": [
+      "The side effect is an external API call with no transaction you can join (email, payments provider)",
+      "Actions are cheap and trivially reversible, so approval and replay protection are overhead",
+      "No human is available to approve within the window that matters"
+    ],
+    "prerequisites": [
+      "A transactional store that holds both the target data and the bookkeeping tables",
+      "A structured plan format the approver can read",
+      "A way to identify the approver that the agent cannot forge"
+    ],
+    "related": [
+      "human-in-loop-approval-framework",
+      "plan-then-execute-pattern",
+      "sandboxed-tool-authorization"
+    ],
+    "domains": [
+      "finance",
+      "inventory",
+      "erp",
+      "operations"
+    ],
+    "updated_at": "2026-10-08",
+    "excerpt": "\n## Problem\nApproval gates usually guard the *request* to write, not the write itself. Between the moment a person clicks approve and the moment the change lands, three things go wrong in practice:\n\n- **The approval drifts from what runs.** The agent revises the plan after approval, or a second plan reuses the first one's approval. The person approved something, just not this.\n- **The target changes underneath.** Another process edits the row while the approval sits in a queue. The correction was right for the state the person saw and is wrong for the state it now applies to.\n- **Retries double-apply.** The run times out, a durable workflow resumes, or the person clicks approve twice. The write runs again. Because the duplicate *succeeds*, nothing in the error path notices.\n\nA separate \"already done?\" table helps with the last one, but if the marker and the write commit separately there is still a window where the row changed and the marker didn't (or the reverse). A crash in that window either repeats the effect or skips it."
+  },
+  {
     "title": "Artifact-Driven Analysis Pipeline Orchestration",
     "status": "emerging",
     "authors": [
