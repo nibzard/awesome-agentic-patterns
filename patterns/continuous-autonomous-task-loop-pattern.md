@@ -9,7 +9,7 @@ tags: [autonomous-execution, task-loop, rate-limiting, git-automation, cli-drive
 summary: "Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits"
 signals: ["A todo file holds discrete, well-defined tasks", "Manual task selection and Git commits slow down work", "Rate limits interrupt long agent sessions"]
 anti_signals: ["Tasks are complex or poorly defined", "Each task decision needs human oversight", "Elevated execution permissions are not allowed"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -103,6 +103,18 @@ STREAM_JSON=true           # Real-time progress tracking
 - Monitor execution logs for unexpected behavior
 - Start with small task batches to validate behavior
 
+### Native alternatives (2026)
+
+Much of the external while-loop is now available inside Claude Code itself, so check these before maintaining a shell script:
+
+- **Background sessions**: `claude --bg` starts a session as a background agent and returns immediately, printing the session ID and management commands.
+- **Budget caps**: `claude -p --max-budget-usd 5.00 "query"` stops the run once estimated API spend reaches the amount, including subagent spend.
+- **In-process stop-hook loops**: a Stop hook that restarts the agent when completion criteria are not met achieves the same unattended looping without an external script (see [Stop Hook Auto-Continue Pattern](stop-hook-auto-continue-pattern.md)).
+
+The external shell loop is still the right choice when you need cross-tool orchestration (mixing CLIs from different vendors), custom rate-limit policy across processes, or progress accounting over the todo file with plain Unix tooling.
+
+Distinct from [Stop Hook Auto-Continue Pattern](stop-hook-auto-continue-pattern.md): that pattern continues a single Claude Code session in-process via a Stop hook, while this pattern drives fresh CLI invocations from an external script.
+
 ## Trade-offs
 
 **Pros:**
@@ -124,6 +136,8 @@ STREAM_JSON=true           # Real-time progress tracking
 ## References
 
 - [Original Autonomous Task Processing Script](https://gist.github.com/nibzard/a97ef0a1919328bcbc6a224a5d2cfc78) - Complete implementation example
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code) - CLI agent capabilities
+- [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference) - native `--bg` background sessions and `--max-budget-usd` spend caps that absorb parts of the external loop
+- [Anthropic Engineering: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) - harness design for unattended, multi-session agent work
+- [The Ralph Loop: How I Run Autonomous AI Agents Overnight](https://blakecrosley.com/blog/ralph-agent-architecture) - Blake Crosley, Feb 2026: stop-hook-based autonomous loops as the in-process variant
 - [ReAct: Synergizing Reasoning and Acting](https://arxiv.org/abs/2210.03629) (NeurIPS 2022) - Yao et al. — establishes Thought→Action→Observation paradigm foundational to continuous task loops
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (NeurIPS 2023) - Shinn et al. — episodic memory and self-reflection for continuous improvement

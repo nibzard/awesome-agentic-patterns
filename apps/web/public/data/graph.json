@@ -1068,7 +1068,7 @@
       "id": "deterministic-zero-llm-orchestration",
       "title": "Deterministic Zero-LLM Orchestration",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "deterministic-zero-llm-orchestration",
       "tags": [
         "orchestration",
@@ -1078,7 +1078,7 @@
         "test-driven",
         "zero-llm-overhead"
       ],
-      "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending no LLM tokens on coordination"
+      "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending LLM tokens only on the one-time goal decomposition"
     },
     {
       "id": "dev-tooling-assumptions-reset",
@@ -1585,7 +1585,7 @@
       "id": "initializer-maintainer-dual-agent-architecture",
       "title": "Initializer-Maintainer Dual Agent Architecture",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "initializer-maintainer-dual-agent",
       "tags": [
         "long-running-agents",
@@ -3415,6 +3415,11 @@
     {
       "source": "exact-action-authorization-binding",
       "target": "cryptographic-governance-audit-trail",
+      "type": "related"
+    },
+    {
+      "source": "markdown-polis-multi-vendor-agent-coordination-via-filesystem-constitution",
+      "target": "versioned-constitution-governance",
       "type": "related"
     },
     {

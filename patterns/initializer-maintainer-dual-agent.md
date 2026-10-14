@@ -1,6 +1,6 @@
 ---
 title: Initializer-Maintainer Dual Agent Architecture
-status: validated-in-production
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anthropic Engineering Team", "Cursor Engineering (Planner-Worker Architecture)"]
 category: Orchestration & Control
@@ -9,7 +9,7 @@ tags: [long-running-agents, session-handoff, lifecycle-specialization, project-b
 summary: "Uses a one-time initializer agent to create the feature list, progress files, and bootstrap script, then a coding agent that resumes from them one feature per session"
 signals: ["Projects need many agent sessions over days or weeks", "Applications have many discrete features to track", "Context loss between sessions is costly"]
 anti_signals: ["Small, single-session tasks", "Exploratory or research projects with no clear feature list up front"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -23,11 +23,11 @@ Long-running agent projects face distinct failure modes at different lifecycle s
 
 ## Solution
 
-Implement a two-agent architecture with lifecycle-specialized responsibilities:
+Implement a two-agent architecture with lifecycle-specialized responsibilities. In the reference implementation both roles are the same harness with only a different initial user prompt (the system prompt, tools, and harness are identical); "two agents" is a prompt-level distinction, not two deployed systems.
 
 **1. Initializer Agent** (runs once at project start):
 
-- Creates comprehensive feature list with all requirements
+- Creates the immutable feature list with all requirements (the artifact and its enforcement rules are covered in [Feature List as Immutable Contract](feature-list-as-immutable-contract.md))
 - Establishes progress tracking artifacts (e.g., `progress.txt`)
 - Sets up environment bootstrap scripts (e.g., `init.sh`)
 - Configures testing infrastructure
@@ -53,7 +53,7 @@ sequenceDiagram
     participant Git as Git Repository
 
     Note over Init: Runs ONCE at project start
-    Init->>FS: Create feature-list.json (200+ items, all "passes: false")
+    Init->>FS: Create feature list (see Feature List as Immutable Contract)
     Init->>FS: Create init.sh (environment bootstrap)
     Init->>FS: Create progress.txt (empty log)
     Init->>Git: Initial commit with foundation
@@ -95,14 +95,7 @@ sequenceDiagram
    - Mandatory testing before marking complete
    - Commit discipline
 
-3. **Define the handoff artifacts**:
-   ```
-   project/
-   ├── feature-list.json    # All features with pass/fail status
-   ├── progress.txt         # Running log of decisions and work
-   ├── init.sh              # One-command environment startup
-   └── .git/                # Descriptive commits as context
-   ```
+3. **Define the handoff artifacts**: the feature list is specified in [Feature List as Immutable Contract](feature-list-as-immutable-contract.md); this pattern adds the progress log and the one-command bootstrap script on top of it.
 
 ## Trade-offs
 
@@ -125,6 +118,8 @@ sequenceDiagram
 ## References
 
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-* [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents)
+* [Cursor: Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) (January 14, 2026)
+* Related: [Feature List as Immutable Contract](feature-list-as-immutable-contract.md) — owns the feature-list artifact and its enforcement rules. Distinct from that pattern: this one owns the session lifecycle (who runs once, who runs repeatedly) around that artifact.
+* Related: [Planner-Worker Separation for Long-Running Agents](planner-worker-separation-for-long-running-agents.md) — splits planning from execution at runtime. Distinct from that pattern: this one separates project bootstrap from incremental delivery over the project's lifetime, and both roles share one harness.
 * Related: [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 * Related: [Proactive Agent State Externalization](proactive-agent-state-externalization.md)

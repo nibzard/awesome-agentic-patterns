@@ -327,7 +327,7 @@ URL: https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning
 Markdown: https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning.md
 
 ### deterministic-zero-llm-orchestration
-Deterministic Zero-LLM Orchestration: A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending no LLM tokens on coordination
+Deterministic Zero-LLM Orchestration: A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending LLM tokens only on the one-time goal decomposition
 URL: https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration
 Markdown: https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration.md
 

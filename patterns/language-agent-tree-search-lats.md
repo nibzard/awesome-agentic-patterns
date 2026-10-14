@@ -9,7 +9,7 @@ tags: [search, monte-carlo, tree-search, reasoning, planning, reflection, evalua
 summary: "Runs Monte Carlo Tree Search over reasoning steps, with the LLM generating candidate actions and scoring partial solutions to pick the best path"
 signals: ["Task needs multi-step planning with many possible solution paths", "Linear ReAct or reflection loops get stuck in dead ends", "Budget allows 5-20x more LLM calls"]
 anti_signals: ["Task is simple or linear", "Real-time response is required", "Cost-sensitive application"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -143,6 +143,7 @@ class LATSAgent:
 - Simple or linear tasks: use ReAct or Chain-of-Thought
 - Real-time response requirements: use single-pass with Reflection Loop
 - Cost-sensitive applications: use Tree-of-Thoughts with limited branching
+- Reasoning models with internalized search: frontier reasoning models already spend test-time compute on internal exploration, which competes with what LATS externalizes. Prefer LATS when you need the search tree to be inspectable and steerable (you can see and prune the branches), when the task benefits from explicit backtracking after feedback, or when adaptive branching clearly beats repeated sampling for your domain. Prefer a reasoning model when a single call is fast enough and you do not need the trace.
 
 **Implementation guidance:**
 - Start with fixed iterations (10-25) before tuning exploration constant c
@@ -152,6 +153,8 @@ class LATSAgent:
 ## References
 
 - [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406) - Zhou et al., 2023
+- [Wider or Deeper? Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search (AB-MCTS)](https://arxiv.org/abs/2503.04412) - Inoue et al., 2025: adaptive branching tree search versus repeated sampling for frontier reasoning models
 - [Monte Carlo Tree Search: A Survey](https://doi.org/10.1109/TCIAIG.2012.2206890) - Browne et al., 2012 (foundational MCTS theory)
 - [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
 - [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
+- Related siblings: [Tree-of-Thought Reasoning](tree-of-thought-reasoning.md) (search over reasoning steps without the agentic tool-use loop) and [Inference-Time Scaling](inference-time-scaling.md) (spending more compute at answer time in general). Distinct from Tree-of-Thought: LATS embeds the search in an agent loop with environment feedback and self-reflection.

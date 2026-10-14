@@ -4,7 +4,7 @@ status: emerging
 authors:
   - Nikola Balic (@nibzard)
 based_on:
-  - Sam Stettner (Ambral)
+  - Jack Stettner (Ambral)
 category: Orchestration & Control
 source: 'https://claude.com/blog/building-companies-with-claude-code'
 tags:
@@ -18,7 +18,7 @@ id: discrete-phase-separation
 summary: "Splits work into separate research, planning, and implementation conversations, each with fresh context, passing only distilled outputs between phases"
 signals: ["Complex features need significant background research", "Refactors where understanding existing code is critical", "Mixing research and implementation in one conversation degrades quality"]
 anti_signals: ["Small tasks where phase handoffs add more overhead than value", "Latency or total token usage must stay low"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -29,30 +29,32 @@ When AI agents attempt to simultaneously research, plan, and implement solutions
 
 Break development workflows into isolated phases with clean handoffs between them. Each phase runs in a separate conversation with a fresh context window, focusing exclusively on its objective:
 
-**Research Phase (Opus 4.1):**
+**Research Phase (frontier reasoning model):**
 
 - Deep exploration of requirements, existing code, and constraints
 - Comprehensive background investigation
 - No implementation concerns
 
-**Planning Phase (Opus 4.1):**
+**Planning Phase (frontier reasoning model):**
 
 - Create structured implementation roadmap
 - Define clear steps and dependencies
 - No coding distractions
 
-**Implementation Phase (Sonnet 4.5):**
+**Implementation Phase (fast coding model):**
 
 - Execute each plan step systematically
 - Focus purely on code quality and functionality
 - Leverage the distilled outputs from previous phases
 
+The source article pinned the then-current frontier and fast models; treat the model choice as a role decision (deep reasoning for research and planning, fast execution for implementation) rather than a pinned version.
+
 **Key principle:** Pass only distilled conclusions between phases, not full conversation history. This prevents context pollution while maintaining necessary information flow.
 
 ```mermaid
 graph LR
-    A[Research Phase<br/>Opus 4.1] -->|Distilled Findings| B[Planning Phase<br/>Opus 4.1]
-    B -->|Implementation Roadmap| C[Execution Phase<br/>Sonnet 4.5]
+    A[Research Phase<br/>deep reasoning model] -->|Distilled Findings| B[Planning Phase<br/>deep reasoning model]
+    B -->|Implementation Roadmap| C[Execution Phase<br/>fast coding model]
 
     style A fill:#e1f5ff
     style B fill:#fff4e1
@@ -70,21 +72,21 @@ graph LR
 
 **Implementation approach:**
 
-1. **Research phase** - Start fresh conversation with Opus 4.1:
-   
+1. **Research phase** - Start a fresh conversation with a deep reasoning model:
+
 - "Research the authentication system and document all OAuth flows"
    - Compile findings into a structured document
    - Close conversation
 
-2. **Planning phase** - New conversation with Opus 4.1:
-   
+2. **Planning phase** - New conversation with a deep reasoning model:
+
 - Provide distilled research findings (not full transcript)
    - "Create implementation plan for adding Google OAuth support"
    - Generate step-by-step roadmap
    - Close conversation
 
-3. **Execution phase** - New conversation with Sonnet 4.5:
-   
+3. **Execution phase** - New conversation with a fast coding model:
+
 - Provide the implementation plan
    - "Implement step 1: Create OAuth configuration module"
    - Execute systematically through each step
@@ -101,22 +103,20 @@ graph LR
 
 - Higher quality outputs in each phase due to focused attention
 - Prevents context contamination from competing objectives
-- Deliberation before action improves tool use accuracy from 72% to 94% (Parisien et al. 2024)
-- Leverages model-specific strengths (Opus for reasoning, Sonnet for execution)
+- Leverages model-specific strengths (deep reasoning for research and planning, fast execution for implementation)
 - Clearer mental model for complex projects
 - Easier to debug which phase introduced issues
 
 **Cons:**
 
 - Requires more explicit phase management and handoffs
-- Planning overhead adds ~35% latency (Parisien et al. 2024)
+- Planning overhead adds latency and total token usage
 - Requires discipline to maintain phase boundaries
 - Information loss risk if handoffs are poorly structured
 - Higher total token usage across multiple conversations
 
 ## References
 
-- [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Sam Stettner (Ambral) emphasizes: "Don't make Claude do research while it's trying to plan, while it's trying to implement."
-- [Deliberation Before Action: Language Models with Tool Use](https://arxiv.org/abs/2403.05441) - Parisien et al., ICLR 2024
+- [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Jack Stettner (CTO, Ambral) emphasizes: "Don't make Claude do research while it's trying to plan, while it's trying to implement."
 - [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) - Beurer-Kellner et al., 2025 (Section 3.1: Plan-Then-Execute)
 - Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Plan-Then-Execute Pattern](plan-then-execute-pattern.md)

@@ -12,7 +12,7 @@ summary: >-
   agentic framework.
 signals: ["The same multi-agent topology must run on more than one framework", "The agent graph is hidden in scattered glue code", "Teams repeat pipeline, fan-out, or gate scaffolding in each project"]
 anti_signals: ["You need platform-specific features the declarative layer cannot express", "A single simple agent with no multi-agent topology"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -101,10 +101,13 @@ graph TD
 - **Abstraction cost**: A declarative layer cannot expose every platform-specific feature; escape hatches or extensions are needed for advanced cases.
 - **Grammar learning curve**: Teams must learn a new syntax, though the goal is to keep it minimal and readable.
 - **Compiler fidelity**: Each binding must faithfully map declarative primitives to platform capabilities, which varies across targets.
-- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing.
+- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing. No cross-framework agent topology standard exists as of October 2026; adjacent efforts standardize other layers (see References).
 
 ## References
 
 - [AgenTopology](https://github.com/agentopology/agentopology) — Open-source reference implementation: parser, validator, CLI, visualizer, and bindings for multiple platform targets. Apache-2.0.
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — declarative graph-based agent workflows (`StateGraph`, nodes and edges) within one framework; the closest mainstream analogue, but not portable across frameworks.
+- [AGNTCY](https://agntcy.org/) — Linux Foundation project standardizing cross-vendor agent discovery, identity, messaging, and observability rather than topology definition.
+- [A2A protocol](https://a2a-protocol.org/) — open standard for cross-framework agent-to-agent discovery and collaboration, again at the protocol layer rather than the topology DSL layer.
 - Jennings, N. R. (2001). "An agent-based approach for building complex software systems". Communications of the ACM. — Foundational work on multi-agent system architectures and coordination patterns.
 - Wooldridge, M. (2009). *An Introduction to MultiAgent Systems*. Wiley. — Textbook covering agent communication languages, interaction protocols, and organizational structures.

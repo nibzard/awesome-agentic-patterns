@@ -24,7 +24,7 @@ related:
 complexity: medium
 effort: days
 impact: high
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -68,6 +68,8 @@ sequenceDiagram
 **Dialogue mode (`/watch-card`):**  For synchronous-style exchanges where Agent A needs a response before continuing, it enters active wait after posting.  It checks its inbox at a set interval (typically 10 minutes) for up to 6 attempts.  If a response arrives, it continues.  If no response arrives within the hour, the card is automatically blocked with a comment for the human.  The agent does not sit idle during the wait; it continues work on other cards.
 
 **Cascade prevention:**  Agent responses use a modified prefix format (`[notification/Agent-X]`) that contains a slash.  The detection regex (`/\[([A-Za-z][A-Za-z0-9-]*)\]/`) does not match tokens containing slashes.  Responses do not trigger new inbox cards; only new requests do.
+
+The broader practice is not limited to this blueprint: independent 2026 tools use a board as the shared coordination layer for agents that run in separate sessions (see References).
 
 ## How to use it
 
@@ -139,3 +141,5 @@ else:
 
 - [Agentic Kanban Blueprint](https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint) -- reference implementation including the Cloudflare Worker proxy, n8n handler, routing convention, polling fallback, and `/watch-card` protocol
 - [AKB docs: agent-communication.md](https://github.com/AgileSmagile/smagile-agentic-kanban-blueprint/blob/main/docs/agent-communication.md) -- full implementation detail including failure modes, multiplicity rules, and initiative wakeup
+- [Hermes Agent Bot Mode vs Kanban: When to Use Each](https://dev.to/vivek_shetye/hermes-agent-bot-mode-vs-kanban-when-to-use-each-and-why-i-use-both-2che) -- Vivek Shetye, Aug 25, 2026: independent writeup using a Kanban board to structure parallel agent work and handoffs
+- [ai-agent-board](https://github.com/DanWahlin/ai-agent-board) -- open-source Kanban board (MIT) that delegates tasks to Claude Code, Copilot, Codex, and OpenCode agents

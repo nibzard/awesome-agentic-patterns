@@ -9,7 +9,7 @@ tags: [routing, cost-control, multi-model, orchestration, reliability]
 summary: "Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail"
 signals: ["Model bills grow faster than product value", "Every request goes to the strongest model by default", "High-volume workflows with measurable quality targets"]
 anti_signals: ["Task complexity cannot be classified reliably", "Team cannot maintain an extra routing control plane"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -53,6 +53,7 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 - Start with high-volume workflows where quality targets are measurable.
 - Add routing telemetry: selected model, estimated cost, actual cost, escalation reason.
 - Define hard-fail behavior for cap breaches (defer, partial answer, or human handoff).
+- Check provider-native caps before building your own: for example Claude Code's `--max-budget-usd` flag stops a run once estimated API spend reaches a set amount.
 
 ## Trade-offs
 
@@ -61,7 +62,10 @@ if quality_gate.failed(result) and policy.can_escalate(task_type):
 
 ## References
 
-- https://arxiv.org/abs/2305.05176 - FrugalGPT: Cost-Effective LLM Routing (Stanford, 2023)
-- https://simonwillison.net/2024/May/29/training-not-chatting/
+- https://arxiv.org/abs/2305.05176 - FrugalGPT (Stanford, 2023): learned query cascades; the hard-cap layer on top is this pattern's addition, not the paper's
 - https://arxiv.org/abs/2406.18665 - RouteLLM (ICLR 2024)
 - https://arxiv.org/html/2510.08439v1 - xRouter (2025)
+- https://arxiv.org/abs/2601.07206 - LLMRouterBench (2026): benchmark covering both performance-oriented and performance-cost routing
+- https://arxiv.org/abs/2609.37902 - Market-Aware Routing for Open-Weight LLM Inference (Sep 2026): routing must also pick the serving provider, not just the model
+- https://code.claude.com/docs/en/cli-reference - Claude Code CLI reference: `--max-budget-usd` as an example of a provider-native hard spend cap
+- https://developers.openai.com/api/docs/guides/rate-limits - OpenAI rate and spend limits: requests that exceed a project or organization budget cap fail hard with 429

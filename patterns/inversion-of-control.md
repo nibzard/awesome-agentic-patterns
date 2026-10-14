@@ -17,7 +17,7 @@ id: inversion-of-control
 summary: "Gives the agent tools, a high-level objective, and guardrails, then lets it choose sequencing and recovery while humans set policy and review"
 signals: ["Humans spend time scripting each step the agent takes", "Tasks have objective success criteria such as passing tests", "Guardrails and checkpoints can be enforced at risky boundaries"]
 anti_signals: ["No guardrails or telemetry exist to detect drift or overreach", "Tasks have vague success criteria that need step-by-step human judgement", "Every step is high risk and needs explicit human approval"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -44,11 +44,10 @@ sequenceDiagram
 
 ## Evidence
 
-**Evidence Grade:** `high`
-
 **Most Valuable Findings:**
+
 - Academic validation from multiple 2025 papers (MI9 governance framework, Beurer-Kellner et al. security patterns) confirms external control layers are essential for agent safety
-- Production implementations report 2-10x developer leverage gains through autonomous execution with guardrails
+- The practice of letting the model decide which tools to run is now the common definition of an agent (see Willison's 2025 definitional post in References)
 
 ## How to use it
 
@@ -64,8 +63,10 @@ sequenceDiagram
 
 ## References
 
-* Raising An Agent - Episode 1, "It's a big bird, it can catch its own food."
+* [Raising An Agent - Episode 1](https://ampcode.com/podcast/episode-1), "It's a big bird, it can catch its own food." (AMP, March 6, 2025)
+* Simon Willison, [What is an agent?](https://simonwillison.net/2025/Sep/18/agents/) (September 18, 2025) — the model deciding which tools to run as the settled definition of an agent
 * MI9: Runtime Governance Framework (arXiv:2508.03858v3, 2025)
 * Beurer-Kellner et al., Design Patterns for Securing LLM Agents (arXiv:2506.08837, 2025)
+* Related: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md) — the calibrated-autonomy companion. Distinct from that pattern: it adjusts how much initiative the agent gets per task, while this one hands over orchestration wholesale inside guardrails.
 
 [Source](https://www.nibzard.com/ampcode)

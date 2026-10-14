@@ -19,7 +19,7 @@ id: distributed-execution-with-cloud-workers
 summary: "Runs many agent sessions in parallel on cloud workers, each in its own git worktree, with dependency-aware scheduling, merge coordination, and approval gates"
 signals: ["Team-wide migrations, refactors, or framework upgrades touch many files", "Work can be split into parallel units with clear dependencies", "Cloud compute and orchestration infrastructure are available"]
 anti_signals: ["Small tasks that one agent session can finish", "Changes are tightly coupled and would cause constant merge conflicts", "Infrastructure complexity or parallel model cost is not acceptable"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -150,7 +150,7 @@ Extends [Sub-Agent Spawning](sub-agent-spawning.md) and [Swarm Migration Pattern
 
 **Pros:**
 
-- Massive parallelization (10x-100x speedup for suitable tasks)
+- Massive parallelization for suitable tasks (throughput is bounded by the number of parallel workers, not by one session)
 - Scales to enterprise team needs
 - Centralizes agent management and monitoring
 - Enables team-wide AI adoption
@@ -168,7 +168,7 @@ Extends [Sub-Agent Spawning](sub-agent-spawning.md) and [Swarm Migration Pattern
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - HumanLayer's CodeLayer enables "teams run multiple Claude agent sessions in parallel"
-- [HumanLayer Documentation](https://docs.humanlayer.dev/) - Framework for human-in-the-loop agent coordination
-- Stone, P., & Veloso, M. (2000). Multiagent systems: A survey from a machine learning perspective. *Autonomous Robots*, 8(3), 345-383. DOI: 10.1023/A:1008930228068
-- Weiss, G. (Ed.). (2013). *Multiagent systems: a modern approach to distributed artificial intelligence*. MIT Press.
+- [HumanLayer](https://www.humanlayer.dev) - human-in-the-loop agent coordination (the former docs.humanlayer.dev subdomain serves an expired TLS certificate; use the apex domain)
+- [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference) - native parallel sessions via the `--worktree` flag, which starts Claude in an isolated git worktree per session
+- [Introducing the Agents API](https://openai.com/index/introducing-the-agents-api) - OpenAI, Sep 2026: managed cloud agents with long-running sessions for parallel work
 - Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Human-in-the-Loop Approval Framework](human-in-loop-approval-framework.md)
