@@ -7,6 +7,22 @@
         <lastBuildDate>Tue, 13 Oct 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
+            <title><![CDATA[Abstracted Code Representation for Review]]></title>
+            <description><![CDATA[Shows reviewers pseudocode, intent summaries, and logical diffs of code changes, with drill-down to the real code to confirm the mapping]]></description>
+            <link>https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[code-review]]></category>
+            <category><![CDATA[verification]]></category>
+            <category><![CDATA[abstraction]]></category>
+            <category><![CDATA[pseudocode]]></category>
+            <category><![CDATA[intent-based-review]]></category>
+            <category><![CDATA[explainability]]></category>
+            <category><![CDATA[software-quality]]></category>
+            <category><![CDATA[human-ai-interface]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Action-Selector Pattern]]></title>
             <description><![CDATA[LLM maps user intent to a pre-approved action ID with schema-validated parameters, and tool outputs never return to the selector]]></description>
             <link>https://agentic-patterns.com/patterns/action-selector-pattern</link>
@@ -47,6 +63,20 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent-Assisted Scaffolding]]></title>
+            <description><![CDATA[Agent generates initial files, boilerplate, and directory structure from a high-level description so developers start on core logic]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-assisted-scaffolding</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-assisted-scaffolding</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[code-generation]]></category>
+            <category><![CDATA[bootstrapping]]></category>
+            <category><![CDATA[scaffolding]]></category>
+            <category><![CDATA[feature-development]]></category>
+            <category><![CDATA[ide]]></category>
+            <category><![CDATA[initial-setup]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Agent-Driven Research]]></title>
             <description><![CDATA[Agent plans its own search queries, runs them across sources, reflects on gaps, and iterates until it can write a sourced report]]></description>
             <link>https://agentic-patterns.com/patterns/agent-driven-research</link>
@@ -72,6 +102,35 @@
             <category><![CDATA[llms-txt]]></category>
             <category><![CDATA[api-discovery]]></category>
             <category><![CDATA[agent-infrastructure]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Agent-Friendly Workflow Design]]></title>
+            <description><![CDATA[Gives agents clear high-level goals, room for implementation choices, structured I/O, and plan review before execution]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-friendly-workflow-design</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[human-agent collaboration]]></category>
+            <category><![CDATA[workflow design]]></category>
+            <category><![CDATA[agent autonomy]]></category>
+            <category><![CDATA[task decomposition]]></category>
+            <category><![CDATA[HCI]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[AI-Accelerated Learning and Skill Development]]></title>
+            <description><![CDATA[Uses AI assistants as tutors that explain errors and concepts, offer alternatives, and fade support as the developer gains skill]]></description>
+            <link>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[developer-productivity]]></category>
+            <category><![CDATA[learning]]></category>
+            <category><![CDATA[skill-acquisition]]></category>
+            <category><![CDATA[iteration]]></category>
+            <category><![CDATA[feedback]]></category>
+            <category><![CDATA[taste-development]]></category>
+            <category><![CDATA[education]]></category>
+            <category><![CDATA[junior-developer]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -160,6 +219,19 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Chain-of-Thought Monitoring & Interruption]]></title>
+            <description><![CDATA[Streams agent reasoning and tool calls in real time so a human can interrupt and redirect early when the approach is wrong]]></description>
+            <link>https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[monitoring]]></category>
+            <category><![CDATA[intervention]]></category>
+            <category><![CDATA[debugging]]></category>
+            <category><![CDATA[reasoning]]></category>
+            <category><![CDATA[ux]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[CLI-First Skill Design]]></title>
             <description><![CDATA[Builds each skill as a standalone CLI with JSON output and exit codes so humans and agents use the same interface]]></description>
             <link>https://agentic-patterns.com/patterns/cli-first-skill-design</link>
@@ -214,75 +286,6 @@
             <category><![CDATA[token-estimation]]></category>
             <category><![CDATA[transcript-validation]]></category>
             <category><![CDATA[api-compaction]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Continuous Autonomous Task Loop Pattern]]></title>
-            <description><![CDATA[Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits]]></description>
-            <link>https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[autonomous-execution]]></category>
-            <category><![CDATA[task-loop]]></category>
-            <category><![CDATA[rate-limiting]]></category>
-            <category><![CDATA[git-automation]]></category>
-            <category><![CDATA[cli-driven]]></category>
-            <category><![CDATA[stream-processing]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[CriticGPT-Style Code Review]]></title>
-            <description><![CDATA[Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration]]></description>
-            <link>https://agentic-patterns.com/patterns/criticgpt-style-evaluation</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/criticgpt-style-evaluation</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[evaluation]]></category>
-            <category><![CDATA[code-review]]></category>
-            <category><![CDATA[critique]]></category>
-            <category><![CDATA[quality-assurance]]></category>
-            <category><![CDATA[bug-detection]]></category>
-            <category><![CDATA[gpt-4]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Cross-Agent Lesson Sharing via Git]]></title>
-            <description><![CDATA[Agents write solved problems as markdown lessons in a shared Git repo and search them before debugging, with GitHub Issues as the coordination layer]]></description>
-            <link>https://agentic-patterns.com/patterns/cross-agent-lesson-sharing</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-agent-lesson-sharing</guid>
-            <category><![CDATA[Context & Memory]]></category>
-            <category><![CDATA[distributed-memory]]></category>
-            <category><![CDATA[knowledge-sharing]]></category>
-            <category><![CDATA[git-based]]></category>
-            <category><![CDATA[swarm-memory]]></category>
-            <category><![CDATA[lessons-learned]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Cross-Cycle Consensus Relay]]></title>
-            <description><![CDATA[Each loop cycle reads a structured relay document, does its work, and atomically writes back decisions, open questions, and the single next action]]></description>
-            <link>https://agentic-patterns.com/patterns/cross-cycle-consensus-relay</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-cycle-consensus-relay</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[state-management]]></category>
-            <category><![CDATA[persistence]]></category>
-            <category><![CDATA[long-running-tasks]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[autonomous-loops]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Cross-Domain Agent Conflict Resolution]]></title>
-            <description><![CDATA[A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.]]></description>
-            <link>https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[conflict-resolution]]></category>
-            <category><![CDATA[policy-as-code]]></category>
-            <category><![CDATA[governance]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[drift-detection]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
