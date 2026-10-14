@@ -2,14 +2,14 @@
 title: Tool Selection Guide
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Analysis of 88 Claude conversation sessions (nibzard-web, skills-marketplace, awesome-agentic-patterns, marginshot, 2025-intro-swe)"]
+based_on: ["Analysis of 88 Claude conversation sessions (author's own analysis, now offline)", "Anthropic Claude Code best practices"]
 category: Orchestration & Control
-source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
+source: "https://www.anthropic.com/engineering/claude-code-best-practices"
 tags: [tools, workflow, best-practices, efficiency, patterns, exploration, modification]
 summary: "Maps each task type to a preferred tool: Glob, Grep, and Read to explore, Edit to modify, Bash to verify, and Task with a clear subject to delegate"
 signals: ["Coding agent has file, shell, and delegation tools", "Agent wastes tokens with wrong tool choices such as Write for small edits", "Agent skips build checks after code changes"]
 anti_signals: ["Agent has only one or two tools", "Simple one-off tasks where the workflow adds overhead"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -21,21 +21,21 @@ AI agents often struggle to select the optimal tool for a given task, leading to
 - Skipping build verification after code changes
 - Performing sequential exploration when parallel would be faster
 
-These ineff compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections.
+These inefficiencies compound across long sessions, resulting in wasted tokens, slower completion, and more user corrections.
 
 ## Solution
 
-Encode data-driven tool selection patterns that emerged from analysis of 88 real-world Claude conversation sessions. By matching task type to optimal tool, agents can follow proven workflows.
+Encode tool selection patterns that emerged from the author's analysis of 88 real-world Claude conversation sessions and that align with Anthropic's published Claude Code guidance (read files before editing, verify changes with shell commands). By matching task type to the right tool, agents can follow proven workflows.
 
-**Tool preference patterns from actual usage data:**
+**Tool preference patterns from observed usage** (session counts come from the author's analysis, whose repository is no longer online — treat them as illustrative, not reproducible):
 
 | Task Type | Recommended Tool | Evidence |
 |-----------|-----------------|----------|
-| Codebase exploration | Read → Grep → Glob | Consistent pattern across all projects |
-| Code modification | Edit (not Write) | 3.4:1 Edit:Write ratio in nibzard-web |
+| Codebase exploration | Read → Grep → Glob | Consistent pattern across all analyzed projects |
+| Code modification | Edit (not Write) | Edits far outnumbered Writes in the analyzed sessions |
 | New file creation | Write | Appropriate use case |
-| Build verification | Bash | 324 uses in nibzard-web, 276 in patterns |
-| Research delegation | Task (with clear subject) | 48 invocations across sessions |
+| Build verification | Bash | The most frequently used tool in the analyzed sessions |
+| Research delegation | Task (with clear subject) | Used repeatedly, always with a subject |
 
 **Key selection criteria:**
 
@@ -45,7 +45,7 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
    - Use `Read` for targeted file inspection
 
 2. **Code modification tasks** (changing existing code):
-   - **Prefer `Edit` over `Write`** - preserves existing context and comments, saves ~66% tokens
+   - **Prefer `Edit` over `Write`** - preserves existing context and comments, and a partial diff costs far fewer tokens than a full file rewrite
    - Only use `Write` for brand new files or complete rewrites (with permission)
    - Use `Write` when changing >50% of a file; otherwise use `Edit`
    - Always `Read` the file before editing
@@ -59,7 +59,7 @@ Encode data-driven tool selection patterns that emerged from analysis of 88 real
    - Use `Task` tool for subagent delegation
    - **Always provide clear task subjects** (no empty strings)
    - Prefer parallel over sequential for independent exploration
-   - Parallel delegation can provide 10x+ speedup for independent tasks (e.g., framework migrations)
+   - Parallel delegation can provide order-of-magnitude speedups for independent tasks (e.g., framework migrations), per the original session analysis
 
 ```mermaid
 flowchart TD
@@ -114,7 +114,7 @@ flowchart TD
 
 **Pros:**
 
-- Data-driven from 88 real sessions
+- Grounded in observed sessions and consistent with Anthropic's published guidance
 - Reduces token waste and user corrections
 - Faster workflow completion
 - Clear mental model for tool selection
@@ -129,7 +129,8 @@ flowchart TD
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+* [Claude Code: Best Practices for Agentic Coding](https://www.anthropic.com/engineering/claude-code-best-practices) (Anthropic) — published guidance that matches the core rules: explore before editing, read files before changes, and verify work with shell commands (live replacement for the original analysis)
+* Original evidence base: the author's 88-session Claude analysis (`github.com/nibzard/SKILLS-AGENTIC-LESSONS`) is no longer available (HTTP 404), so the per-project counts cited above cannot be independently reproduced
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Discrete Phase Separation](discrete-phase-separation.md), [Subject Hygiene](subject-hygiene.md)
 * ToolFormer: [Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) (Schick et al., 2023)
 * ReAct: [Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., 2022)

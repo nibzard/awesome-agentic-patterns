@@ -1,15 +1,15 @@
 ---
-title: Working Memory via TodoWrite
+title: Working Memory via Task Tracking
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Analysis of 88 Claude conversation sessions"]
+based_on: ["Analysis of 88 Claude conversation sessions (author's own analysis, now offline)", "Anthropic context engineering guidance"]
 category: Context & Memory
-source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
+source: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
 tags: [context, memory, working-memory, state, todo-tracking, dependencies, session-management]
-summary: "Keeps an explicit todo list with status, blockers, and next steps during the session so agent and user can track progress"
+summary: "Keeps an explicit task list with status, blockers, and next steps during the session so agent and user can track progress"
 signals: ["Complex multi-step tasks with dependencies", "Agent forgets or repeats tasks after context switches", "Several work streams run in the same session"]
 anti_signals: ["Simple single-step tasks", "Tasks that finish in seconds or quick questions"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -24,7 +24,7 @@ This leads to redundant work, forgotten tasks, and confused users.
 
 ## Solution
 
-Use `TodoWrite` (or equivalent state externalization) to maintain explicit working memory throughout the session. This serves as both agent and user visibility into session state.
+Use session task-tracking tools (in Claude Code: `TaskCreate`, `TaskGet`, `TaskUpdate`, and `TaskList`; earlier versions exposed a single `TodoWrite` tool) to maintain explicit working memory throughout the session. This serves as both agent and user visibility into session state.
 
 **Theoretical foundation:** Externalizes working memory per Baddeley's episodic buffer model and Miller's 7±2 capacity limit—humans and LLMs both struggle to track more than a handful of items internally.
 
@@ -35,9 +35,9 @@ Use `TodoWrite` (or equivalent state externalization) to maintain explicit worki
 3. **Verification steps**: Tests or checks needed
 4. **Next actions**: What to do next
 
-**Usage patterns from data:**
+**Usage patterns from the author's session analysis** (self-reported; the repository that hosted the analysis is no longer online, so treat the table as anecdotal):
 
-| Project | TodoWrite Uses | Session Quality |
+| Project | Task-list uses | Session quality |
 |---------|---------------|-----------------|
 | nibzard-web | 52 | High (8 positive, 2 corrections) |
 | awesome-agentic-patterns | 60 | Medium (1 positive, 5 corrections) |
@@ -46,10 +46,12 @@ Use `TodoWrite` (or equivalent state externalization) to maintain explicit worki
 
 **Key insights:**
 
-- TodoWrite usage correlates with smoother sessions
+- In that (unverifiable) analysis, task-list use accompanied smoother sessions; this is an observation, not a controlled result
 - It serves as working memory for both agent and user
 - Essential for complex multi-step tasks
 - Less critical for simple, straightforward work
+
+**Current tooling note:** since Claude Code v2.1.268 (Agent SDK v0.3.268), newer models track multi-step work without a written todo list, so todo tools are opt-in (`CLAUDE_CODE_ENABLE_TODO_TOOLS=1`), mainly to render progress for the user; the legacy `TodoWrite` tool remains only as a fallback (`CLAUDE_CODE_ENABLE_TASKS=0`). The underlying practice — externalizing task state for long-horizon work — is still recommended in Anthropic's context engineering guidance.
 
 ```mermaid
 stateDiagram-v2
@@ -61,7 +63,7 @@ stateDiagram-v2
     Completed --> [*]
 
     note right of Pending
-        Create via TodoWrite
+        Create via task tool
         with clear subject
     end note
 
@@ -87,7 +89,7 @@ stateDiagram-v2
 
 **Implementation approach:**
 
-1. **Create tasks proactively**: When you identify work, create a TodoWrite entry
+1. **Create tasks proactively**: When you identify work, create a task entry
 2. **Update status as you go**: Mark tasks in_progress when starting
 3. **Maintain single active task**: Exactly ONE task should be in_progress at a time
 4. **Document dependencies**: Use `blocks`/`blockedBy` relationships
@@ -98,7 +100,7 @@ stateDiagram-v2
 
 ```
 1. User: "Add OAuth login and fix the search bug"
-2. Agent creates 2 tasks with TodoWrite
+2. Agent creates 2 tasks with the task-tracking tool
 3. Agent marks OAuth task in_progress, starts work
 4. Agent realizes OAuth needs database schema change
 5. Agent blocks OAuth task, creates schema task
@@ -139,7 +141,9 @@ stateDiagram-v2
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
-* Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Task List Pattern](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/task-lists)
+* [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic) — recommends agentic memory such as notes and todo lists for long-horizon tasks, including Claude Code's to-do list
+* [Todo tracking (Claude Agent SDK docs)](https://code.claude.com/docs/en/agent-sdk/todo-tracking) — current behavior: task-tracking tools by model, opt-in flags, and the `TodoWrite` legacy fallback (replaces the dead `docs.anthropic.com` task-lists page)
+* Original evidence base: the author's 88-session Claude analysis (`github.com/nibzard/SKILLS-AGENTIC-LESSONS`) is no longer available (HTTP 404), so the usage table above cannot be independently verified
+* Related patterns: [Proactive Agent State Externalization](proactive-agent-state-externalization.md), [Filesystem-Based Agent State](filesystem-based-agent-state.md)
 * Baddeley, A. (2000). "The Episodic Buffer: A New Component of Working Memory?" *Trends in Cognitive Sciences*, 4(11), 417-423.
 * Miller, G. A. (1956). "The Magical Number Seven, Plus or Minus Two." *Psychological Review*, 63(2), 81-97.

@@ -3,13 +3,13 @@ title: Lethal Trifecta Threat Model
 status: best-practice
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Simon Willison"]
-category: Reliability & Eval
-source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
+category: Security & Safety
+source: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/"
 tags: [security, prompt-injection, threat-model, data-exfiltration]
 summary: "Classifies each tool by private-data access, untrusted-content exposure, and external communication, and blocks any execution path that has all three"
 signals: ["Agent reads private data and also processes untrusted content", "Agent can send data out through network or messaging tools", "Tools can be tagged with capability metadata"]
 anti_signals: ["Agent has no access to private data", "Agent has no way to communicate externally"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -55,10 +55,7 @@ if tool.can_externally_communicate and
 
 ## References
 
-* Willison, *The Lethal Trifecta for AI Agents* (June 16 2025).
-* Beurer-Kellner et al., *Design Patterns for Securing LLM Agents against Prompt Injections* (arXiv:2506.08837, June 2025).
-
-- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/
-- Academic source: https://doi.org/10.48550/arXiv.2506.08837
+- Primary source: Simon Willison, [The lethal trifecta for AI agents: private data, untrusted content, and external communication](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) (June 16, 2025; the previously cited `/lethal-trifecta` slug was a dead 404 URL)
+- Academic source: Beurer-Kellner et al., *Design Patterns for Securing LLM Agents against Prompt Injections* ([arXiv:2506.08837](https://arxiv.org/abs/2506.08837), June 2025; [doi:10.48550/arXiv.2506.08837](https://doi.org/10.48550/arXiv.2506.08837))
 
 > **Note on terminology**: This pattern describes Simon Willison's prompt injection threat model (private data + untrusted content + external communication), distinct from the AI safety literature's "lethal trifecta" (advanced capabilities + agentic behavior + situational awareness).

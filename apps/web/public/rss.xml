@@ -35,6 +35,19 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent-Driven Research]]></title>
+            <description><![CDATA[Agent plans its own search queries, runs them across sources, reflects on gaps, and iterates until it can write a sourced report]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-driven-research</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-driven-research</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[research]]></category>
+            <category><![CDATA[information retrieval]]></category>
+            <category><![CDATA[tool use]]></category>
+            <category><![CDATA[iterative process]]></category>
+            <category><![CDATA[autonomous search]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Agent-First Tool Discovery]]></title>
             <description><![CDATA[Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics.]]></description>
             <link>https://agentic-patterns.com/patterns/agent-first-tool-discovery</link>
@@ -162,6 +175,20 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[CriticGPT-Style Code Review]]></title>
+            <description><![CDATA[Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration]]></description>
+            <link>https://agentic-patterns.com/patterns/criticgpt-style-evaluation</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/criticgpt-style-evaluation</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[evaluation]]></category>
+            <category><![CDATA[code-review]]></category>
+            <category><![CDATA[critique]]></category>
+            <category><![CDATA[quality-assurance]]></category>
+            <category><![CDATA[bug-detection]]></category>
+            <category><![CDATA[gpt-4]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Cross-Agent Lesson Sharing via Git]]></title>
             <description><![CDATA[Agents write solved problems as markdown lessons in a shared Git repo and search them before debugging, with GitHub Issues as the coordination layer]]></description>
             <link>https://agentic-patterns.com/patterns/cross-agent-lesson-sharing</link>
@@ -258,38 +285,6 @@
             <category><![CDATA[context-monitoring]]></category>
             <category><![CDATA[pre-tool-use]]></category>
             <category><![CDATA[post-tool-use]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Inference-Time Scaling]]></title>
-            <description><![CDATA[Spends extra compute at inference time with best-of-N sampling, longer reasoning, self-refinement, search, and verification to improve output quality]]></description>
-            <link>https://agentic-patterns.com/patterns/inference-time-scaling</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/inference-time-scaling</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[scaling]]></category>
-            <category><![CDATA[inference]]></category>
-            <category><![CDATA[compute]]></category>
-            <category><![CDATA[reasoning]]></category>
-            <category><![CDATA[performance]]></category>
-            <category><![CDATA[o1-model]]></category>
-            <category><![CDATA[test-time-compute]]></category>
-            <category><![CDATA[search]]></category>
-            <category><![CDATA[verification]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Intelligent Bash Tool Execution]]></title>
-            <description><![CDATA[Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals]]></description>
-            <link>https://agentic-patterns.com/patterns/intelligent-bash-tool-execution</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/intelligent-bash-tool-execution</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[bash]]></category>
-            <category><![CDATA[shell]]></category>
-            <category><![CDATA[pty]]></category>
-            <category><![CDATA[fallback]]></category>
-            <category><![CDATA[security]]></category>
-            <category><![CDATA[process-management]]></category>
-            <category><![CDATA[sandboxing]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

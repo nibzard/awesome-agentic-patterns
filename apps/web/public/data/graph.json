@@ -795,7 +795,7 @@
       "id": "criticgpt-style-code-review",
       "title": "CriticGPT-Style Code Review",
       "category": "Reliability & Eval",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "criticgpt-style-evaluation",
       "tags": [
         "evaluation",
@@ -1742,7 +1742,7 @@
     {
       "id": "lethal-trifecta-threat-model",
       "title": "Lethal Trifecta Threat Model",
-      "category": "Reliability & Eval",
+      "category": "Security & Safety",
       "status": "best-practice",
       "slug": "lethal-trifecta-threat-model",
       "tags": [
@@ -2897,7 +2897,7 @@
       "id": "subject-hygiene-for-task-delegation",
       "title": "Subject Hygiene for Task Delegation",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "subject-hygiene",
       "tags": [
         "subagents",
@@ -3226,8 +3226,8 @@
       "summary": "Runs complete agent workflows against mocked tools in CI and checks which tools were called plus agent-as-judge quality criteria"
     },
     {
-      "id": "working-memory-via-todowrite",
-      "title": "Working Memory via TodoWrite",
+      "id": "working-memory-via-task-tracking",
+      "title": "Working Memory via Task Tracking",
       "category": "Context & Memory",
       "status": "emerging",
       "slug": "working-memory-via-todos",
@@ -3240,7 +3240,7 @@
         "dependencies",
         "session-management"
       ],
-      "summary": "Keeps an explicit todo list with status, blockers, and next steps during the session so agent and user can track progress"
+      "summary": "Keeps an explicit task list with status, blockers, and next steps during the session so agent and user can track progress"
     },
     {
       "id": "workspace-native-multi-agent-orchestration",

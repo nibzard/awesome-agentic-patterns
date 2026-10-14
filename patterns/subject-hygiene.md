@@ -1,15 +1,15 @@
 ---
 title: Subject Hygiene for Task Delegation
-status: validated-in-production
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Analysis of 88 Claude conversation sessions (48 Task invocations analyzed)"]
+based_on: ["Analysis of 88 Claude conversation sessions (author's own analysis, now offline)", "Anthropic Claude Code subagent guidance"]
 category: Orchestration & Control
-source: "https://github.com/nibzard/SKILLS-AGENTIC-LESSONS"
+source: "https://code.claude.com/docs/en/sub-agents"
 tags: [subagents, delegation, traceability, naming, clarity, anti-pattern]
 summary: "Requires a specific action-plus-target subject on every subagent task so each delegated job stays traceable and easy to reference"
 signals: ["Main agent delegates work to subagents via a Task tool", "Several subagents run in parallel", "Users or the main agent must review subagent output later"]
 anti_signals: ["No subagent delegation in the workflow", "Single short delegation that nobody will reference again"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -20,7 +20,7 @@ When delegating work to subagents via the Task tool, empty or generic task subje
 - **Unreferencable**: Cannot discuss specific subagent work later
 - **Confusing**: Multiple subagents with empty subjects are indistinguishable
 
-From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point. This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce).
+From 48 Task invocations across 88 sessions, empty task subjects were identified as a major pain point (the author's own session analysis; the repository that hosted it is no longer online, so treat the counts as anecdotal). This pattern has strong academic foundations in multi-agent communication standards (FIPA ACL, KQML) and distributed systems naming principles (REST, MapReduce).
 
 ## Solution
 
@@ -89,15 +89,15 @@ Examples:
 
 Prevents "Empty Subject Anti-Pattern" which makes conversations untraceable and subagent work indistinguishable.
 
-**Real-world impact:**
+**Observed example:**
 
-Validated in production across Claude Code, Cursor, AMP, LangChain, AutoGen, and CrewAI. From nibzard-web session with 4 parallel subagents:
+From the author's nibzard-web session with 4 parallel subagents (self-reported; underlying data no longer published):
 - agent-a7911db: "Newsletter component exploration"
 - agent-adeac17: "Modal pattern discovery"
 - agent-a03b9c9: "Search implementation research"
 - agent-b84c3d1: "Log page analysis"
 
-Clear subjects enabled the main agent to synthesize findings from each subagent effectively.
+Clear subjects let the main agent synthesize findings from each subagent. The general practice matches Anthropic's subagent guidance, which tells agents to write specific, task-scoped descriptions when delegating. No independent cross-tool validation exists: treat this as practical guidance, not a measured result.
 
 ## Trade-offs
 
@@ -124,7 +124,8 @@ Clear subjects enabled the main agent to synthesize findings from each subagent 
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Skills based on lessons learned from analyzing 88 real-world Claude conversation sessions
+* [Claude Code sub-agents documentation](https://code.claude.com/docs/en/sub-agents) — official guidance on creating subagents and writing task-specific descriptions (live replacement for the original analysis)
+* Original evidence base: the author's 88-session Claude analysis (`github.com/nibzard/SKILLS-AGENTIC-LESSONS`) is no longer available (HTTP 404), so the session counts above cannot be independently verified
 * FIPA. "FIPA ACL Communicative Act Library Specification." 2002 - Agent communication language with conversation-id for task traceability
 * Smith, R. G. "The contract net protocol." IEEE Transactions on Computers 1980 - Task identification in distributed delegation
 * Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Parallel Tool Call Learning](parallel-tool-call-learning.md)

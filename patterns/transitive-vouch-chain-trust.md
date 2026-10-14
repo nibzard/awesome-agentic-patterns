@@ -4,14 +4,13 @@ status: emerging
 authors: ["The-Nexus-Guard (@The-Nexus-Guard)"]
 based_on: ["Isnad methodology (hadith chain of transmission)", "PGP Web of Trust", "Ed25519 digital signatures"]
 category: Security & Safety
-source: "https://github.com/nickzsche/aip-identity"
+source: "https://github.com/The-Nexus-Guard/aip"
 tags: [trust, identity, vouch, trust-chain, agent-identity, decentralized-trust, ed25519, reputation]
 summary: "Builds a graph of signed vouches between agents and derives trust in an unknown agent from the chain back to a trusted one, with decay at each hop"
 signals: ["Agents from different operators must collaborate without a central authority", "Agents must decide how much to trust previously unknown agents", "Each agent can hold a stable cryptographic keypair"]
 anti_signals: ["A trusted central registry already covers all agents", "New agents need trust at once with no vouches (cold start)", "Identities are cheap to create and Sybil attacks are a risk"]
 evidence_grade: low
-last_updated: "2026-03-08"
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -123,7 +122,8 @@ The key difference from PGP's web of trust: vouch chains carry semantic weight (
 
 ## Known Implementations
 
-- [AIP (Agent Identity Protocol)](https://github.com/nickzsche/aip-identity) — Python SDK implementing Ed25519-based identity, signed vouches, and chain verification for AI agents.
+- [AIP (Agent Identity Protocol)](https://github.com/The-Nexus-Guard/aip) — Python SDK (`pip install aip-identity`) implementing Ed25519-based identity, signed vouches, and chain verification for AI agents. The repository moved from `github.com/nickzsche/aip-identity` (now HTTP 404) to the author's own organization; it is a small, contributor-owned project, so the evidence grade stays low.
+- Independent 2026 work exploring the same problem: [forge-mcp](https://github.com/pm577/forge-mcp) (Agent Reputation Protocol with `forge_vouch` and trust-score tools) and the [OpenA2A Agent Identity Protocol](https://github.com/opena2a-standards/agent-identity-protocol) (IETF Internet-Draft for agent identity, capabilities, and multi-factor trust). No interoperable standard exists yet.
 
 ## References
 

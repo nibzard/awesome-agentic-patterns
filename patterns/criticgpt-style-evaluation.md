@@ -1,15 +1,15 @@
 ---
 title: "CriticGPT-Style Code Review"
-status: validated-in-production
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["OpenAI"]
+based_on: ["OpenAI (McAleese et al., 2024)"]
 category: "Reliability & Eval"
-source: "https://openai.com/research/criticgpt"
+source: "https://arxiv.org/abs/2407.00215"
 tags: [evaluation, code-review, critique, quality-assurance, bug-detection, gpt-4]
 summary: "Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration"
 signals: ["High volume of AI-generated code overwhelms human reviewers", "Security-sensitive code needs vulnerability checks before merge", "CI/CD pipelines need automated pre-commit review"]
 anti_signals: ["Review depends on full business context only humans have", "You cannot afford human verification of false positives", "Low commit volume where human review is sufficient"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -23,7 +23,9 @@ As AI-generated code becomes more sophisticated, it becomes increasingly difficu
 
 ## Solution
 
-Deploy specialized AI models trained specifically for code critique and evaluation. This approach builds on RLAIF (Reinforcement Learning from AI Feedback), which achieves ~100x cost reduction compared to human-only annotation. These models act as automated code reviewers that can:
+Train or deploy a specialized critic model whose only job is finding problems in code output. CriticGPT, the reference instance, is a GPT-4-based critic trained with reinforcement learning from human feedback to write natural-language critiques of ChatGPT code answers. In the paper it supports human RLHF evaluators, who preferred its critiques over purely human-written critiques 63% of the time and found more real bugs with it. Two caveats travel with the result: the critic sometimes writes convincing critiques of bugs that do not exist, and human-plus-critic teams hallucinate fewer such bugs than the critic alone — so the human stays in the loop by design.
+
+A critic used this way can:
 
 1. **Identify bugs** that human reviewers might miss
 2. **Detect security vulnerabilities** in generated code
@@ -31,7 +33,7 @@ Deploy specialized AI models trained specifically for code critique and evaluati
 4. **Verify correctness** of implemented solutions
 5. **Check adherence** to coding standards and best practices
 
-The critic model works alongside code generation models, providing an additional layer of quality assurance before code reaches human review or production.
+**Scope note:** the published evidence covers critics assisting human evaluators on model outputs, not a standalone reviewer. Running such a critic as an autonomous CI/CD gate, as sketched below, is an extrapolation of the paper's results; treat its findings as input to human review rather than a verdict. For the broader technique of AI flagging issues during human review, see the sibling pattern [AI-Assisted Code Review / Verification](ai-assisted-code-review-verification.md) — the difference is that this pattern uses a model trained specifically for critique, while that one uses general-purpose review agents.
 
 ## Example
 
@@ -265,7 +267,7 @@ sequenceDiagram
 ## How to use it
 
 - Use for automated code review workflows with high commit volumes
-- Deploy in CI/CD pipelines for pre-commit quality checks
+- Deploy in CI/CD pipelines for pre-commit quality checks, with critic findings routed to a human as review input
 - Apply to security-sensitive code requiring vulnerability detection
 - Integrate via git webhooks (GitHub, GitLab) for event-driven review
 - Use 3-4 iterations of critique-refinement loops for complex changes
@@ -273,7 +275,7 @@ sequenceDiagram
 
 ## References
 
-- [OpenAI's CriticGPT Announcement (July 2024)](https://openai.com/research/criticgpt)
-- [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073) - RLAIF foundation with 100x cost reduction vs human annotation
+- McAleese et al., [LLM Critics Help Catch LLM Bugs](https://arxiv.org/abs/2407.00215) (arXiv:2407.00215, June 2024, incl. Jan Leike) — the CriticGPT paper: RL-trained GPT-4 critic assisting human RLHF evaluators; 63% preference over human critiques, hallucinated-bug caveats. (The original `openai.com/research/criticgpt` announcement page is no longer available.)
+- [Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)](https://arxiv.org/abs/2212.08073) - RLAIF foundation: replacing human annotation with AI feedback at lower cost
 - [Self-Taught Evaluators (Meta AI, 2024)](https://arxiv.org/abs/2408.02666) - Bootstrap critic models from synthetic data
 - [Evaluating LLMs for Code Review (2025)](https://arxiv.org/abs/2505.20206) - GPT-4o: 68.50% classification accuracy with context

@@ -83,7 +83,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Semantic Context Filtering Pattern](patterns/semantic-context-filtering.md)
 - [Session-Scoped Context Runtime for Agent Tools](patterns/session-scoped-context-runtime-for-agent-tools.md)
 - [Tool Search Lazy Loading](patterns/tool-search-lazy-loading.md)
-- [Working Memory via TodoWrite](patterns/working-memory-via-todos.md)
+- [Working Memory via Task Tracking](patterns/working-memory-via-todos.md)
 
 ### <a name="feedback-loops"></a>Feedback Loops
 
@@ -190,7 +190,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Evidence-Layered Evaluation for Interactive Agents](patterns/evidence-layered-evaluation-for-interactive-agents.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
 - [Failover-Aware Model Fallback](patterns/failover-aware-model-fallback.md)
-- [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md)
 - [LLM Observability](patterns/llm-observability.md)
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
@@ -223,6 +222,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [External Credential Sync](patterns/external-credential-sync.md)
 - [Hook-Based Safety Guard Rails for Autonomous Code Agents](patterns/hook-based-safety-guard-rails.md)
 - [Isolated VM per RL Rollout](patterns/isolated-vm-per-rl-rollout.md)
+- [Lethal Trifecta Threat Model](patterns/lethal-trifecta-threat-model.md)
 - [Local-First Credential Broker](patterns/local-first-credential-broker.md)
 - [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
 - [One OS User per Agent](patterns/one-os-user-per-agent.md)
