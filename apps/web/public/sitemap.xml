@@ -55,7 +55,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-assisted-scaffolding</loc>
@@ -71,7 +71,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</loc>
@@ -87,7 +87,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/ai-web-search-agent-loop</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</loc>
@@ -163,15 +163,15 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/code-first-tool-interface-pattern</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/code-over-api-pattern</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/code-then-execute-pattern</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/codebase-optimization-for-agents</loc>
@@ -311,11 +311,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dual-use-tool-design</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dynamic-code-injection-on-demand-file-fetch</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dynamic-context-injection</loc>
@@ -323,7 +323,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection</loc>
@@ -371,7 +371,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/frontier-focused-development</loc>
@@ -459,7 +459,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/llm-friendly-api-design</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/local-first-credential-broker</loc>
@@ -471,7 +471,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/mcp-pattern-injection</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</loc>
@@ -495,11 +495,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/multi-platform-communication-aggregation</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/multi-platform-webhook-triggers</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/no-token-limit-magic</loc>
@@ -595,7 +595,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-tool-discovery</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/prompt-caching-via-exact-prefix-preservation</loc>
@@ -635,7 +635,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/schema-validation-retry-cross-step-learning</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/schema-guided-graph-retrieval</loc>
@@ -671,7 +671,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/shell-command-contextualization</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/shipping-as-research</loc>
@@ -715,7 +715,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/structured-output-specification</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/sub-agent-spawning</loc>
@@ -723,7 +723,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/subagent-compilation-checker</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/subject-hygiene</loc>
@@ -803,7 +803,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/working-memory-via-todos</loc>

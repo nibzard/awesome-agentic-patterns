@@ -17,7 +17,7 @@ id: code-over-api-pattern
 summary: "Agent writes code that calls tools and filters data inside a sandbox, so only summaries and samples return to the context window"
 signals: ["Data-heavy workflows over spreadsheets, databases, or logs", "Intermediate results do not need model inspection", "Token cost or latency matters"]
 anti_signals: ["No secure sandboxed code execution environment is available", "The model is not able to write correct code for the task", "Small tool results that fit easily in context"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -98,7 +98,7 @@ The agent sees the log output and return value, but the full dataset never enter
 
 **Pros:**
 
-- Dramatic token reduction (150K → 2K in reported cases)
+- Dramatic token reduction (Anthropic's 150K → 2K tokens, 98.7%, is measured on tool definitions loaded on demand; its spreadsheet example reports the agent seeing 5 of 10,000 rows, and Bifrost measures 58.2-92.8% input-token reductions for code-mode tool calling)
 - Lower latency (fewer large context API calls)
 - Natural fit for data processing tasks
 - Intermediate data stays contained in execution environment
@@ -122,15 +122,17 @@ The agent sees the log output and return value, but the full dataset never enter
 
 - **V8 isolates**: Millisecond startup, minimal memory, strong isolation (Cloudflare Code Mode)
 - **Containers**: 2-5 second startup, full language flexibility (Modal, Docker)
-- **VMs**: Complete isolation for destructive operations (Cognition/Devon)
+- **VMs**: Complete isolation for destructive operations (Cognition/Devin)
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* Cloudflare: Code Mode - V8 isolate-based execution (2025)
-* Beurer-Kellner et al.: Code-Then-Execute security framework (2025)
+* Anthropic Engineering: [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (November 4, 2025) - 150K → 2K tokens (98.7%) applies to tool definitions loaded on demand; the spreadsheet example returns 5 of 10,000 rows
+* Simon Willison: [Code execution with MCP](https://simonwillison.net/2025/Nov/4/code-execution-with-mcp/) (November 4, 2025) - independent commentary on the announcement
+* Cloudflare: [Code Mode](https://blog.cloudflare.com/code-mode/) - V8 isolate-based execution (September 2025)
+* Bifrost: [Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - third-party implementation measuring 58.2-92.8% input-token reductions through 2026
+* Beurer-Kellner et al.: [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (2025) - names the Code-Then-Execute pattern (§3.1, pattern 5)
 * Related: Code-Then-Execute Pattern (focuses on security/formal verification vs token optimization)
+* Division of labor with [Code-First Tool Interface Pattern](code-first-tool-interface-pattern.md): this file documents the general technique of moving data processing into a sandbox, while that file documents Cloudflare's specific Code Mode implementation
 
 - Primary: https://www.anthropic.com/engineering/code-execution-with-mcp
 - Cloudflare: https://blog.cloudflare.com/code-mode/
-- Academic: https://arxiv.org/abs/2506.08837

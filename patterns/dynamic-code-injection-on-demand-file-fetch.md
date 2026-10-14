@@ -4,12 +4,12 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Internal AI Dev Team"]
 category: "Tool Use & Environment"
-source: "https://docs.anthropic.com/en/docs/claude-code/common-workflows"
+source: "https://code.claude.com/docs/en/common-workflows"
 tags: [file-injection, at-mention, slash-commands, IDE-integration]
 summary: "Expands @file or /load tokens in the prompt into file contents, line ranges, or summaries so the agent sees code without manual copy and paste"
 signals: ["Interactive coding sessions need files that were not loaded at the start", "Users copy and paste large files into chat", "The chat front end or proxy has local file system access"]
 anti_signals: ["The interface cannot access the local file system", "You cannot enforce path validation and sensitive file blocking", "The agent must see full files and summaries would drop needed context"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -37,7 +37,7 @@ Concretely:
 ## How to use it
 
 - **Command Syntax Examples:**
-  - `@path/to/file.ext` → loads entire file if < 2,000 tokens; otherwise runs a heuristic summarizer.
+  - `@path/to/file.ext` → loads the entire file when it fits the read limit (Claude Code documents a 25,000-token default per file reference, with a 256KB text-file cap); otherwise summarize or narrow the range.
   - `/load path/to/file.ext:10-50` → loads exactly lines 10 through 50.
   - `/summarize path/to/test_spec.py` → runs a summary routine (e.g., extract docstrings + test names).
 
@@ -58,7 +58,7 @@ Concretely:
   - Enables **interactive exploration** of code without leaving the chat environment.
   - Reduces human overhead: no manual copy/paste of code blocks.
   - Improves agent accuracy by ensuring the most relevant code is directly visible.
-  - Token-efficient: 10-100x reduction versus full context loading; documented 3x+ development efficiency gains.
+  - Token-efficient: injects only the requested files or ranges instead of preloading the whole repository; no reliable multiplier is published, so size the wins against your own baseline.
 
 - **Cons/Considerations:**
   - Requires the chat interface (or a proxy server) to have **local file system access**.
@@ -70,4 +70,5 @@ Concretely:
 - Adapted from "Dynamic Context Injection" patterns (e.g., at-mention in Claude Code) for general coding-agent use.
 - Common in AI-powered IDE plugins (e.g., GitHub Copilot Workspace, Cursor AI).
 - Aider: `/add`, `/drop` CLI commands with tree-sitter AST parsing.
-- Shunyu Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023) - https://arxiv.org/abs/2210.03629
+- [Claude Code common workflows](https://code.claude.com/docs/en/common-workflows) - documents `@` file references, the 25,000-token default read limit, and the 256KB text-file cap.
+- Overlaps [Dynamic Context Injection](dynamic-context-injection.md): that pattern covers on-demand context injection generally, while this file adds the file-specific mechanics (line ranges, tree-sitter extraction, path validation).

@@ -9,7 +9,7 @@ tags: [retry, validation, cross-step-learning, structured-output, zod, error-acc
 summary: "Retries failed structured outputs with the validation errors as feedback and adds recent errors from earlier steps to later prompts so mistakes do not repeat"
 signals: ["Multi-step workflow depends on LLM output that matches a schema", "A single schema violation ends the whole workflow", "The same validation errors repeat across steps"]
 anti_signals: ["The API enforces the schema server-side through structured outputs or tool use", "Latency or cost of extra LLM calls is not acceptable"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -28,11 +28,13 @@ The issues compound in multi-step workflows:
 
 Implement multi-step retry with detailed error feedback and cross-step error accumulation. The agent learns from its validation failures across the entire workflow.
 
+Native server-side schema enforcement has become the default for major providers: OpenAI Structured Outputs and Anthropic structured outputs (JSON outputs plus strict tool use, generally available after a 2025-11-13 beta) constrain decoding so syntactic schema violations cannot occur. Reach for this client-side pattern when your provider lacks enforcement, when you validate constraints a JSON Schema cannot express (for example cross-field business rules), or in multi-step workflows that benefit from cross-step error learning.
+
 ### Core Mechanisms
 
 **1. Multi-attempt retry with detailed feedback:**
 
-Industry practice uses 2-3 retry attempts; research shows iterative refinement with feedback improves output quality by 15-45% (Self-Refine, ICLR 2024).
+Industry practice uses 2-3 retry attempts; the Self-Refine line of work (Madaan et al., ICLR 2024) shows that iterative refinement with feedback improves output quality, without quantifying a percentage.
 
 ```typescript
 const maxAttempts = 3;
@@ -98,8 +100,6 @@ if (recentErrors) {
 ```
 
 **3. Structured feedback loop:**
-
-**Alternative: Server-side validation** - OpenAI Structured Outputs and Anthropic Tool Use enforce schema compliance at the API level, eliminating the need for client-side retry loops.
 
 Each retry iteration provides specific, actionable feedback:
 
@@ -311,5 +311,8 @@ const context: AgentContext = {
 
 - [HyperAgent GitHub Repository](https://github.com/hyperbrowserai/HyperAgent) - Original implementation (see `src/agent/tools/agent.ts` lines 424-509)
 - [Zod Validation Documentation](https://zod.dev/) - Schema validation library
-- [Self-Refine: Improving Reasoning via Iterative Feedback](https://arxiv.org/abs/2303.11366) - ICLR 2024, Shinn et al.
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) - Madaan et al., ICLR 2024 (iterative refinement with feedback; no percentage claim)
+- [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) - server-side schema enforcement that removes the syntactic half of this pattern's job
+- [Anthropic Structured Outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) - JSON outputs plus strict tool use, generally available after a 2025-11-13 beta
+- Distinct from [Structured Output Specification](structured-output-specification.md): that pattern constrains output format at generation time, while this pattern retries validation failures and accumulates errors across steps when enforcement is unavailable or insufficient
 - Related patterns: [Structured Output Specification](structured-output-specification.md), [Action Caching & Replay](action-caching-replay.md)

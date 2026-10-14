@@ -92,6 +92,21 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent SDK for Programmatic Control]]></title>
+            <description><![CDATA[Exposes agent functions through an SDK and CLI so code can run the agent headless with set tools, permissions, and resource limits]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[sdk]]></category>
+            <category><![CDATA[automation]]></category>
+            <category><![CDATA[ci/cd]]></category>
+            <category><![CDATA[programmatic access]]></category>
+            <category><![CDATA[scripting]]></category>
+            <category><![CDATA[api]]></category>
+            <category><![CDATA[headless agent]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Agent-Assisted Scaffolding]]></title>
             <description><![CDATA[Agent generates initial files, boilerplate, and directory structure from a high-level description so developers start on core logic]]></description>
             <link>https://agentic-patterns.com/patterns/agent-assisted-scaffolding</link>
@@ -134,6 +149,21 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent-First Tooling and Logging]]></title>
+            <description><![CDATA[Designs tools and logs for agent consumption with one unified log stream, structured JSON output, and agent-aware CLI flags]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[tool-design]]></category>
+            <category><![CDATA[logging]]></category>
+            <category><![CDATA[machine-readable]]></category>
+            <category><![CDATA[observability]]></category>
+            <category><![CDATA[agent-environment]]></category>
+            <category><![CDATA[mcp]]></category>
+            <category><![CDATA[structured-output]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Agent-Friendly Workflow Design]]></title>
             <description><![CDATA[Gives agents clear high-level goals, room for implementation choices, structured I/O, and plan review before execution]]></description>
             <link>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</link>
@@ -144,6 +174,21 @@
             <category><![CDATA[agent autonomy]]></category>
             <category><![CDATA[task decomposition]]></category>
             <category><![CDATA[HCI]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[AI Web Search Agent Loop]]></title>
+            <description><![CDATA[Coordinator agent translates queries, spawns parallel search workers across domains and time ranges, refines iteratively, and answers with citations]]></description>
+            <link>https://agentic-patterns.com/patterns/ai-web-search-agent-loop</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-web-search-agent-loop</guid>
+            <category><![CDATA[Tool Use & Environment]]></category>
+            <category><![CDATA[web-search]]></category>
+            <category><![CDATA[serp-api]]></category>
+            <category><![CDATA[citations]]></category>
+            <category><![CDATA[parallel-agents]]></category>
+            <category><![CDATA[query-translation]]></category>
+            <category><![CDATA[operators]]></category>
+            <category><![CDATA[grounding]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -240,49 +285,6 @@
             <category><![CDATA[multi-model]]></category>
             <category><![CDATA[orchestration]]></category>
             <category><![CDATA[reliability]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Burn the Boats]]></title>
-            <description><![CDATA[Removes working but obsolete features on a hard, announced deadline so the team and users move to the new approach]]></description>
-            <link>https://agentic-patterns.com/patterns/burn-the-boats</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/burn-the-boats</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[feature-killing]]></category>
-            <category><![CDATA[forced-evolution]]></category>
-            <category><![CDATA[courage]]></category>
-            <category><![CDATA[focus]]></category>
-            <category><![CDATA[self-destruct]]></category>
-            <category><![CDATA[obsolescence]]></category>
-            <category><![CDATA[product-strategy]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Canary Rollout and Automatic Rollback for Agent Policy Changes]]></title>
-            <description><![CDATA[Ships agent policy changes to a small traffic slice first, monitors guardrail metrics, and rolls back to the last stable version automatically]]></description>
-            <link>https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[canary]]></category>
-            <category><![CDATA[rollback]]></category>
-            <category><![CDATA[reliability]]></category>
-            <category><![CDATA[policy]]></category>
-            <category><![CDATA[evaluation]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Capability-Escrow-Receipt]]></title>
-            <description><![CDATA[Binds a signed capability listing, an atomic escrow-plus-hire step, and a signed work receipt into one loop for agent-to-agent payment]]></description>
-            <link>https://agentic-patterns.com/patterns/capability-escrow-receipt</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/capability-escrow-receipt</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[coordination]]></category>
-            <category><![CDATA[payments]]></category>
-            <category><![CDATA[escrow]]></category>
-            <category><![CDATA[receipts]]></category>
-            <category><![CDATA[capabilities]]></category>
-            <category><![CDATA[atomic-hire]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

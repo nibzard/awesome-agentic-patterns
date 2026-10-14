@@ -4,17 +4,17 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Simon Willison (observation)", "Multiple vendor incident reports"]
 category: Tool Use & Environment
-source: "https://simonwillison.net/2025/Jun/16/lethal-trifecta/"
+source: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/"
 tags: [network-sandbox, exfiltration, outbound-controls, security]
 summary: "Puts the agent behind a default-deny egress firewall with allowlisted destinations so stolen data has no outbound channel"
 signals: ["Agent has access to private data and reads untrusted input", "Agent runs in a container or VM where you control outbound network rules", "Needed external APIs can go through an internal proxy"]
 anti_signals: ["The agent must reach many arbitrary external sites to do its job", "The agent has no access to sensitive data", "You cannot build proxy stubs for essential integrations"]
-updated_at: "2026-07-23"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
-Even with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. This pattern implements the Bell-LaPadula model's "no write down" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels.
+Even with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. As an analogy of this pattern's author (not a framing from the source article), the design echoes the Bell-LaPadula "no write down" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels.
 
 ## Solution
 
@@ -47,7 +47,8 @@ RUN iptables -A OUTPUT -d api.mycompany.internal -j ACCEPT
 
 ## References
 
-* Multiple vendor post-mortems cited by Willison: Microsoft 365 Copilot, GitHub MCP, GitLab Duo Chatbot fixes all disabled egress paths as the first patch.
+* Willison's article cites the Microsoft 365 Copilot, GitHub MCP, and GitLab Duo Chatbot incidents as "almost all... promptly fixed by the vendors, usually by locking down the exfiltration vector." It gives no per-vendor fix details and does not claim egress lockdown was the first patch in every case.
 
-- Primary source: https://simonwillison.net/2025/Jun/16/lethal-trifecta/
+- Primary source: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ - describes the threat model this pattern mitigates; the default-deny egress firewall implementation itself is this pattern's contribution
+- Parent threat model: [Lethal Trifecta Threat Model](lethal-trifecta-threat-model.md)
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837.

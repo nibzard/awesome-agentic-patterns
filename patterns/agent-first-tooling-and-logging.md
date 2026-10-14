@@ -4,12 +4,12 @@ status: established
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"]
 category: "Tool Use & Environment"
-source: "https://www.sourcegraph.com"
+source: "https://blog.cloudflare.com/code-mode/"
 tags: [tool-design, logging, machine-readable, observability, agent-environment, mcp, structured-output]
 summary: "Designs tools and logs for agent consumption with one unified log stream, structured JSON output, and agent-aware CLI flags"
 signals: ["Agent parses human-oriented CLI or log output", "Logs are split across client, server, and database streams", "Agent wastes tokens interpreting ambiguous tool output"]
 anti_signals: ["Humans are the main consumers of the tool output", "Team cannot maintain separate human and agent interfaces"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -23,8 +23,8 @@ Consciously design and adapt tooling and logging to be "agent-first," prioritizi
 - **Unified Logging:** Instead of multiple log streams (client, server, database), consolidate them into a single, unified log. This gives the agent a single source of truth to monitor.
 - **Verbose, Structured Output:** Prefer verbose, structured formats like JSON lines over concise, human-readable text. An agent can parse structured data far more effectively and is not constrained by screen space. Use schemas like Pydantic (Python) or Zod (TypeScript) for type-safe structured outputs.
 - **Agent-Aware CLIs:** Design new tools or add flags to existing tools (`--for-agent`, `--json`) that modify their output to be more explicit and less ambiguous for an AI. Assume the agent, not a human, is the primary consumer.
-- **Standardized Tool Protocol:** Use the Model Context Protocol (MCP) as the standard interface for agent-tool communication. Introduced in 2024 and donated to the Agent AI Foundation in 2025, MCP provides a universal "USB interface for agents."
-- **Code-First Tool Interface:** For complex workflows, LLMs generate code that calls tools rather than invoking them directly. This provides 10-100x token reduction by keeping intermediate results in the execution environment rather than model context.
+- **Standardized Tool Protocol:** Use the Model Context Protocol (MCP) as the standard interface for agent-tool communication. Introduced in 2024 and donated to the Linux Foundation's Agentic AI Foundation in December 2025, MCP provides a universal "USB interface for agents."
+- **Code-First Tool Interface:** For complex workflows, LLMs generate code that calls tools rather than invoking them directly. Measured input-token reductions for code-mode tool calling range from 58.2% to 92.8% in Bifrost's benchmarks, because intermediate results stay in the execution environment instead of model context. See [Code-Over-API Pattern](code-over-api-pattern.md) for the full treatment.
 
 This shift in design philosophy acknowledges that as agents perform more development work, the tools they use must adapt to serve them directly. An agent-friendly environment is a prerequisite for reliable and efficient agent performance.
 
@@ -69,10 +69,14 @@ sequenceDiagram
 
 ## References
 
-- From Thorsten Ball: "What we've seen people now do is well instead of having the client log and having the browser log and having the database log, let's have one unified log because then it's easier for the agent to just look at this log... You can just have like JSON line outputs and whatnot because the agent can understand it much better than a human can... This is not made for human consumption anymore. How can we optimize this for agent consumption?"
+- Thorsten Ball's advocacy for agent-first tooling (one unified log stream instead of separate client, browser, and database logs, with JSON-line output the agent can parse) is the paraphrased source of the unified-logging bullet above; no verbatim, citable transcript of that passage could be located, so it is not quoted.
 
-- From Kenton Varda: "LLMs are better at writing code to call MCP, than at calling MCP directly."
+- From Kenton Varda, [Cloudflare Code Mode](https://blog.cloudflare.com/code-mode/) (September 26, 2025): "LLMs are better at writing code to call MCP, than at calling MCP directly."
 
 - Model Context Protocol: https://modelcontextprotocol.io (de facto standard for agent-tool interface, 2024-2025)
 
-- Primary source: https://www.sourcegraph.com
+- [Linux Foundation announces the Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation) (December 9, 2025) - MCP stewardship moved to the Agentic AI Foundation, anchored by MCP, goose, and AGENTS.md contributions
+
+- Measured code-mode token savings: [Bifrost Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) (58.2% to 92.8% input-token reduction)
+
+- Distinct from [Dual-Use Tool Design](dual-use-tool-design.md) (one interface for both audiences) and [LLM-Friendly API Design](llm-friendly-api-design.md) (API shape): this pattern is about tool output and logging being agent-consumable

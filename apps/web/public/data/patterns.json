@@ -304,15 +304,15 @@
   },
   {
     "title": "Agent SDK for Programmatic Control",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Anthropic (Claude Code SDK example)"
+      "Anthropic (Claude Agent SDK)"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://www.nibzard.com/claude-code",
+    "source": "https://github.com/anthropics/claude-agent-sdk-python",
     "tags": [
       "sdk",
       "automation",
@@ -335,7 +335,7 @@
       "High-frequency calls or real-time streaming",
       "Task needs conversational clarification"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nInteractive terminal or chat interfaces are suitable for many agent tasks, but not for all. Integrating agent capabilities into automated workflows (e.g., CI/CD pipelines, scheduled jobs, batch processing) or building more complex applications on top of core agent functionalities requires a programmatic interface."
   },
   {
@@ -452,7 +452,7 @@
       "Kenton Varda (Cloudflare)"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://www.sourcegraph.com",
+    "source": "https://blog.cloudflare.com/code-mode/",
     "tags": [
       "tool-design",
       "logging",
@@ -474,7 +474,7 @@
       "Humans are the main consumers of the tool output",
       "Team cannot maintain separate human and agent interfaces"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMost developer tools, CLIs, and application logs are designed for human consumption. They use color-coded, multi-line, or summarized outputs that are easy for a person to scan but can be difficult for an AI agent to parse reliably. This \"human-centric\" design creates noise and ambiguity, forcing the agent to waste tokens and effort on interpreting output rather than acting on it."
   },
   {
@@ -589,8 +589,8 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Colin Flaherty (Muse)",
-      "Amplify Partners Blog"
+      "Justin Gage (Amplify Partners)",
+      "Colin Flaherty (Muse)"
     ],
     "category": "Tool Use & Environment",
     "source": "https://www.amplifypartners.com/blog-posts/how-ai-web-search-works",
@@ -615,7 +615,7 @@
       "Internal model knowledge answers the query",
       "Latency and cost budgets cannot absorb multiple search rounds"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional LLMs have a training cutoff date, meaning they don't know recent facts or real-time information. Simply connecting a model to a search API isn't enough - the model needs to:\n\n- Decide when searching is necessary versus using internal knowledge\n- Translate conversational context into effective search queries\n- Find diverse, long-tail results rather than just popular pages\n- Iterate and refine searches based on intermediate results\n- Cite sources properly to build user trust and reduce hallucination concerns"
   },
   {
@@ -1286,7 +1286,7 @@
     ],
     "slug": "code-first-tool-interface-pattern",
     "id": "code-mode-mcp-tool-interface-improvement-pattern",
-    "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with 10x+ token savings.",
+    "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with large measured token savings.",
     "signals": [
       "Workflow has a clear sequence of tool calls you can map out upfront",
       "Fan-out over many items would overflow context with direct tool calls",
@@ -1297,7 +1297,7 @@
       "LLM reasoning is needed between tool calls, such as per-item personalization",
       "Single one-off tool calls or quick prototypes without sandbox infrastructure"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional Model Context Protocol (MCP) approaches of directly exposing tools to Large Language Models create significant token waste and complexity issues. We've moved from telling LLMs what to do, to teaching them to write instructions for themselves—it's **turtles writing code all the way down**[^1] for all domains.\n\n#"
   },
   {
@@ -1330,7 +1330,7 @@
       "The model is not able to write correct code for the task",
       "Small tool results that fit easily in context"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen agents make direct API or tool calls, all intermediate data must flow through the model's context window. For data-heavy workflows (processing spreadsheets, filtering logs, transforming datasets), this creates massive token consumption and increased latency. A workflow that fetches 10,000 spreadsheet rows and filters them can easily consume 150,000+ tokens just moving data through the context."
   },
   {
@@ -1363,7 +1363,7 @@
       "You cannot invest in DSL design and static-analysis infrastructure",
       "Simple tasks where sandbox execution overhead outweighs audit value"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nFree-form plan-and-act loops are difficult to audit because critical control decisions stay implicit in natural-language reasoning. In security-sensitive workflows, teams need verifiable guarantees that tainted inputs cannot flow into dangerous sinks (for example, external messages, payments, or destructive commands). Plain-text plans are too weak for formal validation."
   },
   {
@@ -2669,7 +2669,7 @@
       "A tool is only ever used by one audience",
       "A separate specialized tool gives clearly better results for agents or humans"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nBuilding separate tools for humans and AI agents creates:\n\n- **Maintenance overhead**: Two implementations of similar functionality\n- **Inconsistent behavior**: Human tools work differently than agent tools\n- **Learning curve**: Users must learn one interface, agents another\n- **Feature drift**: Human and agent capabilities diverge over time\n- **Testing burden**: Must validate both interfaces separately"
   },
   {
@@ -2682,7 +2682,7 @@
       "Internal AI Dev Team"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://docs.anthropic.com/en/docs/claude-code/common-workflows",
+    "source": "https://code.claude.com/docs/en/common-workflows",
     "tags": [
       "file-injection",
       "at-mention",
@@ -2702,7 +2702,7 @@
       "You cannot enforce path validation and sensitive file blocking",
       "The agent must see full files and summaries would drop needed context"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nDuring an interactive coding session, a user or agent may need to inspect or modify files **not originally loaded** into the main context. Manually copying/pasting entire files into the prompt is:\n\n- Tedious and error-prone.\n- Wastes tokens on boilerplate (e.g., large config files).\n- Interrupts workflow momentum when switching between the editor and chat."
   },
   {
@@ -2751,7 +2751,7 @@
       "Multiple vendor incident reports"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://simonwillison.net/2025/Jun/16/lethal-trifecta/",
+    "source": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
     "tags": [
       "network-sandbox",
       "exfiltration",
@@ -2771,8 +2771,8 @@
       "The agent has no access to sensitive data",
       "You cannot build proxy stubs for essential integrations"
     ],
-    "updated_at": "2026-07-23",
-    "excerpt": "\n## Problem\nEven with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. This pattern implements the Bell-LaPadula model's \"no write down\" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nEven with private-data access and untrusted inputs, attacks fail if the agent has **no way to transmit stolen data**. As an analogy of this pattern's author (not a framing from the source article), the design echoes the Bell-LaPadula \"no write down\" property: high-privilege subjects cannot write to low-trust destinations. Many real-world fixes simply removed or filtered outbound channels."
   },
   {
     "title": "Episodic Memory Retrieval & Injection",
@@ -3229,7 +3229,7 @@
       "The sandbox cannot share a mounted directory with the host",
       "You cannot secure the directory with request authentication and strict permissions"
     ],
-    "updated_at": "2026-08-21",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAn agent that runs inside a sandbox — a container, a hosted runtime, a cloud\nworkspace — is deliberately cut off from the developer's real machine. That\nisolation is correct for safety, but it puts the most valuable work out of\nreach: the toolchain, the local filesystem, git credentials, the Docker daemon,\nand the half-configured services that only exist on someone's laptop.\n\nThe obvious fixes are worse than the problem:\n\n- **Open a port on the host.** Now the developer's machine exposes another\n  network service that must be authenticated, authorized, and reachable through\n  NAT or a corporate VPN.\n- **Hold a synchronous connection.** Sandboxes get suspended, hit request\n  timeouts, and are reaped. A 20-minute build outlives the caller, and when the\n  caller dies mid-flight the work is orphaned with no way to reclaim the result.\n- **Re-issue the call on reconnect.** Without a durable identity for the\n  request, a retry after a dropped connection re-runs a deploy or a migration\n  a second time.\n\nThe underlying difficulty is that the two sides have *different lifetimes*. The\nsandbox is ephemeral and may vanish mid-task; the host is long-lived. Any\nmechanism that assumes both endpoints stay alive for the duration of the work\nwill drop tasks."
   },
   {
@@ -4001,7 +4001,7 @@
       "API is consumed only by humans",
       "Agent already uses a small, stable tool surface without errors"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nFor AI agents to reliably and effectively use tools, especially APIs or internal libraries, the design of these interfaces matters. APIs designed solely for human consumption might be ambiguous or overly complex for an LLM to use correctly without extensive fine-tuning or elaborate prompting."
   },
   {
@@ -4098,7 +4098,7 @@
   },
   {
     "title": "MCP Pattern Injection",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "Rajath Bharadwaj (@Rajathbharadwaj)"
     ],
@@ -4127,7 +4127,7 @@
       "Framework is stable and well covered by training data",
       "No one can maintain the pattern library"
     ],
-    "updated_at": "2026-07-23",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI coding assistants lack domain-specific knowledge about framework best practices. When building LangGraph agents, developers must repeatedly explain patterns, copy-paste from docs, or watch the AI reinvent suboptimal solutions. The assistant's training data is often outdated relative to fast-moving frameworks."
   },
   {
@@ -4307,7 +4307,7 @@
       "Lucas Carlson"
     ],
     "based_on": [
-      "Anthropic (Claude Code)"
+      "Lucas Carlson (practitioner-contributed skill setup)"
     ],
     "category": "Tool Use & Environment",
     "source": "https://github.com/anthropics/claude-code",
@@ -4330,7 +4330,7 @@
       "All communication is on one platform",
       "Privacy rules do not allow aggregating data across platforms"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nUsers communicate across multiple platforms (email, Slack, iMessage, etc.) and need to search for information that might exist in any of them. Searching each platform manually is slow and error-prone. An agent tasked with \"find what X said about Y\" must know which platform to check—or check all of them."
   },
   {
@@ -4367,7 +4367,7 @@
       "Rapid prototype before a custom build",
       "Non-technical users need self-service automation"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAn internal agent only provides value when its workflows are initiated. Building out a library of workflow initialization mechanisms (triggers) is core to agent adoption. Without easy triggers, employees can't effectively automate their day-to-day workflows."
   },
   {
@@ -5307,7 +5307,7 @@
       "Agent needs most of its tools in every workflow",
       "Extra discovery calls before execution are not acceptable"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen agents have access to large tool catalogs (dozens to thousands of available tools), loading all tool definitions upfront consumes excessive context window space. Most tools won't be used in a given workflow, making this preloading wasteful and limiting the context available for actual task execution."
   },
   {
@@ -5672,7 +5672,7 @@
       "The API enforces the schema server-side through structured outputs or tool use",
       "Latency or cost of extra LLM calls is not acceptable"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLLMs don't always produce valid structured output matching the expected schema. Single-attempt validation leads to task failures even when retry would succeed.\n\nThe issues compound in multi-step workflows:\n\n- **Schema violations**: LLM generates JSON that doesn't match the expected Zod/JSON Schema\n- **One-and-done failure**: Single failed attempt terminates the entire workflow\n- **No learning from mistakes**: Each step repeats the same errors independently\n- **Wasted tokens**: Failed responses still consume context and cost money\n- **Fragile workflows**: Flaky LLM outputs make agents unreliable"
   },
   {
@@ -5965,8 +5965,8 @@
     "based_on": [
       "Boris Cherny (via Claude Code)"
     ],
-    "category": "Tool Use & Environment",
-    "source": "https://www.nibzard.com/claude-code",
+    "category": "UX & Collaboration",
+    "source": "https://code.claude.com/docs/en/interactive-mode",
     "tags": [
       "shell integration",
       "context management",
@@ -5987,7 +5987,7 @@
       "Agent has no local shell access",
       "Commands produce large output that inflates token costs"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen an AI agent interacts with a local development environment, it often needs to execute shell commands (e.g., run linters, check git status, list files) and then use the output of these commands as context for its subsequent reasoning or actions. Manually copying and pasting command output into the prompt is tedious and error-prone."
   },
   {
@@ -6378,7 +6378,7 @@
       "Task needs open-ended free-form text",
       "Output shape changes too often to keep a schema"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nFree-form agent outputs are difficult to validate, parse, and integrate with downstream systems. When agents return unstructured text, you face:\n\n- Unpredictable output formats requiring complex parsing\n- Difficult validation and error handling\n- Brittle integration with automated workflows\n- Inconsistent categorization and classification\n- Manual post-processing to extract structured data\n\nThis makes it nearly impossible to build reliable multi-step workflows where one agent's output feeds into another system or agent."
   },
   {
@@ -6427,8 +6427,7 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Anonymous Speaker (Open Source Agent RL Talk)",
-      "Will Brown (Prime Intellect Talk)"
+      "Will Brown (Prime Intellect agentic-RL talk)"
     ],
     "category": "Reliability & Eval",
     "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
@@ -6451,7 +6450,7 @@
       "Modules depend tightly on each other's build order",
       "No infrastructure to run separate build environments"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLarge coding tasks often involve multiple independent components (e.g., microservices, libraries). Having the **main agent** handle compilation and error checking for every component in-context:\n\n- **Blows Up Context Length:** Including entire build logs or bytecode in the prompt is impractical.\n- **Slows Down Inference:** Sending full build commands and parsing verbose output in-context uses excessive tokens.\n\nAdditionally, when the agent's single \"compile-and-run\" step fails, it's hard to pinpoint which submodule caused the error without a more granular approach."
   },
   {
@@ -7187,7 +7186,7 @@
   },
   {
     "title": "Workflow Evals with Mocked Tools",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -7218,7 +7217,7 @@
       "Results must act as a strict CI gate, since non-determinism makes them flaky",
       "Team cannot keep mocks in sync with real tools"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nUnit tests, linters, and typecheckers validate individual components but don't test agent workflows end-to-end. It's easy to create prompts that don't work well despite all underlying pieces being correct.\n\nYou need to validate that prompts and tools work together effectively as a system."
   },
   {

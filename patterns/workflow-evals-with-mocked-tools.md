@@ -1,6 +1,6 @@
 ---
 title: Workflow Evals with Mocked Tools
-status: emerging
+status: established
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -21,7 +21,7 @@ id: workflow-evals-with-mocked-tools
 summary: "Runs complete agent workflows against mocked tools in CI and checks which tools were called plus agent-as-judge quality criteria"
 signals: ["Agent tools have side effects such as API or database writes", "Unit tests pass but prompts and tools fail together", "Need regression tests for agent behavior on each PR"]
 anti_signals: ["Results must act as a strict CI gate, since non-determinism makes them flaky", "Team cannot keep mocks in sync with real tools"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -105,10 +105,11 @@ Implement **workflow evals (simulations)** that test complete agent workflows wi
 
 ## Evidence
 
-- **Evidence Grade:** `emerging` - Early production adoption, primarily industry-driven
+- **Evidence Grade:** `established` - Independent practitioner report plus vendor-published evaluation frameworks (2026)
 - **Key Findings:**
   - Strong production use case: unit tests and linters don't validate prompt-tool integration effectively
   - Dual evaluation (objective + subjective) is standard across implementations
+  - Anthropic's "Demystifying evals for AI agents" (January 2026) codifies the grading side: code-based, model-based, and human graders applied to the trajectory or the final answer, which is the trajectory-level extension of this pattern
   - Non-determinism remains the primary challenge; best used for directional guidance
 - **Unclear:** Optimal mock fidelity requirements for valid evaluation
 
@@ -211,7 +212,7 @@ jobs:
 
 **Handling non-determinism:**
 
-The article notes evals are "not nearly as well as I hoped" due to non-determinism:
+The article notes evals are "not nearly as well as I hoped it would" due to non-determinism:
 
 - **Strong signal**: All pass or all fail
 - **Weak signal**: Mixed results
@@ -238,7 +239,7 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 **Operational challenges:**
 
-> "This is working well, but not nearly as well as I had hoped... there's very strong signal when they all fail, and strong signal when they all pass, but most runs are in between."
+> "Ok, this is working well, but not nearly as well as I hoped it would... there's very strong signal when they all fail, and strong signal when they all pass, but most runs are in between."
 
 > "Our reliance on prompt-driven workflows rather than code-driven workflows introduces a lot of non-determinism, which I don't have a way to solve without... prompt and mock tuning."
 
@@ -252,7 +253,8 @@ The article notes evals are "not nearly as well as I hoped" due to non-determini
 
 ## References
 
-* [Building an internal agent: Evals to validate workflows](https://lethain.com/agents-evals/) - Will Larson (2025)
+* [Building an internal agent: Evals to validate workflows](https://lethain.com/agents-evals/) - Will Larson (December 2025)
+* [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) - Anthropic Engineering (January 2026); code-based, model-based, and human graders over trajectories or final answers
 * Sierra platform: Simulations approach for agent testing
 * [LangSmith Evaluation Platform](https://smith.langchain.com/) - Tool tracking and custom evaluators
 * [Promptfoo](https://github.com/promptfoo/promptfoo) - Mock API responses and assertion-based testing
