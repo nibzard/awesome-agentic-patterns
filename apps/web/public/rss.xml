@@ -177,6 +177,21 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent-Powered Codebase Q&A / Onboarding]]></title>
+            <description><![CDATA[Agent indexes the codebase with embeddings and code graphs and answers natural-language questions about where code is and how it behaves]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[code-understanding]]></category>
+            <category><![CDATA[onboarding]]></category>
+            <category><![CDATA[q&a]]></category>
+            <category><![CDATA[retrieval]]></category>
+            <category><![CDATA[search]]></category>
+            <category><![CDATA[context-awareness]]></category>
+            <category><![CDATA[knowledge-base]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[AI Web Search Agent Loop]]></title>
             <description><![CDATA[Coordinator agent translates queries, spawns parallel search workers across domains and time ranges, refines iteratively, and answers with citations]]></description>
             <link>https://agentic-patterns.com/patterns/ai-web-search-agent-loop</link>
@@ -272,19 +287,6 @@
             <category><![CDATA[inbox]]></category>
             <category><![CDATA[session-continuity]]></category>
             <category><![CDATA[audit-trail]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Budget-Aware Model Routing with Hard Cost Caps]]></title>
-            <description><![CDATA[Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail]]></description>
-            <link>https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[routing]]></category>
-            <category><![CDATA[cost-control]]></category>
-            <category><![CDATA[multi-model]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[reliability]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
