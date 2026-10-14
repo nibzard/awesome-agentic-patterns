@@ -16,7 +16,7 @@ id: reflection-loop
 summary: "Scores each draft against a fixed rubric, feeds the critique into a revision, and repeats until the draft passes a threshold or the retry budget ends"
 signals: ["Output must meet explicit quality criteria", "Single-pass answers miss edge cases or constraints", "Writing, reasoning, or code tasks with a clear scoring metric"]
 anti_signals: ["No well-defined metric to score drafts", "Extra compute per answer is not acceptable"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -40,7 +40,7 @@ for attempt in range(max_iters):
 
 ## How to use it
 
-Use this when quality must meet explicit criteria in writing, reasoning, or code generation. Keep loop budgets small (2-3 iterations are typically optimal; beyond 3 shows diminishing returns), and log score deltas to verify that extra iterations are producing measurable gains.
+Use this when quality must meet explicit criteria in writing, reasoning, or code generation. Keep loop budgets small; there is no universally established optimum, so log score deltas per iteration and stop when the deltas flatten rather than assuming a fixed iteration count. Note that 2025-2026 reasoning models already internalize a form of self-checking in their thinking, so hand-rolled reflection scaffolds pay off mostly with non-reasoning models or when the rubric is domain-specific.
 
 ## Trade-offs
 
@@ -49,5 +49,5 @@ Use this when quality must meet explicit criteria in writing, reasoning, or code
 
 ## References
 
-* [Self-Refine: Improving Reasoning in Language Models via Iterative Feedback](https://arxiv.org/abs/2303.11366)
-* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://neurips.cc/) (NeurIPS 2023) - adds episodic memory for persistent learning across trials
+* [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) - Madaan et al., 2023
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., NeurIPS 2023 - adds episodic memory for persistent learning across trials

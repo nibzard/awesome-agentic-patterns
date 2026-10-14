@@ -1,7 +1,7 @@
 ---
 title: "Frontier-Focused Development"
 status: emerging
-research_date: "2025-02-27"
+research_date: "2026-01-22"
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["AMP (Thorsten Ball, Quinn Slack)"]
 category: "Learning & Adaptation"
@@ -10,7 +10,7 @@ tags: [frontier, state-of-the-art, model-selection, product-strategy, learning, 
 summary: "Targets only state-of-the-art models, picks the best model per use case with no user model selector, and expects to rework the product every few months"
 signals: ["AI capability is the core value of the product", "Users are early adopters or developers who value speed over cost", "A small team can change direction quickly"]
 anti_signals: ["Enterprise customers require stability", "Cost-sensitive markets where top performance is not critical", "AI is a minor feature, or a large team cannot change direction each quarter"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -25,8 +25,10 @@ AI capabilities advance rapidly along predictable scaling laws—products optimi
 
 1. **No model selector**: Pick the best model for each use case, don't let users choose
 2. **Frontier or nothing**: Only build features that push boundaries and generate learning
-3. **Rapid evolution**: Expect to completely change your product every 3 months (AI product lifecycle research confirms quarterly cycles are necessary to remain competitive)
+3. **Rapid evolution**: Expect to completely change your product every few months as frontier capability shifts
 4. **Subscription resistance**: Avoid being tied to one model's pricing structure
+
+Distinct from [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md) (marking surrounding code as temporary) and [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md) (auditing and removing scaffolding per model upgrade): this pattern is the product-level strategy of targeting only frontier models.
 
 ```mermaid
 graph TD
@@ -50,7 +52,7 @@ graph TD
 
 **The problem with optimizing for cost:**
 
-Emergent abilities research shows some capabilities appear suddenly at scale and cannot be predicted or engineered around in smaller models. Cost optimization against today's models solves problems that frontier models will soon solve inherently.
+Emergent-abilities research argues some capabilities appear suddenly at scale and cannot be engineered around in smaller models — though that literature is contested: Schaeffer et al. (2023) show apparent emergence can be an artifact of the chosen metric ([arXiv 2304.15004](https://arxiv.org/abs/2304.15004)). Either way, cost optimization against today's models solves problems that frontier models will soon solve inherently.
 
 > "If you do this right now and you try to make non-frontier models work and optimize for cost, what you're doing is you're building something that will be outdated in half a year... and you're building it for people who by the very definition do not want to pay a lot."
 
@@ -79,7 +81,7 @@ frontier_test:
 
 **Why no model selector?**
 
-1. **Learning**: Can't learn how users interact if everyone uses different models (research shows focused single-model products learn faster)
+1. **Learning**: The AMP team's argument is that you can't learn how users interact if everyone uses different models
 2. **Focus**: One way to use the product means everyone benefits from improvements
 3. **Evolution**: Not beholden to models that were popular 3-6 months ago
 4. **Quality**: Can optimize specifically for the best model's capabilities
@@ -121,7 +123,7 @@ When you offer a subscription (like Claude Max), you become tied to that model:
 - Products where AI capability is the core differentiator
 - Users who want to be on the cutting edge
 
-**Production implementations**: AMP (Anthropic), Claude Code, Cursor, v0.dev, Perplexity—all use opinionated frontier model choices without user-facing selectors.
+**Production implementations**: AMP (built by Thorsten Ball and Quinn Slack's team at [ampcode.com](https://ampcode.com), not Anthropic), Claude Code, Cursor, v0.dev, and Perplexity all make opinionated frontier model choices. Not all of them hide model choice, though: Cursor ships a model picker and Claude Code has a `/model` command; v0.dev and Perplexity are the ones that give users no selector. By 2026 even Amp ships multi-vendor, cost-tiered model dials in its settings, so "no selector" is a default posture rather than an absolute.
 
 **When to consider alternatives:**
 
@@ -138,8 +140,9 @@ When everything is in flux—the models, the software, how we write it—optimiz
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent - Episode 9 (January 2026)](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack); also at [ampcode.com/podcast/episode-9](https://ampcode.com/podcast/episode-9)
+* [Amp](https://ampcode.com) - "built for the frontier" coding agent from Sourcegraph; multi-model dial settings
 * Kaplan et al. (2020). [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). NeurIPS 2020.
 * Wei et al. (2022). [Emergent Abilities of Large Language Models](https://arxiv.org/abs/2206.07682). TMLR 2022.
-* Wang et al. (2023). [The Lifecycle of AI](https://arxiv.org/abs/2304.06425). CHI 2023.
-* Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md)
+* Schaeffer et al. (2023). [Are Emergent Abilities of Large Language Models a Mirage?](https://arxiv.org/abs/2304.15004). NeurIPS 2023 - the counterpoint to the emergent-abilities claim above.
+* Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)

@@ -92,6 +92,20 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Agent Reinforcement Fine-Tuning (Agent RFT)]]></title>
+            <description><![CDATA[Trains model weights with reinforcement learning on real tool calls and custom graders to improve domain-specific tool use and multi-step reasoning]]></description>
+            <link>https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning</guid>
+            <category><![CDATA[Learning & Adaptation]]></category>
+            <category><![CDATA[reinforcement-learning]]></category>
+            <category><![CDATA[fine-tuning]]></category>
+            <category><![CDATA[tool-use]]></category>
+            <category><![CDATA[multi-step-rl]]></category>
+            <category><![CDATA[agent-training]]></category>
+            <category><![CDATA[exploration]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Agent SDK for Programmatic Control]]></title>
             <description><![CDATA[Exposes agent functions through an SDK and CLI so code can run the agent headless with set tools, permissions, and resource limits]]></description>
             <link>https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control</link>
@@ -223,6 +237,21 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[AI-Assisted Code Review / Verification]]></title>
+            <description><![CDATA[Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic]]></description>
+            <link>https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</guid>
+            <category><![CDATA[Feedback Loops]]></category>
+            <category><![CDATA[code-review]]></category>
+            <category><![CDATA[verification]]></category>
+            <category><![CDATA[quality-assurance]]></category>
+            <category><![CDATA[human-ai-collaboration]]></category>
+            <category><![CDATA[trust]]></category>
+            <category><![CDATA[explainability]]></category>
+            <category><![CDATA[software-quality]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Anti-Reward-Hacking Grader Design]]></title>
             <description><![CDATA[Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality.]]></description>
             <link>https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design</link>
@@ -259,34 +288,6 @@
             <category><![CDATA[engineering-tasks]]></category>
             <category><![CDATA[tmux]]></category>
             <category><![CDATA[error-recovery]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Background Agent with CI Feedback]]></title>
-            <description><![CDATA[Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked]]></description>
-            <link>https://agentic-patterns.com/patterns/background-agent-ci</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/background-agent-ci</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[asynchronous]]></category>
-            <category><![CDATA[ci]]></category>
-            <category><![CDATA[feedback]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Board-Mediated Async Inter-Agent Coordination]]></title>
-            <description><![CDATA[Routes agent-to-agent messages through comment threads on board cards, with a prefix that creates an inbox card to notify the target agent]]></description>
-            <link>https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[coordination]]></category>
-            <category><![CDATA[async]]></category>
-            <category><![CDATA[kanban]]></category>
-            <category><![CDATA[board]]></category>
-            <category><![CDATA[message-routing]]></category>
-            <category><![CDATA[inbox]]></category>
-            <category><![CDATA[session-continuity]]></category>
-            <category><![CDATA[audit-trail]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

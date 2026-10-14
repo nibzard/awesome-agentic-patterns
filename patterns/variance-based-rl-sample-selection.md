@@ -1,6 +1,6 @@
 ---
 title: "Variance-Based RL Sample Selection"
-status: validated-in-production
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Theo (OpenAI Solutions Architect)", "Prashant (OpenAI RFT Team)"]
 category: "Learning & Adaptation"
@@ -9,7 +9,7 @@ tags: [reinforcement-learning, sample-efficiency, variance, data-quality, agent-
 summary: "Runs the base model several times per sample and trains RL only on samples with score variance, skipping ones that are always right or always wrong"
 signals: ["Planning reinforcement fine-tuning on a limited budget", "Dataset may contain many samples with no learning signal", "Need to estimate RL improvement potential before training"]
 anti_signals: ["Very small dataset (under about 50 samples) with noisy variance estimates", "No budget for 3-5 baseline runs per sample"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -285,7 +285,7 @@ Track how variance evolves:
 
 - Dataset: 100 validation samples, 1000 training samples
 - Runs per sample: 3
-- Base model: GPT-4o
+- Base model: GPT-5 (GPT-4.1 served as the model grader)
 
 **Results:**
 
@@ -293,22 +293,18 @@ Track how variance evolves:
 Variance Analysis:
   Total samples: 100
   High variance samples: 15 (15%)
-  Always correct: 40 samples
-  Always incorrect: 45 samples
 
 Improvement Potential:
   Current average: 0.59
-  Best-of-3 average: 0.73
-  Potential gain: +0.14 (24% relative improvement)
+  Best-of-3 ceiling: compute from your own runs; the demo did not publish one
 ```
 
 **Interpretation:**
 
 - Only 15% of samples had variance → training will focus learning on those
-- 24% potential improvement if model learns to consistently hit best-of-3 performance
 - Good candidate for RL despite low variance percentage (quality over quantity)
 
-**Training Results:**
+**Training Results (webinar demo, not a production benchmark):**
 
 After 10 steps of agent RFT:
 
@@ -316,12 +312,14 @@ After 10 steps of agent RFT:
 - Tool calls per rollout: 6.9 → 4.2 (-39%)
 - Latency: ~10% reduction
 
-The model improved toward the best-of-3 ceiling while also becoming more efficient.
+The model improved while also becoming more efficient.
 
-**Other Validated Use Cases:**
+**Other demoed use cases from the same webinar:**
 
 - **Ambience Healthcare - ICD-10 Coding**: F1 score 0.52 → 0.57 (+9.6%), 18% latency reduction
-- **Cognition (Devon AI) - File Planning**: 50% reduction in planning tool calls (8-10 → 4)
+- **Cognition (Devin) - File Planning**: planning back-and-forths cut from 8-10 to 4
+
+Note: the production results above validated agent RFT broadly; the variance-selection technique itself was shown in a webinar demo, which is why this pattern carries a lower status than the umbrella [Agent RFT](agent-reinforcement-fine-tuning.md) entry. Distinct from that umbrella entry: this pattern is only the pre-training step of deciding which samples to train on.
 
 ## Trade-offs
 
@@ -344,4 +342,5 @@ The model improved toward the best-of-3 ceiling while also becoming more efficie
 - [OpenAI Build Hour: Agent RFT - Variance Analysis Demo (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Prior RFT Build Hour with Prashant](https://www.youtube.com/openai-build-hours)
 - [Prioritized Experience Replay (Schaul et al., ICLR 2016)](https://arxiv.org/abs/1511.05952) - Foundation paper introducing TD-error-based sample prioritization
+- [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](https://arxiv.org/abs/2503.14476) - names dynamic sampling (resampling to skip prompts whose rollouts all succeed or all fail) among its four key techniques; the research grounding for discarding zero-advantage samples
 - Related patterns: Agent Reinforcement Fine-Tuning, Inference-Time Scaling

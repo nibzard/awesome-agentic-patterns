@@ -4,12 +4,12 @@ status: emerging
 authors: ["Codex (@openai)"]
 based_on: ["Post-incident learning loops in software and ML operations"]
 category: "Feedback Loops"
-source: "https://sre.google/sre-book/postmortem-culture/"
+source: "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
 tags: [evals, incidents, reliability, feedback, continuous-improvement]
 summary: "Converts each production incident into executable eval cases with pass/fail criteria and gates future releases on them"
 signals: ["Production incidents recur after being fixed operationally", "The eval suite drifts away from failures seen in production", "Incident artifacts such as inputs, tool traces, and outputs can be captured"]
 anti_signals: ["No production traffic or incident history exists yet", "Incident data cannot be captured or redacted safely", "The team cannot take on triage overhead for each incident"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -40,14 +40,15 @@ if not suite.run(candidate_policy).pass(case.id):
     block_release(candidate_policy)
 ```
 
+Distinct from [Persistent Test Memory Feedback Loop](persistent-test-memory-feedback-loop.md): that pattern stores test failures as persistent memory the agent itself consults later, while this pattern turns incidents into release-gating eval cases owned by the team.
+
 ## Evidence
 
-- **Evidence Grade:** `medium`
+- **Evidence Grade:** `low`
 - **Most Valuable Findings:**
-  - Academic research shows 60-80% success rates for automated test generation from failure reports
-  - Only 30% of organizations systematically reuse incident data; those that do see fewer repeat incidents
-  - Industry adoption at OpenAI, Anthropic, and Meta validates production-derived evals for ML systems
-- **Unverified / Unclear:** Limited research specifically on AI agent incident-to-eval synthesis; most work focuses on traditional software or model evaluation
+  - Blameless postmortem culture is established practice for capturing incident knowledge, but it stops at written action items rather than executable cases
+  - Vendor evals guidance (Anthropic) describes building executable eval cases with pass/fail grading criteria; deriving those cases from incidents is this pattern's extension of that guidance
+- **Unverified / Unclear:** No public source yet documents incident-derived agent evals end to end. Earlier revisions of this pattern carried adoption and success-rate statistics that had no source; they have been removed.
 
 ## How to use it
 
@@ -63,6 +64,6 @@ if not suite.run(candidate_policy).pass(case.id):
 
 ## References
 
-- https://sre.google/sre-book/postmortem-culture/
-- https://dl.acm.org/doi/10.1145/2635868.2635920 (Thummalapenta et al., FSE 2014: Automatic Generation of Test Cases from Bug Reports)
+- Primary source: [Define success criteria and build evaluations (Anthropic docs)](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) - executable eval cases and grading criteria; the incident-to-case step is the pattern's own extension
+- [Postmortem Culture (Google SRE Book)](https://sre.google/sre-book/postmortem-culture/) - adjacent practice for the incident-capture half of the loop
 - https://martinfowler.com/articles/practical-test-pyramid.html

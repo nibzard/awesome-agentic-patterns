@@ -9,14 +9,14 @@ tags: [research, experimentation, rapid-iteration, learning, dogfooding, shippin
 summary: "Releases reversible, instrumented features to learn whether they work, then doubles down or removes them based on usage data and feedback"
 signals: ["Product sits on a fast-changing frontier such as AI agents", "Users are early adopters who accept experimentation", "Features can be reversed through flags or gradual rollout"]
 anti_signals: ["Safety-critical or regulated applications", "Established market or enterprise users that need stability", "Features with high switching costs"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
 In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.
 
-**Expert intuition is unreliable**: Research across major technology companies shows that 80-90% of product ideas fail to improve key metrics, even when experts are confident they will work (Kohavi et al., 2007). Real-world experimentation beats theoretical analysis.
+**Expert intuition is unreliable**: Controlled-experiment research across major technology companies shows that most product ideas fail to improve key metrics even when experts are confident they will work — roughly two-thirds in Kohavi et al.'s Microsoft survey (2007), with higher figures reported in later Kohavi talks and the 2020 book. Real-world experimentation beats theoretical analysis.
 
 ## Solution
 
@@ -62,18 +62,11 @@ graph TD
 
 **Real example from AMP:**
 
-AMP has ripped out multiple features that users loved:
-- To-dos
-- Forking
-- Tabs
-- Custom commands
-- VS Code extension (forthcoming)
-
-Each removal was greeted positively by users:
+AMP has repeatedly ripped out features users liked (to-dos, forking, tabs, and more), and each removal was greeted positively:
 
 > "People actually really like it when we remove stuff. They were like, 'This is good. Cut the stuff that we've all know doesn't work anymore.'"
 
-Shipping as research means being willing to both add AND remove features rapidly based on what you learn.
+The removal story, including what AMP cut and why, is the core example of [Burn the Boats](burn-the-boats.md), which cites the same episode; read that entry for the feature-killing side. Shipping as research means being willing to both add AND remove features rapidly based on what you learn.
 
 ## How to use it
 
@@ -120,9 +113,7 @@ You can't learn without data:
 
 **5. Kill quickly:**
 
-When something isn't working, remove it:
-
-> "We ripped out four features or something. We ripped out to-dos, we ripped out forking, we ripped out tabs..."
+When something isn't working, remove it (see [Burn the Boats](burn-the-boats.md) for AMP's full removal story from this episode):
 
 > "I was like oh people won't care about this... and yet another removal, but we did and people actually really like it when we remove stuff."
 
@@ -178,6 +169,7 @@ If you wait to see what happens before acting, you'll miss the window. The front
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-007-0061-3) - Kohavi, Henne, Sommerfield (2007)
-* Related: [Burn the Boats](burn-the-boats.md), [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)
+* [Raising an Agent - Episode 10 (February 2026)](https://www.youtube.com/watch?v=4rx36wc9ugw) - Amp, Inc.; also at [ampcode.com/podcast/episode-10](https://ampcode.com/podcast/episode-10)
+* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-008-0114-1) - Kohavi, Longbotham, Sommerfield, Henne (Data Mining and Knowledge Discovery, 2007) - reports roughly two-thirds of ideas failing at Microsoft, not the 80-90% figure sometimes quoted from later Kohavi talks
+* Distinct from [Burn the Boats](burn-the-boats.md) (removing working features on a deadline) and [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md) (treating surrounding code as temporary): this pattern is the ship-to-learn stance that motivates both.
+* Related: [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)

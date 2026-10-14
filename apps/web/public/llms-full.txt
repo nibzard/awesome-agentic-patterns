@@ -945,6 +945,10 @@ Traditional fine-tuning approaches don't work well because they can't train the 
 3. **Learn multi-step reasoning**: The agent learns to reason across tool outputs in the context window
 4. **Optimize for your metrics**: Reduce tool calls, improve accuracy, or balance both based on your reward function
 
+> Provider status (October 2026): OpenAI is winding down its fine-tuning platform; it is "no longer accessible to new users," and current RFT docs support o-series reasoning models only (o4-mini), with graders scoring tool-call contents in the training data rather than calling live endpoints during rollouts. Treat the OpenAI flow below as the demoed path from the Build Hour, now deprecated/limited, and use provider-agnostic frameworks such as [TRL](https://github.com/huggingface/trl) (GRPO/DPO trainers) or [verl](https://github.com/volcengine/verl) (PPO/GRPO/DAPO with tool rollout support) for new work.
+
+This is the umbrella pattern for the loop; see the distinct-from note under References for how the four sibling patterns mined from the same video split it.
+
 **Key Components:**
 
 - **Tool Endpoints**: Host your tools (same as production) that the model calls during training
@@ -959,7 +963,7 @@ Traditional fine-tuning approaches don't work well because they can't train the 
 - **Multi-dimensional evaluation**: Consider correctness, format compliance, efficiency, and safety
 
 ```python
-# Agent RFT Training Setup
+# Agent RFT Training Setup (OpenAI demo path; see provider status note above)
 from openai import OpenAI
 
 client = OpenAI()
@@ -1044,7 +1048,7 @@ job = client.fine_tuning.jobs.create(
 **What Agent RFT Optimizes:**
 
 - **ML Performance**: Better final answer quality through improved reasoning and tool use
-- **Latency**: Fewer tool calls and reasoning tokens (e.g., 50% reduction common)
+- **Latency**: Fewer tool calls and reasoning tokens (in the Build Hour demo: tool calls per rollout fell from 6.9 to 4.2 and latency dropped roughly 10%)
 - **Sample Efficiency**: Can achieve strong results with as few as 100 quality samples
 
 **Tool Call Optimization Patterns:**
@@ -1075,13 +1079,13 @@ graph TD
 
 ## Real-World Examples
 
-**Cognition (Devon AI)**
+**Cognition (Devin)**
 
 - Task: File planning agent to identify which files to edit
 - Tools: `read_file`, `shell` (grep, find)
 - Results:
-  
-- Reduced planning time by 50% (8-10 tool calls → 4 tool calls)
+
+- Cut planning back-and-forths from 8-10 to 4
   - Learned to parallelize tool calls automatically
   - Improved F1 score on file identification
 
@@ -1135,12 +1139,16 @@ graph TD
 
 ## References
 
-- [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U)
-- [OpenAI Fine-tuning Guide](https://platform.openai.com/docs/guides/fine-tuning)
+- [OpenAI Build Hour: Agent RFT (November 2025)](https://youtu.be/1s_7RMG4O4U) - presented by Theophile Sautory and William Hang
+- [OpenAI fine-tuning guide](https://developers.openai.com/api/docs/guides/fine-tuning) - documents the platform wind-down ("no longer accessible to new users")
+- [OpenAI reinforcement fine-tuning docs](https://developers.openai.com/api/docs/guides/reinforcement-fine-tuning) - grader design, o4-mini-only support, tool-call grading in data
+- [TRL (Transformers Reinforcement Learning)](https://github.com/huggingface/trl) - open-source SFT/GRPO/DPO trainers
+- [verl](https://github.com/volcengine/verl) - open-source RL post-training framework with multi-turn tool rollout support
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) (Yao et al., ICLR 2023)
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., NeurIPS 2023)
 - [DeepSeekMath: GRPO for Mathematical Reasoning](https://arxiv.org/abs/2402.03300) (Shao et al., 2024)
-- Related patterns: RLAIF, Tool Use Incentivization via Reward Shaping, Inference-Healed Code Review Reward, Memory Reinforcement Learning
+
+Distinct from the four sibling patterns mined from the same video: [Tool Use Incentivization via Reward Shaping](tool-use-incentivization-via-reward-shaping.md) (dense per-tool rewards), [Parallel Tool Call Learning](parallel-tool-call-learning.md) (batching rewards), [Variance-Based RL Sample Selection](variance-based-rl-sample-selection.md) (choosing which samples to train on), and [Isolated VM per RL Rollout](isolated-vm-per-rl-rollout.md) (rollout infrastructure) each isolate one design decision of this loop.
 
 ---
 
@@ -1957,7 +1965,7 @@ This creates an environment where developers, particularly those less experience
 
 ## AI-Assisted Code Review / Verification
 
-**Status:** emerging
+**Status:** established
 **Category:** Feedback Loops
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://www.youtube.com/watch?v=BGgsoIgbT_Y
@@ -1974,8 +1982,11 @@ Develop and employ AI-powered tools and processes specifically designed to assis
 -   Tools that help summarize the intent or impact of code changes, making it easier for human reviewers to understand.
 -   Interactive systems where reviewers can ask the AI to explain parts of the code or justify certain decisions made during generation.
 -   Mechanisms to ensure the AI's output aligns with the user's "mind's eye" or high-level intent, even if the initial specification was ambiguous.
--   Multi-agent approaches where one agent generates code while another critiques and verifies it, iterating until convergence.
 -   Three-layer workflows stratifying tasks by complexity: AI-only for style/documentation, AI-human collaboration for logic/security, and human-only for architectural decisions.
+
+The multi-agent variant (one agent generates while another critiques and verifies) is covered in depth by the [CriticGPT-Style Code Review](criticgpt-style-evaluation.md) pattern, and reviewing abstracted representations of changes instead of raw diffs is covered by [Abstracted Code Representation for Review](abstracted-code-representation-for-review.md).
+
+This is no longer only an emerging idea: commercial AI reviewers such as [Cursor Bugbot](https://cursor.com/bugbot) and GitHub Copilot code review run as paid pre-merge checks for thousands of teams.
 
 The goal is to make the code review process more efficient and reliable, building confidence in the (AI-assisted) codebase.
 
@@ -1998,7 +2009,7 @@ The goal is to make the code review process more efficient and reliable, buildin
 
 - "Evaluating Large Language Models for Code Review" (arXiv 2505.20206, May 2025): GPT-4o achieved 68.50% classification accuracy with problem descriptions; performance declines significantly without context
 
-- "Automated Code Review In Practice" (arXiv 2412.18531, December 2024): Industry case study examining LLM-based automated code review tools including Qodo, GitHub Copilot, and Coderabbit
+- "Automated Code Review In Practice" (arXiv 2412.18531, December 2024, ICSE 2025 SEIP): Industry case study of one internal tool built on Qodo's PR-Agent; median PR closure time rose from 5h52m to 8h20m after rollout. GitHub Copilot and CodeRabbit appear only as examples of the tool category, not as studied deployments.
 
 ---
 
@@ -2709,7 +2720,7 @@ class WorkflowAgent:
 **Status:** validated-in-production
 **Category:** Feedback Loops
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://ampcode.com/manual#background
+**Source:** https://ampcode.com/docs/orbs
 
 ## Problem
 
@@ -2719,7 +2730,7 @@ Long-running refactors and flaky-fix cycles force developers into synchronous su
 
 Run the agent asynchronously in the background with CI as the objective feedback channel. The agent pushes a branch, waits for CI results, patches failures, and repeats until policy-defined stopping conditions are met. Users are only pulled back in for approvals, ambiguous failures, or final review.
 
-Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands.
+Production implementations include GitHub Agentic Workflows, Cursor Background Agent, and OpenHands. On the Amp side this shows up as Orbs: cloud machines per thread that keep working after you disconnect ([Amp Orbs docs](https://ampcode.com/docs/orbs)). This pattern is about running the whole retry loop unattended in the background, not about designing the agent and repo so CI output is usable feedback.
 
 Key mechanics:
 - Branch-per-task isolation (often via cloud-based execution or git worktrees).
@@ -2758,11 +2769,12 @@ sequenceDiagram
 
 ## References
 
-* Raising An Agent - Episode 6: Background agents use existing CI as the feedback loop.
-* GitHub Agentic Workflows (2026) - Agents run within GitHub Actions with safety controls.
-* OpenHands - Open-source platform achieving 72% on SWE-bench Verified.
+* [Raising An Agent - Episode 6 (May 2025)](https://ampcode.com/podcast/episode-6) - Background agents use existing CI as the feedback loop.
+* [GitHub Agentic Workflows public preview (June 2026)](https://github.blog/changelog/2026-06-11-github-agentic-workflows-is-now-in-public-preview) - Agents run within GitHub Actions with safety controls, automating tasks such as issue triage and CI failure analysis. Technical preview announced [February 2026](https://github.blog/changelog/2026-02-13-github-agentic-workflows-are-now-in-technical-preview).
+* [Amp Orbs](https://ampcode.com/docs/orbs) - Background execution model: one cloud machine per thread that keeps working after you disconnect.
+* OpenHands - Open-source agent platform with background/cloud execution support.
 
-[Source](https://ampcode.com/manual#background)
+[Source](https://ampcode.com/docs/orbs)
 
 ---
 
@@ -4487,12 +4499,14 @@ This separates "the agent predicted this would help" from "reality confirmed it 
 
 ## Evidence
 
-- **Evidence Grade:** `medium`
+- **Evidence Grade:** `low`
+- **Sourcing caveat:** the only implementation so far is the pattern author's own repository, whose implementing engine is closed-source ("the engine source is private" per its README), so the mechanism is self-reported and unverifiable, and this file is author-self-sourced.
 - **Most Valuable Findings:**
   - Reflexion shows that explicit episodic feedback can improve repeated task performance without model weight updates.
   - SWE-bench-style evaluation demonstrates the value of real repository tests as settlement signals for coding agents.
   - SRE postmortem practice supports converting real outcomes into durable learning artifacts rather than relying on unaudited recollection.
-- **Unverified / Unclear:** How to assign fractional credit across many retrieved memories remains implementation-specific.
+  - Independent of that implementation, outcome-driven utility updates on memory are an active technique: MemRL updates per-memory utility scores from task outcomes with the LLM frozen ([arXiv 2601.03192](https://arxiv.org/abs/2601.03192)).
+- **Unverified / Unclear:** How to assign fractional credit across many retrieved memories remains implementation-specific; the reference implementation has no counterfactual harness yet.
 
 ## How to use it
 
@@ -4530,8 +4544,9 @@ Common applications:
 
 ## References
 
-- AccInt uses this pattern as an implementation example: https://github.com/maxbaluev/accreted-intelligence
+- AccInt uses this pattern as an implementation example: https://github.com/maxbaluev/accreted-intelligence (closed-source engine; self-reported results)
 - Reflexion: Language Agents with Verbal Reinforcement Learning: https://arxiv.org/abs/2303.11366
+- MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory: https://arxiv.org/abs/2601.03192 - independent evidence that outcome-driven memory utility updates are an active technique. Distinct from [Memory Reinforcement Learning (MemRL)](memory-reinforcement-learning-memrl.md), which learns utility scores inside one memory system: this pattern's contribution is the commitment ledger and provenance tiers that gate when credit may be applied.
 - SWE-bench: Can Language Models Resolve Real-World GitHub Issues?: https://arxiv.org/abs/2310.06770
 - Google SRE Book, Postmortem Culture: https://sre.google/sre-book/postmortem-culture/
 
@@ -4566,7 +4581,7 @@ Then embed these insights into:
 - **Subagents**: Specialized validators (e.g., security review agent)
 - **Hooks**: Automated checks that prevent regressions
 
-**Result**: Each feature makes the next easier because the codebase becomes increasingly "self-teaching."
+**Result**: Each feature makes the next easier because the codebase becomes increasingly "self-teaching." Distinct from [Iterative Prompt & Skill Refinement](iterative-prompt-skill-refinement.md), which is the organizational loop of monitoring and editing prompts/skills between runs, and from [Skill Library Evolution](skill-library-evolution.md), which accumulates executable skills: this pattern is the broader engineering habit of codifying every feature's learnings back into agent instructions.
 
 ```mermaid
 graph LR
@@ -4622,11 +4637,21 @@ This allows non-experts to be productive immediately:
 - **Requires tooling**: Needs extensible agent system (slash commands, hooks, etc.)
 - **Prompt bloat**: System prompts can grow large over time
 
+**When compounding stops and reverses:**
+
+- Rules accumulate faster than they are pruned, and context-window cost per session grows with the instruction file; Anthropic's guidance reports that bloated instruction files cause agents to ignore the instructions that matter.
+- A rule only earns its place if removing it would change agent behavior for the worse; delete everything else.
+- If the agent keeps violating a rule that exists, the file has likely grown past the point where any single rule is still salient — cut it back instead of adding emphasis everywhere.
+- Prefer converting recurring violations into hooks or tests (deterministic checks) rather than more prose.
+
 ## References
 
 * Dan Shipper: "In normal engineering, every feature you add, it makes it harder to add the next feature. In compounding engineering, your goal is to make the next feature easier to build from the feature that you just added."
 * Dan Shipper: "We codify all the learnings... how did we make the plan, what parts needed to be changed, when we started testing it what issues did we find, what are the things that we missed, and then we codify them back into all the prompts and all the subagents and all the slash commands."
-* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it) (October 2025)
+* [Best practices for Claude Code](https://code.claude.com/docs/en/best-practices) - independent guidance on iterating and pruning CLAUDE.md, and moving one-off knowledge into skills
+* [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) - the skills mechanism this pattern accumulates into
+* [AGENTS.md](https://agents.md) - the cross-tool open format for the project-level instruction file
 * [Compounding Engineering Pattern Research Report](/research/compounding-engineering-pattern-report.md)
 
 ---
@@ -9674,8 +9699,10 @@ AI capabilities advance rapidly along predictable scaling laws—products optimi
 
 1. **No model selector**: Pick the best model for each use case, don't let users choose
 2. **Frontier or nothing**: Only build features that push boundaries and generate learning
-3. **Rapid evolution**: Expect to completely change your product every 3 months (AI product lifecycle research confirms quarterly cycles are necessary to remain competitive)
+3. **Rapid evolution**: Expect to completely change your product every few months as frontier capability shifts
 4. **Subscription resistance**: Avoid being tied to one model's pricing structure
+
+Distinct from [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md) (marking surrounding code as temporary) and [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md) (auditing and removing scaffolding per model upgrade): this pattern is the product-level strategy of targeting only frontier models.
 
 ```mermaid
 graph TD
@@ -9699,7 +9726,7 @@ graph TD
 
 **The problem with optimizing for cost:**
 
-Emergent abilities research shows some capabilities appear suddenly at scale and cannot be predicted or engineered around in smaller models. Cost optimization against today's models solves problems that frontier models will soon solve inherently.
+Emergent-abilities research argues some capabilities appear suddenly at scale and cannot be engineered around in smaller models — though that literature is contested: Schaeffer et al. (2023) show apparent emergence can be an artifact of the chosen metric ([arXiv 2304.15004](https://arxiv.org/abs/2304.15004)). Either way, cost optimization against today's models solves problems that frontier models will soon solve inherently.
 
 > "If you do this right now and you try to make non-frontier models work and optimize for cost, what you're doing is you're building something that will be outdated in half a year... and you're building it for people who by the very definition do not want to pay a lot."
 
@@ -9728,7 +9755,7 @@ frontier_test:
 
 **Why no model selector?**
 
-1. **Learning**: Can't learn how users interact if everyone uses different models (research shows focused single-model products learn faster)
+1. **Learning**: The AMP team's argument is that you can't learn how users interact if everyone uses different models
 2. **Focus**: One way to use the product means everyone benefits from improvements
 3. **Evolution**: Not beholden to models that were popular 3-6 months ago
 4. **Quality**: Can optimize specifically for the best model's capabilities
@@ -9770,7 +9797,7 @@ When you offer a subscription (like Claude Max), you become tied to that model:
 - Products where AI capability is the core differentiator
 - Users who want to be on the cutting edge
 
-**Production implementations**: AMP (Anthropic), Claude Code, Cursor, v0.dev, Perplexity—all use opinionated frontier model choices without user-facing selectors.
+**Production implementations**: AMP (built by Thorsten Ball and Quinn Slack's team at [ampcode.com](https://ampcode.com), not Anthropic), Claude Code, Cursor, v0.dev, and Perplexity all make opinionated frontier model choices. Not all of them hide model choice, though: Cursor ships a model picker and Claude Code has a `/model` command; v0.dev and Perplexity are the ones that give users no selector. By 2026 even Amp ships multi-vendor, cost-tiered model dials in its settings, so "no selector" is a default posture rather than an absolute.
 
 **When to consider alternatives:**
 
@@ -9787,11 +9814,12 @@ When everything is in flux—the models, the software, how we write it—optimiz
 
 ## References
 
-* [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2025)
+* [Raising an Agent - Episode 9 (January 2026)](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack); also at [ampcode.com/podcast/episode-9](https://ampcode.com/podcast/episode-9)
+* [Amp](https://ampcode.com) - "built for the frontier" coding agent from Sourcegraph; multi-model dial settings
 * Kaplan et al. (2020). [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). NeurIPS 2020.
 * Wei et al. (2022). [Emergent Abilities of Large Language Models](https://arxiv.org/abs/2206.07682). TMLR 2022.
-* Wang et al. (2023). [The Lifecycle of AI](https://arxiv.org/abs/2304.06425). CHI 2023.
-* Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md)
+* Schaeffer et al. (2023). [Are Emergent Abilities of Large Language Models a Mirage?](https://arxiv.org/abs/2304.15004). NeurIPS 2023 - the counterpoint to the emergent-abilities claim above.
+* Related: [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Agent Modes by Model Personality](agent-modes-by-model-personality.md), [Progressive Autonomy with Model Evolution](progressive-autonomy-with-model-evolution.md)
 
 ---
 
@@ -9827,23 +9855,30 @@ This enables operations like:
 ## Example
 
 ```python
+import networkx as nx
+
 class GraphOfThoughts:
     def __init__(self, llm, max_thoughts=50):
         self.llm = llm
         self.max_thoughts = max_thoughts
         self.thought_graph = nx.DiGraph()
         self.thought_scores = {}
-        
+
     def solve(self, problem):
         # Initialize with root thought
         root = self.generate_initial_thought(problem)
         self.add_thought(root, score=1.0)
-        
+
         # Iteratively expand the graph
         while len(self.thought_graph) < self.max_thoughts:
             # Select promising thoughts to expand
             thoughts_to_expand = self.select_thoughts_for_expansion()
-            
+
+            # Score each candidate before expansion so selection is driven
+            # by evaluate_thought rather than insertion order
+            for thought in thoughts_to_expand:
+                self.thought_scores[thought] = self.evaluate_thought(thought, problem)
+
             for thought in thoughts_to_expand:
                 # Generate new thoughts through different operations
                 self.branch_thought(thought, problem)
@@ -9989,7 +10024,7 @@ graph TD
 - More expressive than linear or tree-based approaches
 
 **Cons:**
-- Significantly higher computational cost (5-20x vs. linear reasoning)
+- Higher computational cost than a single reasoning path; how much higher depends on graph size and branching, not a fixed multiplier
 - Complex to implement and debug
 - May generate many redundant thoughts
 - Requires sophisticated scoring and path-finding algorithms
@@ -9997,7 +10032,9 @@ graph TD
 
 ## How to use it
 
-Use for complex problems where multiple solution approaches need to be merged or where early decisions may need revision based on later insights. LangGraph provides native support for GoT-like workflows with cycles and backtracking.
+Use for complex problems where multiple solution approaches need to be merged or where early decisions may need revision based on later insights.
+
+Currency note (2026): native reasoning models now internalize much of the single-model test-time structuring that GoT was designed to prompt for by hand, so hand-rolled GoT prompting pays off mainly on open or smaller models. The pattern's live relevance is at the agent level: graph-based orchestration with cycles and backtracking, as in [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview).
 
 Use simpler approaches (CoT, ToT) for:
 - Straightforward problems with single viable solution paths
@@ -10006,7 +10043,8 @@ Use simpler approaches (CoT, ToT) for:
 
 ## References
 
-- [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687) - Besta et al., ETH Zurich
+- [Graph of Thoughts: Solving Elaborate Problems with Large Language Models (AAAI 2024)](https://arxiv.org/abs/2308.09687) - Besta et al., ETH Zurich. On the paper's sorting task, GoT improved quality over Tree-of-Thoughts by 62% while lowering cost by over 31%; the paper does not claim a fixed compute multiplier over linear reasoning.
+- [Tree of Thoughts: Deliberate Problem Solving with Large Language Models](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023 - the tree-search special case GoT extends with merge operations
 - [Code Implementation](https://github.com/spcl/graph-of-thoughts)
 - [LangGraph - Graph-based Agent Workflows](https://www.langchain.com/langgraph)
 
@@ -10425,7 +10463,7 @@ def handler(trigger, tools, virtual_files, subagent):
 **Status:** emerging
 **Category:** Feedback Loops
 **Authors:** Codex (@openai)
-**Source:** https://sre.google/sre-book/postmortem-culture/
+**Source:** https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 ## Problem
 
@@ -10455,14 +10493,15 @@ if not suite.run(candidate_policy).pass(case.id):
     block_release(candidate_policy)
 ```
 
+Distinct from [Persistent Test Memory Feedback Loop](persistent-test-memory-feedback-loop.md): that pattern stores test failures as persistent memory the agent itself consults later, while this pattern turns incidents into release-gating eval cases owned by the team.
+
 ## Evidence
 
-- **Evidence Grade:** `medium`
+- **Evidence Grade:** `low`
 - **Most Valuable Findings:**
-  - Academic research shows 60-80% success rates for automated test generation from failure reports
-  - Only 30% of organizations systematically reuse incident data; those that do see fewer repeat incidents
-  - Industry adoption at OpenAI, Anthropic, and Meta validates production-derived evals for ML systems
-- **Unverified / Unclear:** Limited research specifically on AI agent incident-to-eval synthesis; most work focuses on traditional software or model evaluation
+  - Blameless postmortem culture is established practice for capturing incident knowledge, but it stops at written action items rather than executable cases
+  - Vendor evals guidance (Anthropic) describes building executable eval cases with pass/fail grading criteria; deriving those cases from incidents is this pattern's extension of that guidance
+- **Unverified / Unclear:** No public source yet documents incident-derived agent evals end to end. Earlier revisions of this pattern carried adoption and success-rate statistics that had no source; they have been removed.
 
 ## How to use it
 
@@ -10478,8 +10517,8 @@ if not suite.run(candidate_policy).pass(case.id):
 
 ## References
 
-- https://sre.google/sre-book/postmortem-culture/
-- https://dl.acm.org/doi/10.1145/2635868.2635920 (Thummalapenta et al., FSE 2014: Automatic Generation of Test Cases from Bug Reports)
+- Primary source: [Define success criteria and build evaluations (Anthropic docs)](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) - executable eval cases and grading criteria; the incident-to-case step is the pattern's own extension
+- [Postmortem Culture (Google SRE Book)](https://sre.google/sre-book/postmortem-culture/) - adjacent practice for the incident-capture half of the loop
 - https://martinfowler.com/articles/practical-test-pyramid.html
 
 ---
@@ -10501,6 +10540,10 @@ Simple reward functions that only check for "all tests passed" fail to capture n
 ## Solution
 
 Use an **inference-healed reward model**—a code-review critic that:
+
+> Naming note: "inference healing" is this catalogue's coinage. The source talk's auto-captions render the phrase as "inference feeling," and the concept actually discussed is inference-time scaling for reward models that reason over sub-criteria rubrics. In the literature this family is called generative or rubric-based reward models.
+
+The concrete instantiation below (linter/benchmark/security sub-scores with these weights and a 1-2B critic) is an extrapolation for code review, not something the cited work describes.
 
 **1. Decomposes Code Quality into Subcriteria**
 - **Correctness:** Does the code pass all existing and newly added tests?
@@ -10567,12 +10610,12 @@ return final_score, subscores, comments
 
 ## References
 
-- Derived from "inference healing" in reward modeling, as discussed in the Open Source Agent RL talk (May 2025) and by Will Brown (Prime Intellect).
-- Similar principles in "Criterion-Led Reward Models" (DeepMind blog, April 2025).
-- Related academic work: "CodeRL: Mastering Code Generation through Pretrained Models and Deep Reinforcement Learning" (NeurIPS 2022) introduces critic-based reward signals for code generation.
-- Industry validation: Multi-criteria code review deployed at scale by Microsoft (600K+ PRs/month), Tencent (325M lines/month), and Tekion (60% faster time to merge).
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw (Will Brown, Prime Intellect, "Open Questions in Agentic RL") - reward models as reasoners that break tasks into numerically scored sub-criteria rubrics; credits a recent DeepSeek paper.
+- [Inference-Time Scaling for Generalist Reward Modeling](https://arxiv.org/abs/2504.02495) (DeepSeek-GRM, 2025) - the rubric-based generalist reward model line the talk credits.
+- [Generative Verifiers: Reward Modeling as Next-Token Prediction](https://arxiv.org/abs/2408.15240) (DeepMind, ICLR 2025) - verifiers that generate reasoning before scoring.
+- "CodeRL: Mastering Code Generation through Pretrained Models and Deep Reinforcement Learning" ([arXiv 2207.01780](https://arxiv.org/abs/2207.01780), NeurIPS 2022) - critic-based reward signals for code generation.
 
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
+Distinct from [Anti-Reward-Hacking Grader Design](anti-reward-hacking-grader-design.md), which is about making graders hard to game, and from [CriticGPT-Style Code Review](criticgpt-style-evaluation.md), which trains a critique model for human-facing review rather than for an RL reward signal.
 
 ---
 
@@ -11697,7 +11740,7 @@ flowchart TD
 
 ## Iterative Prompt & Skill Refinement
 
-**Status:** established
+**Status:** emerging
 **Category:** Feedback Loops
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://lethain.com/agents-iterative-refinement/
@@ -11713,18 +11756,18 @@ Implement **multiple complementary refinement mechanisms** that work together. N
 **Four key mechanisms:**
 
 **1. Responsive Feedback (Primary)**
-- Monitor internal `#ai` channel for issues
+- Monitor a dedicated internal channel for agent issues
 - Skim workflow interactions daily
 - This is the most valuable ongoing source of improvement
 
 **2. Owner-Led Refinement (Secondary)**
-- Store prompts in editable documents (Notion, Google Docs)
+- Store prompts in editable documents (the source used Notion; any shared doc system works)
 - Most prompts editable by anyone at the company
-- Include prompt links in workflow outputs (Slack messages, Jira comments)
+- Include prompt links in workflow outputs (chat messages, ticket comments)
 - Prompts must be discoverable + editable
 
 **3. Claude-Enhanced Refinement (Specialized)**
-- Use Datadog MCP to pull logs into skill repository
+- Pull run logs into the skill repository through an observability integration (the source used Datadog via MCP)
 - Skills are a "platform" used by many workflows
 - Often maintained by central AI team, not individual owners
 
@@ -11816,10 +11859,12 @@ Include subjective eval after each run:
 
 ## References
 
-* [Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (Imprint, 2026)
+* [Building an internal agent: Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (January 2026; the article names no employer)
+* [Best practices for Claude Code](https://code.claude.com/docs/en/best-practices) - independent, vendor-side guidance on iterating CLAUDE.md and skills over time and pruning what stops earning its place
 * [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al. (arXiv, 2022)
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (NeurIPS, 2023)
-* Related: Dogfooding with Rapid Iteration, Compounding Engineering, Memory Synthesis from Execution Logs
+
+Distinct from [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md) (improving agents by building with them) and from [Rich Feedback Loops](rich-feedback-loops.md) (machine-readable tool feedback within one session): this pattern is the organizational loop around prompts and skills between runs.
 
 ---
 
@@ -12783,7 +12828,7 @@ The technique is production-scale in its docs-serving form: Context7 (Upstash) s
 **Status:** proposed
 **Category:** Learning & Adaptation
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://arxiv.org/html/2601.03192v1
+**Source:** https://arxiv.org/abs/2601.03192
 
 ## Problem
 
@@ -12901,10 +12946,11 @@ graph LR
 
 ## References
 
-* [Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](https://arxiv.org/html/2601.03192v1) - Shengtao Zhang, Jiaqian Wang, et al. (2025)
+* [MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](https://arxiv.org/abs/2601.03192) - Shengtao Zhang, Jiaqian Wang, et al. (v1 January 2026; [v2](https://arxiv.org/abs/2601.03192v2) February 2026 is the current revision)
 * [Neural Episodic Control](https://arxiv.org/abs/1703.01988) - Pritzel et al. (2017) - Foundation for episodic memory in RL
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (2023) - Demonstrates episodic memory value (91% vs 80% on HumanEval)
-* Related patterns: Episodic Memory Retrieval & Injection (extends), Memory Synthesis from Execution Logs (complements), Agent Reinforcement Fine-Tuning (alternative to)
+
+Distinct from [Episodic Memory Retrieval & Injection](episodic-memory-retrieval-injection.md), which retrieves past episodes by similarity alone: MemRL adds learned utility scores that reorder what gets retrieved, with the LLM frozen. Related patterns: Memory Synthesis from Execution Logs (complements), Agent Reinforcement Fine-Tuning (alternative to).
 
 ---
 
@@ -16853,7 +16899,7 @@ for attempt in range(max_iters):
 
 ## How to use it
 
-Use this when quality must meet explicit criteria in writing, reasoning, or code generation. Keep loop budgets small (2-3 iterations are typically optimal; beyond 3 shows diminishing returns), and log score deltas to verify that extra iterations are producing measurable gains.
+Use this when quality must meet explicit criteria in writing, reasoning, or code generation. Keep loop budgets small; there is no universally established optimum, so log score deltas per iteration and stop when the deltas flatten rather than assuming a fixed iteration count. Note that 2025-2026 reasoning models already internalize a form of self-checking in their thinking, so hand-rolled reflection scaffolds pay off mostly with non-reasoning models or when the rubric is domain-specific.
 
 ## Trade-offs
 
@@ -16862,8 +16908,8 @@ Use this when quality must meet explicit criteria in writing, reasoning, or code
 
 ## References
 
-* [Self-Refine: Improving Reasoning in Language Models via Iterative Feedback](https://arxiv.org/abs/2303.11366)
-* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://neurips.cc/) (NeurIPS 2023) - adds episodic memory for persistent learning across trials
+* [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) - Madaan et al., 2023
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., NeurIPS 2023 - adds episodic memory for persistent learning across trials
 
 ---
 
@@ -17089,18 +17135,11 @@ The agent uses diagnostics to plan the next step, leading to emergent self-debug
 
 **Tool design matters:** Structured outputs (JSON, exit codes, error objects) are more effective than natural language for agent self-correction.
 
-**Evidence from 88 session analysis:**
-
-| Project | Positive | Corrections | Success Rate |
-|---------|----------|-------------|--------------|
-| nibzard-web | 8 | 2 | High (80%) |
-| 2025-intro-swe | 1 | 0 | High (100%) |
-| awesome-agentic-patterns | 1 | 5 | Low (17%) |
-| skills-marketplace | 0 | 2 | Low (0%) |
-
-**Key insight**: Projects with more positive feedback had better outcomes. Reinforcement works—it's training data that teaches the agent what *to* do, whereas corrections only teach what *not* to do.
+**Observed correlation (small sample):** in the author's own review of roughly 88 sessions across four personal projects, the projects with more positive feedback events (0-8 per project) ended with better outcomes than the correction-heavy ones. Treat this as a correlation in a tiny, non-random sample, not as evidence that reinforcement *causes* better outcomes. The earlier per-project table and its source analysis are no longer online and have been removed.
 
 Modern models like Claude Sonnet 4.5 are increasingly proactive in creating their own feedback loops by writing and executing short scripts and tests, even for seemingly simple verification tasks (e.g., using HTML inspection to verify React app behavior).
+
+Distinct from [Output Verification Loop](output-verification-loop.md), which verifies final output against criteria: this pattern is about rich feedback from every tool call plus human reactions within the session.
 
 ## Example
 
@@ -17127,11 +17166,10 @@ sequenceDiagram
 
 ## References
 
-* [SKILLS-AGENTIC-LESSONS.md](https://github.com/nibzard/SKILLS-AGENTIC-LESSONS) - Analysis showing positive feedback correlation with better session outcomes (nibzard-web: 8 positive, 2 corrections vs. awesome-agentic-patterns: 1 positive, 5 corrections)
-* Raising An Agent - Episode 1 & 3 discussions on "give it errors, not bigger prompts."
-* [Cognition AI: Devin & Claude Sonnet 4.5](https://cognition.ai/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops
+* [Raising An Agent - Episode 1 (March 2025)](https://ampcode.com/podcast/episode-1) and [Episode 3 (March 2025)](https://ampcode.com/podcast/episode-3) - discussions on "give it errors, not bigger prompts."
+* [Cognition: Rebuilding Devin for Claude Sonnet 4.5](https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges) - observes proactive testing behavior and custom script creation for feedback loops
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) (Shinn et al., 2023) - agents learn from past failures through self-reflection and memory
-* [Self-Refine: LLMs Can Self-Correct Through Self-Feedback](https://arxiv.org/abs/2303.08972) (Madaan et al., 2023) - iterative refinement with self-generated critique
+* [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) (Madaan et al., 2023) - iterative refinement with self-generated critique
 
 [Source](https://www.nibzard.com/ampcode)
 
@@ -18005,14 +18043,9 @@ Train a **self-taught evaluator** that bootstraps from synthetic data:
 4. Use the judge as a reward model or quality gate for the main agent.
 5. Periodically refresh with new synthetic debates to stay ahead of model drift.
 
-**Dual-model variant** (RLAIF): Use a separate critic model to evaluate the generator, reducing bias at higher cost.
+**Dual-model variant:** using a separate critic model to evaluate the generator (reducing bias at higher cost) is the [RLAIF](rlaif-reinforcement-learning-from-ai-feedback.md) pattern; see that entry rather than restating it here.
 
 To prevent evaluator collapse, keep evaluation prompts and generation prompts partially decoupled, inject adversarial counterexamples, and benchmark against a small human-labeled anchor set.
-
-## Pros & Cons
-
-- **Pros:** near-human eval accuracy without labels; scales with compute; ~100x cost reduction vs human labels (RLAIF).
-- **Cons:** risk of evaluator-model collusion; needs adversarial tests and human anchors.
 
 ## How to use it
 
@@ -18024,25 +18057,25 @@ To prevent evaluator collapse, keep evaluation prompts and generation prompts pa
 
 ## Trade-offs
 
-* **Pros:** Scales evaluation coverage quickly and reduces dependence on expensive human labeling.
-* **Cons:** Can overfit to synthetic preferences and needs careful anti-collusion safeguards.
+* **Pros:** Scales evaluation coverage quickly and reduces dependence on expensive human labeling; trains the judge from synthetic comparisons only.
+* **Cons:** Can overfit to synthetic preferences and needs careful anti-collusion safeguards; risk of evaluator-model collusion.
 
 ## References
 
-- Wang et al., *Self-Taught Evaluators* (2024)
+- [Self-Taught Evaluators](https://arxiv.org/abs/2408.02666) - Wang et al., 2024 (primary source)
 
-- Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning* (2023)
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
 
-- Bai et al., *Constitutional AI: Harmlessness from AI Feedback* (2022)
+- [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al., 2022
 
-- Primary source: https://arxiv.org/abs/2408.02666
+Distinct from [RLAIF](rlaif-reinforcement-learning-from-ai-feedback.md): RLAIF uses AI feedback as the training signal for the generator; this pattern trains the judge itself on its own synthetic comparisons.
 
 ---
 
 ## Self-Discover: LLM Self-Composed Reasoning Structures
 
 **Status:** emerging
-**Category:** Feedback Loops
+**Category:** Learning & Adaptation
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://arxiv.org/abs/2402.03620
 
@@ -18172,9 +18205,11 @@ flowchart TD
 
 **Cons:**
 - Computational overhead: approximately 2-3x the cost of single-pass Chain-of-Thought due to multiple LLM calls
-- Requires a diverse set of reasoning modules (typically 20-30 for good coverage)
+- Requires a diverse module library (the paper uses 39 reasoning modules adopted from Fernando et al. 2023, Promptbreeder)
 - May over-engineer simple problems
 - Structure quality depends on task analysis accuracy
+
+Currency note (2026): frontier reasoning models with test-time compute now supply adaptive multi-step reasoning out of the box, so this pattern is mainly worth the overhead on open or smaller models, or when you need an explicit, inspectable reasoning structure.
 
 ## How to use it
 
@@ -18185,7 +18220,8 @@ flowchart TD
 
 ## References
 
-- [Self-Discover: Large Language Models Self-Compose Reasoning Structures (2024)](https://arxiv.org/abs/2402.03620) - Google DeepMind & USC, arXiv:2402.03620
+- [Self-Discover: Large Language Models Self-Compose Reasoning Structures (2024)](https://arxiv.org/abs/2402.03620) - Google DeepMind & USC, arXiv:2402.03620; [Table 2](https://ar5iv.labs.arxiv.org/html/2402.03620) lists the 39 reasoning modules adopted from Fernando et al. 2023
+- [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](https://arxiv.org/abs/2309.16797) - Fernando et al., 2023 - source of the reasoning-module library
 - [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (2022)](https://arxiv.org/abs/2201.11903) - Wei et al., NeurIPS 2022
 - [Reflexion: Language Agents with Verbal Reinforcement Learning (2023)](https://arxiv.org/abs/2303.11366) - Shinn et al., NeurIPS 2023
 - [Tree of Thoughts: Deliberate Problem Solving with Large Language Models (2023)](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
@@ -18983,7 +19019,7 @@ sequenceDiagram
 
 In the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.
 
-**Expert intuition is unreliable**: Research across major technology companies shows that 80-90% of product ideas fail to improve key metrics, even when experts are confident they will work (Kohavi et al., 2007). Real-world experimentation beats theoretical analysis.
+**Expert intuition is unreliable**: Controlled-experiment research across major technology companies shows that most product ideas fail to improve key metrics even when experts are confident they will work — roughly two-thirds in Kohavi et al.'s Microsoft survey (2007), with higher figures reported in later Kohavi talks and the 2020 book. Real-world experimentation beats theoretical analysis.
 
 ## Solution
 
@@ -19029,18 +19065,11 @@ graph TD
 
 **Real example from AMP:**
 
-AMP has ripped out multiple features that users loved:
-- To-dos
-- Forking
-- Tabs
-- Custom commands
-- VS Code extension (forthcoming)
-
-Each removal was greeted positively by users:
+AMP has repeatedly ripped out features users liked (to-dos, forking, tabs, and more), and each removal was greeted positively:
 
 > "People actually really like it when we remove stuff. They were like, 'This is good. Cut the stuff that we've all know doesn't work anymore.'"
 
-Shipping as research means being willing to both add AND remove features rapidly based on what you learn.
+The removal story, including what AMP cut and why, is the core example of [Burn the Boats](burn-the-boats.md), which cites the same episode; read that entry for the feature-killing side. Shipping as research means being willing to both add AND remove features rapidly based on what you learn.
 
 ## How to use it
 
@@ -19087,9 +19116,7 @@ You can't learn without data:
 
 **5. Kill quickly:**
 
-When something isn't working, remove it:
-
-> "We ripped out four features or something. We ripped out to-dos, we ripped out forking, we ripped out tabs..."
+When something isn't working, remove it (see [Burn the Boats](burn-the-boats.md) for AMP's full removal story from this episode):
 
 > "I was like oh people won't care about this... and yet another removal, but we did and people actually really like it when we remove stuff."
 
@@ -19145,9 +19172,10 @@ If you wait to see what happens before acting, you'll miss the window. The front
 
 ## References
 
-* [Raising an Agent Episode 10: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=4rx36wc9ugw) - AMP (Thorsten Ball, Quinn Slack, 2025)
-* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-007-0061-3) - Kohavi, Henne, Sommerfield (2007)
-* Related: [Burn the Boats](burn-the-boats.md), [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md), [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)
+* [Raising an Agent - Episode 10 (February 2026)](https://www.youtube.com/watch?v=4rx36wc9ugw) - Amp, Inc.; also at [ampcode.com/podcast/episode-10](https://ampcode.com/podcast/episode-10)
+* [Controlled Experiments on the Web: Survey and Practical Guide](https://doi.org/10.1007/s10618-008-0114-1) - Kohavi, Longbotham, Sommerfield, Henne (Data Mining and Knowledge Discovery, 2007) - reports roughly two-thirds of ideas failing at Microsoft, not the 80-90% figure sometimes quoted from later Kohavi talks
+* Distinct from [Burn the Boats](burn-the-boats.md) (removing working features on a deadline) and [Disposable Scaffolding Over Durable Features](disposable-scaffolding-over-durable-features.md) (treating surrounding code as temporary): this pattern is the ship-to-learn stance that motivates both.
+* Related: [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md)
 
 ---
 
@@ -19548,7 +19576,7 @@ def load_skills(skill_names):
 
 **Lazy-loading MCP tools via skills (Amp approach):**
 
-MCP servers often expose many tools that consume significant context. Bind MCP servers to skills with selective tool loading:
+MCP servers often expose many tools that consume significant context, so bind MCP servers to skills with selective tool loading. In Amp's published example, a chrome-devtools MCP server dropped from 26 tools (~17k tokens) to 4 loaded tools (~1.5k tokens). For the general techniques of discovering and loading tools on demand, see [Progressive Tool Discovery](progressive-tool-discovery.md) and [Tool Search Lazy Loading](tool-search-lazy-loading.md); the skill-binding specifics are:
 
 ```json
 // skills/chrome-automation/mcp.json
@@ -19565,10 +19593,6 @@ MCP servers often expose many tools that consume significant context. Bind MCP s
   }
 }
 ```
-
-**Token savings example:**
-- chrome-devtools MCP: 26 tools = 17k tokens
-- Lazy-loaded subset: 4 tools = 1.5k tokens (91% reduction)
 
 The agent sees only the skill description initially. When invoked, only the specified tools are loaded into context.
 
@@ -19689,10 +19713,13 @@ def discover_skills():
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* [Building an internal agent: Adding support for Agent Skills](https://lethain.com/agents-skills/) - Will Larson (Imprint, 2025)
-* [Efficient MCP Tool Loading](https://ampcode.com/news/lazy-load-mcp-with-skills) - Amp (Nicolay, 2025)
-* Related: Compounding Engineering Pattern, CLI-First Skill Design
+* [Code execution with MCP: Building more efficient agents](https://www.anthropic.com/engineering/code-execution-with-mcp) - Anthropic Engineering (November 2025)
+* [Building an internal agent: Adding support for Agent Skills](https://lethain.com/agents-skills/) - Will Larson (December 2025)
+* [Efficient MCP Tool Loading](https://ampcode.com/news/lazy-load-mcp-with-skills) - Amp (January 2026)
+* [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) - Wang et al. (2023) - originated the skill-library concept ("an ever-growing skill library of executable code")
+* [agentskills.io](https://agentskills.io) - the open Agent Skills specification (SKILL.md folders, progressive disclosure) that Imprint and others follow
+
+Distinct from [Progressive Tool Discovery](progressive-tool-discovery.md) and [Tool Search Lazy Loading](tool-search-lazy-loading.md), which manage when tool definitions enter context, and from [Iterative Prompt & Skill Refinement](iterative-prompt-skill-refinement.md), which is the maintenance loop around prompts and skills: this pattern is about what a skill is and how the library grows. Related: Compounding Engineering Pattern, CLI-First Skill Design
 
 ---
 
@@ -19779,16 +19806,17 @@ Even in spec-first projects, implementations can drift as code evolves and the s
 
 ## Solution
 
-Generate **executable assertions** directly from the spec (e.g., unit or integration tests) and let the agent:
+Generate **executable assertions** directly from the spec (e.g., unit or integration tests) and keep them synchronized with every spec change:
 
-- Watch for any spec or code commit.  
-- Auto-regenerate test suite from latest spec snapshot.  
-- Run tests; if failures appear, open an *agent-authored* PR that either:
+- Regenerate the test suite from the latest spec snapshot on each spec commit.
+- Run tests in CI on each code commit; if failures appear, route them either to an *agent-authored* PR that:
     
 - updates code to match spec, or
     - flags unclear spec segments for human review.
 
-This creates a continuous feedback loop ensuring specification and implementation remain synchronized.
+The source article describes a human-driven version of this loop (a person re-derives the checks after each spec change); automated commit-watching and agent-authored PRs are extensions that coding agents now make practical.
+
+This creates a continuous feedback loop ensuring specification and implementation remain synchronized. Distinct from [Specification-Driven Agent Development](specification-driven-agent-development.md) (spec-first scaffolding, which shares this source and the SPEC/EXPOSURE/TASK DELTA framework) and from [Feature List as Immutable Contract](feature-list-as-immutable-contract.md) (an immutable checklist rather than generated tests): this entry is specifically the spec-to-test automation loop.
 
 **Four-phase architecture:**
 1. Specification Layer: Parse specs (YAML/JSON/BDD) into internal representation
@@ -19798,12 +19826,11 @@ This creates a continuous feedback loop ensuring specification and implementatio
 
 ## Evidence
 
-- **Evidence Grade:** `medium`
+- **Evidence Grade:** `low`
 - **Most Valuable Findings:**
-  - Production use at Anthropic (Constitutional AI), OpenAI (Evals), and LangChain
   - Academic foundations in QuickCheck (property-based testing) and Design by Contract
   - Effective when combined with Feature List as Immutable Contract
-- **Unverified:** Long-term impact on agent quality scores; most implementations are recent (2022-2024)
+- **Unverified:** The earlier claim of production use at Anthropic, OpenAI, and LangChain misattributed training-time and model-eval techniques to this CI pattern and has been removed.
 
 ## Trade-offs
 
@@ -19819,17 +19846,18 @@ This creates a continuous feedback loop ensuring specification and implementatio
 
 ## How to use it
 
-- Use this when agent quality improves only after iterative critique or retries.
-- Start with one objective metric and one feedback loop trigger.
-- Record failure modes so each loop produces reusable learning artifacts.
+- Keep the spec in a machine-parseable subset (structured Markdown, YAML, JSON Schema, or BDD) so tests can be regenerated from it.
+- Regenerate the derived test suite on every spec commit, not on a schedule, so tests never lag the spec.
+- Run generated tests in CI on every code commit and treat a spec-test failure as drift, not as a flaky test.
+- Route each failure explicitly: agent-authored fix PR, or a flagged spec-ambiguity issue for a human.
+- Record which spec clause each test came from, so spec edits show exactly which tests must change.
 
 ## References
 
-- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/
+- Primary source: [The AI Engineer Spec](http://jorypestorious.com/blog/ai-engineer-spec/) - Jory Pestorious, describes the SPEC / EXPOSURE / TASK DELTA loop as a human-driven verification process
+- [GitHub Spec Kit](https://github.com/github/spec-kit) - spec-driven development toolkit (`/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, `/speckit-implement`, `/speckit-converge`) representing the 2025 spec-driven tooling wave
 - Anthropic Engineering: [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-- OpenAI Evals: https://github.com/openai/evals
 - QuickCheck (Claessen & Hughes, ICFP 2000) - property-based testing foundation
-- Constitutional AI (Bai et al., Anthropic 2022) - principles as specifications
 
 ---
 
@@ -21753,7 +21781,7 @@ flowchart TD
 
 Coding agents often underutilize specialized tools (e.g., compilers, linters, test runners) when left to optimize only for final task success. They default to "thinking" tokens—generating internal chain-of-thought—instead of invoking external tools, which can slow down development and lead to suboptimal code outputs.
 
-- Models like R1 "use their think tokens" almost exclusively rather than calling tools unless explicitly rewarded for tool use.
+- Reasoning models trained in the R1 style are, as the source talk puts it, single-turn reasoners that are not yet general-purpose agents: they reason in thinking tokens by default and do not reliably reach for tools unless the reward structure makes tool use pay off.
 - Without intermediate incentives, the agent has no incentive to write code, compile, or run tests until the very end.
 - Sparse final rewards provide insufficient signal for learning optimal tool-use patterns across multi-step episodes.
 
@@ -21761,7 +21789,7 @@ Coding agents often underutilize specialized tools (e.g., compilers, linters, te
 
 Provide **dense, shaped rewards** for every intermediate tool invocation that contributes toward final code correctness. Key components:
 
-**1. Define Tool-Specific Reward Signals**
+**1. Define Tool-Specific Reward Signals** (magnitudes below are illustrative starting points to tune, not established values from any source)
 - **Compile Reward:** +1 if code compiles without errors.
 - **Lint Reward:** +0.5 if linter returns zero issues.
 - **Test Reward:** +2 if test suite passes a new test case.
@@ -21809,17 +21837,20 @@ trajectory.append((state, action, tool_output, local_reward))
   - **Tool Adoption:** Encourages the agent to learn how and when to invoke compilers and test runners.
 - **Cons/Considerations:**
   - **Reward Engineering Overhead:** Requires careful design and maintenance of reward functions for each tool.
-  - **Potential Overfitting:** The agent may game intermediate rewards (e.g., repeatedly running lint without changing code).
+  - **Potential Overfitting:** The agent may game intermediate rewards (e.g., repeatedly running lint without changing code); dense process rewards carry a documented hacking risk — see [Anti-Reward-Hacking Grader Design](anti-reward-hacking-grader-design.md) before shipping dense rewards.
+
+Distinct from [Agent Reinforcement Fine-Tuning (Agent RFT)](agent-reinforcement-fine-tuning.md), the umbrella training loop this fits into, and from [Parallel Tool Call Learning](parallel-tool-call-learning.md), which rewards call batching specifically: this pattern is about per-tool-type reward shaping.
 
 ## References
 
-- Will Brown's discussion on how "if you set these models up to use tools, they just won't" unless incentivized.
-- Concepts from "Reinforcing Multi-Turn Reasoning in LLM Agents via Turn-Level Credit Assignment" (Prime Intellect paper previewed in talk).
-- Lightman et al. (2023). "Process-Based Reward Models for Large Language Models." NeurIPS 2023.
-- Shao et al. (2024). "DeepSeekMath: Pushing the Limits of Mathematical Reasoning." Introduces GRPO for step-by-step reasoning.
-- Yao et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." NeurIPS 2022.
-
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
+- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw (Will Brown, Prime Intellect, "Open Questions in Agentic RL," May 2025)
+- [Reinforcing Multi-Turn Reasoning in LLM Agents via Fine-Grained Reward Structure and Credit Assignment](https://arxiv.org/abs/2505.11821) - Wei et al., 2025
+- [A Practitioner's Guide to Multi-turn Agentic Reinforcement Learning](https://arxiv.org/abs/2510.01132) - Wang & Ammanabrolu, 2025
+- [TRACE: Turn-level Reward Assignment via Credit Estimation for Long-Horizon Agents](https://arxiv.org/abs/2607.13988) - 2026
+- [Information Gain-based Policy Optimization (IGPO)](https://arxiv.org/abs/2510.14967) - ICLR 2026 - intrinsic turn-level rewards for multi-turn search agents
+- Lightman et al. (2023). [Let's Verify Step by Step](https://arxiv.org/abs/2305.20050). Process supervision for reasoning.
+- Shao et al. (2024). "DeepSeekMath: Pushing the Limits of Mathematical Reasoning." Introduces GRPO for step-by-step reasoning ([arXiv 2402.03300](https://arxiv.org/abs/2402.03300)).
+- Yao et al. (2023). [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629). ICLR 2023.
 
 ---
 
@@ -22315,7 +22346,7 @@ result = gateway.get_result(job.job_id)
 
 ## Variance-Based RL Sample Selection
 
-**Status:** validated-in-production
+**Status:** emerging
 **Category:** Learning & Adaptation
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://youtu.be/1s_7RMG4O4U
@@ -22593,7 +22624,7 @@ Track how variance evolves:
 
 - Dataset: 100 validation samples, 1000 training samples
 - Runs per sample: 3
-- Base model: GPT-4o
+- Base model: GPT-5 (GPT-4.1 served as the model grader)
 
 **Results:**
 
@@ -22601,22 +22632,18 @@ Track how variance evolves:
 Variance Analysis:
   Total samples: 100
   High variance samples: 15 (15%)
-  Always correct: 40 samples
-  Always incorrect: 45 samples
 
 Improvement Potential:
   Current average: 0.59
-  Best-of-3 average: 0.73
-  Potential gain: +0.14 (24% relative improvement)
+  Best-of-3 ceiling: compute from your own runs; the demo did not publish one
 ```
 
 **Interpretation:**
 
 - Only 15% of samples had variance → training will focus learning on those
-- 24% potential improvement if model learns to consistently hit best-of-3 performance
 - Good candidate for RL despite low variance percentage (quality over quantity)
 
-**Training Results:**
+**Training Results (webinar demo, not a production benchmark):**
 
 After 10 steps of agent RFT:
 
@@ -22624,12 +22651,14 @@ After 10 steps of agent RFT:
 - Tool calls per rollout: 6.9 → 4.2 (-39%)
 - Latency: ~10% reduction
 
-The model improved toward the best-of-3 ceiling while also becoming more efficient.
+The model improved while also becoming more efficient.
 
-**Other Validated Use Cases:**
+**Other demoed use cases from the same webinar:**
 
 - **Ambience Healthcare - ICD-10 Coding**: F1 score 0.52 → 0.57 (+9.6%), 18% latency reduction
-- **Cognition (Devon AI) - File Planning**: 50% reduction in planning tool calls (8-10 → 4)
+- **Cognition (Devin) - File Planning**: planning back-and-forths cut from 8-10 to 4
+
+Note: the production results above validated agent RFT broadly; the variance-selection technique itself was shown in a webinar demo, which is why this pattern carries a lower status than the umbrella [Agent RFT](agent-reinforcement-fine-tuning.md) entry. Distinct from that umbrella entry: this pattern is only the pre-training step of deciding which samples to train on.
 
 ## Trade-offs
 
@@ -22652,6 +22681,7 @@ The model improved toward the best-of-3 ceiling while also becoming more efficie
 - [OpenAI Build Hour: Agent RFT - Variance Analysis Demo (November 2025)](https://youtu.be/1s_7RMG4O4U)
 - [Prior RFT Build Hour with Prashant](https://www.youtube.com/openai-build-hours)
 - [Prioritized Experience Replay (Schaul et al., ICLR 2016)](https://arxiv.org/abs/1511.05952) - Foundation paper introducing TD-error-based sample prioritization
+- [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](https://arxiv.org/abs/2503.14476) - names dynamic sampling (resampling to skip prompts whose rollouts all succeed or all fail) among its four key techniques; the research grounding for discarding zero-advantage samples
 - Related patterns: Agent Reinforcement Fine-Tuning, Inference-Time Scaling
 
 ---

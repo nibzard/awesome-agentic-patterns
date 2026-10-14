@@ -22,7 +22,7 @@ id: compounding-engineering-pattern
 summary: "After each feature, codifies agent mistakes and learnings into CLAUDE.md, slash commands, subagents, and hooks so the next feature is easier to build"
 signals: ["The agent repeats the same mistakes across features", "Onboarding people or agents to the codebase is slow", "Your agent system supports slash commands, subagents, or hooks"]
 anti_signals: ["The team cannot spend time documenting after each feature", "System prompts are already bloated with too many rules"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -47,7 +47,7 @@ Then embed these insights into:
 - **Subagents**: Specialized validators (e.g., security review agent)
 - **Hooks**: Automated checks that prevent regressions
 
-**Result**: Each feature makes the next easier because the codebase becomes increasingly "self-teaching."
+**Result**: Each feature makes the next easier because the codebase becomes increasingly "self-teaching." Distinct from [Iterative Prompt & Skill Refinement](iterative-prompt-skill-refinement.md), which is the organizational loop of monitoring and editing prompts/skills between runs, and from [Skill Library Evolution](skill-library-evolution.md), which accumulates executable skills: this pattern is the broader engineering habit of codifying every feature's learnings back into agent instructions.
 
 ```mermaid
 graph LR
@@ -103,9 +103,19 @@ This allows non-experts to be productive immediately:
 - **Requires tooling**: Needs extensible agent system (slash commands, hooks, etc.)
 - **Prompt bloat**: System prompts can grow large over time
 
+**When compounding stops and reverses:**
+
+- Rules accumulate faster than they are pruned, and context-window cost per session grows with the instruction file; Anthropic's guidance reports that bloated instruction files cause agents to ignore the instructions that matter.
+- A rule only earns its place if removing it would change agent behavior for the worse; delete everything else.
+- If the agent keeps violating a rule that exists, the file has likely grown past the point where any single rule is still salient — cut it back instead of adding emphasis everywhere.
+- Prefer converting recurring violations into hooks or tests (deterministic checks) rather than more prose.
+
 ## References
 
 * Dan Shipper: "In normal engineering, every feature you add, it makes it harder to add the next feature. In compounding engineering, your goal is to make the next feature easier to build from the feature that you just added."
 * Dan Shipper: "We codify all the learnings... how did we make the plan, what parts needed to be changed, when we started testing it what issues did we find, what are the things that we missed, and then we codify them back into all the prompts and all the subagents and all the slash commands."
-* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)
+* [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it) (October 2025)
+* [Best practices for Claude Code](https://code.claude.com/docs/en/best-practices) - independent guidance on iterating and pruning CLAUDE.md, and moving one-off knowledge into skills
+* [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) - the skills mechanism this pattern accumulates into
+* [AGENTS.md](https://agents.md) - the cross-tool open format for the project-level instruction file
 * [Compounding Engineering Pattern Research Report](/research/compounding-engineering-pattern-report.md)

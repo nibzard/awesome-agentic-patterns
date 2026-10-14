@@ -273,8 +273,8 @@
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Will Brown (OpenAI)",
-      "Theo (OpenAI Solutions Architect)"
+      "Theophile Sautory (OpenAI)",
+      "William Hang (OpenAI)"
     ],
     "category": "Learning & Adaptation",
     "source": "https://youtu.be/1s_7RMG4O4U",
@@ -299,7 +299,7 @@
       "Team cannot host tool and grader endpoints that mirror production",
       "No consensus on what a correct answer is"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAfter optimizing prompts and task design, agents may still underperform on your specific business tasks because:\n\n- **Domain shift**: Your tools and business context differ from what the base model was trained on\n- **Inefficient tool use**: Agents make too many tool calls or use wrong tools, leading to high latency\n- **Suboptimal reasoning**: The model doesn't reason well across your specific tool outputs\n- **Sample scarcity**: Some domains (e.g., new GPU hardware, specialized finance) lack training data\n\nTraditional fine-tuning approaches don't work well because they can't train the agent end-to-end on multi-step tool interactions with your environment."
   },
   {
@@ -657,7 +657,7 @@
   },
   {
     "title": "AI-Assisted Code Review / Verification",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -686,7 +686,7 @@
       "Team cannot tolerate false positives and alert fatigue",
       "Architectural decisions that need human-only judgment"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAs AI models generate increasing amounts of code, the bottleneck in software development shifts from code generation to code verification and review. Ensuring that AI-generated code is not only syntactically correct but also semantically correct, aligns with the intended functionality (especially if underspecified), and meets quality standards becomes crucial and time-consuming."
   },
   {
@@ -888,7 +888,7 @@
       "Quinn Slack"
     ],
     "category": "Feedback Loops",
-    "source": "https://ampcode.com/manual#background",
+    "source": "https://ampcode.com/docs/orbs",
     "tags": [
       "asynchronous",
       "ci",
@@ -1462,7 +1462,7 @@
       "research",
       "operations"
     ],
-    "updated_at": "2026-06-15",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents often write memories or update heuristics immediately after generating an answer. That creates weak learning signals:\n\n- A plausible answer can be recorded as if it worked.\n- Retrieved memories get credited even when the final action later fails.\n- Human review, tests, production incidents, and real replies are disconnected from the memory records that influenced the action.\n- Future agents cannot audit which past commitments were predictions, which were settled facts, and which were never verified.\n\nThe result is memory that compounds confidence faster than it compounds truth."
   },
   {
@@ -1498,7 +1498,7 @@
       "The team cannot spend time documenting after each feature",
       "System prompts are already bloated with too many rules"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional software engineering has **diminishing returns**: each feature added increases complexity, making subsequent features harder to build. Technical debt accumulates, onboarding takes longer, and new team members struggle to be productive.\n\nWith AI coding agents, this problem is amplified—agents make the same mistakes repeatedly because learnings aren't systematically captured and codified."
   },
   {
@@ -3265,7 +3265,7 @@
       "Cost-sensitive markets where top performance is not critical",
       "AI is a minor feature, or a large team cannot change direction each quarter"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI capabilities advance rapidly along predictable scaling laws—products optimized for today's models become obsolete in months. Many teams waste time solving problems that frontier models already solve, or build products tied to specific models that won't stay competitive."
   },
   {
@@ -3301,7 +3301,7 @@
       "Compute is limited, since cost is much higher than linear reasoning",
       "Reasoning branches never need to recombine"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLinear reasoning approaches like Chain-of-Thought (CoT) and even tree-based methods like Tree-of-Thoughts (ToT) have limitations when dealing with problems that require complex interdependencies between reasoning steps. Many real-world problems involve reasoning paths that merge, split, and recombine in ways that don't fit neatly into linear or tree structures. These problems need a more flexible approach that can represent arbitrary relationships between thoughts."
   },
   {
@@ -3422,7 +3422,7 @@
       "Post-incident learning loops in software and ML operations"
     ],
     "category": "Feedback Loops",
-    "source": "https://sre.google/sre-book/postmortem-culture/",
+    "source": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
     "tags": [
       "evals",
       "incidents",
@@ -3443,7 +3443,7 @@
       "Incident data cannot be captured or redacted safely",
       "The team cannot take on triage overhead for each incident"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMany teams run agent evaluations, but the eval suite drifts away from real failures seen in production. Incidents get resolved operationally, yet the exact failure mode is rarely converted into a durable regression test. This creates repeat incidents and false confidence from stale benchmark sets."
   },
   {
@@ -3477,7 +3477,7 @@
       "Reward latency and compute from extra checks is not acceptable",
       "No labeled patch data to train or calibrate the critic"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSimple reward functions that only check for \"all tests passed\" fail to capture nuanced code quality issues (e.g., performance regressions, style violations, missing edge-case handling). A single binary signal at the end cannot guide the agent to produce maintainable, high-quality code.\n\n- Verifying **only** final correctness misses suboptimal commits (e.g., a patch that removes error handling but still passes tests).\n- Reward models that produce a single scalar lack **explainability** to tell the agent which aspect of the code needs improvement."
   },
   {
@@ -3696,12 +3696,12 @@
   },
   {
     "title": "Iterative Prompt & Skill Refinement",
-    "status": "established",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Will Larson (Imprint)"
+      "Will Larson"
     ],
     "category": "Feedback Loops",
     "source": "https://lethain.com/agents-iterative-refinement/",
@@ -3727,7 +3727,7 @@
       "Workflow is well understood and can be deterministic code",
       "No one has time to monitor feedback and dashboards"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgent usage reveals gaps in prompts, skills, and tools—but how do you systematically improve them? When a workflow fails or behaves sub-optimally, you need multiple mechanisms to capture feedback and iterate. Single approaches aren't enough; you need a **multi-pronged refinement strategy**."
   },
   {
@@ -4140,7 +4140,7 @@
       "Shengtao Zhang, Jiaqian Wang, et al. (Shanghai Jiao Tong University, Xidian University, MemTensor)"
     ],
     "category": "Learning & Adaptation",
-    "source": "https://arxiv.org/html/2601.03192v1",
+    "source": "https://arxiv.org/abs/2601.03192",
     "tags": [
       "reinforcement-learning",
       "episodic-memory",
@@ -4162,7 +4162,7 @@
       "No clear reward signal",
       "Tasks are highly diverse with no repeating patterns"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nLLMs struggle with **runtime self-evolution** due to the stability-plasticity dilemma:\n\n- **Fine-tuning**: Computationally expensive and prone to catastrophic forgetting\n- **RAG/memory systems**: Rely on semantic similarity that retrieves noise\n- **No utility learning**: Can't distinguish high-value strategies from semantically similar but ineffective ones\n\nStandard retrieval assumes \"similar implies useful,\" but that's often wrong. A semantically relevant past solution might actually be a bad approach for the current task."
   },
   {
@@ -5455,7 +5455,7 @@
       "No well-defined metric to score drafts",
       "Extra compute per answer is not acceptable"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSingle-pass generation frequently misses edge cases, constraints, or quality criteria that become obvious on review. Without a structured revision loop, agents return the first plausible answer even when a better answer is reachable with lightweight critique."
   },
   {
@@ -5567,7 +5567,7 @@
       "No objective signal or tool output to feed back",
       "Runtime and cost of iterative passes are not acceptable"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nPolishing a single prompt can't cover every edge-case; agents need ground truth to self-correct.\n\nAdditionally, agents need to integrate **human feedback** (positive and corrective) to improve session quality over time. Projects that better respond to user feedback have fewer corrections and better outcomes."
   },
   {
@@ -5777,7 +5777,7 @@
       "No human anchor set or adversarial tests to detect evaluator collusion",
       "Judge criteria for the domain cannot be defined objectively"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nHuman-labeled preference datasets are expensive to produce, slow to refresh, and quickly stale as base models and domains change. Teams need scalable evaluation signals that can keep pace with model evolution without waiting on large annotation cycles. Risk of evaluator collapse and bias amplification must be mitigated."
   },
   {
@@ -5790,7 +5790,7 @@
       "Google DeepMind",
       "USC"
     ],
-    "category": "Feedback Loops",
+    "category": "Learning & Adaptation",
     "source": "https://arxiv.org/abs/2402.03620",
     "tags": [
       "reasoning",
@@ -5812,7 +5812,7 @@
       "Simple problems that single-pass Chain-of-Thought handles well",
       "Budget cannot cover about 2-3x the cost of Chain-of-Thought"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nDifferent reasoning tasks require different thinking strategies. While techniques like Chain-of-Thought (CoT) work well for some problems, they may be suboptimal for others. Current approaches typically use fixed reasoning patterns regardless of the specific problem at hand, leading to inefficient problem-solving and suboptimal performance on diverse tasks."
   },
   {
@@ -6023,8 +6023,8 @@
       "Established market or enterprise users that need stability",
       "Features with high switching costs"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nIn the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.\n\n**Expert intuition is unreliable**: Research across major technology companies shows that 80-90% of product ideas fail to improve key metrics, even when experts are confident they will work (Kohavi et al., 2007). Real-world experimentation beats theoretical analysis."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nIn the rapidly evolving AI landscape, waiting for certainty before building means you're always behind. Traditional product development emphasizes validation and certainty before release, but when the market changes every 3-6 weeks, you can't afford to wait.\n\n**Expert intuition is unreliable**: Controlled-experiment research across major technology companies shows that most product ideas fail to improve key metrics even when experts are confident they will work — roughly two-thirds in Kohavi et al.'s Microsoft survey (2007), with higher figures reported in later Kohavi talks and the 2020 book. Real-world experimentation beats theoretical analysis."
   },
   {
     "title": "Signal-Driven Agent Activation",
@@ -6136,7 +6136,7 @@
       "One-off tasks with no repeated problems",
       "No capacity to test, review, and deprecate saved skills"
     ],
-    "updated_at": "2026-01-13",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAgents frequently solve similar problems across different sessions or workflows. Without a mechanism to preserve and reuse working code, agents must rediscover solutions each time, wasting tokens and time. Organizations want agents to build up capability over time rather than starting from scratch every session."
   },
   {
@@ -6204,7 +6204,7 @@
       "Spec wording is too ambiguous to turn into tests",
       "CI capacity is limited"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nEven in spec-first projects, implementations can drift as code evolves and the spec changes (or vice-versa). Silent divergence erodes trust."
   },
   {
@@ -6786,8 +6786,8 @@
       "No RL training loop, only prompting",
       "Team cannot design and tune per-tool reward functions"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nCoding agents often underutilize specialized tools (e.g., compilers, linters, test runners) when left to optimize only for final task success. They default to \"thinking\" tokens—generating internal chain-of-thought—instead of invoking external tools, which can slow down development and lead to suboptimal code outputs.\n\n- Models like R1 \"use their think tokens\" almost exclusively rather than calling tools unless explicitly rewarded for tool use.\n- Without intermediate incentives, the agent has no incentive to write code, compile, or run tests until the very end.\n- Sparse final rewards provide insufficient signal for learning optimal tool-use patterns across multi-step episodes."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nCoding agents often underutilize specialized tools (e.g., compilers, linters, test runners) when left to optimize only for final task success. They default to \"thinking\" tokens—generating internal chain-of-thought—instead of invoking external tools, which can slow down development and lead to suboptimal code outputs.\n\n- Reasoning models trained in the R1 style are, as the source talk puts it, single-turn reasoners that are not yet general-purpose agents: they reason in thinking tokens by default and do not reliably reach for tools unless the reward structure makes tool use pay off.\n- Without intermediate incentives, the agent has no incentive to write code, compile, or run tests until the very end.\n- Sparse final rewards provide insufficient signal for learning optimal tool-use patterns across multi-step episodes."
   },
   {
     "title": "Tool Use Steering via Prompting",
@@ -7013,7 +7013,7 @@
   },
   {
     "title": "Variance-Based RL Sample Selection",
-    "status": "validated-in-production",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
@@ -7042,7 +7042,7 @@
       "Very small dataset (under about 50 samples) with noisy variance estimates",
       "No budget for 3-5 baseline runs per sample"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nNot all training samples are equally valuable for reinforcement learning. This pattern builds on **Prioritized Experience Replay** (Schaul et al., 2016), which introduced TD-error-based sample prioritization for value learning.\n\n- **Zero-variance samples**: Model gets same score every time (always correct or always wrong) → no learning signal\n- **Wasted compute**: Training on samples where the model has no uncertainty wastes expensive RL exploration\n- **Poor data utilization**: With limited training budgets, you want to maximize learning from each sample\n- **Unclear training potential**: Hard to know if your dataset will support effective RL training\n\nWhen Theo ran baseline evaluations on the FinQA benchmark, he discovered that ~85% of samples had zero variance (model always got them right or always wrong), meaning only ~15% of samples could actually contribute to learning."
   },
   {

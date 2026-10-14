@@ -99,7 +99,6 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Rendered UI Finish Gate](patterns/rendered-ui-finish-gate.md)
 - [Rich Feedback Loops > Perfect Prompts](patterns/rich-feedback-loops.md)
 - [Self-Critique Evaluator Loop](patterns/self-critique-evaluator-loop.md)
-- [Self-Discover: LLM Self-Composed Reasoning Structures](patterns/self-discover-reasoning-structures.md)
 - [Spec-As-Test Feedback Loop](patterns/spec-as-test-feedback-loop.md)
 - [Tool Use Incentivization via Reward Shaping](patterns/tool-use-incentivization-via-reward-shaping.md)
 
@@ -112,6 +111,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Memory Reinforcement Learning (MemRL)](patterns/memory-reinforcement-learning-memrl.md)
 - [Merged Code + Language Skill Model](patterns/merged-code-language-skill-model.md)
 - [Persistent Test Memory Feedback Loop](patterns/persistent-test-memory-feedback-loop.md)
+- [Self-Discover: LLM Self-Composed Reasoning Structures](patterns/self-discover-reasoning-structures.md)
 - [Shipping as Research](patterns/shipping-as-research.md)
 - [Skill Library Evolution](patterns/skill-library-evolution.md)
 - [Variance-Based RL Sample Selection](patterns/variance-based-rl-sample-selection.md)

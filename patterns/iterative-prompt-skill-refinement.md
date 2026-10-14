@@ -1,15 +1,15 @@
 ---
 title: "Iterative Prompt & Skill Refinement"
-status: established
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Will Larson (Imprint)"]
+based_on: ["Will Larson"]
 category: "Feedback Loops"
 source: "https://lethain.com/agents-iterative-refinement/"
 tags: [refinement, iteration, prompts, skills, feedback, multi-mechanism, continuous-improvement, dashboards]
 summary: "Combines a feedback channel, editable prompt documents, log-driven skill fixes, and usage dashboards to improve agent prompts and skills continuously"
 signals: ["Agent workflows run in production for many internal users", "Prompts and skills fail in ways no single review catches", "Workflow runs, errors, and tool usage can be logged"]
 anti_signals: ["Workflow is well understood and can be deterministic code", "No one has time to monitor feedback and dashboards"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -23,18 +23,18 @@ Implement **multiple complementary refinement mechanisms** that work together. N
 **Four key mechanisms:**
 
 **1. Responsive Feedback (Primary)**
-- Monitor internal `#ai` channel for issues
+- Monitor a dedicated internal channel for agent issues
 - Skim workflow interactions daily
 - This is the most valuable ongoing source of improvement
 
 **2. Owner-Led Refinement (Secondary)**
-- Store prompts in editable documents (Notion, Google Docs)
+- Store prompts in editable documents (the source used Notion; any shared doc system works)
 - Most prompts editable by anyone at the company
-- Include prompt links in workflow outputs (Slack messages, Jira comments)
+- Include prompt links in workflow outputs (chat messages, ticket comments)
 - Prompts must be discoverable + editable
 
 **3. Claude-Enhanced Refinement (Specialized)**
-- Use Datadog MCP to pull logs into skill repository
+- Pull run logs into the skill repository through an observability integration (the source used Datadog via MCP)
 - Skills are a "platform" used by many workflows
 - Often maintained by central AI team, not individual owners
 
@@ -126,7 +126,9 @@ Include subjective eval after each run:
 
 ## References
 
-* [Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (Imprint, 2026)
+* [Building an internal agent: Iterative prompt and skill refinement](https://lethain.com/agents-iterative-refinement/) - Will Larson (January 2026; the article names no employer)
+* [Best practices for Claude Code](https://code.claude.com/docs/en/best-practices) - independent, vendor-side guidance on iterating CLAUDE.md and skills over time and pruning what stops earning its place
 * [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al. (arXiv, 2022)
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (NeurIPS, 2023)
-* Related: Dogfooding with Rapid Iteration, Compounding Engineering, Memory Synthesis from Execution Logs
+
+Distinct from [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md) (improving agents by building with them) and from [Rich Feedback Loops](rich-feedback-loops.md) (machine-readable tool feedback within one session): this pattern is the organizational loop around prompts and skills between runs.

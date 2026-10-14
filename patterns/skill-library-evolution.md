@@ -24,7 +24,7 @@ id: skill-library-evolution
 summary: "Saves working agent code as reusable skills in a skills directory, documents and tests them over time, and loads skill details only on demand"
 signals: ["Agents solve similar problems across sessions", "Agents rewrite the same code and waste tokens", "Many skills or MCP tools would bloat context if loaded up front"]
 anti_signals: ["One-off tasks with no repeated problems", "No capacity to test, review, and deprecate saved skills"]
-updated_at: '2026-01-13'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -145,7 +145,7 @@ def load_skills(skill_names):
 
 **Lazy-loading MCP tools via skills (Amp approach):**
 
-MCP servers often expose many tools that consume significant context. Bind MCP servers to skills with selective tool loading:
+MCP servers often expose many tools that consume significant context, so bind MCP servers to skills with selective tool loading. In Amp's published example, a chrome-devtools MCP server dropped from 26 tools (~17k tokens) to 4 loaded tools (~1.5k tokens). For the general techniques of discovering and loading tools on demand, see [Progressive Tool Discovery](progressive-tool-discovery.md) and [Tool Search Lazy Loading](tool-search-lazy-loading.md); the skill-binding specifics are:
 
 ```json
 // skills/chrome-automation/mcp.json
@@ -162,10 +162,6 @@ MCP servers often expose many tools that consume significant context. Bind MCP s
   }
 }
 ```
-
-**Token savings example:**
-- chrome-devtools MCP: 26 tools = 17k tokens
-- Lazy-loaded subset: 4 tools = 1.5k tokens (91% reduction)
 
 The agent sees only the skill description initially. When invoked, only the specified tools are loaded into context.
 
@@ -286,7 +282,10 @@ def discover_skills():
 
 ## References
 
-* Anthropic Engineering: Code Execution with MCP (2024)
-* [Building an internal agent: Adding support for Agent Skills](https://lethain.com/agents-skills/) - Will Larson (Imprint, 2025)
-* [Efficient MCP Tool Loading](https://ampcode.com/news/lazy-load-mcp-with-skills) - Amp (Nicolay, 2025)
-* Related: Compounding Engineering Pattern, CLI-First Skill Design
+* [Code execution with MCP: Building more efficient agents](https://www.anthropic.com/engineering/code-execution-with-mcp) - Anthropic Engineering (November 2025)
+* [Building an internal agent: Adding support for Agent Skills](https://lethain.com/agents-skills/) - Will Larson (December 2025)
+* [Efficient MCP Tool Loading](https://ampcode.com/news/lazy-load-mcp-with-skills) - Amp (January 2026)
+* [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/abs/2305.16291) - Wang et al. (2023) - originated the skill-library concept ("an ever-growing skill library of executable code")
+* [agentskills.io](https://agentskills.io) - the open Agent Skills specification (SKILL.md folders, progressive disclosure) that Imprint and others follow
+
+Distinct from [Progressive Tool Discovery](progressive-tool-discovery.md) and [Tool Search Lazy Loading](tool-search-lazy-loading.md), which manage when tool definitions enter context, and from [Iterative Prompt & Skill Refinement](iterative-prompt-skill-refinement.md), which is the maintenance loop around prompts and skills: this pattern is about what a skill is and how the library grows. Related: Compounding Engineering Pattern, CLI-First Skill Design
