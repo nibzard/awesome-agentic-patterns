@@ -7028,7 +7028,7 @@ graph TD
 * [SLSA (Supply-chain Levels for Software Artifacts)](https://slsa.dev) - Framework for supply chain security
 * [Build Systems a la Carte (Mokhov, Mitchell, Peyton Jones, POPL 2020)](https://dl.acm.org/doi/10.1145/3371091) - Formal build system theory including backpressure
 * [Reproducible Builds Project](https://reproducible-builds.org) - Community initiative for verifiable builds
-* Related pattern: [Coding Agent CI Feedback Loop](coding-agent-ci-feedback-loop.md) - the outer loop; this pattern is the per-change inner loop that runs in the agent's own workspace, while CI feedback covers the slower pipeline after the branch is pushed
+* Related pattern: [Background Agent with CI Feedback](background-agent-ci.md) - the outer loop; this pattern is the per-change inner loop that runs in the agent's own workspace, while CI feedback covers the slower pipeline after the branch is pushed
 * Related pattern: [Deterministic Threat Rule Scanning](deterministic-threat-rule-scanning.md) - the same deterministic-control idea applied to scanning agent tool traffic for injected threats, rather than scanning generated code
 * This generalizes beyond security to any code quality or pattern enforcement
 
