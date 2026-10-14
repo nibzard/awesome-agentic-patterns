@@ -1,89 +1,88 @@
 ---
 title: "Patch Steering via Prompted Tool Selection"
-status: best-practice
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Boris Cherny (Claude Code Concepts)", "Will Brown (Prime Intellect Talk)"]
+based_on: ["Tool Use Steering via Prompting (this catalogue)", "Aider unified-diff benchmarks"]
 category: "Tool Use & Environment"
-source: "https://www.youtube.com/watch?v=Xkwok_XXQgw"
+source: "https://aider.chat/docs/unified-diffs.html"
 tags: [patching, prompt-steering, tool-selection, coding-agent]
-summary: "Tells the agent in the prompt which patch or refactoring tool to use, with usage examples, negative rules, and a fallback order"
-signals: ["Coding agent has several patching tools, such as text, AST, and semantic", "Agent uses text patches for refactors and breaks references", "Tool choice varies between runs for the same task"]
+summary: "Tells the agent in the prompt which patch tool or edit format to use, with usage examples, negative rules, and a fallback order"
+signals: ["Coding agent has several patching tools, such as text search/replace, AST-aware, and semantic", "Agent uses raw text replacement for refactors and breaks references", "Edit-format choice varies between runs for the same task"]
 anti_signals: ["Agent has only one patching tool", "Token budget cannot hold tool documentation in the prompt"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
 
-Coding agents with access to multiple patching or refactoring tools (e.g., text-based `apply_patch`, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:
+Coding agents with access to multiple patching or refactoring tools (text-based search/replace, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:
 
-- **Unnecessary Complexity:** Agent might use a generic text-replace tool instead of a specialized AST-aware refactoring tool.
-- **Inconsistent Results:** Without explicit instructions, the agent's tool selection can vary unpredictably, hampering reproducibility.
-- **Safety Risks:** Text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors.
+- **Unnecessary complexity:** the agent picks a generic text-replace tool instead of a specialized AST-aware refactoring tool.
+- **Inconsistent results:** without explicit instructions, tool selection varies between runs for the same task.
+- **Safety risks:** text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors.
+
+The edit-format choice is measurable. In aider's refactoring benchmark, prompting GPT-4 Turbo to emit unified diffs instead of the previous search/replace block format raised the score from 20% to 61%, and lazy "rest of code unchanged" edits dropped from 12 of 89 tasks to 4. The patch format the prompt asks for is part of the tool interface.
 
 ## Solution
 
-**Steer** the agent's tool selection and patch approach through **explicit natural language instructions** in the prompt. Techniques include:
+**Steer** the agent's patch-tool and edit-format selection through explicit natural language instructions in the prompt. This pattern is the patch-tool specialization of the catalogue's [Tool Use Steering via Prompting](tool-use-steering-via-prompting.md); apply that general pattern when the tools in question are anything other than code-editing tools.
 
-**1. Direct Tool Invocation**
+Patch-specific techniques:
+
+**1. Name the tool and the format**
+
 - Prepend: "Use the `apply_patch` tool to insert a new function `validate_input` in `auth_service.py`."
-- The agent recognizes "apply_patch" as the preferred patching mechanism.
+- When the model's own edit format is the variable, specify it: "Return a unified diff, one hunk per function."
 
-**2. Tool Usage Teaching**
+**2. Teach the tool in the prompt**
+
 - Provide a mini-manual in the context:
-  ```text
-  "Our `ASTRefactor` tool takes JSON describing node edits:  
-  {"file": string, "pattern": string, "replacement": string}.  
-  Use it for safe refactors rather than raw `sed` commands."  
-  ```
-- This orients the agent to use the safer, higher-level refactoring tool when modifying function signatures or renaming classes.
 
-**3. Implicit Shorthands**
-- Introduce domain-specific abbreviations: "When instructing to rename variables, say `renameVar(old, new)`; the agent maps this to the ASTRefactor tool under the hood."
+```text
+"Our `ASTRefactor` tool takes JSON describing node edits:
+{"file": string, "pattern": string, "replacement": string}.
+Use it for safe refactors rather than raw sed commands."
+```
 
-**4. Reason-Encouraging Phrases**
-- Add: "Think about type safety before choosing a patch tool."
-- Promotes deeper reasoning so the agent doesn't just apply surface-level text replacements.
+**3. Prefer familiar, forgiving formats**
 
-**5. Negative Constraints**
-- Specify what NOT to use: "Do NOT use text-based patching for function signature changes (will break imports)."
-- Explicit anti-patterns prevent unsafe tool selections more effectively than positive instructions alone.
+- Aider's benchmarks found that simple, familiar formats (unified diffs) beat structured formats such as JSON tool calls for code edits, because escaping code is error-prone, and that flexibly applying imperfect patches mattered: strict application increased editing errors about 9x.
+
+**4. Negative constraints and fallback order**
+
+- Specify what NOT to use: "Do NOT use text-based patching for signature changes (it breaks imports)."
+- Specify a fallback chain: semantic → AST → text, for when the safer tool fails.
 
 ## Example
 
 ```mermaid
 flowchart TD
     A[User Prompt: "Refactor validation logic"] --> B[Augmented Prompt]
-    B --> C["Please use ASTRefactor to update function signatures"]
+    B --> C["Use ASTRefactor for signature changes; fallback to apply_patch"]
     C --> D[Agent selects ASTRefactor]
-    D --> E[ASTRefactorTool patches code]
+    D --> E[ASTRefactor patches code safely]
+    E -->|ASTRefactor fails| F[apply_patch fallback]
 ```
 
 ## How to use it
 
-- **Tool Registry:** Expose tool metadata (name, usage example, input schema, capabilities/limitations) in the agent's initialization context. Include `use_when` and `avoid_when` criteria for each tool.
-- **Prompt Templates:** Create reusable templates with placeholders, e.g.:
-  ```
-  "Task: {task_description}. Preferred tool: {tool_name}.
-  Usage example: {tool_usage_snippet}."
-  ```
-- **Fallback Handling:** If the agent ignores the instruction and uses the wrong tool, include a directive: "If ASTRefactor fails, fallback to apply_patch." Specify fallback chains: semantic → AST → text.
+- **Tool registry:** expose tool metadata (name, usage example, input schema, capabilities and limits) in the agent's initialization context, with `use_when` and `avoid_when` criteria per tool.
+- **Prompt templates:** reuse templates with placeholders, for example `"Task: {task_description}. Preferred tool: {tool_name}. Usage example: {tool_usage_snippet}."`
+- **Fallback handling:** add a directive such as "If ASTRefactor fails, fall back to apply_patch," and test the chain.
 
 ## Trade-offs
 
 - **Pros:**
-  - **Predictable Behavior:** Reduces variance in tool usage for the same task.
-  - **Higher Code Quality:** Ensures the agent uses semantically safe tools (e.g., AST-based) over string-based replacements.
-  - **Appropriate Tool Selection:** Guides agents to match tool capabilities to task requirements (text for simple fixes, AST for refactoring, semantic for API migrations).
+  - **Predictable behavior:** reduces variance in tool usage for the same task.
+  - **Higher code quality:** steers the agent to semantically safe tools and formats for the task.
+  - **Measured effect:** edit-format steering shows large benchmark deltas (aider: 20% to 61% on GPT-4 Turbo).
 - **Cons/Considerations:**
-  - **Prompt Length:** Excessive tool documentation in the prompt can consume valuable tokens.
-  - **Maintenance:** As new patching tools emerge, templates and tool registry need periodic updates.
+  - **Prompt length:** tool documentation consumes tokens.
+  - **Maintenance:** as patching tools change, templates and the tool registry need updates.
+  - **Format lock-in:** a format chosen for one model may not be optimal for the next; re-run benchmarks when the model changes.
 
 ## References
 
-- Adapted from "Tool Use Steering via Prompting" in Claude Code best practices.
-- Will Brown's notes on "if you want it to be a tool use agent" you must decide that's the default behavior in the prompt.
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
-
-**Academic Foundations:**
-- Yao, S. et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023. https://arxiv.org/abs/2210.03629
-- Yan, S. et al. (2023). "API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs." https://arxiv.org/abs/2304.08244
+- Primary source: [Unified diffs make GPT-4 Turbo 3X less lazy](https://aider.chat/docs/unified-diffs.html) — aider's write-up of prompting GPT to produce unified diffs, with refactoring benchmark results (20% to 61%) and experiments over alternative edit formats. It covers edit-format steering for code changes, not multi-tool registries.
+- Parent pattern: [Tool Use Steering via Prompting](tool-use-steering-via-prompting.md) — the general technique this file specializes.
+- Yao, S. et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023. https://arxiv.org/abs/2210.03629 — general foundation for interleaved reasoning and tool use; not patch-specific.
+- An earlier revision cited a Prime Intellect talk on agentic RL as the primary source; that talk does not discuss patch-tool steering, so it was removed.

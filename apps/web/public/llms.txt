@@ -177,7 +177,7 @@ URL: https://agentic-patterns.com/patterns/cli-first-skill-design
 Markdown: https://agentic-patterns.com/patterns/cli-first-skill-design.md
 
 ### cli-native-agent-orchestration
-CLI-Native Agent Orchestration: Exposes agent capabilities as CLI commands with JSON output and exit codes so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs
+CLI-Native Agent Orchestration: Drives agents through their non-interactive CLI mode (claude -p with JSON output and exit codes) so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs
 URL: https://agentic-patterns.com/patterns/cli-native-agent-orchestration
 Markdown: https://agentic-patterns.com/patterns/cli-native-agent-orchestration.md
 
@@ -267,7 +267,7 @@ URL: https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolutio
 Markdown: https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution.md
 
 ### cross-protocol-agent-discovery
-Cross-Protocol Agent Discovery: Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer.
+Cross-Protocol Agent Discovery: Aggregates agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer (proposed; no neutral implementation verified)
 URL: https://agentic-patterns.com/patterns/cross-protocol-agent-discovery
 Markdown: https://agentic-patterns.com/patterns/cross-protocol-agent-discovery.md
 
@@ -662,7 +662,7 @@ URL: https://agentic-patterns.com/patterns/parallel-tool-call-learning
 Markdown: https://agentic-patterns.com/patterns/parallel-tool-call-learning.md
 
 ### patch-steering-via-prompted-tool-selection
-Patch Steering via Prompted Tool Selection: Tells the agent in the prompt which patch or refactoring tool to use, with usage examples, negative rules, and a fallback order
+Patch Steering via Prompted Tool Selection: Tells the agent in the prompt which patch tool or edit format to use, with usage examples, negative rules, and a fallback order
 URL: https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection
 Markdown: https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection.md
 

@@ -3449,7 +3449,7 @@ Worth adopting once a background or scheduled agent handles more than a handful 
 **Status:** emerging
 **Category:** Tool Use & Environment
 **Authors:** Lucas Carlson
-**Source:** https://github.com/anthropics/claude-code
+**Source:** https://code.claude.com/docs/en/skills
 
 ## Problem
 
@@ -3463,6 +3463,8 @@ Teams end up building two interfaces or choosing one audience over the other.
 ## Solution
 
 Design all skills as **CLI tools first**. A well-designed CLI is naturally dual-use: humans can invoke it from the terminal, and agents can invoke it via shell commands.
+
+The standardized **Agent Skills format** (a folder with a `SKILL.md` file plus optional `scripts/`, references, and assets) defines the container: where the skill lives and how the agent discovers and loads it. The CLI-first rule in this pattern governs what you put in that container — bundled capabilities that behave like well-behaved Unix commands. The CLI-first framing itself is the contributing author's practice; the cited sources below document the skills format and agent tool design, not a published skills-as-CLI methodology.
 
 ```mermaid
 graph LR
@@ -3483,7 +3485,7 @@ graph LR
 6. **Default non-interactive**: Avoid prompts; provide `--yes` or `--force` flags instead
 
 ```bash
-# Example: Trello skill as CLI
+# Illustrative example: a Trello skill as a CLI (written for this pattern, not taken from a cited source)
 trello.sh boards                    # List all boards
 trello.sh cards <BOARD_ID>          # List cards on board
 trello.sh create <LIST_ID> "Title"  # Create card
@@ -3571,79 +3573,92 @@ echo "-- Asana --"
 
 ## References
 
-* Unix Philosophy (Doug McIlroy): "Write programs that do one thing and do it well"
-* POSIX exit code conventions: IEEE Std 1003.1
-* Dual-Use Tool Design pattern
-* Intelligent Bash Tool Execution pattern
-* 12-Factor App: Config via environment
-* Claude Code skills directory structure
-
-- Primary source: https://github.com/anthropics/claude-code
-- anthropics/skills: https://github.com/anthropics/skills
+- Primary source: [Claude Code skills documentation](https://code.claude.com/docs/en/skills) — documents the skill layout used above: a `SKILL.md` folder per skill under `~/.claude/skills/`, with optional `scripts/` that the agent executes rather than loads into context.
+- [Agent Skills open format](https://agentskills.io) and [anthropics/skills](https://github.com/anthropics/skills) — the open standard and Anthropic's repository for skills. Skills there are folders of instructions, scripts, and resources; the sources define the format, not a CLI-first design rule.
+- [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) (Anthropic, 2025) — guidance on agent-facing tool design: consolidated high-signal tools, namespacing, response formats, and actionable error messages. It covers tool design generally, not skills-as-CLI specifically.
+- Unix Philosophy (Doug McIlroy): "Write programs that do one thing and do it well"
+- POSIX exit code conventions: IEEE Std 1003.1
+- 12-Factor App: Config via environment
+- Boundary with related patterns: [Dual-Use Tool Design](dual-use-tool-design.md) states the general principle (one interface for humans and agents); this pattern applies it to how skills are built. [CLI-Native Agent Orchestration](cli-native-agent-orchestration.md) scripts the agent itself through its CLI rather than building skills.
 
 ---
 
 ## CLI-Native Agent Orchestration
 
-**Status:** proposed
+**Status:** established
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** http://jorypestorious.com/blog/ai-engineer-spec/
+**Source:** https://code.claude.com/docs/en/headless
 
 ## Problem
 
-Most agent workflows start in chat UIs that are optimized for one-off conversations, not repeatable engineering operations. Teams struggle to automate runs, compose agent steps with existing shell tools, and enforce the same behavior in local development and CI. Without a CLI surface, orchestration logic becomes manual and hard to reproduce.
-
-The CLI-Native approach applies 50+ years of Unix design principles—modularity, composition, and explicit execution—to agent orchestration.
+Most agent workflows start in chat UIs that are optimized for one-off conversations, not repeatable engineering operations. Teams struggle to automate runs, compose agent steps with existing shell tools, and enforce the same behavior in local development and CI. Without a scriptable surface, orchestration logic becomes manual and hard to reproduce.
 
 ## Solution
 
-Expose agent capabilities through a **first-class command-line interface** (here: *Claude CLI*).
+Run the agent through its **non-interactive print mode**. In Claude Code this is `claude -p` with machine-readable output, documented in the official headless and CLI reference pages:
 
-- `claude spec run` — generate/update code from a spec file.
-- `claude spec test` — run the Spec-As-Test suite.
-- `claude repl` — drop into an interactive shell with all project context pre-loaded.
+- `claude -p "query"` — run one task, print the result, and exit.
+- `--output-format json` — structured result with session ID, cost, and metadata (`stream-json` for events).
+- `--json-schema '{...}'` — validated structured output in the `structured_output` field.
+- Exit code semantics — 0 on success, non-zero on failure, so shell scripts and CI can branch.
+- `--allowedTools` and `--permission-mode` — pre-approve a bounded tool set; `--permission-prompts none` for unattended runs.
+- `--max-turns` and `--max-budget-usd` — cap runaway loops and spend.
+- `--continue` / `--resume <session>` — chain multi-step runs on one conversation.
+- `--bare` — skip loading hooks, skills, plugins, and CLAUDE.md for fast, hermetic runs in CI.
 
-**Key mechanisms:**
-- **Structured output**: JSON for scripts (`--json` flag), human-readable for terminals
-- **Exit code semantics**: `0` for success, non-zero for failure
-- **TTY detection**: Auto-switch output format based on execution context
+Developers wrap these calls in Makefiles, Git hooks, cron jobs, and CI steps, and parse results with `jq`. The CLI becomes the stable contract between humans, scripts, and automation, with an auditable command history.
 
-Developers can integrate these commands into Makefiles, Git hooks, cron jobs, and CI workflows. The CLI becomes the stable contract between humans, scripts, and automation systems, enabling headless operation with auditable command history.
+```mermaid
+graph LR
+    A[Makefile / CI job] --> B["claude -p --output-format json"]
+    B --> C[jq parses result + cost]
+    C --> D{Exit code}
+    D -->|0| E[Next pipeline step]
+    D -->|non-zero| F[Fail the job]
+```
 
 ## Example
 
 ```bash
-# In your project Makefile
-generate-from-spec:
-	claude spec run --input api.yaml --output src/
+# Makefile: agent-driven review of the diff against main
+review:
+	git diff main | claude -p "Review this diff for typos and obvious bugs. Report file:line for each finding." \
+		--output-format json | jq -r '.result'
 
-test-spec-compliance:
-	claude spec test --spec api.yaml --codebase src/
+# Git pre-commit hook: unattended check, no prompts possible
+claude -p "Check staged changes for leftover debug statements." \
+	--permission-mode dontAsk --permission-prompts none --max-turns 3
 
-# Git pre-commit hook
-claude spec test || exit 1
+# CI: parse the result and the cost estimate
+result=$(claude -p "Summarize the test failures" --output-format json)
+echo "$result" | jq -r '.result'
+echo "$result" | jq -r '.total_cost_usd'
 ```
-
-## Trade-offs
-
-- **Pros:** scriptable, works offline with local context, easy to embed in other tools.
-- **Cons:** initial install & auth; learning curve for CLI flags.
-
-**When NOT to use:** exploratory tasks with unclear next steps; real-time conversational workflows; high-frequency operation (>100 calls/sec).
 
 ## How to use it
 
-- Start by wrapping one high-friction workflow (for example, spec-to-code generation) in a single CLI command.
-- Standardize flags and output formats so scripts can parse outcomes deterministically.
-- Add CLI commands to `make` targets and CI jobs before expanding scope.
-- Log command invocations and artifact paths for replay and debugging.
+- Wrap one high-friction workflow (for example a review or a fix loop) in a single scripted `claude -p` call before expanding scope.
+- Standardize on `--output-format json` plus `jq` so scripts parse outcomes deterministically.
+- Use `--permission-mode` and an explicit `--allowedTools` list instead of blanket permission skips.
+- Add `--bare` in CI so a teammate's local hooks or MCP servers cannot change the result.
+- Log command invocations, session IDs, and artifact paths for replay and debugging.
+
+## Trade-offs
+
+- **Pros:** scriptable and repeatable; documented exit codes and JSON output; works in CI with no UI; cost and turn caps built in.
+- **Cons:** initial install and auth; prompt engineering replaces interactive steering; long conversations need explicit `--continue`/`--resume` handling.
+
+**When NOT to use:** exploratory tasks that need human steering; interactive pair programming; embedding agent calls inside an application, where the Agent SDK fits better.
 
 ## References
 
-- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/
-- "Why Human-Agent Systems Should Precede AI Autonomy" (arXiv:2506.09420, 2025) — supports CLI transparency for human oversight
-- The Art of Unix Programming — Eric S. Raymond (2003) — 17 design rules applicable to agent orchestration
+- Primary source: [Run Claude Code programmatically](https://code.claude.com/docs/en/headless) — official headless mode documentation: `-p` usage, output formats, exit codes, unattended permission handling, and CI examples.
+- [CLI reference](https://code.claude.com/docs/en/cli-reference) — full flag reference for `-p`, `--output-format`, `--json-schema`, `--max-turns`, `--max-budget-usd`, and `--bare`.
+- "Why Human-Agent Systems Should Precede AI Autonomy" ([arXiv:2506.09420](https://arxiv.org/abs/2506.09420), 2025) — a general position paper on human oversight of agent systems; it argues for transparent, inspectable agent operation but does not document this CLI workflow.
+- The Art of Unix Programming — Eric S. Raymond (2003) — Unix design rules that motivate CLI composition.
+- An earlier revision of this pattern cited `claude spec run`, `claude spec test`, and `claude repl` subcommands and a third-party blog post. Those subcommands do not exist in the official CLI, and the post does not describe this pattern; both were removed.
+- Related catalogue patterns: [CLI-First Skill Design](cli-first-skill-design.md) builds skills as CLIs; this pattern scripts the agent itself through its CLI. [Agent SDK for Programmatic Control](agent-sdk-for-programmatic-control.md) covers embedding the same agent loop in programs.
 
 ---
 
@@ -5950,32 +5965,31 @@ graph TD
 
 ## Cross-Protocol Agent Discovery
 
-**Status:** emerging
+**Status:** proposed
 **Category:** Tool Use & Environment
 **Authors:** Global Chat (@globalchatads)
-**Source:** https://modelcontextprotocol.io
+**Source:** https://agents-txt.com
 
 ## Problem
 
-The AI agent ecosystem is fragmented across multiple incompatible discovery protocols:
+Agent and tool discovery is spread across several mechanisms that do not reference each other:
 
-- **MCP (Model Context Protocol)**: Multiple competing registries (mcp.so, Glama.ai, Smithery, PulseMCP) each with partial coverage and no cross-referencing
-- **agents.txt**: A convention for advertising agent capabilities via a well-known file, similar to robots.txt
-- **Google A2A (Agent-to-Agent)**: Google's protocol for inter-agent communication and discovery
-- **ACDP (Agent Communication Description Protocol)**: Standardized agent capability descriptions
-- **Platform-specific directories**: OpenAI GPT Store, Claude integrations, and others each maintain their own listings
+- **MCP**: an official community registry (launched in preview in September 2025) coexists with earlier third-party directories, each with partial coverage.
+- **agents.txt**: a robots.txt-style convention — a plain-text file at `<origin>/agents.txt` that advertises which agent-facing protocols and features a site supports, with a machine-readable `agents.json` companion.
+- **A2A (Agent2Agent)**: an open protocol for agent discovery and collaboration, contributed by Google and now an open-source project under the Linux Foundation.
+- **Platform-specific directories**: vendor marketplaces each maintain their own listings.
 
-No single registry covers all protocols. An agent listed in an MCP registry won't appear in A2A directories, and vice versa. This creates a discovery problem analogous to early web search before meta-search engines.
+An agent listed in an MCP registry will not appear in an A2A agent card or an agents.txt file, and vice versa. This creates a discovery gap analogous to early web search before meta-search engines.
 
 ## Solution
 
 Aggregate agent metadata across registries and protocols into a unified, protocol-agnostic discovery layer:
 
-1. **Registry Crawling**: Periodically ingest agent listings from each protocol-specific registry via their APIs or structured feeds
-2. **Schema Normalization**: Map each registry's metadata schema to a common format (name, description, capabilities, transport, auth, endpoint)
-3. **Protocol Tagging**: Label each agent with its supported protocol(s), enabling cross-protocol search and comparison
-4. **Unified Search API**: Expose a single search interface that queries across all normalized data
-5. **Validation**: Verify agent endpoints are reachable and metadata is accurate at crawl time
+1. **Registry crawling**: periodically ingest agent listings from each protocol-specific registry via their APIs or structured feeds.
+2. **Schema normalization**: map each registry's metadata schema to a common format (name, description, capabilities, transport, auth, endpoint).
+3. **Protocol tagging**: label each agent with its supported protocol or protocols, enabling cross-protocol search and comparison.
+4. **Unified search API**: expose a single search interface over the normalized data.
+5. **Validation**: verify that agent endpoints are reachable and metadata is accurate at crawl time.
 
 ```mermaid
 graph TD
@@ -5988,29 +6002,33 @@ graph TD
     E --> H[Web UI]
 ```
 
+As of October 2026 we could not verify a neutral, cross-registry implementation of this architecture, so treat the design above as a proposal built from the listed protocol sources.
+
 ## How to use it
 
-- **Agent platforms**: Query the aggregated index to discover the best available agent for a task regardless of its native protocol
-- **Developer tooling**: Integrate cross-protocol search into IDEs and CLI tools so developers find relevant agents without knowing which registry hosts them
-- **Orchestration systems**: Route tasks to agents across protocol boundaries by maintaining a unified capability index
+- **Agent platforms**: query the aggregated index to discover the best available agent for a task regardless of its native protocol.
+- **Developer tooling**: integrate cross-protocol search into IDEs and CLI tools so developers find relevant agents without knowing which registry hosts them.
+- **Orchestration systems**: route tasks to agents across protocol boundaries by maintaining a unified capability index.
 
-**Implementation considerations**:
+**Implementation considerations:**
 
-- Start with the highest-coverage registries for your use case and expand incrementally
-- Implement incremental sync with per-registry rate limits rather than full re-crawls
-- Cache normalized metadata with TTLs appropriate to each registry's update frequency
-- Consider exposing the aggregated index as an MCP server itself, enabling agents to discover other agents programmatically
+- Start with the highest-coverage registries for your use case and expand incrementally.
+- Implement incremental sync with per-registry rate limits rather than full re-crawls.
+- Cache normalized metadata with TTLs appropriate to each registry's update frequency.
+- Consider exposing the aggregated index as an MCP server itself, enabling agents to discover other agents programmatically.
 
 ## Trade-offs
 
-- **Pros:** Single search surface for all agent protocols; protocol-agnostic so it adapts as protocols emerge or fade; reduces vendor lock-in to any single registry; enables cross-protocol capability comparison.
-- **Cons:** Aggregation introduces latency versus direct registry queries; schema normalization loses protocol-specific metadata; operational burden of maintaining crawlers for each registry; stale data risk if registries update faster than sync cycles; discovery does not equal trust — aggregation verifies listing accuracy, not agent quality.
+- **Pros:** single search surface for all agent protocols; protocol-agnostic so it adapts as protocols emerge or fade; reduces lock-in to any single registry; enables cross-protocol capability comparison.
+- **Cons:** aggregation adds latency versus direct registry queries; schema normalization loses protocol-specific metadata; operational burden of maintaining crawlers for each registry; stale data risk if registries update faster than sync cycles; discovery does not equal trust — aggregation verifies listing accuracy, not agent quality.
 
 ## References
 
-- [Model Context Protocol Specification](https://modelcontextprotocol.io) — Anthropic's protocol for LLM-tool integration
-- [agents.txt Specification](https://agentsprotocol.ai) — Convention for advertising agent capabilities
-- [Google A2A Protocol](https://github.com/google/A2A) — Agent-to-Agent communication protocol
+- Primary source: [agents.txt](https://agents-txt.com) — the agents.txt convention: a well-known file that advertises supported agent protocols (MCP, A2A, payments, and others) with an `agents.json` machine-readable companion. It documents one discovery layer this pattern aggregates, not the aggregation itself.
+- [A2A Protocol](https://github.com/a2aproject/A2A) — open agent-to-agent protocol repository, an open-source project under the Linux Foundation (contributed by Google).
+- [MCP Registry](https://github.com/modelcontextprotocol/registry) — the official community-driven registry for MCP servers, in preview since September 2025, with its API in a v0.1 freeze since October 2025.
+- [Model Context Protocol](https://modelcontextprotocol.io) — the MCP specification homepage; background on the protocol, not on cross-registry aggregation.
+- An earlier revision linked agentsprotocol.ai for an "ACDP" specification; that domain no longer resolves, and the claim could not be re-verified, so it was removed.
 - Related catalogue patterns: [Tool Search Lazy Loading](tool-search-lazy-loading.md), [Progressive Tool Discovery](progressive-tool-discovery.md), [Static Service Manifest for Agents](static-service-manifest-for-agents.md)
 
 ---
@@ -13398,15 +13416,15 @@ flowchart TD
 **Status:** emerging
 **Category:** Security & Safety
 **Authors:** SAMA-I (@s-a-m-a-i)
-**Source:** https://policylayer.com
+**Source:** https://eips.ethereum.org/EIPS/eip-7715
 
 ## Problem
 
-AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. This is a specific instance of the "lethal trifecta" threat model: combining wallet access with untrusted inputs and external communication creates exploitation paths.
+AI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. The risk compounds when one agent has wallet access, reads untrusted content, and can make outbound network calls: prompt-injection payloads then have a direct path to funds.
 
 ## Solution
 
-Insert an explicit policy enforcement layer between the agent and transaction signing. The agent submits transaction intent, the policy layer validates it against rules, and only approved intents are forwarded to a signer.
+Insert an explicit policy enforcement layer between the agent and transaction signing. The agent submits transaction intent, the policy layer validates it against rules, and only approved intents are forwarded to a signer. This is the wallet-signing instance of the catalogue's [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md): the protected tool server behind the proxy is a transaction signer, and the policy engine expresses spend rules.
 
 Core mechanics:
 
@@ -13439,12 +13457,12 @@ Core mechanics:
 
 ## References
 
-- [PolicyLayer](https://policylayer.com)
-- [Coinbase Agentic Wallet controls](https://www.coinbase.com)
-- [Openfort](https://www.openfort.xyz)
-- [EIP-4337: Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337) - Smart contract wallets with policy enforcement
-- [ERC-7715: Permissions and Delegation](https://eips.ethereum.org/EIPS/eip-7715) - Standardized wallet delegation for agents
-- [The Lethal Trifecta - Simon Willison](https://simonwillison.net/2025/Jun/16/lethal-trifecta/) - Foundational threat model
+- Primary source: [ERC-7715: Request Permissions from Wallets](https://eips.ethereum.org/EIPS/eip-7715) — Draft standard for `wallet_requestExecutionPermissions`, a JSON-RPC method that grants bounded, revocable execution permissions to a smart account; it requires EIP-4337 and EIP-7710. It defines the permission interface this pattern enforces; it is not agent-specific.
+- [EIP-4337: Account Abstraction Using Alt Mempool](https://eips.ethereum.org/EIPS/eip-4337) — Final standard for smart contract accounts, bundlers, and paymasters; the account layer that policy-gated signers build on.
+- [x402](https://x402.org) — open payment protocol in which servers answer unauthenticated requests with HTTP 402 and agents pay to retry; the payment flow these controls gate.
+- [Openfort](https://www.openfort.io) — vendor example of agent wallets with spending policies, session keys, and sponsored gas (a commercial product, cited as an implementation, not a neutral standard).
+- Related catalogue pattern: [Policy-Gated Tool Proxy](policy-gated-tool-proxy.md) — the general proxy-plus-policy-engine technique this file specializes for wallet signing.
+- Earlier revisions linked a vendor homepage and a bare Coinbase homepage as sources, plus a Willison article whose URL no longer resolves; they were removed or replaced with the references above.
 
 ---
 
@@ -14621,86 +14639,85 @@ graph TD
 
 ## Patch Steering via Prompted Tool Selection
 
-**Status:** best-practice
+**Status:** emerging
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://www.youtube.com/watch?v=Xkwok_XXQgw
+**Source:** https://aider.chat/docs/unified-diffs.html
 
 ## Problem
 
-Coding agents with access to multiple patching or refactoring tools (e.g., text-based `apply_patch`, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:
+Coding agents with access to multiple patching or refactoring tools (text-based search/replace, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:
 
-- **Unnecessary Complexity:** Agent might use a generic text-replace tool instead of a specialized AST-aware refactoring tool.
-- **Inconsistent Results:** Without explicit instructions, the agent's tool selection can vary unpredictably, hampering reproducibility.
-- **Safety Risks:** Text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors.
+- **Unnecessary complexity:** the agent picks a generic text-replace tool instead of a specialized AST-aware refactoring tool.
+- **Inconsistent results:** without explicit instructions, tool selection varies between runs for the same task.
+- **Safety risks:** text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors.
+
+The edit-format choice is measurable. In aider's refactoring benchmark, prompting GPT-4 Turbo to emit unified diffs instead of the previous search/replace block format raised the score from 20% to 61%, and lazy "rest of code unchanged" edits dropped from 12 of 89 tasks to 4. The patch format the prompt asks for is part of the tool interface.
 
 ## Solution
 
-**Steer** the agent's tool selection and patch approach through **explicit natural language instructions** in the prompt. Techniques include:
+**Steer** the agent's patch-tool and edit-format selection through explicit natural language instructions in the prompt. This pattern is the patch-tool specialization of the catalogue's [Tool Use Steering via Prompting](tool-use-steering-via-prompting.md); apply that general pattern when the tools in question are anything other than code-editing tools.
 
-**1. Direct Tool Invocation**
+Patch-specific techniques:
+
+**1. Name the tool and the format**
+
 - Prepend: "Use the `apply_patch` tool to insert a new function `validate_input` in `auth_service.py`."
-- The agent recognizes "apply_patch" as the preferred patching mechanism.
+- When the model's own edit format is the variable, specify it: "Return a unified diff, one hunk per function."
 
-**2. Tool Usage Teaching**
+**2. Teach the tool in the prompt**
+
 - Provide a mini-manual in the context:
-  ```text
-  "Our `ASTRefactor` tool takes JSON describing node edits:  
-  {"file": string, "pattern": string, "replacement": string}.  
-  Use it for safe refactors rather than raw `sed` commands."  
-  ```
-- This orients the agent to use the safer, higher-level refactoring tool when modifying function signatures or renaming classes.
 
-**3. Implicit Shorthands**
-- Introduce domain-specific abbreviations: "When instructing to rename variables, say `renameVar(old, new)`; the agent maps this to the ASTRefactor tool under the hood."
+```text
+"Our `ASTRefactor` tool takes JSON describing node edits:
+{"file": string, "pattern": string, "replacement": string}.
+Use it for safe refactors rather than raw sed commands."
+```
 
-**4. Reason-Encouraging Phrases**
-- Add: "Think about type safety before choosing a patch tool."
-- Promotes deeper reasoning so the agent doesn't just apply surface-level text replacements.
+**3. Prefer familiar, forgiving formats**
 
-**5. Negative Constraints**
-- Specify what NOT to use: "Do NOT use text-based patching for function signature changes (will break imports)."
-- Explicit anti-patterns prevent unsafe tool selections more effectively than positive instructions alone.
+- Aider's benchmarks found that simple, familiar formats (unified diffs) beat structured formats such as JSON tool calls for code edits, because escaping code is error-prone, and that flexibly applying imperfect patches mattered: strict application increased editing errors about 9x.
+
+**4. Negative constraints and fallback order**
+
+- Specify what NOT to use: "Do NOT use text-based patching for signature changes (it breaks imports)."
+- Specify a fallback chain: semantic → AST → text, for when the safer tool fails.
 
 ## Example
 
 ```mermaid
 flowchart TD
     A[User Prompt: "Refactor validation logic"] --> B[Augmented Prompt]
-    B --> C["Please use ASTRefactor to update function signatures"]
+    B --> C["Use ASTRefactor for signature changes; fallback to apply_patch"]
     C --> D[Agent selects ASTRefactor]
-    D --> E[ASTRefactorTool patches code]
+    D --> E[ASTRefactor patches code safely]
+    E -->|ASTRefactor fails| F[apply_patch fallback]
 ```
 
 ## How to use it
 
-- **Tool Registry:** Expose tool metadata (name, usage example, input schema, capabilities/limitations) in the agent's initialization context. Include `use_when` and `avoid_when` criteria for each tool.
-- **Prompt Templates:** Create reusable templates with placeholders, e.g.:
-  ```
-  "Task: {task_description}. Preferred tool: {tool_name}.
-  Usage example: {tool_usage_snippet}."
-  ```
-- **Fallback Handling:** If the agent ignores the instruction and uses the wrong tool, include a directive: "If ASTRefactor fails, fallback to apply_patch." Specify fallback chains: semantic → AST → text.
+- **Tool registry:** expose tool metadata (name, usage example, input schema, capabilities and limits) in the agent's initialization context, with `use_when` and `avoid_when` criteria per tool.
+- **Prompt templates:** reuse templates with placeholders, for example `"Task: {task_description}. Preferred tool: {tool_name}. Usage example: {tool_usage_snippet}."`
+- **Fallback handling:** add a directive such as "If ASTRefactor fails, fall back to apply_patch," and test the chain.
 
 ## Trade-offs
 
 - **Pros:**
-  - **Predictable Behavior:** Reduces variance in tool usage for the same task.
-  - **Higher Code Quality:** Ensures the agent uses semantically safe tools (e.g., AST-based) over string-based replacements.
-  - **Appropriate Tool Selection:** Guides agents to match tool capabilities to task requirements (text for simple fixes, AST for refactoring, semantic for API migrations).
+  - **Predictable behavior:** reduces variance in tool usage for the same task.
+  - **Higher code quality:** steers the agent to semantically safe tools and formats for the task.
+  - **Measured effect:** edit-format steering shows large benchmark deltas (aider: 20% to 61% on GPT-4 Turbo).
 - **Cons/Considerations:**
-  - **Prompt Length:** Excessive tool documentation in the prompt can consume valuable tokens.
-  - **Maintenance:** As new patching tools emerge, templates and tool registry need periodic updates.
+  - **Prompt length:** tool documentation consumes tokens.
+  - **Maintenance:** as patching tools change, templates and the tool registry need updates.
+  - **Format lock-in:** a format chosen for one model may not be optimal for the next; re-run benchmarks when the model changes.
 
 ## References
 
-- Adapted from "Tool Use Steering via Prompting" in Claude Code best practices.
-- Will Brown's notes on "if you want it to be a tool use agent" you must decide that's the default behavior in the prompt.
-- Primary source: https://www.youtube.com/watch?v=Xkwok_XXQgw
-
-**Academic Foundations:**
-- Yao, S. et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023. https://arxiv.org/abs/2210.03629
-- Yan, S. et al. (2023). "API-Bank: A Comprehensive Benchmark for Tool-Augmented LLMs." https://arxiv.org/abs/2304.08244
+- Primary source: [Unified diffs make GPT-4 Turbo 3X less lazy](https://aider.chat/docs/unified-diffs.html) — aider's write-up of prompting GPT to produce unified diffs, with refactoring benchmark results (20% to 61%) and experiments over alternative edit formats. It covers edit-format steering for code changes, not multi-tool registries.
+- Parent pattern: [Tool Use Steering via Prompting](tool-use-steering-via-prompting.md) — the general technique this file specializes.
+- Yao, S. et al. (2022). "ReAct: Synergizing Reasoning and Acting in Language Models." ICLR 2023. https://arxiv.org/abs/2210.03629 — general foundation for interleaved reasoning and tool use; not patch-specific.
+- An earlier revision cited a Prime Intellect talk on agentic RL as the primary source; that talk does not discuss patch-tool steering, so it was removed.
 
 ---
 
@@ -19422,11 +19439,11 @@ def discover_skills():
 **Status:** emerging
 **Category:** Security & Safety
 **Authors:** Eiji Motomura (@EijiAC24)
-**Source:** https://eips.ethereum.org/EIPS/eip-5192
+**Source:** https://chitin.id
 
 ## Problem
 
-As autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations.
+As autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations. Standardization is nascent: ERC-8004 ("Trustless Agents", Draft since August 2025) proposes on-chain identity, reputation, and validation registries for agents, but no widely deployed neutral standard exists yet.
 
 ## Solution
 
@@ -19450,9 +19467,9 @@ graph TD
 
 ## Evidence
 
-- **Evidence Grade:** `medium`
+- **Evidence Grade:** `low`
 - **Most Valuable Findings:** Non-transferable credentials prevent credential theft and impersonation; hash-based state commitments enable verifiable continuity checks without requiring identity disclosure.
-- **Unverified / Unclear:** Long-term operational costs and scalability across large agent fleets require further production validation.
+- **Unverified / Unclear:** The only public implementation we could verify (Chitin) is launch-stage — registration is free for the first 10,000 agents, its contracts repository is young, and its MCP server npm package has a single early release. Long-term operational costs and scalability across large agent fleets are unproven.
 
 ## When to use
 
@@ -19463,24 +19480,27 @@ graph TD
 ## Trade-offs
 
 - **Pros:** Non-transferability prevents credential delegation and theft; tamper-resistant logging provides auditable state history; enables verification without identity disclosure.
-- **Cons:** Requires external registry and append-only log infrastructure; hash commitments verify state integrity but not semantic correctness; operational overhead for issuing/rotating credentials.
+- **Cons:** Requires external registry and append-only log infrastructure; hash commitments verify state integrity but not semantic correctness; operational overhead for issuing/rotating credentials; standards are still drafts and adoption is unproven.
 
 ## Known Implementations
 
-- [Chitin](https://chitin.id)
+- [Chitin](https://chitin.id) — on-chain agent identity on Base L2: EIP-5192 soulbound tokens, Merkle-proof selective disclosure, and a Chronicle log on Arweave; ERC-8004 passport compatible; launch-stage.
 - [Chitin MCP Server](https://www.npmjs.com/package/chitin-mcp-server)
 - [Chitin Contracts](https://github.com/chitin-id/chitin-contracts)
 
 ## How to use it
 
-- Use this when tool access, data exposure, or action authority must be tightly controlled.
-- Start with deny-by-default policy and minimal required privileges.
-- Continuously audit logs for attempted policy bypass and anomalous behavior.
+- Hash the normalized system prompt and configuration at registration, and commit the hash with the identity credential.
+- Issue the non-transferable credential to the agent's own address so it cannot be reassigned.
+- Record every prompt, operator, or policy change as a signed event in the append-only log.
+- Before delegating, verify all three: the credential is valid and locked, the agent's current state hash matches the latest committed hash, and the change log has no gaps.
 
 ## References
 
-- ERC-5192: Non-Transferable Tokens (Soulbound Tokens) - https://eips.ethereum.org/EIPS/eip-5192
-- Vitalik Buterin on Soulbound Items - https://vitalik.ca/general/2022/01/26/soulbound.html
+- Primary source: [Chitin](https://chitin.id) — the launch-stage implementation this entry's mechanism description follows: EIP-5192 soulbound identity on Base L2, state-hash commitments, selective disclosure, and a Chronicle log on Arweave. A vendor site, cited because no neutral deployment exists yet.
+- [ERC-5192: Minimal Soulbound NFTs](https://eips.ethereum.org/EIPS/eip-5192) — Final standard for a minimal non-transferability lock on EIP-721 tokens. It defines non-transferability only and does not mention AI agents.
+- [ERC-8004: Trustless Agents](https://eips.ethereum.org/EIPS/eip-8004) — Draft standard (August 2025) for on-chain AI-agent identity, reputation, and validation registries; the closest neutral standardization effort.
+- [W3C Decentralized Identifiers v1.0](https://www.w3.org/TR/did-core/) — the neutral identifier layer this pattern complements: verifiable, decentralized identifiers resolvable to cryptographic material.
 
 ---
 
@@ -22531,10 +22551,10 @@ sequenceDiagram
 
 ## Visual AI Multimodal Integration
 
-**Status:** emerging
+**Status:** established
 **Category:** Tool Use & Environment
 **Authors:** Nikola Balic (@nibzard)
-**Source:** https://openai.com/research/gpt-4v-system-card
+**Source:** https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
 
 ## Problem
 
@@ -22542,9 +22562,9 @@ Many real-world tasks require understanding and processing visual information al
 
 ## Solution
 
-Integrate large multimodal models (LMMs) into agent architectures to enable visual understanding capabilities. This pattern involves:
+Integrate large multimodal models (LMMs) into agent architectures to enable visual understanding capabilities. Vision input is now a default capability of frontier models, so the pattern is the integration architecture around it — input pipelines, the screenshot-driven agent loop, and cost control — not the presence of vision itself. This pattern involves:
 
-1. **Visual Input Handling**: Accept images, videos, or screenshots as input alongside text. Images are typically resized and base64-encoded or provided via URL. Video may require frame extraction (except Gemini which supports native video processing).
+1. **Visual Input Handling**: Accept images, videos, or screenshots as input alongside text. Images are typically resized and base64-encoded or provided via URL. Video often requires frame extraction unless the chosen provider accepts video natively.
 
 2. **Visual Analysis**: Use multimodal models to extract information, identify objects, read text (OCR), understand spatial relationships, and interpret diagrams or charts.
 
@@ -22552,7 +22572,7 @@ Integrate large multimodal models (LMMs) into agent architectures to enable visu
 
 4. **Visual-Guided Actions**: Take actions based on visual understanding (clicking UI elements, describing scenes, counting objects).
 
-**Provider Selection**: Different providers excel at different tasks—Anthropic Claude for UI understanding and code generation, Google Gemini for native video processing, OpenAI GPT-4o for general-purpose tasks, Meta LLaVA for open-source needs.
+**Provider Selection**: Current frontier models from Anthropic, Google, and OpenAI all accept image input, so select by task fit and current benchmarks rather than by vision support alone. For screenshot-driven computer use, Anthropic ships a documented computer-use tool (see References); open-source multimodal models such as LLaVA remain an option for self-hosted deployments.
 
 ## Example
 
@@ -22703,17 +22723,16 @@ flowchart TD
 
 - Use when tasks require visual understanding—UI debugging, document processing, image analysis, video comprehension, or code generation from screenshots.
 
-- **Choose provider by use case**: Anthropic Claude for UI understanding and screenshot-to-code; Google Gemini for native video processing; OpenAI GPT-4o for general-purpose tasks; Meta LLaVA for open-source/self-hosted needs; Mistral for EU/GDPR compliance.
+- **Choose provider by use case**: all frontier providers accept images, so pick by task fit and verify current capability against the provider's own documentation (for example Anthropic's computer-use tool for screenshot-driven agents, or an open-source multimodal model for self-hosting).
 
 - **Optimize for costs**: Resize images to minimum viable size, use appropriate detail levels (low for general understanding, high for OCR), and consider cascading approaches (smaller models first, escalate when needed).
 
 ## References
 
-- [Andrew Ng on Visual AI and Agentic Workflows (2024)](https://www.deeplearning.ai/the-batch/)
-- [GPT-4V(ision) System Card](https://openai.com/research/gpt-4v-system-card)
-- [Claude 3 Vision Capabilities](https://www.anthropic.com/claude)
-- [Google Gemini Multimodal Features](https://deepmind.google/technologies/gemini/)
-- [LLaVA: Visual Instruction Tuning (Liu et al., 2023)](https://arxiv.org/abs/2304.08485) - Foundational multimodal instruction-following model
+- Primary source: [Claude computer-use tool documentation](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool) — describes a shipped, screenshot-driven multimodal agent loop: the agent returns tool-use blocks such as screenshot, click, and type; the host executes them in a sandbox and returns tool results, repeating until the task completes.
+- [GPT-4V(ision) System Card](https://openai.com/research/gpt-4v-system-card) — OpenAI's 2023 safety analysis of an early vision model; useful background on visual-capability risks, not a description of this pattern.
+- [LLaVA: Visual Instruction Tuning (Liu et al., 2023)](https://arxiv.org/abs/2304.08485) — early open-source multimodal instruction-following model; historical baseline for self-hosted visual agents.
+- Earlier revisions linked a generic newsletter index and provider marketing pages in place of pattern sources; they were removed or replaced with the pages above.
 
 ---
 

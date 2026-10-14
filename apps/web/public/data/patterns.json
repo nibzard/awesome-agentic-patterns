@@ -1201,11 +1201,11 @@
       "Lucas Carlson"
     ],
     "based_on": [
-      "Anthropic (Claude Code)",
+      "Agent Skills format (Anthropic)",
       "Unix Philosophy"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://github.com/anthropics/claude-code",
+    "source": "https://code.claude.com/docs/en/skills",
     "tags": [
       "cli",
       "skills",
@@ -1226,41 +1226,42 @@
       "High-frequency calls above about 100 per second",
       "Complex object graphs or real-time streaming"
     ],
-    "updated_at": "2026-01-05",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nWhen building agent skills (reusable capabilities), there's tension between:\n\n- **API-first design**: Skills as functions/classes—great for programmatic use, but hard to debug and test manually\n- **GUI-first design**: Skills as visual tools—easy for humans, but agents can't invoke them\n\nTeams end up building two interfaces or choosing one audience over the other."
   },
   {
     "title": "CLI-Native Agent Orchestration",
-    "status": "proposed",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Jory Pestorious"
+      "Claude Code headless mode (Anthropic)"
     ],
     "category": "Tool Use & Environment",
-    "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
+    "source": "https://code.claude.com/docs/en/headless",
     "tags": [
       "cli",
       "automation",
       "local-dev",
-      "headless"
+      "headless",
+      "ci"
     ],
     "slug": "cli-native-agent-orchestration",
     "id": "cli-native-agent-orchestration",
-    "summary": "Exposes agent capabilities as CLI commands with JSON output and exit codes so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs",
+    "summary": "Drives agents through their non-interactive CLI mode (claude -p with JSON output and exit codes) so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs",
     "signals": [
       "Agent runs must repeat the same way in local dev and CI",
       "You want to compose agent steps with shell tools, make targets, or Git hooks",
-      "Scripts need to parse agent results and exit codes"
+      "Scripts need to parse agent results, costs, and exit codes"
     ],
     "anti_signals": [
       "Exploratory tasks with unclear next steps",
-      "Real-time conversational workflows",
-      "High-frequency calls above about 100 per second"
+      "Long-running interactive pair-programming sessions",
+      "You need streaming responses inside an application (use the Agent SDK instead)"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nMost agent workflows start in chat UIs that are optimized for one-off conversations, not repeatable engineering operations. Teams struggle to automate runs, compose agent steps with existing shell tools, and enforce the same behavior in local development and CI. Without a CLI surface, orchestration logic becomes manual and hard to reproduce.\n\nThe CLI-Native approach applies 50+ years of Unix design principles—modularity, composition, and explicit execution—to agent orchestration."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nMost agent workflows start in chat UIs that are optimized for one-off conversations, not repeatable engineering operations. Teams struggle to automate runs, compose agent steps with existing shell tools, and enforce the same behavior in local development and CI. Without a scriptable surface, orchestration logic becomes manual and hard to reproduce."
   },
   {
     "title": "Code Mode MCP Tool Interface Improvement Pattern",
@@ -1900,17 +1901,17 @@
   },
   {
     "title": "Cross-Protocol Agent Discovery",
-    "status": "emerging",
+    "status": "proposed",
     "authors": [
       "Global Chat (@globalchatads)"
     ],
     "based_on": [
-      "MCP Registry Protocol (Anthropic)",
-      "agents.txt (Agent Communication Description Protocol)",
-      "Google A2A Protocol"
+      "agents.txt (agents-txt.com)",
+      "A2A Protocol (Linux Foundation)",
+      "MCP Registry (modelcontextprotocol)"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://modelcontextprotocol.io",
+    "source": "https://agents-txt.com",
     "tags": [
       "agent-discovery",
       "mcp",
@@ -1922,9 +1923,9 @@
     ],
     "slug": "cross-protocol-agent-discovery",
     "id": "cross-protocol-agent-discovery",
-    "summary": "Aggregate agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer.",
+    "summary": "Aggregates agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer (proposed; no neutral implementation verified)",
     "signals": [
-      "You need to find agents across MCP, A2A, and agents.txt registries",
+      "You need to find agents across MCP, A2A, and agents.txt surfaces",
       "No single registry covers the protocols your platform uses",
       "Orchestration routes tasks to agents across protocol boundaries"
     ],
@@ -1933,8 +1934,8 @@
       "You need protocol-specific metadata that normalization would drop",
       "You need a trust signal, since discovery does not verify agent quality"
     ],
-    "updated_at": "2026-05-07",
-    "excerpt": "\n## Problem\nThe AI agent ecosystem is fragmented across multiple incompatible discovery protocols:\n\n- **MCP (Model Context Protocol)**: Multiple competing registries (mcp.so, Glama.ai, Smithery, PulseMCP) each with partial coverage and no cross-referencing\n- **agents.txt**: A convention for advertising agent capabilities via a well-known file, similar to robots.txt\n- **Google A2A (Agent-to-Agent)**: Google's protocol for inter-agent communication and discovery\n- **ACDP (Agent Communication Description Protocol)**: Standardized agent capability descriptions\n- **Platform-specific directories**: OpenAI GPT Store, Claude integrations, and others each maintain their own listings\n\nNo single registry covers all protocols. An agent listed in an MCP registry won't appear in A2A directories, and vice versa. This creates a discovery problem analogous to early web search before meta-search engines."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nAgent and tool discovery is spread across several mechanisms that do not reference each other:\n\n- **MCP**: an official community registry (launched in preview in September 2025) coexists with earlier third-party directories, each with partial coverage.\n- **agents.txt**: a robots.txt-style convention — a plain-text file at `<origin>/agents.txt` that advertises which agent-facing protocols and features a site supports, with a machine-readable `agents.json` companion.\n- **A2A (Agent2Agent)**: an open protocol for agent discovery and collaboration, contributed by Google and now an open-source project under the Linux Foundation.\n- **Platform-specific directories**: vendor marketplaces each maintain their own listings.\n\nAn agent listed in an MCP registry will not appear in an A2A agent card or an agents.txt file, and vice versa. This creates a discovery gap analogous to early web search before meta-search engines."
   },
   {
     "title": "Cryptographic Governance Audit Trail",
@@ -4409,10 +4410,12 @@
       "SAMA-I (@s-a-m-a-i)"
     ],
     "based_on": [
-      "Walleted agent execution patterns"
+      "EIP-4337 smart accounts",
+      "ERC-7715 wallet execution permissions",
+      "x402 agent payments"
     ],
     "category": "Security & Safety",
-    "source": "https://policylayer.com",
+    "source": "https://eips.ethereum.org/EIPS/eip-7715",
     "tags": [
       "wallet-controls",
       "spend-limits",
@@ -4433,8 +4436,8 @@
       "Agent never moves funds",
       "Extra latency per transaction is not acceptable"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nAI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. This is a specific instance of the \"lethal trifecta\" threat model: combining wallet access with untrusted inputs and external communication creates exploitation paths."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nAI agents that can initiate wallet actions may issue unsafe transactions under prompt drift, buggy loops, or compromised prompts. If spending approvals are handled directly inside agent prompts or application logic, safety constraints are easy to bypass. The risk compounds when one agent has wallet access, reads untrusted content, and can make outbound network calls: prompt-injection payloads then have a direct path to funds."
   },
   {
     "title": "Non-Generative Judgment Routing with Typed Escalation",
@@ -4832,16 +4835,16 @@
   },
   {
     "title": "Patch Steering via Prompted Tool Selection",
-    "status": "best-practice",
+    "status": "emerging",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Boris Cherny (Claude Code Concepts)",
-      "Will Brown (Prime Intellect Talk)"
+      "Tool Use Steering via Prompting (this catalogue)",
+      "Aider unified-diff benchmarks"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://www.youtube.com/watch?v=Xkwok_XXQgw",
+    "source": "https://aider.chat/docs/unified-diffs.html",
     "tags": [
       "patching",
       "prompt-steering",
@@ -4850,18 +4853,18 @@
     ],
     "slug": "patch-steering-via-prompted-tool-selection",
     "id": "patch-steering-via-prompted-tool-selection",
-    "summary": "Tells the agent in the prompt which patch or refactoring tool to use, with usage examples, negative rules, and a fallback order",
+    "summary": "Tells the agent in the prompt which patch tool or edit format to use, with usage examples, negative rules, and a fallback order",
     "signals": [
-      "Coding agent has several patching tools, such as text, AST, and semantic",
-      "Agent uses text patches for refactors and breaks references",
-      "Tool choice varies between runs for the same task"
+      "Coding agent has several patching tools, such as text search/replace, AST-aware, and semantic",
+      "Agent uses raw text replacement for refactors and breaks references",
+      "Edit-format choice varies between runs for the same task"
     ],
     "anti_signals": [
       "Agent has only one patching tool",
       "Token budget cannot hold tool documentation in the prompt"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nCoding agents with access to multiple patching or refactoring tools (e.g., text-based `apply_patch`, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:\n\n- **Unnecessary Complexity:** Agent might use a generic text-replace tool instead of a specialized AST-aware refactoring tool.\n- **Inconsistent Results:** Without explicit instructions, the agent's tool selection can vary unpredictably, hampering reproducibility.\n- **Safety Risks:** Text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nCoding agents with access to multiple patching or refactoring tools (text-based search/replace, AST-based refactoring, semantic migration) may choose suboptimal tools if not explicitly guided. This leads to:\n\n- **Unnecessary complexity:** the agent picks a generic text-replace tool instead of a specialized AST-aware refactoring tool.\n- **Inconsistent results:** without explicit instructions, tool selection varies between runs for the same task.\n- **Safety risks:** text-based patching on refactoring tasks can break imports, miss references, or introduce syntax errors.\n\nThe edit-format choice is measurable. In aider's refactoring benchmark, prompting GPT-4 Turbo to emit unified diffs instead of the previous search/replace block format raised the score from 20% to 61%, and lazy \"rest of code unchanged\" edits dropped from 12 of 89 tasks to 4. The patch format the prompt asks for is part of the tool interface."
   },
   {
     "title": "Persistent Test Memory Feedback Loop",
@@ -6142,11 +6145,12 @@
       "Eiji Motomura (@EijiAC24)"
     ],
     "based_on": [
-      "ERC-5192 Soulbound Tokens",
-      "Chitin (example implementation)"
+      "Chitin (launch-stage implementation)",
+      "ERC-5192",
+      "ERC-8004"
     ],
     "category": "Security & Safety",
-    "source": "https://eips.ethereum.org/EIPS/eip-5192",
+    "source": "https://chitin.id",
     "tags": [
       "identity",
       "verification",
@@ -6167,8 +6171,8 @@
       "No external registry or append-only log infrastructure",
       "Semantic correctness of agent behavior matters more than state integrity"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nAs autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nAs autonomous agents interact across networks, verifying identity and detecting prompt/operator drift becomes difficult. Without durable identity and an immutable change history, agents can impersonate others or silently diverge from authorized configurations. Standardization is nascent: ERC-8004 (\"Trustless Agents\", Draft since August 2025) proposes on-chain identity, reputation, and validation registries for agents, but no widely deployed neutral standard exists yet."
   },
   {
     "title": "Spec-As-Test Feedback Loop",
@@ -7143,18 +7147,17 @@
   },
   {
     "title": "Visual AI Multimodal Integration",
-    "status": "emerging",
+    "status": "established",
     "authors": [
       "Nikola Balic (@nibzard)"
     ],
     "based_on": [
-      "Andrew Ng",
+      "Anthropic computer use",
       "OpenAI",
-      "Anthropic",
       "Google"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://openai.com/research/gpt-4v-system-card",
+    "source": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool",
     "tags": [
       "multimodal",
       "vision",
@@ -7176,7 +7179,7 @@
       "Budget cannot cover higher visual processing costs",
       "Visual data carries privacy risks that cannot be controlled"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nMany real-world tasks require understanding and processing visual information alongside text. Traditional text-only agents miss critical information present in images, videos, diagrams, and visual interfaces. This limitation prevents agents from helping with tasks like analyzing screenshots, debugging UI issues, understanding charts, processing security footage, or working with visual documentation."
   },
   {
