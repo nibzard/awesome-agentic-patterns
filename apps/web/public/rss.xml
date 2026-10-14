@@ -90,6 +90,22 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Conditional Parallel Tool Execution]]></title>
+            <description><![CDATA[Runs a batch of tool calls in parallel when all are read-only and in sequence when any modifies state, then returns results in request order]]></description>
+            <link>https://agentic-patterns.com/patterns/parallel-tool-execution</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/parallel-tool-execution</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[parallel execution]]></category>
+            <category><![CDATA[tool orchestration]]></category>
+            <category><![CDATA[read-only tools]]></category>
+            <category><![CDATA[stateful tools]]></category>
+            <category><![CDATA[agent efficiency]]></category>
+            <category><![CDATA[agent safety]]></category>
+            <category><![CDATA[concurrency control]]></category>
+            <category><![CDATA[task scheduling]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Context Window Auto-Compaction]]></title>
             <description><![CDATA[Catches context overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request automatically]]></description>
             <link>https://agentic-patterns.com/patterns/context-window-auto-compaction</link>
@@ -101,6 +117,19 @@
             <category><![CDATA[token-estimation]]></category>
             <category><![CDATA[transcript-validation]]></category>
             <category><![CDATA[api-compaction]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Cross-Agent Lesson Sharing via Git]]></title>
+            <description><![CDATA[Agents write solved problems as markdown lessons in a shared Git repo and search them before debugging, with GitHub Issues as the coordination layer]]></description>
+            <link>https://agentic-patterns.com/patterns/cross-agent-lesson-sharing</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/cross-agent-lesson-sharing</guid>
+            <category><![CDATA[Context & Memory]]></category>
+            <category><![CDATA[distributed-memory]]></category>
+            <category><![CDATA[knowledge-sharing]]></category>
+            <category><![CDATA[git-based]]></category>
+            <category><![CDATA[swarm-memory]]></category>
+            <category><![CDATA[lessons-learned]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -132,6 +161,22 @@
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Hook-Based Safety Guard Rails for Autonomous Code Agents]]></title>
+            <description><![CDATA[Runs small shell scripts on PreToolUse and PostToolUse hooks to block destructive commands, lint edits, and warn on context use outside the agent's reasoning]]></description>
+            <link>https://agentic-patterns.com/patterns/hook-based-safety-guard-rails</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/hook-based-safety-guard-rails</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[hooks]]></category>
+            <category><![CDATA[guard-rails]]></category>
+            <category><![CDATA[safety]]></category>
+            <category><![CDATA[autonomous-operation]]></category>
+            <category><![CDATA[destructive-command-blocking]]></category>
+            <category><![CDATA[context-monitoring]]></category>
+            <category><![CDATA[pre-tool-use]]></category>
+            <category><![CDATA[post-tool-use]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Intelligent Bash Tool Execution]]></title>
             <description><![CDATA[Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals]]></description>
             <link>https://agentic-patterns.com/patterns/intelligent-bash-tool-execution</link>
@@ -158,6 +203,34 @@
             <category><![CDATA[isolation]]></category>
             <category><![CDATA[parallelism]]></category>
             <category><![CDATA[deadlock-prevention]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Milestone Escrow for Agent Resource Funding]]></title>
+            <description><![CDATA[Holds agent funding in escrow and releases each payment only after independent verification of a measurable milestone]]></description>
+            <link>https://agentic-patterns.com/patterns/milestone-escrow-agent-funding</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/milestone-escrow-agent-funding</guid>
+            <category><![CDATA[UX & Collaboration]]></category>
+            <category><![CDATA[resource-funding]]></category>
+            <category><![CDATA[escrow]]></category>
+            <category><![CDATA[milestones]]></category>
+            <category><![CDATA[agent-governance]]></category>
+            <category><![CDATA[budget-controls]]></category>
+            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[One OS User per Agent]]></title>
+            <description><![CDATA[Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.]]></description>
+            <link>https://agentic-patterns.com/patterns/one-os-user-per-agent</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/one-os-user-per-agent</guid>
+            <category><![CDATA[Security & Safety]]></category>
+            <category><![CDATA[isolation]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[systemd]]></category>
+            <category><![CDATA[process-identity]]></category>
+            <category><![CDATA[least-privilege]]></category>
+            <category><![CDATA[long-running-agents]]></category>
+            <category><![CDATA[audit-trail]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
@@ -215,79 +288,6 @@
             <category><![CDATA[sandboxed-build]]></category>
             <category><![CDATA[review-queue]]></category>
             <category><![CDATA[autonomy-boundary]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Design-Time File Partition as Concurrency Control]]></title>
-            <description><![CDATA[Each task declares every path it will write; overlapping tasks get a blocking dependency so only disjoint work runs at once on a shared checkout]]></description>
-            <link>https://agentic-patterns.com/patterns/design-time-file-partition</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/design-time-file-partition</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[concurrency]]></category>
-            <category><![CDATA[decomposition]]></category>
-            <category><![CDATA[task-queue]]></category>
-            <category><![CDATA[shared-checkout]]></category>
-            <category><![CDATA[headless]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Evidence Questions, Not Verdict Questions]]></title>
-            <description><![CDATA[Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.]]></description>
-            <link>https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[policy-authoring]]></category>
-            <category><![CDATA[admission-control]]></category>
-            <category><![CDATA[decomposition]]></category>
-            <category><![CDATA[calibration]]></category>
-            <category><![CDATA[confidence]]></category>
-            <category><![CDATA[guard-rails]]></category>
-            <category><![CDATA[determinism]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Non-Generative Judgment Routing with Typed Escalation]]></title>
-            <description><![CDATA[Sends decision-only loop steps as batched typed questions to a non-generative judgment model and escalates what it cannot answer back to the LLM]]></description>
-            <link>https://agentic-patterns.com/patterns/non-generative-judgment-routing</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/non-generative-judgment-routing</guid>
-            <category><![CDATA[Orchestration & Control]]></category>
-            <category><![CDATA[routing]]></category>
-            <category><![CDATA[latency]]></category>
-            <category><![CDATA[structured-outputs]]></category>
-            <category><![CDATA[classification]]></category>
-            <category><![CDATA[escalation]]></category>
-            <category><![CDATA[orchestration]]></category>
-            <category><![CDATA[agent-loops]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[One OS User per Agent]]></title>
-            <description><![CDATA[Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.]]></description>
-            <link>https://agentic-patterns.com/patterns/one-os-user-per-agent</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/one-os-user-per-agent</guid>
-            <category><![CDATA[Security & Safety]]></category>
-            <category><![CDATA[isolation]]></category>
-            <category><![CDATA[multi-agent]]></category>
-            <category><![CDATA[systemd]]></category>
-            <category><![CDATA[process-identity]]></category>
-            <category><![CDATA[least-privilege]]></category>
-            <category><![CDATA[long-running-agents]]></category>
-            <category><![CDATA[audit-trail]]></category>
-            <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Out-of-Process Provider-Boundary Replay]]></title>
-            <description><![CDATA[Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.]]></description>
-            <link>https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay</guid>
-            <category><![CDATA[Reliability & Eval]]></category>
-            <category><![CDATA[record-replay]]></category>
-            <category><![CDATA[determinism]]></category>
-            <category><![CDATA[regression-testing]]></category>
-            <category><![CDATA[http-boundary]]></category>
-            <category><![CDATA[offline]]></category>
-            <category><![CDATA[instrumentation-free]]></category>
             <pubDate>Sat, 26 Sep 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
