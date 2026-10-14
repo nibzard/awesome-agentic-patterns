@@ -1,15 +1,15 @@
 ---
 title: "Lane-Based Execution Queueing"
 status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
+authors: ["OpenClaw Contributors"]
+based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Orchestration & Control"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts"
+source: "https://github.com/openclaw/openclaw/blob/main/src/process/command-queue.ts"
 tags: [queueing, concurrency, lanes, isolation, parallelism, deadlock-prevention]
 summary: "Routes work into named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users"
 signals: ["Several user sessions or channels share one agent process", "Background jobs like cron or sub-agents must not block user replies", "Output from concurrent commands must not interleave"]
 anti_signals: ["Work needs priorities, deadlines, or work stealing", "A single serial queue already gives enough throughput"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -31,7 +31,7 @@ Isolated execution lanes with independent queues and configurable concurrency pe
 - **Session lanes**: Per-conversation queues prevent message interleaving. Each user session gets an isolated lane (e.g., `session:telegram:user123`).
 - **Global lanes**: Background tasks (cron jobs, health checks) execute in dedicated lanes (e.g., `cron`, `subagent`) without blocking session lanes.
 - **Hierarchical composition**: Operations can nest lanes (session → global) via queue chaining. The outer lane waits for the inner lane, preventing deadlocks through structured queuing.
-- **Configurable concurrency**: Each lane supports `maxConcurrent` workers (default 1). High-throughput lanes can run parallel tasks; serial lanes preserve ordering.
+- **Configurable concurrency**: Each lane supports a `maxConcurrent` cap. Unconfigured lanes default to 1 (serial); the `main` lane defaults to `max(8, available CPU parallelism × 4)` and is bounded by `agents.defaults.maxConcurrent`.
 - **Wait-time warnings**: Tasks that sit queued too long trigger warnings and callbacks, surfacing performance issues.
 
 **Implementation sketch:**
@@ -82,12 +82,15 @@ await enqueueCommandInLane(sessionLane, () =>
 // Outer promise resolves when inner completes; no circular wait
 ```
 
-**Lane examples from Clawdbot:**
+**Lane examples from OpenClaw:**
 
-- `main`: Default serial lane for CLI commands
-- `cron`: Scheduled tasks, isolated from user interactions
-- `subagent`: Spawned agent work, parallelizable with parent
-- `session:<id>`: Per-user auto-reply queues
+- `main`: Inbound interactive turns; concurrency defaults to `max(8, available CPU parallelism × 4)`
+- `system-agent` and `system-agent-inference`: Internal agent work, isolated from user traffic
+- `cron` and `cron-nested`: Scheduled turns; an isolated cron turn holds a `cron` slot while its inner agent execution uses `cron-nested`
+- `hook-dispatch`: External hook agent-run dispatch, in its own lane rather than the cron budget
+- `background`, `active-memory`, `nested`: Housekeeping work that must not block user lanes
+- `subagent:<session>`: Per-session spawned-agent queues (default 8 per spawning session); `subagent:swarm:<group>` collectors default to 32
+- `session:<key>`: Per-session serial queues shared by CLI, embedded, and CLI-backend runs
 
 ## How to use it
 
@@ -123,9 +126,9 @@ await enqueueCommandInLane(sessionLane, () =>
 
 ## References
 
-- [Clawdbot command-queue.ts](https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts) - Core queue implementation
-- [Clawdbot lanes.ts](https://github.com/clawdbot/clawdbot/blob/main/src/process/lanes.ts) - Lane definitions
-- [Clawdbot lane resolution](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/lanes.ts) - Runtime lane mapping
+- [OpenClaw command-queue.ts](https://github.com/openclaw/openclaw/blob/main/src/process/command-queue.ts) - Core queue implementation
+- [OpenClaw lanes.ts](https://github.com/openclaw/openclaw/blob/main/src/process/lanes.ts) - Lane enum: main, system-agent, cron, cron-nested, hook-dispatch, background, subagent, active-memory, nested
+- [OpenClaw queue documentation](https://docs.openclaw.ai/concepts/queue) - Lane concurrency defaults and session lanes
 - Related: [Parallel Tool Execution](/patterns/parallel-tool-execution) for tool-level parallelism
 - Academic foundations: Actor Model (IJCAI '73), Work-Stealing (SOSP '95), CALM Theorem (PODS '11)
 - Industry analogs: Sidekiq queues, BullMQ isolation, Airflow pools

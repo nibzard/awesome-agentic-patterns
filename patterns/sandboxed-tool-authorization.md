@@ -1,15 +1,15 @@
 ---
 title: "Sandboxed Tool Authorization"
 status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
+authors: ["OpenClaw Contributors"]
+based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Security & Safety"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts"
-tags: [authorization, policy, allowlist, deny-by-default, pattern-matching, subagent-security]
+source: "https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy.ts"
+tags: [authorization, policy, allowlist, policy-inheritance, pattern-matching, subagent-security]
 summary: "Filters an agent's tools through deny-first allow and deny patterns, profile presets, and subagent policies that inherit parent restrictions"
 signals: ["Agents with different roles need different tool access", "Subagents must get stricter permissions than their parent", "Plugin tools must join policies without manual allowlist updates", "Development and production need different permissions"]
 anti_signals: ["Single agent with a small, fixed tool set", "Team cannot audit many per-agent policies"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -21,21 +21,21 @@ Tool authorization needs flexibility but also security. Static allowlists don't 
 - **Hierarchical delegation**: Subagents should inherit restrictions from parents but with additional constraints
 - **Plugin ecosystems**: External tools need dynamic inclusion without manual allowlist updates
 
-Agents need a policy system that supports pattern matching, deny-by-default semantics, and hierarchical inheritance.
+Agents need a policy system that supports pattern matching, deny precedence, opt-in restriction, and hierarchical inheritance.
 
 ## Solution
 
-Pattern-based policies with deny-by-default and inheritance. Tools are authorized by matching against compiled patterns (exact, regex, wildcard), with deny lists taking precedence over allow lists. Subagents inherit parent policies with additional restrictions, and profile-based tiers provide presets for common agent types.
+Pattern-based policies with deny precedence and inheritance. Tools are allowed by default: an empty allow list permits every tool, and restrictive allowlists are opt-in. Deny lists are evaluated first, so a matching deny pattern blocks a tool regardless of allow entries. Delegated (subagent) sessions inherit the requester's denylist and can only narrow it, and profile-based tiers provide presets for common agent types.
 
 This approach aligns with the academic Action Selector pattern (Beurer-Kellner et al., 2025), which treats the LLM as an instruction decoder rather than a live controller, validating tool parameters against strict schemas before execution and preventing tool outputs from re-entering the selector prompt without additional validation.
 
 **Core concepts:**
 
 - **Pattern matching**: Supports exact matches (`exec`), wildcards (`fs:*`), and regex-like patterns (`*test*`).
-- **Deny-by-default**: Empty allow list denies all tools; explicit allow list permits only matched tools.
+- **Allow by default**: An empty allow list permits every tool; restriction is opt-in. A wildcard stays allow-all even when additive entries are present, so extra allow entries cannot accidentally narrow a delegated session.
 - **Deny precedence**: Deny lists are evaluated first; matching deny patterns block tools regardless of allow list.
 - **Related tool inheritance**: Some tools implicitly grant related permissions (e.g., `exec` allows `apply_patch`).
-- **Hierarchical policy inheritance**: Subagent policies inherit from parent with additional deny rules.
+- **Hierarchical policy inheritance**: Delegated (subagent) sessions inherit the requester's denylist and add restrictions on top; a captured deny floor survives requester config changes.
 - **Profile-based tiers**: Predefined profiles (`minimal`, `coding`, `messaging`, `full`) provide quick configuration.
 
 **Implementation sketch:**
@@ -76,7 +76,7 @@ function makeToolPolicyMatcher(policy: ToolPolicy) {
     const normalized = normalizeToolName(name);
     // Deny takes precedence
     if (matchesAny(normalized, deny)) return false;
-    // Empty allow = allow all (deny-by-default handled by caller)
+    // Empty allow = allow all; restriction is opt-in
     if (allow.length === 0) return true;
     // Explicit allow required
     if (matchesAny(normalized, allow)) return true;
@@ -125,36 +125,28 @@ const TOOL_GROUPS: Record<string, string[]> = {
   "group:fs": ["read", "write", "edit", "apply_patch"],
   "group:runtime": ["exec", "process"],
   "group:sessions": ["sessions_list", "sessions_history", "sessions_send", "sessions_spawn"],
-  "group:clawdbot": ["browser", "canvas", "nodes", "cron", "message", "gateway", /* ... */],
+  "group:openclaw": ["browser", "canvas", "nodes", "cron", "message", "gateway", /* ... */],
 };
 ```
 
-**Subagent policy inheritance:**
+**Delegated (subagent) policy inheritance:**
 
 ```typescript
-const DEFAULT_SUBAGENT_TOOL_DENY = [
-  // Session management - main agent orchestrates
-  "sessions_list",
-  "sessions_history",
-  "sessions_send",
-  "sessions_spawn",
-  // System admin - dangerous from subagent
-  "gateway",
-  "agents_list",
-  // Status/scheduling - main agent coordinates
-  "session_status",
-  "cron",
-];
+type DelegatedToolPolicy = {
+  requesterSessionKey: string;
+  targetAgentId: string;
+  inheritedToolDenylist?: string[];   // Denies inherited from the requester
+  delegatedToolDenyFloor?: {          // Prepared by the host before flattening;
+    policyAgentId: string;            // never accepted from tool arguments
+    deny: string[];
+  };
+  requesterToolDenylist?: string[];   // Immediate requester snapshot
+};
 
-function resolveSubagentToolPolicy(config?: Config): ToolPolicy {
-  const configured = config?.tools?.subagents?.tools;
-  const deny = [
-    ...DEFAULT_SUBAGENT_TOOL_DENY,      // Base restrictions
-    ...(configured?.deny ?? []),        // Additional restrictions
-  ];
-  const allow = configured?.allow;       // Optional allowlist
-  return { allow, deny };
-}
+// The delegated session's effective deny set is the union of the floor,
+// the inherited denylist, and the requester snapshot. Delegation can only
+// narrow the parent surface, never widen it, and the floor keeps earlier
+// revocations in force even if the requester config changes mid-run.
 ```
 
 **Policy resolution across multiple layers:**
@@ -210,7 +202,7 @@ function resolveEffectiveToolPolicy(params: {
 **Pros:**
 
 - **Flexible patterns**: Wildcards and groups enable concise policies for large tool sets.
-- **Security by default**: Deny-by-default semantics prevent accidental permission grants.
+- **Security by precedence**: Deny rules cannot be bypassed by allow rules, and opt-in allowlists narrow the default surface when a role needs it.
 - **Hierarchical control**: Subagents can be restricted further without modifying parent policies.
 - **Profile presets**: Common agent types (coding, messaging) have pre-configured policies.
 - **Plugin support**: Tool groups can include plugin tools via dynamic discovery.
@@ -224,9 +216,10 @@ function resolveEffectiveToolPolicy(params: {
 
 ## References
 
-- [Clawdbot tool-policy.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts) - Policy resolution
-- [Clawdbot pi-tools.policy.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-tools.policy.ts) - Policy enforcement
-- [Clawdbot sandbox policies](https://github.com/clawdbot/clawdbot/tree/main/src/agents/sandbox) - Sandbox-specific policies
+- [OpenClaw tool-policy.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy.ts) - Policy resolution and restrictive-allow analysis (`hasRestrictiveAllowPolicy`)
+- [OpenClaw tool-policy-shared.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy-shared.ts) - Pattern matching and `resolveToolProfilePolicy` re-export
+- [OpenClaw delegated-tool-policy.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/delegated-tool-policy.ts) - Subagent/delegated inheritance and deny floors
+- [OpenClaw sandbox policies](https://github.com/openclaw/openclaw/tree/main/src/agents/sandbox) - Sandbox-specific policies
 - Beurer-Kellner et al. (2025). "Design Patterns for Securing LLM Agents against Prompt Injections." arXiv:2506.08837 - Action Selector pattern academic foundation
-- [Model Context Protocol](https://modelcontextprotocol.io) - Production standard for tool authorization (Anthropic, 2025)
+- [Model Context Protocol](https://modelcontextprotocol.io) - Protocol standard for tool interoperability (Anthropic, 2025); tool authorization itself stays application-level
 - Related: [Egress Lockdown (No-Exfiltration Channel)](/patterns/egress-lockdown-no-exfiltration-channel) for security patterns

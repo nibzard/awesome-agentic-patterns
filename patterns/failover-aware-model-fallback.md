@@ -1,15 +1,15 @@
 ---
 title: "Failover-Aware Model Fallback"
 status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
+authors: ["OpenClaw Contributors"]
+based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Reliability & Eval"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts"
+source: "https://github.com/openclaw/openclaw/blob/main/src/agents/model-fallback-runner.ts"
 tags: [fallback, reliability, error-classification, multi-model, failover, resilience]
 summary: "Classifies each model failure by reason and falls back along a model chain only for retryable errors, failing fast on auth, billing, and user aborts"
 signals: ["The agent calls models from multiple providers or models", "Timeouts and rate limits interrupt requests", "Blind retries waste calls on auth or billing errors"]
 anti_signals: ["A single model with no alternative provider", "Downstream parsing cannot handle output differences between models", "Extra latency and API charges from failed attempts are not acceptable"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -152,8 +152,9 @@ agents:
 
 ## References
 
-- [Clawdbot model-fallback.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts) - Fallback orchestration
+- [OpenClaw model-fallback-runner.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/model-fallback-runner.ts) - Fallback orchestration (`runWithModelFallback`)
 - [Release It!](https://www.pragmaticprogrammer.com/titles/mnee2) by Michael Nygard (2007) - Circuit Breaker pattern foundation
-- [Clawdbot failover-error.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/failover-error.ts) - Error classification
-- [Clawdbot error helpers](https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-helpers/errors.ts) - Reason classification logic
+- [OpenClaw failover-error.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/failover-error.ts) - Error classification wrapper
+- [OpenClaw classification-rules.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/failover/classification-rules.ts) - Reason classification rules for billing, rate limit, and overflow signals
+- [LiteLLM routing](https://docs.litellm.ai/docs/routing) - Independent implementation: router cooldowns, retries, and provider failover
 - Related: [Extended Coherence Work Sessions](/patterns/extended-coherence-work-sessions) for reliability patterns

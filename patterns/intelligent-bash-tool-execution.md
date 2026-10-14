@@ -1,15 +1,15 @@
 ---
 title: "Intelligent Bash Tool Execution"
 status: "validated-in-production"
-authors: ["Clawdbot Contributors"]
-based_on: ["Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"]
+authors: ["OpenClaw Contributors"]
+based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Tool Use & Environment"
-source: "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts"
+source: "https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-run.ts"
 tags: [bash, shell, pty, fallback, security, process-management, sandboxing]
 summary: "Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals"
 signals: ["Agents run TTY-required CLIs or interactive tools", "Agents start long-running background processes that need tracking and cleanup", "Command execution needs approval modes such as deny, allowlist, or full"]
 anti_signals: ["Agents only run simple non-interactive commands", "The environment cannot install or compile a native PTY module and needs no TTY support"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -250,9 +250,10 @@ function killSession(session: ProcessSession) {
 
 ## References
 
-- [Clawdbot bash-tools.exec.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts) - Execution modes
-- [Clawdbot bash-tools.process.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.process.ts) - Process management
-- [Clawdbot bash-process-registry.ts](https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-process-registry.ts) - Background registry
+- [OpenClaw bash-tools.exec-run.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-run.ts) - Command execution; the original `bash-tools.exec.ts` was split into the current `bash-tools.exec-*` modules after the Clawdbot-to-OpenClaw rename
+- [OpenClaw bash-tools.exec-host-spawn.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-host-spawn.ts) - PTY versus child spawn modes
+- [OpenClaw bash-process-registry.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-process-registry.ts) - Background registry
+- [OpenClaw bash-tools.exec-approval-request.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-approval-request.ts) - Approval workflow
 - [Claude Code](https://claude.ai/code) - Tool-mediated bash execution with `run_in_background` support
 - [Model Context Protocol](https://modelcontextprotocol.io) - Structured tool definition standard
 - Related: [Virtual Machine Operator Agent](/patterns/virtual-machine-operator-agent) for remote execution patterns

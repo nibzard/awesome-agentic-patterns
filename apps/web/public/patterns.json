@@ -1660,15 +1660,15 @@
     "title": "Context Window Auto-Compaction",
     "status": "validated-in-production",
     "authors": [
-      "Clawdbot Contributors"
+      "OpenClaw Contributors"
     ],
     "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)",
-      "Pi Coding Agent (@mariozechner/pi-coding-agent)",
+      "OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)",
+      "Pi coding agent (https://github.com/earendil-works/pi)",
       "Michael Bolin (OpenAI Codex)"
     ],
     "category": "Context & Memory",
-    "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/pi-embedded-runner/compact.ts",
+    "source": "https://github.com/openclaw/openclaw/blob/main/src/agents/embedded-agent-runner/compact.ts",
     "tags": [
       "context-management",
       "compaction",
@@ -1679,7 +1679,7 @@
     ],
     "slug": "context-window-auto-compaction",
     "id": "context-window-auto-compaction",
-    "summary": "Catches context overflow errors, compacts and validates the transcript with a reserve token floor, and retries the request automatically",
+    "summary": "Catches context overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request automatically",
     "signals": [
       "Long sessions fail with context_length_exceeded errors",
       "Operators truncate transcripts by hand",
@@ -1689,8 +1689,8 @@
       "Short sessions that never approach the context limit",
       "Summary detail loss is not acceptable and manual curation is required"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nContext overflow is a silent killer of agent reliability. When accumulated conversation history exceeds the model's context window:\n\n- **API errors**: Requests fail with `context_length_exceeded` or similar errors\n- **Manual intervention**: Operators must truncate transcripts, losing valuable context\n- **Retry complexity**: Detecting overflow and retrying with compaction is error-prone\n\nAgents need automatic compaction that preserves essential information while staying within token limits, with model-specific validation and reserve token floors to prevent immediate re-overflow."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nContext overflow is a silent killer of agent reliability. When accumulated conversation history exceeds the model's context window:\n\n- **API errors**: Requests fail with `context_length_exceeded` or similar errors\n- **Manual intervention**: Operators must truncate transcripts, losing valuable context\n- **Retry complexity**: Detecting overflow and retrying with compaction is error-prone\n\nAgents need automatic compaction that preserves essential information while staying within token limits, with model-specific validation and capped reserve headroom to prevent immediate re-overflow."
   },
   {
     "title": "Context-Minimization Pattern",
@@ -3022,15 +3022,15 @@
   },
   {
     "title": "External Credential Sync",
-    "status": "validated-in-production",
+    "status": "established",
     "authors": [
-      "Clawdbot Contributors"
+      "OpenClaw Contributors"
     ],
     "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+      "OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"
     ],
     "category": "Security & Safety",
-    "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/auth-profiles/external-cli-sync.ts",
+    "source": "https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts",
     "tags": [
       "credentials",
       "oauth",
@@ -3041,7 +3041,7 @@
     ],
     "slug": "external-credential-sync",
     "id": "external-credential-sync",
-    "summary": "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with near-expiry refresh, OAuth upgrade, and dedupe",
+    "summary": "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership",
     "signals": [
       "Users already sign in to the same providers through other CLIs or tools",
       "Stale or expired tokens cause auth failures during sessions",
@@ -3052,7 +3052,7 @@
       "The agent is the only tool that holds credentials for the provider",
       "Policy forbids reading credentials owned by other tools"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nUsers manage AI API credentials across multiple tools—CLIs (Claude Code, Codex CLI), web portals, and local development environments. Manually re-entering credentials for each tool is friction-prone and leads to:\n\n- **Stale tokens**: OAuth refresh tokens expire, causing authentication failures\n- **Inconsistent state**: Credentials updated in one tool don't propagate to others\n- **Token-only drift**: Some tools support OAuth refresh; others store static tokens that expire\n\nAgents need automatic credential synchronization to reduce authentication friction while maintaining security (no plaintext storage, proper expiry handling)."
   },
   {
@@ -3096,13 +3096,13 @@
     "title": "Failover-Aware Model Fallback",
     "status": "validated-in-production",
     "authors": [
-      "Clawdbot Contributors"
+      "OpenClaw Contributors"
     ],
     "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+      "OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"
     ],
     "category": "Reliability & Eval",
-    "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/model-fallback.ts",
+    "source": "https://github.com/openclaw/openclaw/blob/main/src/agents/model-fallback-runner.ts",
     "tags": [
       "fallback",
       "reliability",
@@ -3124,7 +3124,7 @@
       "Downstream parsing cannot handle output differences between models",
       "Extra latency and API charges from failed attempts are not acceptable"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nAI model requests fail for varied and often opaque reasons. Simple retry logic fails to distinguish between:\n\n- **Transient failures** (timeouts, rate limits) that benefit from retry with backoff\n- **Semantic failures** (auth errors, billing issues) where retry is futile\n- **User aborts** where retry wastes resources and frustrates users\n\nAgents using multiple models or providers need intelligent fallback strategies that respect failure semantics, avoid retry loops, and provide clear diagnostics."
   },
   {
@@ -3558,13 +3558,13 @@
     "title": "Intelligent Bash Tool Execution",
     "status": "validated-in-production",
     "authors": [
-      "Clawdbot Contributors"
+      "OpenClaw Contributors"
     ],
     "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+      "OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"
     ],
     "category": "Tool Use & Environment",
-    "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/bash-tools.exec.ts",
+    "source": "https://github.com/openclaw/openclaw/blob/main/src/agents/bash-tools.exec-run.ts",
     "tags": [
       "bash",
       "shell",
@@ -3586,7 +3586,7 @@
       "Agents only run simple non-interactive commands",
       "The environment cannot install or compile a native PTY module and needs no TTY support"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSecure, reliable command execution from agents is complex and error-prone:\n\n- **PTY requirements**: TTY-required CLIs (coding agents, terminal UIs) fail with direct exec\n- **Platform differences**: Linux and macOS behave differently for detached processes, signal handling\n- **Security concerns**: Arbitrary command execution needs approval workflows, elevated mode detection\n- **Background management**: Long-running processes need tracking, output aggregation, and cleanup\n\nAgents need a multi-mode execution strategy that adapts to the command's requirements while maintaining security and reliability."
   },
   {
@@ -3732,13 +3732,13 @@
     "title": "Lane-Based Execution Queueing",
     "status": "validated-in-production",
     "authors": [
-      "Clawdbot Contributors"
+      "OpenClaw Contributors"
     ],
     "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+      "OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"
     ],
     "category": "Orchestration & Control",
-    "source": "https://github.com/clawdbot/clawdbot/blob/main/src/process/command-queue.ts",
+    "source": "https://github.com/openclaw/openclaw/blob/main/src/process/command-queue.ts",
     "tags": [
       "queueing",
       "concurrency",
@@ -3759,7 +3759,7 @@
       "Work needs priorities, deadlines, or work stealing",
       "A single serial queue already gives enough throughput"
     ],
-    "updated_at": "2026-03-11",
+    "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nTraditional agent systems serialize all operations through a single execution queue, creating bottlenecks that limit throughput. Concurrent execution is desirable but risky:\n\n- **Interleaving hazards**: Multiple commands writing to stdin/stdout simultaneously corrupt user-facing output\n- **Race conditions**: Shared state access without proper synchronization causes data corruption\n- **Deadlock risks**: Naive concurrent queuing can create circular dependencies between operations\n\nAgentic systems need parallelism to remain responsive (e.g., background tasks shouldn't block user interactions), but must preserve isolation guarantees."
   },
   {
@@ -5605,18 +5605,18 @@
     "title": "Sandboxed Tool Authorization",
     "status": "validated-in-production",
     "authors": [
-      "Clawdbot Contributors"
+      "OpenClaw Contributors"
     ],
     "based_on": [
-      "Clawdbot Implementation (https://github.com/clawdbot/clawdbot)"
+      "OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"
     ],
     "category": "Security & Safety",
-    "source": "https://github.com/clawdbot/clawdbot/blob/main/src/agents/tool-policy.ts",
+    "source": "https://github.com/openclaw/openclaw/blob/main/src/agents/tool-policy.ts",
     "tags": [
       "authorization",
       "policy",
       "allowlist",
-      "deny-by-default",
+      "policy-inheritance",
       "pattern-matching",
       "subagent-security"
     ],
@@ -5633,8 +5633,8 @@
       "Single agent with a small, fixed tool set",
       "Team cannot audit many per-agent policies"
     ],
-    "updated_at": "2026-03-11",
-    "excerpt": "\n## Problem\nTool authorization needs flexibility but also security. Static allowlists don't scale across:\n\n- **Multiple environments**: Development (permissive) vs. production (restrictive)\n- **Different agent roles**: Coding agents need filesystem access; messaging agents shouldn't\n- **Hierarchical delegation**: Subagents should inherit restrictions from parents but with additional constraints\n- **Plugin ecosystems**: External tools need dynamic inclusion without manual allowlist updates\n\nAgents need a policy system that supports pattern matching, deny-by-default semantics, and hierarchical inheritance."
+    "updated_at": "2026-10-13",
+    "excerpt": "\n## Problem\nTool authorization needs flexibility but also security. Static allowlists don't scale across:\n\n- **Multiple environments**: Development (permissive) vs. production (restrictive)\n- **Different agent roles**: Coding agents need filesystem access; messaging agents shouldn't\n- **Hierarchical delegation**: Subagents should inherit restrictions from parents but with additional constraints\n- **Plugin ecosystems**: External tools need dynamic inclusion without manual allowlist updates\n\nAgents need a policy system that supports pattern matching, deny precedence, opt-in restriction, and hierarchical inheritance."
   },
   {
     "title": "Schema Validation Retry with Cross-Step Learning",

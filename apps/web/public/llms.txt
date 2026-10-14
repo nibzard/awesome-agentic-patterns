@@ -232,7 +232,7 @@ URL: https://agentic-patterns.com/patterns/context-window-anxiety-management
 Markdown: https://agentic-patterns.com/patterns/context-window-anxiety-management.md
 
 ### context-window-auto-compaction
-Context Window Auto-Compaction: Catches context overflow errors, compacts and validates the transcript with a reserve token floor, and retries the request automatically
+Context Window Auto-Compaction: Catches context overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request automatically
 URL: https://agentic-patterns.com/patterns/context-window-auto-compaction
 Markdown: https://agentic-patterns.com/patterns/context-window-auto-compaction.md
 
@@ -417,7 +417,7 @@ URL: https://agentic-patterns.com/patterns/extended-coherence-work-sessions
 Markdown: https://agentic-patterns.com/patterns/extended-coherence-work-sessions.md
 
 ### external-credential-sync
-External Credential Sync: Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with near-expiry refresh, OAuth upgrade, and dedupe
+External Credential Sync: Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership
 URL: https://agentic-patterns.com/patterns/external-credential-sync
 Markdown: https://agentic-patterns.com/patterns/external-credential-sync.md
 

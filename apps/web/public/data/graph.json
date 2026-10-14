@@ -759,7 +759,7 @@
         "transcript-validation",
         "api-compaction"
       ],
-      "summary": "Catches context overflow errors, compacts and validates the transcript with a reserve token floor, and retries the request automatically"
+      "summary": "Catches context overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request automatically"
     },
     {
       "id": "context-minimization-pattern",
@@ -1358,7 +1358,7 @@
       "id": "external-credential-sync",
       "title": "External Credential Sync",
       "category": "Security & Safety",
-      "status": "validated-in-production",
+      "status": "established",
       "slug": "external-credential-sync",
       "tags": [
         "credentials",
@@ -1368,7 +1368,7 @@
         "cli-integration",
         "auth-reuse"
       ],
-      "summary": "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with near-expiry refresh, OAuth upgrade, and dedupe"
+      "summary": "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership"
     },
     {
       "id": "factory-over-assistant",
@@ -2512,7 +2512,7 @@
         "authorization",
         "policy",
         "allowlist",
-        "deny-by-default",
+        "policy-inheritance",
         "pattern-matching",
         "subagent-security"
       ],
