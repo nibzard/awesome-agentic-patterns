@@ -2,14 +2,14 @@
 title: "Recursive Best-of-N Delegation"
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
-based_on: ["Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models (arXiv 2512.24601)", "Self-Consistency (Wang et al. 2022)", "Tree-of-Thoughts (Yao et al. 2023)"]
+based_on: ["nkkko (original Labruno creator)", "Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models (arXiv 2512.24601)", "Self-Consistency (Wang et al. 2022)", "Tree-of-Thoughts (Yao et al. 2023)"]
 category: "Orchestration & Control"
 source: "https://github.com/nibzard/labruno-agent"
 tags: [recursion, best-of-n, parallel-sandboxes, judge, delegation, rlms, selection, sub-agents]
 summary: "Runs several parallel candidate workers per subtask in a recursive agent tree, scores them with tests and a judge, and promotes the best result upward"
 signals: ["Subtasks are shardable but each shard can be tricky", "Outputs can be scored cheaply with tests, type checks, or lint", "One wrong subtask result is costly, as in migrations or large refactors"]
 anti_signals: ["No objective checks exist and judge quality is weak", "Cost or latency budget cannot cover multiple attempts per subtask"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -25,6 +25,8 @@ Meanwhile, "best-of-N" parallel attempts help reliability, but without structure
 ## Solution
 
 At *each node* in a recursive agent tree, run **best-of-N** for the current subtask before expanding further. This combines the structured decomposition of recursive delegation with the reliability of self-consistency sampling:
+
+**Provenance note:** the per-node best-of-N tree is a synthesis of self-consistency sampling and RLM-style recursion, not a documented implementation. The linked Labruno repo implements only single-level best-of-N with a judge (no recursion), and the Recursive Language Models paper targets long-context processing rather than per-node selection.
 
 1. **Decompose:** Parent turns task into sub-tasks (like normal recursive delegation)
 2. **Parallel candidates per subtask:** For each subtask, spawn **K candidate workers** in isolated sandboxes (K=2-5 typical)
@@ -92,8 +94,8 @@ Practical defaults:
 ## References
 
 * [Self-Consistency (Wang et al. 2022): Foundation for best-of-N sampling via majority voting](https://arxiv.org/abs/2203.11171)
-* [Recursive Language Models (arXiv 2512.24601, 2025): Recursion as inference-time scaling](https://arxiv.org/abs/2512.24601)
+* [Recursive Language Models (arXiv 2512.24601, 2025): Recursive decomposition for long-context processing](https://arxiv.org/abs/2512.24601)
 * [Tree-of-Thoughts (Yao et al. 2023): Tree-based reasoning with evaluation mechanisms](https://arxiv.org/abs/2305.10601)
-* [Labruno (GitHub): Parallel sandboxes + LLM judge selects best implementation](https://github.com/nibzard/labruno-agent)
+* [Labruno (GitHub): Parallel sandboxes + LLM judge selects best implementation; single-level best-of-N only, README credits the original creator nkkko](https://github.com/nibzard/labruno-agent)
 * [Daytona RLM Guide: Recursive delegation with sandboxed execution](https://www.daytona.io/docs/en/recursive-language-models/)
-* Related patterns: [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)
+* Related patterns: [Adaptive Sandbox Fan-Out Controller](adaptive-sandbox-fanout-controller.md) tunes the size of one parallel sandbox batch from early signals, while this pattern fixes K candidates per node inside a recursive tree; see also [Sub-Agent Spawning](sub-agent-spawning.md), [Swarm Migration Pattern](swarm-migration-pattern.md), and [Self-Critique / Evaluator loops](self-critique-evaluator-loop.md)

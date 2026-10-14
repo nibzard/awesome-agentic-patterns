@@ -1,15 +1,15 @@
 ---
 title: Specification-Driven Agent Development
-status: proposed
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Jory Pestorious (AI Engineer World's Fair 2025)"]
 category: Orchestration & Control
-source: "http://jorypestorious.com/blog/ai-engineer-spec/"
+source: "https://jorypestorious.com/blog/ai-engineer-spec/"
 tags: [spec-first, scaffolding, contract, requirements]
 summary: "Makes a version-controlled spec file the agent's main input, scaffolds code from it, and links each artifact back to a spec clause"
 signals: ["Loose prompts cause agents to drift from stakeholder intent", "Requirements can be written as Markdown, OpenAPI, or JSON Schema", "Team needs audit trails from code back to requirements"]
 anti_signals: ["Requirements are too coarse or unknown to specify", "Quick exploratory work where writing a spec costs more than it saves"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -32,9 +32,12 @@ if new_feature_requested:
 ```
 
 **Core Framework (SPEC/EXPOSURE/TASK DELTA):**
+
 - **SPEC**: Version-controlled markdown capturing intent and values
 - **EXPOSURE**: What customers experience; spec is permanent, code is temporary
 - **TASK DELTA**: Continuous loop evaluating SPEC ↔ PRODUCT to identify gaps
+
+**Vendor tooling (2025-2026):** GitHub Spec Kit drives a `/specify → /plan → /tasks → /implement` command sequence from a constitution and spec documents, and AWS Kiro ships spec-driven agentic development in the editor.
 
 ## How to use it
 
@@ -51,6 +54,8 @@ Pitfalls: coarse or under-specified requirements still propagate errors.
 
 ## References
 
-- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
+- Primary source: https://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)
 - Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
-- Parisien et al. (2024): "Deliberation Before Action" (ICLR 2024) - https://arxiv.org/abs/2403.05441
+- GitHub Spec Kit (spec-driven development toolkit, launched September 2025): https://github.com/github/spec-kit
+- AWS Kiro (spec-driven agentic development): https://kiro.dev
+- Related patterns: [Spec-As-Test Feedback Loop](spec-as-test-feedback-loop.md) turns the spec into executable tests on every commit, while this pattern uses the spec to drive initial construction; [Feature List as Immutable Contract](feature-list-as-immutable-contract.md) freezes a JSON feature list with acceptance steps rather than a full specification.

@@ -19,7 +19,7 @@ id: parallel-tool-call-learning
 summary: "Uses agent reinforcement fine-tuning to teach the model to issue independent tool calls in parallel, which cuts sequential rounds and latency"
 signals: ["Agent makes many sequential tool calls that do not depend on each other", "Tool execution is faster than inference", "Agent RFT training and concurrent tool infrastructure are available"]
 anti_signals: ["Each tool result decides the next call", "Tools are slow or rate-limited"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -119,7 +119,7 @@ class ParallelToolExecutor:
 
 **Training Setup:**
 
-No special configuration needed - parallelization emerges naturally:
+No special configuration needed - parallelization emerges naturally. Illustrative setup (the Cognition case study fine-tuned GPT-5-family models):
 
 ```python
 # Standard Agent RFT setup
@@ -286,8 +286,7 @@ Total: 3-4 rounds (50% reduction in back-and-forth)
 **Additional Validation: Ambience Healthcare**
 
 - **Task**: Medical coding with ICD-10 code lookups
-- **Result**: 18% latency reduction after Agent RFT
-- **Pattern**: Parallel execution of independent code lookups reduced sequential rounds
+- **Result**: Average response time cut by 18% after Agent RFT. The video credits this drop to fine-tuning overall and does not attribute it to parallel code lookups specifically.
 
 ## When Parallelization Helps Most
 
@@ -384,8 +383,8 @@ graph TD
 ## References
 
 - [OpenAI Build Hour: Agent RFT - Cognition Case Study (November 2025)](https://youtu.be/1s_7RMG4O4U)
-- [Parallel Tool Execution Pattern](./parallel-tool-execution.md)
-- Related patterns: Agent Reinforcement Fine-Tuning, Tool Use Incentivization via Reward Shaping
+- W&D: [Scaling Parallel Tool Calling for Efficient Deep Research Agents](https://arxiv.org/abs/2602.07359) (2026) - scales agent "width" through parallel tool calling instead of multi-agent orchestration
+- Related patterns: [Parallel Tool Execution](parallel-tool-execution.md) batches already-issued tool calls in an orchestrator, while this pattern trains the model itself to issue independent calls in one round; see also Agent Reinforcement Fine-Tuning and Tool Use Incentivization via Reward Shaping
 
 ### Academic Foundations
 

@@ -222,7 +222,7 @@
       "id": "agent-friendly-workflow-design",
       "title": "Agent-Friendly Workflow Design",
       "category": "UX & Collaboration",
-      "status": "best-practice",
+      "status": "emerging",
       "slug": "agent-friendly-workflow-design",
       "tags": [
         "human-agent collaboration",
@@ -288,7 +288,7 @@
       "id": "ai-accelerated-learning-and-skill-development",
       "title": "AI-Accelerated Learning and Skill Development",
       "category": "UX & Collaboration",
-      "status": "validated-in-production",
+      "status": "best-practice",
       "slug": "ai-accelerated-learning-and-skill-development",
       "tags": [
         "developer-productivity",
@@ -2786,7 +2786,7 @@
       "id": "specification-driven-agent-development",
       "title": "Specification-Driven Agent Development",
       "category": "Orchestration & Control",
-      "status": "proposed",
+      "status": "emerging",
       "slug": "specification-driven-agent-development",
       "tags": [
         "spec-first",
@@ -2924,7 +2924,7 @@
         "scalability",
         "framework-migration"
       ],
-      "summary": "Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks, achieving 10x+ speedup for large-scale framework upgrades, lint rule rollouts, and API migrations."
+      "summary": "Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks for large-scale framework upgrades, lint rule rollouts, and API migrations."
     },
     {
       "id": "team-shared-agent-configuration-as-code",

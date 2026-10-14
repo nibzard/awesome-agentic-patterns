@@ -1,6 +1,6 @@
 {
   "title": "Specification-Driven Agent Development",
-  "status": "proposed",
+  "status": "emerging",
   "authors": [
     "Nikola Balic (@nibzard)"
   ],
@@ -8,7 +8,7 @@
     "Jory Pestorious (AI Engineer World's Fair 2025)"
   ],
   "category": "Orchestration & Control",
-  "source": "http://jorypestorious.com/blog/ai-engineer-spec/",
+  "source": "https://jorypestorious.com/blog/ai-engineer-spec/",
   "tags": [
     "spec-first",
     "scaffolding",
@@ -27,6 +27,6 @@
     "Requirements are too coarse or unknown to specify",
     "Quick exploratory work where writing a spec costs more than it saves"
   ],
-  "updated_at": "2026-03-11",
-  "body": "\n## Problem\n\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.\n\n## Solution\n\nAdopt a **spec-first workflow** in which a formal specification file (e.g., Markdown, OpenAPI, JSON Schema) is the agent's *primary* input and source of truth.\n\n- **Parse spec** → agent builds an explicit task graph.\n- **Scaffold** project structure & stub code straight from the spec.\n- **Enforce** that every generated artifact links back to a spec clause.\n- **Iterate** only by editing the spec, *not* by re-prompting ad-hoc.\n\n```pseudo\nif new_feature_requested:\n    write_spec(update)\n    agent.sync_with(spec)\n```\n\n**Core Framework (SPEC/EXPOSURE/TASK DELTA):**\n- **SPEC**: Version-controlled markdown capturing intent and values\n- **EXPOSURE**: What customers experience; spec is permanent, code is temporary\n- **TASK DELTA**: Continuous loop evaluating SPEC ↔ PRODUCT to identify gaps\n\n## How to use it\n\nWrite specifications first (Markdown files in git), then let agents scaffold from them. Documentation IS the spec—write it before code.\n\nUse tiered review: AI for patterns, humans for logic. Parallelize via git worktrees or multiple agents coordinating through shared spec files.\n\nPitfalls: coarse or under-specified requirements still propagate errors.\n\n## Trade-offs\n\n- **Pros:** repeatable, audit-friendly, easy diffing.\n- **Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.\n\n## References\n\n- Primary source: http://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)\n- Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents\n- Parisien et al. (2024): \"Deliberation Before Action\" (ICLR 2024) - https://arxiv.org/abs/2403.05441\n"
+  "updated_at": "2026-10-13",
+  "body": "\n## Problem\n\nHand-crafted prompts or loose user stories leave room for ambiguity; agents can wander, over-interpret, or produce code that conflicts with stakeholder intent.\n\n## Solution\n\nAdopt a **spec-first workflow** in which a formal specification file (e.g., Markdown, OpenAPI, JSON Schema) is the agent's *primary* input and source of truth.\n\n- **Parse spec** → agent builds an explicit task graph.\n- **Scaffold** project structure & stub code straight from the spec.\n- **Enforce** that every generated artifact links back to a spec clause.\n- **Iterate** only by editing the spec, *not* by re-prompting ad-hoc.\n\n```pseudo\nif new_feature_requested:\n    write_spec(update)\n    agent.sync_with(spec)\n```\n\n**Core Framework (SPEC/EXPOSURE/TASK DELTA):**\n\n- **SPEC**: Version-controlled markdown capturing intent and values\n- **EXPOSURE**: What customers experience; spec is permanent, code is temporary\n- **TASK DELTA**: Continuous loop evaluating SPEC ↔ PRODUCT to identify gaps\n\n**Vendor tooling (2025-2026):** GitHub Spec Kit drives a `/specify → /plan → /tasks → /implement` command sequence from a constitution and spec documents, and AWS Kiro ships spec-driven agentic development in the editor.\n\n## How to use it\n\nWrite specifications first (Markdown files in git), then let agents scaffold from them. Documentation IS the spec—write it before code.\n\nUse tiered review: AI for patterns, humans for logic. Parallelize via git worktrees or multiple agents coordinating through shared spec files.\n\nPitfalls: coarse or under-specified requirements still propagate errors.\n\n## Trade-offs\n\n- **Pros:** repeatable, audit-friendly, easy diffing.\n- **Cons:** up-front spec writing effort; initial ramp-up for teams new to spec formats.\n\n## References\n\n- Primary source: https://jorypestorious.com/blog/ai-engineer-spec/ (AI Engineer World's Fair 2025)\n- Anthropic Engineering: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents\n- GitHub Spec Kit (spec-driven development toolkit, launched September 2025): https://github.com/github/spec-kit\n- AWS Kiro (spec-driven agentic development): https://kiro.dev\n- Related patterns: [Spec-As-Test Feedback Loop](spec-as-test-feedback-loop.md) turns the spec into executable tests on every commit, while this pattern uses the spec to drive initial construction; [Feature List as Immutable Contract](feature-list-as-immutable-contract.md) freezes a JSON feature list with acceptance steps rather than a full specification.\n"
 }

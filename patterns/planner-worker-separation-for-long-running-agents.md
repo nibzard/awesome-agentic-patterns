@@ -1,15 +1,15 @@
 ---
 title: Planner-Worker Separation for Long-Running Agents
 status: emerging
-authors: ["Cursor Team"]
-based_on: ["Cursor Engineering Team"]
+authors: ["Nikola Balic (@nibzard)"]
+based_on: ["Wilson Lin (Cursor)"]
 category: Orchestration & Control
 source: "https://cursor.com/blog/scaling-agents"
 tags: [multi-agent, coordination, long-running, hierarchical, parallelism]
 summary: "Splits agents into planners that create tasks, workers that complete them in isolation, and a judge that decides each cycle whether to continue"
 signals: ["Many agents work in parallel on one large codebase for days or weeks", "Flat peer agents conflict, duplicate work, or wait on locks", "No agent owns hard problems or overall project direction"]
 anti_signals: ["Small task that one agent can finish in a single session", "No budget to run many concurrent agents", "No orchestration infrastructure for roles and task distribution"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -33,8 +33,9 @@ This creates an iterative cycle where each iteration starts fresh, combating dri
 
 ## Evidence
 
-- **Evidence Grade:** `high` (production-validated at scale)
-- **Validated Findings:** Cursor demonstrated hundreds of concurrent agents running for weeks on massive codebases (1M+ lines of code)
+- **Evidence Grade:** `medium` (single vendor research blog; not independently verified)
+- **Reported Findings:** Cursor reports hundreds of concurrent agents running for weeks on massive codebases (1M+ lines of code)
+- **Disputed:** Community discussion questions whether the flagship browser repo compiles as published and whether its reported line counts are inflated ([Hacker News thread](https://news.ycombinator.com/item?id=46769965))
 - **Academic Foundation:** Decades of research in hierarchical RL (Feudal Networks, 2017; Options Framework, 1999) provide theoretical backing for planning-execution separation
 - **Multi-Source Validation:** Complementary implementations by Anthropic (initializer-maintainer), AMP (factory-over-assistant), and GitHub Agentic Workflows confirm pattern utility
 
@@ -125,7 +126,9 @@ graph TD
 ## References
 
 * [Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Cursor blog post on running hundreds of concurrent agents for weeks at a time
-* [Browser source code on GitHub](https://github.com/getcursor/browser) - 1M+ lines of agent-generated code
+* [fastrender (the browser experiment repo)](https://github.com/wilsonzlin/fastrender) - described as research into collaborative parallel AI coding agents; line counts are disputed
+* [Hacker News discussion](https://news.ycombinator.com/item?id=46769965) - independent reports questioning the repo's build state and line counts
 * [Feudal Networks (FuN)](https://arxiv.org/abs/1706.06121) - ICML 2017 paper introducing manager-worker separation in hierarchical RL (Vezhnevets et al.)
 * [The Options Framework](https://doi.org/10.1016/S0004-3702(99)00052-1) - Seminal work on temporal abstraction creating planning-execution hierarchy (Sutton et al., 1999)
 * [HIRO: Hierarchical RL with Off-Policy Correction](https://arxiv.org/abs/2005.08996) - ICML 2020 paper on high-level planners and low-level workers (Lee et al.)
+* Related patterns: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) splits one long-running agent into an initializer and a maintainer rather than a planner-worker-judge hierarchy; [Factory over Assistant](factory-over-assistant.md) runs parallel autonomous agents against automated feedback loops instead of explicit planner and judge roles.

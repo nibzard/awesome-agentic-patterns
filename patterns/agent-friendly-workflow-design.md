@@ -1,6 +1,6 @@
 ---
 title: Agent-Friendly Workflow Design
-status: best-practice
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Amjad Masad"]
 category: UX & Collaboration
@@ -9,7 +9,7 @@ tags: [human-agent collaboration, workflow design, agent autonomy, task decompos
 summary: "Gives agents clear high-level goals, room for implementation choices, structured I/O, and plan review before execution"
 signals: ["Humans micromanage the agent's technical decisions", "Humans and agents share work across handoffs", "Rigid step-by-step workflows reduce agent output quality"]
 anti_signals: ["Task needs exact prescribed steps with no agent choice", "Team cannot invest in explicit process design"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -66,9 +66,9 @@ flowchart TD
 
 ## References
 
-- Derived from insights in "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
+- Derived from insights in Amjad Masad's talk "How AI Agents Are Reshaping Creation," such as: "If you become a little too technical, they actually start to struggle to use the agent, because they're trying to force it to do certain technical decisions, whereas Replit agent is sort of programmed in a way to have more freedom." And the concluding point: "Focus on agent-friendly workflows - Creating environments where humans and AI agents can collaborate effectively."
 
-[Source](https://www.nibzard.com/silent-revolution)
+[Secondary source: the pattern author's summary of the talk](https://www.nibzard.com/silent-revolution). Masad is on X as [@amasad](https://x.com/amasad); the talk itself has no stable public URL.
 
-- [OpenAI Swarm](https://github.com/openai/swarm) - Lightweight multi-agent orchestration with handoff patterns
-- [Agent Engineering: Deploy to Observe](https://www.anthropic.com/index/agent-engineering) - Production deployment patterns for reliable agent systems
+- [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) - guidance on structuring agent workflows
+- [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) - successor to the educational OpenAI Swarm sample, with handoff patterns

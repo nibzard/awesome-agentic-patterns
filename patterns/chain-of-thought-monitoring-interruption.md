@@ -18,7 +18,7 @@ id: chain-of-thought-monitoring-interruption
 summary: "Streams agent reasoning and tool calls in real time so a human can interrupt and redirect early when the approach is wrong"
 signals: ["Complex refactoring where wrong file choices are costly", "High-stakes operations such as database migrations or API changes", "Requirements are ambiguous and the agent may misread them"]
 anti_signals: ["Agent runs fully unattended with no human watching", "Routine tasks where monitoring adds more load than it saves"]
-updated_at: '2026-01-05'
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -103,6 +103,10 @@ sequenceDiagram
 - Ability to redirect with additional context
 - Resume capability after corrections
 
+**Shipped natively by harnesses:**
+
+Agent harnesses now build in mid-run steering, which absorbs part of the advice above: Claude Code streams reasoning with escape-to-interrupt and message-based redirection, and OpenAI Codex supports steering a running session. Custom framework work is mainly needed when you want programmatic triggers.
+
 **Best practices:**
 
 1. **Monitor first tool calls closely** - First actions reveal understanding
@@ -128,12 +132,14 @@ sequenceDiagram
 - May create dependency on human oversight for routine tasks
 - Adds cognitive load to monitor agent reasoning
 - Risk of over-correcting and preventing valid creative approaches
-- **Low faithfulness:** Current models' CoT frequently doesn't reflect true reasoning (Claude 3.7: ~25%, DeepSeek R1: ~39%)
+- **Low faithfulness:** Current models' CoT frequently doesn't reflect true reasoning (Claude 3.7: ~25%, DeepSeek R1: ~39%, per Chen et al., [Reasoning Models Don't Always Say What They Think](https://arxiv.org/abs/2505.05410))
 
 ## References
 
 - [Building Companies with Claude Code](https://claude.com/blog/building-companies-with-claude-code) - Tanner Jones (Vulcan) advises: "Have your finger on the trigger to escape and interrupt any bad behavior."
 - [Effectively Controlling Reasoning Models through Thinking Intervention](https://arxiv.org/pdf/2503.24370) (Princeton et al., March 2025) - "Thinking intervention" for strategically inserting/modifying thinking tokens during generation
 - [Dynamic Early Exit in Reasoning Models](https://arxiv.org/abs/2504.15895) (arXiv:2504.15895, April 2025) - Confidence-based early stopping; ~75% of samples contain early exit opportunities
+- [OpenAI on chain-of-thought monitoring](https://openai.com/chain-of-thought-monitoring) (2025) - the major CoT-monitoring reference, including the caveat that monitoring pressure can push models to obfuscate their reasoning
+- [Reasoning Models Don't Always Say What They Think](https://arxiv.org/abs/2505.05410) (Chen et al., 2025) - measured CoT faithfulness rates behind the percentages above
 - [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/) - Standard attributes for AI agent tracing
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Verbose Reasoning Transparency](verbose-reasoning-transparency.md)

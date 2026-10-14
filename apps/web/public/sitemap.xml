@@ -27,7 +27,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/abstracted-code-representation-for-review</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/action-caching-replay</loc>
@@ -59,7 +59,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-assisted-scaffolding</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-driven-research</loc>
@@ -75,7 +75,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding</loc>
@@ -91,7 +91,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</loc>
@@ -147,7 +147,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/classify-then-act-for-background-agents</loc>
@@ -519,11 +519,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/oracle-and-worker-multi-model</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark</loc>
@@ -543,7 +543,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/parallel-tool-call-learning</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection</loc>
@@ -559,11 +559,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/plan-then-execute-pattern</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/planner-worker-separation-for-long-running-agents</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/policy-gated-tool-proxy</loc>
@@ -583,11 +583,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-complexity-escalation</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-disclosure-large-files</loc>
@@ -607,7 +607,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/recursive-best-of-n-delegation</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/reflection</loc>
@@ -659,7 +659,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/semantic-context-filtering</loc>
@@ -699,7 +699,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/specification-driven-agent-development</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative</loc>
@@ -711,7 +711,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/structured-output-specification</loc>
@@ -719,7 +719,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/sub-agent-spawning</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/subagent-compilation-checker</loc>
@@ -731,7 +731,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/swarm-migration-pattern</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/team-shared-agent-configuration</loc>
@@ -775,7 +775,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tree-of-thought-reasoning</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/unified-tool-gateway</loc>
@@ -811,7 +811,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/workspace-native-multi-agent-orchestration</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/zero-knowledge-verified-agent-egress</loc>

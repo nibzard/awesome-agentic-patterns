@@ -9,7 +9,7 @@ tags: [code-generation, bootstrapping, scaffolding, feature-development, ide, in
 summary: "Agent generates initial files, boilerplate, and directory structure from a high-level description so developers start on core logic"
 signals: ["Starting a new feature, module, or greenfield project", "Standardized framework with repetitive boilerplate"]
 anti_signals: ["Integration with an old legacy codebase", "Complex business logic that needs deep domain expertise", "Highly regulated environment with strict compliance"]
-updated_at: "2026-03-11"
+updated_at: "2026-10-13"
 ---
 
 ## Problem
@@ -29,7 +29,7 @@ This allows developers to:
 **Scaffolding Modes:**
 
 -   **Text-to-code:** Natural language descriptions generate code structure
--   **Design-to-code:** Figma, PSD, or design sketches convert to layouts (tools achieve ~92% layout accuracy)
+-   **Design-to-code:** Figma, PSD, or design sketches convert to layouts (for example [Sketch2Code](https://github.com/SALT-NLP/Sketch2Code))
 -   **Repository-aware:** Agents read existing codebases to scaffold compatible structures
 
 **Critical for Future AI Agent Work**: The scaffolded structure becomes crucial context for subsequent AI agent interactions. Well-structured scaffolding with clear file organization, naming conventions, and architectural patterns helps future agents understand the codebase layout and make more informed decisions when implementing features or making modifications.
@@ -65,7 +65,7 @@ flowchart TD
 ## Trade-offs
 
 * **Pros:** Faster time to first code, consistent project structure, reduced boilerplate.
-* **Cons:** Code reliability issues (36% of developers report problems), requires human review, struggles with legacy integration. Scaffolding is essential—without it, configurations lead to "massive overengineering" (SANER 2026).
+* **Cons:** Code reliability issues (46% of developers distrust AI answer accuracy and 66% report frustration with almost-right answers, per the [Stack Overflow 2025 survey](https://survey.stackoverflow.co/2025)), requires human review, struggles with legacy integration. Scaffolding matters at system level too: the app.build paper argues that without environment scaffolding, teams risk "massive overengineering" of AI models while ignoring the real bottleneck.
 
 ## References
 
@@ -77,4 +77,4 @@ flowchart TD
 
 - "Scratch Copilot: Supporting Youth Creative Coding with AI" (2025). arXiv:2505.03867v1 - Implements supportive scaffolding mechanisms for real-time ideation, code generation, and debugging.
 
-- "App.build: Scaffolding Environment-Aware Multi-Agent Systems" (2026). SANER 2026 Industrial Track, arXiv:2509.03310v2 - Ablation studies show configurations without scaffolding lead to "massive overengineering."
+- "app.build: A Production Framework for Scaling Agentic Prompt-to-App Generation with Environment Scaffolding" (arXiv preprint 2509.03310) - argues that without environment scaffolding, teams risk "massive overengineering" of AI models while ignoring the real bottleneck.

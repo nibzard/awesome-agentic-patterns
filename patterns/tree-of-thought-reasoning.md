@@ -15,8 +15,8 @@ slug: tree-of-thought-reasoning
 id: tree-of-thought-reasoning
 summary: "Expands a tree of candidate reasoning steps, scores partial states, prunes weak branches, and picks the best path instead of one linear chain"
 signals: ["Complex planning, math, or code tasks where the first path often fails", "A good evaluation function or external verifier exists", "Task needs explicit backtracking"]
-anti_signals: ["Simple linear tasks", "Tight latency or token budget (3-10x more tokens than chain-of-thought)"]
-updated_at: '2026-01-05'
+anti_signals: ["Simple linear tasks", "Tight latency or token budget (explicit trees cost substantially more tokens than chain-of-thought)"]
+updated_at: '2026-10-13'
 ---
 
 ## Problem
@@ -48,10 +48,12 @@ Apply when tasks benefit from exploring many potential strategies—puzzles, cod
 
 Algorithm variants: BFS for exhaustive exploration, DFS for deep paths with limited memory, Beam search for memory-constrained scenarios with good heuristics.
 
+**Reasoning-model context (2024-2026):** RL-trained reasoning models such as OpenAI's o1 and its successors internalize much of this deliberate search at inference time ([Learning to Reason with LLMs](https://openai.com/index/learning-to-reason-with-llms/)). This pushes explicit ToT scaffolds toward verifier-guided work (where an external evaluator still prunes branches) and non-frontier models. See [Language Agent Tree Search (LATS)](language-agent-tree-search-lats.md) and [Inference-Time Scaling](inference-time-scaling.md).
+
 ## Trade-offs
 
-* **Pros:** Covers more possibilities; improves reliability on hard tasks (22-28% over CoT on multi-step reasoning); enables explicit backtracking from failed paths.
-* **Cons:** Higher compute cost (3-10x more tokens than Chain-of-Thought); needs a good evaluation function to guide search; inherently slower latency. Best for complex planning, mathematical reasoning, and code generation—overkill for simple linear tasks.
+* **Pros:** Covers more possibilities; improves reliability on hard search tasks (on Game of 24, the paper reports 4% accuracy for chain-of-thought prompting versus 74% for ToT); enables explicit backtracking from failed paths.
+* **Cons:** Higher compute cost (substantially more tokens than chain-of-thought; the paper does not publish a token multiplier); needs a good evaluation function to guide search; inherently slower latency. Best for complex planning, mathematical reasoning, and code generation—overkill for simple linear tasks.
 
 ## References
 
