@@ -195,6 +195,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Evidence-Layered Evaluation for Interactive Agents](patterns/evidence-layered-evaluation-for-interactive-agents.md)
 - [Extended Coherence Work Sessions](patterns/extended-coherence-work-sessions.md)
 - [Failover-Aware Model Fallback](patterns/failover-aware-model-fallback.md)
+- [Fleet Cost Simulation Before Dispatch](patterns/fleet-cost-simulation-before-dispatch.md)
 - [LLM Observability](patterns/llm-observability.md)
 - [No-Token-Limit Magic](patterns/no-token-limit-magic.md)
 - [Orchestration Prompt-Writing Benchmark](patterns/orchestration-prompt-writing-benchmark.md)
