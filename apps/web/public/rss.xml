@@ -4,8 +4,21 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 14 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 17 Oct 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Fleet Cost Simulation Before Dispatch]]></title>
+            <description><![CDATA[Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production]]></description>
+            <link>https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[cost-control]]></category>
+            <category><![CDATA[simulation]]></category>
+            <category><![CDATA[starvation]]></category>
+            <category><![CDATA[priority-scheduling]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <pubDate>Sat, 17 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Curated Code Context Window]]></title>
             <description><![CDATA[A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context]]></description>
@@ -273,21 +286,6 @@
             <category><![CDATA[taste-development]]></category>
             <category><![CDATA[education]]></category>
             <category><![CDATA[junior-developer]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[AI-Assisted Code Review / Verification]]></title>
-            <description><![CDATA[Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</guid>
-            <category><![CDATA[Feedback Loops]]></category>
-            <category><![CDATA[code-review]]></category>
-            <category><![CDATA[verification]]></category>
-            <category><![CDATA[quality-assurance]]></category>
-            <category><![CDATA[human-ai-collaboration]]></category>
-            <category><![CDATA[trust]]></category>
-            <category><![CDATA[explainability]]></category>
-            <category><![CDATA[software-quality]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

@@ -451,6 +451,11 @@ Filesystem-Mediated Host Delegation: Lets a sandboxed agent write request files 
 URL: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation
 Markdown: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation.md
 
+### fleet-cost-simulation-before-dispatch
+Fleet Cost Simulation Before Dispatch: Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production
+URL: https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch
+Markdown: https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch.md
+
 ### frontier-focused-development
 Frontier-Focused Development: Targets only state-of-the-art models, picks the best model per use case with no user model selector, and expects to rework the product every few months
 URL: https://agentic-patterns.com/patterns/frontier-focused-development
