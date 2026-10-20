@@ -1639,6 +1639,21 @@
       "summary": "Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals"
     },
     {
+      "id": "intent-level-cost-attribution",
+      "title": "Intent-Level Cost Attribution",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "intent-level-cost-attribution",
+      "tags": [
+        "cost-control",
+        "observability",
+        "budgeting",
+        "multi-agent",
+        "token-spend"
+      ],
+      "summary": "Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total"
+    },
+    {
       "id": "inversion-of-control",
       "title": "Inversion of Control",
       "category": "Orchestration & Control",

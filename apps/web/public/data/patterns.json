@@ -3648,6 +3648,39 @@
     "excerpt": "\n## Problem\nSecure, reliable command execution from agents is complex and error-prone:\n\n- **PTY requirements**: TTY-required CLIs (coding agents, terminal UIs) fail with direct exec\n- **Platform differences**: Linux and macOS behave differently for detached processes, signal handling\n- **Security concerns**: Arbitrary command execution needs approval workflows, elevated mode detection\n- **Background management**: Long-running processes need tracking, output aggregation, and cleanup\n\nAgents need a multi-mode execution strategy that adapts to the command's requirements while maintaining security and reliability."
   },
   {
+    "title": "Intent-Level Cost Attribution",
+    "status": "proposed",
+    "authors": [
+      "Retsumdk (@Retsumdk)"
+    ],
+    "based_on": [
+      "Original Creator (@Retsumdk)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/Retsumdk/agent-cost-attribution-api",
+    "tags": [
+      "cost-control",
+      "observability",
+      "budgeting",
+      "multi-agent",
+      "token-spend"
+    ],
+    "slug": "intent-level-cost-attribution",
+    "id": "intent-level-cost-attribution",
+    "summary": "Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total",
+    "signals": [
+      "Multiple agents, users, or intents share one model budget and someone must answer for the spend",
+      "A budget cap exists or is planned, and it should bind the specific work that is expensive rather than throttling everything uniformly",
+      "Cost regressions after a prompt, model, or workflow change need to be localized to the intent that caused them"
+    ],
+    "anti_signals": [
+      "A single agent with a single user and no budget enforcement - a daily total is enough",
+      "Call sites cannot name their intent or project, and threading attribution keys through the orchestration layer is not feasible"
+    ],
+    "updated_at": "2026-10-20",
+    "excerpt": "\n## Problem\nAgent fleets spend LLM budget continuously and opaquely. When a bill spikes or a budget cap trips, the operator can usually answer *how much* was spent but not *which work caused it*: a single daily total hides whether the spend came from a misbehaving retry loop, one user's abnormal usage, a specific intent that quietly grew, or steady baseline load across the fleet. Without attribution at the level of the work item that triggered the calls, cost control degenerates into guesswork — you can cut a budget, but you cannot cut the right thing, and you cannot tell whether a change actually reduced waste or just moved it somewhere else."
+  },
+  {
     "title": "Inversion of Control",
     "status": "validated-in-production",
     "authors": [

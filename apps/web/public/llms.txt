@@ -501,6 +501,11 @@ Intelligent Bash Tool Execution: Runs agent shell commands through a multi-mode 
 URL: https://agentic-patterns.com/patterns/intelligent-bash-tool-execution
 Markdown: https://agentic-patterns.com/patterns/intelligent-bash-tool-execution.md
 
+### intent-level-cost-attribution
+Intent-Level Cost Attribution: Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total
+URL: https://agentic-patterns.com/patterns/intent-level-cost-attribution
+Markdown: https://agentic-patterns.com/patterns/intent-level-cost-attribution.md
+
 ### inversion-of-control
 Inversion of Control: Gives the agent tools, a high-level objective, and guardrails, then lets it choose sequencing and recovery while humans set policy and review
 URL: https://agentic-patterns.com/patterns/inversion-of-control
