@@ -49,6 +49,7 @@ The governance layer operates as middleware that wraps the agent tool-calling in
 ## References
 
 - [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation. Disclosure: this SDK is a client for the author's own commercial signing service at asqav.com (Elastic License 2.0, Free/Pro/Enterprise plans); ML-DSA signing runs server-side in that service, and Ed25519/ES256 cover locally signed receipts, so "sign at the point of execution" is the pattern's design goal rather than a description of how this SDK's cloud-issued receipts are produced
+- [Tracekit](https://github.com/Cygnux-Labs/Tracekit) - Open-source implementation of this pattern (contributor-owned, disclosed): a signer process outside the agent checks each tool call against a policy before it runs (allow, deny, or hold for a person) and appends an Ed25519-signed record of the call, the decision and the result to a per-run hash chain that verifies offline. MIT, self-hosted and signed locally; the chain resists tampering only when the signer runs outside the agent's OS account.
 - [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture
 - [OWASP Agentic AI Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks (the OWASP Top 10 for Agentic Applications is a separate document)
 - [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard
