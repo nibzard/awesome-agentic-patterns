@@ -230,6 +230,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Local-First Credential Broker](patterns/local-first-credential-broker.md)
 - [Non-Custodial Spending Controls](patterns/non-custodial-spending-controls.md)
 - [One OS User per Agent](patterns/one-os-user-per-agent.md)
+- [Per-User Delegated OAuth for Agent Tool Calls](patterns/per-user-delegated-oauth-for-agent-tool-calls.md)
 - [PII Tokenization](patterns/pii-tokenization.md)
 - [Policy-Gated Tool Proxy](patterns/policy-gated-tool-proxy.md)
 - [Sandboxed Tool Authorization](patterns/sandboxed-tool-authorization.md)
