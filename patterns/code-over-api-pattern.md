@@ -130,6 +130,7 @@ The agent sees the log output and return value, but the full dataset never enter
 * Simon Willison: [Code execution with MCP](https://simonwillison.net/2025/Nov/4/code-execution-with-mcp/) (November 4, 2025) - independent commentary on the announcement
 * Cloudflare: [Code Mode](https://blog.cloudflare.com/code-mode/) - V8 isolate-based execution (September 2025)
 * Bifrost: [Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - third-party implementation measuring 58.2-92.8% input-token reductions through 2026
+* Submilli: [submilli-runtime](https://github.com/submilli/submilli-runtime) - Apache-2.0 runtime for the sandbox side of this pattern (contributor-owned, disclosed): agent-written programs run in per-run WebAssembly instances, and default-deny rules over operations and argument values are checked on every tool call. Young project (v0.5.0)
 * Beurer-Kellner et al.: [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (2025) - names the Code-Then-Execute pattern (§3.1, pattern 5)
 * Related: Code-Then-Execute Pattern (focuses on security/formal verification vs token optimization)
 * Division of labor with [Code-First Tool Interface Pattern](code-first-tool-interface-pattern.md): this file documents the general technique of moving data processing into a sandbox, while that file documents Cloudflare's specific Code Mode implementation
