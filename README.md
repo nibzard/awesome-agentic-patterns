@@ -211,6 +211,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Tier Auto-Apply by Mechanical Impact](patterns/tier-auto-apply-by-mechanical-impact.md)
 - [Versioned Constitution Governance](patterns/versioned-constitution-governance.md)
 - [Workflow Evals with Mocked Tools](patterns/workflow-evals-with-mocked-tools.md)
+- **[Cross-System Hold-and-Ask Verification Gate](https://levelcfo.com/benchmarks/agentic-accounting/)** - Prevents silent ledger corruption when AI agents reconcile multi-system operational data into accounting ledgers by enforcing a 4-gate deterministic tie-out ([LevelBench-100 Dataset](https://github.com/levelcfo/levelbench-100)).
 
 ### <a name="security-safety"></a>Security & Safety
 
