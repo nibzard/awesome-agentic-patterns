@@ -69,6 +69,7 @@ Use this for complex multi-step agents such as SQL copilots, software-engineerin
 * Beurer-Kellner et al., [Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837) (2025) - names Code-Then-Execute as §3.1 pattern 5, without a checker step
 * Anthropic Engineering, [Code Execution with MCP](https://www.anthropic.com/engineering/code-execution-with-mcp) (November 4, 2025) - 98.7% tool-definition token reduction
 * Bifrost, [Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) - 58.2-92.8% measured input-token reduction
+* Submilli, [submilli-runtime](https://github.com/submilli/submilli-runtime) (Apache-2.0; contributor-owned, disclosed) - an implementation of the locked-sandbox step: each agent-written program is type-checked, compiled and run in its own isolated instance, and deny-by-default rules are checked on every call. Young project (v0.5.0).
 * Distinct from [Plan-Then-Execute Pattern](plan-then-execute-pattern.md): that pattern structures reasoning before acting, while this pattern compiles actions into a verifiable program
 * Distinct from [Code-Over-API Pattern](code-over-api-pattern.md): that pattern optimizes tokens for data processing, while this pattern prioritizes auditability and data-flow control
 
