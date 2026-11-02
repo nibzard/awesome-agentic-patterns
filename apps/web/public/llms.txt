@@ -251,6 +251,11 @@ Continuous Autonomous Task Loop Pattern: Runs a loop where subagents pick the ne
 URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern
 Markdown: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern.md
 
+### coverage-gated-deliberative-review
+Coverage-Gated Deliberative Review: Enforces multi-pass multi-perspective deliberation over code changes with mathematical coverage and churn thresholds before merging or executing actions
+URL: https://agentic-patterns.com/patterns/coverage-gated-deliberative-review
+Markdown: https://agentic-patterns.com/patterns/coverage-gated-deliberative-review.md
+
 ### criticgpt-style-evaluation
 CriticGPT-Style Code Review: Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration
 URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation

@@ -90,6 +90,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 
 - [AI-Assisted Code Review / Verification](patterns/ai-assisted-code-review-verification.md)
 - [Background Agent with CI Feedback](patterns/background-agent-ci.md)
+- [Coverage-Gated Deliberative Review](patterns/coverage-gated-deliberative-review.md)
 - [Deterministic Grader in the Loop](patterns/deterministic-grader-in-the-loop.md)
 - [Dogfooding with Rapid Iteration for Agent Improvement](patterns/dogfooding-with-rapid-iteration-for-agent-improvement.md)
 - [Graph of Thoughts (GoT)](patterns/graph-of-thoughts.md)
