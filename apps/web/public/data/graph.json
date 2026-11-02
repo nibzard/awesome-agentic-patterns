@@ -816,6 +816,23 @@
       "summary": "Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits"
     },
     {
+      "id": "coverage-gated-deliberative-review",
+      "title": "Coverage-Gated Deliberative Review",
+      "category": "Feedback Loops",
+      "status": "proposed",
+      "slug": "coverage-gated-deliberative-review",
+      "tags": [
+        "code-review",
+        "deliberation",
+        "multi-pass",
+        "convergence",
+        "coverage-gate",
+        "quality-assurance",
+        "agent-orchestration"
+      ],
+      "summary": "Enforces multi-pass multi-perspective deliberation over code changes with mathematical coverage and churn thresholds before merging or executing actions"
+    },
+    {
       "id": "criticgpt-style-code-review",
       "title": "CriticGPT-Style Code Review",
       "category": "Reliability & Eval",

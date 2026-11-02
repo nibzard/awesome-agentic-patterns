@@ -1818,6 +1818,41 @@
     "excerpt": "\n## Problem\nTraditional development workflows require constant human intervention for task management:\n\n- **Manual Task Selection**: Developers spend time deciding what to work on next from todo lists\n- **Context Switching Overhead**: Moving between different types of tasks interrupts flow state\n- **Rate Limit Interruptions**: API rate limits break development momentum and require manual waiting\n- **Repetitive Git Operations**: Each task completion requires manual staging, committing, and status checking\n- **Error Recovery**: Failed tasks need manual diagnosis and restart\n\nThis manual orchestration reduces overall productivity and prevents developers from focusing on higher-level problem solving."
   },
   {
+    "title": "Coverage-Gated Deliberative Review",
+    "status": "proposed",
+    "authors": [
+      "Quinn O'Donnell (@Quinnod345)"
+    ],
+    "based_on": [
+      "Quinn O'Donnell (Ponder)"
+    ],
+    "category": "Feedback Loops",
+    "source": "https://github.com/Quinnod345/ponder",
+    "tags": [
+      "code-review",
+      "deliberation",
+      "multi-pass",
+      "convergence",
+      "coverage-gate",
+      "quality-assurance",
+      "agent-orchestration"
+    ],
+    "slug": "coverage-gated-deliberative-review",
+    "id": "coverage-gated-deliberative-review",
+    "summary": "Enforces multi-pass multi-perspective deliberation over code changes with mathematical coverage and churn thresholds before merging or executing actions",
+    "signals": [
+      "Agent review suggestions fluctuate across repeated passes without reaching consensus",
+      "Single-pass reviews miss subtle architectural regressions or security edge cases",
+      "Teams need an auditable verification ledger of review coverage across distinct personas"
+    ],
+    "anti_signals": [
+      "Trivial single-line documentation or formatting changes where deliberation overhead exceeds code complexity",
+      "Latency-critical interactive shell workflows where instant execution is required"
+    ],
+    "updated_at": "2026-11-02",
+    "excerpt": "\n## Problem\nReviewing code with AI coding agents often relies on single-turn, single-persona prompts. Single-pass evaluations suffer from prompt-drift, hallucinations of nonexistent defects, sycophancy toward existing code, or oversight of subtle side-effects across security, architecture, and developer experience.\n\nWhen agents attempt iterative refinement across multiple rounds without formal convergence rules, reviews frequently oscillate. A defect reported in pass 1 may be contradicted in pass 2, or new subjective nitpicks may arise indefinitely. Without formal coverage tracking and finding stability metrics, review pipelines cannot determine when deliberation has reached genuine consensus versus arbitrary cutoff."
+  },
+  {
     "title": "CriticGPT-Style Code Review",
     "status": "emerging",
     "authors": [
