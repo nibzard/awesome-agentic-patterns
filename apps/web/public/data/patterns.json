@@ -3430,7 +3430,7 @@
       "No human is available to respond in time",
       "Approval volume would be so high that reviewers rubber-stamp requests"
     ],
-    "updated_at": "2026-10-13",
+    "updated_at": "2026-11-06",
     "excerpt": "\n## Problem\nAutonomous AI agents need to execute high-risk or irreversible operations (database modifications, production deployments, system configurations, API calls) but allowing unsupervised execution creates unacceptable safety and compliance risks. Blocking all such operations defeats the purpose of agent automation."
   },
   {

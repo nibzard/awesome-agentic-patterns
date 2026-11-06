@@ -22,7 +22,7 @@ summary: >-
   interfaces and comprehensive audit trails.
 signals: ["Agents run high-risk or irreversible operations such as production DB writes, payments, or deploys", "Compliance requires a record of who approved each sensitive action", "Humans can respond fast enough through Slack, email, or a dashboard"]
 anti_signals: ["All agent actions are safe or easily reversible", "No human is available to respond in time", "Approval volume would be so high that reviewers rubber-stamp requests"]
-updated_at: '2026-10-13'
+updated_at: '2026-11-06'
 ---
 
 ## Problem
@@ -195,4 +195,5 @@ approval_channels:
 - [MCP elicitation specification](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation) - protocol-level mid-flow approval requests
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
 - [Impri](https://github.com/sekera-radim/impri) - Self-hostable, framework-agnostic implementation of this pattern (contributor-owned, disclosed): agents propose actions via MCP or REST, a human approves/edits/rejects from a web inbox, Slack, Telegram, or phone, then the agent executes. MIT-licensed open-core, included as a concrete alternative to the vendor-SDK references above.
+- [Duct](https://github.com/5hirish/duct) - Open-source marketing agent (contributor-owned, disclosed) that applies the proposal/execution separation from the ETH Zurich paper at the tool-list level: the model can only propose a change set as data, no approve or apply tool exists for it to call, a human approves through an HTTP route, and a per-project autonomy level (`ask` by default) can let reversible, guardrail-clean changes auto-apply but never widens what may apply. MIT-licensed, included as a second concrete implementation beside Impri.
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)
