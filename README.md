@@ -217,6 +217,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Authenticated Authority Channel](patterns/authenticated-authority-channel.md)
 - [Black-Box Skill Invocation](patterns/black-box-skill-invocation.md)
 - [Consequence-Family Coverage Audit](patterns/consequence-family-coverage-audit.md)
+- [Credential-Free Outbox](patterns/credential-free-outbox.md)
 - [Cryptographic Governance Audit Trail](patterns/cryptographic-governance-audit-trail.md)
 - [Denial Tracking & Permission Escalation](patterns/denial-tracking-permission-escalation.md)
 - [Deterministic Security Scanning Build Loop](patterns/deterministic-security-scanning-build-loop.md)
