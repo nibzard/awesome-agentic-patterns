@@ -168,6 +168,7 @@ The tables below are auto‑generated from the `patterns/` folder.
 - [Progressive Complexity Escalation](patterns/progressive-complexity-escalation.md)
 - [Recursive Best-of-N Delegation](patterns/recursive-best-of-n-delegation.md)
 - [Self-Rewriting Meta-Prompt Loop](patterns/self-rewriting-meta-prompt-loop.md)
+- [Shared Core with Native Shells](patterns/shared-core-native-shells.md)
 - [Signal-Driven Agent Activation](patterns/signal-driven-agent-activation.md)
 - [Specification-Driven Agent Development](patterns/specification-driven-agent-development.md)
 - [Stop Hook Auto-Continue Pattern](patterns/stop-hook-auto-continue-pattern.md)
