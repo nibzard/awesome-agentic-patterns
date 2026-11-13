@@ -6062,6 +6062,42 @@
     "excerpt": "\n## Problem\nCoding agents read the same files and command outputs many times per session. Each hop typically pastes full text into the model context, so cost and latency grow with repetition and verbosity even when the underlying artifact has not changed."
   },
   {
+    "title": "Shared Core with Native Shells",
+    "status": "emerging",
+    "authors": [
+      "Florian Wilhelm (@fwilhe2)"
+    ],
+    "based_on": [
+      "Florian Wilhelm (fwilhe2/editor and fwilhe2/grind; contributor-owned)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/fwilhe2/editor/blob/main/doc/architecture.md",
+    "tags": [
+      "architecture",
+      "cross-platform",
+      "native-ui",
+      "cli",
+      "parity-tests",
+      "multi-agent",
+      "code-generation"
+    ],
+    "slug": "shared-core-native-shells",
+    "id": "shared-core-with-native-shells",
+    "summary": "Puts all application state and behaviour in one core library, has agents write a thin native front-end per platform, and fails the build when a shell or the CLI falls out of step with the core",
+    "signals": [
+      "One application should look and behave natively on several platforms (desktop toolkits, terminal, browser)",
+      "Agents write most of the per-platform code and humans review it",
+      "Behaviour drift between platform front-ends is the main maintenance cost"
+    ],
+    "anti_signals": [
+      "A single cross-platform UI toolkit already gives an acceptable experience on every target",
+      "The application is mostly UI with little shared model or logic",
+      "Nobody can run or inspect each platform's build before release"
+    ],
+    "updated_at": "2026-11-13",
+    "excerpt": "\n## Problem\nA native interface per platform used to mean writing the application several times, in different languages, toolkits and build systems. Few projects could justify that, so most shipped one cross-platform UI that fits no platform well.\n\nCoding agents make the per-platform implementation cheap. They do not make it consistent. An agent asked to build a Windows front-end will re-implement undo, word wrapping and caret movement against whatever it finds in that toolkit, and the result differs from the GNOME and macOS versions in ways no reviewer will catch by reading diffs. Toolkit text widgets make this worse: each holds its own copy of the document, and the toolkit's rules win over the application's."
+  },
+  {
     "title": "Shell Command Contextualization",
     "status": "established",
     "authors": [

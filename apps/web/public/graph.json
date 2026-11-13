@@ -2712,6 +2712,23 @@
       ]
     },
     {
+      "id": "shared-core-with-native-shells",
+      "title": "Shared Core with Native Shells",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "shared-core-native-shells",
+      "tags": [
+        "architecture",
+        "cross-platform",
+        "native-ui",
+        "cli",
+        "parity-tests",
+        "multi-agent",
+        "code-generation"
+      ],
+      "summary": "Puts all application state and behaviour in one core library, has agents write a thin native front-end per platform, and fails the build when a shell or the CLI falls out of step with the core"
+    },
+    {
       "id": "shell-command-contextualization",
       "title": "Shell Command Contextualization",
       "category": "UX & Collaboration",
