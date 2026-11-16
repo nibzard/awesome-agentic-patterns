@@ -315,7 +315,7 @@ This report compiles academic research on **Agent-First Tooling and Logging** - 
 
 ---
 
-## Agent-to-Agent Communication Protocols
+## Agent Communication and Tool Interoperability
 
 ### Communication Protocol Standards
 
@@ -382,16 +382,16 @@ This report compiles academic research on **Agent-First Tooling and Logging** - 
 
 #### **Model Context Protocol (MCP)**
 - **Authors**: Anthropic
-- **Venue**: Protocol specification (donated to Agent AI Foundation, December 2025)
+- **Venue**: Protocol specification (contributed to the [Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation), December 2025)
 - **Year**: 2024-2025
 - **URL**: https://modelcontextprotocol.io
 
 **Key Features:**
-- **Universal interface**: "USB interface for agents"
-- **Standardized protocol**: Consistent tool access across LLM providers
-- **Bidirectional communication**: Agents can both consume and provide tools
+- **Host/client/server roles**: An AI application hosts MCP clients, each of which connects to an MCP server
+- **Standardized interfaces**: MCP servers expose tools, resources, and prompts to MCP clients
+- **Protocol scope**: MCP exchanges context between clients and servers; it does not define peer-agent coordination
 - **Resource sharing**: Files, prompts, and templates accessible via protocol
-- **3x+ improvement**: Development efficiency improvement reported
+- **Architecture reference**: https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture
 
 **Relevance to Agent-First Tooling:**
 - Leading standard for agent-to-tool communication
@@ -599,7 +599,7 @@ This report compiles academic research on **Agent-First Tooling and Logging** - 
 
 ### Industry Standards & Protocols
 
-- **Model Context Protocol (MCP)**: https://modelcontextprotocol.io (Anthropic, donated to Agent AI Foundation, December 2025)
+- **Model Context Protocol (MCP)**: https://modelcontextprotocol.io (Anthropic, contributed to the Agentic AI Foundation, December 2025)
 - **Co-TAP Protocol**: https://github.com/ZTE-AICloud/Co-TAP (ZTE, 2025)
 
 ### Frameworks & Implementations

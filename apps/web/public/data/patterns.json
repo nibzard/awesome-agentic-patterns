@@ -1818,6 +1818,43 @@
     "excerpt": "\n## Problem\nTraditional development workflows require constant human intervention for task management:\n\n- **Manual Task Selection**: Developers spend time deciding what to work on next from todo lists\n- **Context Switching Overhead**: Moving between different types of tasks interrupts flow state\n- **Rate Limit Interruptions**: API rate limits break development momentum and require manual waiting\n- **Repetitive Git Operations**: Each task completion requires manual staging, committing, and status checking\n- **Error Recovery**: Failed tasks need manual diagnosis and restart\n\nThis manual orchestration reduces overall productivity and prevents developers from focusing on higher-level problem solving."
   },
   {
+    "title": "Credential-Free Outbox",
+    "status": "emerging",
+    "authors": [
+      "tpoxa (@tpoxa)"
+    ],
+    "based_on": [
+      "tiny (https://github.com/tiny-systems/tiny)",
+      "Transactional outbox (microservices pattern)"
+    ],
+    "category": "Security & Safety",
+    "source": "https://tinysystems.io/blog/the-outbox/",
+    "tags": [
+      "credentials",
+      "prompt-injection",
+      "least-privilege",
+      "git",
+      "ci",
+      "containment",
+      "outbox"
+    ],
+    "slug": "credential-free-outbox",
+    "id": "credential-free-outbox",
+    "summary": "The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything",
+    "signals": [
+      "Agent reads untrusted text (issues, READMEs, dependency docs) and must also publish results",
+      "Results can be expressed as a file: a git bundle, a patch, a report",
+      "A CI system can run a credentialed job on a schedule or event"
+    ],
+    "anti_signals": [
+      "The agent needs an interactive, authenticated session with an outside system mid-task",
+      "Results must be published synchronously within the agent's turn",
+      "There is no separate trusted runner to hold the credential"
+    ],
+    "updated_at": "2026-11-08",
+    "excerpt": "\n## Problem\nA coding agent has to publish its work: push a branch, open a pull request, post a comment. The obvious way is to give it a token. But the same agent reads untrusted text all day, so a prompt injection can use that token for anything it allows: force-push, reach other repositories, open a pull request somewhere it shouldn't. Short-lived CI tokens don't fix this cleanly either. GitHub revokes a job's token when the job ends, often before a long-running agent has finished."
+  },
+  {
     "title": "CriticGPT-Style Code Review",
     "status": "emerging",
     "authors": [
@@ -3289,6 +3326,37 @@
     "excerpt": "\n## Problem\nAn agent that runs inside a sandbox — a container, a hosted runtime, a cloud\nworkspace — is deliberately cut off from the developer's real machine. That\nisolation is correct for safety, but it puts the most valuable work out of\nreach: the toolchain, the local filesystem, git credentials, the Docker daemon,\nand the half-configured services that only exist on someone's laptop.\n\nThe obvious fixes are worse than the problem:\n\n- **Open a port on the host.** Now the developer's machine exposes another\n  network service that must be authenticated, authorized, and reachable through\n  NAT or a corporate VPN.\n- **Hold a synchronous connection.** Sandboxes get suspended, hit request\n  timeouts, and are reaped. A 20-minute build outlives the caller, and when the\n  caller dies mid-flight the work is orphaned with no way to reclaim the result.\n- **Re-issue the call on reconnect.** Without a durable identity for the\n  request, a retry after a dropped connection re-runs a deploy or a migration\n  a second time.\n\nThe underlying difficulty is that the two sides have *different lifetimes*. The\nsandbox is ephemeral and may vanish mid-task; the host is long-lived. Any\nmechanism that assumes both endpoints stay alive for the duration of the work\nwill drop tasks."
   },
   {
+    "title": "Fleet Cost Simulation Before Dispatch",
+    "status": "proposed",
+    "authors": [
+      "Retsumdk (@Retsumdk)"
+    ],
+    "based_on": [],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/Retsumdk/agent-budget-simulator",
+    "tags": [
+      "cost-control",
+      "simulation",
+      "starvation",
+      "priority-scheduling",
+      "multi-agent"
+    ],
+    "slug": "fleet-cost-simulation-before-dispatch",
+    "id": "fleet-cost-simulation-before-dispatch",
+    "summary": "Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production",
+    "signals": [
+      "A fleet of agents draws on a shared resource budget (tokens, API calls, dollars) that renews slowly or not at all",
+      "Priority and fairness policies look correct in code review but starve low tiers under load",
+      "Budget exhaustion in production is expensive and noisy, while replaying the same load in a simulator is cheap and silent"
+    ],
+    "anti_signals": [
+      "A single agent with a simple per-request cost cap and no queue",
+      "Workloads whose cost distribution is unknowable, where simulation would only restate the assumptions fed into it"
+    ],
+    "updated_at": "2026-10-17",
+    "excerpt": "\n## Problem\nAgent fleets spend three scarce resources — tokens, API calls, and dollars — on work whose cost profile is only known after the work runs. The failure modes are invisible until they are expensive:\n\n1. **Budget exhaustion mid-flight.** The fleet runs out of tokens or dollars partway through a batch, leaving half the work aborted and the rest degraded — after the money is already spent.\n2. **Starvation by priority.** A `strict_priority` policy that reads as obviously correct starves `background` agents indefinitely under load. Nobody notices until a background task that mattered never ran.\n3. **Unvalidated recovery.** Retry / abort / degrade / fallback rules are chosen per call site and are rarely exercised against a realistic resource ceiling, so the first real quota outage is also the first test.\n\nLive canaries partially help, but they find these bugs in production, where each finding costs real spend and real incidents."
+  },
+  {
     "title": "Frontier-Focused Development",
     "status": "emerging",
     "authors": [
@@ -3430,7 +3498,7 @@
       "No human is available to respond in time",
       "Approval volume would be so high that reviewers rubber-stamp requests"
     ],
-    "updated_at": "2026-10-13",
+    "updated_at": "2026-11-06",
     "excerpt": "\n## Problem\nAutonomous AI agents need to execute high-risk or irreversible operations (database modifications, production deployments, system configurations, API calls) but allowing unsupervised execution creates unacceptable safety and compliance risks. Blocking all such operations defeats the purpose of agent automation."
   },
   {
@@ -3646,6 +3714,39 @@
     ],
     "updated_at": "2026-10-13",
     "excerpt": "\n## Problem\nSecure, reliable command execution from agents is complex and error-prone:\n\n- **PTY requirements**: TTY-required CLIs (coding agents, terminal UIs) fail with direct exec\n- **Platform differences**: Linux and macOS behave differently for detached processes, signal handling\n- **Security concerns**: Arbitrary command execution needs approval workflows, elevated mode detection\n- **Background management**: Long-running processes need tracking, output aggregation, and cleanup\n\nAgents need a multi-mode execution strategy that adapts to the command's requirements while maintaining security and reliability."
+  },
+  {
+    "title": "Intent-Level Cost Attribution",
+    "status": "proposed",
+    "authors": [
+      "Retsumdk (@Retsumdk)"
+    ],
+    "based_on": [
+      "Original Creator (@Retsumdk)"
+    ],
+    "category": "Reliability & Eval",
+    "source": "https://github.com/Retsumdk/agent-cost-attribution-api",
+    "tags": [
+      "cost-control",
+      "observability",
+      "budgeting",
+      "multi-agent",
+      "token-spend"
+    ],
+    "slug": "intent-level-cost-attribution",
+    "id": "intent-level-cost-attribution",
+    "summary": "Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total",
+    "signals": [
+      "Multiple agents, users, or intents share one model budget and someone must answer for the spend",
+      "A budget cap exists or is planned, and it should bind the specific work that is expensive rather than throttling everything uniformly",
+      "Cost regressions after a prompt, model, or workflow change need to be localized to the intent that caused them"
+    ],
+    "anti_signals": [
+      "A single agent with a single user and no budget enforcement - a daily total is enough",
+      "Call sites cannot name their intent or project, and threading attribution keys through the orchestration layer is not feasible"
+    ],
+    "updated_at": "2026-10-20",
+    "excerpt": "\n## Problem\nAgent fleets spend LLM budget continuously and opaquely. When a bill spikes or a budget cap trips, the operator can usually answer *how much* was spent but not *which work caused it*: a single daily total hides whether the spend came from a misbehaving retry loop, one user's abnormal usage, a specific intent that quietly grew, or steady baseline load across the fleet. Without attribution at the level of the work item that triggered the calls, cost control degenerates into guesswork — you can cut a budget, but you cannot cut the right thing, and you cannot tell whether a change actually reduced waste or just moved it somewhere else."
   },
   {
     "title": "Inversion of Control",
@@ -6083,7 +6184,7 @@
     ],
     "slug": "shared-core-native-shells",
     "id": "shared-core-with-native-shells",
-    "summary": "Puts all application state and behaviour in one core library, has agents write a thin native front-end per platform, and fails the build when a shell or the CLI falls out of step with the core",
+    "summary": "Keeps application state and behavior in a shared core, uses native front ends for each platform, and checks that shells and the CLI expose the core consistently",
     "signals": [
       "One application should look and behave natively on several platforms (desktop toolkits, terminal, browser)",
       "Agents write most of the per-platform code and humans review it",
@@ -6095,7 +6196,7 @@
       "Nobody can run or inspect each platform's build before release"
     ],
     "updated_at": "2026-11-13",
-    "excerpt": "\n## Problem\nA native interface per platform used to mean writing the application several times, in different languages, toolkits and build systems. Few projects could justify that, so most shipped one cross-platform UI that fits no platform well.\n\nCoding agents make the per-platform implementation cheap. They do not make it consistent. An agent asked to build a Windows front-end will re-implement undo, word wrapping and caret movement against whatever it finds in that toolkit, and the result differs from the GNOME and macOS versions in ways no reviewer will catch by reading diffs. Toolkit text widgets make this worse: each holds its own copy of the document, and the toolkit's rules win over the application's."
+    "excerpt": "\n## Problem\nProviding a native interface on several platforms often means maintaining separate implementations across languages, toolkits, and build systems. A cross-platform toolkit such as Qt or wxWidgets can reduce that work and is often the right choice, but its shared widgets and interaction model may not match each platform's conventions. It can also constrain teams that need direct access to platform APIs, highly platform-specific behavior, or a UI that uses different technologies on desktop, web, and terminal targets. In those cases, separate native shells may fit better, provided the shared application behavior is kept out of them.\n\nHistorically, the implementation cost of several native shells could make this approach impractical for a small team. Coding agents make it more feasible by taking on much of the repetitive per-platform implementation from a shared core API and checklist. They do not ensure consistent behavior, so shells still need parity checks and human review. If shells each implement undo, wrapping, or caret movement independently, those features can diverge. Toolkit text widgets can create further divergence when each shell keeps its own document state and applies the toolkit's editing rules."
   },
   {
     "title": "Shell Command Contextualization",

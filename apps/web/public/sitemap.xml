@@ -218,6 +218,10 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/credential-free-outbox</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/criticgpt-style-evaluation</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -378,6 +382,10 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch</loc>
+    <lastmod>2026-10-17</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/frontier-focused-development</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -391,7 +399,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/human-in-loop-approval-framework</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-06</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</loc>
@@ -416,6 +424,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/intelligent-bash-tool-execution</loc>
     <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/intent-level-cost-attribution</loc>
+    <lastmod>2026-10-20</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/inversion-of-control</loc>

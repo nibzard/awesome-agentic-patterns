@@ -251,6 +251,11 @@ Continuous Autonomous Task Loop Pattern: Runs a loop where subagents pick the ne
 URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern
 Markdown: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern.md
 
+### credential-free-outbox
+Credential-Free Outbox: The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything
+URL: https://agentic-patterns.com/patterns/credential-free-outbox
+Markdown: https://agentic-patterns.com/patterns/credential-free-outbox.md
+
 ### criticgpt-style-evaluation
 CriticGPT-Style Code Review: Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration
 URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
@@ -451,6 +456,11 @@ Filesystem-Mediated Host Delegation: Lets a sandboxed agent write request files 
 URL: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation
 Markdown: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation.md
 
+### fleet-cost-simulation-before-dispatch
+Fleet Cost Simulation Before Dispatch: Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production
+URL: https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch
+Markdown: https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch.md
+
 ### frontier-focused-development
 Frontier-Focused Development: Targets only state-of-the-art models, picks the best model per use case with no user model selector, and expects to rework the product every few months
 URL: https://agentic-patterns.com/patterns/frontier-focused-development
@@ -500,6 +510,11 @@ Markdown: https://agentic-patterns.com/patterns/initializer-maintainer-dual-agen
 Intelligent Bash Tool Execution: Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals
 URL: https://agentic-patterns.com/patterns/intelligent-bash-tool-execution
 Markdown: https://agentic-patterns.com/patterns/intelligent-bash-tool-execution.md
+
+### intent-level-cost-attribution
+Intent-Level Cost Attribution: Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total
+URL: https://agentic-patterns.com/patterns/intent-level-cost-attribution
+Markdown: https://agentic-patterns.com/patterns/intent-level-cost-attribution.md
 
 ### inversion-of-control
 Inversion of Control: Gives the agent tools, a high-level objective, and guardrails, then lets it choose sequencing and recovery while humans set policy and review
@@ -827,7 +842,7 @@ URL: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-ag
 Markdown: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools.md
 
 ### shared-core-native-shells
-Shared Core with Native Shells: Puts all application state and behaviour in one core library, has agents write a thin native front-end per platform, and fails the build when a shell or the CLI falls out of step with the core
+Shared Core with Native Shells: Keeps application state and behavior in a shared core, uses native front ends for each platform, and checks that shells and the CLI expose the core consistently
 URL: https://agentic-patterns.com/patterns/shared-core-native-shells
 Markdown: https://agentic-patterns.com/patterns/shared-core-native-shells.md
 

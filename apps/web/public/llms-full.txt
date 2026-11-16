@@ -5549,6 +5549,60 @@ Distinct from [Stop Hook Auto-Continue Pattern](stop-hook-auto-continue-pattern.
 
 ---
 
+## Credential-Free Outbox
+
+**Status:** emerging
+**Category:** Security & Safety
+**Authors:** tpoxa (@tpoxa)
+**Source:** https://tinysystems.io/blog/the-outbox/
+
+## Problem
+
+A coding agent has to publish its work: push a branch, open a pull request, post a comment. The obvious way is to give it a token. But the same agent reads untrusted text all day, so a prompt injection can use that token for anything it allows: force-push, reach other repositories, open a pull request somewhere it shouldn't. Short-lived CI tokens don't fix this cleanly either. GitHub revokes a job's token when the job ends, often before a long-running agent has finished.
+
+## Solution
+
+The agent holds no publishing credentials at all. It writes its finished work as a file to an outbox, and a separate, short-lived, credentialed job delivers it.
+
+- **Agent:** commits on a branch, then runs `git bundle create outbox/<branch>.bundle main..<branch>`. No remote, no token.
+- **Courier:** a CI job with its own fresh token lists the outbox, validates each bundle name against a strict pattern, fetches the bundle, rebases it onto the current main and pushes.
+- **Acknowledge after delivery:** the courier deletes a bundle only after the push succeeds. A failed push leaves it in place for the next run, so nothing is lost or delivered twice.
+- **Identity-bearing side effects** (opening the PR, posting a comment) are done by the courier too, never by the agent.
+
+```pseudo
+agent:
+    work(); commit(branch)
+    write_bundle("outbox/" + branch + ".bundle")
+
+courier (scheduled or event-driven, outside the agent sandbox):
+    for b in list(outbox) where name matches ^[A-Za-z0-9][A-Za-z0-9._-]*\.bundle$:
+        fetch(b)                 # argv-only channel, no shell
+        rebase(onto = "main")
+        push(token)
+        open_pr(token)
+        ack(b)                   # only after the push succeeded
+```
+
+## How to use it
+
+- Run the courier outside the agent's sandbox, with a token scoped to the target repository and as short-lived as the platform allows.
+- Read bundles through an argv-only channel and never interpolate agent-written text into a shell command. The bundle name allow-list is part of the pattern, not decoration.
+- Rebase in the courier. A bundle made from an old clone can carry stale workflow files, and some CI tokens are not allowed to push changes to workflows even incidentally.
+- On GitHub, pushes made with the job's `GITHUB_TOKEN` don't trigger further workflows, so the courier has to open the pull request itself rather than relying on a push-triggered job.
+
+## Trade-offs
+
+- **Pros:** a hijacked agent has no token to push, force-push or reach other repositories with. Nothing in the sandbox needs rotating. Every delivery is done and logged by one auditable job.
+- **Cons:** delivery is asynchronous, so there is a delay between "done" and "visible". The courier needs read access to the agent's outbox, which is its own small trust boundary. The model API key usually still lives in the sandbox, so this narrows the blast radius rather than eliminating it.
+
+## References
+
+- https://tinysystems.io/blog/the-outbox/
+- https://github.com/tiny-systems/tiny
+- https://microservices.io/patterns/data/transactional-outbox.html
+
+---
+
 ## CriticGPT-Style Code Review
 
 **Status:** emerging
@@ -6329,6 +6383,7 @@ The governance layer operates as middleware that wraps the agent tool-calling in
 ## References
 
 - [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation. Disclosure: this SDK is a client for the author's own commercial signing service at asqav.com (Elastic License 2.0, Free/Pro/Enterprise plans); ML-DSA signing runs server-side in that service, and Ed25519/ES256 cover locally signed receipts, so "sign at the point of execution" is the pattern's design goal rather than a description of how this SDK's cloud-issued receipts are produced
+- [Tracekit](https://github.com/Cygnux-Labs/Tracekit) - Open-source implementation of this pattern (contributor-owned, disclosed): a signer process outside the agent checks each tool call against a policy before it runs (allow, deny, or hold for a person) and appends an Ed25519-signed record of the call, the decision and the result to a per-run hash chain that verifies offline. MIT, self-hosted and signed locally; the chain resists tampering only when the signer runs outside the agent's OS account.
 - [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture
 - [OWASP Agentic AI Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks (the OWASP Top 10 for Agentic Applications is a separate document)
 - [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard
@@ -9840,6 +9895,80 @@ gives durability; it gives no safety on its own.
 
 ---
 
+## Fleet Cost Simulation Before Dispatch
+
+**Status:** proposed
+**Category:** Reliability & Eval
+**Authors:** Retsumdk (@Retsumdk)
+**Source:** https://github.com/Retsumdk/agent-budget-simulator
+
+## Problem
+
+Agent fleets spend three scarce resources — tokens, API calls, and dollars — on work whose cost profile is only known after the work runs. The failure modes are invisible until they are expensive:
+
+1. **Budget exhaustion mid-flight.** The fleet runs out of tokens or dollars partway through a batch, leaving half the work aborted and the rest degraded — after the money is already spent.
+2. **Starvation by priority.** A `strict_priority` policy that reads as obviously correct starves `background` agents indefinitely under load. Nobody notices until a background task that mattered never ran.
+3. **Unvalidated recovery.** Retry / abort / degrade / fallback rules are chosen per call site and are rarely exercised against a realistic resource ceiling, so the first real quota outage is also the first test.
+
+Live canaries partially help, but they find these bugs in production, where each finding costs real spend and real incidents.
+
+## Solution
+
+Put a deterministic simulator between the fleet's policy and production. Model the resource budget, agent tiers, fairness policy, and failure-recovery behavior, then replay packaged scenarios — baseline, stress, starvation, deadline, token-bucket — and read the verdict before a single real task is dispatched.
+
+```pseudo
+for scenario in [baseline, stress, starvation, deadline, token_bucket]:
+    result = simulate(fleet_policy, scenario, seed=fixed)
+    report = evaluate(result)   # per-agent dispatch/complete/degrade/reject,
+                                # per-resource consumed/remaining/utilization
+    if report.verdict == FAIL:   # e.g. Status: STARVED, background tier got 0 dispatches
+        tune(fleet_policy, budget)   # before production, not after
+```
+
+The mechanics that make this a real gate rather than a demo:
+
+- **Resource-kind budgets.** Track `tokens`, `api_calls`, and `dollars` separately — a fleet can be token-starved while sitting on unspent dollars, and the fix differs by resource.
+- **Agent tiers with effective priority.** `critical`, `high`, `normal`, `background`, `best_effort` tiers compose with the fairness policy (`fifo`, `strict_priority`, `weighted_fair`, `deadline_aware`) to produce effective priority, which is what actually decides dispatch order under contention.
+- **Deterministic seeds.** A fixed seed makes a failure reproducible: the same scenario that starved `background-bot` yesterday starves it again today after your fix, proving the fix rather than suggesting it.
+- **Bounded-spend probes.** The starvation scenario intentionally under-provisions the budget; the value is not the failure itself but the shape of it — which tiers starved, how many tasks were rejected, and whether recovery degraded or aborted.
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- **Most Valuable Findings:**
+  - Deterministic discrete-event simulation is a standard validation tool for schedulers and queueing policies; applying it to agent fleets is a direct transplant of a mature technique, not a novel claim.
+  - The simulator's starvation run correctly surfaced a policy failure (background tier received 0 dispatches of 4 rejections under `strict_priority`) that a code review of the same policy would pass.
+- **Unverified / Unclear:** Simulation validates the policy logic against the workload model you wrote, not against production traffic. A workload distribution that misestimates task cost or arrival rate will make the verdicts confidently wrong — the evidence grade is capped for exactly this reason.
+
+## How to use it
+
+- **When:** You run multiple agents against a shared budget, you are about to change a priority/fairness policy, or you are sizing tier budgets for a new workload.
+- **Prerequisites:** A rough per-task cost model (tokens or dollars per task per tier) and the fleet's actual tier structure. The model can be coarse; wrong-but-plausible is usually enough to expose structural bugs like starvation.
+- **Implementation notes:**
+  - Run the scenario suite in CI whenever the priority policy, tier table, or budget values change — the simulator is fast enough to treat as a unit-test dependency.
+  - Treat `STARVED` verdicts as policy findings, not noise: a starved tier in simulation is a starved tier in production with worse visibility.
+  - Keep scenarios adversarial on purpose (under-provisioned budgets, bursty arrivals); a suite that only contains the baseline scenario will only ever pass.
+
+## Trade-offs
+
+- **Pros:**
+  - Converts the most expensive way to discover a budget bug (production) into the cheapest (a deterministic replay).
+  - Makes priority-policy fairness a testable property instead of an assertion in review.
+  - Reproducible failures (fixed seeds) let you verify a fix, not just observe a change.
+- **Cons:**
+  - Verdicts are only as honest as the workload model; simulation can create false confidence if the cost model is far from reality.
+  - Maintaining scenarios is an ongoing cost — stale scenarios silently stop representing the real workload.
+  - It validates policy, not agents: an agent that misreports its own consumption is invisible to the simulator.
+
+## References
+
+- Reference implementation: [agent-budget-simulator](https://github.com/Retsumdk/agent-budget-simulator) — deterministic TypeScript scenario simulator, clone-and-run, MIT (contributor-owned, disclosed).
+- Shreedhar, M. & Varghese, G., "Efficient Fair Queuing using Deficit Round Robin" (SIGCOMM '95) — the fairness discipline underlying weighted-fair policies.
+- Kleppmann, M., *Designing Data-Intensive Applications* — backpressure and load-shedding discussion (Ch. 9).
+- Related pattern in this catalogue: [Budget-Aware Model Routing with Hard Cost Caps](budget-aware-model-routing-with-hard-cost-caps.md) — per-request model selection under caps, complementary to fleet-level pre-dispatch simulation.
+
+---
+
 ## Frontier-Focused Development
 
 **Status:** emerging
@@ -10468,6 +10597,7 @@ approval_channels:
 - [MCP elicitation specification](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation) - protocol-level mid-flow approval requests
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
 - [Impri](https://github.com/sekera-radim/impri) - Self-hostable, framework-agnostic implementation of this pattern (contributor-owned, disclosed): agents propose actions via MCP or REST, a human approves/edits/rejects from a web inbox, Slack, Telegram, or phone, then the agent executes. MIT-licensed open-core, included as a concrete alternative to the vendor-SDK references above.
+- [Duct](https://github.com/5hirish/duct) - Open-source marketing agent (contributor-owned, disclosed) that applies the proposal/execution separation from the ETH Zurich paper at the tool-list level: the model can only propose a change set as data, no approve or apply tool exists for it to call, a human approves through an HTTP route, and a per-project autonomy level (`ask` by default) can let reversible, guardrail-clean changes auto-apply but never widens what may apply. MIT-licensed, included as a second concrete implementation beside Impri.
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)
 
 ---
@@ -11389,6 +11519,81 @@ function killSession(session: ProcessSession) {
 - [Claude Code](https://claude.ai/code) - Tool-mediated bash execution with `run_in_background` support
 - [Model Context Protocol](https://modelcontextprotocol.io) - Structured tool definition standard
 - Related: [Virtual Machine Operator Agent](/patterns/virtual-machine-operator-agent) for remote execution patterns
+
+---
+
+## Intent-Level Cost Attribution
+
+**Status:** proposed
+**Category:** Reliability & Eval
+**Authors:** Retsumdk (@Retsumdk)
+**Source:** https://github.com/Retsumdk/agent-cost-attribution-api
+
+## Problem
+
+Agent fleets spend LLM budget continuously and opaquely. When a bill spikes or a budget cap trips, the operator can usually answer *how much* was spent but not *which work caused it*: a single daily total hides whether the spend came from a misbehaving retry loop, one user's abnormal usage, a specific intent that quietly grew, or steady baseline load across the fleet. Without attribution at the level of the work item that triggered the calls, cost control degenerates into guesswork — you can cut a budget, but you cannot cut the right thing, and you cannot tell whether a change actually reduced waste or just moved it somewhere else.
+
+## Solution
+
+Attribute every model call to the intent that caused it at the moment the call is made. Each usage record carries a three-part attribution key — `projectId`, `intentId`, and `userId` — plus the model, token counts, and optional free-form metadata. Cost is computed at record time from per-model pricing, so the ledger is a first-class artifact rather than something reconstructed later from provider invoices.
+
+The mechanism has four parts:
+
+- **Tracker** — the core engine that turns a usage event (model, input/output tokens, attribution keys) into a priced cost record.
+- **Storage** — a persistence layer with atomic writes so concurrent agents recording usage cannot corrupt the ledger.
+- **Reporting API** — roll-ups by project, by intent, and by user, plus filtered record retrieval, so the same ledger answers both "what did this intent cost?" and "who is driving the bill?"
+- **CLI** — server startup and report generation from the command line for operators working outside the API.
+
+```pseudo
+on_model_call(agent, model, input_tokens, output_tokens, intent, project, user):
+    cost = price(model, input_tokens, output_tokens)
+    ledger.append({
+      model, tokens, cost,
+      projectId: project, intentId: intent, userId: user,
+      metadata, timestamp
+    })   # atomic write
+
+when budget_question_arises:
+    report(by="intent")   # find the top spenders by work item
+    report(by="user")     # separate fleet load from individual demand
+```
+
+The control points are the record schema (the attribution keys are mandatory, so unattributed spend cannot hide) and the report endpoints (the same data serves alerting, post-hoc analysis, and per-intent budget enforcement).
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- **Most Valuable Findings:** Production cost-governance systems (finops practice, LLM gateway products) consistently attribute spend along workload dimensions rather than only reporting totals; recording attribution at call time avoids the reconstruction problem that makes post-hoc invoice analysis lossy. The reference implementation demonstrates the pattern end-to-end with per-model pricing and atomic ledger writes.
+- **Unverified / Unclear:** Quantified savings from intent-level attribution in published agent deployments are not documented; the pattern's value in fleets with very high intent cardinality (attribution overhead vs. insight) needs field measurement.
+
+## How to use it
+
+Use this pattern when:
+
+- Multiple agents, users, or intents share one model budget and someone must answer for it.
+- A budget cap exists (or should): attribution is the prerequisite for caps that bind the *right* work instead of throttling everything uniformly.
+- Cost regressions need diagnosis: after a prompt, model, or workflow change, per-intent deltas localize the regression instead of forcing a fleet-wide bisect.
+
+Prerequisites: every model call site must be able to name its intent and project — attribution keys must be threaded through the orchestration layer at call time, which is a real (and one-time) instrumentation cost. Implementation considerations: price tables must stay current with model pricing changes; atomic writes or an append-only log matter once more than one agent writes concurrently.
+
+## Trade-offs
+
+**Pros:**
+
+- Turns an opaque total into a queryable ledger; cost questions become lookups, not investigations.
+- Makes targeted cost control possible: cap, throttle, or refactor the specific intent that is expensive.
+- Attribution recorded at call time preserves intent that post-hoc reconstruction cannot recover.
+
+**Cons:**
+
+- Instrumentation tax: every call site must supply the attribution keys, and a mis-keyed call silently pollutes reports.
+- Attribution cardinality can explode in fleets with many short-lived intents; roll-ups need designing (per project, per user) to stay useful.
+- The ledger itself is state that must be persisted and retained — at scale this becomes its own storage problem.
+
+## References
+
+- Reference implementation: [Retsumdk/agent-cost-attribution-api](https://github.com/Retsumdk/agent-cost-attribution-api) — REST + CLI cost ledger with `projectId`/`intentId`/`userId` attribution, per-model pricing, and atomic JSON persistence (MIT).
+- Related patterns in this catalog: [Budget-aware model routing with hard cost caps](budget-aware-model-routing-with-hard-cost-caps.md) — routing-level cost control that benefits from attribution data.
 
 ---
 
@@ -19224,13 +19429,13 @@ on_tool_read(path, mode):
 
 ## Problem
 
-A native interface per platform used to mean writing the application several times, in different languages, toolkits and build systems. Few projects could justify that, so most shipped one cross-platform UI that fits no platform well.
+Providing a native interface on several platforms often means maintaining separate implementations across languages, toolkits, and build systems. A cross-platform toolkit such as Qt or wxWidgets can reduce that work and is often the right choice, but its shared widgets and interaction model may not match each platform's conventions. It can also constrain teams that need direct access to platform APIs, highly platform-specific behavior, or a UI that uses different technologies on desktop, web, and terminal targets. In those cases, separate native shells may fit better, provided the shared application behavior is kept out of them.
 
-Coding agents make the per-platform implementation cheap. They do not make it consistent. An agent asked to build a Windows front-end will re-implement undo, word wrapping and caret movement against whatever it finds in that toolkit, and the result differs from the GNOME and macOS versions in ways no reviewer will catch by reading diffs. Toolkit text widgets make this worse: each holds its own copy of the document, and the toolkit's rules win over the application's.
+Historically, the implementation cost of several native shells could make this approach impractical for a small team. Coding agents make it more feasible by taking on much of the repetitive per-platform implementation from a shared core API and checklist. They do not ensure consistent behavior, so shells still need parity checks and human review. If shells each implement undo, wrapping, or caret movement independently, those features can diverge. Toolkit text widgets can create further divergence when each shell keeps its own document state and applies the toolkit's editing rules.
 
 ## Solution
 
-Split the application into one **core** that owns every piece of state and every rule, and several **shells** that only render and forward input. Then make the boundary between them mechanically checked, so agents can work on shells in parallel without redefining the application.
+Place application state and behavior in a shared **core**. Keep each platform **shell** responsible for rendering and forwarding input to that core. Add automated checks at the boundary so shell implementations expose the same core capabilities without duplicating application rules.
 
 ```mermaid
 graph TD
@@ -19244,18 +19449,18 @@ graph TD
     Checks -. fail build on drift .-> Shells
 ```
 
-The core decides:
+The core owns:
 
 - **Document state and history.** Edits are data with an inverse; undo grouping and "modified" are core decisions.
-- **Layout.** Up, Down, Page Down and click positions depend on rows on screen, so wrapping lives in the core. A shell supplies only a small metrics interface (string width, row height), measured with the same engine it draws with.
+- **Layout.** Vertical movement and click positions depend on the displayed rows, so wrapping is calculated in the core. A shell supplies text-width and row-height metrics from the rendering engine it uses.
 - **The list of verbs.** Every menu command is declared once in a table with an id, label and summary.
-- **What is visible.** Shells read a windowed view sized to their frame, never the whole document.
+- **Visible content.** Shells request a view sized to the available frame rather than loading the whole document.
 
-Each shell decides only presentation: which keys map to which verb, whether commands appear in a menu bar or a header bar, how a dirty document is marked. These follow each platform's own guidelines and are expected to differ between shells.
+Each shell handles presentation details: key bindings, menu placement, and how an unsaved document is indicated. These details follow platform conventions and can differ between shells.
 
-A **CLI exposes every core capability**, including state that persists between invocations through a session file. It gives agents and tests a way to drive the application without a GUI.
+A **CLI exposes the core capabilities**, including any state persisted between invocations in a session file. Agents and tests can use it to drive the application without a GUI.
 
-**Ratchet tests** fail the build when the boundary is broken. The parity test parses the core's source to list its public methods; the shell tests iterate over the verb table:
+Automated parity checks fail the build when a shell or the CLI falls behind the core. In the reference implementation, one test parses the core source to find public methods, while shell tests check the shared command table:
 
 - every public method on the core's application type has a CLI command, or a written reason in a parity table;
 - every CLI command appears in a sample script that the test suite runs;
@@ -19271,26 +19476,28 @@ A **CLI exposes every core capability**, including state that persists between i
 
 ## How to use it
 
-1. **Build the core with tests and no UI.** Include a test that observers can read back from the core while being notified, so the core must release its lock before calling them.
-2. **Add the CLI and the parity test next.** Stateless CLI calls show which state the core failed to expose.
-3. **Write one sample script** that exercises every CLI command; reuse its output as the fixture each shell renders.
-4. **Build the terminal shell first.** It is the cheapest real event loop. Move anything it invents that a second shell would also need into the core before starting the next shell.
-5. **Hand further shells to agents** with a checklist: no application state in the shell, no toolkit text widget owning the text, keymap and menus in widget-free modules with tests, repaint on core notification only.
-6. **Check platform code where the platform is absent.** With all shells in one language, type-checking and linting for each target run on any CI host, because checking does not link. Keep window-independent code (argument parsing, keymaps, menus, geometry) outside platform `cfg` gates so its tests run everywhere.
-7. **Render frames headlessly** (`--render-to` style) and compare two renders byte for byte. A human still has to look at screenshots: tests prove wiring, not appearance.
+1. **Build and test the core without a UI.** Test that observers can read the core while receiving a notification; this also checks that callbacks run after the core releases its lock.
+2. **Add the CLI and parity checks.** Stateless CLI calls help identify core state that is not exposed through the interface.
+3. **Create a sample script** that exercises each CLI command, and use its output as a fixture for shell rendering tests.
+4. **Build the terminal shell first.** Move behavior that another shell would need into the core before implementing additional shells.
+5. **Delegate additional shells with a clear checklist:** keep application state out of shells; do not let toolkit text widgets own document contents; test keymaps and menus outside widget-dependent modules; repaint in response to core notifications.
+6. **Check platform code on CI hosts without the target platform.** When shells use one language, run type checks and linting for each target on any host where these checks do not require linking. Keep platform-independent code, such as argument parsing, keymaps, menus, and geometry, outside platform-specific compilation gates so its tests run everywhere.
+7. **Render frames headlessly** and compare deterministic output where practical. Review screenshots as well: automated checks verify behavior and rendering consistency, but not whether the interface looks right.
 
 ## Trade-offs
 
 - **Pros:**
-  - Behaviour is defined once, so shells cannot disagree about undo, selection or wrapping.
-  - Shell work is a bounded, repeatable task with a checklist and failing tests, which suits agents.
-  - The CLI gives agents and scripts the same capabilities as the GUIs, with structured output.
-  - Each platform gets its own conventions instead of a lowest-common-denominator UI.
+  - Shared rules reduce behavioral differences in features such as undo, selection, and wrapping.
+  - Shell work has a defined boundary and can be checked with repeatable tests.
+  - The CLI gives agents and scripts access to core capabilities through a structured interface.
+  - Each platform can follow its own interface conventions.
+  - Agents can produce and update several shell implementations from the same core contract, reducing the human effort that previously made this architecture costly.
 - **Cons:**
-  - Rendering text yourself instead of using toolkit widgets means re-doing input methods, accessibility and complex-script shaping per shell. The reference implementation lists these as open gaps.
-  - The core API grows faster than in a single-UI application, because every shell-local need becomes a core feature.
-  - Ratchet tests that parse source code are brittle under refactoring and need maintenance.
-  - Appearance and platform conventions still require human inspection on each platform, which limits how much review the tests replace.
+  - Custom text rendering requires each shell to address input methods, accessibility, and complex-script shaping. The reference implementation lists these as open gaps.
+  - The core API can grow as platform-specific requirements are added.
+  - Source-parsing checks can break during refactoring and require maintenance.
+  - Appearance and platform conventions still need review on each platform; automated checks do not replace visual inspection.
+  - A cross-platform toolkit such as Qt or wxWidgets is usually a better fit when one consistent UI across platforms is acceptable, the team wants a mature shared widget set, or it lacks the capacity to build and review native shells for every target. Agents lower shell implementation costs, but do not remove the cost of validating platform behavior, accessibility, and rendering.
 
 ## References
 
