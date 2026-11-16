@@ -816,6 +816,23 @@
       "summary": "Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits"
     },
     {
+      "id": "credential-free-outbox",
+      "title": "Credential-Free Outbox",
+      "category": "Security & Safety",
+      "status": "emerging",
+      "slug": "credential-free-outbox",
+      "tags": [
+        "credentials",
+        "prompt-injection",
+        "least-privilege",
+        "git",
+        "ci",
+        "containment",
+        "outbox"
+      ],
+      "summary": "The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything"
+    },
+    {
       "id": "criticgpt-style-code-review",
       "title": "CriticGPT-Style Code Review",
       "category": "Reliability & Eval",

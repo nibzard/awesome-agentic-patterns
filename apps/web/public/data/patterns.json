@@ -1818,6 +1818,43 @@
     "excerpt": "\n## Problem\nTraditional development workflows require constant human intervention for task management:\n\n- **Manual Task Selection**: Developers spend time deciding what to work on next from todo lists\n- **Context Switching Overhead**: Moving between different types of tasks interrupts flow state\n- **Rate Limit Interruptions**: API rate limits break development momentum and require manual waiting\n- **Repetitive Git Operations**: Each task completion requires manual staging, committing, and status checking\n- **Error Recovery**: Failed tasks need manual diagnosis and restart\n\nThis manual orchestration reduces overall productivity and prevents developers from focusing on higher-level problem solving."
   },
   {
+    "title": "Credential-Free Outbox",
+    "status": "emerging",
+    "authors": [
+      "tpoxa (@tpoxa)"
+    ],
+    "based_on": [
+      "tiny (https://github.com/tiny-systems/tiny)",
+      "Transactional outbox (microservices pattern)"
+    ],
+    "category": "Security & Safety",
+    "source": "https://tinysystems.io/blog/the-outbox/",
+    "tags": [
+      "credentials",
+      "prompt-injection",
+      "least-privilege",
+      "git",
+      "ci",
+      "containment",
+      "outbox"
+    ],
+    "slug": "credential-free-outbox",
+    "id": "credential-free-outbox",
+    "summary": "The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything",
+    "signals": [
+      "Agent reads untrusted text (issues, READMEs, dependency docs) and must also publish results",
+      "Results can be expressed as a file: a git bundle, a patch, a report",
+      "A CI system can run a credentialed job on a schedule or event"
+    ],
+    "anti_signals": [
+      "The agent needs an interactive, authenticated session with an outside system mid-task",
+      "Results must be published synchronously within the agent's turn",
+      "There is no separate trusted runner to hold the credential"
+    ],
+    "updated_at": "2026-11-08",
+    "excerpt": "\n## Problem\nA coding agent has to publish its work: push a branch, open a pull request, post a comment. The obvious way is to give it a token. But the same agent reads untrusted text all day, so a prompt injection can use that token for anything it allows: force-push, reach other repositories, open a pull request somewhere it shouldn't. Short-lived CI tokens don't fix this cleanly either. GitHub revokes a job's token when the job ends, often before a long-running agent has finished."
+  },
+  {
     "title": "CriticGPT-Style Code Review",
     "status": "emerging",
     "authors": [

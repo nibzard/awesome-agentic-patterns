@@ -251,6 +251,11 @@ Continuous Autonomous Task Loop Pattern: Runs a loop where subagents pick the ne
 URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern
 Markdown: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern.md
 
+### credential-free-outbox
+Credential-Free Outbox: The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything
+URL: https://agentic-patterns.com/patterns/credential-free-outbox
+Markdown: https://agentic-patterns.com/patterns/credential-free-outbox.md
+
 ### criticgpt-style-evaluation
 CriticGPT-Style Code Review: Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration
 URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
