@@ -4,8 +4,23 @@
         <description><![CDATA[New and updated AI agent design patterns.]]></description>
         <link>https://agentic-patterns.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sun, 08 Nov 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 13 Nov 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href="https://agentic-patterns.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Shared Core with Native Shells]]></title>
+            <description><![CDATA[Keeps application state and behavior in a shared core, uses native front ends for each platform, and checks that shells and the CLI expose the core consistently]]></description>
+            <link>https://agentic-patterns.com/patterns/shared-core-native-shells</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/shared-core-native-shells</guid>
+            <category><![CDATA[Orchestration & Control]]></category>
+            <category><![CDATA[architecture]]></category>
+            <category><![CDATA[cross-platform]]></category>
+            <category><![CDATA[native-ui]]></category>
+            <category><![CDATA[cli]]></category>
+            <category><![CDATA[parity-tests]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[code-generation]]></category>
+            <pubDate>Fri, 13 Nov 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Credential-Free Outbox]]></title>
             <description><![CDATA[The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything]]></description>
@@ -269,19 +284,6 @@
             <category><![CDATA[agent-environment]]></category>
             <category><![CDATA[mcp]]></category>
             <category><![CDATA[structured-output]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[Agent-Friendly Workflow Design]]></title>
-            <description><![CDATA[Gives agents clear high-level goals, room for implementation choices, structured I/O, and plan review before execution]]></description>
-            <link>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/agent-friendly-workflow-design</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[human-agent collaboration]]></category>
-            <category><![CDATA[workflow design]]></category>
-            <category><![CDATA[agent autonomy]]></category>
-            <category><![CDATA[task decomposition]]></category>
-            <category><![CDATA[HCI]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>

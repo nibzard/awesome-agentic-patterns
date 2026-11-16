@@ -6163,6 +6163,42 @@
     "excerpt": "\n## Problem\nCoding agents read the same files and command outputs many times per session. Each hop typically pastes full text into the model context, so cost and latency grow with repetition and verbosity even when the underlying artifact has not changed."
   },
   {
+    "title": "Shared Core with Native Shells",
+    "status": "emerging",
+    "authors": [
+      "Florian Wilhelm (@fwilhe2)"
+    ],
+    "based_on": [
+      "Florian Wilhelm (fwilhe2/editor and fwilhe2/grind; contributor-owned)"
+    ],
+    "category": "Orchestration & Control",
+    "source": "https://github.com/fwilhe2/editor/blob/main/doc/architecture.md",
+    "tags": [
+      "architecture",
+      "cross-platform",
+      "native-ui",
+      "cli",
+      "parity-tests",
+      "multi-agent",
+      "code-generation"
+    ],
+    "slug": "shared-core-native-shells",
+    "id": "shared-core-with-native-shells",
+    "summary": "Keeps application state and behavior in a shared core, uses native front ends for each platform, and checks that shells and the CLI expose the core consistently",
+    "signals": [
+      "One application should look and behave natively on several platforms (desktop toolkits, terminal, browser)",
+      "Agents write most of the per-platform code and humans review it",
+      "Behaviour drift between platform front-ends is the main maintenance cost"
+    ],
+    "anti_signals": [
+      "A single cross-platform UI toolkit already gives an acceptable experience on every target",
+      "The application is mostly UI with little shared model or logic",
+      "Nobody can run or inspect each platform's build before release"
+    ],
+    "updated_at": "2026-11-13",
+    "excerpt": "\n## Problem\nProviding a native interface on several platforms often means maintaining separate implementations across languages, toolkits, and build systems. A cross-platform toolkit such as Qt or wxWidgets can reduce that work and is often the right choice, but its shared widgets and interaction model may not match each platform's conventions. It can also constrain teams that need direct access to platform APIs, highly platform-specific behavior, or a UI that uses different technologies on desktop, web, and terminal targets. In those cases, separate native shells may fit better, provided the shared application behavior is kept out of them.\n\nHistorically, the implementation cost of several native shells could make this approach impractical for a small team. Coding agents make it more feasible by taking on much of the repetitive per-platform implementation from a shared core API and checklist. They do not ensure consistent behavior, so shells still need parity checks and human review. If shells each implement undo, wrapping, or caret movement independently, those features can diverge. Toolkit text widgets can create further divergence when each shell keeps its own document state and applies the toolkit's editing rules."
+  },
+  {
     "title": "Shell Command Contextualization",
     "status": "established",
     "authors": [

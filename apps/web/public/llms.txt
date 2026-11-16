@@ -841,6 +841,11 @@ Session-Scoped Context Runtime for Agent Tools: Interpose a context runtime that
 URL: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools
 Markdown: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools.md
 
+### shared-core-native-shells
+Shared Core with Native Shells: Keeps application state and behavior in a shared core, uses native front ends for each platform, and checks that shells and the CLI expose the core consistently
+URL: https://agentic-patterns.com/patterns/shared-core-native-shells
+Markdown: https://agentic-patterns.com/patterns/shared-core-native-shells.md
+
 ### shell-command-contextualization
 Shell Command Contextualization: Lets the user run a shell command with a prefix such as ! and injects the command and its full output into the agent's context
 URL: https://agentic-patterns.com/patterns/shell-command-contextualization
