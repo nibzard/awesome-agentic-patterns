@@ -6383,6 +6383,7 @@ The governance layer operates as middleware that wraps the agent tool-calling in
 ## References
 
 - [asqav SDK](https://github.com/jagmarques/asqav-sdk) - Reference implementation. Disclosure: this SDK is a client for the author's own commercial signing service at asqav.com (Elastic License 2.0, Free/Pro/Enterprise plans); ML-DSA signing runs server-side in that service, and Ed25519/ES256 cover locally signed receipts, so "sign at the point of execution" is the pattern's design goal rather than a description of how this SDK's cloud-issued receipts are produced
+- [Tracekit](https://github.com/Cygnux-Labs/Tracekit) - Open-source implementation of this pattern (contributor-owned, disclosed): a signer process outside the agent checks each tool call against a policy before it runs (allow, deny, or hold for a person) and appends an Ed25519-signed record of the call, the decision and the result to a per-run hash chain that verifies offline. MIT, self-hosted and signed locally; the chain resists tampering only when the signer runs outside the agent's OS account.
 - [IETF SCITT](https://datatracker.ietf.org/wg/scitt/about/) - Supply Chain Integrity architecture
 - [OWASP Agentic AI Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) - Agent security risks (the OWASP Top 10 for Agentic Applications is a separate document)
 - [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final) - Post-quantum digital signature standard
@@ -9894,6 +9895,80 @@ gives durability; it gives no safety on its own.
 
 ---
 
+## Fleet Cost Simulation Before Dispatch
+
+**Status:** proposed
+**Category:** Reliability & Eval
+**Authors:** Retsumdk (@Retsumdk)
+**Source:** https://github.com/Retsumdk/agent-budget-simulator
+
+## Problem
+
+Agent fleets spend three scarce resources — tokens, API calls, and dollars — on work whose cost profile is only known after the work runs. The failure modes are invisible until they are expensive:
+
+1. **Budget exhaustion mid-flight.** The fleet runs out of tokens or dollars partway through a batch, leaving half the work aborted and the rest degraded — after the money is already spent.
+2. **Starvation by priority.** A `strict_priority` policy that reads as obviously correct starves `background` agents indefinitely under load. Nobody notices until a background task that mattered never ran.
+3. **Unvalidated recovery.** Retry / abort / degrade / fallback rules are chosen per call site and are rarely exercised against a realistic resource ceiling, so the first real quota outage is also the first test.
+
+Live canaries partially help, but they find these bugs in production, where each finding costs real spend and real incidents.
+
+## Solution
+
+Put a deterministic simulator between the fleet's policy and production. Model the resource budget, agent tiers, fairness policy, and failure-recovery behavior, then replay packaged scenarios — baseline, stress, starvation, deadline, token-bucket — and read the verdict before a single real task is dispatched.
+
+```pseudo
+for scenario in [baseline, stress, starvation, deadline, token_bucket]:
+    result = simulate(fleet_policy, scenario, seed=fixed)
+    report = evaluate(result)   # per-agent dispatch/complete/degrade/reject,
+                                # per-resource consumed/remaining/utilization
+    if report.verdict == FAIL:   # e.g. Status: STARVED, background tier got 0 dispatches
+        tune(fleet_policy, budget)   # before production, not after
+```
+
+The mechanics that make this a real gate rather than a demo:
+
+- **Resource-kind budgets.** Track `tokens`, `api_calls`, and `dollars` separately — a fleet can be token-starved while sitting on unspent dollars, and the fix differs by resource.
+- **Agent tiers with effective priority.** `critical`, `high`, `normal`, `background`, `best_effort` tiers compose with the fairness policy (`fifo`, `strict_priority`, `weighted_fair`, `deadline_aware`) to produce effective priority, which is what actually decides dispatch order under contention.
+- **Deterministic seeds.** A fixed seed makes a failure reproducible: the same scenario that starved `background-bot` yesterday starves it again today after your fix, proving the fix rather than suggesting it.
+- **Bounded-spend probes.** The starvation scenario intentionally under-provisions the budget; the value is not the failure itself but the shape of it — which tiers starved, how many tasks were rejected, and whether recovery degraded or aborted.
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- **Most Valuable Findings:**
+  - Deterministic discrete-event simulation is a standard validation tool for schedulers and queueing policies; applying it to agent fleets is a direct transplant of a mature technique, not a novel claim.
+  - The simulator's starvation run correctly surfaced a policy failure (background tier received 0 dispatches of 4 rejections under `strict_priority`) that a code review of the same policy would pass.
+- **Unverified / Unclear:** Simulation validates the policy logic against the workload model you wrote, not against production traffic. A workload distribution that misestimates task cost or arrival rate will make the verdicts confidently wrong — the evidence grade is capped for exactly this reason.
+
+## How to use it
+
+- **When:** You run multiple agents against a shared budget, you are about to change a priority/fairness policy, or you are sizing tier budgets for a new workload.
+- **Prerequisites:** A rough per-task cost model (tokens or dollars per task per tier) and the fleet's actual tier structure. The model can be coarse; wrong-but-plausible is usually enough to expose structural bugs like starvation.
+- **Implementation notes:**
+  - Run the scenario suite in CI whenever the priority policy, tier table, or budget values change — the simulator is fast enough to treat as a unit-test dependency.
+  - Treat `STARVED` verdicts as policy findings, not noise: a starved tier in simulation is a starved tier in production with worse visibility.
+  - Keep scenarios adversarial on purpose (under-provisioned budgets, bursty arrivals); a suite that only contains the baseline scenario will only ever pass.
+
+## Trade-offs
+
+- **Pros:**
+  - Converts the most expensive way to discover a budget bug (production) into the cheapest (a deterministic replay).
+  - Makes priority-policy fairness a testable property instead of an assertion in review.
+  - Reproducible failures (fixed seeds) let you verify a fix, not just observe a change.
+- **Cons:**
+  - Verdicts are only as honest as the workload model; simulation can create false confidence if the cost model is far from reality.
+  - Maintaining scenarios is an ongoing cost — stale scenarios silently stop representing the real workload.
+  - It validates policy, not agents: an agent that misreports its own consumption is invisible to the simulator.
+
+## References
+
+- Reference implementation: [agent-budget-simulator](https://github.com/Retsumdk/agent-budget-simulator) — deterministic TypeScript scenario simulator, clone-and-run, MIT (contributor-owned, disclosed).
+- Shreedhar, M. & Varghese, G., "Efficient Fair Queuing using Deficit Round Robin" (SIGCOMM '95) — the fairness discipline underlying weighted-fair policies.
+- Kleppmann, M., *Designing Data-Intensive Applications* — backpressure and load-shedding discussion (Ch. 9).
+- Related pattern in this catalogue: [Budget-Aware Model Routing with Hard Cost Caps](budget-aware-model-routing-with-hard-cost-caps.md) — per-request model selection under caps, complementary to fleet-level pre-dispatch simulation.
+
+---
+
 ## Frontier-Focused Development
 
 **Status:** emerging
@@ -10522,6 +10597,7 @@ approval_channels:
 - [MCP elicitation specification](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation) - protocol-level mid-flow approval requests
 - [Design Patterns for Securing LLM Agents](https://arxiv.org/abs/2506.08837) (Beurer-Kellner et al., ETH Zurich, 2025) - Academic treatment of approval systems as security pattern, including separation of proposal and execution
 - [Impri](https://github.com/sekera-radim/impri) - Self-hostable, framework-agnostic implementation of this pattern (contributor-owned, disclosed): agents propose actions via MCP or REST, a human approves/edits/rejects from a web inbox, Slack, Telegram, or phone, then the agent executes. MIT-licensed open-core, included as a concrete alternative to the vendor-SDK references above.
+- [Duct](https://github.com/5hirish/duct) - Open-source marketing agent (contributor-owned, disclosed) that applies the proposal/execution separation from the ETH Zurich paper at the tool-list level: the model can only propose a change set as data, no approve or apply tool exists for it to call, a human approves through an HTTP route, and a per-project autonomy level (`ask` by default) can let reversible, guardrail-clean changes auto-apply but never widens what may apply. MIT-licensed, included as a second concrete implementation beside Impri.
 - Related patterns: [Spectrum of Control / Blended Initiative](spectrum-of-control-blended-initiative.md), [Chain-of-Thought Monitoring & Interruption](chain-of-thought-monitoring-interruption.md)
 
 ---
@@ -11443,6 +11519,81 @@ function killSession(session: ProcessSession) {
 - [Claude Code](https://claude.ai/code) - Tool-mediated bash execution with `run_in_background` support
 - [Model Context Protocol](https://modelcontextprotocol.io) - Structured tool definition standard
 - Related: [Virtual Machine Operator Agent](/patterns/virtual-machine-operator-agent) for remote execution patterns
+
+---
+
+## Intent-Level Cost Attribution
+
+**Status:** proposed
+**Category:** Reliability & Eval
+**Authors:** Retsumdk (@Retsumdk)
+**Source:** https://github.com/Retsumdk/agent-cost-attribution-api
+
+## Problem
+
+Agent fleets spend LLM budget continuously and opaquely. When a bill spikes or a budget cap trips, the operator can usually answer *how much* was spent but not *which work caused it*: a single daily total hides whether the spend came from a misbehaving retry loop, one user's abnormal usage, a specific intent that quietly grew, or steady baseline load across the fleet. Without attribution at the level of the work item that triggered the calls, cost control degenerates into guesswork — you can cut a budget, but you cannot cut the right thing, and you cannot tell whether a change actually reduced waste or just moved it somewhere else.
+
+## Solution
+
+Attribute every model call to the intent that caused it at the moment the call is made. Each usage record carries a three-part attribution key — `projectId`, `intentId`, and `userId` — plus the model, token counts, and optional free-form metadata. Cost is computed at record time from per-model pricing, so the ledger is a first-class artifact rather than something reconstructed later from provider invoices.
+
+The mechanism has four parts:
+
+- **Tracker** — the core engine that turns a usage event (model, input/output tokens, attribution keys) into a priced cost record.
+- **Storage** — a persistence layer with atomic writes so concurrent agents recording usage cannot corrupt the ledger.
+- **Reporting API** — roll-ups by project, by intent, and by user, plus filtered record retrieval, so the same ledger answers both "what did this intent cost?" and "who is driving the bill?"
+- **CLI** — server startup and report generation from the command line for operators working outside the API.
+
+```pseudo
+on_model_call(agent, model, input_tokens, output_tokens, intent, project, user):
+    cost = price(model, input_tokens, output_tokens)
+    ledger.append({
+      model, tokens, cost,
+      projectId: project, intentId: intent, userId: user,
+      metadata, timestamp
+    })   # atomic write
+
+when budget_question_arises:
+    report(by="intent")   # find the top spenders by work item
+    report(by="user")     # separate fleet load from individual demand
+```
+
+The control points are the record schema (the attribution keys are mandatory, so unattributed spend cannot hide) and the report endpoints (the same data serves alerting, post-hoc analysis, and per-intent budget enforcement).
+
+## Evidence
+
+- **Evidence Grade:** `low`
+- **Most Valuable Findings:** Production cost-governance systems (finops practice, LLM gateway products) consistently attribute spend along workload dimensions rather than only reporting totals; recording attribution at call time avoids the reconstruction problem that makes post-hoc invoice analysis lossy. The reference implementation demonstrates the pattern end-to-end with per-model pricing and atomic ledger writes.
+- **Unverified / Unclear:** Quantified savings from intent-level attribution in published agent deployments are not documented; the pattern's value in fleets with very high intent cardinality (attribution overhead vs. insight) needs field measurement.
+
+## How to use it
+
+Use this pattern when:
+
+- Multiple agents, users, or intents share one model budget and someone must answer for it.
+- A budget cap exists (or should): attribution is the prerequisite for caps that bind the *right* work instead of throttling everything uniformly.
+- Cost regressions need diagnosis: after a prompt, model, or workflow change, per-intent deltas localize the regression instead of forcing a fleet-wide bisect.
+
+Prerequisites: every model call site must be able to name its intent and project — attribution keys must be threaded through the orchestration layer at call time, which is a real (and one-time) instrumentation cost. Implementation considerations: price tables must stay current with model pricing changes; atomic writes or an append-only log matter once more than one agent writes concurrently.
+
+## Trade-offs
+
+**Pros:**
+
+- Turns an opaque total into a queryable ledger; cost questions become lookups, not investigations.
+- Makes targeted cost control possible: cap, throttle, or refactor the specific intent that is expensive.
+- Attribution recorded at call time preserves intent that post-hoc reconstruction cannot recover.
+
+**Cons:**
+
+- Instrumentation tax: every call site must supply the attribution keys, and a mis-keyed call silently pollutes reports.
+- Attribution cardinality can explode in fleets with many short-lived intents; roll-ups need designing (per project, per user) to stay useful.
+- The ledger itself is state that must be persisted and retained — at scale this becomes its own storage problem.
+
+## References
+
+- Reference implementation: [Retsumdk/agent-cost-attribution-api](https://github.com/Retsumdk/agent-cost-attribution-api) — REST + CLI cost ledger with `projectId`/`intentId`/`userId` attribution, per-model pricing, and atomic JSON persistence (MIT).
+- Related patterns in this catalog: [Budget-aware model routing with hard cost caps](budget-aware-model-routing-with-hard-cost-caps.md) — routing-level cost control that benefits from attribution data.
 
 ---
 

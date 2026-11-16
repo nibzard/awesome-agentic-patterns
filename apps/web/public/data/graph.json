@@ -1492,6 +1492,21 @@
       "summary": "Lets a sandboxed agent write request files to a shared spool directory that a host daemon runs against a whitelist, with idempotent results the agent polls for"
     },
     {
+      "id": "fleet-cost-simulation-before-dispatch",
+      "title": "Fleet Cost Simulation Before Dispatch",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "fleet-cost-simulation-before-dispatch",
+      "tags": [
+        "cost-control",
+        "simulation",
+        "starvation",
+        "priority-scheduling",
+        "multi-agent"
+      ],
+      "summary": "Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production"
+    },
+    {
       "id": "frontier-focused-development",
       "title": "Frontier-Focused Development",
       "category": "Learning & Adaptation",
@@ -1654,6 +1669,21 @@
         "sandboxing"
       ],
       "summary": "Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals"
+    },
+    {
+      "id": "intent-level-cost-attribution",
+      "title": "Intent-Level Cost Attribution",
+      "category": "Reliability & Eval",
+      "status": "proposed",
+      "slug": "intent-level-cost-attribution",
+      "tags": [
+        "cost-control",
+        "observability",
+        "budgeting",
+        "multi-agent",
+        "token-spend"
+      ],
+      "summary": "Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total"
     },
     {
       "id": "inversion-of-control",
