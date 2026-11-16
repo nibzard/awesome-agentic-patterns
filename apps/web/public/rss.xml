@@ -21,6 +21,32 @@
             <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
+            <title><![CDATA[Intent-Level Cost Attribution]]></title>
+            <description><![CDATA[Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total]]></description>
+            <link>https://agentic-patterns.com/patterns/intent-level-cost-attribution</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/intent-level-cost-attribution</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[cost-control]]></category>
+            <category><![CDATA[observability]]></category>
+            <category><![CDATA[budgeting]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <category><![CDATA[token-spend]]></category>
+            <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Fleet Cost Simulation Before Dispatch]]></title>
+            <description><![CDATA[Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production]]></description>
+            <link>https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch</link>
+            <guid isPermaLink="true">https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch</guid>
+            <category><![CDATA[Reliability & Eval]]></category>
+            <category><![CDATA[cost-control]]></category>
+            <category><![CDATA[simulation]]></category>
+            <category><![CDATA[starvation]]></category>
+            <category><![CDATA[priority-scheduling]]></category>
+            <category><![CDATA[multi-agent]]></category>
+            <pubDate>Sat, 17 Oct 2026 00:00:00 GMT</pubDate>
+        </item>
+        <item>
             <title><![CDATA[Curated Code Context Window]]></title>
             <description><![CDATA[A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context]]></description>
             <link>https://agentic-patterns.com/patterns/curated-code-context-window</link>
@@ -256,37 +282,6 @@
             <category><![CDATA[search]]></category>
             <category><![CDATA[context-awareness]]></category>
             <category><![CDATA[knowledge-base]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[AI Web Search Agent Loop]]></title>
-            <description><![CDATA[Coordinator agent translates queries, spawns parallel search workers across domains and time ranges, refines iteratively, and answers with citations]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-web-search-agent-loop</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-web-search-agent-loop</guid>
-            <category><![CDATA[Tool Use & Environment]]></category>
-            <category><![CDATA[web-search]]></category>
-            <category><![CDATA[serp-api]]></category>
-            <category><![CDATA[citations]]></category>
-            <category><![CDATA[parallel-agents]]></category>
-            <category><![CDATA[query-translation]]></category>
-            <category><![CDATA[operators]]></category>
-            <category><![CDATA[grounding]]></category>
-            <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[AI-Accelerated Learning and Skill Development]]></title>
-            <description><![CDATA[Uses AI assistants as tutors that explain errors and concepts, offer alternatives, and fade support as the developer gains skill]]></description>
-            <link>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</link>
-            <guid isPermaLink="true">https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</guid>
-            <category><![CDATA[UX & Collaboration]]></category>
-            <category><![CDATA[developer-productivity]]></category>
-            <category><![CDATA[learning]]></category>
-            <category><![CDATA[skill-acquisition]]></category>
-            <category><![CDATA[iteration]]></category>
-            <category><![CDATA[feedback]]></category>
-            <category><![CDATA[taste-development]]></category>
-            <category><![CDATA[education]]></category>
-            <category><![CDATA[junior-developer]]></category>
             <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
         </item>
     </channel>
