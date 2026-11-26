@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0066cc"/>
-  <path d="M10 16L14 12L18 16L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M10 22L14 18L18 22L22 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <style>rect { fill: #c2412d; stroke: #c2412d; } .o { fill: none; } @media (prefers-color-scheme: dark) { rect { fill: #f0826a; stroke: #f0826a; } .o { fill: none; } }</style>
+  <rect x="2" y="2" width="9" height="9" rx="2"/>
+  <rect class="o" x="14" y="3" width="7" height="7" rx="1.5" stroke-width="2"/>
+  <rect class="o" x="3" y="14" width="7" height="7" rx="1.5" stroke-width="2"/>
+  <rect x="13" y="13" width="9" height="9" rx="2"/>
 </svg>

@@ -31,30 +31,31 @@ const isActive = (item: (typeof navItems)[number]) =>
 
 <header class="header">
   <div class="header-container">
-    <a href="/" class="logo">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <rect width="32" height="32" rx="6" fill="currentColor"></rect>
-        <path
-          d="M10 16L14 12L18 16L22 12"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-        <path
-          d="M10 22L14 18L18 22L22 18"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
+    <a href="/" class="logo" aria-label="Agentic Patterns home">
+      <!-- Mark: a 2x2 grid with two solid cells on the diagonal, a pattern in its simplest form. -->
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"></rect>
+        <rect
+          x="14"
+          y="3"
+          width="7"
+          height="7"
+          rx="1.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"></rect>
+        <rect
+          x="3"
+          y="14"
+          width="7"
+          height="7"
+          rx="1.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"></rect>
+        <rect x="13" y="13" width="9" height="9" rx="2" fill="currentColor"></rect>
       </svg>
-      <span>Agentic Patterns</span>
+      <span class="logo-wordmark">agentic<span class="logo-dot">/</span>patterns</span>
     </a>
 
     <nav class="nav" aria-label="Main navigation">
@@ -537,15 +538,22 @@ const isActive = (item: (typeof navItems)[number]) =>
   .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    letter-spacing: -0.01em;
     color: var(--color-text);
     white-space: nowrap;
   }
 
   .logo svg {
+    flex-shrink: 0;
     color: var(--color-primary);
+  }
+
+  .logo-dot {
+    color: var(--color-text-muted);
   }
 
   .nav {

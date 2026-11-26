@@ -8,19 +8,21 @@ import { getAllPatterns } from '../lib/patterns';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
   type?: 'website' | 'article';
   canonicalPath?: string;
   markdownPath?: string;
   activeCategory?: string;
   activeSlug?: string;
+  footerNewsletter?: boolean;
 }
 
-const { activeCategory, activeSlug, ...layoutProps } = Astro.props;
+const { activeCategory, activeSlug, footerNewsletter = true, ...layoutProps } = Astro.props;
 const patterns = await getAllPatterns();
 const hasRail = Astro.slots.has('rail');
 ---
 
-<BaseLayout {...layoutProps}>
+<BaseLayout {...layoutProps} {footerNewsletter}>
   <div class:list={['docs-shell', { 'docs-shell--rail': hasRail }]}>
     <aside class="docs-shell-sidebar">
       <DocsSidebar {patterns} {activeCategory} {activeSlug} />

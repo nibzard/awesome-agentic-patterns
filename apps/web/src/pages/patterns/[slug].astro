@@ -4,6 +4,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import PatternSource from '../../components/PatternSource.astro';
 import PatternActions from '../../components/PatternActions.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
 import type { PatternEntry } from '../../types';
 import { getAllPatterns } from '../../lib/patterns';
 import { renderMarkdown } from '../../lib/markdown';
@@ -61,9 +62,11 @@ const extraFacts = [
   title={`${pattern.title} - Agentic Patterns`}
   description={pattern.summary || `Reference entry for ${pattern.title}.`}
   type="article"
+  image={`/og/${pattern.slug}.png`}
   {markdownPath}
   activeCategory={pattern.category}
   activeSlug={pattern.slug}
+  footerNewsletter={false}
 >
   <article class="pattern" data-pagefind-body>
     <nav class="pattern-crumbs" aria-label="Breadcrumb">
@@ -176,6 +179,14 @@ const extraFacts = [
       )
     }
 
+    <section class="pattern-subscribe" data-pagefind-ignore>
+      <NewsletterCTA
+        title="Get new patterns by email"
+        description="A short email when new patterns land. No spam."
+        buttonText="Subscribe"
+      />
+    </section>
+
     <footer class="pattern-footer" data-pagefind-ignore>
       <a href={editUrl} target="_blank" rel="noreferrer">Edit this pattern on GitHub</a>
       <a href={markdownPath}>View as Markdown</a>
@@ -219,26 +230,20 @@ const extraFacts = [
 </DocsLayout>
 
 <script>
-  import mermaid from 'mermaid';
+  import { mountAsync } from 'pele/lazy';
 
-  const mermaidNodes = document.querySelectorAll<HTMLElement>('.mermaid');
-  if (mermaidNodes.length > 0) {
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    // useMaxWidth: false keeps each diagram at its natural size instead of shrinking it to fit.
-    const naturalSize = { useMaxWidth: false };
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: dark ? 'dark' : 'neutral',
-      flowchart: naturalSize,
-      sequence: naturalSize,
-      state: naturalSize,
-      class: naturalSize,
-      er: naturalSize,
-      gantt: naturalSize,
-      journey: naturalSize,
+  // Pele draws each Mermaid source as SVG and fits the layout to the container width.
+  // The lazy entry loads only the diagram types a page uses, which keeps the page script small.
+  // autoDirection turns a wide left-to-right flowchart top-to-bottom when it does not fit,
+  // so labels keep their size instead of shrinking. Colors come from the --pele-* variables
+  // in global.css, so a theme change needs no re-render.
+  document.querySelectorAll<HTMLElement>('.mermaid').forEach((node) => {
+    void mountAsync(node, node.textContent || '', {
+      autoDirection: true,
+      directionBreakpoint: 900,
+      fontSize: 14,
     });
-    mermaid.run({ nodes: mermaidNodes });
-  }
+  });
 
   // Highlight the section in view in the right rail.
   const railLinks = new Map(
@@ -401,11 +406,19 @@ const extraFacts = [
     color: var(--color-text-muted);
   }
 
+  .pattern-subscribe {
+    margin-top: 3rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
   .pattern-footer {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.25rem;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--color-border);
     font-size: 0.875rem;

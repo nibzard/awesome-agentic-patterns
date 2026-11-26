@@ -130,6 +130,13 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     </div>
   </details>
 
+  <details class="agent-preview">
+    <summary class="action-link" aria-label="Show the text that Copy for agent copies"
+      >What gets copied</summary
+    >
+    <pre class="agent-preview-text">{agentPromptContent}</pre>
+  </details>
+
   <span class="copy-feedback" aria-live="polite"></span>
 </div>
 
@@ -234,8 +241,32 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     outline-offset: 2px;
   }
 
-  .citation-details[open] {
+  .citation-details[open],
+  .agent-preview[open] {
     flex-basis: 100%;
+  }
+
+  .agent-preview summary {
+    list-style: none;
+  }
+
+  .agent-preview summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .agent-preview-text {
+    margin: var(--spacing-sm) 0 0;
+    max-height: 20rem;
+    overflow: auto;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--code-block-bg);
+    color: var(--code-block-fg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   .citation-details summary {

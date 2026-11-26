@@ -91,8 +91,8 @@ function getCategoryColor(category: string): string {
       <div class="graph-hero-copy">
         <h1>Pattern graph</h1>
         <p class="graph-subtitle">
-          See which patterns link to each other. Color shows the category. Click a node to open the
-          pattern.
+          See one pattern and the patterns it links to. Click a node to move the focus to it. Color
+          shows the category.
         </p>
       </div>
     </section>
@@ -226,6 +226,10 @@ function getCategoryColor(category: string): string {
           Showing <span id="graph-count">{graphNodes.length}</span> of {graphNodes.length}
           patterns · <span id="graph-edge-count">0</span> connections ·
           <span id="graph-mode-label">Explicit links</span>
+          <span id="graph-focus-text"></span>
+          <a href="/graph?view=all" id="graph-view-toggle" class="graph-view-toggle"
+            >Show all patterns</a
+          >
         </div>
 
         <div class="graph-search">
@@ -376,7 +380,7 @@ function getCategoryColor(category: string): string {
 
           <div class="detail-badges" id="detail-badges"></div>
 
-          <a href="/patterns" class="detail-link" id="detail-link">View Full Pattern →</a>
+          <a href="/patterns" class="detail-link" id="detail-link">Open pattern →</a>
         </div>
       </div>
     </div>
@@ -411,6 +415,9 @@ function getCategoryColor(category: string): string {
   const LABEL_MIN_SCREEN_PX = 10;
   const LABEL_SVG_PX = 12;
   let activeMode = modeOptions.has(modeParam) ? modeParam : DEFAULT_MODE;
+  // The first view shows one pattern and its direct links; ?view=all shows every pattern.
+  const showAll = params.get('view') === 'all';
+  let focusId = null;
 
   const clearFiltersLink = document.getElementById('graph-clear-filters');
   const countEl = document.getElementById('graph-count');
@@ -702,6 +709,77 @@ function getCategoryColor(category: string): string {
   let currentEdges = buildEdges(activeMode);
   renderEdges(currentEdges);
 
+  const edgeEnds = (edge) => [getNodeId(edge.source), getNodeId(edge.target)];
+
+  if (!showAll) {
+    if (selectedNodeId && nodeById.has(selectedNodeId)) {
+      focusId = selectedNodeId;
+    } else {
+      // With no pattern chosen, start on the pattern with the most explicit links.
+      const degree = new Map();
+      buildEdges(DEFAULT_MODE).forEach((edge) => {
+        edgeEnds(edge).forEach((id) => degree.set(id, (degree.get(id) || 0) + 1));
+      });
+      focusId = [...degree.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+    }
+  }
+
+  const focusNeighbors = () => {
+    const ids = new Set([focusId]);
+    currentEdges.forEach((edge) => {
+      const [source, target] = edgeEnds(edge);
+      if (source === focusId) ids.add(target);
+      if (target === focusId) ids.add(source);
+    });
+    return ids;
+  };
+
+  // Pin the focused pattern in the center and its neighbors on a ring around it.
+  const layoutFocus = () => {
+    if (!focusId) return;
+    const viewBox = svg?.viewBox?.baseVal;
+    const cx = (viewBox?.width || 2000) / 2;
+    const cy = (viewBox?.height || 1600) / 2;
+    nodes.forEach((node) => {
+      node.fx = null;
+      node.fy = null;
+    });
+    const center = nodeById.get(focusId);
+    if (!center) return;
+    center.fx = cx;
+    center.fy = cy;
+    const ring = [...focusNeighbors()].filter((id) => id !== focusId);
+    const radius = Math.max(260, ring.length * 34);
+    ring.forEach((id, index) => {
+      const node = nodeById.get(id);
+      if (!node) return;
+      const angle = (index / ring.length) * 2 * Math.PI - Math.PI / 2;
+      node.fx = cx + Math.cos(angle) * radius;
+      node.fy = cy + Math.sin(angle) * radius;
+    });
+  };
+
+  const focusTextEl = document.getElementById('graph-focus-text');
+  const viewToggle = document.getElementById('graph-view-toggle');
+  const updateFocusText = () => {
+    const toggleParams = new URLSearchParams(window.location.search);
+    toggleParams.delete('node');
+    if (focusId) {
+      const count = focusNeighbors().size - 1;
+      if (focusTextEl) {
+        focusTextEl.textContent = `· ${nodeById.get(focusId)?.title || ''} and ${count} linked`;
+      }
+      toggleParams.set('view', 'all');
+      if (viewToggle) viewToggle.textContent = 'Show all patterns';
+    } else {
+      if (focusTextEl) focusTextEl.textContent = '';
+      toggleParams.delete('view');
+      if (viewToggle) viewToggle.textContent = 'Focus on one pattern';
+    }
+    const query = toggleParams.toString();
+    viewToggle?.setAttribute('href', query ? `/graph?${query}` : '/graph');
+  };
+
   let simulation;
   let linkForce;
   let zoomBehavior;
@@ -746,8 +824,11 @@ function getCategoryColor(category: string): string {
       })
       .on('end', (event, d) => {
         if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
+        // In the focused view a dragged node stays where it is dropped.
+        if (!focusId) {
+          d.fx = null;
+          d.fy = null;
+        }
       });
 
     if (nodeSelection) {
@@ -774,7 +855,8 @@ function getCategoryColor(category: string): string {
         // At the full-graph zoom level the labels overlap; the hover tooltip shows the title.
         const screenScale = svg ? svg.getBoundingClientRect().width / width : 1;
         const labelPx = LABEL_SVG_PX * event.transform.k * screenScale;
-        svg?.classList.toggle('labels-visible', labelPx >= LABEL_MIN_SCREEN_PX);
+        // The focused view has few nodes, so its labels do not overlap at any zoom.
+        svg?.classList.toggle('labels-visible', Boolean(focusId) || labelPx >= LABEL_MIN_SCREEN_PX);
       });
 
     svgSelection.call(zoomBehavior);
@@ -872,6 +954,7 @@ function getCategoryColor(category: string): string {
 
   const applyFilters = () => {
     const visibleNodes = new Set();
+    const focusSet = focusId ? focusNeighbors() : null;
     nodeElements.forEach((node) => {
       const category = node.getAttribute('data-category') || '';
       const status = node.getAttribute('data-status') || '';
@@ -896,6 +979,10 @@ function getCategoryColor(category: string): string {
         selectedDomains.length > 0 &&
         !domains.some((domain) => selectedDomains.includes(domain))
       ) {
+        matches = false;
+      }
+
+      if (focusSet && !focusSet.has(node.getAttribute('data-node-id'))) {
         matches = false;
       }
 
@@ -931,6 +1018,8 @@ function getCategoryColor(category: string): string {
     activeMode = modeOptions.has(mode) ? mode : DEFAULT_MODE;
     currentEdges = buildEdges(activeMode);
     renderEdges(currentEdges);
+    layoutFocus();
+    updateFocusText();
 
     if (linkForce && simulation) {
       linkForce.links(currentEdges);
@@ -994,12 +1083,13 @@ function getCategoryColor(category: string): string {
       circle.removeAttribute('filter');
     });
 
-    if (!selectedNodeId) {
+    const detailId = selectedNodeId || focusId;
+    if (!detailId) {
       detailPanel.hidden = true;
       return;
     }
 
-    const node = document.querySelector(`.graph-node[data-node-id="${selectedNodeId}"]`);
+    const node = document.querySelector(`.graph-node[data-node-id="${detailId}"]`);
     if (!node) {
       detailPanel.hidden = true;
       return;
@@ -1048,25 +1138,16 @@ function getCategoryColor(category: string): string {
     }
 
     if (detailStatus) {
-      detailStatus.style.setProperty('--status-color', getStatusColor(status));
+      // Use the shared status-pill colors from global.css.
+      detailStatus.className = `status-pill status-pill--${status}`;
     }
 
-    const nodeCircle = document.querySelector(`[data-node-circle="${selectedNodeId}"]`);
+    const nodeCircle = document.querySelector(`[data-node-circle="${detailId}"]`);
     if (nodeCircle) {
       nodeCircle.setAttribute('filter', 'url(#glow)');
     }
 
     detailPanel.hidden = false;
-  };
-
-  const getStatusColor = (status) => {
-    const colors = {
-      proposed: '#9ca3af',
-      emerging: '#60a5fa',
-      production: '#10b981',
-      foundational: '#059669',
-    };
-    return colors[status] || '#6b7280';
   };
 
   if (detailClose) {
@@ -1190,8 +1271,16 @@ function getCategoryColor(category: string): string {
   }
 
   updateFilterInputs();
+  svg?.classList.toggle('is-focused', Boolean(focusId));
+  layoutFocus();
+  updateFocusText();
   applyFilters();
   updateDetailPanel();
+  if (focusId && simulation) {
+    simulation.alpha(0.5).restart();
+    // Fit the view to the focused group once the pinned nodes are in place.
+    setTimeout(() => document.getElementById('fit-view')?.click(), 400);
+  }
 </script>
 
 <style>
@@ -1214,7 +1303,7 @@ function getCategoryColor(category: string): string {
     max-width: 44rem;
     color: var(--text-muted-strong);
     font-size: 1.0625rem;
-    line-height: 1.7;
+    line-height: var(--leading-prose);
   }
 
   .graph-layout {
@@ -1324,6 +1413,15 @@ function getCategoryColor(category: string): string {
   .graph-canvas-container {
     position: relative;
     min-width: 0;
+  }
+
+  .graph-view-toggle {
+    margin-left: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  .graph-view-toggle:hover {
+    text-decoration: underline;
   }
 
   .graph-info {
@@ -1485,6 +1583,11 @@ function getCategoryColor(category: string): string {
     transition: opacity 0.15s ease;
   }
 
+  /* The focused view shows about 20 nodes, so its labels can be larger. */
+  .graph-svg.is-focused .node-label {
+    font-size: 20px;
+  }
+
   .graph-svg:not(.labels-visible) .node-label {
     opacity: 0;
   }
@@ -1540,10 +1643,10 @@ function getCategoryColor(category: string): string {
 
   .graph-detail-panel {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 320px;
-    padding: var(--spacing-lg);
+    bottom: 16px;
+    right: 16px;
+    width: 300px;
+    padding: 1rem;
     background-color: var(--surface-pill);
     border: 1px solid var(--surface-border-strong);
     border-radius: var(--radius-lg);
@@ -1575,10 +1678,10 @@ function getCategoryColor(category: string): string {
   }
 
   .detail-title {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     padding-right: var(--spacing-lg);
   }
 
@@ -1586,47 +1689,48 @@ function getCategoryColor(category: string): string {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
   }
 
   .detail-summary {
-    margin: 0 0 var(--spacing-md);
+    margin: 0 0 var(--spacing-sm);
     color: var(--text-muted-strong);
-    line-height: 1.6;
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
   .detail-badges {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
   }
 
-  .detail-badge {
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 0.72rem;
+  /* Badges are created by the script, so scoped styles must be global to reach them. */
+  .detail-badges :global(.detail-badge) {
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     background-color: var(--color-bg-soft);
     color: var(--text-muted-strong);
   }
 
-  .detail-badge--maturity {
+  .detail-badges :global(.detail-badge--maturity) {
     background-color: var(--color-success);
     color: var(--color-on-primary);
   }
 
-  .detail-badge--domain {
+  .detail-badges :global(.detail-badge--domain) {
     color: var(--color-text);
   }
 
-  .detail-category,
-  .detail-status {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+  .detail-category {
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
   }
 
   .detail-category {
@@ -1634,23 +1738,14 @@ function getCategoryColor(category: string): string {
     color: var(--color-accent-blue);
   }
 
-  .detail-status {
-    background-color: var(--status-color);
-    color: var(--color-on-primary);
-  }
-
   .detail-link {
-    display: inline-block;
-    padding: 0.85rem 1.1rem;
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-    border-radius: 999px;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-primary);
   }
 
   .detail-link:hover {
-    background-color: var(--color-primary-hover);
+    text-decoration: underline;
   }
 
   @media (max-width: 1024px) {
@@ -1677,7 +1772,7 @@ function getCategoryColor(category: string): string {
     }
 
     .graph-hero-copy h1 {
-      font-size: clamp(2.4rem, 16vw, 4rem);
+      font-size: 1.4rem;
     }
 
     .graph-subtitle {

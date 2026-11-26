@@ -16,13 +16,16 @@
     "@astrojs/markdown-remark": "^7.3.10",
     "@astrojs/mdx": "8.1.6",
     "@astrojs/vercel": "11.0.22",
+    "@resvg/resvg-js": "^2.6.2",
     "astro": "7.4.13",
     "d3": "7",
+    "geist": "^1.9.2",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
-    "mermaid": "^11.12.2",
     "pagefind": "^1.4.0",
-    "rehype-mermaid": "^2.0.0"
+    "pele": "^1.13.0",
+    "rehype-mermaid": "^2.0.0",
+    "satori": "^0.63.2"
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",

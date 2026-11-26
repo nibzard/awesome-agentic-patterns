@@ -18,7 +18,7 @@ interface Props {
 const {
   title = 'Awesome Agentic Patterns',
   description = 'A curated catalog of AI agent design patterns.',
-  image = '/og-image.svg',
+  image = '/og/default.png',
   type = 'website',
   canonicalPath,
   markdownPath,
@@ -64,6 +64,8 @@ const themeScript = `
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />

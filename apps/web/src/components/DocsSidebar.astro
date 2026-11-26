@@ -1,6 +1,8 @@
 ---
 // ABOUTME: Left navigation for the docs shell: categories with counts, learning links, and project links.
-// ABOUTME: On a pattern page it expands the active category to list its patterns.
+// ABOUTME: On a pattern page it expands the active category to list its patterns; a newsletter signup sits at the end.
+import NewsletterCTA from './NewsletterCTA.astro';
+
 interface SidebarPattern {
   slug: string;
   title: string;
@@ -129,6 +131,10 @@ const projectLinks = [
         ))
       }
     </ul>
+
+    <div class="docs-sidebar-newsletter">
+      <NewsletterCTA variant="compact" title="Get new patterns by email" buttonText="Subscribe" />
+    </div>
   </nav>
 </div>
 
@@ -202,6 +208,32 @@ const projectLinks = [
   .docs-sidebar-link.active {
     background: var(--color-primary-light);
     color: var(--color-primary);
+  }
+
+  .docs-sidebar-newsletter {
+    margin: 1.5rem 0 0 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta-title) {
+    font-size: 0.8125rem;
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta-form) {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .docs-sidebar-newsletter :global(.newsletter-cta-input) {
+    width: 100%;
   }
 
   .docs-sidebar-count {

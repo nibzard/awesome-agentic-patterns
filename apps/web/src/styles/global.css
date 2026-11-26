@@ -66,6 +66,8 @@
 
   --page-max: 1320px;
   --header-height: 3.5rem;
+  /* Line height for running text: dense enough for reference docs. */
+  --leading-prose: 1.6;
 }
 
 :root[data-theme='dark'] {
@@ -368,12 +370,21 @@ select {
   border: 1px dashed var(--color-border);
 }
 
-/* Diagrams render at their natural size so labels stay readable; wide ones scroll. */
+/* Mermaid diagrams, drawn by Pele. Pele fits the layout to the width; very wide ones scroll. */
 .mermaid {
-  display: flex;
-  justify-content: safe center;
-  overflow-x: auto;
+  --pele-bg: transparent;
+  --pele-fg: var(--color-text);
+  --pele-muted: var(--color-text-muted);
+  --pele-line: var(--color-text-muted);
+  --pele-surface: var(--color-bg-soft);
+  --pele-surface-alt: var(--color-bg-panel);
+  --pele-border: var(--color-divider);
+  --pele-accent: var(--color-primary);
+  --pele-font: var(--font-sans);
+  --pele-radius: var(--radius-sm);
+
   margin: var(--spacing-lg) 0;
+  overflow-x: auto;
   background-color: var(--color-bg-elevated);
   padding: var(--spacing-md);
   border-radius: var(--radius-md);
@@ -381,15 +392,15 @@ select {
 }
 
 .mermaid svg {
-  flex-shrink: 0;
-  max-width: none;
+  display: block;
+  margin: 0 auto;
   height: auto;
 }
 
 /* Rendered Markdown body for pattern and guide pages. */
 .prose {
   margin-top: 0.9rem;
-  line-height: 1.7;
+  line-height: var(--leading-prose);
 }
 
 .prose p {
