@@ -1,6 +1,6 @@
 ---
 title: "Lane-Based Execution Queueing"
-status: "validated-in-production"
+status: emerging
 authors: ["OpenClaw Contributors"]
 based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Orchestration & Control"

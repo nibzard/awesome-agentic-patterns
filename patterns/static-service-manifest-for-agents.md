@@ -112,7 +112,6 @@ The agent workflow becomes:
 
 - Standards have consolidated but differ by domain: `agents.md` is the settled convention for repository-level coding-agent instructions, while `llms.txt` (v2, 2026) has wide but voluntary adoption for websites and structured JSON manifests remain fragmented
 - Static manifests can drift from actual API state if not kept in sync
-- Static manifests can drift from actual API state if not kept in sync
 - Only describes *what* is available, not *how* to use each endpoint in detail (still need OpenAPI or MCP for full schemas)
 - May expose surface area to adversarial agents if not paired with proper auth
 

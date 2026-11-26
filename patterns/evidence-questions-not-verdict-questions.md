@@ -1,6 +1,6 @@
 ---
 title: Evidence Questions, Not Verdict Questions
-status: emerging
+status: proposed
 authors: ["Doron Podoleanu (@doronp)"]
 based_on: ["jevc (https://github.com/doronp/jevc)", "Beurer-Kellner et al., Design Patterns for Securing LLM Agents (2025)"]
 category: "Security & Safety"

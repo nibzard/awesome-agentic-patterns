@@ -31,36 +31,18 @@ Agents often execute tool calls sequentially even when they could run in paralle
 - **Poor tool utilization**: Multiple independent information needs handled one-by-one
 - **Suboptimal learned behavior**: Base models may not naturally parallelize without training signal
 
-**Example bottleneck:**
-
-```
-Sequential (slow):
-1. search("Intel financial data") → 2s
-2. read_file("2023_report.pdf") → 1.5s
-3. search("return metrics") → 2s
-4. read_file("returns_table.csv") → 1.5s
-
-Total: 7 seconds
-```
-
 Cognition observed this with Devon: the baseline model would make 8-10 sequential tool calls during file planning, taking significant time even though many calls could have run in parallel.
 
 ## Solution
 
 **Use Agent RFT to teach the model to parallelize independent tool calls, dramatically reducing latency when tool execution is faster than inference.**
 
-**How Models Learn Parallelization:**
-
-During RL exploration, the agent discovers that:
-
-1. Multiple tool calls can be made simultaneously
-2. When tool results arrive together, the next reasoning step has more context
-3. Parallel patterns receive similar rewards in less time (implicit efficiency reward)
-4. The model naturally converges toward parallel execution patterns
+**How Models Learn Parallelization:** during RL exploration the agent discovers that it can issue multiple tool calls at once, that results arriving together give the next reasoning step more context, and that parallel patterns earn similar rewards in less time (an implicit efficiency reward), so it converges toward parallel execution.
 
 **Tool Classification for Safe Parallelization:**
 
 Agents learn to distinguish between:
+
 - **Read-only tools**: Safe to parallelize (search, read_file, list)
 - **State-modifying tools**: Require serialization (write_file, delete, state-changing APIs)
 
@@ -68,33 +50,7 @@ This classification prevents race conditions while maximizing parallelism for sa
 
 **Natural Emergence through RL:**
 
-Unlike explicit programming, the parallelization emerges from:
-
-- **Exploration**: Agent tries different tool call patterns
-- **Reward shaping**: Faster completions may get slight bonuses (optional)
-- **Efficiency pressure**: Light penalty on token usage encourages efficiency
-- **Pattern reinforcement**: Successful parallel patterns get reinforced
-
-**Typical Learned Pattern:**
-
-```
-Parallel (fast):
-Batch 1 (parallel):
-  
-- search("Intel financial data")
-  - read_file("2023_report.pdf")
-  - search("return metrics")
-  - list("/financial_reports")
-→ All complete in ~2s (dominated by slowest)
-
-Batch 2 (parallel, based on Batch 1 results):
-  
-- read_file("returns_table.csv")
-  - read_file("competitor_data.csv")
-→ Complete in ~1.5s
-
-Total: ~3.5s (50% faster)
-```
+Unlike explicit programming, the parallelization emerges from exploration, from optional reward shaping (slight bonuses for faster completion), from light efficiency pressure on token usage, and from the reinforcement of the parallel patterns that succeed.
 
 ## How to use it
 
@@ -104,253 +60,88 @@ Your infrastructure must support parallel tool execution:
 
 ```python
 # Tool server must handle concurrent requests
-@app.cls(
-    image=base_image,
-    concurrency_limit=10,  # Allow 10 concurrent tools per rollout
-    allow_concurrent_inputs=True
-)
+@app.cls(image=base_image, concurrency_limit=10, allow_concurrent_inputs=True)  # 10 concurrent tools per rollout
 class ParallelToolExecutor:
     @method()
     async def execute_tool(self, rollout_id: str, tool: str, params: dict):
-        # Use async for I/O-bound operations
-        result = await self._async_execute(tool, params)
-        return result
+        return await self._async_execute(tool, params)   # async for I/O-bound operations
 ```
 
-**Training Setup:**
+No special training configuration is needed; parallelization emerges naturally from a standard Agent RFT job (tools, grader, hyperparameters). The Cognition case study fine-tuned GPT-5-family models.
 
-No special configuration needed - parallelization emerges naturally. Illustrative setup (the Cognition case study fine-tuned GPT-5-family models):
-
-```python
-# Standard Agent RFT setup
-job = client.fine_tuning.jobs.create(
-    training_file="file-abc123",
-    model="gpt-4o",
-    method="rft",
-    rft={
-        "tools": tools,
-        "grader": grader,
-        "hyperparameters": {
-            "n_epochs": 3,
-            "batch_size": 16,
-            "compute_multiplier": 1
-        }
-    }
-)
-
-# No special "parallelization" flag needed!
-# Model discovers this pattern during exploration
-```
-
-**Optional: Explicit Latency Rewards**
+**Optional: explicit latency rewards.**
 
 You can encourage parallelization through reward shaping:
 
 ```python
-class LatencyAwareGrader:
-    def grade(self, question, answer, tool_trace, ground_truth):
-        # Standard correctness score
-        correctness = self.check_correctness(answer, ground_truth)
-
-        # Bonus for efficiency
-        num_sequential_rounds = self.count_sequential_rounds(tool_trace)
-
-        if num_sequential_rounds <= 3:
-            efficiency_bonus = 0.1
-        elif num_sequential_rounds <= 5:
-            efficiency_bonus = 0.05
-        else:
-            efficiency_bonus = 0.0
-
-        return {
-            "score": correctness + efficiency_bonus,
-            "subscores": {
-                "correctness": correctness,
-                "efficiency": efficiency_bonus
-            }
-        }
-
-    def count_sequential_rounds(self, tool_trace):
-        """
-        Count how many back-and-forth rounds with tools
-        Parallel calls in same round = 1 round
-        """
-        rounds = 0
-        current_round_calls = set()
-
-        for call in tool_trace:
-            if call['type'] == 'tool_call':
-                current_round_calls.add(call['id'])
-            elif call['type'] == 'tool_response':
-                if call['call_id'] in current_round_calls:
-                    current_round_calls.remove(call['call_id'])
-                    if not current_round_calls:
-                        rounds += 1
-
-        return rounds
+def grade(self, answer, ground_truth, tool_trace):
+    correctness = self.check_correctness(answer, ground_truth)
+    rounds = self.count_sequential_rounds(tool_trace)     # parallel calls in one round count once
+    efficiency_bonus = 0.1 if rounds <= 3 else 0.05 if rounds <= 5 else 0.0
+    return {"score": correctness + efficiency_bonus,
+            "subscores": {"correctness": correctness, "efficiency": efficiency_bonus}}
 ```
 
-**Monitoring Parallelization:**
+`count_sequential_rounds` walks the trace and adds a round each time all the tool calls issued together have received their responses.
 
-Track during training to see if model learns parallel patterns:
+**Monitoring parallelization:**
+
+Group the tool calls between assistant messages into batches and track their size, to see whether the model learns parallel patterns:
 
 ```python
 def analyze_parallelization(tool_trace):
-    """
-    Analyze how many parallel calls the agent made
-    """
-    parallel_batches = []
-    current_batch = []
-
-    for event in tool_trace:
+    batches, current = [], []
+    for event in tool_trace:                        # a batch ends at the next assistant message
         if event['type'] == 'tool_call':
-            current_batch.append(event)
-        elif event['type'] == 'assistant_message':
-            # End of reasoning, start of new tool batch
-            if current_batch:
-                parallel_batches.append(len(current_batch))
-                current_batch = []
-
-    return {
-        'num_batches': len(parallel_batches),
-        'calls_per_batch': parallel_batches,
-        'max_parallelism': max(parallel_batches) if parallel_batches else 0,
-        'total_calls': sum(parallel_batches)
-    }
-
-# Example output showing learned parallelization:
-# Baseline: {'num_batches': 8, 'calls_per_batch': [1,1,1,1,1,1,1,1], 'max_parallelism': 1}
+            current.append(event)
+        elif event['type'] == 'assistant_message' and current:
+            batches.append(len(current))
+            current = []
+    return {'num_batches': len(batches), 'calls_per_batch': batches, 'max_parallelism': max(batches) if batches else 0,
+            'total_calls': sum(batches)}
+# Baseline:   {'num_batches': 8, 'calls_per_batch': [1,1,1,1,1,1,1,1], 'max_parallelism': 1}
 # Fine-tuned: {'num_batches': 2, 'calls_per_batch': [4,2], 'max_parallelism': 4}
 ```
 
-## Real-World Example: Cognition Devon
+### When parallelization helps most
 
-**Task**: File planning agent - identify which files need editing
+**High impact:**
 
-**Tools Available**:
+1. **Tool execution << inference time**: If tools return in 100ms but inference takes 2s, parallelization saves multiple inference rounds (API calls, database queries, file reads)
+2. **Independent information gathering**: Multiple search queries, reading multiple files, checking multiple conditions
+3. **Broad exploration phases**: Initial reconnaissance (find all Python files, check all tests) and multi-source research (docs, code, and tests at once)
 
-- `read_file(path)`: Read file contents (~500ms)
-- `shell(command)`: Run grep/find/ls (~300ms)
+**Low impact:**
 
-**Baseline Behavior (Before RFT):**
+1. **Sequential dependencies**: You must read file A to know which file B to read; each tool result determines the next action
+2. **Tool execution >> inference time**: If each tool takes 10s and inference takes 1s, parallelization saves less (heavy computation, large file processing)
+3. **Rate-limited APIs**: External APIs that throttle concurrent requests; parallel calls just hit rate limits
 
-Sequential pattern observed in traces:
+### Worked example: Cognition (Devon)
 
-```
-1. shell("find . -name '*.py'")
-2. read_file("main.py")
-3. shell("grep 'UserAuth' .")
-4. read_file("auth.py")
-5. shell("grep 'DatabaseConnection' .")
-6. read_file("db.py")
-7. shell("ls tests/")
-8. read_file("tests/test_auth.py")
+- **Task**: a file planning agent that identifies which files need editing, with `read_file(path)` (~500ms) and `shell(command)` for grep, find, and ls (~300ms).
+- **Baseline behavior before RFT**, 8-10 sequential calls:
 
-Total: 8-10 sequential tool calls
-```
+  ```
+  shell("find . -name '*.py'") → read_file("main.py") → shell("grep 'UserAuth' .") → read_file("auth.py")
+  → shell("grep 'DatabaseConnection' .") → read_file("db.py") → shell("ls tests/") → read_file("tests/test_auth.py")
+  ```
 
-**After Agent RFT:**
+- **After Agent RFT**, 3-4 rounds (50% reduction in back-and-forth):
 
-Learned parallel pattern:
+  ```
+  Round 1 (parallel): shell("find . -name '*.py'"), shell("grep 'UserAuth' ."), shell("grep 'DatabaseConnection' ."), shell("ls tests/")
+  Round 2 (parallel, based on Round 1): read_file("main.py"), read_file("auth.py")
+  Round 3 (if needed): read_file("db.py")
+  ```
 
-```
-Round 1 (parallel):
-  
-- shell("find . -name '*.py'")
-  - shell("grep 'UserAuth' .")
-  - shell("grep 'DatabaseConnection' .")
-  - shell("ls tests/")
-
-Round 2 (parallel, based on Round 1):
-  
-- read_file("main.py")
-  - read_file("auth.py")
-
-Round 3 (if needed):
-  
-- read_file("db.py")
-
-Total: 3-4 rounds (50% reduction in back-and-forth)
-```
-
-**Results:**
-
-- Planning time reduced by ~50%
-- Latency improvement even more dramatic when tool execution < inference time
-- Model learned this without explicit parallelization reward
+- **Results**: planning time reduced by ~50%; the improvement is larger still when tool execution takes less time than inference; and the model learned this without an explicit parallelization reward.
 
 **Sam's Observation:**
 
 > "We noticed that the model starts learning how to do a lot of parallel tool calls. The first action that the model does, it will kick off like eight different things... and then following on it will independently explore all of those things by again running more parallel tool calls."
 
-**Additional Validation: Ambience Healthcare**
-
-- **Task**: Medical coding with ICD-10 code lookups
-- **Result**: Average response time cut by 18% after Agent RFT. The video credits this drop to fine-tuning overall and does not attribute it to parallel code lookups specifically.
-
-## When Parallelization Helps Most
-
-**High Impact Scenarios:**
-
-1. **Tool execution << Inference time**
-   - If tools return in 100ms but inference takes 2s, parallelization saves multiple inference rounds
-   - Example: API calls, database queries, file reads
-
-2. **Independent information gathering**
-   - Multiple search queries
-   - Reading multiple files
-   - Checking multiple conditions
-
-3. **Broad exploration phases**
-   - Initial reconnaissance (find all Python files, check all tests, etc.)
-   - Multi-source research (check docs, code, tests simultaneously)
-
-**Low Impact Scenarios:**
-
-1. **Sequential dependencies**
-   - Must read file A to know which file B to read
-   - Each tool result determines next action
-
-2. **Tool execution >> Inference time**
-   - If each tool takes 10s and inference takes 1s, parallelization saves less
-   - Example: Heavy computation, large file processing
-
-3. **Rate-limited APIs**
-   - External APIs that throttle concurrent requests
-   - Parallel calls just hit rate limits
-
-## Comparison with Explicit Parallelization
-
-| Approach | Agent RFT Learning | Manual Programming |
-|----------|-------------------|-------------------|
-| **Implementation** | Emerges from training | Explicit parallel tool API |
-| **Flexibility** | Adapts to task | Fixed strategy |
-| **Dependencies** | Learns safe patterns | Must hand-code logic |
-| **Optimization** | Optimizes for your tools | Generic parallelization |
-| **Maintenance** | Automatic with retraining | Manual updates |
-
-```mermaid
-graph TD
-    A[Agent Receives Task] --> B{RL-Trained Model}
-
-    B --> C[Identifies Independent Queries]
-    C --> D[Batch 1: Parallel Tool Calls]
-    D --> E[All Tools Execute Concurrently]
-
-    E --> F[Results Arrive Together]
-    F --> G{Need More Info?}
-
-    G -->|Yes| H[Batch 2: Parallel Tool Calls]
-    H --> I[Execute Concurrently]
-    I --> J[Aggregate Results]
-
-    G -->|No| J[Aggregate Results]
-    J --> K[Generate Answer]
-
-    style D fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style H fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style K fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-```
+**Additional validation:** Ambience Healthcare (medical coding with ICD-10 code lookups) cut average response time by 18% after Agent RFT; the video credits this drop to fine-tuning overall and does not attribute it to parallel code lookups specifically.
 
 ## Trade-offs
 
@@ -370,7 +161,17 @@ graph TD
 - **May need reward shaping**: Explicit latency bonuses can help if parallelization doesn't emerge naturally
 - **Debugging complexity**: Parallel execution makes traces harder to follow
 
-## Implementation Checklist
+### Compared with explicit parallelization
+
+| Approach | Agent RFT Learning | Manual Programming |
+|----------|-------------------|-------------------|
+| **Implementation** | Emerges from training | Explicit parallel tool API |
+| **Flexibility** | Adapts to task | Fixed strategy |
+| **Dependencies** | Learns safe patterns | Must hand-code logic |
+| **Optimization** | Optimizes for your tools | Generic parallelization |
+| **Maintenance** | Automatic with retraining | Manual updates |
+
+### Checklist
 
 - [ ] Tool infrastructure supports concurrent requests (async, multiple workers)
 - [ ] Each tool can handle being called multiple times in parallel safely

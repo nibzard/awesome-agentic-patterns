@@ -1,6 +1,6 @@
 ---
 title: "Three-Stage Perception Architecture"
-status: established
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Sense-Plan-Act (Robotics)", "Information Processing Theory (Newell & Simon 1972)"]
 category: "Orchestration & Control"
@@ -173,6 +173,13 @@ flowchart LR
     style N fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
 ```
 
+## How to use it
+
+- Use when input handling, reasoning, and execution have different scaling needs, failure modes, or owning teams; the stage boundaries make each one independently testable.
+- Define typed interfaces between stages so each stage can be replaced without touching the others.
+- Let native multimodal input handle perception where the model already accepts the modality; keep only normalization and schema validation as explicit perception steps.
+- Distinct from [discrete-phase-separation.md](discrete-phase-separation.md): that pattern splits work into separate conversations (research, planning, implementation) with fresh context each; this pattern splits the runtime pipeline of a single agent run into perception, processing, and action stages.
+
 ## Benefits
 
 - **Modularity**: Each stage can be developed, tested, and scaled independently
@@ -184,6 +191,7 @@ flowchart LR
 ## Trade-offs
 
 **Pros:**
+
 - Clean separation of concerns
 - Easier to maintain and extend
 - Better error isolation
@@ -191,17 +199,11 @@ flowchart LR
 - Facilitates team collaboration (different teams per stage)
 
 **Cons:**
+
 - Additional complexity for simple tasks
 - Potential latency from stage transitions
 - Requires careful interface design between stages
 - May introduce overhead for data transformation between stages
-
-## How to use it
-
-- Use when input handling, reasoning, and execution have different scaling needs, failure modes, or owning teams; the stage boundaries make each one independently testable.
-- Define typed interfaces between stages so each stage can be replaced without touching the others.
-- Let native multimodal input handle perception where the model already accepts the modality; keep only normalization and schema validation as explicit perception steps.
-- Distinct from [discrete-phase-separation.md](discrete-phase-separation.md): that pattern splits work into separate conversations (research, planning, implementation) with fresh context each; this pattern splits the runtime pipeline of a single agent run into perception, processing, and action stages.
 
 ## References
 

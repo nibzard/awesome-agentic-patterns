@@ -123,7 +123,6 @@ WFGY implements a "semantic firewall" that validates semantic stability **before
 
 - [WFGY Problem Map README](https://github.com/onestardao/WFGY/blob/main/ProblemMap/README.md)
 - [WFGY Problem Map Repository](https://github.com/onestardao/WFGY/tree/main/ProblemMap)
-- [Technical Deep Dive Report](https://github.com/nibzard/awesome-agentic-patterns/blob/main/research/wfgy-reliability-problem-map-technical-deep-dive.md)
 - [Semantic Clinic Index](https://github.com/onestardao/WFGY/blob/main/ProblemMap/SemanticClinicIndex.md)
 - [Grandma's Clinic (Beginner-Friendly)](https://github.com/onestardao/WFGY/blob/main/ProblemMap/GrandmaClinic/README.md)
 - Barnett et al., "Seven Failure Points When Engineering a Retrieval Augmented Generation System" ([arXiv:2401.05856](https://arxiv.org/abs/2401.05856), 2024) — prior academic work on RAG failure taxonomies

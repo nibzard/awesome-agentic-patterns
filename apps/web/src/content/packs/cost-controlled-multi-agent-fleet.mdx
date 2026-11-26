@@ -1,0 +1,143 @@
+---
+title: 'Cost-Controlled Multi-Agent Fleet'
+summary: 'Patterns for fanning work out to parallel agents without file collisions, runaway spend, or lost cost visibility.'
+domain: 'Multi-Agent Systems'
+patterns:
+  - sub-agent-spawning
+  - design-time-file-partition
+  - lane-based-execution-queueing
+  - budget-aware-model-routing-with-hard-cost-caps
+  - agent-circuit-breaker
+  - intent-level-cost-attribution
+order: 5
+---
+
+## Overview
+
+This pack is for systems that run several agents at once: a main agent with a few sub-agents, or a fleet of
+workers that share one repository. Parallel agents fail in two ways that a single agent does not. They
+collide, because two workers write to the same files or overload the same tools. They also multiply cost,
+because every agent makes its own model calls and its own retries.
+
+The six patterns cover both problems: sub-agent spawning, design-time file partition, queue lanes, model
+routing with hard caps, a circuit breaker, and cost attribution.
+
+## When to Use This Pack
+
+- **The work splits into independent subtasks** that can run in parallel
+- **Several agents share one repository or workspace**
+- **Model spend grows with the number of agents** and must stay inside a budget
+- **Cost must be reported per feature, project, or user**, not only as one monthly total
+
+## Patterns Included
+
+### 1. [Sub-Agent Spawning](/patterns/sub-agent-spawning)
+
+**Status**: foundational.
+
+The main agent spawns sub-agents for subtasks. Each sub-agent starts with a fresh context and a scoped set
+of tools, works on one clear task subject, and returns its result for the main agent to merge. The pattern
+defines sub-agent types in configuration, each with its own prompt, tools, and context, and it limits the
+number of active sub-agents.
+
+**Role in this pack**: The unit of fan-out. It is the only `foundational` pattern in this pack.
+
+### 2. [Design-Time File Partition as Concurrency Control](/patterns/design-time-file-partition)
+
+**Status**: proposed, with low evidence.
+
+Makes each task declare, before it runs, the complete set of paths that it will write, including generated
+outputs such as lockfiles and snapshots. When two tasks overlap, the planner adds a blocking dependency
+between them, so only one runs at a time. The queue must hand a ready task to exactly one worker in a
+single transaction. Shared Git state, such as the index, is serialized under a shared lock because the
+partition does not cover it.
+
+**Role in this pack**: Prevents write collisions before they happen, instead of merging conflicts after.
+
+### 3. [Lane-Based Execution Queueing](/patterns/lane-based-execution-queueing)
+
+**Status**: emerging.
+
+Routes work into named lanes. Each lane has its own queue and its own concurrency limit: one lane per user
+session, and global lanes for scheduled jobs and sub-agents. One session never interleaves with another,
+and a background job cannot block a user. Lanes compose hierarchically (a session lane can feed a global
+lane), which avoids deadlocks.
+
+**Role in this pack**: Isolates the queues so that concurrency is bounded for each kind of work.
+
+It is not a general scheduler: it has no priorities, deadlines, or work stealing.
+
+### 4. [Budget-Aware Model Routing with Hard Cost Caps](/patterns/budget-aware-model-routing-with-hard-cost-caps)
+
+**Status**: emerging.
+
+Defines a tiered model catalog (small, medium, frontier) and routes each request to the cheapest model that
+can do the job. A policy engine computes the maximum spend before each call and enforces hard caps per
+request, per user, and per workflow lane. When a cap is reached, the call fails in a defined way: defer,
+return a partial answer, or hand off to a human. Routing telemetry records each decision.
+
+**Role in this pack**: Bounds the cost per request. Retries count against the same per-request, per-user,
+and per-lane caps.
+
+### 5. [Agent Circuit Breaker](/patterns/agent-circuit-breaker)
+
+**Status**: emerging.
+
+Tracks failures for each tool. When a tool passes its failure threshold, the circuit opens and calls to
+that tool are disabled for a cooldown period, then tested again. The agent gets a defined error or a
+fallback result instead of a retry loop. The pattern is small, and its state is scoped to a session.
+
+**Role in this pack**: Stops each agent from retrying a broken tool once its own breaker trips.
+
+### 6. [Intent-Level Cost Attribution](/patterns/intent-level-cost-attribution)
+
+**Status**: proposed, with low evidence.
+
+Records every model call when it happens, with the model, the token counts, and the identifiers of the work
+that caused it: project, intent, and user. A ledger with atomic writes stores the records. A reporting
+interface rolls the costs up by project, by intent, and by user.
+
+**Role in this pack**: Shows which work costs what, so that a cap can be set for each work item.
+
+## How They Fit Together
+
+The patterns answer three questions in sequence: who may write where, how much may run at once, and how much
+may be spent. Adopt them in this order:
+
+1. **Start with sub-agents and a cap.** Use Sub-Agent Spawning together with Budget-Aware Model Routing,
+   because fan-out multiplies model calls from the first day.
+2. **Partition before you parallelize on shared state.** Add Design-Time File Partition when three or more
+   agents work on one repository.
+3. **Separate the queues.** Add Lane-Based Execution Queueing when interactive sessions and background jobs
+   share workers.
+4. **Cut off the broken paths.** Add the Agent Circuit Breaker for the tools that fail under load.
+5. **Attribute the spend.** Add Intent-Level Cost Attribution when a budget must be enforced per feature or
+   per user.
+
+## Honest Trade-offs
+
+- **Weaker evidence at the bottom of the stack**: Sub-Agent Spawning is `foundational`. Three patterns are
+  `emerging`, and two are `proposed` with low evidence: Design-Time File Partition reports one production
+  deployment, and Intent-Level Cost Attribution reports no documented savings from a deployed fleet. Read
+  the `proposed` patterns as designs, and test them against your own workload before you rely on them.
+- **Planning burden**: Design-Time File Partition requires the planner to know the code layout and to list
+  every output path. A missed path is a collision that the partition does not prevent.
+- **Queue claims**: The partition is only as safe as the claim. In the reported deployment, the remaining
+  failure was two workers that claimed one task, which is a queue defect that the partition does not
+  prevent.
+- **Throughput**: Blocking dependencies and per-lane concurrency limits serialize work that would otherwise
+  overlap.
+- **Masked errors**: A circuit breaker hides intermittent errors behind its fallback path.
+- **Attribution overhead**: Cost attribution adds instrumentation at every model call site. A call that is
+  recorded with the wrong identifier pollutes the reports.
+- **Quality risk**: Routing to the cheapest model under-powers tasks when the task classification is weak.
+
+## What to Leave Out Until Later
+
+- **Large fleets**: The file partition pattern describes one production deployment with about twenty
+  headless workers on one checkout. Stay well below that number until the partition and the lanes are
+  stable.
+- **Priority scheduling**: Lanes have no priorities or deadlines. Add a scheduler only when a real
+  starvation problem appears.
+- **Fine-grained routing tuning**: Do not tune the routing thresholds until the cost ledger shows where the
+  money goes.

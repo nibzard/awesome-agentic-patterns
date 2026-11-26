@@ -36,11 +36,8 @@ USER_AGENT = "arxiv-scanner/0.1 (https://github.com/nibzard/awesome-agentic-patt
 VALID_STATUSES = {
     "proposed",
     "emerging",
-    "established",
-    "validated-in-production",
-    "best-practice",
-    "experimental-but-awesome",
-    "rapidly-improving",
+    "production",
+    "foundational",
 }
 
 # Valid category values

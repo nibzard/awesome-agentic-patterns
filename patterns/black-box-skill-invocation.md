@@ -1,6 +1,6 @@
 ---
 title: Black-Box Skill Invocation
-status: emerging
+status: proposed
 authors: ["Ziwei Zhao (@ZiwayZhao)"]
 based_on: ["Capability-Based Security (Dennis & Van Horn, 1966)", "Remote Procedure Call (Birrell & Nelson, 1984)"]
 category: "Security & Safety"

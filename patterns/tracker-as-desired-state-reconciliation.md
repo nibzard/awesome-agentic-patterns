@@ -23,7 +23,7 @@ prerequisites:
   - "Ability to add or designate workflow states for the state contract"
   - "Idempotent side effects keyed by work-item ID"
 related:
-  - board-mediated-async-inter-agent-coordination
+  - board-mediated-inter-agent-coordination
   - signal-driven-agent-activation
   - multi-platform-webhook-triggers
   - filesystem-based-agent-state

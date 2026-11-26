@@ -1,6 +1,6 @@
 ---
 title: LLM Observability
-status: emerging
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -22,6 +22,7 @@ id: llm-observability
 summary: "Sends agent runs to an LLM observability platform for span-level traces of each LLM call and tool use, plus aggregate cost, latency, and success metrics"
 signals: ["Multi-step agent workflows are hard to debug from raw logs", "Non-engineers need to inspect workflow runs", "Team needs cost, latency, and success metrics across runs"]
 anti_signals: ["Simple, deterministic tools with no agent behavior", "Single-step operations where standard logs suffice", "Budget does not cover observability spend"]
+related: ["agent-first-tooling-and-logging", "out-of-process-provider-boundary-replay", "intent-level-cost-attribution", "chain-of-thought-monitoring-interruption", "verbose-reasoning-transparency"]
 updated_at: '2026-10-13'
 ---
 

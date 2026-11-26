@@ -35,181 +35,42 @@ A critic used this way can:
 
 **Scope note:** the published evidence covers critics assisting human evaluators on model outputs, not a standalone reviewer. Running such a critic as an autonomous CI/CD gate, as sketched below, is an extrapolation of the paper's results; treat its findings as input to human review rather than a verdict. For the broader technique of AI flagging issues during human review, see the sibling pattern [AI-Assisted Code Review / Verification](ai-assisted-code-review-verification.md) — the difference is that this pattern uses a model trained specifically for critique, while that one uses general-purpose review agents.
 
-## Example
+Sketch of the generate-and-review loop:
 
 ```python
-class CriticGPTReviewer:
-    def __init__(self, critic_model, severity_threshold=0.7):
-        self.critic = critic_model
-        self.severity_threshold = severity_threshold
-        
-    def review_code(self, code, context=None, language="python"):
-        """Comprehensive code review using specialized critic model"""
-        
-        reviews = {
-            'bugs': self.check_for_bugs(code, context, language),
-            'security': self.security_audit(code, language),
-            'quality': self.quality_review(code, language),
-            'performance': self.performance_analysis(code, language),
-            'best_practices': self.best_practices_check(code, language)
-        }
-        
-        # Aggregate findings
-        all_issues = []
-        for category, findings in reviews.items():
-            for issue in findings:
-                issue['category'] = category
-                all_issues.append(issue)
-        
-        # Sort by severity
-        all_issues.sort(key=lambda x: x['severity'], reverse=True)
-        
-        return {
-            'issues': all_issues,
-            'summary': self.generate_summary(all_issues),
-            'recommended_action': self.recommend_action(all_issues)
-        }
-    
-    def check_for_bugs(self, code, context, language):
-        prompt = f"""
-        Review this {language} code for bugs:
-        
-        Context: {context or 'General purpose code'}
-        
-        Code:
-        ```{language}
-        {code}
-        ```
-        
-        Identify any bugs including:
-        
-- Logic errors
-        - Off-by-one errors  
-        - Null/undefined reference errors
-        - Type mismatches
-        - Resource leaks
-        - Race conditions
-        - Edge case handling
-        
-        For each bug found, provide:
-        1. Line number(s)
-        2. Description of the bug
-        3. Severity (0-1)
-        4. Suggested fix
-        """
-        
-        response = self.critic.analyze(prompt)
-        return self.parse_bug_findings(response)
-    
-    def security_audit(self, code, language):
-        prompt = f"""
-        Perform security analysis on this {language} code:
-        
-        ```{language}
-        {code}
-        ```
-        
-        Check for vulnerabilities including:
-        
-- SQL injection
-        - XSS vulnerabilities
-        - Command injection
-        - Path traversal
-        - Insecure cryptography
-        - Hardcoded secrets
-        - Authentication/authorization issues
-        - Input validation problems
-        
-        Report format: [line, vulnerability type, severity, fix]
-        """
-        
-        response = self.critic.analyze(prompt)
-        return self.parse_security_findings(response)
-    
-    def quality_review(self, code, language):
-        prompt = f"""
-        Review code quality for this {language} code:
-        
-        ```{language}
-        {code}
-        ```
-        
-        Evaluate:
-        
-- Code clarity and readability
-        - Function/variable naming
-        - Code organization
-        - Documentation completeness
-        - DRY principle violations
-        - Coupling and cohesion
-        - Error handling quality
-        """
-        
-        response = self.critic.analyze(prompt)
-        return self.parse_quality_findings(response)
-    
-    def suggest_fixes(self, code, issue):
-        """Generate specific fix for identified issue"""
-        prompt = f"""
-        Code with issue:
-        ```
-        {code}
-        ```
-        
-        Issue: {issue['description']}
-        Location: Line {issue['line']}
-        
-        Provide a corrected version of the relevant code section.
-        """
-        
-        return self.critic.generate(prompt)
+SEVERITY_THRESHOLD = 0.7   # reviewer default
+CRITICAL_SEVERITY = 0.8    # issues above this force a regeneration
+MAX_ITERATIONS = 3
 
-class IntegratedCodeGeneration:
-    """Example of critic integration with code generation"""
-    
-    def __init__(self, generator, critic):
-        self.generator = generator
-        self.critic = CriticGPTReviewer(critic)
-        
-    def generate_and_review(self, task_description, max_iterations=3):
-        # Initial generation
-        code = self.generator.generate_code(task_description)
-        
-        for i in range(max_iterations):
-            # Review generated code
-            review = self.critic.review_code(
-                code, 
-                context=task_description
-            )
-            
-            # If no critical issues, we're done
-            critical_issues = [
-                issue for issue in review['issues'] 
-                if issue['severity'] > 0.8
-            ]
-            
-            if not critical_issues:
-                break
-                
-            # Otherwise, regenerate with feedback
-            feedback = self.format_feedback(critical_issues)
-            refinement_prompt = f"""
-            Original task: {task_description}
-            
-            Generated code has these issues:
-            {feedback}
-            
-            Generate improved code addressing these issues:
-            """
-            
-            code = self.generator.generate_code(refinement_prompt)
-        
-        return {
-            'code': code,
-            'final_review': review,
-            'iterations': i + 1
-        }
+def review_code(critic, code, task):
+    all_issues = []
+    for category, prompt in PROMPTS.items():       # bugs, security, quality, performance, best practices
+        all_issues += parse(critic.analyze(prompt(code, task)), category)
+    all_issues.sort(key=lambda issue: issue["severity"], reverse=True)
+    return {"issues": all_issues,
+            "summary": generate_summary(all_issues),
+            "recommended_action": recommend_action(all_issues)}
+
+def generate_and_review(generator, critic, task):
+    code = generator.generate_code(task)
+    for iteration in range(MAX_ITERATIONS):
+        review = review_code(critic, code, task)
+        critical = [issue for issue in review["issues"] if issue["severity"] > CRITICAL_SEVERITY]
+        if not critical:
+            break                                    # hand code and review to a human reviewer
+        # Refinement prompt = original task + the code + the formatted critical issues
+        code = generator.generate_code(refine(task, code, format_feedback(critical)))
+    return {"code": code, "final_review": review, "iterations": iteration + 1}
 ```
+
+Each finding carries a severity from 0 to 1, a category, and the line it refers to. The reviewer is constructed with a `severity_threshold` of 0.7; the loop shown here regenerates whenever an issue scores above `CRITICAL_SEVERITY` (0.8).
+
+Each pass asks the critic for a fixed report shape:
+
+- **Bugs:** line number(s), description, severity (0-1), and a suggested fix. The prompt lists logic errors, off-by-one errors, null/undefined references, type mismatches, resource leaks, race conditions, and edge case handling.
+- **Security:** `[line, vulnerability type, severity, fix]`. The prompt lists SQL injection, XSS, command injection, path traversal, insecure cryptography, hardcoded secrets, authentication/authorization issues, and input validation.
+- **Quality, performance, and best practices:** clarity and readability, naming, code organization, documentation completeness, DRY violations, coupling and cohesion, and error handling.
+- **Fixes:** given the code and one issue, the critic generates a corrected version of the affected section.
 
 ```mermaid
 sequenceDiagram
@@ -217,17 +78,14 @@ sequenceDiagram
     participant Generator as Code Generator
     participant Critic as CriticGPT
     participant Human as Human Reviewer
-    
     User->>Generator: Request code for task
     Generator->>Generator: Generate initial code
     Generator->>Critic: Submit code for review
-    
     loop Until code passes or max iterations
         Critic->>Critic: Analyze for bugs
-        Critic->>Critic: Security audit  
+        Critic->>Critic: Security audit
         Critic->>Critic: Quality review
         Critic->>Generator: Return issues found
-        
         alt Critical issues found
             Generator->>Generator: Refine code based on feedback
             Generator->>Critic: Submit revised code
@@ -235,34 +93,8 @@ sequenceDiagram
             Generator->>Human: Present code with review
         end
     end
-    
     Human->>User: Approve/modify final code
 ```
-
-## Benefits
-
-- **Catches More Bugs**: Specialized training helps identify subtle issues
-- **Consistent Reviews**: No fatigue or oversight like human reviewers
-- **Fast Feedback**: Near-instantaneous review of generated code
-- **Learning Tool**: Helps developers understand potential issues
-- **Reduces Security Risks**: Proactive vulnerability detection
-
-## Trade-offs
-
-**Pros:**
-- Scalable code review process
-- Consistent quality standards
-- Catches issues early in development
-- Can review code 24/7 without breaks
-- Improves over time with more training
-
-**Cons:**
-- May have false positives requiring human verification
-- Training specialized critic models is resource-intensive
-- Cannot understand full business context like humans
-- May miss novel vulnerability types
-- Requires integration into existing workflows
-- Risk of evaluator-model collusion in self-critique loops (mitigate with anchor sets and adversarial examples)
 
 ## How to use it
 
@@ -272,6 +104,26 @@ sequenceDiagram
 - Integrate via git webhooks (GitHub, GitLab) for event-driven review
 - Use 3-4 iterations of critique-refinement loops for complex changes
 - Mitigate collapse risks: decouple evaluation/generation prompts, benchmark against human-labeled anchor sets
+
+## Trade-offs
+
+**Pros:**
+
+- **Catches more bugs**: Specialized training helps identify subtle issues
+- **Consistent reviews**: No fatigue or oversight like human reviewers
+- **Fast feedback**: Near-instantaneous review of generated code
+- **Learning tool**: Helps developers understand potential issues
+- **Reduces security risks**: Proactive vulnerability detection
+- **Scalable**: A consistent quality standard that can review code 24/7 and improves with more training
+
+**Cons:**
+
+- May have false positives requiring human verification
+- Training specialized critic models is resource-intensive
+- Cannot understand full business context like humans
+- May miss novel vulnerability types
+- Requires integration into existing workflows
+- Risk of evaluator-model collusion in self-critique loops (mitigate with anchor sets and adversarial examples)
 
 ## References
 

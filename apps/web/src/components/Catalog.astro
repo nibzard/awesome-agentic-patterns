@@ -14,15 +14,7 @@ const sorted = [...patterns].sort(
   (a, b) => (b.updated_at || '').localeCompare(a.updated_at || '') || a.title.localeCompare(b.title)
 );
 
-const statusOrder = [
-  'best-practice',
-  'validated-in-production',
-  'established',
-  'emerging',
-  'rapidly-improving',
-  'experimental-but-awesome',
-  'proposed',
-];
+const statusOrder = ['foundational', 'production', 'emerging', 'proposed'];
 
 const statusCounts = patterns.reduce((acc: Record<string, number>, pattern) => {
   acc[pattern.status] = (acc[pattern.status] || 0) + 1;

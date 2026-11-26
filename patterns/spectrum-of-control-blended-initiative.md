@@ -1,6 +1,6 @@
 ---
 title: Spectrum of Control / Blended Initiative
-status: validated-in-production
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Aman Sanger (Cursor)"]
 category: UX & Collaboration
@@ -9,6 +9,7 @@ tags: [human-agent-collaboration, autonomy-spectrum, interactive-control, task-d
 summary: "Gives users several autonomy modes, from inline completion to background agents, and lets them switch modes per task"
 signals: ["Tasks range from small edits to multi-file features", "Users need to move between direct control and delegation", "Coding tool or IDE with room for several interaction paths"]
 anti_signals: ["Single task type that needs only one autonomy level", "Team cannot build and maintain several interaction modes"]
+related: ["seamless-background-to-foreground-handoff", "classify-then-act-for-background-agents", "inversion-of-control", "factory-over-assistant", "progressive-complexity-escalation"]
 updated_at: "2026-10-13"
 ---
 
@@ -74,7 +75,7 @@ flowchart LR
 
 - Aman Sanger (Cursor) extensively discusses this spectrum at 0:05:16-0:06:44, detailing different features like tab completion, Command K, Agent for multi-file edits, and Background Agent for entire PRs, describing it as "almost a spectrum."
 - Sheridan, T. B., & Verplank, W. L. (1978). Human and Computer Control of Undersea Teleoperators. MIT Man-Machine Systems Laboratory technical report, available at https://ntrs.nasa.gov/citations/19790007441 (this report has no IEEE journal DOI)
-- Parasuraman, R., et al. (2000). A Model for Types and Levels of Human Interaction with Automation. https://doi.org/10.1109/3477.866864
+- Parasuraman, R., Sheridan, T. B., & Wickens, C. D. (2000). A Model for Types and Levels of Human Interaction with Automation. https://doi.org/10.1109/3468.844354
 - Horvitz, Eric (1999). Principles of Mixed-Initiative User Interfaces. CHI '99. https://doi.org/10.1145/302979.303030
 
 - Primary source: https://www.youtube.com/watch?v=BGgsoIgbT_Y

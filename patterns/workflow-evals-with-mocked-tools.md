@@ -1,6 +1,6 @@
 ---
 title: Workflow Evals with Mocked Tools
-status: established
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -21,91 +21,53 @@ id: workflow-evals-with-mocked-tools
 summary: "Runs complete agent workflows against mocked tools in CI and checks which tools were called plus agent-as-judge quality criteria"
 signals: ["Agent tools have side effects such as API or database writes", "Unit tests pass but prompts and tools fail together", "Need regression tests for agent behavior on each PR"]
 anti_signals: ["Results must act as a strict CI gate, since non-determinism makes them flaky", "Team cannot keep mocks in sync with real tools"]
+related: ["incident-to-eval-synthesis", "out-of-process-provider-boundary-replay", "evidence-layered-evaluation-for-interactive-agents", "anti-reward-hacking-grader-design", "progressive-autonomy-with-model-evolution"]
 updated_at: '2026-10-13'
 ---
 
 ## Problem
 
-Unit tests, linters, and typecheckers validate individual components but don't test agent workflows end-to-end. It's easy to create prompts that don't work well despite all underlying pieces being correct.
-
-You need to validate that prompts and tools work together effectively as a system.
+Unit tests, linters, and typecheckers validate individual components but do not test agent workflows end to end. It is easy to create prompts that do not work well although every underlying piece is correct. You need to validate that prompts and tools work together effectively as a system.
 
 ## Solution
 
-Implement **workflow evals (simulations)** that test complete agent workflows with mocked tools.
+Implement **workflow evals (simulations)** that test complete agent workflows with mocked tools. The approach is Sierra-inspired and has four components.
 
-**Core components (Sierra-inspired approach):**
+**1. Dual tool implementations.** Every tool has both a `true` and a `mock` version:
 
-1. **Dual tool implementations**: Every tool has both `true` and `mock` versions
+```python
+# True implementation: calls the real API
+def search_knowledge_base_true(query: str) -> str:
+    return kb_api.search(query)
 
-   ```python
-   # True implementation - calls real APIs
-   def search_knowledge_base_true(query: str) -> str:
-       return kb_api.search(query)
-
-   # Mock implementation - returns static/test data
-   def search_knowledge_base_mock(query: str) -> str:
-       return TEST_KB_RESULTS.get(query, DEFAULT_RESULT)
-   ```
-
-2. **Simulation configuration**: Each eval defines:
-   - **Initial prompt**: What the agent receives
-   - **Metadata**: Situation context available to harness
-   - **Evaluation criteria**: Success/failure determination
-
-   ```yaml
-   evals:
-     - name: slack_reaction_jira_workflow
-       initial_prompt: "Add a smiley reaction to the JIRA ticket in this Slack message"
-       metadata:
-         situation: "slack_message_with_jira_link"
-       expected_tools:
-         - slack_get_message
-         - jira_get_ticket
-         - slack_add_reaction
-       evaluation_criteria:
-         objective:
-           - tools_called: ["slack_get_message", "jira_get_ticket", "slack_add_reaction"]
-           - tools_not_called: ["slack_send_message"]
-         subjective:
-           - agent_judge: "Response was helpful and accurate"
-   ```
-
-3. **Dual evaluation criteria**:
-
-   **Objective criteria**:
-   - Which tools were called
-   - Which tools were NOT called
-   - Tags/states added to conversation (if applicable)
-
-   **Subjective criteria**:
-   - Agent-as-judge assessments (e.g., "Was response friendly?")
-   - LLM evaluations of qualitative outcomes
-
-4. **CI/CD integration**: Run evals automatically on every PR
-
-   ```pseudo
-   # GitHub Actions workflow
-   on: pull_request
-   steps:
-     - run: python scripts/run_agent_evals.py
-       # Posts results as PR comment
-   ```
-
-```pseudo
-# Eval execution flow
-1. Load eval configuration
-2. Swap in mock implementations for all tools
-3. Run agent with initial prompt + metadata
-4. Track which tools agent calls
-5. Evaluate against objective criteria (tool usage)
-6. Run agent-as-judge for subjective criteria
-7. Report pass/fail with details
+# Mock implementation: returns static test data
+def search_knowledge_base_mock(query: str) -> str:
+    return TEST_KB_RESULTS.get(query, DEFAULT_RESULT)
 ```
+
+**2. Simulation configuration.** Each eval defines the initial prompt, metadata (situation context available to the harness), and evaluation criteria:
+
+```yaml
+evals:
+  - name: slack_reaction_jira_workflow
+    initial_prompt: "Add a smiley reaction to the JIRA ticket in this Slack message"
+    metadata:
+      situation: "slack_message_with_jira_link"
+    evaluation_criteria:
+      objective:
+        - tools_called: ["slack_get_message", "jira_get_ticket", "slack_add_reaction"]
+        - tools_not_called: ["slack_send_message"]
+      subjective:
+        - agent_judge: "Response was helpful and accurate"
+```
+
+**3. Dual evaluation criteria.** Objective criteria check which tools were called, which tools were not called, and which tags or states the conversation gained (if applicable). Subjective criteria use agent-as-judge assessments (for example, "Was the response friendly?") and LLM evaluations of qualitative outcomes.
+
+**4. CI/CD integration.** A run loads the eval configuration, swaps in the mock implementations for all tools, runs the agent with the prompt and metadata, and tracks the tool calls. It then evaluates the objective criteria, runs the agent-as-judge for the subjective criteria, and reports pass or fail with details. CI triggers the run on every PR.
 
 ## Evidence
 
-- **Evidence Grade:** `established` - Independent practitioner report plus vendor-published evaluation frameworks (2026)
+- **Evidence Grade:** `medium` - Independent practitioner report plus vendor-published evaluation frameworks (2026)
 - **Key Findings:**
   - Strong production use case: unit tests and linters don't validate prompt-tool integration effectively
   - Dual evaluation (objective + subjective) is standard across implementations
@@ -115,78 +77,52 @@ Implement **workflow evals (simulations)** that test complete agent workflows wi
 
 ## How to use it
 
-**Best for:**
+**Best for:** agent workflows where tools have side effects (APIs, databases), CI/CD pipelines that need workflow validation, prompt engineering and optimization, and regression testing for agent behavior changes.
 
-- Agent workflows where tools have side effects (APIs, databases)
-- CI/CD pipelines requiring workflow validation
-- Prompt engineering and optimization
-- Regression testing for agent behavior changes
-
-**Implementation approach:**
-
-**1. Create mock layer for tools:**
+**1. Create a mock layer for tools:**
 
 ```python
 class MockToolRegistry:
     def __init__(self, mode: str = "mock"):
         self.mode = mode
+        self.mocks = {"slack_send_message": mock_slack_send_message, "jira_create_ticket": mock_jira_create_ticket}
 
     def get_tool(self, tool_name: str):
-        if self.mode == "mock":
-            return self.mocks[tool_name]
-        return self.real_tools[tool_name]
-
-    # Register mock implementations
-    mocks = {
-        "slack_send_message": mock_slack_send_message,
-        "jira_create_ticket": mock_jira_create_ticket,
-        # ...
-    }
+        return self.mocks[tool_name] if self.mode == "mock" else self.real_tools[tool_name]
 ```
 
 **2. Define eval cases:**
 
 ```python
-evals = [
-    {
-        "name": "login_support_flow",
-        "prompt": "User can't log in, help them",
-        "expected_tools": ["user_lookup", "password_reset"],
-        "forbidden_tools": ["account_delete"],
-        "subjective_criteria": "Response was empathetic and helpful"
-    },
-    # ... more evals
-]
+evals = [{
+    "name": "login_support_flow",
+    "prompt": "User can't log in, help them",
+    "expected_tools": ["user_lookup", "password_reset"],
+    "forbidden_tools": ["account_delete"],
+    "subjective_criteria": "Response was empathetic and helpful",
+}]
 ```
 
 **3. Run and evaluate:**
 
 ```python
-def run_eval(eval_config):
-    # Run agent with mocked tools
-    result = agent.run(
-        prompt=eval_config["prompt"],
-        tools=mock_registry
-    )
-
-    # Check objective criteria
+def run_eval(eval_config, mock_registry):
+    result = agent.run(prompt=eval_config["prompt"], tools=mock_registry)
     tools_called = result.tools_used
+
+    # Objective: tool usage
     passed = all(t in tools_called for t in eval_config["expected_tools"])
     passed &= all(t not in tools_called for t in eval_config["forbidden_tools"])
 
-    # Check subjective criteria
+    # Subjective: agent-as-judge, only if the objective checks passed
     if passed:
-        judge_prompt = f"""
-        Evaluate this agent response: {result.response}
-        Criteria: {eval_config['subjective_criteria']}
-        Pass/fail?
-        """
-        passed = llm_evaluator(judge_prompt) == "PASS"
+        criteria = eval_config['subjective_criteria']
+        passed = llm_evaluator(f"Evaluate this agent response: {result.response}\nCriteria: {criteria}\nPass/fail?") == "PASS"
 
     return {"passed": passed, "details": result}
 ```
 
-**4. Integrate with CI/CD:**
+**4. Integrate with CI/CD and post the results as a PR comment:**
 
 ```yaml
 # .github/workflows/agent_evals.yml
@@ -197,45 +133,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: python scripts/run_evals.py --format github
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            const results = require('./eval_results.json');
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: formatResults(results)
-            });
+      - run: python scripts/run_evals.py --format github   # writes eval_results.json
+      - uses: actions/github-script@v6                   # then posts it as a PR comment
 ```
 
 **Handling non-determinism:**
 
-The article notes evals are "not nearly as well as I hoped it would" due to non-determinism:
+The article notes that the evals work "not nearly as well as I hoped it would" because of non-determinism:
 
-- **Strong signal**: All pass or all fail
-- **Weak signal**: Mixed results
-- **Mitigation**: Retry failed evals (e.g., "at least once in three tries")
+- **Strong signal**: all pass or all fail
+- **Weak signal**: mixed results
+- **Mitigation**: retry failed evals (for example, "at least once in three tries")
 
 ## Trade-offs
 
 **Pros:**
 
-- **End-to-end validation**: Tests prompts + tools together as a system
-- **Fast feedback**: Catch regressions before they reach production
-- **Safe testing**: Mocked tools avoid side effects during testing
-- **Clear criteria**: Both objective (tool calls) and subjective (quality) measures
-- **CI/CD integration**: Automated validation on every PR
+- **End-to-end validation**: tests prompts and tools together as a system
+- **Fast feedback**: catches regressions before they reach production
+- **Safe testing**: mocked tools avoid side effects during testing
+- **Clear criteria**: objective (tool calls) and subjective (quality) measures
+- **CI/CD integration**: automated validation on every PR
 
 **Cons:**
 
 - **Non-deterministic**: LLM variability makes flaky tests common
-- **Mock maintenance**: Need to keep mocks synced with real tool behavior
-- **Prompt-driven fragility**: Prompt-dependent workflows (vs code-driven) more flaky
-- **Not blocking-ready**: Hard to use as CI gate due to variability
-- **Tuning overhead**: Need continuous adjustment of prompts and mock responses
-- **Limited signal**: Mixed pass/fail results provide ambiguous guidance
+- **Mock maintenance and tuning overhead**: mocks must stay in sync with real tool behavior, and prompts and mock responses need continuous adjustment
+- **Limited signal**: mixed pass/fail results provide ambiguous guidance
 
 **Operational challenges:**
 
@@ -243,13 +167,12 @@ The article notes evals are "not nearly as well as I hoped it would" due to non-
 
 > "Our reliance on prompt-driven workflows rather than code-driven workflows introduces a lot of non-determinism, which I don't have a way to solve without... prompt and mock tuning."
 
-**Improvement strategies:**
+**Failure modes / gotchas:**
 
-1. **Retry logic**: "At least once in three tries" to reduce flakiness
-2. **Tune prompts**: Make eval prompts more precise and deterministic
-3. **Tune mocks**: Improve mock responses to be more realistic; keep synced with real tools
-4. **Code over prompts**: Move complex workflows from prompt-driven to code-driven
-5. **Directional vs blocking**: Use for context rather than CI gates
+- **Hard CI gate:** non-determinism makes evals flaky, so a strict gate blocks PRs at random. Use the results as directional context, and retry failures ("at least once in three tries").
+- **Prompt-driven fragility:** prompt-driven workflows are more flaky than code-driven ones. Move complex workflows from prompts into code.
+- **Mock drift:** a mock that no longer matches the real tool passes evals that fail in production. Tune mocks to be realistic and keep them synced.
+- **Judge noise:** a vague subjective criterion adds more variance. Tune eval prompts to be precise and deterministic.
 
 ## References
 

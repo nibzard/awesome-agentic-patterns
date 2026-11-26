@@ -432,6 +432,7 @@ function getCategoryColor(category: string): string {
   const nodes = Array.from(nodeElements)
     .map((node) => ({
       id: node.getAttribute('data-node-id') || '',
+      slug: node.getAttribute('data-slug') || '',
       title: node.getAttribute('data-title') || '',
       category: node.getAttribute('data-category') || '',
       tags: parseList(node.getAttribute('data-tags')),
@@ -444,6 +445,8 @@ function getCategoryColor(category: string): string {
     .filter((node) => node.id);
 
   const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const nodeIdBySlug = new Map(nodes.map((node) => [node.slug, node.id]));
+  const resolveNodeId = (ref) => (nodeById.has(ref) ? ref : nodeIdBySlug.get(ref) || ref);
 
   const modeLabels = {
     tag: 'Shared tags',
@@ -473,9 +476,11 @@ function getCategoryColor(category: string): string {
     const edges = [];
     const edgeKeys = new Set();
     nodes.forEach((node) => {
-      node.related.forEach((target) => addEdge(edges, edgeKeys, node.id, target, 'related'));
+      node.related.forEach((target) =>
+        addEdge(edges, edgeKeys, node.id, resolveNodeId(target), 'related')
+      );
       node.antiPatterns.forEach((target) =>
-        addEdge(edges, edgeKeys, node.id, target, 'anti-pattern')
+        addEdge(edges, edgeKeys, node.id, resolveNodeId(target), 'anti-pattern')
       );
     });
     return edges;
@@ -1043,11 +1048,8 @@ function getCategoryColor(category: string): string {
     const colors = {
       proposed: '#9ca3af',
       emerging: '#60a5fa',
-      established: '#34d399',
-      'validated-in-production': '#10b981',
-      'best-practice': '#059669',
-      'experimental-but-awesome': '#f59e0b',
-      'rapidly-improving': '#8b5cf6',
+      production: '#10b981',
+      foundational: '#059669',
     };
     return colors[status] || '#6b7280';
   };

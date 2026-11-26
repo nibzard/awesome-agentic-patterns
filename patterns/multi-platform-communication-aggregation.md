@@ -1,6 +1,6 @@
 ---
 title: Multi-Platform Communication Aggregation
-status: emerging
+status: proposed
 authors:
   - Lucas Carlson
 based_on:

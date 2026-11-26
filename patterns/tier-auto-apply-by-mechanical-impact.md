@@ -1,6 +1,6 @@
 ---
 title: Tier Auto-Apply by Mechanical Impact
-status: emerging
+status: proposed
 authors: ["James Ross (@jimy-r)"]
 based_on: ["James Ross (@jimy-r), Agent Workspace Architecture"]
 category: "Reliability & Eval"

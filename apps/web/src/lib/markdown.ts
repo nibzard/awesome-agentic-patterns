@@ -7,6 +7,9 @@ const markdown = new MarkdownIt({
   linkify: true,
 });
 
+// fuzzyLink turns a bare file name such as CLAUDE.md into a link, because .md is a top-level domain.
+markdown.linkify.set({ fuzzyLink: false });
+
 const defaultFence =
   markdown.renderer.rules.fence ||
   ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));

@@ -1,6 +1,6 @@
 ---
 title: Self-Critique Evaluator Loop
-status: established
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Meta AI (Self-Taught Evaluators)"]
 category: Feedback Loops

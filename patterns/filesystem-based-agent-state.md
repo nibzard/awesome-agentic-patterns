@@ -1,6 +1,6 @@
 ---
 title: Filesystem-Based Agent State
-status: established
+status: foundational
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -20,6 +20,7 @@ summary: >-
   for long-running tasks.
 signals: ["Multi-step workflows with expensive operations such as API calls or data processing", "Tasks may be interrupted or exceed single-session context limits", "Several agents or sessions build on earlier work"]
 anti_signals: ["Short tasks that finish in one session with cheap steps", "The execution environment has no persistent storage", "Concurrent writers with no file locking or atomic writes"]
+related: ["episodic-memory-retrieval-injection", "cross-cycle-consensus-relay", "proactive-agent-state-externalization", "tracker-as-desired-state-reconciliation", "filesystem-mediated-host-delegation"]
 updated_at: '2026-10-13'
 ---
 

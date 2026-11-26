@@ -1,6 +1,6 @@
 ---
 title: Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution
-status: emerging
+status: proposed
 authors: ["Yehuda Levy (@ymxlx)"]
 based_on: ["Polis Protocol (https://github.com/ymxlx/polis-protocol)"]
 category: "Orchestration & Control"

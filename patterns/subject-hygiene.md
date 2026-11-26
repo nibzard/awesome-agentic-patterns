@@ -1,6 +1,6 @@
 ---
 title: Subject Hygiene for Task Delegation
-status: emerging
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Analysis of 88 Claude conversation sessions (author's own analysis, now offline)", "Anthropic Claude Code subagent guidance"]
 category: Orchestration & Control

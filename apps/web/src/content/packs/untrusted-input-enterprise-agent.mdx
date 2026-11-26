@@ -1,0 +1,151 @@
+---
+title: 'Untrusted-Input Enterprise Agent'
+summary: 'A defense-in-depth stack for agents that read untrusted content and act on enterprise systems.'
+domain: 'Security & Enterprise'
+patterns:
+  - lethal-trifecta-threat-model
+  - dual-llm-pattern
+  - context-minimization-pattern
+  - egress-lockdown-no-exfiltration-channel
+  - exact-action-authorization-binding
+  - policy-gated-tool-proxy
+order: 3
+---
+
+## Overview
+
+This pack is for agents that sit between untrusted content and trusted systems: a support agent that
+reads customer email and updates a CRM, or an intake agent that processes vendor documents and writes to
+internal APIs. Every document, ticket, or web page is a possible prompt injection, and every tool is a
+possible way to act on one.
+
+The six patterns form one defense-in-depth design. Each layer assumes that the layer before it can fail.
+
+## When to Use This Pack
+
+- **The agent reads content that someone else wrote**: email, web pages, PDFs, support tickets, pull
+  requests, or third-party API responses
+- **The agent can reach sensitive data or systems**: customer records, internal APIs, databases, or
+  credentials
+- **A successful injection would matter**: leaked data, a wrong write, or a sent message would have
+  business or legal consequences
+
+Do not use this pack for an agent that only handles input from its own operators and only takes read-only
+actions. The layers cost real latency and complexity.
+
+## Patterns Included
+
+### 1. [Lethal Trifecta Threat Model](/patterns/lethal-trifecta-threat-model)
+
+**Status**: foundational.
+
+Classifies every tool against three capabilities: access to private data, exposure to untrusted content,
+and the ability to communicate externally. An execution path that has all three lets an injected
+instruction exfiltrate private data, so the pattern makes sure that at least one leg is missing on every
+path. It is enforced with a machine-readable capability matrix and a check in the agent runner before
+execution, not with prompt guardrails.
+
+**Role in this pack**: The threat model. It shows which execution paths must lose a leg.
+
+### 2. [Dual LLM Pattern](/patterns/dual-llm-pattern)
+
+**Status**: emerging.
+
+Splits the work across two LLMs. A quarantined LLM reads untrusted data and has no tools. A privileged
+LLM calls tools and never sees raw untrusted text. The quarantined LLM passes only typed values, symbolic
+variables, or opaque handles to the privileged one. The pattern states that Dual LLM alone is not provably
+secure, so it is one layer here, not the whole answer.
+
+**Role in this pack**: Privilege separation. Untrusted text never reaches the model that holds the tools.
+
+### 3. [Context-Minimization Pattern](/patterns/context-minimization-pattern)
+
+**Status**: foundational.
+
+Removes untrusted text and tool output from the context after they have become a safe structured artifact,
+for example a query or a structured object. Later steps see only trusted data. The
+strong variant also removes tainted intermediate LLM output. The same mechanism supports data
+minimization for privacy rules such as HIPAA and GDPR.
+
+**Role in this pack**: Taint purging. Injection text cannot influence a later step that can no longer see
+it.
+
+### 4. [Egress Lockdown (No-Exfiltration Channel)](/patterns/egress-lockdown-no-exfiltration-channel)
+
+**Status**: foundational.
+
+Puts the agent behind a default-deny egress firewall, with allowlisted destinations and limits on methods
+and payload sizes. The pattern strips or hashes the content of the outbound calls that remain. When
+external communication is essential, it moves that work to a separate worker that holds no private data.
+Dropped traffic is logged.
+
+**Role in this pack**: The network boundary. An injected instruction has no channel to send data out.
+
+### 5. [Exact-Action Authorization Binding](/patterns/exact-action-authorization-binding)
+
+**Status**: emerging.
+
+Binds each approval to a digest of the exact action that was shown: task, approver, actor, acting surface,
+operation, target, arguments, policy, expiry, and nonce. The component that executes the action derives the
+digest again and
+compares it before it runs. The approval is consumed once, and the write is committed with an idempotency
+key. Policy decisions (allow, deny, require approval) are deterministic, with no model in the path.
+
+**Role in this pack**: Closes the time-of-check to time-of-use gap. What the approver saw is exactly what
+runs.
+
+### 6. [Policy-Gated Tool Proxy](/patterns/policy-gated-tool-proxy)
+
+**Status**: emerging.
+
+Places a proxy between the agents and the tool servers (MCP, REST, or gRPC). The proxy evaluates each
+call against a policy engine, using the tool name, the arguments, the caller identity, and rate limits.
+The outcomes are allow, deny, require approval, or transform. Each decision is written to an append-only
+audit log.
+
+**Role in this pack**: Enforcement at the tool boundary at run time, with a record of every decision.
+
+## How They Fit Together
+
+The layers follow one request from planning to the final write. Adopt them in this order:
+
+1. **Threat model first.** Run the Lethal Trifecta audit and record a capability matrix for every tool.
+   The audit shows which execution paths have all three capabilities, so that each one can be made to lose
+   a leg.
+2. **Close the network boundary.** Apply the Egress Lockdown next. It is a small deterministic change that
+   closes the exfiltration channel, and it does not depend on the model.
+3. **Separate privilege.** Introduce the Dual LLM split for the tools that combine private data with
+   external effects.
+4. **Purge taint.** Add Context Minimization so that untrusted text exists only in the step that needs it.
+5. **Bind approvals to actions.** Add Exact-Action Authorization Binding for the writes that need a human
+   decision.
+6. **Enforce at the tool boundary.** Route every call through the Policy-Gated Tool Proxy, so that the
+   rules still apply when an agent does not follow its own instructions.
+
+Each layer assumes that the previous one can fail. A quarantined model can still be tricked, so its output
+is minimized. An approval can become stale, so it is bound to an action. An agent can ignore its
+instructions, so the proxy enforces the rules.
+
+## Honest Trade-offs
+
+- **Latency**: Two models, a proxy, and approval steps add round trips to every action.
+- **Debugging difficulty**: With the Dual LLM Pattern, the behavior is split across two contexts, which
+  makes a bad result harder to trace.
+- **Lost nuance**: Context Minimization removes raw text, and with it conversational detail and an easy
+  reference back to the source.
+- **Maintenance**: Egress allowlists and proxy policies must be updated when a destination or a tool
+  changes.
+- **Coverage limits**: The proxy evaluates one call at a time, so a violation that spans several allowed
+  calls is not caught. Exact-Action Authorization Binding fits writes inside a transaction, and does not
+  fit calls to external services such as email or payment APIs.
+- **Maturity**: Three patterns in this pack are `emerging`, not `foundational`. Validate each one in your
+  own environment before you depend on it.
+
+## What to Leave Out Until Later
+
+- **Multi-agent delegation**: Keep one agent and one privileged model until the single-path design is
+  proven.
+- **Autonomous write access**: Let approvals stay in the loop until the audit log shows that the policy
+  denies or escalates the correct calls.
+- **A broad integration surface**: Allowlist the few destinations and tools that the task needs. Add more
+  only when a blocked call shows a real need.

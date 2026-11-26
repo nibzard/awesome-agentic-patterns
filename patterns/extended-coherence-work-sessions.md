@@ -1,6 +1,6 @@
 ---
 title: Extended Coherence Work Sessions
-status: rapidly-improving
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Amjad Masad (observation)"]
 category: Reliability & Eval

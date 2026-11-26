@@ -1,6 +1,6 @@
 ---
 title: "Reasoning-Token Firewall"
-status: emerging
+status: proposed
 authors: ["aaronjmars (@aaronjmars)"]
 based_on: ["Aeon harness-adapter (aeonfun/aeon)"]
 category: "Reliability & Eval"

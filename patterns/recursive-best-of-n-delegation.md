@@ -1,6 +1,6 @@
 ---
 title: "Recursive Best-of-N Delegation"
-status: emerging
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["nkkko (original Labruno creator)", "Labruno (GitHub)", "Daytona RLM Guide", "Recursive Language Models (arXiv 2512.24601)", "Self-Consistency (Wang et al. 2022)", "Tree-of-Thoughts (Yao et al. 2023)"]
 category: "Orchestration & Control"

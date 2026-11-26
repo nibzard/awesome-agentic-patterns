@@ -97,7 +97,7 @@ class AgentCircuitBreaker:
 
 - **Evidence Grade:** `medium`
 - **Most Valuable Findings:**
-  - Circuit breakers are validated-in-production in microservice architectures (Netflix Hystrix, Resilience4j, Polly) and the pattern translates directly to agent tool calls
+  - Circuit breakers are proven in production in microservice architectures (Netflix Hystrix, Resilience4j, Polly) and the pattern translates directly to agent tool calls
   - Agent-specific 2025-26 practitioner coverage (Maxim's production guide, ToolRoute's reliability-patterns write-up) recommends circuit breakers for LLM application and agent tool failures
 - **Unverified / Unclear:** Optimal threshold and cooldown values for agent workloads vary significantly by tool type and latency profile. No published measurements of token savings from circuit breakers in agent systems were found; the token-waste benefit is currently qualitative
 

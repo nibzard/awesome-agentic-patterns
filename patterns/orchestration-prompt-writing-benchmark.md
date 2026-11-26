@@ -1,6 +1,6 @@
 ---
 title: "Orchestration Prompt-Writing Benchmark"
-status: emerging
+status: proposed
 authors: ["Contributor (@WhymustIhaveaname)"]
 based_on: ["Sun et al. (2026)"]
 category: "Reliability & Eval"
@@ -47,7 +47,7 @@ This is deliberately orthogonal to [Workflow Evals with Mocked Tools](workflow-e
 
 ## Evidence
 
-- **Evidence Grade:** low-medium. This is a single benchmark paper at time of writing, with no independent replication yet.
+- **Evidence Grade:** `low`. This is a single benchmark paper at time of writing, with no independent replication yet.
 - **Most Valuable Finding:** building the eval around topology variation, rather than one fixed topology, surfaces a failure mode a fixed-topology eval suite would miss: fragment-assignment quality varies unevenly across topologies.
 - **Unverified / Unclear:** how well benchmark performance predicts end-to-end task success in production systems; generalization beyond the paper's reported scenarios and topologies has not been independently confirmed. Verify current figures against the source before citing them.
 

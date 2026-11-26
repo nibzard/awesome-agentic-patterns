@@ -16,8 +16,6 @@ updated_at: "2026-10-13"
 
 LLM-based agent execution is expensive (both in costs and latency) and non-deterministic. Running the same workflow multiple times yields different results and incurs repeated LLM costs.
 
-This creates several issues:
-
 - **Cost explosion**: Every workflow run burns LLM tokens even for identical tasks
 - **Non-determinism**: Same input produces different outputs across runs
 - **No regression testing**: Impossible to verify fixes don't break existing workflows
@@ -30,101 +28,63 @@ Record every action during execution with precise metadata (XPaths, frame indice
 
 This pattern builds on **experience replay** from reinforcement learning, where agents learn by reusing past successful actions rather than exploring anew each time.
 
-### Core Approach
-
 **Action cache entries** store complete execution metadata:
 
 ```typescript
 interface ActionCacheEntry {
-  stepIndex: number;           // Order in workflow
-  instruction: string;         // Natural language description
-  elementId: string;           // Encoded frameIndex-backendNodeId
-  method: string;              // click, fill, type, etc.
-  arguments: string[];         // Method parameters
-  frameIndex: number;          // Frame context for iframes
-  xpath: string;               // Normalized XPath for element
-  actionType: string;          // Action category
-  success: boolean;            // Execution result
-  message: string;             // Output or error message
+  stepIndex: number;   // Order in workflow
+  instruction: string; // Natural language description
+  elementId: string;   // Encoded frameIndex-backendNodeId
+  method: string;      // click, fill, type, etc.
+  arguments: string[]; // Method parameters
+  frameIndex: number;  // Frame context for iframes
+  xpath: string;       // Normalized XPath for element
+  actionType: string;  // Action category
+  success: boolean;    // Execution result
+  message: string;     // Output or error message
 }
 
 interface ActionCacheOutput {
   actions: ActionCacheEntry[];
-  finalState: {
-    success: boolean;
-    error?: string;
-    duration: number;
-  };
+  finalState: { success: boolean; error?: string; duration: number };  // outcome of the whole run
 }
 ```
 
-**Building cache entries during execution:**
+**Building cache entries** during the LLM-powered first run:
 
 ```typescript
-export const buildActionCacheEntry = ({
+const entry: ActionCacheEntry = {
   stepIndex,
-  action,
-  actionOutput,
-  domState,
-}: {
-  stepIndex: number;
-  action: ActionType;
-  actionOutput: ActionOutput;
-  domState: A11yDOMState;
-}): ActionCacheEntry => {
-  const instruction = extractInstruction(action);
-  const elementId = extractElementId(action);
-  const method = extractMethod(action);
-  const args = extractArguments(action);
-  const frameIndex = extractFrameIndex(elementId);
-  const xpath = normalizeXPath(
-    domState.xpathMap?.[encodedId] || extractXPathFromDebug(actionOutput)
-  );
-
-  return {
-    stepIndex,
-    instruction,
-    elementId,
-    method,
-    arguments: args,
-    frameIndex,
-    xpath,
-    actionType: action.type,
-    success: actionOutput.success,
-    message: actionOutput.message,
-  };
+  instruction: extractInstruction(action),
+  elementId,                                    // frameIndex-backendNodeId
+  method: extractMethod(action),                // click, fill, type, ...
+  arguments: extractArguments(action),
+  frameIndex: extractFrameIndex(elementId),
+  xpath: normalizeXPath(domState.xpathMap?.[elementId] || extractXPathFromDebug(actionOutput)),
+  actionType: action.type,
+  success: actionOutput.success,
+  message: actionOutput.message,
 };
 ```
 
 **Replay with intelligent fallback:**
 
 ```typescript
-// Replay from cache with XPath retry and LLM fallback
 const replay = await page.runFromActionCache(cache, {
-  maxXPathRetries: 3,           // Retry XPath resolution up to 3 times
-  fallbackToLLM: true,          // Use LLM if XPath resolution fails
-  debug: true,
+  maxXPathRetries: 3,   // Retry XPath resolution up to 3 times
+  fallbackToLLM: true,  // Use LLM if XPath resolution fails
 });
 
-// Replay flow:
 // 1. Try cached XPath directly
-// 2. If fails, retry with normalized XPath variations
-// 3. If still fails, invoke LLM for element resolution
-// 4. Update cache with successful resolution
+// 2. If it fails, retry with normalized XPath variations
+// 3. If it still fails, invoke the LLM for element resolution
+// 4. Update the cache with the successful resolution
 ```
 
-**Generate standalone scripts:**
+**Generate standalone scripts** from a cache for manual debugging or CI:
 
 ```typescript
-// Export cached workflow as TypeScript
-const script = generateScriptFromCache(cache);
-
-// Produces runnable code:
-// import { chromium } from 'playwright';
-// const page = await chromium.newPage();
-// await page.click('div[data-testid="login-button"]');
-// await page.fill('input[name="email"]', 'user@example.com');
-// ...
+const script = generateScriptFromCache(cache);  // e.g. page.click('div[data-testid="login-button"]')
 ```
 
 ### Architecture
@@ -139,7 +99,6 @@ graph TB
         E --> F[Build Cache Entry #2]
         F --> G[Complete]
     end
-
     subgraph "Subsequent Runs (Cache-Powered)"
         H[User Request] --> I{Cache Exists?}
         I -->|Yes| J[Load Action Cache]
@@ -153,14 +112,13 @@ graph TB
         O -->|No| Q[LLM Fallback]
         Q --> P
     end
-
     style B fill:#f9f,stroke:#333
     style P fill:#9f9,stroke:#333
 ```
 
 ## How to use it
 
-### 1. Enable Action Caching
+### 1. Enable action caching
 
 Most agent frameworks have caching options. Enable them during execution:
 
@@ -171,53 +129,31 @@ const cache = await agent.executeTask("Login and navigate to dashboard", {
 });
 ```
 
-### 2. Persist Cache
+### 2. Persist and replay the cache
 
-Save the cache for later use:
-
-```typescript
-import fs from 'fs';
-
-fs.writeFileSync(
-  'workflows/login-cache.json',
-  JSON.stringify(cache, null, 2)
-);
-```
-
-### 3. Replay from Cache
+Save the cache as JSON, then load it for later runs with the same fallback options:
 
 ```typescript
-const savedCache = JSON.parse(
-  fs.readFileSync('workflows/login-cache.json', 'utf-8')
-);
+fs.writeFileSync('workflows/login-cache.json', JSON.stringify(cache, null, 2));
 
+const savedCache = JSON.parse(fs.readFileSync('workflows/login-cache.json', 'utf-8'));
 const result = await page.runFromActionCache(savedCache, {
   maxXPathRetries: 3,
   fallbackToLLM: true,
 });
 ```
 
-### 4. CI/CD Integration
+### 3. Run the replay in CI
+
+Cached workflows double as deterministic regression tests. To debug one outside the agent, export a standalone TypeScript script with `npx hyperagent script workflows/login-cache.json > login.test.ts`.
 
 ```typescript
-// test.js - Automated regression test
-describe('User Login Flow', () => {
-  it('should login successfully', async () => {
-    const cache = JSON.parse(readFileSync('workflows/login-cache.json'));
-    const result = await page.runFromActionCache(cache);
+it('should login successfully', async () => {
+  const cache = JSON.parse(readFileSync('workflows/login-cache.json'));
+  const result = await page.runFromActionCache(cache);
 
-    expect(result.finalState.success).toBe(true);
-  });
+  expect(result.finalState.success).toBe(true);
 });
-```
-
-### 5. Script Generation
-
-Export workflows as standalone scripts for manual debugging or CI:
-
-```bash
-# Generate TypeScript script from cache
-npx hyperagent script workflows/login-cache.json > login.test.ts
 ```
 
 ## Trade-offs

@@ -1,6 +1,6 @@
 ---
 title: "Fleet Cost Simulation Before Dispatch"
-status: "proposed"
+status: proposed
 authors: ["Retsumdk (@Retsumdk)"]
 based_on: []
 category: "Reliability & Eval"

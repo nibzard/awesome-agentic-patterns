@@ -170,8 +170,7 @@ CRITICAL RULES:
 * [Anthropic Engineering: Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 * [GitHub Spec Kit](https://github.com/github/spec-kit) - spec-driven development toolkit that mainstreamed spec-as-contract for coding agents (specify, plan, tasks, implement)
 * [Kiro](https://kiro.dev/) - AWS agentic development platform built around specs turned into requirements, designs, and sequenced tasks
-* Related: [Specification-Driven Agent Development](specification-driven-agent-development.md) — the broader spec-first workflow this contract feeds. Distinct from that pattern: it fixes acceptance as an immutable, machine-readable checklist rather than a living spec document.
+* Related: [Specification-Driven Agent Development](specification-driven-agent-development.md) — the broader spec-first workflow and continuous spec-to-test CI loop this contract feeds. Distinct from that pattern: it fixes acceptance as an immutable, machine-readable checklist rather than a living spec document.
 * Related: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) — the session lifecycle that creates and then consumes this contract. Distinct from that pattern: this file owns the artifact and its enforcement rules; that one owns who runs when.
-* Related: [Spec as Test Feedback Loop](spec-as-test-feedback-loop.md) — verifies work against a spec in a loop; this pattern freezes the spec up front instead.
 * Related: [Action-Selector Pattern](action-selector-pattern.md) — alternative approach using allowlists
 * Related: [Sandboxed Tool Authorization](sandboxed-tool-authorization.md) — complementary pattern for capability restriction

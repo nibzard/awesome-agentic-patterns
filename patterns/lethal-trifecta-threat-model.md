@@ -1,6 +1,6 @@
 ---
 title: Lethal Trifecta Threat Model
-status: best-practice
+status: foundational
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Simon Willison"]
 category: Security & Safety
@@ -9,6 +9,7 @@ tags: [security, prompt-injection, threat-model, data-exfiltration]
 summary: "Classifies each tool by private-data access, untrusted-content exposure, and external communication, and blocks any execution path that has all three"
 signals: ["Agent reads private data and also processes untrusted content", "Agent can send data out through network or messaging tools", "Tools can be tagged with capability metadata"]
 anti_signals: ["Agent has no access to private data", "Agent has no way to communicate externally"]
+related: ["egress-lockdown-no-exfiltration-channel", "dual-llm-pattern", "context-minimization-pattern", "tool-capability-compartmentalization", "sandboxed-tool-authorization"]
 updated_at: "2026-10-13"
 ---
 

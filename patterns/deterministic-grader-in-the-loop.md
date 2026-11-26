@@ -1,6 +1,6 @@
 ---
 title: Deterministic Grader in the Loop
-status: emerging
+status: proposed
 authors: ["parweb (@parweb)"]
 category: "Feedback Loops"
 source: "https://github.com/parweb/mcp-ai-slop-checker"

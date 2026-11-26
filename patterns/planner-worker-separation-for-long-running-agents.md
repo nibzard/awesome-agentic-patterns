@@ -128,7 +128,7 @@ graph TD
 * [Scaling long-running autonomous coding](https://cursor.com/blog/scaling-agents) - Cursor blog post on running hundreds of concurrent agents for weeks at a time
 * [fastrender (the browser experiment repo)](https://github.com/wilsonzlin/fastrender) - described as research into collaborative parallel AI coding agents; line counts are disputed
 * [Hacker News discussion](https://news.ycombinator.com/item?id=46769965) - independent reports questioning the repo's build state and line counts
-* [Feudal Networks (FuN)](https://arxiv.org/abs/1706.06121) - ICML 2017 paper introducing manager-worker separation in hierarchical RL (Vezhnevets et al.)
+* [FeUdal Networks for Hierarchical Reinforcement Learning (FuN)](https://arxiv.org/abs/1703.01161) - ICML 2017 paper introducing manager-worker separation in hierarchical RL (Vezhnevets et al.)
 * [The Options Framework](https://doi.org/10.1016/S0004-3702(99)00052-1) - Seminal work on temporal abstraction creating planning-execution hierarchy (Sutton et al., 1999)
-* [HIRO: Hierarchical RL with Off-Policy Correction](https://arxiv.org/abs/2005.08996) - ICML 2020 paper on high-level planners and low-level workers (Lee et al.)
+* [Data-Efficient Hierarchical Reinforcement Learning (HIRO)](https://arxiv.org/abs/1805.08296) - NeurIPS 2018 paper on high-level planners and low-level workers with off-policy correction (Nachum et al.)
 * Related patterns: [Initializer-Maintainer Dual Agent Architecture](initializer-maintainer-dual-agent.md) splits one long-running agent into an initializer and a maintainer rather than a planner-worker-judge hierarchy; [Factory over Assistant](factory-over-assistant.md) runs parallel autonomous agents against automated feedback loops instead of explicit planner and judge roles.

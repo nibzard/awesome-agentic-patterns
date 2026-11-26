@@ -1,6 +1,6 @@
 ---
 title: "Intelligent Bash Tool Execution"
-status: "validated-in-production"
+status: production
 authors: ["OpenClaw Contributors"]
 based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Tool Use & Environment"
@@ -9,6 +9,7 @@ tags: [bash, shell, pty, fallback, security, process-management, sandboxing]
 summary: "Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals"
 signals: ["Agents run TTY-required CLIs or interactive tools", "Agents start long-running background processes that need tracking and cleanup", "Command execution needs approval modes such as deny, allowlist, or full"]
 anti_signals: ["Agents only run simple non-interactive commands", "The environment cannot install or compile a native PTY module and needs no TTY support"]
+related: ["virtual-machine-operator-agent", "sandboxed-tool-authorization", "shell-command-contextualization", "one-os-user-per-agent", "filesystem-mediated-host-delegation"]
 updated_at: "2026-10-13"
 ---
 
@@ -41,75 +42,44 @@ Multi-mode execution with adaptive fallback: direct exec → PTY, with automatic
 **Implementation sketch:**
 
 ```typescript
-async function runExecProcess(opts: {
-  command: string;
-  workdir: string;
-  env: Record<string, string>;
-  usePty: boolean;
-  timeoutSec: number;
-  runInBackground?: boolean;
-  maxOutput?: number;
-}): Promise<ExecProcessHandle> {
+type ExecOptions = { command: string; workdir: string; env: Record<string, string>; usePty: boolean;
+  timeoutSec: number; runInBackground?: boolean; maxOutput?: number };
+
+async function runExecProcess(opts: ExecOptions): Promise<ExecProcessHandle> {
   let child: ChildProcess | null = null;
   let pty: PtyHandle | null = null;
   const warnings: string[] = [];
-
+  const argv = [shell, opts.command];
+  const base = { cwd: opts.workdir, env: opts.env };
+  const noDetach = [{ label: "no-detach", options: { detached: false } }];
   if (opts.usePty) {
     try {
-      const { spawn } = await import("@lydell/node-pty");
-      pty = spawn(shell, [opts.command], {
-        cwd: opts.workdir,
-        env: opts.env,
-        cols: 120,
-        rows: 30,
-      });
+      const { spawn } = await import("@lydell/node-pty");              // TTY-required CLIs
+      pty = spawn(shell, [opts.command], { ...base, cols: 120, rows: 30 });
     } catch (err) {
-      // PTY unavailable; fallback to direct exec
+      // PTY unavailable; fall back to direct exec
       warnings.push(`PTY spawn failed (${err}); retrying without PTY.`);
-      const { child: spawned } = await spawnWithFallback({
-        argv: [shell, opts.command],
-        options: { cwd: opts.workdir, env: opts.env },
-        fallbacks: [{ label: "no-detach", options: { detached: false } }],
-      });
-      child = spawned;
+      child = (await spawnWithFallback({ argv, options: base, fallbacks: noDetach })).child;
     }
   } else {
     // Direct exec without PTY
-    const { child: spawned } = await spawnWithFallback({
-      argv: [shell, opts.command],
-      options: { cwd: opts.workdir, env: opts.env, detached: platform !== "win32" },
-      fallbacks: [{ label: "no-detach", options: { detached: false } }],
-    });
-    child = spawned;
+    child = (await spawnWithFallback({ argv, options: { ...base, detached: platform !== "win32" }, fallbacks: noDetach })).child;
   }
-
-  // Register session for tracking
-  const session = {
-    id: createSessionSlug(),
-    command: opts.command,
-    pid: child?.pid ?? pty?.pid,
-    aggregated: "",
-    tail: "",
-    exited: false,
-  };
+  // Register the session for tracking, then arm the timeout
+  const session = { id: createSessionSlug(), command: opts.command, pid: child?.pid ?? pty?.pid,
+                    aggregated: "", tail: "", exited: false };
   addSession(session);
-
-  // Handle timeout with SIGKILL
   if (opts.timeoutSec > 0) {
     setTimeout(() => {
-      if (!session.exited) {
-        killSession(session);  // SIGTERM then SIGKILL
-      }
+      if (!session.exited) killSession(session);  // SIGTERM then SIGKILL
     }, opts.timeoutSec * 1000);
   }
-
   return { session, promise /* resolves on exit */ };
 }
 ```
 
-**Spawn fallback for platform differences:**
-
 ```typescript
+// A failed spawn is retried with each fallback in turn (platform differences)
 async function spawnWithFallback(params: {
   argv: string[];
   options: ChildProcess.SpawnOptions;
@@ -120,11 +90,9 @@ async function spawnWithFallback(params: {
   } catch (err) {
     for (const fallback of params.fallbacks) {
       try {
-        const mergedOptions = { ...params.options, ...fallback.options };
-        const child = spawn(...params.argv, mergedOptions);
-        // Warn about fallback
+        const merged = { ...params.options, ...fallback.options };
         logWarn(`spawn failed (${err}); retrying with ${fallback.label}.`);
-        return { child };
+        return { child: spawn(...params.argv, merged) };
       } catch {
         continue;
       }
@@ -134,72 +102,39 @@ async function spawnWithFallback(params: {
 }
 ```
 
-**Security-aware execution with approval:**
-
 ```typescript
+// Evaluate the command against the policy, ask when required, only then execute
 async function executeWithApproval(params: {
   command: string;
   security: "deny" | "allowlist" | "full";
   ask: "off" | "on-miss" | "always";
   agentId: string;
 }): Promise<ExecResult> {
-  const approvals = resolveExecApprovals(params.agentId, {
-    security: params.security,
-    ask: params.ask,
-  });
-
+  const approvals = resolveExecApprovals(params.agentId, { security: params.security, ask: params.ask });
   const allowlistEval = evaluateShellAllowlist({
     command: params.command,
     allowlist: approvals.allowlist,
     safeBins: approvals.safeBins,
   });
-
   const requiresAsk = requiresExecApproval({
     ask: params.ask,
     security: params.security,
     analysisOk: allowlistEval.analysisOk,
     allowlistSatisfied: allowlistEval.allowlistSatisfied,
   });
-
   if (requiresAsk) {
+    // Request approval via the gateway and wait for the decision
     const approvalId = crypto.randomUUID();
-    // Request approval via gateway; wait for decision
     const decision = await requestApproval(approvalId, params.command);
-    if (decision === "deny") {
-      throw new Error("exec denied: user rejected");
-    }
+    if (decision === "deny") throw new Error("exec denied: user rejected");
   }
-
-  // Execute command
   return runExecProcess(params);
 }
 ```
 
-**Background process management:**
+A `ProcessSession` in the registry records `id`, `command`, `pid`, `aggregated` (the captured output), `tail` (recent lines for notifications), `exited`, `exitCode`, `exitSignal`, and `backgrounded`.
 
 ```typescript
-type ProcessSession = {
-  id: string;
-  command: string;
-  pid?: number;
-  aggregated: string;
-  tail: string;
-  exited: boolean;
-  exitCode?: number | null;
-  exitSignal?: NodeJS.Signals | null;
-  backgrounded: boolean;
-};
-
-const sessions = new Map<string, ProcessSession>();
-
-function addSession(session: ProcessSession) {
-  sessions.set(session.id, session);
-}
-
-function markBackgrounded(session: ProcessSession) {
-  session.backgrounded = true;
-}
-
 function killSession(session: ProcessSession) {
   if (session.child) {
     session.child.kill("SIGTERM");

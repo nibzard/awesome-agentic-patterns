@@ -1,6 +1,6 @@
 ---
 title: Cross-Cycle Consensus Relay
-status: emerging
+status: proposed
 authors: ["Nikita Dmitrieff (@NikitaDmitrieff)"]
 based_on: ["auto-co autonomous AI company framework"]
 category: Orchestration & Control

@@ -153,5 +153,5 @@ The agent has full autonomy within the workflow scope but cannot exceed it — a
 - [Triggers for Agents — Will Larson, Irrational Exuberance (December 2025)](https://lethain.com/agents-triggers/) — primary source. Documents event-initiated triggers (webhooks, Slack messages and reacji, scheduled events) for starting agent workflows in a production internal agent. It covers trigger mechanics and adoption, not the declarative threshold/cooldown rule layer described here.
 - [Event-Driven Architecture (Martin Fowler)](https://martinfowler.com/articles/201701-event-driven.html)
 - [SOAR Playbook Activation (Gartner)](https://www.gartner.com/en/information-technology/glossary/security-orchestration-automation-response-soar)
-- [CLI-First Skill Design (this catalogue)](cli-first-skill-design.md)
+- [Dual-Use Tool Design (this catalogue)](dual-use-tool-design.md)
 - [CLI-Native Agent Orchestration (this catalogue)](cli-native-agent-orchestration.md)

@@ -20,7 +20,7 @@ effort: hours
 impact: high
 signals: ["Agent output feeds into decisions or downstream agents", "Hallucination risk is non-trivial", "Compliance requires an audit trail"]
 anti_signals: ["Output is purely creative with no factual claims", "Latency budget under 500ms"]
-related: ["reflection-loop", "self-critique-evaluator-loop"]
+related: ["reflection", "self-critique-evaluator-loop"]
 updated_at: "2026-10-13"
 ---
 
@@ -72,5 +72,5 @@ In multi-agent systems, run verification at each hand-off between agents so erro
 - [VeroQ Shield -- LLM output verification](https://github.com/veroq-ai/shield)
 - [FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation](https://aclanthology.org/2023.emnlp-main.741/) (Min et al., EMNLP 2023) -- established the decomposition-into-atomic-claims plus evidence-check lineage this pattern follows
 - [OpenFactCheck: Building, Benchmarking Customized Fact-Checking Systems and Evaluating the Factuality of Claims and LLMs](https://arxiv.org/abs/2405.05583) (2024) -- open-source, maintained implementation of the pipeline
-- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.11366) -- related but lacks external evidence grounding
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) (Madaan et al., 2023) -- related but lacks external evidence grounding
 - [FacTool: Factuality Detection in Generative AI](https://arxiv.org/abs/2307.13528) -- academic approach to claim-level verification

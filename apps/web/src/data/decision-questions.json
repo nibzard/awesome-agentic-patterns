@@ -1,106 +1,105 @@
 [
   {
-    "id": "agent-type",
-    "question": "What type of agent are you building?",
+    "id": "failure-mode",
+    "question": "What is most likely to break first?",
     "options": [
       {
-        "value": "autonomous",
-        "label": "Fully autonomous agent",
-        "description": "An agent that operates independently without human intervention"
+        "value": "prompt-injection",
+        "label": "Prompt injection or data exfiltration",
+        "description": "The agent reads untrusted input and has access to sensitive data or external tools"
       },
       {
-        "value": "assisted",
-        "label": "Human-assisted agent",
-        "description": "An agent that collaborates with humans and requires human input"
+        "value": "context-cost",
+        "label": "Context bloat, cache misses, or runaway token spend",
+        "description": "Long sessions, big tool catalogs, or multi-step tool outputs overwhelm the context window or budget"
       },
       {
-        "value": "workflow",
-        "label": "Workflow automation",
-        "description": "An agent that automates specific tasks or workflows"
+        "value": "silent-regressions",
+        "label": "Silent failures, hallucinations, or flaky outputs",
+        "description": "The agent appears to work until it quietly breaks, loops, or regresses after a prompt or model change"
+      },
+      {
+        "value": "multi-agent-drift",
+        "label": "Multi-agent conflicts, starvation, or coordination drift",
+        "description": "Parallel agents overwrite each other's work, drop handoffs, or starve lower-priority tasks"
+      },
+      {
+        "value": "long-session-coherence",
+        "label": "Long-running session drift or lost state",
+        "description": "Multi-hour or asynchronous jobs lose track of goals, progress, or credentials mid-run"
+      },
+      {
+        "value": "unverified-shipping",
+        "label": "Unverified code or UI changes reaching users",
+        "description": "Generated code compiles or passes unit tests but ships broken UX, security bugs, or spec drift"
       }
     ]
   },
   {
-    "id": "complexity",
-    "question": "How complex is the task your agent needs to accomplish?",
+    "id": "trust-boundary",
+    "question": "What is the agent's trust boundary?",
     "options": [
       {
-        "value": "simple",
-        "label": "Simple, well-defined",
-        "description": "Clear inputs, outputs, and success criteria"
+        "value": "trusted-only",
+        "label": "Trusted inputs, read-only or easily reversible actions",
+        "description": "Low blast radius; mistakes are cheap to undo"
       },
       {
-        "value": "moderate",
-        "label": "Moderately complex",
-        "description": "Multiple steps, some decision points required"
+        "value": "untrusted-input",
+        "label": "Reads untrusted external content",
+        "description": "Processes web pages, emails, tickets, PRs, or third-party documents that may carry prompt injections"
       },
       {
-        "value": "complex",
-        "label": "Highly complex",
-        "description": "Many interdependent steps, requires planning and reasoning"
+        "value": "irreversible-actions",
+        "label": "Takes irreversible or high-consequence external actions",
+        "description": "Modifies production databases, pushes code, sends messages, spends money, or changes permissions"
       }
     ]
   },
   {
-    "id": "memory",
-    "question": "Does your agent need to remember information across sessions?",
+    "id": "horizon",
+    "question": "What is the execution shape?",
     "options": [
       {
-        "value": "none",
-        "label": "No memory needed",
-        "description": "Each interaction is independent"
+        "value": "single-session",
+        "label": "Interactive single-agent session",
+        "description": "A user works directly with one agent across turns"
       },
       {
-        "value": "session",
-        "label": "Session memory only",
-        "description": "Remember within a single session/conversation"
+        "value": "background-worker",
+        "label": "Long-running or scheduled autonomous worker",
+        "description": "Runs unattended over hours/days, on schedules, or in CI"
       },
       {
-        "value": "persistent",
-        "label": "Long-term memory",
-        "description": "Need to store and retrieve information across sessions"
+        "value": "multi-agent-fleet",
+        "label": "Parallel sub-agents or multi-agent fleet",
+        "description": "Fans out work across concurrent workers or specialized agents"
       }
     ]
   },
   {
-    "id": "tools",
-    "question": "Will your agent need to use external tools or APIs?",
+    "id": "domain",
+    "question": "What is the primary domain?",
     "options": [
       {
-        "value": "none",
-        "label": "No tools needed",
-        "description": "Agent operates on provided information only"
+        "value": "coding",
+        "label": "Software engineering & DevOps",
+        "description": "Writing, reviewing, testing, refactoring, or migrating code"
       },
       {
-        "value": "few",
-        "label": "Few specific tools",
-        "description": "Agent uses a small set of known tools"
+        "value": "enterprise-ops",
+        "label": "Enterprise workflows & API/tool automation",
+        "description": "Connecting internal systems, tickets, databases, approvals, and SaaS APIs"
       },
       {
-        "value": "many",
-        "label": "Many tools or dynamic discovery",
-        "description": "Agent needs access to many tools or discovers tools dynamically"
-      }
-    ]
-  },
-  {
-    "id": "safety",
-    "question": "What level of safety and reliability is required?",
-    "options": [
-      {
-        "value": "low",
-        "label": "Low risk",
-        "description": "Mistakes are easily reversible"
+        "value": "research-retrieval",
+        "label": "Deep research, RAG & synthesis",
+        "description": "Multi-round search, large-document extraction, and cited reporting"
       },
       {
-        "value": "medium",
-        "label": "Medium risk",
-        "description": "Mistakes could cause problems but not critical failures"
-      },
-      {
-        "value": "high",
-        "label": "High risk / Critical",
-        "description": "Mistakes could cause serious damage or security issues"
+        "value": "browser-ui",
+        "label": "Browser automation & frontend UI",
+        "description": "Interacting with web pages, DOMs, or verifying rendered user interfaces"
       }
     ]
   }

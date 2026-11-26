@@ -1,6 +1,6 @@
 ---
 title: Dual-Rail Message Delivery
-status: validated-in-production
+status: emerging
 authors: ["Anton Dziatkovskii (@Palo-Alto-AI-Research-Lab)"]
 based_on: ["Chandra & Toueg (1996), unreliable failure detectors", "Helland (2012), at-least-once delivery and idempotence"]
 category: "Orchestration & Control"

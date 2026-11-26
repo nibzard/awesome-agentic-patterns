@@ -4,7 +4,7 @@ status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Cognition AI (2025)"]
 category: Context & Memory
-source: "https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges (September 2025)"
+source: "https://cognition.com/blog/devin-sonnet-4-5-lessons-and-challenges"
 tags: [context-anxiety, token-management, premature-completion, model-behavior]
 summary: "Enables a large context window but caps usage lower, and adds prompts that state the token budget so the model does not rush to finish"
 signals: ["Model summarizes or wraps up early despite remaining context", "Long coding, research, or planning sessions where premature completion hurts quality"]
@@ -69,7 +69,7 @@ Apply when using models that exhibit context awareness and anxiety behaviors:
 
 Monitor for signs of context anxiety: sudden summarization, rushed decisions, or explicit mentions of "running out of space."
 
-Distinct from [No-Token-Limit Magic](no-token-limit-magic.md), which removes token limits during prototyping to learn what good behavior needs; this pattern keeps the cap in place and only changes how the model perceives the remaining budget. Compare also [Context Window Auto-Compaction](context-window-auto-compaction.md), which manages the same pressure by compacting context instead of reassuring the model.
+Distinct from the [No-Token-Limit Magic](../principles/no-token-limit-magic.md) principle, which removes token limits during prototyping to learn what good behavior needs; this pattern keeps the cap in place and only changes how the model perceives the remaining budget. Compare also [Context Window Auto-Compaction](context-window-auto-compaction.md), which manages the same pressure by compacting context instead of reassuring the model.
 
 ## Trade-offs
 

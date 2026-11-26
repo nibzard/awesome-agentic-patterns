@@ -13,13 +13,13 @@ This is a documentation website for "Awesome Agentic Patterns" - a curated catal
 ### Development Workflow
 ```bash
 # Initial setup (run once)
-npm install                            # Install Node.js dependencies
+bun install                            # Install dependencies
 
 # Standard development cycle
-npm run dev                            # Serve docs locally at http://localhost:4321
+bun run dev                            # Serve docs locally at http://localhost:4321
 
 # Building and deployment
-npm run build                          # Build static site to apps/web/dist/
+bun run build                          # Build static site to apps/web/dist/
 vercel deploy                          # Deploy to Vercel (primary)
 ```
 
@@ -28,8 +28,8 @@ vercel deploy                          # Deploy to Vercel (primary)
 The project has a unique architecture where pattern documentation drives the entire site:
 
 1. **Pattern Files** (`patterns/*.md`): Source of truth for all patterns
-   - Must include YAML front-matter with: title, status, authors, category, tags
-   - Content sections: Problem, Solution, Example (with Mermaid diagrams), References
+   - Must include YAML front-matter with: title, status, authors, category, source, tags, summary, signals, anti_signals, updated_at
+   - Content sections: Problem, Solution, How to use it, Trade-offs, References
 
 2. **Data Pipeline**: Pattern files are converted to JSON in `apps/web/public/patterns/`
    - Astro build reads JSON files to generate pages
@@ -42,12 +42,12 @@ The project has a unique architecture where pattern documentation drives the ent
 ## Pattern Development Workflow
 
 ### Adding New Patterns
-1. **Start with template**: Copy `patterns/TEMPLATE.md` to create new pattern files
+1. **Start with template**: Copy `TEMPLATE.md` (repository root) to create new pattern files in `patterns/`
 2. **Required YAML front-matter**: Every pattern must include:
    ```yaml
    ---
    title: "Clear, Descriptive Title"
-   status: "proposed | emerging | established | validated-in-production | best-practice | experimental-but-awesome | rapidly-improving"
+   status: "proposed | emerging | production | foundational"
    authors: ["Contributor Name (@username)"]
    based_on: ["Original Creator (Source)"]
    category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
@@ -59,9 +59,9 @@ The project has a unique architecture where pattern documentation drives the ent
    updated_at: "YYYY-MM-DD"  # Required: last content change date — file mtimes differ per machine, so generated data needs an explicit date
    ---
    ```
-3. **Required sections**: Problem, Solution, References
+3. **Required sections**: Problem, Solution, How to use it, Trade-offs, References
 4. **Data sync**: Pattern files must be converted to JSON for the Astro site
-   - Run `npm run build:data` to update the JSON files
+   - Run `bun run build:data` to update the JSON files
    - JSON files are stored in `apps/web/public/patterns/` and `apps/web/public/data/patterns/`
    - CI fails if the committed JSON files differ from what the pipeline produces; run the pipeline and commit its output together with the pattern `.md` change
 
@@ -100,9 +100,10 @@ This ensures assets load correctly on both local development (`localhost:4321`) 
 
 ### File Structure
 ```
+TEMPLATE.md           # Template for new patterns (repository root)
+
 patterns/              # Source of truth - all pattern .md files
-├── TEMPLATE.md       # Template for new patterns
-└── *.md             # Individual pattern files with YAML front-matter
+└── *.md              # Individual pattern files with YAML front-matter
 
 apps/web/             # Astro web application
 ├── public/

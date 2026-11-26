@@ -1,6 +1,6 @@
 ---
 title: "Capability-Escrow-Receipt"
-status: "experimental-but-awesome"
+status: proposed
 authors: ["Dillon Sexton (@EmperorMew)"]
 based_on: ["Voidly Pay (contributor-owned reference implementation)"]
 category: "Orchestration & Control"

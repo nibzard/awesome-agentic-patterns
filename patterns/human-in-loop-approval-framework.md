@@ -1,6 +1,6 @@
 ---
 title: Human-in-the-Loop Approval Framework
-status: validated-in-production
+status: foundational
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -22,6 +22,7 @@ summary: >-
   interfaces and comprehensive audit trails.
 signals: ["Agents run high-risk or irreversible operations such as production DB writes, payments, or deploys", "Compliance requires a record of who approved each sensitive action", "Humans can respond fast enough through Slack, email, or a dashboard"]
 anti_signals: ["All agent actions are safe or easily reversible", "No human is available to respond in time", "Approval volume would be so high that reviewers rubber-stamp requests"]
+related: ["exact-action-authorization-binding", "tier-auto-apply-by-mechanical-impact", "consequence-family-coverage-audit", "sandboxed-tool-authorization", "chain-of-thought-monitoring-interruption"]
 updated_at: '2026-11-06'
 ---
 

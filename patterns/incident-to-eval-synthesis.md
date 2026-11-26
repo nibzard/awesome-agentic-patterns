@@ -1,6 +1,6 @@
 ---
 title: Incident-to-Eval Synthesis
-status: emerging
+status: proposed
 authors: ["Codex (@openai)"]
 based_on: ["Post-incident learning loops in software and ML operations"]
 category: "Feedback Loops"

@@ -1,0 +1,112 @@
+---
+title: 'Designing Reliable Agent Evals'
+description: 'Combining deterministic graders, mocked-tool CI workflows, replayable traces, incident-to-eval loops, and canary rollouts so agent changes ship without silent regressions.'
+order: 5
+---
+
+## The Four-Stage Pyramid
+
+An agent change ships safely when each stage of the pyramid only has to catch what the stage below it already ruled out. Skip a stage and the one above drowns.
+
+| Stage                              | Patterns                                                                                                                                                                                                                                                                                                                                                                 | Question It Answers                                                          | Speed and Cost                                                                                |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| 1. Deterministic checks            | [Structured Output Specification](/patterns/structured-output-specification), [Rich Feedback Loops](/patterns/rich-feedback-loops), [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop), [Rendered UI Finish Gate](/patterns/rendered-ui-finish-gate)                                                                                         | Does the output have the shape and the properties you can count?             | Schema and counted checks cost no tokens. The agent's revision pass and a UI render take time |
+| 2. Mocked-tool and replay CI       | [Workflow Evals with Mocked Tools](/patterns/workflow-evals-with-mocked-tools), [Out-of-Process Provider-Boundary Replay](/patterns/out-of-process-provider-boundary-replay)                                                                                                                                                                                             | Does the whole workflow behave when prompt, tools, and model interact?       | Workflow evals spend model calls on every PR. Replays cost nothing and need no key            |
+| 3. Grader and rubric evals         | [Skill Activation as Precision/Recall Measurement](/patterns/skill-activation-as-precision-recall), [Evidence-Layered Evaluation for Interactive Agents](/patterns/evidence-layered-evaluation-for-interactive-agents), [Output Verification Loop](/patterns/output-verification-loop), [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design) | Is the behavior good, not only valid?                                        | Model calls per row, plus labelling and instrumentation time                                  |
+| 4. Production feedback and rollout | [LLM Observability](/patterns/llm-observability), [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis), [Canary Rollout and Automatic Rollback](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes)                                                                                                                                  | What is breaking for real users, and can you get back to a known-good state? | Observability spend, triage time, and release orchestration                                   |
+
+### Stage 1: Deterministic Checks
+
+Start with what a machine can verify without a model in the loop.
+
+- [Structured Output Specification](/patterns/structured-output-specification) constrains output with schemas, so a parser or a downstream system can rely on it
+- [Rich Feedback Loops](/patterns/rich-feedback-loops) returns compiler errors, test failures, and lint output after each tool call, so the agent has something specific to fix
+- [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop) replaces the LLM-as-judge in a self-review loop with a scorer that returns the raw counts behind each sub-score. It is reproducible, so you can assert it in a test or a CI gate
+- [Rendered UI Finish Gate](/patterns/rendered-ui-finish-gate) checks an agent-built interface against its design contract, required states, and rendered output before merge
+
+### Stage 2: Mocked-Tool and Replay CI
+
+Then test the pieces together, with no side effects and no bill.
+
+- [Workflow Evals with Mocked Tools](/patterns/workflow-evals-with-mocked-tools) runs the complete workflow against mocked tools in CI. It checks which tools were called, plus agent-as-judge quality criteria
+- [Out-of-Process Provider-Boundary Replay](/patterns/out-of-process-provider-boundary-replay) captures a run at the model-provider HTTP boundary from outside the process, then serves those bytes back. The agent re-executes its own logic with no provider call, so replays belong in CI and in bug reports
+
+Know the limit of replay: blocking provider egress is not sandboxing. The agent still executes its recorded tool calls for real.
+
+### Stage 3: Grader and Rubric Evals
+
+Now ask whether the behavior is good.
+
+- [Skill Activation as Precision/Recall Measurement](/patterns/skill-activation-as-precision-recall) treats skill routing as classification over a labelled dataset, with per-skill precision and recall and CI thresholds that fail the build
+- [Evidence-Layered Evaluation for Interactive Agents](/patterns/evidence-layered-evaluation-for-interactive-agents) scores interactive runs on a task outcome assertion and links each result to layered evidence: actions, screenshots, replays, network, and messages
+- [Output Verification Loop](/patterns/output-verification-loop) extracts individual claims, checks each against evidence sources, and returns per-claim trust scores before anything acts on the result
+- [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design) hardens any grader a model optimizes against, with multi-criteria evaluation and iterative hardening
+
+### Stage 4: Production Feedback and Rollout
+
+Finally, let production tell you what the suite missed.
+
+- [LLM Observability](/patterns/llm-observability) gives span-level traces of each model call and tool use, plus aggregate cost, latency, and success metrics
+- [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis) converts each production incident into executable eval cases with pass/fail criteria, and gates future releases on them
+- [Canary Rollout and Automatic Rollback for Agent Policy Changes](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes) ships a policy change to a small traffic slice, monitors guardrail metrics, and rolls back to the last stable version automatically
+
+## Comparison Matrix
+
+| Eval Technique                                                                                                     | Speed and Cost                                                            | What It Catches                                                                | What It Misses                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| [Structured Output Specification](/patterns/structured-output-specification)                                       | Schema check with no model call                                           | Output that would break a parser or a downstream system                        | Whether the content is correct                                                                    |
+| [Rich Feedback Loops](/patterns/rich-feedback-loops)                                                               | One model pass per revision; raises runtime and cost                      | Errors that a compiler, test suite, or linter can report                       | Problems with no objective signal to feed back                                                    |
+| [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop)                                     | Offline, reproducible, no token cost                                      | The specific counted property the agent failed, with numbers it can act on     | Everything you did not think to count. Meaning, truth, and fit for audience. It invites Goodhart  |
+| [Rendered UI Finish Gate](/patterns/rendered-ui-finish-gate)                                                       | Render time plus review time                                              | Broken states and interactions that compile-time checks and source review miss | Issues that no rule covers, and comparisons that encode reviewer bias                             |
+| [Workflow Evals with Mocked Tools](/patterns/workflow-evals-with-mocked-tools)                                     | Slower, spends model calls, and flakes                                    | Regressions in prompts and tools together, and which tools were called         | Mocks that drift from real tools. Too variable to serve as a blocking gate                        |
+| [Out-of-Process Provider-Boundary Replay](/patterns/out-of-process-provider-boundary-replay)                       | Fast, no key, no model call                                               | Bugs that reproduce only in a full session                                     | Prompt changes, which need a live model. Real side effects, which need a sandbox                  |
+| [Skill Activation as Precision/Recall Measurement](/patterns/skill-activation-as-precision-recall)                 | One model call per row, times replicates                                  | Silent mis-routing and over-triggering across a skill catalog                  | Single-row verdicts, since only the aggregate is trustworthy. Numbers move with the model version |
+| [Evidence-Layered Evaluation for Interactive Agents](/patterns/evidence-layered-evaluation-for-interactive-agents) | Storage and instrumentation overhead                                      | Failures that a single pass/fail score hides, for browser and desktop agents   | A correct evaluator is not guaranteed. Logs can hold sensitive data                               |
+| [Output Verification Loop](/patterns/output-verification-loop)                                                     | One verification call per output; adds latency                            | Factual errors that reflection loops miss                                      | Quality beyond your evidence source. Tight latency budgets                                        |
+| [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design)                                   | More code to maintain, and multi-criteria grading takes longer per sample | A model that games the metric: reward rises while real performance does not    | Criteria that resist a precise definition, such as financial soundness                            |
+| [LLM Observability](/patterns/llm-observability)                                                                   | Ongoing platform spend, usually minimal latency                           | Cost, latency, and failure patterns across many runs                           | Whether a run was any good. Traces show what happened, not what should have happened              |
+| [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis)                                                 | Triage time per incident                                                  | Failures that recur after an operational fix                                   | Anything before you have traffic and capturable incident data                                     |
+| [Canary Rollout and Automatic Rollback](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes)  | Release orchestration and telemetry                                       | Regressions that only appear on live traffic                                   | Anything without real-time telemetry and versioned policies                                       |
+
+## Anti-Patterns
+
+### LLM-as-judge with no deterministic checks underneath
+
+An LLM judge is non-deterministic, costs tokens, and gives the agent nothing specific to fix. [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop) exists because of this: it replaces the judge with a scorer that returns raw counts, which gives the revision loop a gradient. Reserve the judge for attributes that genuinely need semantic judgment, such as factual correctness or tone for an audience. [Workflow Evals with Mocked Tools](/patterns/workflow-evals-with-mocked-tools) points at the same problem: judge-based results are too variable to serve as a blocking CI gate.
+
+### Testing only the happy path
+
+A suite that checks only the expected output passes on the day before the incident. Three patterns widen it:
+
+- [Rendered UI Finish Gate](/patterns/rendered-ui-finish-gate) keeps required states visible: async, empty, error, and responsive
+- [Skill Activation as Precision/Recall Measurement](/patterns/skill-activation-as-precision-recall) scores every skill on every row, so a description edit cannot quietly re-route another skill's prompts
+- [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis) turns each real failure into a case
+
+### Letting graders get reward-hacked
+
+Any metric an agent can read, it will learn to satisfy. The deterministic grader pattern calls this Goodhart risk "real and direct" and advises capping the iterations and keeping the threshold well below the maximum. [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design) is written for reinforcement learning reward design, and lists "training reward rises while real performance does not" as its warning signal. The same failure appears whenever an agent optimizes against any grader. You cannot harden a grader you never inspect, so traces from [LLM Observability](/patterns/llm-observability) are part of the fix.
+
+### Never turning production bugs into regression cases
+
+An operational fix without an eval case is a promise to debug the same thing twice. [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis) names the symptom: incidents recur after they were fixed operationally, and the eval suite drifts away from what production shows. When a regression slips past the suite anyway, [Canary Rollout and Automatic Rollback](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes) is the last line. It limits the blast radius and shortens time-to-recovery.
+
+## Close the Loop
+
+The stages form a cycle, not a ladder. Production incidents become eval cases at stage 3. Those cases gate releases, and the next policy change ships behind a canary. Each turn of the cycle moves a failure from "surprised us in production" to "fails a PR check".
+
+A minimum loop for a new agent:
+
+1. Constrain the output with a schema
+2. Feed compiler, test, and lint output back after each tool call
+3. Run a mocked-tool workflow eval on every PR, non-blocking at first
+4. Capture traces at the provider boundary, so every bug report is replayable
+5. Instrument production
+6. Turn each incident into an eval case
+7. Ship policy changes behind a canary with automatic rollback
+
+## Next Steps
+
+- Choose the patterns that feed the evals with [Choosing the Right Patterns](/guides/pattern-selection)
+- A rubber-stamp judge is a topology failure too. See [Multi-Agent Topologies Compared](/guides/multi-agent-topologies-compared)
+- Context changes shift eval results. See the [Context Engineering Playbook](/guides/context-engineering-playbook)
+- A defense you have not tested is a hypothesis. See [Prompt-Injection Defense in Depth](/guides/prompt-injection-defense-in-depth)

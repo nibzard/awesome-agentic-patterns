@@ -9,6 +9,7 @@
     "test": "bun test apps/web/src",
     "validate:patterns": "bun scripts/validate-patterns.ts patterns",
     "validate:patterns:content": "bun scripts/validate-patterns.ts patterns --check-content",
+    "audit:citations": "bun scripts/audit-citations.ts",
     "build:data": "bun scripts/build-data.ts",
     "migrate:patterns": "bun scripts/migrate-patterns.ts",
     "migrate:patterns:dry": "bun scripts/migrate-patterns.ts --dry-run",

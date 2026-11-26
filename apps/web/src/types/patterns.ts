@@ -6,14 +6,12 @@
 /**
  * Pattern status values
  */
-export type PatternStatus =
-  | 'proposed'
-  | 'emerging'
-  | 'established'
-  | 'validated-in-production'
-  | 'best-practice'
-  | 'experimental-but-awesome'
-  | 'rapidly-improving';
+export type PatternStatus = 'proposed' | 'emerging' | 'production' | 'foundational';
+
+/**
+ * Evidence grade values
+ */
+export type EvidenceGrade = 'high' | 'medium' | 'low' | 'mixed' | 'unknown';
 
 /**
  * Pattern category values
@@ -57,6 +55,7 @@ export interface PatternEntry {
   slug: string;
   title: string;
   status: PatternStatus;
+  evidence_grade?: EvidenceGrade;
   authors: string[];
   based_on?: string[];
   category: PatternCategory;
@@ -176,9 +175,6 @@ export type BadgeSize = 'sm' | 'md' | 'lg';
 export const STATUS_BADGES: Record<PatternStatus, BadgeVariant> = {
   proposed: 'neutral',
   emerging: 'info',
-  established: 'success',
-  'validated-in-production': 'success',
-  'best-practice': 'success',
-  'experimental-but-awesome': 'warning',
-  'rapidly-improving': 'info',
+  production: 'success',
+  foundational: 'success',
 } as const;

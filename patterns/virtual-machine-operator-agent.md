@@ -1,6 +1,6 @@
 ---
 title: Virtual Machine Operator Agent
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Amjad Masad"]
 category: Tool Use & Environment
@@ -9,6 +9,7 @@ tags: [computer operation, virtual machine, execution environment, agent capabil
 summary: "Gives the agent a dedicated virtual machine where it can run code, install packages, use the file system, and operate CLI tools"
 signals: ["Tasks need code execution, package installs, or system tools", "Agent must work as a general-purpose computer operator", "Isolation from the host system is required"]
 anti_signals: ["Tasks are only text or code generation with no execution", "Cold-start latency of VMs or containers is not acceptable"]
+related: ["code-over-api-pattern", "intelligent-bash-tool-execution", "egress-lockdown-no-exfiltration-channel", "one-os-user-per-agent", "custom-sandboxed-background-agent"]
 updated_at: "2026-10-13"
 ---
 

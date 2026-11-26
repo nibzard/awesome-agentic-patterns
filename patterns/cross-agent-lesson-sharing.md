@@ -1,6 +1,6 @@
 ---
 title: Cross-Agent Lesson Sharing via Git
-status: emerging
+status: proposed
 authors: ["MisakaNet community"]
 based_on: ["MisakaNet", "GitHub Issues"]
 category: Context & Memory
@@ -41,18 +41,18 @@ status: published
 evidence_level: "E2"
 ---
 
-## Problem
+### Problem
 ChromaDB fails with "Invalid cross-device link" on NTFS-mounted WSL paths.
 
-## Root Cause
+### Root Cause
 The cache directory sits on a filesystem that does not support the link
 operations ChromaDB uses.
 
-## Solution
+### Solution
 Set `CHROMA_CACHE_DIR` to a native ext4 path:
 export CHROMA_CACHE_DIR=/tmp/chroma-cache
 
-## Verification
+### Verification
 python3 -c "import chromadb; chromadb.Client()"
 ```
 

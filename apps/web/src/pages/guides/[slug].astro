@@ -149,6 +149,33 @@ const { Content } = await render(guide);
     padding: 0;
   }
 
+  .guide-content-wrapper :global(table) {
+    display: block;
+    width: 100%;
+    margin: 0 0 var(--spacing-md);
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .guide-content-wrapper :global(thead) {
+    background-color: var(--color-bg-soft);
+  }
+
+  .guide-content-wrapper :global(th),
+  .guide-content-wrapper :global(td) {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .guide-content-wrapper :global(th) {
+    color: var(--color-text);
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-divider);
+  }
+
   .guide-content-wrapper :global(a) {
     color: var(--color-primary);
     text-decoration: none;

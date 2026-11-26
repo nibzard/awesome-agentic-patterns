@@ -1,18 +1,23 @@
 // ABOUTME: Validates pattern front matter and section structure for all files under patterns/.
-// ABOUTME: Enforces the required updated_at date because generated site data must stay deterministic.
+// ABOUTME: With --check-content it also enforces evidence grades, referential integrity, status vs. evidence, and length guardrails.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 
-const STATUS_VALUES = [
-  'proposed',
-  'emerging',
-  'established',
-  'validated-in-production',
-  'best-practice',
-  'experimental-but-awesome',
-  'rapidly-improving',
-];
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoPatternsDir = path.join(repoRoot, 'patterns');
+const contentPacksDir = path.join(repoRoot, 'apps', 'web', 'src', 'content', 'packs');
+const contentGuidesDir = path.join(repoRoot, 'apps', 'web', 'src', 'content', 'guides');
+
+const STATUS_VALUES = ['proposed', 'emerging', 'production', 'foundational'];
+const EVIDENCE_GRADE_VALUES = ['high', 'medium', 'low', 'mixed', 'unknown'];
+const EVIDENCE_GRADE_LINE = /\*\*Evidence Grade:\*\*\s*`?([a-zA-Z0-9_-]+)`?/i;
+const MIN_PATTERN_LINES = 55;
+const MAX_PATTERN_LINES = 220;
+const MIN_INDEPENDENT_URLS = 3;
+const SINGLE_SOURCE_DISCLOSURE = /contributor[- ]owned|launch[- ]stage/i;
+const EXTERNAL_URL = /https?:\/\/[^\s<>()\[\]"']+/g;
 
 const CATEGORY_VALUES = [
   'Orchestration & Control',
@@ -140,7 +145,127 @@ function validateHeadingStructure(filePath: string, body: string): ValidationIss
   return issues;
 }
 
-function validatePattern(filePath: string, checkContent: boolean): ValidationIssue[] {
+function stripFencedCode(text: string): string {
+  return text.replace(/```[\s\S]*?(?:```|$)/g, '');
+}
+
+function collectAllPatternSlugs(): Set<string> {
+  const slugs = new Set<string>();
+  if (!fs.existsSync(repoPatternsDir)) return slugs;
+
+  fs.readdirSync(repoPatternsDir)
+    .filter((file) => file.endsWith('.md') && file !== 'TEMPLATE.md')
+    .forEach((file) => {
+      slugs.add(path.basename(file, path.extname(file)));
+      const { data } = matter(fs.readFileSync(path.join(repoPatternsDir, file), 'utf-8'));
+      if (typeof data.slug === 'string') slugs.add(data.slug);
+    });
+
+  return slugs;
+}
+
+function parseBodyEvidenceGrade(body: string): string | undefined {
+  const match = body.match(EVIDENCE_GRADE_LINE);
+  return match ? match[1].toLowerCase() : undefined;
+}
+
+function countDistinctExternalUrls(...texts: Array<string | undefined>): number {
+  const urls = new Set<string>();
+  texts.forEach((text) => {
+    if (!text) return;
+    for (const match of text.matchAll(EXTERNAL_URL)) {
+      urls.add(match[0].replace(/[.,;:!?)]+$/, ''));
+    }
+  });
+  return urls.size;
+}
+
+function findBrokenRelativeMdLinks(filePath: string, body: string): string[] {
+  const broken: string[] = [];
+
+  for (const match of stripFencedCode(body).matchAll(/\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
+    const target = match[1];
+    if (/^(https?:\/\/|mailto:|#|\/)/.test(target)) continue;
+
+    const cleanTarget = target.split('#')[0].split('?')[0];
+    if (!cleanTarget.endsWith('.md')) continue;
+
+    if (!fs.existsSync(path.resolve(path.dirname(filePath), cleanTarget))) {
+      broken.push(target);
+    }
+  }
+
+  return broken;
+}
+
+function listContentFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((file) => /\.mdx?$/.test(file))
+    .map((file) => path.join(dir, file));
+}
+
+function findUnknownPatternLinks(filePath: string, body: string, allPatternSlugs: Set<string>): string[] {
+  const unknown = new Set<string>();
+
+  for (const match of stripFencedCode(body).matchAll(/\/patterns\/([a-z0-9-]+)/g)) {
+    if (!allPatternSlugs.has(match[1])) unknown.add(match[1]);
+  }
+
+  return Array.from(unknown).map((slug) => `/patterns/${slug}`);
+}
+
+function validateContentReferences(allPatternSlugs: Set<string>): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  listContentFiles(contentPacksDir).forEach((filePath) => {
+    const { data, content } = matter(fs.readFileSync(filePath, 'utf-8'));
+
+    if (Array.isArray(data.patterns)) {
+      data.patterns.forEach((slug) => {
+        if (typeof slug === 'string' && !allPatternSlugs.has(slug)) {
+          issues.push({
+            file: filePath,
+            level: 'error',
+            field: 'patterns',
+            message: `Pack lists pattern slug '${slug}', which has no patterns/*.md file.`,
+          });
+        }
+      });
+    }
+
+    findUnknownPatternLinks(filePath, content, allPatternSlugs).forEach((link) => {
+      issues.push({
+        file: filePath,
+        level: 'error',
+        field: 'links',
+        message: `Link '${link}' points to a pattern slug with no patterns/*.md file.`,
+      });
+    });
+  });
+
+  listContentFiles(contentGuidesDir).forEach((filePath) => {
+    const { content } = matter(fs.readFileSync(filePath, 'utf-8'));
+
+    findUnknownPatternLinks(filePath, content, allPatternSlugs).forEach((link) => {
+      issues.push({
+        file: filePath,
+        level: 'error',
+        field: 'links',
+        message: `Link '${link}' points to a pattern slug with no patterns/*.md file.`,
+      });
+    });
+  });
+
+  return issues;
+}
+
+function validatePattern(
+  filePath: string,
+  checkContent: boolean,
+  allPatternSlugs: Set<string>
+): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const raw = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(raw);
@@ -295,6 +420,18 @@ function validatePattern(filePath: string, checkContent: boolean): ValidationIss
     });
   }
 
+  if (
+    data.evidence_grade !== undefined &&
+    (typeof data.evidence_grade !== 'string' || !EVIDENCE_GRADE_VALUES.includes(data.evidence_grade))
+  ) {
+    issues.push({
+      file: filePath,
+      level: 'error',
+      field: 'evidence_grade',
+      message: `evidence_grade must be one of: ${EVIDENCE_GRADE_VALUES.join(', ')}`,
+    });
+  }
+
   const arrayFields = [
     'signals',
     'anti_signals',
@@ -334,6 +471,83 @@ function validatePattern(filePath: string, checkContent: boolean): ValidationIss
 
   if (checkContent) {
     issues.push(...validateHeadingStructure(filePath, content));
+
+    const bodyEvidenceGrade = parseBodyEvidenceGrade(content);
+    if (bodyEvidenceGrade && !EVIDENCE_GRADE_VALUES.includes(bodyEvidenceGrade)) {
+      issues.push({
+        file: filePath,
+        level: 'error',
+        field: 'evidence_grade',
+        message: `**Evidence Grade:** '${bodyEvidenceGrade}' is not one of: ${EVIDENCE_GRADE_VALUES.join(', ')}. Status words are not evidence grades.`,
+      });
+    }
+
+    if (isStringArray(data.related)) {
+      data.related.forEach((slug) => {
+        if (!allPatternSlugs.has(slug)) {
+          issues.push({
+            file: filePath,
+            level: 'error',
+            field: 'related',
+            message: `related entry '${slug}' has no patterns/*.md file.`,
+          });
+        }
+      });
+    }
+
+    findBrokenRelativeMdLinks(filePath, content).forEach((link) => {
+      issues.push({
+        file: filePath,
+        level: 'error',
+        field: 'links',
+        message: `Relative link '${link}' does not resolve to an existing file.`,
+      });
+    });
+
+    const evidenceGrade =
+      typeof data.evidence_grade === 'string' ? data.evidence_grade.toLowerCase() : bodyEvidenceGrade;
+
+    if (data.status === 'foundational' || data.status === 'production') {
+      if (evidenceGrade === 'low') {
+        issues.push({
+          file: filePath,
+          level: 'error',
+          field: 'status',
+          message: `Status '${data.status}' cannot have low evidence grade; downgrade to 'proposed' or 'emerging' or strengthen evidence.`,
+        });
+      }
+
+      const basedOnText = Array.isArray(data.based_on) ? data.based_on.join(' ') : String(data.based_on || '');
+      const disclosureText = `${basedOnText}\n${String(data.source || '')}\n${content}`;
+      if (
+        SINGLE_SOURCE_DISCLOSURE.test(disclosureText) &&
+        countDistinctExternalUrls(basedOnText, String(data.source || ''), content) < MIN_INDEPENDENT_URLS
+      ) {
+        issues.push({
+          file: filePath,
+          level: 'warn',
+          field: 'status',
+          message: `Status '${data.status}' with a contributor-owned or launch-stage primary implementation and fewer than ${MIN_INDEPENDENT_URLS} distinct external URLs; possible single-source status inflation.`,
+        });
+      }
+    }
+
+    const lineCount = raw.split('\n').length;
+    if (lineCount < MIN_PATTERN_LINES) {
+      issues.push({
+        file: filePath,
+        level: 'warn',
+        field: 'length',
+        message: `Pattern has ${lineCount} lines (<${MIN_PATTERN_LINES}); check whether mechanics/gotchas are too thin.`,
+      });
+    } else if (lineCount > MAX_PATTERN_LINES) {
+      issues.push({
+        file: filePath,
+        level: 'warn',
+        field: 'length',
+        message: `Pattern has ${lineCount} lines (>${MAX_PATTERN_LINES}); consider trimming to the 70-180 line target.`,
+      });
+    }
   }
 
   return issues;
@@ -371,6 +585,14 @@ function formatIssue(issue: ValidationIssue): string {
   return `${prefix} ${issue.file}:${issue.field}: ${issue.message}`;
 }
 
+function isWholeCatalogRun(targets: string[]): boolean {
+  if (targets.length === 0) return true;
+  return targets.some((target) => {
+    const resolved = path.resolve(target);
+    return path.basename(resolved) === 'patterns' && fs.existsSync(resolved) && fs.statSync(resolved).isDirectory();
+  });
+}
+
 function main(): void {
   const args = process.argv.slice(2);
   const checkContent = args.includes('--check-content');
@@ -384,7 +606,11 @@ function main(): void {
     process.exit(1);
   }
 
-  const issues = files.flatMap((file) => validatePattern(file, checkContent));
+  const allPatternSlugs = checkContent ? collectAllPatternSlugs() : new Set<string>();
+  const issues = [
+    ...files.flatMap((file) => validatePattern(file, checkContent, allPatternSlugs)),
+    ...(checkContent && isWholeCatalogRun(targets) ? validateContentReferences(allPatternSlugs) : []),
+  ];
   const errors = issues.filter((issue) => issue.level === 'error');
   const warnings = issues.filter((issue) => issue.level === 'warn');
 

@@ -40,12 +40,7 @@ server.tool("get_pattern", { name: z.string() }, async ({ name }) => {
 
 The key insight: MCP servers act as **live documentation** that the AI can query, rather than static context that burns tokens.
 
-The technique is production-scale in its docs-serving form: Context7 (Upstash) serves current, version-specific library documentation to coding agents over MCP. The pattern-library variant documented here rests on a small personal reference implementation, so the status is emerging rather than validated-in-production.
-
-## Trade-offs
-
-**Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.  
-**Cons:** Requires MCP server setup; adds latency for tool calls; patterns must be maintained.
+The technique is production-scale in its docs-serving form: Context7 (Upstash) serves current, version-specific library documentation to coding agents over MCP. The pattern-library variant documented here rests on a small personal reference implementation, so the status is emerging rather than production.
 
 ## How to use it
 
@@ -54,6 +49,11 @@ The technique is production-scale in its docs-serving form: Context7 (Upstash) s
 - Include "when to use" and "when NOT to use" guidance in pattern descriptions
 - Version your patterns alongside your codebase
 - Use `npx` for easy distribution: `npx your-patterns-mcp`
+
+## Trade-offs
+
+**Pros:** Always up-to-date patterns; on-demand retrieval saves context space; patterns are structured and tested.  
+**Cons:** Requires MCP server setup; adds latency for tool calls; patterns must be maintained.
 
 ## References
 

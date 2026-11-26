@@ -135,7 +135,7 @@ export async function getPatternsByTag(tag: string): Promise<PatternEntry[]> {
  */
 export async function getRelatedPatterns(patternIds: string[]): Promise<PatternEntry[]> {
   const patterns = await getAllPatterns();
-  return patterns.filter((p) => patternIds.includes(p.id));
+  return patterns.filter((p) => patternIds.includes(p.id) || patternIds.includes(p.slug));
 }
 
 /**
@@ -143,7 +143,7 @@ export async function getRelatedPatterns(patternIds: string[]): Promise<PatternE
  */
 export async function getAntiPatterns(patternIds: string[]): Promise<PatternEntry[]> {
   const patterns = await getAllPatterns();
-  return patterns.filter((p) => patternIds.includes(p.id));
+  return patterns.filter((p) => patternIds.includes(p.id) || patternIds.includes(p.slug));
 }
 
 /**

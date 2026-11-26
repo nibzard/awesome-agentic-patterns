@@ -117,20 +117,6 @@ class LATSAgent:
 - **Self-Improving**: Uses reflection to learn which paths are more promising
 - **Robust**: Less likely to get stuck in dead ends compared to linear approaches
 
-## Trade-offs
-
-**Pros:**
-- Significantly better performance on complex reasoning tasks
-- Systematic exploration prevents getting stuck
-- Naturally handles problems with multiple valid approaches
-- Provides interpretable reasoning traces
-
-**Cons:**
-- Higher computational cost (5-20x more LLM calls than simpler approaches)
-- Inherently sequential—unsuitable for real-time applications
-- Implementation complexity requires correct MCTS and tree state management
-- May be overkill for simple tasks where ReAct or ToT suffice
-
 ## How to use it
 
 **When to use LATS:**
@@ -150,11 +136,25 @@ class LATSAgent:
 - Use lower temperature (0.1-0.3) for evaluation, higher (0.7-1.0) for expansion
 - Consider LangGraph for graph infrastructure supporting MCTS-like workflows
 
+## Trade-offs
+
+**Pros:**
+- Significantly better performance on complex reasoning tasks
+- Systematic exploration prevents getting stuck
+- Naturally handles problems with multiple valid approaches
+- Provides interpretable reasoning traces
+
+**Cons:**
+- Higher computational cost (5-20x more LLM calls than simpler approaches)
+- Inherently sequential—unsuitable for real-time applications
+- Implementation complexity requires correct MCTS and tree state management
+- May be overkill for simple tasks where ReAct or ToT suffice
+
 ## References
 
 - [Language Agent Tree Search (LATS) Paper](https://arxiv.org/abs/2310.04406) - Zhou et al., 2023
 - [Wider or Deeper? Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search (AB-MCTS)](https://arxiv.org/abs/2503.04412) - Inoue et al., 2025: adaptive branching tree search versus repeated sampling for frontier reasoning models
-- [Monte Carlo Tree Search: A Survey](https://doi.org/10.1109/TCIAIG.2012.2206890) - Browne et al., 2012 (foundational MCTS theory)
+- [A Survey of Monte Carlo Tree Search Methods](https://doi.org/10.1109/TCIAIG.2012.2186810) - Browne et al., 2012 (foundational MCTS theory)
 - [Tree of Thoughts: Deliberate Problem Solving](https://arxiv.org/abs/2305.10601) - Yao et al., NeurIPS 2023
 - [Reflexion: Language Agents with Verbal RL](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
 - Related siblings: [Tree-of-Thought Reasoning](tree-of-thought-reasoning.md) (search over reasoning steps without the agentic tool-use loop) and [Inference-Time Scaling](inference-time-scaling.md) (spending more compute at answer time in general). Distinct from Tree-of-Thought: LATS embeds the search in an agent loop with environment feedback and self-reflection.

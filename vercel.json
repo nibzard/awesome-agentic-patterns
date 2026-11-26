@@ -3,6 +3,163 @@
   "installCommand": "bun install",
   "buildCommand": "bun run build",
   "outputDirectory": "apps/web/dist",
+  "redirects": [
+    {
+      "source": "/patterns/code-first-tool-interface-pattern",
+      "destination": "/patterns/code-over-api-pattern",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/code-first-tool-interface-pattern.md",
+      "destination": "/patterns/code-over-api-pattern.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/code-mode-mcp-tool-interface-improvement-pattern",
+      "destination": "/patterns/code-over-api-pattern",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/tool-search-lazy-loading",
+      "destination": "/patterns/progressive-tool-discovery",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/tool-search-lazy-loading.md",
+      "destination": "/patterns/progressive-tool-discovery.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/approval-bound-transactional-write",
+      "destination": "/patterns/exact-action-authorization-binding",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/approval-bound-transactional-write.md",
+      "destination": "/patterns/exact-action-authorization-binding.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/patch-steering-via-prompted-tool-selection",
+      "destination": "/patterns/tool-use-steering-via-prompting",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/patch-steering-via-prompted-tool-selection.md",
+      "destination": "/patterns/tool-use-steering-via-prompting.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/tool-selection-guide",
+      "destination": "/patterns/tool-use-steering-via-prompting",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/tool-selection-guide.md",
+      "destination": "/patterns/tool-use-steering-via-prompting.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/cli-first-skill-design",
+      "destination": "/patterns/dual-use-tool-design",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/cli-first-skill-design.md",
+      "destination": "/patterns/dual-use-tool-design.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/spec-as-test-feedback-loop",
+      "destination": "/patterns/specification-driven-agent-development",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/spec-as-test-feedback-loop.md",
+      "destination": "/patterns/specification-driven-agent-development.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/ai-web-search-agent-loop",
+      "destination": "/patterns/agent-driven-research",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/ai-web-search-agent-loop.md",
+      "destination": "/patterns/agent-driven-research.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/cross-protocol-agent-discovery",
+      "destination": "/patterns/agent-first-tool-discovery",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/cross-protocol-agent-discovery.md",
+      "destination": "/patterns/agent-first-tool-discovery.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/disposable-scaffolding-over-durable-features",
+      "destination": "/patterns/progressive-autonomy-with-model-evolution",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/disposable-scaffolding-over-durable-features.md",
+      "destination": "/patterns/progressive-autonomy-with-model-evolution.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/burn-the-boats",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/burn-the-boats.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/latent-demand-product-discovery",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/latent-demand-product-discovery.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/frontier-focused-development",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/frontier-focused-development.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/shipping-as-research",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/shipping-as-research.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/dogfooding-with-rapid-iteration-for-agent-improvement",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/dogfooding-with-rapid-iteration-for-agent-improvement.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/democratization-of-tooling-via-agents",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/democratization-of-tooling-via-agents.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/ai-accelerated-learning-and-skill-development",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/ai-accelerated-learning-and-skill-development.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/dev-tooling-assumptions-reset",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/dev-tooling-assumptions-reset.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/no-token-limit-magic",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/no-token-limit-magic.md",
+      "permanent": true
+    },
+    {
+      "source": "/patterns/shared-core-native-shells",
+      "destination": "https://github.com/nibzard/awesome-agentic-patterns/blob/main/principles/shared-core-native-shells.md",
+      "permanent": true
+    }
+  ],
   "git": {
     "deploymentEnabled": {
       "main": true,

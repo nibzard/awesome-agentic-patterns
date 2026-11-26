@@ -1,0 +1,104 @@
+---
+title: 'Context Engineering Playbook'
+description: 'How exact prefix caching, auto-compaction, progressive tool discovery, code-over-API, and semantic filtering work together—and when they conflict.'
+order: 4
+---
+
+## Diagnose Before You Add a Pattern
+
+Every pattern in this playbook trades something: latency, detail, infrastructure, or flexibility. Stacking two of them without knowing the symptom is how a lean agent becomes an expensive one. Find the symptom first, then reach for one pattern.
+
+## Context Cost Diagnosis
+
+| Symptom                                                                   | Root Cause                                                                | First Pattern to Reach For                                                                                                                                                                   |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cost and latency climb with every turn of a long session                  | The request prefix keeps changing, so the provider re-bills cached tokens | [Prompt Caching via Exact Prefix Preservation](/patterns/prompt-caching-via-exact-prefix-preservation)                                                                                       |
+| Tool definitions fill the window before any work starts                   | Every tool is loaded up front                                             | [Progressive Tool Discovery (Lazy Tool Loading)](/patterns/progressive-tool-discovery)                                                                                                       |
+| The same project instructions are pasted into every session               | Baseline context is assembled by hand                                     | [Layered Configuration Context](/patterns/layered-configuration-context)                                                                                                                     |
+| One prompt serves an interactive session, a headless run, and CI          | No single instruction set is true for every surface                       | [Surface-Scoped System Prompt](/patterns/surface-scoped-system-prompt)                                                                                                                       |
+| A few large PDFs or DOCX files swamp the prompt                           | Whole files are loaded for a few relevant paragraphs                      | [Progressive Disclosure for Large Files](/patterns/progressive-disclosure-large-files)                                                                                                       |
+| Raw HTML or API responses crowd out the reasoning                         | Boilerplate goes to the model unfiltered                                  | [Semantic Context Filtering Pattern](/patterns/semantic-context-filtering)                                                                                                                   |
+| A data-heavy workflow over a database or spreadsheet overflows on fan-out | Every intermediate tool result returns to the window                      | [Code-Over-API (Code Mode)](/patterns/code-over-api-pattern)                                                                                                                                 |
+| The coding agent loads half the repository for a small task               | Nothing curates what the search returns                                   | [Curated Code Context Window](/patterns/curated-code-context-window)                                                                                                                         |
+| Search results go stale right after a code change                         | A vector index lags the working tree                                      | [Agentic Search Over Vector Embeddings](/patterns/agentic-search-over-vector-embeddings)                                                                                                     |
+| Long sessions fail with `context_length_exceeded`                         | No recovery when the transcript hits the limit                            | [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)                                                                                                                   |
+| The agent repeats or forgets work after a context switch or a restart     | Progress lives only in the transcript                                     | [Working Memory via Task Tracking](/patterns/working-memory-via-todos), or [Filesystem-Based Agent State](/patterns/filesystem-based-agent-state) when the work must survive an interruption |
+| Always-loaded files and unattended fan-out quietly drain the budget       | Nobody measures or caps context spend                                     | [Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource)                                                                                                     |
+| The model wraps up early while plenty of context remains                  | The model rations its remaining budget                                    | [Context Window Anxiety Management](/patterns/context-window-anxiety-management)                                                                                                             |
+
+## How the Patterns Interact and Conflict
+
+These patterns are not independent. Some reinforce each other. Some quietly cancel each other out.
+
+### Prefix caching versus mid-session tool changes
+
+[Prompt Caching via Exact Prefix Preservation](/patterns/prompt-caching-via-exact-prefix-preservation) keeps static content first in a fixed order and only appends messages. That makes sampling cost linear instead of quadratic, though the request payload still grows with the history. The cache only holds if nothing before the new message changes. The pattern's own trade-off list names the usual culprit: mid-conversation changes to tools or model break prefix matching. It advises against honoring an MCP `tools/list_changed` notice mid-conversation for the same reason.
+
+So if tools are the problem, do not inject them ad hoc mid-session. [Progressive Tool Discovery (Lazy Tool Loading)](/patterns/progressive-tool-discovery) offers two variants. Search-based lazy loading (`defer_loading` / Tool Search) keeps deferred tools out of the system-prompt prefix, which is why the pattern lists cache preservation as a pro. Hierarchical catalog browsing is the second variant: the agent browses a tree instead of searching. You pay for both with extra discovery calls before execution.
+
+### Surface-scoped prompts versus a shared cache
+
+[Surface-Scoped System Prompt](/patterns/surface-scoped-system-prompt) ships one prompt per invocation surface. That fixes a real problem: instructions about asking questions are wrong for a headless run. It also fragments prompt-prefix caching across surfaces, and drift between the prompts is silent. A safety rule can be tightened in the interactive prompt and forgotten in the headless one.
+
+Accept that trade only when the surfaces really differ. Keep the shared layer stable and load it first, so each surface reuses what it can.
+
+### Compaction buys longevity and spends detail
+
+[Context Window Auto-Compaction](/patterns/context-window-auto-compaction) catches overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request. It turns a hard failure into a slow success. But auto-generated summaries lose nuanced details that manual curation would preserve, and the retry adds latency. The pattern's own anti-signal is any case where that loss is unacceptable.
+
+Externalize critical state before you depend on compaction:
+
+- [Working Memory via Task Tracking](/patterns/working-memory-via-todos) keeps an explicit task list with status, blockers, and next steps, and it survives context window switches
+- [Filesystem-Based Agent State](/patterns/filesystem-based-agent-state) persists intermediate results as durable checkpoints, so a compacted or interrupted session resumes from files instead of from a summary
+
+Treat compaction as the safety net, not the strategy.
+
+### Code-Over-API removes the middle of the conversation
+
+[Code-Over-API (Code Mode)](/patterns/code-over-api-pattern) has the agent write code that calls tools and processes the results inside a sandbox. Only summaries and samples return to the context window. The reduction happens in code, not in a lossy model summary, because the full result never needs to fit. The pattern also reports lower latency from fewer large round-trips, and credentials stay in the MCP servers and never reach the model.
+
+It needs a secure code execution environment and a workflow whose tool sequence you can map out up front. It is a poor fit for open-ended exploration or for steps that need model reasoning between calls.
+
+### Filtering and disclosure solve different shapes of bloat
+
+[Semantic Context Filtering Pattern](/patterns/semantic-context-filtering) transforms data before the model sees it. Use it when raw HTML or API responses are mostly noise. It costs filter logic, and it can remove context that matters.
+
+[Progressive Disclosure for Large Files](/patterns/progressive-disclosure-large-files) puts only file metadata in the prompt and gives the agent load, peek, and extract tools. Use it when a few large files hold a small amount of relevant text. It costs tool round-trips.
+
+A large file can pass through both: extract first, then filter. Each step can drop something the task needed, so check what survives before you trust the pipeline.
+
+### A search sub-agent keeps the main context small
+
+[Curated Code Context Window](/patterns/curated-code-context-window) has a search sub-agent find the few relevant files and inject only top snippets into the main coding agent. It pairs with [Agentic Search Over Vector Embeddings](/patterns/agentic-search-over-vector-embeddings), which searches the current file state with standard tools and needs no index infrastructure. The cost is an extra component and a model capable enough to search iteratively.
+
+### The budget pattern notices when the others regress
+
+[Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource) measures always-loaded context per source, alerts on trend growth, and puts hard spend caps and fan-out bounds on unattended runs. It is how you find out that a new integration quietly doubled the baseline. Its own warning applies: size a cap as a belt, not a governor, or it will abort a legitimately heavy run.
+
+## Rollout Sequence
+
+Add these in order. Each step makes the next one cheaper to evaluate.
+
+1. **Stabilize the static prefix.** Put static content first in a fixed order and only append messages. Add [Layered Configuration Context](/patterns/layered-configuration-context) so the baseline loads automatically. Add [Surface-Scoped System Prompt](/patterns/surface-scoped-system-prompt) only if you run more than one surface. This step costs almost nothing and makes every later saving measurable
+
+2. **Shrink the tool surface.** Enable [Progressive Tool Discovery (Lazy Tool Loading)](/patterns/progressive-tool-discovery). The pattern cites 10 tools as the point where search-based loading pays off, and standard tool calling as the better fit below that
+
+3. **Shrink the data surface.** Choose by data shape: [Semantic Context Filtering Pattern](/patterns/semantic-context-filtering) for noisy responses, [Progressive Disclosure for Large Files](/patterns/progressive-disclosure-large-files) for big documents, [Curated Code Context Window](/patterns/curated-code-context-window) for a large repository. Add [Code-Over-API (Code Mode)](/patterns/code-over-api-pattern) for data-heavy fan-out
+
+4. **Externalize state.** Add [Working Memory via Task Tracking](/patterns/working-memory-via-todos) or [Filesystem-Based Agent State](/patterns/filesystem-based-agent-state) before you rely on a summary to carry a session
+
+5. **Add the safety net.** Enable [Context Window Auto-Compaction](/patterns/context-window-auto-compaction) once the steps above have cut what you load. Compaction is lossy, so it should stay rare
+
+6. **Govern what is left.** Add [Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource) when files are auto-loaded into every session or agents run unattended
+
+Hold two patterns until you have evidence:
+
+- [Context Window Anxiety Management](/patterns/context-window-anxiety-management) pays off only when the model shows the behavior. Otherwise it adds tokens and model-specific tuning for nothing. Shrinking the load is the cheaper cure
+- Episodic memory, such as [Episodic Memory Retrieval and Injection](/patterns/episodic-memory-retrieval-injection), adds storage, retrieval cost, and a corpus you must review and prune. Do not add it before one session is stable
+
+## Next Steps
+
+- Pick the rest of your starting stack with [Choosing the Right Patterns](/guides/pattern-selection)
+- Sub-agents get a clean context each. See [Multi-Agent Topologies Compared](/guides/multi-agent-topologies-compared)
+- Summarization and delegation are reasons to mark who holds authority. See [Prompt-Injection Defense in Depth](/guides/prompt-injection-defense-in-depth)
+- Measure the savings with [Designing Reliable Agent Evals](/guides/designing-reliable-agent-evals)

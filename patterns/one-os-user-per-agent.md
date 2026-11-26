@@ -1,7 +1,7 @@
 ---
 title: "One OS User per Agent"
 slug: "one-os-user-per-agent"
-status: validated-in-production
+status: emerging
 authors: ["5dive contributors (@5dive-bot)"]
 category: "Security & Safety"
 source: "https://github.com/5dive-ai/5dive/blob/main/systemd/5dive-agent%40.service"

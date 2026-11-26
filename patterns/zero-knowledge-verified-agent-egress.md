@@ -1,6 +1,6 @@
 ---
 title: Zero-Knowledge Verified Agent Egress
-status: emerging
+status: proposed
 authors: ["Provably (@aural-psynapse)"]
 based_on: ["Zero-knowledge proofs", "Zero trust architecture", "Trusted-endpoint allow-listing"]
 category: "Security & Safety"
@@ -43,7 +43,7 @@ This is complementary to [Egress Lockdown (No-Exfiltration Channel)](egress-lock
 - **Most Valuable Findings:**
   - NIST SP 800-207 (Zero Trust Architecture) establishes per-request verification before granting access as a core tenet; this pattern applies the same tenet to an agent's outbound calls. NIST SP 800-207 does not mention agents or egress content verification, so it serves as a conceptual basis, not a description of this pattern.
   - Zero-knowledge proofs let a verifier confirm a claim without seeing the secret behind it (Goldwasser, Micali & Rackoff, 1989), so the source of truth stays private from both the agent and the destination.
-  - Agent-security literature treats untrusted tool calls and prompt-injection-driven misuse as a first-class problem (see the agentic-security survey arXiv:2510.06445, OWASP's Agentic AI Threats and Mitigations guide, and CaMeL in "Defeating Prompt Injections by Design", which enforces security policies when tools are invoked through a capability mechanism). None of these describes content verification via zero-knowledge proofs at egress.
+  - Agent-security literature treats untrusted tool calls and prompt-injection-driven misuse as a first-class problem (see "A Survey on Agentic Security", arXiv:2510.06445; OWASP's Agentic AI Threats and Mitigations guide; and CaMeL, "Defeating Prompt Injections by Design", arXiv:2503.18813, which enforces security policies when tools are invoked through a capability mechanism). None of these describes content verification via zero-knowledge proofs at egress.
   - Hooking at the HTTP and MCP layer catches outbound calls regardless of which framework produced them.
 - **Unverified / Unclear:** Proof-generation latency and the operational cost of running the verification backend at high call volumes need more production data.
 - **Adoption caveat:** the only known implementation is from the pattern author's own company; no third-party deployment, adoption, or independent writeup exists yet.

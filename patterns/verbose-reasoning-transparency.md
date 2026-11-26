@@ -1,6 +1,6 @@
 ---
 title: Verbose Reasoning Transparency
-status: best-practice
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
@@ -9,6 +9,7 @@ tags: [explainability, debugging, transparency, agent reasoning, verbose mode, i
 summary: "Lets users open a verbose view on demand that shows the agent's interpretation, tool choices, intermediate steps, and raw tool outputs"
 signals: ["Users must debug unexpected agent output", "Users need to learn how to prompt the agent better", "High-stakes tasks where users must know why the agent acted"]
 anti_signals: ["Verbose output would expose sensitive system prompts or credentials", "Token overhead is not acceptable"]
+related: ["chain-of-thought-monitoring-interruption", "reasoning-token-firewall", "llm-observability", "abstracted-code-representation-for-review"]
 updated_at: "2026-10-13"
 ---
 
@@ -73,6 +74,6 @@ sequenceDiagram
 -   [Reasoning models don't say they think](https://www.anthropic.com/research/reasoning-models-dont-say-they-think) — Anthropic (2025): displayed chain of thought often omits the real reasoning.
 -   [Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation](https://arxiv.org/abs/2503.11926) — OpenAI (2025): monitoring reasoning can reward obfuscation.
 -   Wei et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *NeurIPS*. https://arxiv.org/abs/2201.11903
--   Mohseni et al. (2021). "HCI Guidelines for Explainable AI." *arXiv:2108.05206*. https://arxiv.org/abs/2108.05206
+-   Mohseni, S., Zarei, N., & Ragan, E. D. (2021). "A Multidisciplinary Survey and Framework for Design and Evaluation of Explainable AI Systems." *ACM TiiS*, [arXiv:1811.11839](https://arxiv.org/abs/1811.11839)
 
 [Source](https://www.nibzard.com/claude-code)

@@ -1,6 +1,6 @@
 ---
 title: CLI-Native Agent Orchestration
-status: established
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Claude Code headless mode (Anthropic)"]
 category: Tool Use & Environment
@@ -80,4 +80,4 @@ echo "$result" | jq -r '.total_cost_usd'
 - "Why Human-Agent Systems Should Precede AI Autonomy" ([arXiv:2506.09420](https://arxiv.org/abs/2506.09420), 2025) — a general position paper on human oversight of agent systems; it argues for transparent, inspectable agent operation but does not document this CLI workflow.
 - The Art of Unix Programming — Eric S. Raymond (2003) — Unix design rules that motivate CLI composition.
 - An earlier revision of this pattern cited `claude spec run`, `claude spec test`, and `claude repl` subcommands and a third-party blog post. Those subcommands do not exist in the official CLI, and the post does not describe this pattern; both were removed.
-- Related catalogue patterns: [CLI-First Skill Design](cli-first-skill-design.md) builds skills as CLIs; this pattern scripts the agent itself through its CLI. [Agent SDK for Programmatic Control](agent-sdk-for-programmatic-control.md) covers embedding the same agent loop in programs.
+- Related catalogue patterns: [Dual-Use Tool Design](dual-use-tool-design.md) builds tools and skills as CLIs; this pattern scripts the agent itself through its CLI. [Agent SDK for Programmatic Control](agent-sdk-for-programmatic-control.md) covers embedding the same agent loop in programs.

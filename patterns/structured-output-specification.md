@@ -1,6 +1,6 @@
 ---
 title: Structured Output Specification
-status: established
+status: foundational
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -22,6 +22,7 @@ summary: >-
   with downstream systems.
 signals: ["Agent output feeds databases, APIs, or other agents", "Classification or data extraction tasks", "Framework supports schema-constrained output"]
 anti_signals: ["Task needs open-ended free-form text", "Output shape changes too often to keep a schema"]
+related: ["action-selector-pattern", "llm-map-reduce-pattern", "discrete-phase-separation", "reasoning-token-firewall", "subagent-compilation-checker"]
 updated_at: '2026-10-13'
 ---
 

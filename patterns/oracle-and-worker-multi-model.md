@@ -39,7 +39,7 @@ graph TD
 
 ## Evidence
 
-- **Evidence Grade:** `emerging`
+- **Evidence Grade:** `medium`
 - **Most Valuable Findings:** Used in production by Amp, whose oracle subagent combines multiple LLMs (S1E7 of the "Raising an Agent" podcast); academic foundation from model cascading research (FrugalGPT: up to 98% cost reduction with quality parity)
 - **Unverified:** Amp has not published a cost-reduction figure for the oracle/worker split; optimal Oracle invocation thresholds remain application-specific
 

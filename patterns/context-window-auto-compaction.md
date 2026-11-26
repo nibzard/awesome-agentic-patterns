@@ -1,6 +1,6 @@
 ---
 title: "Context Window Auto-Compaction"
-status: "validated-in-production"
+status: foundational
 authors: ["OpenClaw Contributors"]
 based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)", "Pi coding agent (https://github.com/earendil-works/pi)", "Michael Bolin (OpenAI Codex)"]
 category: "Context & Memory"
@@ -9,6 +9,7 @@ tags: [context-management, compaction, overflow-recovery, token-estimation, tran
 summary: "Catches context overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request automatically"
 signals: ["Long sessions fail with context_length_exceeded errors", "Operators truncate transcripts by hand", "Agent supports multiple model providers with different transcript rules"]
 anti_signals: ["Short sessions that never approach the context limit", "Summary detail loss is not acceptable and manual curation is required"]
+related: ["prompt-caching-via-exact-prefix-preservation", "context-budget-as-a-governed-resource", "extended-coherence-work-sessions", "filesystem-based-agent-state", "curated-code-context-window"]
 updated_at: "2026-10-13"
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Session-Scoped Context Runtime for Agent Tools
-status: emerging
+status: proposed
 authors: ["Yves Gugger (@yvgude)"]
 based_on: ["Anthropic Model Context Protocol Specification"]
 category: "Context & Memory"

@@ -1,15 +1,15 @@
 ---
 title: "External Credential Sync"
-status: "established"
+status: emerging
 authors: ["OpenClaw Contributors"]
 based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
-category: "Security & Safety"
+category: "Tool Use & Environment"
 source: "https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts"
 tags: [credentials, oauth, token-sync, keychain, cli-integration, auth-reuse]
 summary: "Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership"
 signals: ["Users already sign in to the same providers through other CLIs or tools", "Stale or expired tokens cause auth failures during sessions", "Credentials drift between tools"]
 anti_signals: ["Headless environments with no OS keychain access", "The agent is the only tool that holds credentials for the provider", "Policy forbids reading credentials owned by other tools"]
-updated_at: "2026-10-13"
+updated_at: "2026-11-23"
 ---
 
 ## Problem
@@ -117,6 +117,13 @@ function isPersistedExternalCliAuthProfile(params: {
 - **Privilege requirements**: Reading keychain credentials may require user permission or elevated privileges.
 - **Sync lag**: Cached reads (~15 minute TTL) mean fresh credentials may not appear immediately.
 
+**Security note (blast radius):**
+
+This pattern is a convenience, not a security hardening. Sync copies raw credentials into a store that the agent process can read. This *increases* credential exposure compared to a design that keeps the credentials outside the agent process. If the agent reads untrusted input, an injected instruction can make it misuse or leak the synced credentials. For agents that read untrusted input, prefer these patterns:
+
+- [Local-First Credential Broker](local-first-credential-broker.md): a local broker injects credentials at the network layer, so the agent process never holds the raw secret.
+- [Credential-Free Outbox](credential-free-outbox.md): the agent writes to an outbox, and a separate job with its own token publishes the work, so the agent never holds a credential that can publish.
+
 ## References
 
 - [OpenClaw external-cli-sync.ts](https://github.com/openclaw/openclaw/blob/main/src/agents/auth-profiles/external-cli-sync.ts) - MiniMax CLI bootstrap and persisted ownership
@@ -125,3 +132,5 @@ function isPersistedExternalCliAuthProfile(params: {
 - RFC 6749: [OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749) - Refresh token semantics
 - RFC 9700: [OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/html/rfc9700) - Token storage, expiry, and protection guidance
 - Related: [PII Tokenization](/patterns/pii-tokenization) for credential security patterns
+- Contrasting alternative: [Local-First Credential Broker](local-first-credential-broker.md) - injects credentials at the network layer, so the agent never holds the raw secret
+- Contrasting alternative: [Credential-Free Outbox](credential-free-outbox.md) - publishes through a separate job that holds the token, so the agent never holds a credential that can publish

@@ -1,6 +1,6 @@
 ---
 title: "Continuous Autonomous Task Loop Pattern"
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Internal Practice"]
 category: "Orchestration & Control"
@@ -9,6 +9,7 @@ tags: [autonomous-execution, task-loop, rate-limiting, git-automation, cli-drive
 summary: "Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits"
 signals: ["A todo file holds discrete, well-defined tasks", "Manual task selection and Git commits slow down work", "Rate limits interrupt long agent sessions"]
 anti_signals: ["Tasks are complex or poorly defined", "Each task decision needs human oversight", "Elevated execution permissions are not allowed"]
+related: ["stop-hook-auto-continue-pattern", "filesystem-based-agent-state", "cross-cycle-consensus-relay", "tracker-as-desired-state-reconciliation", "deterministic-zero-llm-orchestration"]
 updated_at: "2026-10-13"
 ---
 

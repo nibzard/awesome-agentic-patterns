@@ -1,6 +1,6 @@
 ---
 title: "Factory over Assistant"
-status: validated-in-production
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["AMP (Thorsten Ball, Quinn Slack)", "Raising an Agent Podcast"]
 category: "Orchestration & Control"
@@ -9,6 +9,7 @@ tags: [parallelism, autonomous-agents, factory, assistant, sidebar, orchestratio
 summary: "Spawns several autonomous agents in parallel with automated feedback loops such as tests and builds, and checks on them later instead of watching one agent"
 signals: ["Models can work autonomously for long periods", "Tests, builds, and linters can verify agent output without a human", "You have many independent tasks to run at once"]
 anti_signals: ["Exploratory work where you do not yet know what you want", "Tasks need frequent human guidance or domain knowledge not written down", "Quick iterations where interactive feedback is faster"]
+related: ["custom-sandboxed-background-agent", "seamless-background-to-foreground-handoff", "spectrum-of-control-blended-initiative", "agent-modes-by-model-personality", "llm-observability"]
 updated_at: "2026-10-13"
 ---
 
@@ -172,7 +173,7 @@ The factory model is why AMP is killing their VS Code extension. The extension o
 * [Raising an Agent Episode 9: The Assistant is Dead, Long Live the Factory](https://www.youtube.com/watch?v=2wjnV6F2arc) - AMP (Thorsten Ball, Quinn Slack, 2026-01-22); also at [ampcode.com/podcast/episode-9](https://ampcode.com/podcast/episode-9)
 * [Raising an Agent Episode 10](https://ampcode.com/podcast/episode-10) - AMP, 2026-02-05: announces the editor extension sunset ("the sidebar era is ending")
 * [The Coding Agent Is Dead](https://ampcode.com/news/the-coding-agent-is-dead) - AMP, 2026-02-19: written announcement that Amp for VS Code and Amp for JetBrains are being sunset
-* [Communicative Agents for Software Development (OpenDevin)](https://arxiv.org/abs/2407.16819) - Wang et al., 2024
-* [AutoGen: Enabling Multi-Agent LLM Applications](https://arxiv.org/abs/2308.08160) - Duan et al. (Microsoft Research), 2023
+* [OpenDevin: An Open Platform for AI Software Developers](https://arxiv.org/abs/2407.16741) - Wang et al., 2024 (later renamed OpenHands)
+* [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155) - Wu et al. (Microsoft Research), 2023
 * [CAMEL: Communicative Agents for Mind Exploration](https://arxiv.org/abs/2303.17760) - Li et al., 2023
 * Related: [Agent Modes by Model Personality](agent-modes-by-model-personality.md), [Rich Feedback Loops](rich-feedback-loops.md)

@@ -1,6 +1,7 @@
 {
   "title": "Subagent Compilation Checker",
-  "status": "emerging",
+  "status": "proposed",
+  "evidence_grade": "medium",
   "authors": [
     "Nikola Balic (@nibzard)"
   ],

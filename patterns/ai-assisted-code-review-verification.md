@@ -1,6 +1,6 @@
 ---
 title: AI-Assisted Code Review / Verification
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Aman Sanger (Cursor)"]
 category: Feedback Loops
@@ -9,6 +9,7 @@ tags: [code-review, verification, quality-assurance, human-ai-collaboration, tru
 summary: "Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic"
 signals: ["AI generates more code than humans can review line by line", "Code review is the development bottleneck"]
 anti_signals: ["Team cannot tolerate false positives and alert fatigue", "Architectural decisions that need human-only judgment"]
+related: ["abstracted-code-representation-for-review", "output-verification-loop", "sub-agent-spawning", "subagent-compilation-checker", "deterministic-security-scanning-build-loop"]
 updated_at: "2026-10-13"
 ---
 

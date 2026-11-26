@@ -1,6 +1,6 @@
 ---
 title: Agent SDK for Programmatic Control
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anthropic (Claude Agent SDK)"]
 category: Tool Use & Environment
@@ -9,6 +9,7 @@ tags: [sdk, automation, ci/cd, programmatic access, scripting, api, headless age
 summary: "Exposes agent functions through an SDK and CLI so code can run the agent headless with set tools, permissions, and resource limits"
 signals: ["Agent must run in CI/CD pipelines or scheduled jobs", "Batch processing across many files or projects", "Building custom apps or UIs on an agent backend"]
 anti_signals: ["Microservices architecture that prefers REST or gRPC APIs", "High-frequency calls or real-time streaming", "Task needs conversational clarification"]
+related: ["cli-native-agent-orchestration", "surface-scoped-system-prompt", "failover-aware-model-fallback", "sandboxed-tool-authorization", "llm-observability"]
 updated_at: "2026-10-13"
 ---
 

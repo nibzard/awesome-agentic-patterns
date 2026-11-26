@@ -1,6 +1,6 @@
 ---
 title: Multi-Model Orchestration for Complex Edits
-status: validated-in-production
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Aman Sanger (Cursor)"]
 category: Orchestration & Control

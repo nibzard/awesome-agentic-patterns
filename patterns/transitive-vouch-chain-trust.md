@@ -1,6 +1,6 @@
 ---
 title: Transitive Vouch-Chain Trust
-status: emerging
+status: proposed
 authors: ["The-Nexus-Guard (@The-Nexus-Guard)"]
 based_on: ["Isnad methodology (hadith chain of transmission)", "PGP Web of Trust", "Ed25519 digital signatures"]
 category: Security & Safety

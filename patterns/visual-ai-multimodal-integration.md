@@ -1,6 +1,6 @@
 ---
 title: "Visual AI Multimodal Integration"
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anthropic computer use", "OpenAI", "Google"]
 category: "Tool Use & Environment"
@@ -9,6 +9,7 @@ tags: [multimodal, vision, video, image-processing, visual-understanding, agent-
 summary: "Adds multimodal models to the agent so it can analyze images, video, and screenshots and combine them with text to reason and act"
 signals: ["Tasks involve screenshots, charts, diagrams, or video", "Agent must debug UIs or extract data from visual documents", "Users want to show a problem instead of describing it"]
 anti_signals: ["All inputs are text only", "Budget cannot cover higher visual processing costs", "Visual data carries privacy risks that cannot be controlled"]
+related: ["three-stage-perception-architecture", "rendered-ui-finish-gate", "evidence-layered-evaluation-for-interactive-agents", "virtual-machine-operator-agent"]
 updated_at: "2026-10-13"
 ---
 
@@ -160,21 +161,6 @@ flowchart TD
 - **Medical Imaging**: Assist in analyzing medical images (with appropriate disclaimers)
 - **E-commerce**: Analyze product images for categorization or quality control
 
-## Trade-offs
-
-**Pros:**
-- Enables entirely new categories of tasks
-- More natural interaction (users can show rather than describe)
-- Better accuracy for visual tasks
-- Can handle complex multimodal reasoning
-
-**Cons:**
-- Higher computational costs for visual processing
-- Larger model requirements
-- Potential privacy concerns with visual data
-- May require specialized infrastructure for video processing
-- Quality depends on visual model capabilities
-
 ## How to use it
 
 - Use when tasks require visual understanding—UI debugging, document processing, image analysis, video comprehension, or code generation from screenshots.
@@ -182,6 +168,23 @@ flowchart TD
 - **Choose provider by use case**: all frontier providers accept images, so pick by task fit and verify current capability against the provider's own documentation (for example Anthropic's computer-use tool for screenshot-driven agents, or an open-source multimodal model for self-hosting).
 
 - **Optimize for costs**: Resize images to minimum viable size, use appropriate detail levels (low for general understanding, high for OCR), and consider cascading approaches (smaller models first, escalate when needed).
+
+## Trade-offs
+
+**Pros:**
+
+- Enables entirely new categories of tasks
+- More natural interaction (users can show rather than describe)
+- Better accuracy for visual tasks
+- Can handle complex multimodal reasoning
+
+**Cons:**
+
+- Higher computational costs for visual processing
+- Larger model requirements
+- Potential privacy concerns with visual data
+- May require specialized infrastructure for video processing
+- Quality depends on visual model capabilities
 
 ## References
 

@@ -1,6 +1,6 @@
 ---
 title: Dead-Man's Switch for Scheduled Agent Jobs
-status: validated-in-production
+status: emerging
 authors: ["James Ross (@jimy-r)"]
 based_on: ["Healthchecks.io-style cron monitoring (inverted to success-sentinel checking)"]
 category: "Reliability & Eval"

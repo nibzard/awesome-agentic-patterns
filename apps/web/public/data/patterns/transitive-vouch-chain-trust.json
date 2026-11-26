@@ -1,6 +1,7 @@
 {
   "title": "Transitive Vouch-Chain Trust",
-  "status": "emerging",
+  "status": "proposed",
+  "evidence_grade": "low",
   "authors": [
     "The-Nexus-Guard (@The-Nexus-Guard)"
   ],

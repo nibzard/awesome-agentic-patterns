@@ -1,6 +1,6 @@
 ---
 title: Rich Feedback Loops > Perfect Prompts
-status: validated-in-production
+status: foundational
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Thorsten Ball", "Quinn Slack"]
 category: Feedback Loops
@@ -9,6 +9,7 @@ tags: [feedback, testing, reliability, user-feedback, positive-reinforcement, co
 summary: "Returns compiler errors, test failures, lint output, and human feedback to the agent after each tool call so it can plan fixes and self-correct"
 signals: ["Agent quality improves only after iterative critique or retries", "Tools can emit structured errors, exit codes, or test results", "Users give frequent positive or corrective feedback"]
 anti_signals: ["No objective signal or tool output to feed back", "Runtime and cost of iterative passes are not acceptable"]
+related: ["stop-hook-auto-continue-pattern", "deterministic-grader-in-the-loop", "output-verification-loop", "workflow-evals-with-mocked-tools", "factory-over-assistant"]
 updated_at: "2026-10-13"
 ---
 

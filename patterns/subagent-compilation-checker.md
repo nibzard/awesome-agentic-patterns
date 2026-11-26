@@ -1,6 +1,6 @@
 ---
 title: "Subagent Compilation Checker"
-status: emerging
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Will Brown (Prime Intellect agentic-RL talk)"]
 category: "Reliability & Eval"

@@ -1,6 +1,6 @@
 {
   "title": "Design-Time File Partition as Concurrency Control",
-  "status": "emerging",
+  "status": "proposed",
   "authors": [
     "Jed Arden (@jedarden)"
   ],

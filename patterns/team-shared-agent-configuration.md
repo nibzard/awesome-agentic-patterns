@@ -1,6 +1,6 @@
 ---
 title: Team-Shared Agent Configuration as Code
-status: best-practice
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -24,6 +24,7 @@ summary: >-
   PRs and code review.
 signals: ["Several engineers use the same agent on one repository", "Team members get the same permission prompts again and again", "Team needs standard rules for files the agent must not touch"]
 anti_signals: ["Solo developer with no shared repository", "Config would need secrets that cannot be committed"]
+related: ["layered-configuration-context", "sandboxed-tool-authorization", "versioned-constitution-governance", "compounding-engineering-pattern", "agent-friendly-workflow-design"]
 updated_at: '2026-10-13'
 ---
 

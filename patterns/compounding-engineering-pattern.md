@@ -118,4 +118,3 @@ This allows non-experts to be productive immediately:
 * [Best practices for Claude Code](https://code.claude.com/docs/en/best-practices) - independent guidance on iterating and pruning CLAUDE.md, and moving one-off knowledge into skills
 * [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) - the skills mechanism this pattern accumulates into
 * [AGENTS.md](https://agents.md) - the cross-tool open format for the project-level instruction file
-* [Compounding Engineering Pattern Research Report](/research/compounding-engineering-pattern-report.md)

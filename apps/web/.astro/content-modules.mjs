@@ -1,8 +1,17 @@
 
 export default new Map([
-["src/content/packs/coding-agent-mvp.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fcoding-agent-mvp.mdx&astroContentModuleFlag=true")],
-["src/content/packs/safety-first-stack.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fsafety-first-stack.mdx&astroContentModuleFlag=true")],
+["src/content/guides/context-engineering-playbook.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fcontext-engineering-playbook.mdx&astroContentModuleFlag=true")],
+["src/content/guides/designing-reliable-agent-evals.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fdesigning-reliable-agent-evals.mdx&astroContentModuleFlag=true")],
 ["src/content/guides/help.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fhelp.mdx&astroContentModuleFlag=true")],
 ["src/content/guides/migration-to-git-labels.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fmigration-to-git-labels.mdx&astroContentModuleFlag=true")],
-["src/content/guides/pattern-selection.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fpattern-selection.mdx&astroContentModuleFlag=true")]]);
+["src/content/guides/multi-agent-topologies-compared.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fmulti-agent-topologies-compared.mdx&astroContentModuleFlag=true")],
+["src/content/guides/pattern-selection.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fpattern-selection.mdx&astroContentModuleFlag=true")],
+["src/content/guides/prompt-injection-defense-in-depth.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fguides%2Fprompt-injection-defense-in-depth.mdx&astroContentModuleFlag=true")],
+["src/content/packs/coding-agent-mvp.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fcoding-agent-mvp.mdx&astroContentModuleFlag=true")],
+["src/content/packs/cost-controlled-multi-agent-fleet.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fcost-controlled-multi-agent-fleet.mdx&astroContentModuleFlag=true")],
+["src/content/packs/deep-research-retrieval-agent.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fdeep-research-retrieval-agent.mdx&astroContentModuleFlag=true")],
+["src/content/packs/long-running-autonomous-worker.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Flong-running-autonomous-worker.mdx&astroContentModuleFlag=true")],
+["src/content/packs/production-eval-release-pipeline.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fproduction-eval-release-pipeline.mdx&astroContentModuleFlag=true")],
+["src/content/packs/safety-first-stack.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Fsafety-first-stack.mdx&astroContentModuleFlag=true")],
+["src/content/packs/untrusted-input-enterprise-agent.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpacks%2Funtrusted-input-enterprise-agent.mdx&astroContentModuleFlag=true")]]);
 		

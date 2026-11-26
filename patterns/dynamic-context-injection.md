@@ -1,6 +1,6 @@
 ---
 title: Dynamic Context Injection
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Boris Cherny (via Claude Code)"]
 category: Context & Memory
@@ -9,6 +9,7 @@ tags: [context management, dynamic context, lazy loading, slash commands, at-men
 summary: "Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands"
 signals: ["Interactive sessions need specific files or script output on demand", "Users often paste large text blocks or edit static context files", "Teams reuse the same complex instructions across sessions"]
 anti_signals: ["Non-interactive agents with no user in the session", "The needed context is static and fits in baseline configuration files", "You cannot enforce path allowlists and secret scanning on injected files"]
+related: ["layered-configuration-context", "shell-command-contextualization", "curated-code-context-window", "progressive-tool-discovery", "self-identity-accumulation"]
 updated_at: "2026-10-14"
 ---
 
@@ -56,7 +57,7 @@ sequenceDiagram
 
 ## Evidence
 
-- **Evidence Grade:** `established`
+- **Evidence Grade:** `high`
 - **Documented implementations:** `@` file references, `@server:resource` MCP resource mentions, and slash commands are documented product features of Claude Code (see References); equivalent at-mention mechanisms ship in other coding agents
 - **Security-critical:** injected files and command output are an injection surface, so allowlist validation and secret scanning matter
 

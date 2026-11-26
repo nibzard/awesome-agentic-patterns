@@ -1,20 +1,23 @@
 ---
 title: "Agent-First Tooling and Logging"
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Thorsten Ball (Sourcegraph)", "Kenton Varda (Cloudflare)"]
 category: "Tool Use & Environment"
 source: "https://blog.cloudflare.com/code-mode/"
-tags: [tool-design, logging, machine-readable, observability, agent-environment, mcp, structured-output]
-summary: "Designs tools and logs for agent consumption with one unified log stream, structured JSON output, and agent-aware CLI flags"
+tags: [tool-design, logging, machine-readable, observability, agent-environment, mcp, structured-output, diagnostics]
+summary: "Designs logs and tool output for agent consumption with one unified log stream, structured JSON, and agent-aware CLI flags"
 signals: ["Agent parses human-oriented CLI or log output", "Logs are split across client, server, and database streams", "Agent wastes tokens interpreting ambiguous tool output"]
 anti_signals: ["Humans are the main consumers of the tool output", "Team cannot maintain separate human and agent interfaces"]
-updated_at: "2026-10-13"
+related: ["dual-use-tool-design", "codebase-optimization-for-agents", "llm-friendly-api-design", "code-over-api-pattern", "llm-observability"]
+updated_at: "2026-11-23"
 ---
 
 ## Problem
 
 Most developer tools, CLIs, and application logs are designed for human consumption. They use color-coded, multi-line, or summarized outputs that are easy for a person to scan but can be difficult for an AI agent to parse reliably. This "human-centric" design creates noise and ambiguity, forcing the agent to waste tokens and effort on interpreting output rather than acting on it.
+
+The same problem shows up across streams: a request leaves traces in the client, the server, and the database, each in its own log. A human debugger knows where to look. An agent must reconcile all three before it can reason about what went wrong.
 
 ## Solution
 
@@ -27,6 +30,8 @@ Consciously design and adapt tooling and logging to be "agent-first," prioritizi
 - **Code-First Tool Interface:** For complex workflows, LLMs generate code that calls tools rather than invoking them directly. Measured input-token reductions for code-mode tool calling range from 58.2% to 92.8% in Bifrost's benchmarks, because intermediate results stay in the execution environment instead of model context. See [Code-Over-API Pattern](code-over-api-pattern.md) for the full treatment.
 
 This shift in design philosophy acknowledges that as agents perform more development work, the tools they use must adapt to serve them directly. An agent-friendly environment is a prerequisite for reliable and efficient agent performance.
+
+**Scope boundary.** This pattern governs what the environment *emits*: the log streams and structured diagnostics an agent reads to understand system state. The shared invocation interface, where humans and agents call the same command, is covered by [Dual-Use Tool Design](dual-use-tool-design.md).
 
 ## Example
 
@@ -55,12 +60,14 @@ sequenceDiagram
 ## Trade-offs
 
 - **Pros:**
+
   - Dramatically improves agent parsing accuracy and speed
   - Reduces token waste on output interpretation
   - Enables more reliable automation and decision-making
   - Single source of truth for system state
 
 - **Cons/Considerations:**
+
   - May sacrifice human readability and debugging convenience
   - Requires investment in tooling modifications
   - Teams need to maintain both human and agent interfaces (dual-interface pattern)
@@ -79,4 +86,4 @@ sequenceDiagram
 
 - Measured code-mode token savings: [Bifrost Code Mode benchmarks](https://docs.getbifrost.ai/mcp/code-mode) (58.2% to 92.8% input-token reduction)
 
-- Distinct from [Dual-Use Tool Design](dual-use-tool-design.md) (one interface for both audiences) and [LLM-Friendly API Design](llm-friendly-api-design.md) (API shape): this pattern is about tool output and logging being agent-consumable
+- Distinct from [Dual-Use Tool Design](dual-use-tool-design.md) (one shared invocation interface for both audiences) and [LLM-Friendly API Design](llm-friendly-api-design.md) (API shape): this pattern is about tool output and logging being agent-consumable

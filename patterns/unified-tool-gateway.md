@@ -1,6 +1,6 @@
 ---
 title: Unified Tool Gateway
-status: emerging
+status: production
 authors: ["Blake Folgado (@blakefolgado)"]
 based_on: ["API Gateway Pattern (microservices.io)", "Model Context Protocol"]
 category: "Tool Use & Environment"
@@ -15,7 +15,7 @@ impact: "high"
 signals: ["Agent needs 10+ external tools or APIs", "Managing multiple API keys across providers", "Usage-based billing required across tools", "Teams sharing tool access with centralized controls"]
 anti_signals: ["Single-provider tool usage", "Agents that only need 1-2 tools", "Fully offline or air-gapped environments"]
 prerequisites: ["MCP or tool-use capable agent", "Network access to external APIs"]
-related: ["progressive-tool-discovery", "tool-search-lazy-loading", "tool-capability-compartmentalization"]
+related: ["progressive-tool-discovery", "tool-capability-compartmentalization"]
 anti_patterns: ["direct-api-integration-per-tool"]
 tools: ["mcp-servers", "api-gateway", "tool-registry"]
 domains: ["tool-use", "infrastructure", "ops"]

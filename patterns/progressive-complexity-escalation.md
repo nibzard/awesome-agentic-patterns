@@ -24,69 +24,34 @@ updated_at: '2026-10-13'
 
 ## Problem
 
-Organizations deploy AI agents with overly ambitious capabilities from day one, leading to:
+Organizations deploy AI agents with overly ambitious capabilities from day one. The result is:
 
-- Unreliable outputs when agents tackle tasks beyond current model capabilities
+- Unreliable output on tasks beyond current model capability
 - Failed implementations that damage stakeholder confidence
-- Complex reasoning tasks producing inconsistent results
-- Wasted engineering effort building infrastructure for capabilities models can't yet deliver
-- Safety risks from autonomous execution of high-stakes operations
+- Inconsistent results on complex reasoning tasks
+- Engineering effort spent on infrastructure for capabilities that models cannot yet deliver
+- Safety risk from autonomous execution of high-stakes operations
 
-The gap between theoretical agent capabilities and practical reliability creates deployment failures.
+The gap between theoretical agent capability and practical reliability creates deployment failures.
 
 ## Solution
 
-Design agent systems to start with low-complexity, high-reliability tasks and progressively unlock more complex capabilities as models improve and trust is established. Match task complexity to current model capabilities rather than building to theoretical potential.
+Start with low-complexity, high-reliability tasks and unlock more complex capabilities as models improve and trust is established. Match task complexity to current model capability, not to theoretical potential.
 
 **Core principles:**
 
-**Grounded in learning science:**
-
-- Draws from curriculum learning theory and scaffolding research
-- Wilson et al. (2019) measure the optimal training signal at roughly 85% success (the "Eighty Five Percent Rule"); Vygotsky's Zone of Proximal Development contributes the related start-within-reach idea, not a percentage
-- Working memory limits require gradual complexity increase
-
-**Start with proven sweet spots:**
-
-- Low cognitive load tasks with high repetition
-- Tasks "too dynamic for traditional automation, but predictable enough for AI to handle reliably"
-- Information gathering and synthesis over complex reasoning
-- Well-defined success criteria
+- **Grounded in learning science:** the pattern draws on curriculum learning theory and scaffolding research. Wilson et al. (2019) measure the optimal training signal at roughly 85% success (the "Eighty Five Percent Rule"). Vygotsky's Zone of Proximal Development contributes the related start-within-reach idea, not a percentage. Working memory limits require a gradual complexity increase.
+- **Start with proven sweet spots:** low cognitive load tasks with high repetition, tasks "too dynamic for traditional automation, but predictable enough for AI to handle reliably", information gathering and synthesis over complex reasoning, and well-defined success criteria.
 
 **Define capability tiers:**
 
-```
-Tier 1 (Deploy immediately):
+| Tier | Tasks | Working memory |
+|------|-------|----------------|
+| 1 (deploy immediately) | Data entry and research, content categorization, information extraction, template-based generation | 2-3 items |
+| 2 (unlock with validation) | Multi-step workflows with human gates, conditional logic with structured outputs, integration with multiple tools, personalization and adaptation | 4-5 items |
+| 3 (future unlock) | Autonomous decision-making, complex reasoning chains, creative problem-solving, novel task generalization | 7+ items |
 
-- Data entry and research
-- Content categorization
-- Information extraction
-- Template-based generation
-- Working memory: 2-3 items
-
-Tier 2 (Unlock with validation):
-
-- Multi-step workflows with human gates
-- Conditional logic with structured outputs
-- Integration with multiple tools
-- Personalization and adaptation
-- Working memory: 4-5 items
-
-Tier 3 (Future unlock):
-
-- Autonomous decision-making
-- Complex reasoning chains
-- Creative problem-solving
-- Novel task generalization
-- Working memory: 7+ items
-```
-
-**Progressive unlock mechanisms:**
-
-- Performance metrics trigger capability expansion
-- Human review gates before promoting to higher tiers
-- A/B testing new capabilities against baselines
-- Gradual rollout with monitoring
+**Unlock progressively:** performance metrics trigger capability expansion, human review gates come before promotion to a higher tier, A/B testing compares new capabilities against baselines, and rollout is gradual, with monitoring.
 
 **Scope note:** the Vercel source documents the start-simple principle; the capability tiers and promotion gates in this pattern are this catalogue's extrapolation, not Vercel's framework.
 
@@ -121,44 +86,15 @@ graph TD
 
 ## How to use it
 
-**When to apply:**
-
-- Deploying agents into production environments
-- Building internal automation tools
-- Customer-facing agent applications
-- High-stakes or regulated domains
-- New agent capabilities with unproven reliability
-
-**Implementation approach:**
+**When to apply:** deploying agents into production environments, building internal automation tools, customer-facing agent applications, high-stakes or regulated domains, and new agent capabilities with unproven reliability.
 
 **1. Classify task complexity:**
 
-```python
-class TaskComplexity:
-    LOW = {
-        'cognitive_load': 'minimal',
-        'steps': 1-3,
-        'tools': 0-2,
-        'reasoning_depth': 'shallow',
-        'error_impact': 'low'
-    }
-
-    MEDIUM = {
-        'cognitive_load': 'moderate',
-        'steps': 4-8,
-        'tools': 2-5,
-        'reasoning_depth': 'multi-step',
-        'error_impact': 'medium'
-    }
-
-    HIGH = {
-        'cognitive_load': 'significant',
-        'steps': '8+',
-        'tools': '5+',
-        'reasoning_depth': 'deep/creative',
-        'error_impact': 'high'
-    }
-```
+| Load | Steps | Tools | Reasoning depth | Error impact |
+|------|-------|-------|-----------------|--------------|
+| Low | 1-3 | 0-2 | Shallow | Low |
+| Medium | 4-8 | 2-5 | Multi-step | Medium |
+| High | 8+ | 5+ | Deep or creative | High |
 
 **2. Define promotion criteria (illustrative values, not recommended defaults; tune per domain):**
 
@@ -178,7 +114,7 @@ capability_gates:
     - stakeholder_confidence: high
 ```
 
-**3. Implement capability flags:**
+**3. Gate capabilities behind a tier flag:**
 
 ```typescript
 class AgentCapabilities {
@@ -205,45 +141,44 @@ class AgentCapabilities {
 
 **4. Monitor and promote:**
 
-- Track success metrics per tier
-- Review error patterns and edge cases
-- Gradually expand agent authority
-- Maintain rollback capability
-- If success rate >90%, increase task difficulty; if <70%, decrease it
+- Track success metrics per tier, and review error patterns and edge cases
+- If the success rate is above 90%, increase task difficulty; if it is below 70%, decrease it
+- Expand agent authority gradually, and keep a rollback path for each promotion
 
 **Prerequisites:**
 
 - Clear success metrics for each capability tier
 - Monitoring and observability infrastructure
-- Stakeholder alignment on progression plan
+- Stakeholder alignment on the progression plan
 - Fallback mechanisms for failures
 
 ## Trade-offs
 
 **Pros:**
 
-- **Risk mitigation:** Limits blast radius of agent errors
-- **Stakeholder confidence:** Builds trust through proven reliability
-- **Focused engineering:** Resources spent on proven capabilities
-- **Graceful degradation:** System remains useful even at lower tiers
-- **Model evolution readiness:** Architecture prepared for capability growth
-- **Realistic expectations:** Aligns deployment with actual model performance
+- **Risk mitigation:** limits the blast radius of agent errors
+- **Stakeholder confidence:** builds trust through proven reliability
+- **Focused engineering:** resources go to proven capabilities, and the architecture is ready for model evolution
+- **Graceful degradation:** the system stays useful even at lower tiers
 
 **Cons:**
 
-- **Delayed value:** Full automation benefits realized over time, not immediately
-- **Complexity:** Requires tier management and promotion logic
-- **Maintenance overhead:** Multiple capability paths to test and maintain
-- **Promotion friction:** Manual review of metrics and promotion decisions
-- **User confusion:** Inconsistent capabilities across deployment phases
-- **Engineering investment:** Building infrastructure for future capabilities
+- **Delayed value:** full automation benefits arrive over time, not immediately
+- **Complexity:** tier management and promotion logic must be built and tested
+- **Promotion friction:** metrics and promotion decisions need review
+- **User confusion:** capabilities differ across deployment phases
 
 **Balancing approaches:**
 
-- Clearly communicate capability roadmap to stakeholders
-- Automate tier promotion based on objective metrics
-- Maintain simple mental model (what can the agent do today?)
-- Design for capability growth from day one
+- Communicate the capability roadmap to stakeholders
+- Automate tier promotion on objective metrics
+- Keep a simple mental model: what can the agent do today?
+
+**Failure modes / gotchas:**
+
+- **Gates copied as defaults:** the thresholds above are illustrative. A gate that is not tuned to the domain promotes a tier too early or holds it back too long.
+- **Building ahead of the evidence:** infrastructure for Tier 3 built before Tier 1 is proven is engineering spent on capabilities the model cannot yet deliver.
+- **Promotion without rollback:** a promoted tier that misbehaves needs a way back to the human-gated path. Keep that path live after each promotion.
 
 ## References
 

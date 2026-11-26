@@ -38,9 +38,9 @@ Eliminates unauthorized data exfiltration by controlling all outbound communicat
 
 ### 3. Lethal Trifecta Threat Model
 
-Addresses the three critical failure modes: reward hacking, goal misgeneralization, and scalable oversight.
+Classifies every tool against Simon Willison's three capabilities—access to private data, exposure to untrusted content, and the ability to communicate externally—because an execution path with all three lets a prompt injection exfiltrate private data. Then breaks at least one leg of that triangle on every path.
 
-**Why it's essential**: Provides a comprehensive framework for thinking about AI safety.
+**Why it's essential**: A simple audit that eliminates an entire attack class instead of chasing individual injections.
 
 ### 4. Deterministic Security Scanning Build Loop
 

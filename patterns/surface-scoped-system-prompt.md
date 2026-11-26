@@ -1,6 +1,6 @@
 ---
 title: "Surface-Scoped System Prompt"
-status: established
+status: emerging
 authors: ["Continuum AI (@xizhuomengcontin)"]
 based_on: ["MiniMax Code (MiniMax-AI)", "Claude Code (Anthropic)"]
 category: "Context & Memory"

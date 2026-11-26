@@ -1,6 +1,6 @@
 ---
 title: Agent-Powered Codebase Q&A / Onboarding
-status: validated-in-production
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Lukas Möller (Cursor)", "Aman Sanger (Cursor)"]
 category: Context & Memory
@@ -9,6 +9,7 @@ tags: [code-understanding, onboarding, q&a, retrieval, search, context-awareness
 summary: "Agent indexes the codebase with embeddings and code graphs and answers natural-language questions about where code is and how it behaves"
 signals: ["Developers onboard to a large or unfamiliar codebase", "Team explores legacy systems or asks repository-wide questions"]
 anti_signals: ["Codebase is small enough to read directly", "Team cannot keep indexes current as code changes"]
+related: ["precomputed-code-graph-lookup", "agentic-search-over-vector-embeddings", "curated-code-context-window", "dynamic-context-injection"]
 updated_at: "2026-10-13"
 ---
 

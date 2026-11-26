@@ -1,6 +1,6 @@
 {
   "title": "Unified Tool Gateway",
-  "status": "emerging",
+  "status": "production",
   "authors": [
     "Blake Folgado (@blakefolgado)"
   ],
@@ -42,7 +42,6 @@
   ],
   "related": [
     "progressive-tool-discovery",
-    "tool-search-lazy-loading",
     "tool-capability-compartmentalization"
   ],
   "anti_patterns": [

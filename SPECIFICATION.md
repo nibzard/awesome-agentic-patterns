@@ -303,7 +303,7 @@ apps/web/
 ### Phase 1 - Content Model and Schema
 4. Define the final front matter schema (required and optional fields).
 5. Add schema validation (Zod or Python) for `patterns/`.
-6. Update `patterns/TEMPLATE.md` to include new fields.
+6. Update `TEMPLATE.md` to include new fields.
 7. Add a migration script to backfill missing fields (summary, slug, id).
 8. Add lint checks for required sections and heading order.
 

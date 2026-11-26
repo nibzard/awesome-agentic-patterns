@@ -59,6 +59,7 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
 interface ParsedPattern {
   title: string;
   status: string;
+  evidence_grade?: string;
   authors: string[];
   based_on?: string[];
   category: string;
@@ -169,6 +170,7 @@ function parsePatternFile(filePath: string): ParsedPattern {
   return {
     title,
     status: (data.status as string) || 'proposed',
+    evidence_grade: data.evidence_grade as string | undefined,
     authors: toStringArray(data.authors, []) || [],
     based_on: toStringArray(data.based_on),
     category: (data.category as string) || 'Uncategorized',
@@ -399,6 +401,13 @@ function copyImageAssets(): void {
   });
 }
 
+function pruneOrphanedPatternJson(dir: string, activeJsonFiles: Set<string>): void {
+  // Only .json files are generated here; image assets and .md copies beside them must survive.
+  fs.readdirSync(dir)
+    .filter((file) => file.endsWith('.json') && !activeJsonFiles.has(file))
+    .forEach((file) => fs.rmSync(path.join(dir, file)));
+}
+
 function writeOutputs(patterns: ParsedPattern[]): void {
   fs.mkdirSync(publicDir, { recursive: true });
   fs.mkdirSync(dataDir, { recursive: true });
@@ -406,10 +415,20 @@ function writeOutputs(patterns: ParsedPattern[]): void {
   fs.mkdirSync(legacyPatternsDir, { recursive: true });
 
   const nodeIds = new Set(patterns.map((pattern) => pattern.id));
+  const slugToNodeId = new Map(patterns.map((pattern) => [pattern.slug, pattern.id]));
+  const resolveNodeId = (ref: string): string | undefined => {
+    if (nodeIds.has(ref)) return ref;
+    return slugToNodeId.get(ref);
+  };
+  const activeJsonFiles = new Set(patterns.map((pattern) => `${pattern.slug}.json`));
+
+  pruneOrphanedPatternJson(legacyPatternsDir, activeJsonFiles);
+  pruneOrphanedPatternJson(dataPatternsDir, activeJsonFiles);
 
   const patternIndex = patterns.map((pattern) => ({
     title: pattern.title,
     status: pattern.status,
+    evidence_grade: pattern.evidence_grade,
     authors: pattern.authors,
     based_on: pattern.based_on,
     category: pattern.category,
@@ -448,12 +467,14 @@ function writeOutputs(patterns: ParsedPattern[]): void {
     edges: patterns.flatMap((pattern) => {
       const relatedEdges =
         pattern.related
-          ?.filter((id) => nodeIds.has(id))
-          .map((id) => ({ source: pattern.id, target: id, type: 'related' as const })) || [];
+          ?.map((ref) => resolveNodeId(ref))
+          .filter((target): target is string => Boolean(target) && target !== pattern.id)
+          .map((target) => ({ source: pattern.id, target, type: 'related' as const })) || [];
       const antiEdges =
         pattern.anti_patterns
-          ?.filter((id) => nodeIds.has(id))
-          .map((id) => ({ source: pattern.id, target: id, type: 'anti-pattern' as const })) || [];
+          ?.map((ref) => resolveNodeId(ref))
+          .filter((target): target is string => Boolean(target) && target !== pattern.id)
+          .map((target) => ({ source: pattern.id, target, type: 'anti-pattern' as const })) || [];
       return [...relatedEdges, ...antiEdges];
     }),
   };
@@ -467,6 +488,7 @@ function writeOutputs(patterns: ParsedPattern[]): void {
     const patternJson = {
       title: pattern.title,
       status: pattern.status,
+      evidence_grade: pattern.evidence_grade,
       authors: pattern.authors,
       based_on: pattern.based_on,
       category: pattern.category,
@@ -500,7 +522,9 @@ function writeOutputs(patterns: ParsedPattern[]): void {
     );
   });
 
-  fs.writeFileSync(path.join(publicDir, 'llms.txt'), generateLlmsTxt(patterns));
+  const llmsTxt = generateLlmsTxt(patterns);
+  fs.writeFileSync(path.join(publicDir, 'llms.txt'), llmsTxt);
+  fs.writeFileSync(path.join(repoRoot, 'llms.txt'), llmsTxt);
   fs.writeFileSync(path.join(publicDir, 'llms-full.txt'), generateLlmsFullTxt(patterns));
   fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), generateSitemapXml(patterns));
   fs.writeFileSync(path.join(publicDir, 'rss.xml'), generateRssFeed(patterns));

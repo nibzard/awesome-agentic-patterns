@@ -1,20 +1,426 @@
 ---
+// ABOUTME: Decision guide page: four failure-mode-first questions that produce a short, linked pattern list.
+// ABOUTME: Recommendation rules are declared here and checked against patterns/*.md at build time.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import questions from '../data/decision-questions.json';
+import { getAllPatterns } from '../lib/patterns';
+
+interface RecommendationRule {
+  question: string;
+  value: string;
+  patterns: string[];
+}
+
+interface FailureModeGuide {
+  summary: string;
+  avoid: string[];
+}
+
+/** One line per pattern, written from that pattern's own summary and signals. */
+const PATTERN_WHY: Record<string, string> = {
+  'lethal-trifecta-threat-model':
+    'Classifies every tool by private-data access, untrusted-content exposure, and external communication, and blocks any execution path that has all three.',
+  'dual-llm-pattern':
+    'Splits the work between a privileged LLM that calls tools but never sees untrusted data and a quarantined LLM that reads untrusted data but has no tools.',
+  'context-minimization-pattern':
+    'Removes untrusted text and tool output from the context once they have become a safe structured artifact, so later steps see only trusted data.',
+  'egress-lockdown-no-exfiltration-channel':
+    'Puts the agent behind a default-deny egress firewall with allowlisted destinations, so stolen data has no outbound channel even if an injection succeeds.',
+  'plan-then-execute-pattern':
+    'Fixes the full sequence of tool calls before the model reads untrusted data, so tool output can change parameters but never which tools run.',
+  'action-selector-pattern':
+    'Lets the model only map intent to a pre-approved action ID with schema-validated parameters, so untrusted content cannot change which action runs.',
+  'llm-map-reduce-pattern':
+    'Processes each untrusted document in its own sandboxed LLM call with a constrained output, then aggregates the results with deterministic code.',
+  'semantic-context-filtering':
+    'Sends the model only the semantic parts of raw data, such as accessibility trees or relevant API fields, instead of the full payload.',
+  'context-window-auto-compaction':
+    'Catches context-overflow errors, compacts the transcript with capped reserve headroom, validates it for the provider, and retries automatically.',
+  'prompt-caching-via-exact-prefix-preservation':
+    'Keeps static prompt content first and only appends new messages, so each request reuses the cached prefix instead of reprocessing the whole history.',
+  'progressive-tool-discovery':
+    'Loads only core tools up front and lets the agent discover the rest on demand, so tool definitions stop consuming the context window.',
+  'code-over-api-pattern':
+    'Has the agent write code that calls tools and processes data inside a sandbox, so only summaries and samples return to the context window.',
+  'curated-code-context-window':
+    "Uses a search subagent to find the few relevant files for a task and injects only top snippets or summaries into the main agent's context.",
+  'progressive-disclosure-large-files':
+    'Puts only file metadata in the prompt and gives the agent load, peek, and extract tools to pull content into context on demand.',
+  'budget-aware-model-routing-with-hard-cost-caps':
+    'Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail.',
+  'context-budget-as-a-governed-resource':
+    'Measures always-loaded context per source, alerts on growth, and puts hard spend caps and fan-out bounds on unattended runs.',
+  'workflow-evals-with-mocked-tools':
+    'Runs complete agent workflows against mocked tools in CI and checks which tools were called; non-deterministic, so read it as a signal rather than a hard gate.',
+  'llm-observability':
+    'Sends agent runs to an observability platform for span-level traces of each LLM call and tool use, plus cost, latency, and success metrics.',
+  'canary-rollout-and-automatic-rollback-for-agent-policy-changes':
+    'Ships each prompt, tool-policy, or routing change to a small traffic slice first, watches guardrail metrics, and rolls back to the last stable version automatically.',
+  'incident-to-eval-synthesis':
+    'Turns each production incident into an executable eval case with pass/fail criteria, and gates future releases on it.',
+  'agent-circuit-breaker':
+    'Tracks failure rates per tool and temporarily disables a broken endpoint, so the agent stops burning tokens on retries that cannot succeed.',
+  'output-verification-loop':
+    'Extracts individual claims from the output, checks each against evidence sources, and returns per-claim trust scores before anything acts on the result.',
+  'evidence-layered-evaluation-for-interactive-agents':
+    'Scores each interactive run on a task-outcome assertion and attaches layered evidence: actions, screenshots, replays, network, and messages.',
+  'out-of-process-provider-boundary-replay':
+    'Records a run at the model-provider HTTP boundary and serves those bytes back, so the agent re-executes its own logic offline with no provider call.',
+  'sub-agent-spawning':
+    'Spawns sub-agents with fresh context and scoped tools to work on subtasks in parallel, then merges their results back in the main agent.',
+  'design-time-file-partition':
+    'Makes each task declare every path it will write and adds a blocking dependency between overlapping tasks, so only disjoint work runs at once.',
+  'lane-based-execution-queueing':
+    'Routes work into named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users.',
+  'dual-rail-message-delivery':
+    'Sends every inter-agent message on two independent channels, alerts when the rails diverge, and requires ACKs to confirm completion.',
+  'fair-share-task-queues-with-heartbeat-leases':
+    'Distributes tasks across a shared fleet with weighted fair-share scheduling, heartbeat leases, and dead-letter retries so a crashed worker does not lose its task.',
+  'filesystem-based-agent-state':
+    'Persists intermediate results and working state to files as durable checkpoints, so an interrupted job resumes instead of restarting.',
+  'working-memory-via-todos':
+    'Keeps an explicit task list with status, blockers, and next steps during the session, so progress survives context switches.',
+  'credential-free-outbox':
+    'Keeps publishing credentials out of the agent: it writes finished work to an outbox and a separate short-lived job delivers it.',
+  'dead-mans-switch-for-scheduled-agent-jobs':
+    'Has each scheduled job write a success sentinel to its log, and a separate checker file a task when the sentinel is missing or stale.',
+  'rich-feedback-loops':
+    'Returns compiler errors, test failures, lint output, and human feedback after each tool call so the agent can plan fixes and self-correct.',
+  'specification-driven-agent-development':
+    "Makes a version-controlled spec the agent's main input and regenerates executable tests from it on every commit to catch drift.",
+  'deterministic-security-scanning-build-loop':
+    'Adds SAST, SCA, and secret scanners to the build target the agent must run after each change, so scanner failures force the agent to fix the code.',
+  'background-agent-ci':
+    'Runs the agent in the background on its own branch and feeds CI results back, so it patches failures until green or blocked.',
+  'rendered-ui-finish-gate':
+    'Verifies an agent-built interface against its design contract, required states, interaction semantics, and rendered output before it merges.',
+  'human-in-loop-approval-framework':
+    'Puts human approval gates in front of designated high-risk operations, with an audit trail, while safe operations proceed without interruption.',
+  'exact-action-authorization-binding':
+    'Binds each approval to the exact action the reviewer saw, re-verifies that identity at the execution boundary, and commits the write once with an idempotency receipt.',
+  'chain-of-thought-monitoring-interruption':
+    "Streams the agent's reasoning and tool calls in real time so a human can interrupt and redirect early when the approach is wrong.",
+  'progressive-complexity-escalation':
+    'Deploys agents on low-complexity, high-reliability tasks first and unlocks higher tiers only when metrics and review gates show proven reliability.',
+  'verbose-reasoning-transparency':
+    "Lets users open a verbose view on demand that shows the agent's interpretation, tool choices, intermediate steps, and raw tool outputs.",
+  'structured-output-specification':
+    'Constrains agent outputs with deterministic schemas so results are machine-readable, validatable, and passed reliably to databases, APIs, or other agents.',
+  'agent-driven-research':
+    'Lets the agent plan its own queries, fan out parallel search workers, reflect on evidence gaps, and iterate until it can write a sourced report.',
+};
+
+/**
+ * Each rule lists the patterns that fit one answer, most useful first. For the failure mode, the first four
+ * are shown; entries after them only mark the pattern as relevant to that failure mode for the other slots.
+ */
+const RULES: RecommendationRule[] = [
+  {
+    question: 'failure-mode',
+    value: 'prompt-injection',
+    patterns: [
+      'lethal-trifecta-threat-model',
+      'dual-llm-pattern',
+      'context-minimization-pattern',
+      'egress-lockdown-no-exfiltration-channel',
+      'action-selector-pattern',
+      'llm-map-reduce-pattern',
+      'semantic-context-filtering',
+    ],
+  },
+  {
+    question: 'failure-mode',
+    value: 'context-cost',
+    patterns: [
+      'context-window-auto-compaction',
+      'prompt-caching-via-exact-prefix-preservation',
+      'progressive-tool-discovery',
+      'code-over-api-pattern',
+      'semantic-context-filtering',
+      'curated-code-context-window',
+      'progressive-disclosure-large-files',
+      'budget-aware-model-routing-with-hard-cost-caps',
+      'context-budget-as-a-governed-resource',
+    ],
+  },
+  {
+    question: 'failure-mode',
+    value: 'silent-regressions',
+    patterns: [
+      'workflow-evals-with-mocked-tools',
+      'llm-observability',
+      'canary-rollout-and-automatic-rollback-for-agent-policy-changes',
+      'incident-to-eval-synthesis',
+      'agent-circuit-breaker',
+      'output-verification-loop',
+      'evidence-layered-evaluation-for-interactive-agents',
+      'out-of-process-provider-boundary-replay',
+    ],
+  },
+  {
+    question: 'failure-mode',
+    value: 'multi-agent-drift',
+    patterns: [
+      'sub-agent-spawning',
+      'design-time-file-partition',
+      'lane-based-execution-queueing',
+      'dual-rail-message-delivery',
+      'fair-share-task-queues-with-heartbeat-leases',
+    ],
+  },
+  {
+    question: 'failure-mode',
+    value: 'long-session-coherence',
+    patterns: [
+      'filesystem-based-agent-state',
+      'context-window-auto-compaction',
+      'working-memory-via-todos',
+      'credential-free-outbox',
+      'dead-mans-switch-for-scheduled-agent-jobs',
+    ],
+  },
+  {
+    question: 'failure-mode',
+    value: 'unverified-shipping',
+    patterns: [
+      'workflow-evals-with-mocked-tools',
+      'rich-feedback-loops',
+      'specification-driven-agent-development',
+      'deterministic-security-scanning-build-loop',
+      'background-agent-ci',
+      'rendered-ui-finish-gate',
+    ],
+  },
+  {
+    question: 'trust-boundary',
+    value: 'trusted-only',
+    patterns: ['llm-observability', 'progressive-complexity-escalation'],
+  },
+  {
+    question: 'trust-boundary',
+    value: 'untrusted-input',
+    patterns: [
+      'lethal-trifecta-threat-model',
+      'egress-lockdown-no-exfiltration-channel',
+      'context-minimization-pattern',
+      'plan-then-execute-pattern',
+      'dual-llm-pattern',
+      'action-selector-pattern',
+    ],
+  },
+  {
+    question: 'trust-boundary',
+    value: 'irreversible-actions',
+    patterns: [
+      'human-in-loop-approval-framework',
+      'exact-action-authorization-binding',
+      'chain-of-thought-monitoring-interruption',
+    ],
+  },
+  {
+    question: 'horizon',
+    value: 'single-session',
+    patterns: ['verbose-reasoning-transparency', 'chain-of-thought-monitoring-interruption'],
+  },
+  {
+    question: 'horizon',
+    value: 'background-worker',
+    patterns: [
+      'filesystem-based-agent-state',
+      'dead-mans-switch-for-scheduled-agent-jobs',
+      'background-agent-ci',
+      'context-budget-as-a-governed-resource',
+    ],
+  },
+  {
+    question: 'horizon',
+    value: 'multi-agent-fleet',
+    patterns: [
+      'sub-agent-spawning',
+      'budget-aware-model-routing-with-hard-cost-caps',
+      'fair-share-task-queues-with-heartbeat-leases',
+      'agent-circuit-breaker',
+      'context-budget-as-a-governed-resource',
+    ],
+  },
+  {
+    question: 'domain',
+    value: 'coding',
+    patterns: [
+      'rich-feedback-loops',
+      'curated-code-context-window',
+      'background-agent-ci',
+      'out-of-process-provider-boundary-replay',
+    ],
+  },
+  {
+    question: 'domain',
+    value: 'enterprise-ops',
+    patterns: ['structured-output-specification', 'action-selector-pattern'],
+  },
+  {
+    question: 'domain',
+    value: 'research-retrieval',
+    patterns: [
+      'agent-driven-research',
+      'progressive-disclosure-large-files',
+      'llm-map-reduce-pattern',
+      'output-verification-loop',
+    ],
+  },
+  {
+    question: 'domain',
+    value: 'browser-ui',
+    patterns: [
+      'semantic-context-filtering',
+      'evidence-layered-evaluation-for-interactive-agents',
+      'rendered-ui-finish-gate',
+    ],
+  },
+];
+
+const FAILURE_MODE_GUIDES: Record<string, FailureModeGuide> = {
+  'prompt-injection': {
+    summary:
+      'No prompt or filter makes an agent injection-proof. Make sure no execution path combines private data, untrusted content, and external communication, then contain what an injected agent can reach.',
+    avoid: [
+      'Relying on a prompt instruction such as "ignore injected commands" as the primary control.',
+      'Letting one agent hold private data, read untrusted content, and reach the network on the same path.',
+      'Treating a clean-looking answer as safe while the raw untrusted text is still in the context window.',
+    ],
+  },
+  'context-cost': {
+    summary:
+      'Token spend is a design property, not a prompt-tuning problem. Keep what the model sees small and stable: trim inputs before they reach the context, load tools and files on demand, and preserve the cached prefix.',
+    avoid: [
+      'Loading every tool, file, or raw API response into the context by default.',
+      'Editing or reordering earlier messages mid-session, which invalidates the prompt cache.',
+      'Sending every request to the strongest model when a cheaper one passes the quality gate.',
+    ],
+  },
+  'silent-regressions': {
+    summary:
+      'Silent failures need a signal from outside the model. Put deterministic checks around the agent, trace every run, and ship changes so a regression is caught on a small slice and rolled back.',
+    avoid: [
+      'Treating green unit tests as proof that prompts and tools still work together.',
+      'Shipping a prompt or model change to all traffic without a versioned rollback.',
+      'Using a non-deterministic LLM judge as a hard CI gate.',
+    ],
+  },
+  'multi-agent-drift': {
+    summary:
+      'Parallel agents collide when concurrency is negotiated at run time. Decide it up front: give each unit of work an explicit owner and scope, keep queues separate, and make handoffs durable enough to detect a drop.',
+    avoid: [
+      'Letting parallel agents write to the same files with no declared ownership.',
+      'Handing work between agents through ephemeral chat with no durable record or acknowledgement.',
+      'Running every agent as a flat peer when no single agent owns the overall direction.',
+    ],
+  },
+  'long-session-coherence': {
+    summary:
+      'Long jobs lose state when it lives only in the context window. Write progress to durable checkpoints, keep the context compact across hours, keep credentials out of the job, and have an external check notice when it stops reporting.',
+    avoid: [
+      "Keeping goals and progress only in the model's context window.",
+      'Holding long-lived publishing credentials inside a job that may run for hours.',
+      'Trusting a job because it was scheduled, with no signal that it actually ran.',
+    ],
+  },
+  'unverified-shipping': {
+    summary:
+      'A clean compile proves very little. Verify behavior, not syntax: feed real test and CI signals back to the agent, scan for security issues, check the rendered interface when there is one, and test against the spec.',
+    avoid: [
+      'Equating a clean compile or a passing unit suite with a working feature.',
+      'Merging agent output with no behavioral, rendered, or security check.',
+      'Letting the spec live only in a prompt, so drift has nothing to be detected against.',
+    ],
+  },
+};
+
+const TRUST_BOUNDARY_AVOID: Record<string, string[]> = {
+  'trusted-only': [
+    'Granting write access or broad credentials that the task does not need yet.',
+    'Leaving the boundary unchanged after the agent gains new data sources or tools.',
+  ],
+  'untrusted-input': [
+    'Letting untrusted text reach the model that also holds high-privilege tools.',
+    'Assuming a filter or classifier will catch every injected instruction.',
+  ],
+  'irreversible-actions': [
+    'Approving a plan once and trusting that the executed action still matches it.',
+    'Retrying a failed write without an idempotency key.',
+  ],
+};
+
+const SLUG_FORMAT = /^[a-z0-9-]+$/;
+
+const optionValuesFor = (questionId: string): string[] =>
+  questions
+    .filter((question) => question.id === questionId)
+    .flatMap((question) => question.options.map((option) => option.value));
+
+const allPatterns = await getAllPatterns();
+const patternBySlug = new Map(allPatterns.map((pattern) => [pattern.slug, pattern]));
+const referencedSlugs = [...new Set(RULES.flatMap((rule) => rule.patterns))];
+
+const problems = [
+  ...referencedSlugs
+    .filter((slug) => !patternBySlug.has(slug))
+    .map((slug) => `no patterns/${slug}.md file`),
+  ...referencedSlugs
+    .filter((slug) => !SLUG_FORMAT.test(slug))
+    .map((slug) => `invalid slug format: ${slug}`),
+  ...referencedSlugs
+    .filter((slug) => !PATTERN_WHY[slug])
+    .map((slug) => `no decision-guide reason for ${slug}`),
+  ...RULES.filter((rule) => !optionValuesFor(rule.question).includes(rule.value)).map(
+    (rule) => `rule answers unknown option ${rule.question}=${rule.value}`
+  ),
+  ...optionValuesFor('failure-mode')
+    .filter((value) => !FAILURE_MODE_GUIDES[value])
+    .map((value) => `no guide for failure mode ${value}`),
+  ...optionValuesFor('trust-boundary')
+    .filter((value) => !TRUST_BOUNDARY_AVOID[value])
+    .map((value) => `no avoid list for trust boundary ${value}`),
+];
+
+if (problems.length > 0) {
+  throw new Error(`Decision guide is out of sync with the pattern catalog: ${problems.join('; ')}`);
+}
+
+const catalog = referencedSlugs.map((slug) => {
+  const pattern = patternBySlug.get(slug);
+  return {
+    slug,
+    title: pattern?.title ?? '',
+    status: pattern?.status ?? '',
+    why: PATTERN_WHY[slug] ?? '',
+  };
+});
+
+const engine = JSON.stringify({
+  questions,
+  catalog,
+  rules: RULES,
+  failureModes: FAILURE_MODE_GUIDES,
+  trustAvoid: TRUST_BOUNDARY_AVOID,
+}).replace(/</g, '\\u003c');
 
 const initialQuestion = questions[0];
 const initialProgress = (1 / questions.length) * 100;
 ---
 
-<BaseLayout title="Pattern Decision Tree - Awesome Agentic Patterns">
+<BaseLayout
+  title="Pattern Decision Tree - Awesome Agentic Patterns"
+  description="Answer four questions about your failure mode, trust boundary, execution shape, and domain to get a shortlist of agentic patterns."
+>
   <div class="decision-page">
     <section class="decision-hero">
       <div class="decision-hero-copy">
         <span class="section-label">Decision Guide</span>
         <h1>Decision guide</h1>
         <p class="decision-subtitle">
-          Answer a few questions about control, memory, tools, and safety. You get a short list of
-          patterns and the reason for each.
+          Answer a few questions about failure modes, trust boundaries, execution shape, and domain.
+          You get a short list of linked patterns and the reason for each.
         </p>
       </div>
     </section>
@@ -26,8 +432,8 @@ const initialProgress = (1 / questions.length) * 100;
             <div>
               <p class="decision-stage-kicker">Route builder</p>
               <p class="decision-stage-copy">
-                Each answer narrows the shortlist and preserves the reasoning behind the
-                recommendation.
+                Each answer adds its own picks to the shortlist, and every recommendation keeps the
+                reason it fits your failure mode, trust boundary, execution shape, and domain.
               </p>
             </div>
             <div class="decision-progress">
@@ -47,11 +453,11 @@ const initialProgress = (1 / questions.length) * 100;
 
                 return (
                   <a href={`/decision?answers=${answersParam}`} class="option-card">
-                    <div class="option-header">
-                      <input type="radio" readonly />
+                    <span class="option-header">
+                      <span class="option-radio" aria-hidden="true" />
                       <span class="option-label">{option.label}</span>
-                    </div>
-                    <p class="option-description">{option.description}</p>
+                    </span>
+                    <span class="option-description">{option.description}</span>
                   </a>
                 );
               })
@@ -63,153 +469,228 @@ const initialProgress = (1 / questions.length) * 100;
   </div>
 </BaseLayout>
 
-<script type="application/json" id="decision-questions" set:html={JSON.stringify(questions)} />
+<script type="application/json" id="decision-engine" set:html={engine} />
 
 <script>
-  const questionsEl = document.getElementById('decision-questions');
-  const questions = questionsEl ? JSON.parse(questionsEl.textContent || '[]') : [];
+  interface QuestionOption {
+    value: string;
+    label: string;
+    description: string;
+  }
+
+  interface Question {
+    id: string;
+    question: string;
+    options: QuestionOption[];
+  }
+
+  interface CatalogEntry {
+    slug: string;
+    title: string;
+    status: string;
+    why: string;
+  }
+
+  interface Rule {
+    question: string;
+    value: string;
+    patterns: string[];
+  }
+
+  interface Engine {
+    questions: Question[];
+    catalog: CatalogEntry[];
+    rules: Rule[];
+    failureModes: Record<string, { summary: string; avoid: string[] }>;
+    trustAvoid: Record<string, string[]>;
+  }
+
+  interface Answer {
+    questionId: string;
+    value: string;
+  }
+
+  interface ResultGroup {
+    title: string;
+    patterns: CatalogEntry[];
+  }
+
+  interface Recommendation {
+    groups: ResultGroup[];
+    route: { label: string; value: string }[];
+    summary: string;
+    avoid: string[];
+  }
+
+  // Slots keep every answer useful: the failure mode fills most of the list, and each other answer gets its own picks.
+  const SLOT_PLAN: { question: string; count: number }[] = [
+    { question: 'failure-mode', count: 4 },
+    { question: 'trust-boundary', count: 2 },
+    { question: 'horizon', count: 1 },
+    { question: 'domain', count: 1 },
+  ];
+  // Execution shape and domain move a pattern up when another answer also recommends it.
+  const CROSS_MATCH_FIRST = new Set(['horizon', 'domain']);
+  const ROUTE_LABELS: Record<string, string> = {
+    'failure-mode': 'Failure mode',
+    'trust-boundary': 'Trust boundary',
+    horizon: 'Execution shape',
+    domain: 'Domain',
+  };
+  const FALLBACK_SUMMARY =
+    'Start with the patterns that match your answers, read the detail page for each, and commit to a small stack for the first version.';
+  const HTML_ESCAPES: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+
+  const EMPTY_ENGINE: Engine = {
+    questions: [],
+    catalog: [],
+    rules: [],
+    failureModes: {},
+    trustAvoid: {},
+  };
+
   const root = document.getElementById('decision-root');
 
-  const parseAnswers = () => {
-    const params = new URLSearchParams(window.location.search);
-    const raw = params.get('answers');
-    if (!raw) return [];
+  const escapeHtml = (value: string): string =>
+    value.replace(/[&<>"']/g, (character) => HTML_ESCAPES[character] ?? character);
+
+  const isEngine = (value: unknown): value is Engine => {
+    if (typeof value !== 'object' || value === null) return false;
+    const candidate = value as Partial<Engine>;
+    return (
+      Array.isArray(candidate.questions) &&
+      Array.isArray(candidate.catalog) &&
+      Array.isArray(candidate.rules)
+    );
+  };
+
+  const readEngine = (): Engine => {
     try {
-      const parsed = JSON.parse(decodeURIComponent(raw));
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (err) {
-      return [];
+      const parsed: unknown = JSON.parse(
+        document.getElementById('decision-engine')?.textContent || ''
+      );
+      return isEngine(parsed) ? parsed : EMPTY_ENGINE;
+    } catch {
+      return EMPTY_ENGINE;
     }
   };
 
-  const getRecommendations = (answerList) => {
-    const answersMap = Object.fromEntries(answerList.map((a) => [a.questionId, a.value]));
-    const agentType = answersMap['agent-type'] ?? answersMap.agentType;
+  const engine = readEngine();
+  const catalogBySlug = new Map(engine.catalog.map((entry) => [entry.slug, entry]));
 
-    const patterns = [];
-    const rationales = [];
-    const avoid = [];
+  const isAnswer = (value: unknown): value is Answer => {
+    if (typeof value !== 'object' || value === null) return false;
+    const candidate = value as Partial<Answer>;
+    return typeof candidate.questionId === 'string' && typeof candidate.value === 'string';
+  };
 
-    if (agentType === 'autonomous') {
-      patterns.push(
-        'Continuous Autonomous Task Loop',
-        'Specification-Driven Agent Development',
-        'Progressive Autonomy with Model Evolution'
+  // Answers arrive through the URL, so keep only known options and only as an ordered prefix of the questions.
+  const parseAnswers = (questions: Question[]): Answer[] => {
+    const raw = new URLSearchParams(window.location.search).get('answers');
+    if (!raw) return [];
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return [];
+    }
+    if (!Array.isArray(parsed)) return [];
+
+    const given = parsed.filter(isAnswer);
+    const ordered: Answer[] = [];
+
+    for (const question of questions) {
+      const match = given.find(
+        (answer) =>
+          answer.questionId === question.id &&
+          question.options.some((option) => option.value === answer.value)
       );
-      rationales.push(
-        'For autonomous agents, consider patterns that enable self-directed operation and gradual capability increase.'
-      );
-      avoid.push(
-        'Unbounded tool access without guardrails.',
-        'Long-running loops without checkpoints.'
-      );
-    } else if (agentType === 'assisted') {
-      patterns.push(
-        'Human-in-Loop Approval Framework',
-        'Spectrum of Control: Blended Initiative',
-        'Seamless Background-to-Foreground Handoff'
-      );
-      rationales.push(
-        'Human-assisted agents benefit from clear control handoff and approval mechanisms.'
-      );
-      avoid.push('Opaque autonomy without explicit handoff points.');
-    } else if (agentType === 'workflow') {
-      patterns.push(
-        'Code-Then-Execute Pattern',
-        'Asynchronous Coding Agent Pipeline',
-        'Plan-Then-Execute Pattern'
-      );
-      rationales.push(
-        'Workflow automation benefits from clear separation of planning and execution phases.'
-      );
-      avoid.push('Single-step automation without validation gates.');
+      if (!match) break;
+      ordered.push({ questionId: question.id, value: match.value });
     }
 
-    if (answersMap.complexity === 'complex') {
-      patterns.push(
-        'Tree-of-Thought Reasoning',
-        'Graph-of-Thoughts',
-        'Language Agent Tree Search (LATS)'
-      );
-      rationales.push(
-        'Complex tasks require advanced reasoning patterns that explore multiple solution paths.'
-      );
-      avoid.push('Single-pass solutions that skip exploration and verification.');
-    } else if (answersMap.complexity === 'moderate') {
-      patterns.push('Chain-of-Thought Monitoring', 'Reflection');
-      rationales.push(
-        'Moderately complex tasks benefit from structured reasoning and self-reflection.'
-      );
-    } else if (answersMap.complexity === 'simple') {
-      avoid.push('Over-engineered planners that add latency to simple tasks.');
-    }
+    return ordered;
+  };
 
-    if (answersMap.memory === 'persistent') {
-      patterns.push(
-        'Episodic Memory Retrieval Injection',
-        'Filesystem-Based Agent State',
-        'Memory Synthesis from Execution Logs'
+  // Each slot takes its picks from the rule of its own question, in that rule's order, and skips patterns that an
+  // earlier slot already took.
+  const buildGroups = (answers: Answer[]): ResultGroup[] => {
+    const ruleFor = (question: string): Rule | undefined =>
+      engine.rules.find(
+        (rule) =>
+          rule.question === question &&
+          answers.some((answer) => answer.questionId === question && answer.value === rule.value)
       );
-      rationales.push(
-        'Long-term memory requires patterns for storing, retrieving, and synthesizing past experiences.'
-      );
-      avoid.push('Persisting sensitive data without retention policies.');
-    } else if (answersMap.memory === 'session') {
-      patterns.push('Context Window Optimization', 'Progressive Disclosure for Large Files');
-      rationales.push('Session memory benefits from efficient context management techniques.');
-      avoid.push('Over-reliance on long context windows without summarization.');
-    } else if (answersMap.memory === 'none') {
-      avoid.push('Adding storage layers that are never used.');
-    }
 
-    if (answersMap.tools === 'many') {
-      patterns.push(
-        'Progressive Tool Discovery',
-        'Tool Capability Compartmentalization',
-        'Parallel Tool Execution'
-      );
-      rationales.push(
-        'When using many tools, consider patterns for discovery, organization, and parallel execution.'
-      );
-      avoid.push('Tool sprawl without permissions and usage boundaries.');
-    } else if (answersMap.tools === 'few') {
-      patterns.push('Code-First Tool Interface Pattern', 'Tool Use Steering via Prompting');
-      rationales.push(
-        'For a small set of tools, focus on clear interfaces and effective prompting.'
-      );
-      avoid.push('Overbuilding dynamic tool discovery for a fixed tool set.');
-    } else if (answersMap.tools === 'none') {
-      avoid.push('Designing prompts around tools you do not have.');
-    }
+    const otherMatches = (slug: string, question: string): number =>
+      SLOT_PLAN.filter(
+        (slot) => slot.question !== question && ruleFor(slot.question)?.patterns.includes(slug)
+      ).length;
 
-    if (answersMap.safety === 'high') {
-      patterns.push(
-        'Anti-Reward Hacking Grader Design',
-        'Egress Lockdown: No Exfiltration Channel',
-        'Lethal Trifecta Threat Model',
-        'Deterministic Security Scanning Build Loop'
+    // The failure mode and the trust boundary keep their curated order.
+    const candidates = (question: string): string[] => {
+      const patterns = ruleFor(question)?.patterns ?? [];
+      if (!CROSS_MATCH_FIRST.has(question)) return patterns;
+      return [...patterns].sort(
+        (a, b) =>
+          otherMatches(b, question) - otherMatches(a, question) ||
+          patterns.indexOf(a) - patterns.indexOf(b)
       );
-      rationales.push(
-        'High-risk applications require security-focused patterns to prevent exploitation and ensure safety.'
-      );
-      avoid.push('Shipping without evals, monitoring, and rollback plans.');
-      avoid.push('Granting high-risk permissions by default.');
-    } else if (answersMap.safety === 'medium') {
-      patterns.push('Workflow Evals with Mocked Tools', 'LLM Observability');
-      rationales.push(
-        'Medium-risk applications benefit from evaluation and observability patterns.'
-      );
-      avoid.push('Skipping evaluation and observability instrumentation.');
-    }
+    };
+
+    // The type argument goes on the variable, because the repo ESLint parser rejects it on "new".
+    const taken: Set<string> = new Set();
+
+    return SLOT_PLAN.flatMap((slot) => {
+      const patterns = candidates(slot.question)
+        .filter((slug) => !taken.has(slug))
+        .slice(0, slot.count)
+        .flatMap((slug) => catalogBySlug.get(slug) ?? []);
+
+      patterns.forEach((pattern) => taken.add(pattern.slug));
+      if (patterns.length === 0) return [];
+
+      return [
+        {
+          title: `For your ${(ROUTE_LABELS[slot.question] ?? slot.question).toLowerCase()}`,
+          patterns,
+        },
+      ];
+    });
+  };
+
+  const getRecommendations = (answers: Answer[]): Recommendation => {
+    const valueOf = (questionId: string): string | undefined =>
+      answers.find((answer) => answer.questionId === questionId)?.value;
+
+    const failureMode = valueOf('failure-mode');
+    const trustBoundary = valueOf('trust-boundary');
+    const guide = failureMode ? engine.failureModes[failureMode] : undefined;
+    const trustAvoid = trustBoundary ? engine.trustAvoid[trustBoundary] : undefined;
+
+    const route = answers.flatMap((answer) => {
+      const question = engine.questions.find((item) => item.id === answer.questionId);
+      const option = question?.options.find((item) => item.value === answer.value);
+      if (!question || !option) return [];
+      return [{ label: ROUTE_LABELS[question.id] ?? question.question, value: option.label }];
+    });
 
     return {
-      patterns: [...new Set(patterns)],
-      rationale: rationales.join(' '),
-      avoid: [...new Set(avoid)],
+      groups: buildGroups(answers),
+      route,
+      summary: guide?.summary ?? FALLBACK_SUMMARY,
+      avoid: [...new Set([...(guide?.avoid ?? []), ...(trustAvoid ?? [])])],
     };
   };
 
-  const renderProgress = (index, total) => {
+  const renderProgress = (index: number, total: number): string => {
     const progress = ((index + 1) / total) * 100;
 
     return `
@@ -222,19 +703,18 @@ const initialProgress = (1 / questions.length) * 100;
     `;
   };
 
-  const renderQuestion = (question, answers, index) => {
-    const total = questions.length;
+  const renderQuestion = (question: Question, answers: Answer[], index: number): string => {
     const optionsHtml = question.options
       .map((option) => {
         const newAnswers = [...answers, { questionId: question.id, value: option.value }];
         const answersParam = encodeURIComponent(JSON.stringify(newAnswers));
         return `
           <a href="/decision?answers=${answersParam}" class="option-card">
-            <div class="option-header">
-              <input type="radio" readonly />
-              <span class="option-label">${option.label}</span>
-            </div>
-            <p class="option-description">${option.description}</p>
+            <span class="option-header">
+              <span class="option-radio" aria-hidden="true"></span>
+              <span class="option-label">${escapeHtml(option.label)}</span>
+            </span>
+            <span class="option-description">${escapeHtml(option.description)}</span>
           </a>
         `;
       })
@@ -246,7 +726,7 @@ const initialProgress = (1 / questions.length) * 100;
           <a href="/decision?answers=${encodeURIComponent(
             JSON.stringify(answers.slice(0, -1))
           )}" class="button button--secondary">
-            ← Previous
+            &larr; Previous
           </a>
         `
         : '';
@@ -257,50 +737,71 @@ const initialProgress = (1 / questions.length) * 100;
           <div>
             <p class="decision-stage-kicker">Route builder</p>
             <p class="decision-stage-copy">
-              Each answer narrows the shortlist and preserves the reasoning behind the recommendation.
+              Each answer narrows the shortlist. Every recommendation keeps the reason it fits your failure
+              mode, trust boundary, execution shape, and domain.
             </p>
           </div>
-          ${renderProgress(index, total)}
+          ${renderProgress(index, engine.questions.length)}
         </div>
-        <h2 class="question-title">${question.question}</h2>
+        <h2 class="question-title">${escapeHtml(question.question)}</h2>
         <div class="question-options">${optionsHtml}</div>
         <div class="decision-nav">${previousLink}<span></span></div>
       </div>
     `;
   };
 
-  const renderResults = (recommendation) => {
-    const patternsHtml = recommendation.patterns
+  const renderPatternCard = (pattern: CatalogEntry): string => `
+    <a href="/patterns/${pattern.slug}" class="result-pattern">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="result-icon" aria-hidden="true" focusable="false">
+        <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="currentColor" />
+      </svg>
+      <span class="result-body">
+        <span class="result-heading">
+          <span class="result-title">${escapeHtml(pattern.title)}</span>
+          <span class="status-pill status-pill--${escapeHtml(pattern.status)}">${escapeHtml(pattern.status)}</span>
+        </span>
+        <span class="result-why">${escapeHtml(pattern.why)}</span>
+      </span>
+      <span class="result-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  `;
+
+  const renderResults = (recommendation: Recommendation): string => {
+    const routeHtml = recommendation.route
       .map(
-        (pattern) => `
-          <div class="result-pattern">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="result-icon">
-              <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="currentColor" />
-            </svg>
-            <span>${pattern}</span>
+        (stop) => `
+          <div>
+            <dt>${escapeHtml(stop.label)}</dt>
+            <dd>${escapeHtml(stop.value)}</dd>
           </div>
         `
       )
       .join('');
-
-    const avoidItems = recommendation.avoid.map((item) => `<li>${item}</li>`).join('');
-    const avoidHtml =
-      avoidItems.length > 0
-        ? `<ul>${avoidItems}</ul>`
-        : '<p>Focus on clear boundaries, reliable validation, and safe tool access.</p>';
+    const groupsHtml = recommendation.groups
+      .map(
+        (group) => `
+          <section class="results-group">
+            <h3>${escapeHtml(group.title)}</h3>
+            <div class="results-patterns">${group.patterns.map(renderPatternCard).join('')}</div>
+          </section>
+        `
+      )
+      .join('');
+    const avoidHtml = recommendation.avoid.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
 
     return `
       <div class="decision-results">
-        <h2 class="results-title">Recommended Patterns</h2>
+        <h2 class="results-title">Recommended patterns</h2>
+        <dl class="results-route">${routeHtml}</dl>
         <div class="results-rationale">
-          <h3>Why These Patterns?</h3>
-          <p>${recommendation.rationale}</p>
+          <h3>Approach</h3>
+          <p>${escapeHtml(recommendation.summary)}</p>
         </div>
+        ${groupsHtml}
         <div class="results-avoid">
-          <h3>What to Avoid</h3>
-          ${avoidHtml}
+          <h3>What to avoid</h3>
+          <ul>${avoidHtml}</ul>
         </div>
-        <div class="results-patterns">${patternsHtml}</div>
         <div class="decision-actions">
           <a href="/decision" class="button button--primary">Start Over</a>
           <a href="/patterns" class="button button--secondary">Browse All Patterns</a>
@@ -309,18 +810,18 @@ const initialProgress = (1 / questions.length) * 100;
     `;
   };
 
-  const renderDecision = () => {
-    if (!root || questions.length === 0) return;
-    const answers = parseAnswers();
-    const step = Math.min(answers.length, questions.length);
+  const renderDecision = (): void => {
+    if (!root || engine.questions.length === 0) return;
 
-    if (step < questions.length) {
-      root.innerHTML = renderQuestion(questions[step], answers, step);
+    const answers = parseAnswers(engine.questions);
+    const step = answers.length;
+
+    if (step < engine.questions.length) {
+      root.innerHTML = renderQuestion(engine.questions[step], answers, step);
       return;
     }
 
-    const recommendation = getRecommendations(answers);
-    root.innerHTML = renderResults(recommendation);
+    root.innerHTML = renderResults(getRecommendations(answers));
   };
 
   renderDecision();
@@ -454,11 +955,35 @@ const initialProgress = (1 / questions.length) * 100;
     margin-bottom: var(--spacing-sm);
   }
 
-  .option-header input[type='radio'] {
+  .option-radio {
+    display: inline-grid;
+    place-content: center;
+    flex-shrink: 0;
     width: 20px;
     height: 20px;
-    cursor: pointer;
-    accent-color: var(--color-primary);
+    border: 2px solid var(--color-divider);
+    border-radius: 50%;
+    transition: border-color 0.2s ease;
+  }
+
+  .option-radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    transform: scale(0);
+    transition: transform 0.2s ease;
+  }
+
+  .option-card:hover .option-radio,
+  .option-card:focus-visible .option-radio {
+    border-color: var(--color-primary);
+  }
+
+  .option-card:hover .option-radio::after,
+  .option-card:focus-visible .option-radio::after {
+    transform: scale(1);
   }
 
   .option-label {
@@ -467,6 +992,7 @@ const initialProgress = (1 / questions.length) * 100;
   }
 
   .option-description {
+    display: block;
     font-size: 0.95rem;
     color: var(--text-muted-strong);
     margin: 0;
@@ -490,6 +1016,37 @@ const initialProgress = (1 / questions.length) * 100;
     font-size: clamp(2rem, 4vw, 3rem);
     color: var(--color-text);
     margin-bottom: 0;
+  }
+
+  .results-route {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--spacing-md);
+    margin: 0;
+  }
+
+  .results-route > div {
+    display: grid;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-soft);
+    border-radius: var(--radius-md);
+  }
+
+  .results-route dt {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .results-route dd {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-text);
   }
 
   .results-rationale {
@@ -536,32 +1093,106 @@ const initialProgress = (1 / questions.length) * 100;
     margin-bottom: var(--spacing-xs);
   }
 
+  .results-group {
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  .results-group h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
   .results-patterns {
     display: grid;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
   }
 
   .result-pattern {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--spacing-md);
-    padding: 0.95rem 1rem;
+    padding: clamp(1rem, 2vw, 1.25rem);
     background-color: var(--surface-card);
-    border-radius: var(--radius-lg);
     border: 1px solid var(--surface-border-strong);
-    font-weight: 600;
+    border-radius: var(--radius-lg);
     color: var(--color-text);
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .result-pattern:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-bg-elevated);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .result-icon {
     color: var(--color-primary);
     flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .result-body {
+    display: grid;
+    gap: var(--spacing-xs);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .result-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .result-title {
+    font-size: 1.08rem;
+    font-weight: 600;
+  }
+
+  .result-why {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted-strong);
+  }
+
+  .result-arrow {
+    align-self: center;
+    flex-shrink: 0;
+    color: var(--color-primary);
+    transition: transform 0.2s ease;
+  }
+
+  .result-pattern:hover .result-arrow {
+    transform: translateX(3px);
   }
 
   .decision-actions {
     display: flex;
     gap: var(--spacing-md);
     flex-wrap: wrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .option-card,
+    .option-radio,
+    .option-radio::after,
+    .result-pattern,
+    .result-arrow {
+      transition: none;
+    }
+
+    .option-card:hover,
+    .result-pattern:hover {
+      transform: none;
+    }
   }
 
   @media (max-width: 960px) {
@@ -594,6 +1225,10 @@ const initialProgress = (1 / questions.length) * 100;
 
     .question-title {
       max-width: none;
+    }
+
+    .result-arrow {
+      display: none;
     }
   }
 </style>

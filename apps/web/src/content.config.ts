@@ -1,15 +1,9 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const patternStatus = z.enum([
-  'proposed',
-  'emerging',
-  'established',
-  'validated-in-production',
-  'best-practice',
-  'experimental-but-awesome',
-  'rapidly-improving',
-]);
+const patternStatus = z.enum(['proposed', 'emerging', 'production', 'foundational']);
+
+const evidenceGrade = z.enum(['high', 'medium', 'low', 'mixed', 'unknown']);
 
 const patternCategory = z.enum([
   'Orchestration & Control',
@@ -40,6 +34,7 @@ const patterns = defineCollection({
     id: z.string().optional(),
     slug: z.string().optional(),
     status: patternStatus,
+    evidence_grade: evidenceGrade.optional(),
     authors: z.array(z.string()).min(1),
     based_on: z.array(z.string()).optional(),
     category: patternCategory,

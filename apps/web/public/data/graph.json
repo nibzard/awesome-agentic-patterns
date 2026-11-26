@@ -140,7 +140,7 @@
       "id": "agent-sdk-for-programmatic-control",
       "title": "Agent SDK for Programmatic Control",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "production",
       "slug": "agent-sdk-for-programmatic-control",
       "tags": [
         "sdk",
@@ -157,7 +157,7 @@
       "id": "agent-assisted-scaffolding",
       "title": "Agent-Assisted Scaffolding",
       "category": "UX & Collaboration",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "agent-assisted-scaffolding",
       "tags": [
         "code-generation",
@@ -173,16 +173,20 @@
       "id": "agent-driven-research",
       "title": "Agent-Driven Research",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "production",
       "slug": "agent-driven-research",
       "tags": [
         "research",
         "information retrieval",
-        "tool use",
         "iterative process",
-        "autonomous search"
+        "autonomous search",
+        "web-search",
+        "parallel-agents",
+        "query-translation",
+        "grounding",
+        "citations"
       ],
-      "summary": "Agent plans its own search queries, runs them across sources, reflects on gaps, and iterates until it can write a sourced report"
+      "summary": "Agent plans its own queries, fans out parallel search workers across sources, reflects on evidence gaps, and iterates until it can write a sourced report"
     },
     {
       "id": "agent-first-tool-discovery",
@@ -197,15 +201,20 @@
         "service-registry",
         "llms-txt",
         "api-discovery",
-        "agent-infrastructure"
+        "agent-infrastructure",
+        "agent-discovery",
+        "interoperability",
+        "protocol-agnostic",
+        "a2a",
+        "agents-txt"
       ],
-      "summary": "Build search indexes designed for agent consumers, returning structured tool metadata ranked by agent-relevant signals instead of human SEO metrics."
+      "summary": "Indexes tools and agents across MCP registries, A2A cards, OpenAPI specs, and custom directories into one normalized search surface ranked by agent-relevant signals"
     },
     {
       "id": "agent-first-tooling-and-logging",
       "title": "Agent-First Tooling and Logging",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "production",
       "slug": "agent-first-tooling-and-logging",
       "tags": [
         "tool-design",
@@ -214,9 +223,10 @@
         "observability",
         "agent-environment",
         "mcp",
-        "structured-output"
+        "structured-output",
+        "diagnostics"
       ],
-      "summary": "Designs tools and logs for agent consumption with one unified log stream, structured JSON output, and agent-aware CLI flags"
+      "summary": "Designs logs and tool output for agent consumption with one unified log stream, structured JSON, and agent-aware CLI flags"
     },
     {
       "id": "agent-friendly-workflow-design",
@@ -237,7 +247,7 @@
       "id": "agent-powered-codebase-qa-onboarding",
       "title": "Agent-Powered Codebase Q&A / Onboarding",
       "category": "Context & Memory",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "agent-powered-codebase-qa-onboarding",
       "tags": [
         "code-understanding",
@@ -254,7 +264,7 @@
       "id": "agentic-search-over-vector-embeddings",
       "title": "Agentic Search Over Vector Embeddings",
       "category": "Tool Use & Environment",
-      "status": "best-practice",
+      "status": "emerging",
       "slug": "agentic-search-over-vector-embeddings",
       "tags": [
         "search",
@@ -268,45 +278,10 @@
       "summary": "Replaces vector indexes with agent-driven grep, find, and file traversal that searches current file state on demand and refines iteratively"
     },
     {
-      "id": "ai-web-search-agent-loop",
-      "title": "AI Web Search Agent Loop",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "ai-web-search-agent-loop",
-      "tags": [
-        "web-search",
-        "serp-api",
-        "citations",
-        "parallel-agents",
-        "query-translation",
-        "operators",
-        "grounding"
-      ],
-      "summary": "Coordinator agent translates queries, spawns parallel search workers across domains and time ranges, refines iteratively, and answers with citations"
-    },
-    {
-      "id": "ai-accelerated-learning-and-skill-development",
-      "title": "AI-Accelerated Learning and Skill Development",
-      "category": "UX & Collaboration",
-      "status": "best-practice",
-      "slug": "ai-accelerated-learning-and-skill-development",
-      "tags": [
-        "developer-productivity",
-        "learning",
-        "skill-acquisition",
-        "iteration",
-        "feedback",
-        "taste-development",
-        "education",
-        "junior-developer"
-      ],
-      "summary": "Uses AI assistants as tutors that explain errors and concepts, offer alternatives, and fade support as the developer gains skill"
-    },
-    {
       "id": "ai-assisted-code-review-verification",
       "title": "AI-Assisted Code Review / Verification",
       "category": "Feedback Loops",
-      "status": "established",
+      "status": "production",
       "slug": "ai-assisted-code-review-verification",
       "tags": [
         "code-review",
@@ -318,6 +293,28 @@
         "software-quality"
       ],
       "summary": "Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic"
+    },
+    {
+      "id": "anchored-structured-context-compaction",
+      "title": "Anchored Structured Context Compaction",
+      "category": "Context & Memory",
+      "status": "production",
+      "slug": "anchored-structured-context-compaction",
+      "tags": [
+        "context-management",
+        "compaction",
+        "structured-summary",
+        "long-horizon-tasks",
+        "state-preservation",
+        "context-drift",
+        "agentic-memory"
+      ],
+      "summary": "Maintains a typed state block (pinned goal and constraints, verified decisions, an artifact registry, open blockers) and merges only the newly evicted span into it at each compaction, so that long sessions keep exact details instead of drifting",
+      "domains": [
+        "coding",
+        "research",
+        "ops"
+      ]
     },
     {
       "id": "anti-reward-hacking-grader-design",
@@ -335,34 +332,10 @@
       "summary": "Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality."
     },
     {
-      "id": "approval-bound-transactional-write",
-      "title": "Approval-Bound Transactional Write",
-      "category": "Reliability & Eval",
-      "status": "emerging",
-      "slug": "approval-bound-transactional-write",
-      "tags": [
-        "idempotency",
-        "human-approval",
-        "transactions",
-        "postconditions",
-        "drift-detection",
-        "agent-writes",
-        "retries"
-      ],
-      "summary": "Binds a human approval to one exact plan version, then applies the write, checks the postcondition and records the idempotency key in a single database transaction",
-      "maturity": "early",
-      "domains": [
-        "finance",
-        "inventory",
-        "erp",
-        "operations"
-      ]
-    },
-    {
       "id": "artifact-driven-analysis-pipeline-orchestration",
       "title": "Artifact-Driven Analysis Pipeline Orchestration",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "multi-step-analysis-pipeline-orchestration",
       "tags": [
         "pipeline",
@@ -413,7 +386,7 @@
       "id": "autonomous-workflow-agent-architecture",
       "title": "Autonomous Workflow Agent Architecture",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "autonomous-workflow-agent-architecture",
       "tags": [
         "workflow-automation",
@@ -429,7 +402,7 @@
       "id": "background-agent-with-ci-feedback",
       "title": "Background Agent with CI Feedback",
       "category": "Feedback Loops",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "background-agent-ci",
       "tags": [
         "asynchronous",
@@ -442,7 +415,7 @@
       "id": "black-box-skill-invocation",
       "title": "Black-Box Skill Invocation",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "black-box-skill-invocation",
       "tags": [
         "privacy",
@@ -459,7 +432,7 @@
       "id": "board-mediated-async-inter-agent-coordination",
       "title": "Board-Mediated Async Inter-Agent Coordination",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "board-mediated-inter-agent-coordination",
       "tags": [
         "multi-agent",
@@ -478,7 +451,7 @@
       "id": "budget-aware-model-routing-with-hard-cost-caps",
       "title": "Budget-Aware Model Routing with Hard Cost Caps",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "emerging",
       "slug": "budget-aware-model-routing-with-hard-cost-caps",
       "tags": [
         "routing",
@@ -490,27 +463,10 @@
       "summary": "Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail"
     },
     {
-      "id": "burn-the-boats",
-      "title": "Burn the Boats",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "burn-the-boats",
-      "tags": [
-        "feature-killing",
-        "forced-evolution",
-        "courage",
-        "focus",
-        "self-destruct",
-        "obsolescence",
-        "product-strategy"
-      ],
-      "summary": "Removes working but obsolete features on a hard, announced deadline so the team and users move to the new approach"
-    },
-    {
       "id": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
       "title": "Canary Rollout and Automatic Rollback for Agent Policy Changes",
       "category": "Reliability & Eval",
-      "status": "established",
+      "status": "emerging",
       "slug": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
       "tags": [
         "canary",
@@ -525,7 +481,7 @@
       "id": "capability-escrow-receipt",
       "title": "Capability-Escrow-Receipt",
       "category": "Orchestration & Control",
-      "status": "experimental-but-awesome",
+      "status": "proposed",
       "slug": "capability-escrow-receipt",
       "tags": [
         "multi-agent",
@@ -569,26 +525,10 @@
       "summary": "Sorts each task into has-default, needs-intent, or out-of-scope, builds only has-default work in a sandbox, and queues it for human review"
     },
     {
-      "id": "cli-first-skill-design",
-      "title": "CLI-First Skill Design",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "cli-first-skill-design",
-      "tags": [
-        "cli",
-        "skills",
-        "shell",
-        "dual-use",
-        "composability",
-        "unix-philosophy"
-      ],
-      "summary": "Builds each skill as a standalone CLI with JSON output and exit codes so humans and agents use the same interface"
-    },
-    {
       "id": "cli-native-agent-orchestration",
       "title": "CLI-Native Agent Orchestration",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "emerging",
       "slug": "cli-native-agent-orchestration",
       "tags": [
         "cli",
@@ -600,41 +540,27 @@
       "summary": "Drives agents through their non-interactive CLI mode (claude -p with JSON output and exit codes) so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs"
     },
     {
-      "id": "code-mode-mcp-tool-interface-improvement-pattern",
-      "title": "Code Mode MCP Tool Interface Improvement Pattern",
-      "category": "Tool Use & Environment",
-      "status": "established",
-      "slug": "code-first-tool-interface-pattern",
-      "tags": [
-        "tool-interface",
-        "code-generation",
-        "sandboxing",
-        "mcp",
-        "mcp-improvement",
-        "typescript",
-        "v8-isolates",
-        "token-optimization"
-      ],
-      "summary": "LLMs generate TypeScript code to orchestrate MCP tools in ephemeral V8 isolates, eliminating token-heavy round-trips and enabling efficient multi-step workflows with large measured token savings."
-    },
-    {
       "id": "code-over-api-pattern",
-      "title": "Code-Over-API Pattern",
+      "title": "Code-Over-API (Code Mode)",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "production",
       "slug": "code-over-api-pattern",
       "tags": [
         "token-optimization",
         "code-execution",
         "data-processing",
-        "mcp"
+        "mcp",
+        "mcp-improvement",
+        "tool-interface",
+        "sandboxing",
+        "v8-isolates"
       ],
-      "summary": "Agent writes code that calls tools and filters data inside a sandbox, so only summaries and samples return to the context window"
+      "summary": "Agent writes code that calls tools and processes data inside a sandbox, so only summaries and samples return to the context window instead of every intermediate result"
     },
     {
       "id": "code-then-execute-pattern",
       "title": "Code-Then-Execute Pattern",
-      "category": "Tool Use & Environment",
+      "category": "Security & Safety",
       "status": "emerging",
       "slug": "code-then-execute-pattern",
       "tags": [
@@ -706,7 +632,7 @@
       "id": "conditional-parallel-tool-execution",
       "title": "Conditional Parallel Tool Execution",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "parallel-tool-execution",
       "tags": [
         "parallel execution",
@@ -724,7 +650,7 @@
       "id": "consequence-family-coverage-audit",
       "title": "Consequence-Family Coverage Audit",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "consequence-family-coverage-audit",
       "tags": [
         "risk-classification",
@@ -745,7 +671,7 @@
       "id": "context-budget-as-a-governed-resource",
       "title": "Context Budget as a Governed Resource",
       "category": "Context & Memory",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "context-budget-as-a-governed-resource",
       "tags": [
         "context-budget",
@@ -774,7 +700,7 @@
       "id": "context-window-auto-compaction",
       "title": "Context Window Auto-Compaction",
       "category": "Context & Memory",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "context-window-auto-compaction",
       "tags": [
         "context-management",
@@ -790,7 +716,7 @@
       "id": "context-minimization-pattern",
       "title": "Context-Minimization Pattern",
       "category": "Context & Memory",
-      "status": "emerging",
+      "status": "foundational",
       "slug": "context-minimization-pattern",
       "tags": [
         "context-hygiene",
@@ -803,7 +729,7 @@
       "id": "continuous-autonomous-task-loop-pattern",
       "title": "Continuous Autonomous Task Loop Pattern",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "production",
       "slug": "continuous-autonomous-task-loop-pattern",
       "tags": [
         "autonomous-execution",
@@ -852,7 +778,7 @@
       "id": "cross-agent-lesson-sharing-via-git",
       "title": "Cross-Agent Lesson Sharing via Git",
       "category": "Context & Memory",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "cross-agent-lesson-sharing",
       "tags": [
         "distributed-memory",
@@ -867,7 +793,7 @@
       "id": "cross-cycle-consensus-relay",
       "title": "Cross-Cycle Consensus Relay",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "cross-cycle-consensus-relay",
       "tags": [
         "multi-agent",
@@ -896,23 +822,6 @@
       "summary": "A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code."
     },
     {
-      "id": "cross-protocol-agent-discovery",
-      "title": "Cross-Protocol Agent Discovery",
-      "category": "Tool Use & Environment",
-      "status": "proposed",
-      "slug": "cross-protocol-agent-discovery",
-      "tags": [
-        "agent-discovery",
-        "mcp",
-        "registry",
-        "interoperability",
-        "protocol-agnostic",
-        "a2a",
-        "agents-txt"
-      ],
-      "summary": "Aggregates agent metadata across fragmented registries and protocols into a unified, protocol-agnostic discovery layer (proposed; no neutral implementation verified)"
-    },
-    {
       "id": "cryptographic-governance-audit-trail",
       "title": "Cryptographic Governance Audit Trail",
       "category": "Security & Safety",
@@ -933,7 +842,7 @@
       "id": "curated-code-context-window",
       "title": "Curated Code Context Window",
       "category": "Context & Memory",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "curated-code-context-window",
       "tags": [
         "context-management",
@@ -964,7 +873,7 @@
       "id": "dead-mans-switch-for-scheduled-agent-jobs",
       "title": "Dead-Man's Switch for Scheduled Agent Jobs",
       "category": "Reliability & Eval",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "dead-mans-switch-for-scheduled-agent-jobs",
       "tags": [
         "scheduled-agents",
@@ -976,10 +885,33 @@
       "summary": "Each scheduled job writes a success sentinel to its log, and a separate checker files a task when the sentinel is missing or stale"
     },
     {
+      "id": "debiased-llm-as-a-judge-evaluation",
+      "title": "Debiased LLM-as-a-Judge Evaluation",
+      "category": "Reliability & Eval",
+      "status": "production",
+      "slug": "debiased-llm-as-a-judge-evaluation",
+      "tags": [
+        "llm-as-a-judge",
+        "position-bias",
+        "verbosity-bias",
+        "self-enhancement-bias",
+        "rubric-based-eval",
+        "judge-calibration",
+        "human-alignment",
+        "evaluation"
+      ],
+      "summary": "Removes the systematic distortions of a model judge before its scores gate a release: swaps the order of each pairwise comparison, grades narrow pass/fail rubric items that cite evidence, supplies a reference answer and a judge from another model family, and measures the agreement with human labels first",
+      "domains": [
+        "evaluation",
+        "research",
+        "coding"
+      ]
+    },
+    {
       "id": "declarative-multi-agent-topology-definition",
       "title": "Declarative Multi-Agent Topology Definition",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "declarative-multi-agent-topology-definition",
       "tags": [
         "multi-agent",
@@ -996,21 +928,27 @@
       "summary": "Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework."
     },
     {
-      "id": "democratization-of-tooling-via-agents",
-      "title": "Democratization of Tooling via Agents",
-      "category": "UX & Collaboration",
-      "status": "established",
-      "slug": "democratization-of-tooling-via-agents",
+      "id": "delegated-user-authorization-oauth-token-exchange",
+      "title": "Delegated User Authorization (OAuth Token Exchange)",
+      "category": "Security & Safety",
+      "status": "production",
+      "slug": "delegated-user-auth-token-exchange",
       "tags": [
-        "no-code",
-        "low-code",
-        "citizen-developer",
-        "tool-creation",
-        "business-users",
-        "automation",
-        "custom-software"
+        "oauth",
+        "token-exchange",
+        "delegation",
+        "least-privilege",
+        "on-behalf-of",
+        "audit-attribution",
+        "multi-tenant",
+        "identity"
       ],
-      "summary": "Non-programmers describe a tool in natural language and iterate with an AI agent that generates and fixes the code for dashboards, scripts, or small apps"
+      "summary": "Exchanges the user's token and the agent's own identity for a short-lived, single-audience, minimally scoped token immediately before each tool call, so that the agent acts with delegated and attributable authority instead of a shared super-credential",
+      "domains": [
+        "enterprise",
+        "security",
+        "ops"
+      ]
     },
     {
       "id": "denial-tracking-permission-escalation",
@@ -1038,7 +976,7 @@
       "id": "design-time-file-partition-as-concurrency-control",
       "title": "Design-Time File Partition as Concurrency Control",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "design-time-file-partition",
       "tags": [
         "multi-agent",
@@ -1059,7 +997,7 @@
       "id": "deterministic-grader-in-the-loop",
       "title": "Deterministic Grader in the Loop",
       "category": "Feedback Loops",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "deterministic-grader-in-the-loop",
       "tags": [
         "feedback-loop",
@@ -1109,7 +1047,7 @@
       "id": "deterministic-zero-llm-orchestration",
       "title": "Deterministic Zero-LLM Orchestration",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "deterministic-zero-llm-orchestration",
       "tags": [
         "orchestration",
@@ -1120,24 +1058,6 @@
         "zero-llm-overhead"
       ],
       "summary": "A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending LLM tokens only on the one-time goal decomposition"
-    },
-    {
-      "id": "dev-tooling-assumptions-reset",
-      "title": "Dev Tooling Assumptions Reset",
-      "category": "UX & Collaboration",
-      "status": "emerging",
-      "slug": "dev-tooling-assumptions-reset",
-      "tags": [
-        "dev-tools",
-        "assumptions",
-        "github",
-        "tickets",
-        "code-review",
-        "tooling",
-        "agent-workflows",
-        "paradigm-shift"
-      ],
-      "summary": "Audits dev tools for human-effort assumptions and replaces tickets, PR ceremony, and sprints with immediate agent dispatch, variations, and automated tests"
     },
     {
       "id": "discrete-phase-separation",
@@ -1153,21 +1073,6 @@
         "multi-model"
       ],
       "summary": "Splits work into separate research, planning, and implementation conversations, each with fresh context, passing only distilled outputs between phases"
-    },
-    {
-      "id": "disposable-scaffolding-over-durable-features",
-      "title": "Disposable Scaffolding Over Durable Features",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "disposable-scaffolding-over-durable-features",
-      "tags": [
-        "bitter-lesson",
-        "temporary-tooling",
-        "model-centric",
-        "adaptability",
-        "future-proofing"
-      ],
-      "summary": "Treats code around the model as temporary scaffolding: build the simplest thing that works now, mark it disposable, and remove it when models improve"
     },
     {
       "id": "distributed-execution-with-cloud-workers",
@@ -1186,22 +1091,6 @@
       "summary": "Runs many agent sessions in parallel on cloud workers, each in its own git worktree, with dependency-aware scheduling, merge coordination, and approval gates"
     },
     {
-      "id": "dogfooding-with-rapid-iteration-for-agent-improvement",
-      "title": "Dogfooding with Rapid Iteration for Agent Improvement",
-      "category": "Feedback Loops",
-      "status": "best-practice",
-      "slug": "dogfooding-with-rapid-iteration-for-agent-improvement",
-      "tags": [
-        "dogfooding",
-        "iterative-development",
-        "feedback-loop",
-        "agent-improvement",
-        "internal-testing",
-        "product-development"
-      ],
-      "summary": "The agent team uses its own agent for daily work, collects feedback in low-friction channels, and ships features internally first to validate or discard them"
-    },
-    {
       "id": "dual-llm-pattern",
       "title": "Dual LLM Pattern",
       "category": "Orchestration & Control",
@@ -1218,7 +1107,7 @@
       "id": "dual-rail-message-delivery",
       "title": "Dual-Rail Message Delivery",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "dual-rail-message-delivery",
       "tags": [
         "multi-agent",
@@ -1233,10 +1122,32 @@
       "summary": "Sends every inter-agent message on two independent channels through one entry point, alerts when the rails diverge, and requires ACKs to confirm completion"
     },
     {
+      "id": "dual-speed-realtime-architecture-talker-reasoner",
+      "title": "Dual-Speed Realtime Architecture (Talker-Reasoner)",
+      "category": "Orchestration & Control",
+      "status": "emerging",
+      "slug": "dual-speed-talker-reasoner-architecture",
+      "tags": [
+        "talker-reasoner",
+        "dual-process",
+        "realtime",
+        "background-reasoning",
+        "shared-belief-state",
+        "latency",
+        "asynchronous-agents"
+      ],
+      "summary": "Splits an agent into a fast Talker that owns the live conversation and a slow Reasoner that plans and calls tools in the background, with a shared belief state as their only coupling, so that the user gets a reply at once while the deep work runs",
+      "domains": [
+        "coaching",
+        "customer-support",
+        "coding"
+      ]
+    },
+    {
       "id": "dual-use-tool-design",
       "title": "Dual-Use Tool Design",
       "category": "Tool Use & Environment",
-      "status": "best-practice",
+      "status": "foundational",
       "slug": "dual-use-tool-design",
       "tags": [
         "tools",
@@ -1244,15 +1155,42 @@
         "slash-commands",
         "hooks",
         "human-ai-collaboration",
-        "consistency"
+        "consistency",
+        "cli",
+        "skills",
+        "composability",
+        "unix-philosophy"
       ],
-      "summary": "Builds each tool with one interface and implementation that both humans and agents can call, with the same output, permissions, and logs"
+      "summary": "Builds each tool or skill as one CLI interface that both humans and agents call, with JSON output, exit codes, and the same permissions and logs"
+    },
+    {
+      "id": "durable-execution-step-checkpointing",
+      "title": "Durable Execution & Step Checkpointing",
+      "category": "Orchestration & Control",
+      "status": "production",
+      "slug": "durable-execution-step-checkpointing",
+      "tags": [
+        "durable-execution",
+        "checkpointing",
+        "replay",
+        "idempotency",
+        "saga-compensation",
+        "long-running-agents",
+        "workflow-orchestration",
+        "retries"
+      ],
+      "summary": "Replays a durable step history to resume crashed, rate-limited, or approval-paused agent runs from the last completed step, without repeating finished LLM calls or committed side effects",
+      "domains": [
+        "ops",
+        "enterprise",
+        "coding"
+      ]
     },
     {
       "id": "dynamic-context-injection",
       "title": "Dynamic Context Injection",
       "category": "Context & Memory",
-      "status": "established",
+      "status": "production",
       "slug": "dynamic-context-injection",
       "tags": [
         "context management",
@@ -1267,8 +1205,8 @@
     {
       "id": "egress-lockdown-no-exfiltration-channel",
       "title": "Egress Lockdown (No-Exfiltration Channel)",
-      "category": "Tool Use & Environment",
-      "status": "established",
+      "category": "Security & Safety",
+      "status": "foundational",
       "slug": "egress-lockdown-no-exfiltration-channel",
       "tags": [
         "network-sandbox",
@@ -1282,7 +1220,7 @@
       "id": "episodic-memory-retrieval-injection",
       "title": "Episodic Memory Retrieval & Injection",
       "category": "Context & Memory",
-      "status": "established",
+      "status": "production",
       "slug": "episodic-memory-retrieval-injection",
       "tags": [
         "episodic-memory",
@@ -1296,7 +1234,7 @@
       "id": "evidence-questions-not-verdict-questions",
       "title": "Evidence Questions, Not Verdict Questions",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "evidence-questions-not-verdict-questions",
       "tags": [
         "policy-authoring",
@@ -1334,7 +1272,7 @@
       "id": "exact-action-authorization-binding",
       "title": "Exact-Action Authorization Binding",
       "category": "Security & Safety",
-      "status": "proposed",
+      "status": "emerging",
       "slug": "exact-action-authorization-binding",
       "tags": [
         "authorization",
@@ -1342,21 +1280,30 @@
         "tool-use",
         "action-binding",
         "TOCTOU",
-        "receipts"
+        "receipts",
+        "idempotency",
+        "transactions",
+        "postconditions",
+        "drift-detection",
+        "agent-writes",
+        "retries"
       ],
-      "summary": "Bind a short-lived approval to the complete action presented to the reviewer, then rederive and compare that identity at the acting boundary before execution.",
-      "maturity": "early",
+      "summary": "Bind a short-lived approval to the complete action presented to the reviewer, rederive and compare that identity at the acting boundary before execution, and commit the write with its postcondition check and idempotency receipt in one transaction.",
       "domains": [
         "ops",
         "coding",
-        "fintech"
+        "fintech",
+        "finance",
+        "inventory",
+        "erp",
+        "operations"
       ]
     },
     {
       "id": "explicit-posterior-sampling-planner",
       "title": "Explicit Posterior-Sampling Planner",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "explicit-posterior-sampling-planner",
       "tags": [
         "RL",
@@ -1371,7 +1318,7 @@
       "id": "extended-coherence-work-sessions",
       "title": "Extended Coherence Work Sessions",
       "category": "Reliability & Eval",
-      "status": "rapidly-improving",
+      "status": "emerging",
       "slug": "extended-coherence-work-sessions",
       "tags": [
         "coherence",
@@ -1385,8 +1332,8 @@
     {
       "id": "external-credential-sync",
       "title": "External Credential Sync",
-      "category": "Security & Safety",
-      "status": "established",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
       "slug": "external-credential-sync",
       "tags": [
         "credentials",
@@ -1402,7 +1349,7 @@
       "id": "factory-over-assistant",
       "title": "Factory over Assistant",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "factory-over-assistant",
       "tags": [
         "parallelism",
@@ -1419,7 +1366,7 @@
       "id": "failover-aware-model-fallback",
       "title": "Failover-Aware Model Fallback",
       "category": "Reliability & Eval",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "failover-aware-model-fallback",
       "tags": [
         "fallback",
@@ -1465,7 +1412,7 @@
       "id": "filesystem-based-agent-state",
       "title": "Filesystem-Based Agent State",
       "category": "Context & Memory",
-      "status": "established",
+      "status": "foundational",
       "slug": "filesystem-based-agent-state",
       "tags": [
         "state-management",
@@ -1479,7 +1426,7 @@
       "id": "filesystem-mediated-host-delegation",
       "title": "Filesystem-Mediated Host Delegation",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "filesystem-mediated-host-delegation",
       "tags": [
         "sandbox-escape",
@@ -1507,23 +1454,6 @@
       "summary": "Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production"
     },
     {
-      "id": "frontier-focused-development",
-      "title": "Frontier-Focused Development",
-      "category": "Learning & Adaptation",
-      "status": "emerging",
-      "slug": "frontier-focused-development",
-      "tags": [
-        "frontier",
-        "state-of-the-art",
-        "model-selection",
-        "product-strategy",
-        "learning",
-        "innovation",
-        "no-selector"
-      ],
-      "summary": "Targets only state-of-the-art models, picks the best model per use case with no user model selector, and expects to rework the product every few months"
-    },
-    {
       "id": "graph-of-thoughts-got",
       "title": "Graph of Thoughts (GoT)",
       "category": "Feedback Loops",
@@ -1543,7 +1473,7 @@
       "id": "hook-based-safety-guard-rails-for-autonomous-code-agents",
       "title": "Hook-Based Safety Guard Rails for Autonomous Code Agents",
       "category": "Security & Safety",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "hook-based-safety-guard-rails",
       "tags": [
         "hooks",
@@ -1561,7 +1491,7 @@
       "id": "human-in-the-loop-approval-framework",
       "title": "Human-in-the-Loop Approval Framework",
       "category": "UX & Collaboration",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "human-in-loop-approval-framework",
       "tags": [
         "human-oversight",
@@ -1572,6 +1502,27 @@
         "slack-integration"
       ],
       "summary": "Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails."
+    },
+    {
+      "id": "hybrid-gui-visual-grounding",
+      "title": "Hybrid GUI & Visual Grounding",
+      "category": "Tool Use & Environment",
+      "status": "emerging",
+      "slug": "hybrid-gui-visual-grounding",
+      "tags": [
+        "gui-grounding",
+        "set-of-mark",
+        "accessibility-tree",
+        "computer-use",
+        "visual-grounding",
+        "action-verification"
+      ],
+      "summary": "Grounds each GUI action in a filtered accessibility tree first, falls back to numbered visual marks or scaled coordinates only for what the tree cannot see, and confirms the effect of each action from a state diff before the next step",
+      "domains": [
+        "browser-automation",
+        "desktop-automation",
+        "enterprise"
+      ]
     },
     {
       "id": "hybrid-llmcode-workflow-coordinator",
@@ -1594,7 +1545,7 @@
       "id": "incident-to-eval-synthesis",
       "title": "Incident-to-Eval Synthesis",
       "category": "Feedback Loops",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "incident-to-eval-synthesis",
       "tags": [
         "evals",
@@ -1623,7 +1574,7 @@
       "id": "inference-time-scaling",
       "title": "Inference-Time Scaling",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "production",
       "slug": "inference-time-scaling",
       "tags": [
         "scaling",
@@ -1657,7 +1608,7 @@
       "id": "intelligent-bash-tool-execution",
       "title": "Intelligent Bash Tool Execution",
       "category": "Tool Use & Environment",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "intelligent-bash-tool-execution",
       "tags": [
         "bash",
@@ -1689,7 +1640,7 @@
       "id": "inversion-of-control",
       "title": "Inversion of Control",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "inversion-of-control",
       "tags": [
         "orchestration",
@@ -1701,7 +1652,7 @@
     {
       "id": "isolated-vm-per-rl-rollout",
       "title": "Isolated VM per RL Rollout",
-      "category": "Security & Safety",
+      "category": "Learning & Adaptation",
       "status": "emerging",
       "slug": "isolated-vm-per-rl-rollout",
       "tags": [
@@ -1718,7 +1669,7 @@
       "id": "iterative-multi-agent-brainstorming",
       "title": "Iterative Multi-Agent Brainstorming",
       "category": "Orchestration & Control",
-      "status": "experimental-but-awesome",
+      "status": "emerging",
       "slug": "iterative-multi-agent-brainstorming",
       "tags": [
         "multi-agent",
@@ -1752,7 +1703,7 @@
       "id": "judge-gated-finding-exchange-between-parallel-sub-agents",
       "title": "Judge-Gated Finding Exchange Between Parallel Sub-Agents",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "judge-gated-finding-exchange-between-sub-agents",
       "tags": [
         "multi-agent",
@@ -1773,7 +1724,7 @@
       "id": "lane-based-execution-queueing",
       "title": "Lane-Based Execution Queueing",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "lane-based-execution-queueing",
       "tags": [
         "queueing",
@@ -1803,25 +1754,10 @@
       "summary": "Runs Monte Carlo Tree Search over reasoning steps, with the LLM generating candidate actions and scoring partial solutions to pick the best path"
     },
     {
-      "id": "latent-demand-product-discovery",
-      "title": "Latent Demand Product Discovery",
-      "category": "UX & Collaboration",
-      "status": "best-practice",
-      "slug": "latent-demand-product-discovery",
-      "tags": [
-        "product-discovery",
-        "extensibility",
-        "hackable-products",
-        "power-users",
-        "latent-demand"
-      ],
-      "summary": "Builds hackable, extensible products, watches how power users repurpose them, and turns the most frequent workarounds into supported features"
-    },
-    {
       "id": "layered-configuration-context",
       "title": "Layered Configuration Context",
       "category": "Context & Memory",
-      "status": "established",
+      "status": "production",
       "slug": "layered-configuration-context",
       "tags": [
         "context management",
@@ -1836,7 +1772,7 @@
       "id": "lethal-trifecta-threat-model",
       "title": "Lethal Trifecta Threat Model",
       "category": "Security & Safety",
-      "status": "best-practice",
+      "status": "foundational",
       "slug": "lethal-trifecta-threat-model",
       "tags": [
         "security",
@@ -1864,7 +1800,7 @@
       "id": "llm-observability",
       "title": "LLM Observability",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "production",
       "slug": "llm-observability",
       "tags": [
         "observability",
@@ -1915,7 +1851,7 @@
       "id": "markdown-polis-multi-vendor-agent-coordination-via-filesystem-constitution",
       "title": "Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "markdown-polis-coordination",
       "tags": [
         "multi-agent",
@@ -1948,6 +1884,29 @@
         "langgraph"
       ],
       "summary": "Runs an MCP server that exposes framework best-practice patterns as tools, so the coding assistant fetches current patterns on demand"
+    },
+    {
+      "id": "memory-consolidation-decay-contradiction-resolution",
+      "title": "Memory Consolidation, Decay & Contradiction Resolution",
+      "category": "Context & Memory",
+      "status": "emerging",
+      "slug": "memory-consolidation-decay-contradiction",
+      "tags": [
+        "agent-memory",
+        "memory-consolidation",
+        "contradiction-resolution",
+        "temporal-knowledge-graph",
+        "bi-temporal",
+        "memory-decay",
+        "entity-resolution",
+        "stale-facts"
+      ],
+      "summary": "Gives each stored fact a lifecycle: reconciles each new fact against the related stored facts when it arrives, stamps facts with event time and ingestion time so that a superseded fact is invalidated and not deleted, and runs a background job that merges duplicates and expires spent state",
+      "domains": [
+        "customer-support",
+        "enterprise",
+        "research"
+      ]
     },
     {
       "id": "memory-reinforcement-learning-memrl",
@@ -2015,7 +1974,7 @@
       "id": "multi-model-orchestration-for-complex-edits",
       "title": "Multi-Model Orchestration for Complex Edits",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "multi-model-orchestration-for-complex-edits",
       "tags": [
         "multi-model",
@@ -2031,7 +1990,7 @@
       "id": "multi-platform-communication-aggregation",
       "title": "Multi-Platform Communication Aggregation",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "multi-platform-communication-aggregation",
       "tags": [
         "search",
@@ -2061,17 +2020,27 @@
       "summary": "Starts agent workflows from Slack, Notion, and Jira webhooks, emoji reactions, and schedules, with idempotency and signature checks on each event"
     },
     {
-      "id": "no-token-limit-magic",
-      "title": "No-Token-Limit Magic",
-      "category": "Reliability & Eval",
-      "status": "experimental-but-awesome",
-      "slug": "no-token-limit-magic",
+      "id": "multi-tenant-agent-memory-isolation",
+      "title": "Multi-Tenant Agent & Memory Isolation",
+      "category": "Security & Safety",
+      "status": "production",
+      "slug": "multi-tenant-agent-isolation",
       "tags": [
-        "performance",
-        "cost",
-        "experimentation"
+        "multi-tenancy",
+        "tenant-isolation",
+        "memory-isolation",
+        "sandboxing",
+        "microvm",
+        "cache-isolation",
+        "prompt-injection",
+        "data-leakage"
       ],
-      "summary": "Removes hard token limits during prototyping to learn what good behavior needs, then compresses context only after quality is stable and measured"
+      "summary": "Enforces a tenant boundary on all four agent state planes (execution, retrieval and memory, cache, credential and egress), with tenant identity bound outside the model, so that one tenant's data or instructions cannot reach another",
+      "domains": [
+        "enterprise",
+        "security",
+        "ops"
+      ]
     },
     {
       "id": "non-custodial-spending-controls",
@@ -2093,7 +2062,7 @@
       "id": "non-generative-judgment-routing-with-typed-escalation",
       "title": "Non-Generative Judgment Routing with Typed Escalation",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "non-generative-judgment-routing",
       "tags": [
         "routing",
@@ -2115,7 +2084,7 @@
       "id": "one-os-user-per-agent",
       "title": "One OS User per Agent",
       "category": "Security & Safety",
-      "status": "validated-in-production",
+      "status": "emerging",
       "slug": "one-os-user-per-agent",
       "tags": [
         "isolation",
@@ -2162,7 +2131,7 @@
       "id": "orchestration-prompt-writing-benchmark",
       "title": "Orchestration Prompt-Writing Benchmark",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "orchestration-prompt-writing-benchmark",
       "tags": [
         "multi-agent",
@@ -2257,24 +2226,10 @@
       "summary": "Uses agent reinforcement fine-tuning to teach the model to issue independent tool calls in parallel, which cuts sequential rounds and latency"
     },
     {
-      "id": "patch-steering-via-prompted-tool-selection",
-      "title": "Patch Steering via Prompted Tool Selection",
-      "category": "Tool Use & Environment",
-      "status": "emerging",
-      "slug": "patch-steering-via-prompted-tool-selection",
-      "tags": [
-        "patching",
-        "prompt-steering",
-        "tool-selection",
-        "coding-agent"
-      ],
-      "summary": "Tells the agent in the prompt which patch tool or edit format to use, with usage examples, negative rules, and a fallback order"
-    },
-    {
       "id": "persistent-test-memory-feedback-loop",
       "title": "Persistent Test Memory Feedback Loop",
       "category": "Learning & Adaptation",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "persistent-test-memory-feedback-loop",
       "tags": [
         "testing-agents",
@@ -2295,7 +2250,7 @@
       "id": "pii-tokenization",
       "title": "PII Tokenization",
       "category": "Security & Safety",
-      "status": "established",
+      "status": "production",
       "slug": "pii-tokenization",
       "tags": [
         "privacy",
@@ -2310,7 +2265,7 @@
       "id": "plan-then-execute-pattern",
       "title": "Plan-Then-Execute Pattern",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "production",
       "slug": "plan-then-execute-pattern",
       "tags": [
         "planning",
@@ -2355,7 +2310,7 @@
       "id": "precomputed-code-graph-lookup",
       "title": "Precomputed Code Graph Lookup",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "precomputed-code-graph-lookup",
       "tags": [
         "code-graph",
@@ -2387,7 +2342,7 @@
       "id": "proactive-trigger-vocabulary",
       "title": "Proactive Trigger Vocabulary",
       "category": "UX & Collaboration",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "proactive-trigger-vocabulary",
       "tags": [
         "ux",
@@ -2402,7 +2357,7 @@
       "id": "progressive-autonomy-with-model-evolution",
       "title": "Progressive Autonomy with Model Evolution",
       "category": "Orchestration & Control",
-      "status": "best-practice",
+      "status": "production",
       "slug": "progressive-autonomy-with-model-evolution",
       "tags": [
         "model-evolution",
@@ -2410,9 +2365,11 @@
         "autonomy",
         "system-prompts",
         "capabilities",
-        "model-intelligence"
+        "model-intelligence",
+        "bitter-lesson",
+        "temporary-tooling"
       ],
-      "summary": "Audits prompts and orchestration after each model upgrade and removes the scaffolding that evals show the new model no longer needs"
+      "summary": "Treats scaffolding around the model as disposable: build the simplest thing that works, mark it temporary, and remove it when evals show a new model handles the task natively"
     },
     {
       "id": "progressive-complexity-escalation",
@@ -2449,23 +2406,25 @@
     },
     {
       "id": "progressive-tool-discovery",
-      "title": "Progressive Tool Discovery",
+      "title": "Progressive Tool Discovery (Lazy Tool Loading)",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "foundational",
       "slug": "progressive-tool-discovery",
       "tags": [
         "mcp",
         "tool-discovery",
         "context-optimization",
-        "lazy-loading"
+        "lazy-loading",
+        "search",
+        "dynamic-loading"
       ],
-      "summary": "Organizes tools in a browsable hierarchy and lets the agent load names, descriptions, or full schemas only for the tools it needs"
+      "summary": "Load only core tools upfront and let the agent discover the rest on demand, either by searching the catalog or by browsing a hierarchy, so tool definitions stop consuming the context window"
     },
     {
       "id": "prompt-caching-via-exact-prefix-preservation",
       "title": "Prompt Caching via Exact Prefix Preservation",
       "category": "Context & Memory",
-      "status": "emerging",
+      "status": "foundational",
       "slug": "prompt-caching-via-exact-prefix-preservation",
       "tags": [
         "prompt-caching",
@@ -2482,7 +2441,7 @@
       "id": "reasoning-token-firewall",
       "title": "Reasoning-Token Firewall",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "reasoning-token-firewall",
       "tags": [
         "reasoning",
@@ -2498,7 +2457,7 @@
       "id": "recursive-best-of-n-delegation",
       "title": "Recursive Best-of-N Delegation",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "recursive-best-of-n-delegation",
       "tags": [
         "recursion",
@@ -2516,7 +2475,7 @@
       "id": "reflection-loop",
       "title": "Reflection Loop",
       "category": "Feedback Loops",
-      "status": "established",
+      "status": "production",
       "slug": "reflection",
       "tags": [
         "self-feedback",
@@ -2546,7 +2505,7 @@
       "id": "rendered-ui-finish-gate",
       "title": "Rendered UI Finish Gate",
       "category": "Feedback Loops",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "rendered-ui-finish-gate",
       "tags": [
         "ui-quality",
@@ -2567,7 +2526,7 @@
       "id": "rich-feedback-loops-perfect-prompts",
       "title": "Rich Feedback Loops > Perfect Prompts",
       "category": "Feedback Loops",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "rich-feedback-loops",
       "tags": [
         "feedback",
@@ -2583,7 +2542,7 @@
       "id": "rlaif-reinforcement-learning-from-ai-feedback",
       "title": "RLAIF (Reinforcement Learning from AI Feedback)",
       "category": "Reliability & Eval",
-      "status": "established",
+      "status": "production",
       "slug": "rlaif-reinforcement-learning-from-ai-feedback",
       "tags": [
         "rlhf",
@@ -2600,7 +2559,7 @@
       "id": "sandboxed-tool-authorization",
       "title": "Sandboxed Tool Authorization",
       "category": "Security & Safety",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "sandboxed-tool-authorization",
       "tags": [
         "authorization",
@@ -2666,7 +2625,7 @@
       "id": "self-critique-evaluator-loop",
       "title": "Self-Critique Evaluator Loop",
       "category": "Feedback Loops",
-      "status": "established",
+      "status": "emerging",
       "slug": "self-critique-evaluator-loop",
       "tags": [
         "self-critique",
@@ -2716,7 +2675,7 @@
       "id": "self-rewriting-meta-prompt-loop",
       "title": "Self-Rewriting Meta-Prompt Loop",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "self-rewriting-meta-prompt-loop",
       "tags": [
         "meta-prompting",
@@ -2744,7 +2703,7 @@
       "id": "session-scoped-context-runtime-for-agent-tools",
       "title": "Session-Scoped Context Runtime for Agent Tools",
       "category": "Context & Memory",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "session-scoped-context-runtime-for-agent-tools",
       "tags": [
         "mcp",
@@ -2759,27 +2718,10 @@
       ]
     },
     {
-      "id": "shared-core-with-native-shells",
-      "title": "Shared Core with Native Shells",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "shared-core-native-shells",
-      "tags": [
-        "architecture",
-        "cross-platform",
-        "native-ui",
-        "cli",
-        "parity-tests",
-        "multi-agent",
-        "code-generation"
-      ],
-      "summary": "Keeps application state and behavior in a shared core, uses native front ends for each platform, and checks that shells and the CLI expose the core consistently"
-    },
-    {
       "id": "shell-command-contextualization",
       "title": "Shell Command Contextualization",
       "category": "UX & Collaboration",
-      "status": "established",
+      "status": "production",
       "slug": "shell-command-contextualization",
       "tags": [
         "shell integration",
@@ -2790,23 +2732,6 @@
         "interactive tools"
       ],
       "summary": "Lets the user run a shell command with a prefix such as ! and injects the command and its full output into the agent's context"
-    },
-    {
-      "id": "shipping-as-research",
-      "title": "Shipping as Research",
-      "category": "Learning & Adaptation",
-      "status": "emerging",
-      "slug": "shipping-as-research",
-      "tags": [
-        "research",
-        "experimentation",
-        "rapid-iteration",
-        "learning",
-        "dogfooding",
-        "shipping",
-        "uncertainty"
-      ],
-      "summary": "Releases reversible, instrumented features to learn whether they work, then doubles down or removes them based on usage data and feedback"
     },
     {
       "id": "signal-driven-agent-activation",
@@ -2848,7 +2773,7 @@
       "id": "skill-library-evolution",
       "title": "Skill Library Evolution",
       "category": "Learning & Adaptation",
-      "status": "established",
+      "status": "production",
       "slug": "skill-library-evolution",
       "tags": [
         "code-reuse",
@@ -2867,7 +2792,7 @@
       "id": "soulbound-identity-verification",
       "title": "Soulbound Identity Verification",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "soulbound-identity-verification",
       "tags": [
         "identity",
@@ -2880,19 +2805,6 @@
       "summary": "Binds agent identity to a non-transferable credential with a committed state hash and logs signed state changes so verifiers can check continuity"
     },
     {
-      "id": "spec-as-test-feedback-loop",
-      "title": "Spec-As-Test Feedback Loop",
-      "category": "Feedback Loops",
-      "status": "emerging",
-      "slug": "spec-as-test-feedback-loop",
-      "tags": [
-        "validation",
-        "drift-detection",
-        "continuous-testing"
-      ],
-      "summary": "Generates executable tests from the spec on every spec or code commit and opens agent PRs that fix code or flag unclear spec parts"
-    },
-    {
       "id": "specification-driven-agent-development",
       "title": "Specification-Driven Agent Development",
       "category": "Orchestration & Control",
@@ -2902,15 +2814,18 @@
         "spec-first",
         "scaffolding",
         "contract",
-        "requirements"
+        "requirements",
+        "validation",
+        "drift-detection",
+        "continuous-testing"
       ],
-      "summary": "Makes a version-controlled spec file the agent's main input, scaffolds code from it, and links each artifact back to a spec clause"
+      "summary": "Makes a version-controlled spec the agent's main input, scaffolds code from it, and regenerates executable tests from it on every commit to catch drift"
     },
     {
       "id": "spectrum-of-control-blended-initiative",
       "title": "Spectrum of Control / Blended Initiative",
       "category": "UX & Collaboration",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "spectrum-of-control-blended-initiative",
       "tags": [
         "human-agent-collaboration",
@@ -2959,7 +2874,7 @@
       "id": "structured-output-specification",
       "title": "Structured Output Specification",
       "category": "Reliability & Eval",
-      "status": "established",
+      "status": "foundational",
       "slug": "structured-output-specification",
       "tags": [
         "structured-output",
@@ -2975,7 +2890,7 @@
       "id": "sub-agent-spawning",
       "title": "Sub-Agent Spawning",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "foundational",
       "slug": "sub-agent-spawning",
       "tags": [
         "orchestration",
@@ -2993,7 +2908,7 @@
       "id": "subagent-compilation-checker",
       "title": "Subagent Compilation Checker",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "subagent-compilation-checker",
       "tags": [
         "subagent",
@@ -3007,7 +2922,7 @@
       "id": "subject-hygiene-for-task-delegation",
       "title": "Subject Hygiene for Task Delegation",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "subject-hygiene",
       "tags": [
         "subagents",
@@ -3023,7 +2938,7 @@
       "id": "surface-scoped-system-prompt",
       "title": "Surface-Scoped System Prompt",
       "category": "Context & Memory",
-      "status": "established",
+      "status": "emerging",
       "slug": "surface-scoped-system-prompt",
       "tags": [
         "system-prompt",
@@ -3039,7 +2954,7 @@
       "id": "swarm-migration-pattern",
       "title": "Swarm Migration Pattern",
       "category": "Orchestration & Control",
-      "status": "validated-in-production",
+      "status": "production",
       "slug": "swarm-migration-pattern",
       "tags": [
         "swarm",
@@ -3056,7 +2971,7 @@
       "id": "team-shared-agent-configuration-as-code",
       "title": "Team-Shared Agent Configuration as Code",
       "category": "UX & Collaboration",
-      "status": "best-practice",
+      "status": "production",
       "slug": "team-shared-agent-configuration",
       "tags": [
         "configuration",
@@ -3072,7 +2987,7 @@
       "id": "three-stage-perception-architecture",
       "title": "Three-Stage Perception Architecture",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "emerging",
       "slug": "three-stage-perception-architecture",
       "tags": [
         "architecture",
@@ -3088,7 +3003,7 @@
       "id": "tier-auto-apply-by-mechanical-impact",
       "title": "Tier Auto-Apply by Mechanical Impact",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "tier-auto-apply-by-mechanical-impact",
       "tags": [
         "auto-apply",
@@ -3113,44 +3028,6 @@
       "summary": "Splits tools into reader, processor, and writer classes with scoped permissions and blocks tool chains that combine private data, untrusted input, and external writes"
     },
     {
-      "id": "tool-search-lazy-loading",
-      "title": "Tool Search Lazy Loading",
-      "category": "Context & Memory",
-      "status": "established",
-      "slug": "tool-search-lazy-loading",
-      "tags": [
-        "mcp",
-        "tool-discovery",
-        "context-optimization",
-        "lazy-loading",
-        "search",
-        "dynamic-loading"
-      ],
-      "summary": "Dynamically load tools via search instead of preloading all available tools to reduce context usage",
-      "maturity": "maturing",
-      "domains": [
-        "tool-use",
-        "context-optimization"
-      ]
-    },
-    {
-      "id": "tool-selection-guide",
-      "title": "Tool Selection Guide",
-      "category": "Orchestration & Control",
-      "status": "emerging",
-      "slug": "tool-selection-guide",
-      "tags": [
-        "tools",
-        "workflow",
-        "best-practices",
-        "efficiency",
-        "patterns",
-        "exploration",
-        "modification"
-      ],
-      "summary": "Maps each task type to a preferred tool: Glob, Grep, and Read to explore, Edit to modify, Bash to verify, and Task with a clear subject to delegate"
-    },
-    {
       "id": "tool-use-incentivization-via-reward-shaping",
       "title": "Tool Use Incentivization via Reward Shaping",
       "category": "Feedback Loops",
@@ -3168,7 +3045,7 @@
       "id": "tool-use-steering-via-prompting",
       "title": "Tool Use Steering via Prompting",
       "category": "Tool Use & Environment",
-      "status": "best-practice",
+      "status": "foundational",
       "slug": "tool-use-steering-via-prompting",
       "tags": [
         "tool use",
@@ -3176,9 +3053,13 @@
         "agent guidance",
         "custom tools",
         "cli",
-        "natural language control"
+        "natural language control",
+        "tool-selection",
+        "patching",
+        "coding-agent",
+        "workflow"
       ],
-      "summary": "Tells the agent in the prompt which tool to use, how to learn a custom tool, and which shorthands map to tool sequences"
+      "summary": "Tells the agent in the prompt which tool to use for each task type, which patch format to emit, how to learn a custom tool, and which shorthands map to tool sequences"
     },
     {
       "id": "tracker-as-desired-state-reconciliation",
@@ -3204,10 +3085,33 @@
       ]
     },
     {
+      "id": "trajectory-state-invariant-evaluation",
+      "title": "Trajectory & State-Invariant Evaluation",
+      "category": "Reliability & Eval",
+      "status": "production",
+      "slug": "trajectory-and-state-invariant-evaluation",
+      "tags": [
+        "agent-evaluation",
+        "end-state-verification",
+        "trajectory-assertions",
+        "pass-hat-k",
+        "reliability",
+        "tool-use",
+        "policy-compliance",
+        "sandbox-reset"
+      ],
+      "summary": "Grades a tool-using agent on the end state of its sandbox against the expected postconditions and not on its final prose, adds assertions on the recorded tool calls for policy preconditions and forbidden side effects, and repeats each scenario to measure the probability that all trials pass",
+      "domains": [
+        "customer-support",
+        "ops",
+        "evaluation"
+      ]
+    },
+    {
       "id": "transitive-vouch-chain-trust",
       "title": "Transitive Vouch-Chain Trust",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "transitive-vouch-chain-trust",
       "tags": [
         "trust",
@@ -3225,7 +3129,7 @@
       "id": "tree-of-thought-reasoning",
       "title": "Tree-of-Thought Reasoning",
       "category": "Orchestration & Control",
-      "status": "established",
+      "status": "emerging",
       "slug": "tree-of-thought-reasoning",
       "tags": [
         "branching",
@@ -3238,7 +3142,7 @@
       "id": "unified-tool-gateway",
       "title": "Unified Tool Gateway",
       "category": "Tool Use & Environment",
-      "status": "emerging",
+      "status": "production",
       "slug": "unified-tool-gateway",
       "tags": [
         "tool-gateway",
@@ -3275,7 +3179,7 @@
       "id": "verbose-reasoning-transparency",
       "title": "Verbose Reasoning Transparency",
       "category": "UX & Collaboration",
-      "status": "best-practice",
+      "status": "production",
       "slug": "verbose-reasoning-transparency",
       "tags": [
         "explainability",
@@ -3291,7 +3195,7 @@
       "id": "versioned-constitution-governance",
       "title": "Versioned Constitution Governance",
       "category": "Reliability & Eval",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "versioned-constitution-governance",
       "tags": [
         "constitution",
@@ -3308,7 +3212,7 @@
       "id": "virtual-machine-operator-agent",
       "title": "Virtual Machine Operator Agent",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "production",
       "slug": "virtual-machine-operator-agent",
       "tags": [
         "computer operation",
@@ -3322,7 +3226,7 @@
       "id": "visual-ai-multimodal-integration",
       "title": "Visual AI Multimodal Integration",
       "category": "Tool Use & Environment",
-      "status": "established",
+      "status": "production",
       "slug": "visual-ai-multimodal-integration",
       "tags": [
         "multimodal",
@@ -3335,10 +3239,33 @@
       "summary": "Adds multimodal models to the agent so it can analyze images, video, and screenshots and combine them with text to reason and act"
     },
     {
+      "id": "voice-agent-turn-taking-barge-in-handling",
+      "title": "Voice Agent Turn-Taking & Barge-In Handling",
+      "category": "UX & Collaboration",
+      "status": "production",
+      "slug": "voice-agent-turn-taking-barge-in",
+      "tags": [
+        "voice-agents",
+        "turn-taking",
+        "barge-in",
+        "endpointing",
+        "vad",
+        "interruption-handling",
+        "realtime",
+        "telephony"
+      ],
+      "summary": "Couples four control loops in a voice agent so that neither side talks over the other: semantic end-of-turn detection, adaptive barge-in that flushes the audio pipeline, truncation of the assistant message to the words the user heard, and a filler while a slow tool runs",
+      "domains": [
+        "customer-support",
+        "telephony",
+        "enterprise"
+      ]
+    },
+    {
       "id": "workflow-evals-with-mocked-tools",
       "title": "Workflow Evals with Mocked Tools",
       "category": "Reliability & Eval",
-      "status": "established",
+      "status": "production",
       "slug": "workflow-evals-with-mocked-tools",
       "tags": [
         "evals",
@@ -3372,7 +3299,7 @@
       "id": "workspace-native-multi-agent-orchestration",
       "title": "Workspace-Native Multi-Agent Orchestration",
       "category": "Orchestration & Control",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "workspace-native-multi-agent-orchestration",
       "tags": [
         "multi-agent",
@@ -3391,7 +3318,7 @@
       "id": "zero-knowledge-verified-agent-egress",
       "title": "Zero-Knowledge Verified Agent Egress",
       "category": "Security & Safety",
-      "status": "emerging",
+      "status": "proposed",
       "slug": "zero-knowledge-verified-agent-egress",
       "tags": [
         "egress",
@@ -3429,13 +3356,168 @@
       "type": "related"
     },
     {
-      "source": "approval-bound-transactional-write",
-      "target": "plan-then-execute-pattern",
+      "source": "agent-circuit-breaker",
+      "target": "action-caching-replay-pattern",
       "type": "related"
     },
     {
-      "source": "approval-bound-transactional-write",
+      "source": "agent-sdk-for-programmatic-control",
+      "target": "cli-native-agent-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "agent-sdk-for-programmatic-control",
+      "target": "surface-scoped-system-prompt",
+      "type": "related"
+    },
+    {
+      "source": "agent-sdk-for-programmatic-control",
+      "target": "failover-aware-model-fallback",
+      "type": "related"
+    },
+    {
+      "source": "agent-sdk-for-programmatic-control",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "agent-sdk-for-programmatic-control",
+      "target": "llm-observability",
+      "type": "related"
+    },
+    {
+      "source": "agent-assisted-scaffolding",
+      "target": "specification-driven-agent-development",
+      "type": "related"
+    },
+    {
+      "source": "agent-assisted-scaffolding",
+      "target": "progressive-autonomy-with-model-evolution",
+      "type": "related"
+    },
+    {
+      "source": "agent-assisted-scaffolding",
+      "target": "skill-library-evolution",
+      "type": "related"
+    },
+    {
+      "source": "agent-assisted-scaffolding",
+      "target": "agent-friendly-workflow-design",
+      "type": "related"
+    },
+    {
+      "source": "agent-driven-research",
+      "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "agent-driven-research",
+      "target": "inference-time-scaling",
+      "type": "related"
+    },
+    {
+      "source": "agent-driven-research",
+      "target": "llm-map-reduce-pattern",
+      "type": "related"
+    },
+    {
+      "source": "agent-driven-research",
+      "target": "context-minimization-pattern",
+      "type": "related"
+    },
+    {
+      "source": "agent-driven-research",
+      "target": "output-verification-loop",
+      "type": "related"
+    },
+    {
+      "source": "agent-first-tooling-and-logging",
+      "target": "dual-use-tool-design",
+      "type": "related"
+    },
+    {
+      "source": "agent-first-tooling-and-logging",
+      "target": "codebase-optimization-for-agents",
+      "type": "related"
+    },
+    {
+      "source": "agent-first-tooling-and-logging",
+      "target": "llm-friendly-api-design",
+      "type": "related"
+    },
+    {
+      "source": "agent-first-tooling-and-logging",
+      "target": "code-over-api-pattern",
+      "type": "related"
+    },
+    {
+      "source": "agent-first-tooling-and-logging",
+      "target": "llm-observability",
+      "type": "related"
+    },
+    {
+      "source": "agent-powered-codebase-qa-onboarding",
+      "target": "precomputed-code-graph-lookup",
+      "type": "related"
+    },
+    {
+      "source": "agent-powered-codebase-qa-onboarding",
+      "target": "agentic-search-over-vector-embeddings",
+      "type": "related"
+    },
+    {
+      "source": "agent-powered-codebase-qa-onboarding",
+      "target": "curated-code-context-window",
+      "type": "related"
+    },
+    {
+      "source": "agent-powered-codebase-qa-onboarding",
+      "target": "dynamic-context-injection",
+      "type": "related"
+    },
+    {
+      "source": "ai-assisted-code-review-verification",
+      "target": "abstracted-code-representation-for-review",
+      "type": "related"
+    },
+    {
+      "source": "ai-assisted-code-review-verification",
+      "target": "output-verification-loop",
+      "type": "related"
+    },
+    {
+      "source": "ai-assisted-code-review-verification",
+      "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "ai-assisted-code-review-verification",
+      "target": "subagent-compilation-checker",
+      "type": "related"
+    },
+    {
+      "source": "ai-assisted-code-review-verification",
+      "target": "deterministic-security-scanning-build-loop",
+      "type": "related"
+    },
+    {
+      "source": "anchored-structured-context-compaction",
+      "target": "context-window-auto-compaction",
+      "type": "related"
+    },
+    {
+      "source": "anchored-structured-context-compaction",
+      "target": "filesystem-based-agent-state",
+      "type": "related"
+    },
+    {
+      "source": "anchored-structured-context-compaction",
+      "target": "prompt-caching-via-exact-prefix-preservation",
+      "type": "related"
+    },
+    {
+      "source": "anchored-structured-context-compaction",
+      "target": "working-memory-via-task-tracking",
       "type": "related"
     },
     {
@@ -3464,6 +3546,31 @@
       "type": "related"
     },
     {
+      "source": "background-agent-with-ci-feedback",
+      "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
+      "source": "background-agent-with-ci-feedback",
+      "target": "stop-hook-auto-continue-pattern",
+      "type": "related"
+    },
+    {
+      "source": "background-agent-with-ci-feedback",
+      "target": "seamless-background-to-foreground-handoff",
+      "type": "related"
+    },
+    {
+      "source": "background-agent-with-ci-feedback",
+      "target": "agent-sdk-for-programmatic-control",
+      "type": "related"
+    },
+    {
+      "source": "background-agent-with-ci-feedback",
+      "target": "factory-over-assistant",
+      "type": "related"
+    },
+    {
       "source": "board-mediated-async-inter-agent-coordination",
       "target": "cross-cycle-consensus-relay",
       "type": "related"
@@ -3475,7 +3582,37 @@
     },
     {
       "source": "classify-then-act-for-background-agents",
+      "target": "human-in-the-loop-approval-framework",
+      "type": "related"
+    },
+    {
+      "source": "classify-then-act-for-background-agents",
       "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
+      "source": "code-over-api-pattern",
+      "target": "code-then-execute-pattern",
+      "type": "related"
+    },
+    {
+      "source": "code-over-api-pattern",
+      "target": "dual-use-tool-design",
+      "type": "related"
+    },
+    {
+      "source": "code-over-api-pattern",
+      "target": "virtual-machine-operator-agent",
+      "type": "related"
+    },
+    {
+      "source": "code-over-api-pattern",
+      "target": "llm-friendly-api-design",
+      "type": "related"
+    },
+    {
+      "source": "code-over-api-pattern",
+      "target": "session-scoped-context-runtime-for-agent-tools",
       "type": "related"
     },
     {
@@ -3494,13 +3631,193 @@
       "type": "related"
     },
     {
+      "source": "conditional-parallel-tool-execution",
+      "target": "parallel-tool-call-learning",
+      "type": "related"
+    },
+    {
+      "source": "conditional-parallel-tool-execution",
+      "target": "tool-capability-compartmentalization",
+      "type": "related"
+    },
+    {
+      "source": "conditional-parallel-tool-execution",
+      "target": "code-over-api-pattern",
+      "type": "related"
+    },
+    {
+      "source": "conditional-parallel-tool-execution",
+      "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "conditional-parallel-tool-execution",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
       "source": "consequence-family-coverage-audit",
       "target": "policy-gated-tool-proxy",
       "type": "related"
     },
     {
       "source": "consequence-family-coverage-audit",
+      "target": "human-in-the-loop-approval-framework",
+      "type": "related"
+    },
+    {
+      "source": "consequence-family-coverage-audit",
       "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "context-window-auto-compaction",
+      "target": "prompt-caching-via-exact-prefix-preservation",
+      "type": "related"
+    },
+    {
+      "source": "context-window-auto-compaction",
+      "target": "context-budget-as-a-governed-resource",
+      "type": "related"
+    },
+    {
+      "source": "context-window-auto-compaction",
+      "target": "extended-coherence-work-sessions",
+      "type": "related"
+    },
+    {
+      "source": "context-window-auto-compaction",
+      "target": "filesystem-based-agent-state",
+      "type": "related"
+    },
+    {
+      "source": "context-window-auto-compaction",
+      "target": "curated-code-context-window",
+      "type": "related"
+    },
+    {
+      "source": "context-minimization-pattern",
+      "target": "lethal-trifecta-threat-model",
+      "type": "related"
+    },
+    {
+      "source": "context-minimization-pattern",
+      "target": "pii-tokenization",
+      "type": "related"
+    },
+    {
+      "source": "context-minimization-pattern",
+      "target": "dual-llm-pattern",
+      "type": "related"
+    },
+    {
+      "source": "context-minimization-pattern",
+      "target": "plan-then-execute-pattern",
+      "type": "related"
+    },
+    {
+      "source": "context-minimization-pattern",
+      "target": "context-window-auto-compaction",
+      "type": "related"
+    },
+    {
+      "source": "continuous-autonomous-task-loop-pattern",
+      "target": "stop-hook-auto-continue-pattern",
+      "type": "related"
+    },
+    {
+      "source": "continuous-autonomous-task-loop-pattern",
+      "target": "filesystem-based-agent-state",
+      "type": "related"
+    },
+    {
+      "source": "continuous-autonomous-task-loop-pattern",
+      "target": "cross-cycle-consensus-relay",
+      "type": "related"
+    },
+    {
+      "source": "continuous-autonomous-task-loop-pattern",
+      "target": "tracker-as-desired-state-reconciliation",
+      "type": "related"
+    },
+    {
+      "source": "continuous-autonomous-task-loop-pattern",
+      "target": "deterministic-zero-llm-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "curated-code-context-window",
+      "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "curated-code-context-window",
+      "target": "agentic-search-over-vector-embeddings",
+      "type": "related"
+    },
+    {
+      "source": "curated-code-context-window",
+      "target": "precomputed-code-graph-lookup",
+      "type": "related"
+    },
+    {
+      "source": "curated-code-context-window",
+      "target": "context-window-auto-compaction",
+      "type": "related"
+    },
+    {
+      "source": "curated-code-context-window",
+      "target": "agent-powered-codebase-qa-onboarding",
+      "type": "related"
+    },
+    {
+      "source": "debiased-llm-as-a-judge-evaluation",
+      "target": "deterministic-grader-in-the-loop",
+      "type": "related"
+    },
+    {
+      "source": "debiased-llm-as-a-judge-evaluation",
+      "target": "anti-reward-hacking-grader-design",
+      "type": "related"
+    },
+    {
+      "source": "debiased-llm-as-a-judge-evaluation",
+      "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "debiased-llm-as-a-judge-evaluation",
+      "target": "rlaif-reinforcement-learning-from-ai-feedback",
+      "type": "related"
+    },
+    {
+      "source": "delegated-user-authorization-oauth-token-exchange",
+      "target": "local-first-credential-broker",
+      "type": "related"
+    },
+    {
+      "source": "delegated-user-authorization-oauth-token-exchange",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "delegated-user-authorization-oauth-token-exchange",
+      "target": "exact-action-authorization-binding",
+      "type": "related"
+    },
+    {
+      "source": "delegated-user-authorization-oauth-token-exchange",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "denial-tracking-permission-escalation",
+      "target": "human-in-the-loop-approval-framework",
+      "type": "related"
+    },
+    {
+      "source": "denial-tracking-permission-escalation",
+      "target": "hook-based-safety-guard-rails-for-autonomous-code-agents",
       "type": "related"
     },
     {
@@ -3520,7 +3837,152 @@
     },
     {
       "source": "design-time-file-partition-as-concurrency-control",
+      "target": "board-mediated-async-inter-agent-coordination",
+      "type": "related"
+    },
+    {
+      "source": "design-time-file-partition-as-concurrency-control",
       "target": "deterministic-zero-llm-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "dual-speed-realtime-architecture-talker-reasoner",
+      "target": "oracle-and-worker-multi-model-approach",
+      "type": "related"
+    },
+    {
+      "source": "dual-speed-realtime-architecture-talker-reasoner",
+      "target": "multi-model-orchestration-for-complex-edits",
+      "type": "related"
+    },
+    {
+      "source": "dual-speed-realtime-architecture-talker-reasoner",
+      "target": "budget-aware-model-routing-with-hard-cost-caps",
+      "type": "related"
+    },
+    {
+      "source": "dual-speed-realtime-architecture-talker-reasoner",
+      "target": "seamless-background-to-foreground-handoff",
+      "type": "related"
+    },
+    {
+      "source": "dual-use-tool-design",
+      "target": "agent-first-tooling-and-logging",
+      "type": "related"
+    },
+    {
+      "source": "dual-use-tool-design",
+      "target": "code-over-api-pattern",
+      "type": "related"
+    },
+    {
+      "source": "dual-use-tool-design",
+      "target": "cli-native-agent-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "dual-use-tool-design",
+      "target": "llm-friendly-api-design",
+      "type": "related"
+    },
+    {
+      "source": "dual-use-tool-design",
+      "target": "skill-library-evolution",
+      "type": "related"
+    },
+    {
+      "source": "durable-execution-step-checkpointing",
+      "target": "filesystem-based-agent-state",
+      "type": "related"
+    },
+    {
+      "source": "durable-execution-step-checkpointing",
+      "target": "exact-action-authorization-binding",
+      "type": "related"
+    },
+    {
+      "source": "durable-execution-step-checkpointing",
+      "target": "human-in-the-loop-approval-framework",
+      "type": "related"
+    },
+    {
+      "source": "durable-execution-step-checkpointing",
+      "target": "dead-mans-switch-for-scheduled-agent-jobs",
+      "type": "related"
+    },
+    {
+      "source": "dynamic-context-injection",
+      "target": "layered-configuration-context",
+      "type": "related"
+    },
+    {
+      "source": "dynamic-context-injection",
+      "target": "shell-command-contextualization",
+      "type": "related"
+    },
+    {
+      "source": "dynamic-context-injection",
+      "target": "curated-code-context-window",
+      "type": "related"
+    },
+    {
+      "source": "dynamic-context-injection",
+      "target": "progressive-tool-discovery",
+      "type": "related"
+    },
+    {
+      "source": "dynamic-context-injection",
+      "target": "self-identity-accumulation",
+      "type": "related"
+    },
+    {
+      "source": "egress-lockdown-no-exfiltration-channel",
+      "target": "lethal-trifecta-threat-model",
+      "type": "related"
+    },
+    {
+      "source": "egress-lockdown-no-exfiltration-channel",
+      "target": "dual-llm-pattern",
+      "type": "related"
+    },
+    {
+      "source": "egress-lockdown-no-exfiltration-channel",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "egress-lockdown-no-exfiltration-channel",
+      "target": "credential-free-outbox",
+      "type": "related"
+    },
+    {
+      "source": "egress-lockdown-no-exfiltration-channel",
+      "target": "zero-knowledge-verified-agent-egress",
+      "type": "related"
+    },
+    {
+      "source": "episodic-memory-retrieval-injection",
+      "target": "memory-synthesis-from-execution-logs",
+      "type": "related"
+    },
+    {
+      "source": "episodic-memory-retrieval-injection",
+      "target": "proactive-agent-state-externalization",
+      "type": "related"
+    },
+    {
+      "source": "episodic-memory-retrieval-injection",
+      "target": "filesystem-based-agent-state",
+      "type": "related"
+    },
+    {
+      "source": "episodic-memory-retrieval-injection",
+      "target": "self-identity-accumulation",
+      "type": "related"
+    },
+    {
+      "source": "episodic-memory-retrieval-injection",
+      "target": "memory-reinforcement-learning-memrl",
       "type": "related"
     },
     {
@@ -3539,8 +4001,18 @@
       "type": "related"
     },
     {
+      "source": "evidence-questions-not-verdict-questions",
+      "target": "hook-based-safety-guard-rails-for-autonomous-code-agents",
+      "type": "related"
+    },
+    {
       "source": "exact-action-authorization-binding",
       "target": "authenticated-authority-channel",
+      "type": "related"
+    },
+    {
+      "source": "exact-action-authorization-binding",
+      "target": "human-in-the-loop-approval-framework",
       "type": "related"
     },
     {
@@ -3554,13 +4026,368 @@
       "type": "related"
     },
     {
+      "source": "exact-action-authorization-binding",
+      "target": "plan-then-execute-pattern",
+      "type": "related"
+    },
+    {
+      "source": "exact-action-authorization-binding",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "factory-over-assistant",
+      "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
+      "source": "factory-over-assistant",
+      "target": "seamless-background-to-foreground-handoff",
+      "type": "related"
+    },
+    {
+      "source": "factory-over-assistant",
+      "target": "spectrum-of-control-blended-initiative",
+      "type": "related"
+    },
+    {
+      "source": "factory-over-assistant",
+      "target": "agent-modes-by-model-personality",
+      "type": "related"
+    },
+    {
+      "source": "factory-over-assistant",
+      "target": "llm-observability",
+      "type": "related"
+    },
+    {
+      "source": "failover-aware-model-fallback",
+      "target": "agent-circuit-breaker",
+      "type": "related"
+    },
+    {
+      "source": "failover-aware-model-fallback",
+      "target": "budget-aware-model-routing-with-hard-cost-caps",
+      "type": "related"
+    },
+    {
+      "source": "failover-aware-model-fallback",
+      "target": "agent-sdk-for-programmatic-control",
+      "type": "related"
+    },
+    {
+      "source": "failover-aware-model-fallback",
+      "target": "extended-coherence-work-sessions",
+      "type": "related"
+    },
+    {
+      "source": "filesystem-based-agent-state",
+      "target": "episodic-memory-retrieval-injection",
+      "type": "related"
+    },
+    {
+      "source": "filesystem-based-agent-state",
+      "target": "cross-cycle-consensus-relay",
+      "type": "related"
+    },
+    {
+      "source": "filesystem-based-agent-state",
+      "target": "proactive-agent-state-externalization",
+      "type": "related"
+    },
+    {
+      "source": "filesystem-based-agent-state",
+      "target": "tracker-as-desired-state-reconciliation",
+      "type": "related"
+    },
+    {
+      "source": "filesystem-based-agent-state",
+      "target": "filesystem-mediated-host-delegation",
+      "type": "related"
+    },
+    {
+      "source": "hook-based-safety-guard-rails-for-autonomous-code-agents",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "hook-based-safety-guard-rails-for-autonomous-code-agents",
+      "target": "deterministic-threat-rule-scanning",
+      "type": "related"
+    },
+    {
+      "source": "hook-based-safety-guard-rails-for-autonomous-code-agents",
+      "target": "intelligent-bash-tool-execution",
+      "type": "related"
+    },
+    {
+      "source": "hook-based-safety-guard-rails-for-autonomous-code-agents",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "hook-based-safety-guard-rails-for-autonomous-code-agents",
+      "target": "egress-lockdown-no-exfiltration-channel",
+      "type": "related"
+    },
+    {
+      "source": "human-in-the-loop-approval-framework",
+      "target": "exact-action-authorization-binding",
+      "type": "related"
+    },
+    {
+      "source": "human-in-the-loop-approval-framework",
+      "target": "tier-auto-apply-by-mechanical-impact",
+      "type": "related"
+    },
+    {
+      "source": "human-in-the-loop-approval-framework",
+      "target": "consequence-family-coverage-audit",
+      "type": "related"
+    },
+    {
+      "source": "human-in-the-loop-approval-framework",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "human-in-the-loop-approval-framework",
+      "target": "chain-of-thought-monitoring-interruption",
+      "type": "related"
+    },
+    {
+      "source": "hybrid-gui-visual-grounding",
+      "target": "semantic-context-filtering-pattern",
+      "type": "related"
+    },
+    {
+      "source": "hybrid-gui-visual-grounding",
+      "target": "visual-ai-multimodal-integration",
+      "type": "related"
+    },
+    {
+      "source": "hybrid-gui-visual-grounding",
+      "target": "action-caching-replay-pattern",
+      "type": "related"
+    },
+    {
+      "source": "hybrid-gui-visual-grounding",
+      "target": "virtual-machine-operator-agent",
+      "type": "related"
+    },
+    {
+      "source": "inference-time-scaling",
+      "target": "recursive-best-of-n-delegation",
+      "type": "related"
+    },
+    {
+      "source": "inference-time-scaling",
+      "target": "tree-of-thought-reasoning",
+      "type": "related"
+    },
+    {
+      "source": "inference-time-scaling",
+      "target": "language-agent-tree-search-lats",
+      "type": "related"
+    },
+    {
+      "source": "inference-time-scaling",
+      "target": "budget-aware-model-routing-with-hard-cost-caps",
+      "type": "related"
+    },
+    {
+      "source": "inference-time-scaling",
+      "target": "agent-driven-research",
+      "type": "related"
+    },
+    {
+      "source": "intelligent-bash-tool-execution",
+      "target": "virtual-machine-operator-agent",
+      "type": "related"
+    },
+    {
+      "source": "intelligent-bash-tool-execution",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "intelligent-bash-tool-execution",
+      "target": "shell-command-contextualization",
+      "type": "related"
+    },
+    {
+      "source": "intelligent-bash-tool-execution",
+      "target": "one-os-user-per-agent",
+      "type": "related"
+    },
+    {
+      "source": "intelligent-bash-tool-execution",
+      "target": "filesystem-mediated-host-delegation",
+      "type": "related"
+    },
+    {
+      "source": "inversion-of-control",
+      "target": "agent-friendly-workflow-design",
+      "type": "related"
+    },
+    {
+      "source": "inversion-of-control",
+      "target": "spectrum-of-control-blended-initiative",
+      "type": "related"
+    },
+    {
+      "source": "inversion-of-control",
+      "target": "progressive-complexity-escalation",
+      "type": "related"
+    },
+    {
+      "source": "inversion-of-control",
+      "target": "plan-then-execute-pattern",
+      "type": "related"
+    },
+    {
+      "source": "inversion-of-control",
+      "target": "llm-observability",
+      "type": "related"
+    },
+    {
+      "source": "judge-gated-finding-exchange-between-parallel-sub-agents",
+      "target": "board-mediated-async-inter-agent-coordination",
+      "type": "related"
+    },
+    {
+      "source": "judge-gated-finding-exchange-between-parallel-sub-agents",
+      "target": "non-generative-judgment-routing-with-typed-escalation",
+      "type": "related"
+    },
+    {
       "source": "judge-gated-finding-exchange-between-parallel-sub-agents",
       "target": "sub-agent-spawning",
       "type": "related"
     },
     {
+      "source": "layered-configuration-context",
+      "target": "dynamic-context-injection",
+      "type": "related"
+    },
+    {
+      "source": "layered-configuration-context",
+      "target": "context-budget-as-a-governed-resource",
+      "type": "related"
+    },
+    {
+      "source": "layered-configuration-context",
+      "target": "prompt-caching-via-exact-prefix-preservation",
+      "type": "related"
+    },
+    {
+      "source": "layered-configuration-context",
+      "target": "surface-scoped-system-prompt",
+      "type": "related"
+    },
+    {
+      "source": "layered-configuration-context",
+      "target": "versioned-constitution-governance",
+      "type": "related"
+    },
+    {
+      "source": "lethal-trifecta-threat-model",
+      "target": "egress-lockdown-no-exfiltration-channel",
+      "type": "related"
+    },
+    {
+      "source": "lethal-trifecta-threat-model",
+      "target": "dual-llm-pattern",
+      "type": "related"
+    },
+    {
+      "source": "lethal-trifecta-threat-model",
+      "target": "context-minimization-pattern",
+      "type": "related"
+    },
+    {
+      "source": "lethal-trifecta-threat-model",
+      "target": "tool-capability-compartmentalization",
+      "type": "related"
+    },
+    {
+      "source": "lethal-trifecta-threat-model",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "llm-observability",
+      "target": "agent-first-tooling-and-logging",
+      "type": "related"
+    },
+    {
+      "source": "llm-observability",
+      "target": "out-of-process-provider-boundary-replay",
+      "type": "related"
+    },
+    {
+      "source": "llm-observability",
+      "target": "intent-level-cost-attribution",
+      "type": "related"
+    },
+    {
+      "source": "llm-observability",
+      "target": "chain-of-thought-monitoring-interruption",
+      "type": "related"
+    },
+    {
+      "source": "llm-observability",
+      "target": "verbose-reasoning-transparency",
+      "type": "related"
+    },
+    {
+      "source": "markdown-polis-multi-vendor-agent-coordination-via-filesystem-constitution",
+      "target": "board-mediated-async-inter-agent-coordination",
+      "type": "related"
+    },
+    {
       "source": "markdown-polis-multi-vendor-agent-coordination-via-filesystem-constitution",
       "target": "versioned-constitution-governance",
+      "type": "related"
+    },
+    {
+      "source": "memory-consolidation-decay-contradiction-resolution",
+      "target": "episodic-memory-retrieval-injection",
+      "type": "related"
+    },
+    {
+      "source": "memory-consolidation-decay-contradiction-resolution",
+      "target": "memory-synthesis-from-execution-logs",
+      "type": "related"
+    },
+    {
+      "source": "memory-consolidation-decay-contradiction-resolution",
+      "target": "schema-guided-graph-retrieval-for-multi-hop-reasoning",
+      "type": "related"
+    },
+    {
+      "source": "memory-consolidation-decay-contradiction-resolution",
+      "target": "memory-reinforcement-learning-memrl",
+      "type": "related"
+    },
+    {
+      "source": "multi-tenant-agent-memory-isolation",
+      "target": "one-os-user-per-agent",
+      "type": "related"
+    },
+    {
+      "source": "multi-tenant-agent-memory-isolation",
+      "target": "egress-lockdown-no-exfiltration-channel",
+      "type": "related"
+    },
+    {
+      "source": "multi-tenant-agent-memory-isolation",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "multi-tenant-agent-memory-isolation",
+      "target": "pii-tokenization",
       "type": "related"
     },
     {
@@ -3590,12 +4417,22 @@
     },
     {
       "source": "orchestration-prompt-writing-benchmark",
+      "target": "subject-hygiene-for-task-delegation",
+      "type": "related"
+    },
+    {
+      "source": "orchestration-prompt-writing-benchmark",
       "target": "workflow-evals-with-mocked-tools",
       "type": "related"
     },
     {
       "source": "orchestration-prompt-writing-benchmark",
       "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "out-of-process-provider-boundary-replay",
+      "target": "action-caching-replay-pattern",
       "type": "related"
     },
     {
@@ -3620,7 +4457,62 @@
     },
     {
       "source": "persistent-test-memory-feedback-loop",
+      "target": "rich-feedback-loops-perfect-prompts",
+      "type": "related"
+    },
+    {
+      "source": "persistent-test-memory-feedback-loop",
       "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "pii-tokenization",
+      "target": "context-minimization-pattern",
+      "type": "related"
+    },
+    {
+      "source": "pii-tokenization",
+      "target": "lethal-trifecta-threat-model",
+      "type": "related"
+    },
+    {
+      "source": "pii-tokenization",
+      "target": "local-first-credential-broker",
+      "type": "related"
+    },
+    {
+      "source": "pii-tokenization",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "pii-tokenization",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "plan-then-execute-pattern",
+      "target": "action-selector-pattern",
+      "type": "related"
+    },
+    {
+      "source": "plan-then-execute-pattern",
+      "target": "code-then-execute-pattern",
+      "type": "related"
+    },
+    {
+      "source": "plan-then-execute-pattern",
+      "target": "dual-llm-pattern",
+      "type": "related"
+    },
+    {
+      "source": "plan-then-execute-pattern",
+      "target": "context-minimization-pattern",
+      "type": "related"
+    },
+    {
+      "source": "plan-then-execute-pattern",
+      "target": "discrete-phase-separation",
       "type": "related"
     },
     {
@@ -3639,6 +4531,66 @@
       "type": "related"
     },
     {
+      "source": "progressive-autonomy-with-model-evolution",
+      "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "progressive-autonomy-with-model-evolution",
+      "target": "compounding-engineering-pattern",
+      "type": "related"
+    },
+    {
+      "source": "progressive-autonomy-with-model-evolution",
+      "target": "agent-assisted-scaffolding",
+      "type": "related"
+    },
+    {
+      "source": "progressive-autonomy-with-model-evolution",
+      "target": "progressive-complexity-escalation",
+      "type": "related"
+    },
+    {
+      "source": "progressive-autonomy-with-model-evolution",
+      "target": "canary-rollout-and-automatic-rollback-for-agent-policy-changes",
+      "type": "related"
+    },
+    {
+      "source": "progressive-tool-discovery",
+      "target": "context-minimization-pattern",
+      "type": "related"
+    },
+    {
+      "source": "progressive-tool-discovery",
+      "target": "dynamic-context-injection",
+      "type": "related"
+    },
+    {
+      "source": "prompt-caching-via-exact-prefix-preservation",
+      "target": "context-window-auto-compaction",
+      "type": "related"
+    },
+    {
+      "source": "prompt-caching-via-exact-prefix-preservation",
+      "target": "progressive-tool-discovery",
+      "type": "related"
+    },
+    {
+      "source": "prompt-caching-via-exact-prefix-preservation",
+      "target": "surface-scoped-system-prompt",
+      "type": "related"
+    },
+    {
+      "source": "prompt-caching-via-exact-prefix-preservation",
+      "target": "layered-configuration-context",
+      "type": "related"
+    },
+    {
+      "source": "prompt-caching-via-exact-prefix-preservation",
+      "target": "extended-coherence-work-sessions",
+      "type": "related"
+    },
+    {
       "source": "reasoning-token-firewall",
       "target": "chain-of-thought-monitoring-interruption",
       "type": "related"
@@ -3654,8 +4606,268 @@
       "type": "related"
     },
     {
+      "source": "reflection-loop",
+      "target": "deterministic-grader-in-the-loop",
+      "type": "related"
+    },
+    {
+      "source": "reflection-loop",
+      "target": "inference-time-scaling",
+      "type": "related"
+    },
+    {
+      "source": "reflection-loop",
+      "target": "self-critique-evaluator-loop",
+      "type": "related"
+    },
+    {
+      "source": "reflection-loop",
+      "target": "rlaif-reinforcement-learning-from-ai-feedback",
+      "type": "related"
+    },
+    {
+      "source": "reflection-loop",
+      "target": "output-verification-loop",
+      "type": "related"
+    },
+    {
+      "source": "rich-feedback-loops-perfect-prompts",
+      "target": "stop-hook-auto-continue-pattern",
+      "type": "related"
+    },
+    {
+      "source": "rich-feedback-loops-perfect-prompts",
+      "target": "deterministic-grader-in-the-loop",
+      "type": "related"
+    },
+    {
+      "source": "rich-feedback-loops-perfect-prompts",
+      "target": "output-verification-loop",
+      "type": "related"
+    },
+    {
+      "source": "rich-feedback-loops-perfect-prompts",
+      "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "rich-feedback-loops-perfect-prompts",
+      "target": "factory-over-assistant",
+      "type": "related"
+    },
+    {
+      "source": "rlaif-reinforcement-learning-from-ai-feedback",
+      "target": "self-critique-evaluator-loop",
+      "type": "related"
+    },
+    {
+      "source": "rlaif-reinforcement-learning-from-ai-feedback",
+      "target": "anti-reward-hacking-grader-design",
+      "type": "related"
+    },
+    {
+      "source": "rlaif-reinforcement-learning-from-ai-feedback",
+      "target": "inference-healed-code-review-reward",
+      "type": "related"
+    },
+    {
+      "source": "rlaif-reinforcement-learning-from-ai-feedback",
+      "target": "variance-based-rl-sample-selection",
+      "type": "related"
+    },
+    {
+      "source": "sandboxed-tool-authorization",
+      "target": "lethal-trifecta-threat-model",
+      "type": "related"
+    },
+    {
+      "source": "sandboxed-tool-authorization",
+      "target": "tool-capability-compartmentalization",
+      "type": "related"
+    },
+    {
+      "source": "sandboxed-tool-authorization",
+      "target": "egress-lockdown-no-exfiltration-channel",
+      "type": "related"
+    },
+    {
+      "source": "sandboxed-tool-authorization",
+      "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "sandboxed-tool-authorization",
+      "target": "policy-gated-tool-proxy",
+      "type": "related"
+    },
+    {
+      "source": "shell-command-contextualization",
+      "target": "dynamic-context-injection",
+      "type": "related"
+    },
+    {
+      "source": "shell-command-contextualization",
+      "target": "intelligent-bash-tool-execution",
+      "type": "related"
+    },
+    {
+      "source": "shell-command-contextualization",
+      "target": "context-budget-as-a-governed-resource",
+      "type": "related"
+    },
+    {
+      "source": "skill-library-evolution",
+      "target": "progressive-tool-discovery",
+      "type": "related"
+    },
+    {
+      "source": "skill-library-evolution",
+      "target": "compounding-engineering-pattern",
+      "type": "related"
+    },
+    {
+      "source": "skill-library-evolution",
+      "target": "dual-use-tool-design",
+      "type": "related"
+    },
+    {
+      "source": "skill-library-evolution",
+      "target": "iterative-prompt-skill-refinement",
+      "type": "related"
+    },
+    {
+      "source": "skill-library-evolution",
+      "target": "mcp-pattern-injection",
+      "type": "related"
+    },
+    {
+      "source": "spectrum-of-control-blended-initiative",
+      "target": "seamless-background-to-foreground-handoff",
+      "type": "related"
+    },
+    {
+      "source": "spectrum-of-control-blended-initiative",
+      "target": "classify-then-act-for-background-agents",
+      "type": "related"
+    },
+    {
+      "source": "spectrum-of-control-blended-initiative",
+      "target": "inversion-of-control",
+      "type": "related"
+    },
+    {
+      "source": "spectrum-of-control-blended-initiative",
+      "target": "factory-over-assistant",
+      "type": "related"
+    },
+    {
+      "source": "spectrum-of-control-blended-initiative",
+      "target": "progressive-complexity-escalation",
+      "type": "related"
+    },
+    {
+      "source": "structured-output-specification",
+      "target": "action-selector-pattern",
+      "type": "related"
+    },
+    {
+      "source": "structured-output-specification",
+      "target": "llm-map-reduce-pattern",
+      "type": "related"
+    },
+    {
+      "source": "structured-output-specification",
+      "target": "discrete-phase-separation",
+      "type": "related"
+    },
+    {
+      "source": "structured-output-specification",
+      "target": "reasoning-token-firewall",
+      "type": "related"
+    },
+    {
+      "source": "structured-output-specification",
+      "target": "subagent-compilation-checker",
+      "type": "related"
+    },
+    {
+      "source": "sub-agent-spawning",
+      "target": "curated-code-context-window",
+      "type": "related"
+    },
+    {
+      "source": "sub-agent-spawning",
+      "target": "agent-driven-research",
+      "type": "related"
+    },
+    {
+      "source": "sub-agent-spawning",
+      "target": "swarm-migration-pattern",
+      "type": "related"
+    },
+    {
+      "source": "sub-agent-spawning",
+      "target": "discrete-phase-separation",
+      "type": "related"
+    },
+    {
+      "source": "sub-agent-spawning",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
       "source": "surface-scoped-system-prompt",
       "target": "agent-modes-by-model-personality",
+      "type": "related"
+    },
+    {
+      "source": "swarm-migration-pattern",
+      "target": "sub-agent-spawning",
+      "type": "related"
+    },
+    {
+      "source": "swarm-migration-pattern",
+      "target": "llm-map-reduce-pattern",
+      "type": "related"
+    },
+    {
+      "source": "swarm-migration-pattern",
+      "target": "deterministic-zero-llm-orchestration",
+      "type": "related"
+    },
+    {
+      "source": "swarm-migration-pattern",
+      "target": "recursive-best-of-n-delegation",
+      "type": "related"
+    },
+    {
+      "source": "swarm-migration-pattern",
+      "target": "planner-worker-separation-for-long-running-agents",
+      "type": "related"
+    },
+    {
+      "source": "team-shared-agent-configuration-as-code",
+      "target": "layered-configuration-context",
+      "type": "related"
+    },
+    {
+      "source": "team-shared-agent-configuration-as-code",
+      "target": "sandboxed-tool-authorization",
+      "type": "related"
+    },
+    {
+      "source": "team-shared-agent-configuration-as-code",
+      "target": "versioned-constitution-governance",
+      "type": "related"
+    },
+    {
+      "source": "team-shared-agent-configuration-as-code",
+      "target": "compounding-engineering-pattern",
+      "type": "related"
+    },
+    {
+      "source": "team-shared-agent-configuration-as-code",
+      "target": "agent-friendly-workflow-design",
       "type": "related"
     },
     {
@@ -3664,18 +4876,23 @@
       "type": "related"
     },
     {
-      "source": "tool-search-lazy-loading",
-      "target": "context-minimization-pattern",
+      "source": "tier-auto-apply-by-mechanical-impact",
+      "target": "human-in-the-loop-approval-framework",
       "type": "related"
     },
     {
-      "source": "tool-search-lazy-loading",
-      "target": "progressive-tool-discovery",
+      "source": "tool-use-steering-via-prompting",
+      "target": "sub-agent-spawning",
       "type": "related"
     },
     {
-      "source": "tool-search-lazy-loading",
-      "target": "dynamic-context-injection",
+      "source": "tool-use-steering-via-prompting",
+      "target": "discrete-phase-separation",
+      "type": "related"
+    },
+    {
+      "source": "tool-use-steering-via-prompting",
+      "target": "subject-hygiene-for-task-delegation",
       "type": "related"
     },
     {
@@ -3699,18 +4916,138 @@
       "type": "related"
     },
     {
+      "source": "trajectory-state-invariant-evaluation",
+      "target": "workflow-evals-with-mocked-tools",
+      "type": "related"
+    },
+    {
+      "source": "trajectory-state-invariant-evaluation",
+      "target": "deterministic-grader-in-the-loop",
+      "type": "related"
+    },
+    {
+      "source": "trajectory-state-invariant-evaluation",
+      "target": "evidence-layered-evaluation-for-interactive-agents",
+      "type": "related"
+    },
+    {
+      "source": "trajectory-state-invariant-evaluation",
+      "target": "incident-to-eval-synthesis",
+      "type": "related"
+    },
+    {
       "source": "unified-tool-gateway",
       "target": "progressive-tool-discovery",
       "type": "related"
     },
     {
       "source": "unified-tool-gateway",
-      "target": "tool-search-lazy-loading",
+      "target": "tool-capability-compartmentalization",
       "type": "related"
     },
     {
-      "source": "unified-tool-gateway",
-      "target": "tool-capability-compartmentalization",
+      "source": "verbose-reasoning-transparency",
+      "target": "chain-of-thought-monitoring-interruption",
+      "type": "related"
+    },
+    {
+      "source": "verbose-reasoning-transparency",
+      "target": "reasoning-token-firewall",
+      "type": "related"
+    },
+    {
+      "source": "verbose-reasoning-transparency",
+      "target": "llm-observability",
+      "type": "related"
+    },
+    {
+      "source": "verbose-reasoning-transparency",
+      "target": "abstracted-code-representation-for-review",
+      "type": "related"
+    },
+    {
+      "source": "virtual-machine-operator-agent",
+      "target": "code-over-api-pattern",
+      "type": "related"
+    },
+    {
+      "source": "virtual-machine-operator-agent",
+      "target": "intelligent-bash-tool-execution",
+      "type": "related"
+    },
+    {
+      "source": "virtual-machine-operator-agent",
+      "target": "egress-lockdown-no-exfiltration-channel",
+      "type": "related"
+    },
+    {
+      "source": "virtual-machine-operator-agent",
+      "target": "one-os-user-per-agent",
+      "type": "related"
+    },
+    {
+      "source": "virtual-machine-operator-agent",
+      "target": "custom-sandboxed-background-agent",
+      "type": "related"
+    },
+    {
+      "source": "visual-ai-multimodal-integration",
+      "target": "three-stage-perception-architecture",
+      "type": "related"
+    },
+    {
+      "source": "visual-ai-multimodal-integration",
+      "target": "rendered-ui-finish-gate",
+      "type": "related"
+    },
+    {
+      "source": "visual-ai-multimodal-integration",
+      "target": "evidence-layered-evaluation-for-interactive-agents",
+      "type": "related"
+    },
+    {
+      "source": "visual-ai-multimodal-integration",
+      "target": "virtual-machine-operator-agent",
+      "type": "related"
+    },
+    {
+      "source": "voice-agent-turn-taking-barge-in-handling",
+      "target": "chain-of-thought-monitoring-interruption",
+      "type": "related"
+    },
+    {
+      "source": "voice-agent-turn-taking-barge-in-handling",
+      "target": "spectrum-of-control-blended-initiative",
+      "type": "related"
+    },
+    {
+      "source": "voice-agent-turn-taking-barge-in-handling",
+      "target": "agent-circuit-breaker",
+      "type": "related"
+    },
+    {
+      "source": "workflow-evals-with-mocked-tools",
+      "target": "incident-to-eval-synthesis",
+      "type": "related"
+    },
+    {
+      "source": "workflow-evals-with-mocked-tools",
+      "target": "out-of-process-provider-boundary-replay",
+      "type": "related"
+    },
+    {
+      "source": "workflow-evals-with-mocked-tools",
+      "target": "evidence-layered-evaluation-for-interactive-agents",
+      "type": "related"
+    },
+    {
+      "source": "workflow-evals-with-mocked-tools",
+      "target": "anti-reward-hacking-grader-design",
+      "type": "related"
+    },
+    {
+      "source": "workflow-evals-with-mocked-tools",
+      "target": "progressive-autonomy-with-model-evolution",
       "type": "related"
     }
   ]

@@ -1,6 +1,6 @@
 ---
 title: Canary Rollout and Automatic Rollback for Agent Policy Changes
-status: established
+status: emerging
 authors: ["Codex (@openai)"]
 based_on: ["Canary deployment and SRE rollback practices"]
 category: "Reliability & Eval"

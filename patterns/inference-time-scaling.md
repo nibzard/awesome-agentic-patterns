@@ -1,6 +1,6 @@
 ---
 title: "Inference-Time Scaling"
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Snell et al. (compute-optimal test-time scaling)", "OpenAI (o1)", "Wei et al. (CoT)", "Wang et al. (Self-Consistency)", "Yao et al. (Tree-of-Thought)"]
 category: "Orchestration & Control"
@@ -9,6 +9,7 @@ tags: [scaling, inference, compute, reasoning, performance, o1-model, test-time-
 summary: "Spends extra compute at inference time with best-of-N sampling, longer reasoning, self-refinement, search, and verification to improve output quality"
 signals: ["Complex reasoning tasks such as math or coding where more deliberation helps", "Output quality matters more than latency and cost", "You want a smaller model to match a larger one on hard tasks"]
 anti_signals: ["Simple tasks that gain nothing from extra compute", "Latency-sensitive responses", "Inference budget cannot absorb higher per-request cost"]
+related: ["recursive-best-of-n-delegation", "tree-of-thought-reasoning", "language-agent-tree-search-lats", "budget-aware-model-routing-with-hard-cost-caps", "agent-driven-research"]
 updated_at: "2026-10-13"
 ---
 
@@ -28,179 +29,95 @@ Inference-Time Scaling allocates additional computational resources during infer
 
 This approach trades compute time for solution quality, allowing smaller models with inference-time scaling to outperform larger models using standard inference.
 
-## Example
+Sketch of an agent that picks strategies by compute budget:
 
 ```python
 class InferenceTimeScalingAgent:
-    def __init__(self, base_model, scaling_strategy='adaptive'):
-        self.base_model = base_model
-        self.scaling_strategy = scaling_strategy
-        
     def solve_with_scaling(self, problem, max_compute_budget=100):
         if self.scaling_strategy == 'adaptive':
-            # Estimate problem difficulty
-            difficulty = self.estimate_difficulty(problem)
+            difficulty = self.estimate_difficulty(problem)             # spend by difficulty, not a fixed N
             compute_budget = min(difficulty * 10, max_compute_budget)
         else:
             compute_budget = max_compute_budget
-            
-        # Try different scaling approaches based on budget
+
         solutions = []
-        
-        # Approach 1: Multiple attempts with different prompting
-        if compute_budget >= 10:
+        if compute_budget >= 10:                                       # 1. multiple attempts, varied prompting
             solutions.extend(self.multiple_attempts(problem, n=5))
-        
-        # Approach 2: Step-by-step reasoning with verification
-        if compute_budget >= 30:
+        if compute_budget >= 30:                                       # 2. extended reasoning with self-critique
             solutions.append(self.deep_reasoning(problem))
-        
-        # Approach 3: Solution space search
-        if compute_budget >= 50:
+        if compute_budget >= 50:                                       # 3. search over the solution space
             solutions.append(self.solution_search(problem))
-        
-        # Select best solution
         return self.select_best_solution(solutions, problem)
-    
+
     def multiple_attempts(self, problem, n=5):
-        """Generate multiple solutions with different approaches"""
-        prompting_strategies = [
-            "Think step by step",
-            "Consider edge cases",
-            "Work backwards from the goal",
-            "Break into subproblems", 
-            "Use analogical reasoning"
-        ]
-        
+        strategies = ["Think step by step", "Consider edge cases", "Work backwards from the goal",
+                      "Break into subproblems", "Use analogical reasoning"]
         solutions = []
         for i in range(n):
-            strategy = prompting_strategies[i % len(prompting_strategies)]
-            prompt = f"{strategy}: {problem}"
-            solution = self.base_model.generate(prompt)
-            solutions.append({
-                'solution': solution,
-                'strategy': strategy,
-                'confidence': self.evaluate_confidence(solution)
-            })
-        
+            strategy = strategies[i % len(strategies)]
+            solution = self.base_model.generate(f"{strategy}: {problem}")
+            solutions.append({'solution': solution, 'strategy': strategy,
+                              'confidence': self.evaluate_confidence(solution)})
         return solutions
-    
+
     def deep_reasoning(self, problem):
-        """Extended chain-of-thought with self-verification"""
-        # Initial reasoning
-        cot_prompt = f"""
-        Problem: {problem}
-        
-        Let me work through this systematically:
-        1. Understanding: What exactly is being asked?
-        2. Approach: What methods could work?
-        3. Solution: Work through the chosen approach
-        4. Verification: Double-check the answer
-        """
-        
-        initial_solution = self.base_model.generate(cot_prompt)
-        
-        # Self-critique
-        critique_prompt = f"""
-        Problem: {problem}
-        Proposed solution: {initial_solution}
-        
-        Critically evaluate this solution:
-        
-- Are there any errors?
-        - What assumptions were made?
-        - Could the approach be improved?
-        """
-        
-        critique = self.base_model.generate(critique_prompt)
-        
-        # Refined solution
-        refine_prompt = f"""
-        Problem: {problem}
-        Initial solution: {initial_solution}
-        Critique: {critique}
-        
-        Provide an improved solution addressing the critique:
-        """
-        
-        refined = self.base_model.generate(refine_prompt)
-        
-        return {
-            'solution': refined,
-            'strategy': 'deep_reasoning',
-            'iterations': 3,
-            'confidence': self.evaluate_confidence(refined)
-        }
-    
-    def solution_search(self, problem):
-        """Search through solution space systematically"""
-        # This could implement beam search, A*, or other algorithms
-        # Simplified example using breadth-first exploration
-        
-        candidates = PriorityQueue()
-        initial = self.generate_initial_solutions(problem, n=3)
-        
-        for sol in initial:
+        # Reason first (understand, pick an approach, solve, verify), then critique
+        # (errors? assumptions? could the approach be improved?), then refine
+        initial = self.base_model.generate(cot_prompt(problem))
+        critique = self.base_model.generate(critique_prompt(problem, initial))
+        refined = self.base_model.generate(refine_prompt(problem, initial, critique))
+        return {'solution': refined, 'strategy': 'deep_reasoning', 'iterations': 3,
+                'confidence': self.evaluate_confidence(refined)}
+
+    def solution_search(self, problem, max_iterations=10):
+        candidates = PriorityQueue()                 # highest-scoring partial solution first
+        for sol in self.generate_initial_solutions(problem, n=3):
             candidates.put((-self.score_solution(sol), sol))
-        
-        best_solution = None
-        iterations = 0
-        
-        while not candidates.empty() and iterations < 10:
+        best, iterations = None, 0
+        while not candidates.empty() and iterations < max_iterations:
             score, current = candidates.get()
-            
-            if self.is_complete_solution(current, problem):
-                if best_solution is None or score < best_solution[0]:
-                    best_solution = (score, current)
-            
-            # Generate variations
-            variations = self.generate_variations(current, problem)
+            if self.is_complete_solution(current, problem) and (best is None or score < best[0]):
+                best = (score, current)
+            variations = self.generate_variations(current, problem)    # explore, score, re-queue
             for var in variations:
-                var_score = self.score_solution(var)
-                candidates.put((-var_score, var))
-            
+                candidates.put((-self.score_solution(var), var))
             iterations += 1
-        
-        return {
-            'solution': best_solution[1] if best_solution else current,
-            'strategy': 'solution_search', 
-            'iterations': iterations,
-            'candidates_explored': iterations * len(variations)
-        }
+        return {'solution': best[1] if best else current, 'strategy': 'solution_search',
+                'iterations': iterations, 'candidates_explored': iterations * len(variations)}
 ```
 
 ```mermaid
 flowchart TD
     A[Input Problem] --> B{Assess Difficulty}
-    
+
     B -->|Low| C[Standard Inference]
     B -->|Medium| D[Multiple Attempts]
     B -->|High| E[Deep Reasoning]
     B -->|Very High| F[Solution Search]
-    
+
     D --> G[Generate N Solutions]
     G --> H[Score Each]
-    
+
     E --> I[Initial CoT]
     I --> J[Self-Critique]
     J --> K[Refinement]
-    
+
     F --> L[Generate Candidates]
     L --> M[Explore Space]
     M --> N[Iterative Improvement]
-    
+
     H --> O[Select Best]
     K --> O
     N --> O
     C --> O
-    
+
     O --> P[Final Answer]
-    
+
     style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
     style O fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
 ```
 
-## Real-World Evidence
+## Evidence
 
 - **Academic Foundation**: Wei et al. (2022) established chain-of-thought prompting; Wang et al. (2022) demonstrated self-consistency gains via multiple sampling
 - **Compute-Optimal Scaling**: Snell et al. (2024) show that adapting test-time compute per prompt makes scaling markedly more efficient than uniform best-of-N, and can let a smaller model outperform a much larger one in FLOPs-matched settings
@@ -208,27 +125,29 @@ flowchart TD
 - **Production Models**: OpenAI o1 (September 2024) and Anthropic Claude Extended Thinking implement inference-time scaling natively, with improved reasoning on math and coding tasks
 - **Self-Refinement**: Shinn et al. (2023) Reflexion shows models can improve outputs through iterative self-critique
 
-## Trade-offs
-
-**Pros:**
-- Can dramatically improve performance on complex tasks
-- More cost-effective than training larger models
-- Allows dynamic resource allocation based on task difficulty
-- Enables "System 2" thinking in AI systems
-
-**Cons:**
-- Increased latency for responses
-- Higher inference costs for complex problems
-- Diminishing returns beyond certain compute thresholds
-- Not beneficial for simple tasks
-- Requires careful tuning of scaling strategies
-
 ## How to use it
 
 - Set a compute or latency ceiling per request before you scale, then measure quality per dollar at each budget step. Stop where returns flatten.
 - Match the strategy to verifiability. Best-of-N and self-consistency need a scorer or verifier to select among candidates. Sequential refinement needs the model to critique its own output credibly.
 - Adapt compute to difficulty instead of spending a fixed N on every prompt. Snell et al. (2024) show compute-optimal allocation beats uniform best-of-N at the same budget.
 - Check native reasoning models first. Frontier models now spend test-time compute internally (o1, Claude Extended Thinking). Hand-rolled best-of-N or search scaffolding may duplicate what the base model already provides. See [recursive-best-of-n-delegation.md](recursive-best-of-n-delegation.md) and [tree-of-thought-reasoning.md](tree-of-thought-reasoning.md) for when building it yourself still pays off.
+
+## Trade-offs
+
+**Pros:**
+
+- Can dramatically improve performance on complex tasks
+- More cost-effective than training larger models
+- Allows dynamic resource allocation based on task difficulty
+- Enables "System 2" thinking in AI systems
+
+**Cons:**
+
+- Increased latency for responses
+- Higher inference costs for complex problems
+- Diminishing returns beyond certain compute thresholds
+- Not beneficial for simple tasks
+- Requires careful tuning of scaling strategies
 
 ## References
 

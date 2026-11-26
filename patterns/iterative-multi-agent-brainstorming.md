@@ -1,6 +1,6 @@
 ---
 title: Iterative Multi-Agent Brainstorming
-status: experimental-but-awesome
+status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Boris Cherny (via Claude Code capability)"]
 category: Orchestration & Control

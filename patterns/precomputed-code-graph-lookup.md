@@ -1,6 +1,6 @@
 ---
 title: "Precomputed Code Graph Lookup"
-status: emerging
+status: proposed
 authors: ["Muthukumaran Navaneethakrishnan (@muthuishere)"]
 based_on: ["Aider repo map (Paul Gauthier)", "SCIP / LSIF (Sourcegraph, Microsoft)"]
 category: "Tool Use & Environment"

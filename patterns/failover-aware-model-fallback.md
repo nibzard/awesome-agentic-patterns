@@ -1,6 +1,6 @@
 ---
 title: "Failover-Aware Model Fallback"
-status: "validated-in-production"
+status: production
 authors: ["OpenClaw Contributors"]
 based_on: ["OpenClaw, formerly Clawdbot (https://github.com/openclaw/openclaw)"]
 category: "Reliability & Eval"
@@ -9,6 +9,7 @@ tags: [fallback, reliability, error-classification, multi-model, failover, resil
 summary: "Classifies each model failure by reason and falls back along a model chain only for retryable errors, failing fast on auth, billing, and user aborts"
 signals: ["The agent calls models from multiple providers or models", "Timeouts and rate limits interrupt requests", "Blind retries waste calls on auth or billing errors"]
 anti_signals: ["A single model with no alternative provider", "Downstream parsing cannot handle output differences between models", "Extra latency and API charges from failed attempts are not acceptable"]
+related: ["agent-circuit-breaker", "budget-aware-model-routing-with-hard-cost-caps", "agent-sdk-for-programmatic-control", "extended-coherence-work-sessions"]
 updated_at: "2026-10-13"
 ---
 

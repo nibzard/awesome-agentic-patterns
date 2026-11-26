@@ -1,6 +1,6 @@
 ---
 title: Context Budget as a Governed Resource
-status: validated-in-production
+status: emerging
 authors: ["James Ross (@jimy-r)"]
 based_on: ["Anthropic context-engineering guidance", "Agent Workspace Architecture (production workspace)"]
 category: "Context & Memory"

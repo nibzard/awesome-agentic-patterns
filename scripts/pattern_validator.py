@@ -74,11 +74,8 @@ class ValidationResult:
 VALID_STATUSES = {
     "proposed",
     "emerging",
-    "established",
-    "validated-in-production",
-    "best-practice",
-    "experimental-but-awesome",
-    "rapidly-improving",
+    "production",
+    "foundational",
 }
 
 VALID_CATEGORIES = {

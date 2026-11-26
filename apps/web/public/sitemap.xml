@@ -63,15 +63,15 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-driven-research</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-first-tool-discovery</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-first-tooling-and-logging</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/agent-friendly-workflow-design</loc>
@@ -86,24 +86,16 @@
     <lastmod>2026-01-05</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/ai-web-search-agent-loop</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/ai-accelerated-learning-and-skill-development</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/ai-assisted-code-review-verification</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://agentic-patterns.com/patterns/anchored-structured-context-compaction</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/approval-bound-transactional-write</loc>
-    <lastmod>2026-10-08</lastmod>
+    <loc>https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design</loc>
+    <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration</loc>
@@ -138,10 +130,6 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/burn-the-boats</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -158,24 +146,16 @@
     <lastmod>2026-09-26</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/cli-first-skill-design</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/cli-native-agent-orchestration</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/code-first-tool-interface-pattern</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/code-over-api-pattern</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/code-then-execute-pattern</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/codebase-optimization-for-agents</loc>
@@ -238,10 +218,6 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/cross-protocol-agent-discovery</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -258,12 +234,16 @@
     <lastmod>2026-07-23</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/debiased-llm-as-a-judge-evaluation</loc>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/democratization-of-tooling-via-agents</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://agentic-patterns.com/patterns/delegated-user-auth-token-exchange</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/denial-tracking-permission-escalation</loc>
@@ -290,15 +270,7 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/dev-tooling-assumptions-reset</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/discrete-phase-separation</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/disposable-scaffolding-over-durable-features</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
@@ -306,20 +278,24 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/dogfooding-with-rapid-iteration-for-agent-improvement</loc>
-    <lastmod>2026-01-05</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/dual-llm-pattern</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dual-rail-message-delivery</loc>
     <lastmod>2026-08-21</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/dual-speed-talker-reasoner-architecture</loc>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/dual-use-tool-design</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/durable-execution-step-checkpointing</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/dynamic-context-injection</loc>
@@ -327,11 +303,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions</loc>
@@ -343,11 +319,11 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/exact-action-authorization-binding</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/explicit-posterior-sampling-planner</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/extended-coherence-work-sessions</loc>
@@ -355,7 +331,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/external-credential-sync</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/factory-over-assistant</loc>
@@ -386,10 +362,6 @@
     <lastmod>2026-10-17</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/frontier-focused-development</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/graph-of-thoughts</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -400,6 +372,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/human-in-loop-approval-framework</loc>
     <lastmod>2026-11-06</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/hybrid-gui-visual-grounding</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator</loc>
@@ -435,7 +411,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/iterative-multi-agent-brainstorming</loc>
@@ -458,10 +434,6 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/latent-demand-product-discovery</loc>
-    <lastmod>2026-01-05</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/layered-configuration-context</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -471,7 +443,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/llm-map-reduce-pattern</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/llm-observability</loc>
@@ -494,6 +466,10 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
+    <loc>https://agentic-patterns.com/patterns/memory-consolidation-decay-contradiction</loc>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
     <loc>https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
@@ -507,7 +483,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/milestone-escrow-agent-funding</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/multi-model-orchestration-for-complex-edits</loc>
@@ -522,8 +498,8 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/no-token-limit-magic</loc>
-    <lastmod>2026-03-11</lastmod>
+    <loc>https://agentic-patterns.com/patterns/multi-tenant-agent-isolation</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/non-custodial-spending-controls</loc>
@@ -566,10 +542,6 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/patch-steering-via-prompted-tool-selection</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop</loc>
     <lastmod>2026-08-16</lastmod>
   </url>
@@ -603,7 +575,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-complexity-escalation</loc>
@@ -615,7 +587,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/progressive-tool-discovery</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/prompt-caching-via-exact-prefix-preservation</loc>
@@ -631,7 +603,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/reflection</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/wfgy-reliability-problem-map</loc>
@@ -690,15 +662,7 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/shared-core-native-shells</loc>
-    <lastmod>2026-11-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/shell-command-contextualization</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/shipping-as-research</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
@@ -718,12 +682,8 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/spec-as-test-feedback-loop</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/specification-driven-agent-development</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative</loc>
@@ -778,24 +738,20 @@
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
-    <loc>https://agentic-patterns.com/patterns/tool-search-lazy-loading</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
-    <loc>https://agentic-patterns.com/patterns/tool-selection-guide</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-  <url>
     <loc>https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tool-use-steering-via-prompting</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation</loc>
     <lastmod>2026-08-11</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/trajectory-and-state-invariant-evaluation</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/transitive-vouch-chain-trust</loc>
@@ -819,7 +775,7 @@
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/versioned-constitution-governance</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/virtual-machine-operator-agent</loc>
@@ -828,6 +784,10 @@
   <url>
     <loc>https://agentic-patterns.com/patterns/visual-ai-multimodal-integration</loc>
     <lastmod>2026-10-13</lastmod>
+  </url>
+  <url>
+    <loc>https://agentic-patterns.com/patterns/voice-agent-turn-taking-barge-in</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools</loc>

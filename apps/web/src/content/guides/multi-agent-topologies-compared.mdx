@@ -1,0 +1,103 @@
+---
+title: 'Multi-Agent Topologies Compared'
+description: 'How to choose between sub-agent spawning, planner-worker separation, initializer-maintainer loops, swarm migrations, board-mediated threads, and tracker reconciliation.'
+order: 2
+---
+
+## Start With the Bottleneck
+
+A second agent is a tax. It costs tokens, it adds a handoff, and it creates one more place for state to disappear. Pay that tax only when a single-agent loop hits a concrete bottleneck.
+
+Three bottlenecks justify multi-agent coordination:
+
+1. **Context saturation**: one agent's context overflows or degrades before the task is done
+2. **Wall-clock parallelism**: the work splits into independent pieces, and running them in series is too slow
+3. **Privilege or role isolation**: some work must run with narrower tools or fresher context than the main agent
+
+If your bottleneck is "the agent is not smart enough" or "the output is unreliable", more agents multiply the defect. Fix the loop first. [Choosing the Right Patterns](/guides/pattern-selection) covers that starting stack, and [Designing Reliable Agent Evals](/guides/designing-reliable-agent-evals) covers how to prove the fix worked.
+
+If the bottleneck is slow I/O, try [Parallel Tool Execution](/patterns/parallel-tool-execution) inside one agent before you add a second one. It runs read-only tool calls concurrently and falls back to sequence when any call modifies state.
+
+## Comparison Matrix
+
+Every topology below answers the same two questions differently: where does coordination state live, and who owns it?
+
+| Topology                                                                                                         | Coordination Mechanism                                                                                                 | Best For                                                                                             | Primary Failure Mode                                                                                 | Current Tier |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------ |
+| [Sub-Agent Spawning](/patterns/sub-agent-spawning)                                                               | A main agent spawns sub-agents with fresh context and scoped tools, then merges their results                          | A large multi-file task that overflows one context, or independent subtasks that can run in parallel | Overhead: spawning and tracking sub-agents can cost more than the task saves                         | foundational |
+| [Planner-Worker Separation for Long-Running Agents](/patterns/planner-worker-separation-for-long-running-agents) | Planners create tasks, workers finish them in isolation, and a judge ends each cycle                                   | Many agents on one large codebase for days or weeks, where flat peers conflict or duplicate work     | Complexity: it needs orchestration infrastructure and extensive prompt tuning                        | emerging     |
+| [Initializer-Maintainer Dual Agent](/patterns/initializer-maintainer-dual-agent)                                 | A one-time initializer writes a feature list, progress files, and a bootstrap script; a coding agent resumes from them | Many sessions over days or weeks, on an app with many discrete features                              | Upfront cost: it needs a comprehensive feature spec, and the initializer must anticipate later needs | emerging     |
+| [Swarm Migration](/patterns/swarm-migration-pattern)                                                             | A main agent fans 10 or more sub-agents out onto independent migration chunks                                          | A mechanical change across many independent files, with clear rules and good test coverage           | Merge conflicts, plus the burden of verifying many outputs                                           | production   |
+| [Factory over Assistant](/patterns/factory-over-assistant)                                                       | Autonomous agents run in parallel; tests, builds, and linters give the feedback; you check in later                    | Many independent tasks that automated checks can verify without a human                              | Loss of control: you cannot steer in real time, and issues can stay hidden for 30-60 minutes         | production   |
+| [Board-Mediated Inter-Agent Coordination](/patterns/board-mediated-inter-agent-coordination)                     | Agents talk through comment threads on board cards; a prefix raises an inbox card for the target agent                 | Agents in separate sessions whose coordination decisions must stay with the work record              | Latency and routing: polling delays delivery, and two instances of one agent break routing           | emerging     |
+| [Tracker-as-Desired-State Reconciliation](/patterns/tracker-as-desired-state-reconciliation)                     | The orchestrator re-reads tracker state every tick and keeps only a short-lived local claim                            | A long-lived fleet that must survive restarts while humans edit the same tickets                     | Poll latency, API quota, and a buggy transition rule that can mass-move tickets                      | emerging     |
+
+Tier is the pattern's catalog `status`. `proposed` means 0-1 public implementations. `emerging` means 2+ independent implementations or one detailed production write-up. `production` means proven across multiple independent production systems. `foundational` means an industry-default baseline whenever its signals apply. The pattern page is authoritative if a tier moves.
+
+## Distinctions People Get Wrong
+
+### A swarm is not just many sub-agents
+
+[Swarm Migration](/patterns/swarm-migration-pattern) narrows sub-agent spawning to one job: a mechanical change spread across many independent files. It adds prerequisites that plain spawning does not have: atomic migrations, unambiguous rules, good test coverage, and a sandbox that is safe to run many agents in. Under about 10 files, the pattern itself says sequential execution is more efficient.
+
+### A parent is not a factory
+
+With [Sub-Agent Spawning](/patterns/sub-agent-spawning), a main agent tracks its sub-agents and merges the results. With [Factory over Assistant](/patterns/factory-over-assistant), nobody watches. Tests, builds, and linters provide the feedback, and you check in later. The factory trades real-time steering for throughput. It fails on exploratory work and on tasks that need guidance nobody wrote down.
+
+### Planner-worker is not initializer-maintainer
+
+Both target work that outlives one session. [Initializer-Maintainer Dual Agent](/patterns/initializer-maintainer-dual-agent) runs its initializer once, then a coding agent resumes from the feature list and progress files, one feature per session. [Planner-Worker Separation](/patterns/planner-worker-separation-for-long-running-agents) keeps planners, workers, and a judge active across cycles, and it needs infrastructure to distribute tasks.
+
+### A message is not state
+
+[Board-Mediated Coordination](/patterns/board-mediated-inter-agent-coordination) passes messages between specific agents through card comments. Each prefix must map to exactly one active agent, or routing breaks. [Tracker-as-Desired-State Reconciliation](/patterns/tracker-as-desired-state-reconciliation) ignores messages. It re-reads ticket state every tick and derives dispatch from it, so restarts and human edits self-heal.
+
+## Decision Tree
+
+Ask these questions in order and stop at the first "yes".
+
+1. **Does the task fit in one agent's context, in one session?** Stay single-agent. No topology below earns its overhead yet.
+
+2. **Is the change mechanical?** The same rule applies to roughly 10 or more independent files, the rules are unambiguous, and tests can verify each chunk. Use [Swarm Migration](/patterns/swarm-migration-pattern).
+
+3. **Do you have many independent tasks that tests, builds, or linters can verify without a human?** Use [Factory over Assistant](/patterns/factory-over-assistant) and check on the agents later.
+
+4. **Does one main task split into independent subtasks that a parent can merge?** Use [Sub-Agent Spawning](/patterns/sub-agent-spawning). The parent keeps ownership and aggregates the results.
+
+5. **Will the project run for days or weeks across many sessions?** Pick by shape:
+   - Many discrete features, one finished per session: [Initializer-Maintainer Dual Agent](/patterns/initializer-maintainer-dual-agent)
+   - Many concurrent agents that need clear ownership and a judge to end each cycle: [Planner-Worker Separation](/patterns/planner-worker-separation-for-long-running-agents)
+
+6. **Do agents already run in separate sessions and need to coordinate?** Pick by what you trust:
+   - A board with an API, and decisions that must stay on the work card: [Board-Mediated Coordination](/patterns/board-mediated-inter-agent-coordination)
+   - A tracker that humans and agents both edit, and a fleet that must survive restarts: [Tracker-as-Desired-State Reconciliation](/patterns/tracker-as-desired-state-reconciliation)
+
+7. **Still unsure?** Stay single-agent. Revisit once the single-agent loop is stable and measured.
+
+## Companion Patterns for Concurrency and Isolation
+
+No topology above handles concurrency on its own. These four plug into whichever one you pick.
+
+- [Design-Time File Partition as Concurrency Control](/patterns/design-time-file-partition): each task declares every path it will write, so only disjoint work runs at once on a shared checkout. It does not stop a worker that writes outside its declared set.
+- [Lane-Based Execution Queueing](/patterns/lane-based-execution-queueing): named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users. It is not a priority scheduler.
+- [Distributed Execution with Cloud Workers](/patterns/distributed-execution-cloud-workers): many sessions in parallel, each in its own git worktree, with dependency-aware scheduling and approval gates. You pay for the infrastructure.
+- [Subject Hygiene for Task Delegation](/patterns/subject-hygiene): a specific action-plus-target subject on every delegated task, so each job stays traceable. Nothing enforces it except discipline.
+
+If your bottleneck is privilege isolation, add [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization). Its subagent policies inherit the parent's restrictions and can only narrow them.
+
+## Common Failure Modes
+
+| Failure Mode           | What It Looks Like                                                                                     | Mitigate With                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ---------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Write collisions       | Two agents fix the same file, clobber each other's edits, or break generated artifacts                 | [Design-Time File Partition](/patterns/design-time-file-partition) declares write paths up front and adds a blocking dependency between overlapping tasks. [Distributed Execution with Cloud Workers](/patterns/distributed-execution-cloud-workers) gives each worker its own worktree instead                                                                                                                                                  |
+| Lost handoff state     | A new session starts without the decisions, progress, or files the previous one produced               | [Initializer-Maintainer Dual Agent](/patterns/initializer-maintainer-dual-agent) keeps progress files and a bootstrap script. [Board-Mediated Coordination](/patterns/board-mediated-inter-agent-coordination) and [Tracker-as-Desired-State Reconciliation](/patterns/tracker-as-desired-state-reconciliation) keep state on the work record. [Filesystem-Based Agent State](/patterns/filesystem-based-agent-state) writes durable checkpoints |
+| Rubber-stamp judges    | The judge approves every cycle, or reviewers approve every request, so the loop never catches a defect | Give the loop evidence it cannot argue with. [Rich Feedback Loops](/patterns/rich-feedback-loops) returns compiler, test, and lint output. [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop) scores what you can count. [Human-in-the-Loop Approval Framework](/patterns/human-in-loop-approval-framework) names approval fatigue as a known risk, so keep approval volume low                                      |
+| Runaway token fan-out  | Ten agents become thirty, and the budget is gone before anyone notices                                 | [Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource) adds hard spend caps and fan-out bounds to unattended runs. [Lane-Based Execution Queueing](/patterns/lane-based-execution-queueing) limits concurrency per lane. [Budget-Aware Model Routing with Hard Cost Caps](/patterns/budget-aware-model-routing-with-hard-cost-caps) routes each request to the cheapest capable model under hard cost caps     |
+| Untraceable delegation | You cannot tell which sub-agent did what, or why                                                       | [Subject Hygiene for Task Delegation](/patterns/subject-hygiene) requires an action-plus-target subject on every delegated task                                                                                                                                                                                                                                                                                                                  |
+
+## Next Steps
+
+- Not sure which failure mode you have? Start with [Choosing the Right Patterns](/guides/pattern-selection)
+- Sub-agents get fresh context, so make it count. See the [Context Engineering Playbook](/guides/context-engineering-playbook)
+- Every judge needs evidence it cannot rubber-stamp. See [Designing Reliable Agent Evals](/guides/designing-reliable-agent-evals)
+- More agents means more tool calls to police. See [Prompt-Injection Defense in Depth](/guides/prompt-injection-defense-in-depth)

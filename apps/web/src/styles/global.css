@@ -336,6 +336,7 @@ select {
   display: inline-flex;
   align-items: center;
   padding: 0.2rem 0.45rem;
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -346,22 +347,26 @@ select {
   color: var(--color-text-muted);
 }
 
-.status-pill--best-practice,
-.status-pill--validated-in-production,
-.status-pill--established {
+.status-pill--foundational {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.status-pill--production {
   background: var(--color-success-bg);
   color: var(--color-success);
 }
 
-.status-pill--emerging,
-.status-pill--rapidly-improving {
+.status-pill--emerging {
   background: var(--color-warning-bg);
   color: var(--color-warning);
 }
 
-.status-pill--experimental-but-awesome {
-  background: var(--color-info-bg);
-  color: var(--color-info);
+.status-pill--proposed {
+  background: var(--surface-pill);
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
 }
 
 .mermaid {

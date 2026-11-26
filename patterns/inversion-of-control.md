@@ -1,6 +1,6 @@
 ---
 title: Inversion of Control
-status: validated-in-production
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -17,6 +17,7 @@ id: inversion-of-control
 summary: "Gives the agent tools, a high-level objective, and guardrails, then lets it choose sequencing and recovery while humans set policy and review"
 signals: ["Humans spend time scripting each step the agent takes", "Tasks have objective success criteria such as passing tests", "Guardrails and checkpoints can be enforced at risky boundaries"]
 anti_signals: ["No guardrails or telemetry exist to detect drift or overreach", "Tasks have vague success criteria that need step-by-step human judgement", "Every step is high risk and needs explicit human approval"]
+related: ["agent-friendly-workflow-design", "spectrum-of-control-blended-initiative", "progressive-complexity-escalation", "plan-then-execute-pattern", "llm-observability"]
 updated_at: '2026-10-13'
 ---
 

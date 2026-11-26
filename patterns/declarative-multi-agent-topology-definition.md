@@ -1,6 +1,6 @@
 ---
 title: Declarative Multi-Agent Topology Definition
-status: emerging
+status: proposed
 authors: ["Nadav Naveh (@nadavnaveh)"]
 based_on: ["AgenTopology (reference implementation)"]
 category: "Orchestration & Control"
@@ -101,7 +101,7 @@ graph TD
 - **Abstraction cost**: A declarative layer cannot expose every platform-specific feature; escape hatches or extensions are needed for advanced cases.
 - **Grammar learning curve**: Teams must learn a new syntax, though the goal is to keep it minimal and readable.
 - **Compiler fidelity**: Each binding must faithfully map declarative primitives to platform capabilities, which varies across targets.
-- **Early ecosystem**: The pattern is emerging; tooling and community support are still maturing. No cross-framework agent topology standard exists as of October 2026; adjacent efforts standardize other layers (see References).
+- **Early ecosystem**: The pattern is still a proposal; tooling and community support are still maturing. No cross-framework agent topology standard exists as of October 2026; adjacent efforts standardize other layers (see References).
 
 ## References
 

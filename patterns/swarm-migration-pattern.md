@@ -1,6 +1,6 @@
 ---
 title: Swarm Migration Pattern
-status: validated-in-production
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -25,6 +25,7 @@ summary: >-
   rollouts, and API migrations.
 signals: ["Migration touches many files that can change independently", "Good test coverage can verify each chunk", "Clear, unambiguous migration rules exist"]
 anti_signals: ["Fewer than about 10 files to migrate", "Files are tightly coupled and need coordinated changes", "Budget cannot cover many parallel agents"]
+related: ["sub-agent-spawning", "llm-map-reduce-pattern", "deterministic-zero-llm-orchestration", "recursive-best-of-n-delegation", "planner-worker-separation-for-long-running-agents"]
 updated_at: '2026-10-13'
 ---
 

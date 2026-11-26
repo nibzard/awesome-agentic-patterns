@@ -1,0 +1,137 @@
+---
+title: 'Production Eval Release Pipeline'
+summary: 'A closed loop from CI evals to recorded traces, incident-derived cases, and canary rollouts with automatic rollback.'
+domain: 'Reliability & Evaluation'
+patterns:
+  - workflow-evals-with-mocked-tools
+  - deterministic-grader-in-the-loop
+  - incident-to-eval-synthesis
+  - out-of-process-provider-boundary-replay
+  - canary-rollout-and-automatic-rollback-for-agent-policy-changes
+order: 6
+---
+
+## Overview
+
+This pack is for teams that change prompts, tools, or models often and need to know, before users do, when
+a change makes the agent worse. It forms a closed loop. Evals run in CI on every change. Real runs are
+recorded so that the logic of the agent can be re-run offline. Production incidents become eval cases.
+Each change reaches users gradually, with an automatic way back.
+
+## When to Use This Pack
+
+- **You change prompts, tool policies, or models regularly** and need a regression signal before release
+- **The agent fails quietly**: the output looks plausible, and the failure appears in metrics or tickets
+  later
+- **A production incident must not repeat** after it is fixed
+- **You need a safe rollout path** for changes that cannot be fully tested before release
+
+## Patterns Included
+
+### 1. [Workflow Evals with Mocked Tools](/patterns/workflow-evals-with-mocked-tools)
+
+**Status**: production.
+
+Runs complete agent workflows against mock versions of each tool. An eval case states the initial prompt,
+objective criteria (which tools must and must not be called), and subjective criteria that an
+agent-as-judge scores. The evals run on every pull request and post the results as a comment. Each tool has
+two implementations, real and mock.
+
+**Role in this pack**: The fast check with deterministic infrastructure that runs on every change.
+
+The pattern is candid about its limits. Agents are non-deterministic, so the results are a directional
+signal and are hard to use as a blocking CI gate. All-pass or all-fail is a strong signal. Mixed results
+are weak.
+
+### 2. [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop)
+
+**Status**: proposed, with low evidence.
+
+Replaces LLM-as-judge in the self-review loop of an agent with a deterministic scorer. The scorer returns
+raw counts for each sub-score, for example how many hype words or em dashes appear. The loop is: score, fix
+the worst count, score again, until the output passes a threshold or the retry budget ends. It fits style,
+format and schema conformance, and required elements. It does not fit factual accuracy, novelty, or
+audience fit.
+
+**Role in this pack**: Gives the pipeline a check that is free, repeatable, and assertable in CI.
+
+Scores invite gaming, so cap the iterations and keep the pass threshold below the maximum.
+
+### 3. [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis)
+
+**Status**: proposed, with low evidence.
+
+Turns a production incident into an eval case. The team captures the artifacts (inputs, context, tool
+traces, output, impact), redacts them, reduces them to a minimal reproducible scenario, and writes objective
+pass/fail criteria. The case joins the corpus with severity and owner metadata and runs in CI and release
+gates. The pattern recommends a tiered policy: block on severe incidents and warn on the rest.
+
+**Role in this pack**: Makes sure that each production failure is tested from then on.
+
+The pattern reports that no public source documents the incident-to-eval process end to end.
+
+### 4. [Out-of-Process Provider-Boundary Replay](/patterns/out-of-process-provider-boundary-replay)
+
+**Status**: emerging.
+
+Records a real run at the model provider boundary. The agent runs as a child process whose provider
+endpoints point at a proxy. The proxy stores each request and response, including streamed frames, as raw
+bytes. To replay, the harness restores the initial working tree and tool fixtures, then serves the recorded
+bytes back. The run reports where the new behavior diverges from the recording.
+
+**Role in this pack**: Re-runs the logic of the agent offline, with no provider call and no provider cost.
+
+Replay re-executes agent code against recorded model answers. It cannot test a prompt change, because a
+changed prompt would have produced a different answer that was never recorded. Replay blocks provider
+traffic but is not a sandbox: tool calls execute for real.
+
+### 5. [Canary Rollout and Automatic Rollback for Agent Policy Changes](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes)
+
+**Status**: emerging.
+
+Ships each change to a small share of traffic first. A traffic splitter, a registry of immutable policy
+versions, and real-time monitors for quality, latency, failures, safety flags, spend, and loops work
+together with rollback automation. When a guardrail metric crosses a trigger that was defined before the
+rollout, the system returns to the previous stable version. A shadow mode is optional.
+
+**Role in this pack**: The release step. A regression reaches a small share of users for a short time, and
+then it is gone.
+
+The traffic stages in the pattern are illustrative, not sourced benchmarks.
+
+## How They Fit Together
+
+The loop has four stations. Adopt them in this order:
+
+1. **CI first.** Add Workflow Evals with Mocked Tools to every pull request, with deterministic graders
+   where a rule can be written down. Read mixed results as a signal to investigate, not as a pass or a
+   fail.
+2. **Record before you debug.** Add Provider-Boundary Replay so that a failing run can be re-executed
+   offline, step by step, at no provider cost.
+3. **Feed the loop from production.** Add Incident-to-Eval Synthesis, starting with the most severe
+   incidents only.
+4. **Release gradually.** Add Canary Rollout when real-time telemetry and versioned policies exist. A
+   canary without monitors and rollback triggers is only a slow deployment.
+
+## Honest Trade-offs
+
+- **Weak signals from non-deterministic evals**: Workflow evals with an LLM judge vary from run to run. Use
+  them as a directional signal and keep the hard gates deterministic.
+- **Replay has a narrow reach**: It cannot evaluate a prompt change, it is not a sandbox, and recorded
+  traces are as sensitive as the conversations that they contain.
+- **Incident synthesis is manual work**: Redacting and reducing an incident takes engineering time, and the
+  pattern has no public end-to-end reference yet.
+- **Deterministic graders measure what can be counted**: They are poor judges of factual accuracy, and a
+  score that is optimized directly invites gaming.
+- **Canaries need infrastructure**: Traffic splitting, immutable policy versions, and real-time monitors
+  must exist before the first canary.
+- **Maturity**: One pattern is `production`, two are `emerging`, and two are `proposed` with low evidence.
+
+## What to Leave Out Until Later
+
+- **Large eval corpora**: Start with the workflows that failed in production. A long list of synthetic
+  cases adds noise before it adds coverage.
+- **LLM judges as hard gates**: Do not block merges on a judge that scores the same output differently on
+  two runs.
+- **Complex traffic stages**: Two stages (a small canary and the full rollout) are enough until the
+  monitors are trusted.

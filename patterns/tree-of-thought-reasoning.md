@@ -1,6 +1,6 @@
 ---
 title: Tree-of-Thought Reasoning
-status: established
+status: emerging
 authors:
   - Nikola Balic (@nibzard)
 based_on:

@@ -1,6 +1,6 @@
 ---
 title: "Hook-Based Safety Guard Rails for Autonomous Code Agents"
-status: validated-in-production
+status: foundational
 authors: ["yurukusa (@yurukusa)"]
 based_on: ["Claude Code Hooks (Anthropic)", "claude-code-ops-starter (https://github.com/yurukusa/claude-code-ops-starter)"]
 category: "Security & Safety"
@@ -9,6 +9,7 @@ tags: [hooks, guard-rails, safety, autonomous-operation, destructive-command-blo
 summary: "Runs small shell scripts on PreToolUse and PostToolUse hooks to block destructive commands, lint edits, and warn on context use outside the agent's reasoning"
 signals: ["Code agents run unattended with shell and file write access", "Destructive commands or silent syntax errors are a risk", "The agent framework supports pre- and post-tool-use hooks"]
 anti_signals: ["The framework has no hook events", "You need complete protection, since pattern matching misses creative commands", "Every action already goes through human review"]
+related: ["policy-gated-tool-proxy", "deterministic-threat-rule-scanning", "intelligent-bash-tool-execution", "sandboxed-tool-authorization", "egress-lockdown-no-exfiltration-channel"]
 updated_at: "2026-10-13"
 ---
 

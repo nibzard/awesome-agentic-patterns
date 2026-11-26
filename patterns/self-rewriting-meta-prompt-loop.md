@@ -1,6 +1,6 @@
 ---
 title: Self-Rewriting Meta-Prompt Loop
-status: emerging
+status: proposed
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Noah D. Goodman (Meta-Prompt)"]
 category: Orchestration & Control

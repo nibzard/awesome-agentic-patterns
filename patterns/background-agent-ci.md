@@ -1,6 +1,6 @@
 ---
 title: Background Agent with CI Feedback
-status: validated-in-production
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -16,6 +16,7 @@ id: background-agent-with-ci-feedback
 summary: "Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked"
 signals: ["Long-running refactors or dependency upgrades", "Developers wait and poll for CI results", "CI gives objective pass or fail signals"]
 anti_signals: ["No reliable CI suite exists", "Task needs frequent human decisions during the work"]
+related: ["custom-sandboxed-background-agent", "stop-hook-auto-continue-pattern", "seamless-background-to-foreground-handoff", "agent-sdk-for-programmatic-control", "factory-over-assistant"]
 updated_at: '2026-10-13'
 ---
 

@@ -1,15 +1,18 @@
 ---
 title: Pattern Title Here
-status: proposed # One of: proposed, emerging, established, validated-in-production, best-practice, experimental-but-awesome, rapidly-improving
+status: proposed # One of: proposed, emerging, production, foundational
 authors: ["Contributor Name (@username)"] # Repo contributors
 based_on: ["Original Creator (Source)"]    # Pattern originators/inspiration
 category: "Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration | Uncategorized"
 source: "URL to the primary blog post, talk, repo, or paper"
 tags: [tag1, tag2, keyword3, relevant-concept]
+summary: "One sentence that says what the pattern does (the solution, not the problem)"
+signals: ["Condition when a developer should use this pattern", "Another concrete condition"]
+anti_signals: ["Condition when this pattern is the wrong choice", "Another concrete condition"]
+updated_at: "YYYY-MM-DD" # Required: date of the last content change; keeps generated data deterministic
 # Optional evidence metadata for research-informed updates
 # evidence_grade: unknown  # one of: high, medium, low, mixed, unknown
 # evidence_snapshot: "1-2 high-signal findings + key uncertainty"
-# last_updated: "YYYY-MM-DD"
 ---
 
 ## Problem
@@ -63,6 +66,11 @@ Be honest about the pros and cons:
 
 - **Pros:** List the benefits and advantages
 - **Cons:** List the drawbacks, complexity, or limitations
+
+### Failure modes
+
+List 2-4 concrete ways a naive implementation of this pattern breaks.
+For each one, give the symptom, the cause, and the guard or fix, and keep it specific to this pattern's mechanism.
 
 ## References
 

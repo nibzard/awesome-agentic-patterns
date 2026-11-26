@@ -121,6 +121,13 @@ flowchart TD
     style H fill:#fff3e0,stroke:#e65100,stroke-width:2px
 ```
 
+## How to use it
+
+- Use this for complex reasoning tasks where different problems require different reasoning strategies (mathematical problem solving, strategic planning, multi-step code generation)
+- Best suited for applications where performance gains justify the additional computational overhead
+- Consider when interpretability of reasoning approach is valuable
+- Start with a diverse module library covering decomposition, verification, improvement, knowledge retrieval, and strategic reasoning
+
 ## Benefits
 
 - **Task-Specific Optimization**: Reasoning approach dynamically matches problem requirements without manual prompt engineering
@@ -131,25 +138,20 @@ flowchart TD
 ## Trade-offs
 
 **Pros:**
+
 - Significant performance improvements on diverse reasoning tasks
 - More efficient than trying all reasoning strategies
 - Creates reusable reasoning templates
 - Adapts to novel problem types
 
 **Cons:**
+
 - Computational overhead: approximately 2-3x the cost of single-pass Chain-of-Thought due to multiple LLM calls
 - Requires a diverse module library (the paper uses 39 reasoning modules adopted from Fernando et al. 2023, Promptbreeder)
 - May over-engineer simple problems
 - Structure quality depends on task analysis accuracy
 
 Currency note (2026): frontier reasoning models with test-time compute now supply adaptive multi-step reasoning out of the box, so this pattern is mainly worth the overhead on open or smaller models, or when you need an explicit, inspectable reasoning structure.
-
-## How to use it
-
-- Use this for complex reasoning tasks where different problems require different reasoning strategies (mathematical problem solving, strategic planning, multi-step code generation)
-- Best suited for applications where performance gains justify the additional computational overhead
-- Consider when interpretability of reasoning approach is valuable
-- Start with a diverse module library covering decomposition, verification, improvement, knowledge retrieval, and strategic reasoning
 
 ## References
 

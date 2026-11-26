@@ -1,6 +1,6 @@
 ---
 title: "Non-Custodial Spending Controls"
-status: "emerging"
+status: emerging
 authors: ["SAMA-I (@s-a-m-a-i)"]
 based_on: ["EIP-4337 smart accounts", "ERC-7715 wallet execution permissions", "x402 agent payments"]
 category: "Security & Safety"

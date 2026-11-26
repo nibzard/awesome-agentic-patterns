@@ -1,6 +1,6 @@
 ---
 title: PII Tokenization
-status: established
+status: production
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -18,6 +18,7 @@ id: pii-tokenization
 summary: "Replaces PII in tool results with placeholder tokens before the model sees them and restores the real values in outgoing tool calls"
 signals: ["Agent workflows handle customer, HR, or medical records", "Compliance rules such as GDPR, HIPAA, or CCPA apply", "Agent routes data between tools without needing to read raw values"]
 anti_signals: ["Agent must reason over the actual content of the sensitive values", "Data contains no PII", "Tokenization would replace access controls and encryption instead of adding to them"]
+related: ["context-minimization-pattern", "lethal-trifecta-threat-model", "local-first-credential-broker", "policy-gated-tool-proxy", "sandboxed-tool-authorization"]
 updated_at: '2026-10-13'
 ---
 

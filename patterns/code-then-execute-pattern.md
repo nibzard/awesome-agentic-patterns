@@ -3,13 +3,13 @@ title: Code-Then-Execute Pattern
 status: emerging
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["DeepMind CaMeL (orig.)", "Luca Beurer-Kellner et al. (2025)"]
-category: Tool Use & Environment
+category: Security & Safety
 source: "https://arxiv.org/abs/2506.08837"
 tags: [dsl, sandbox, program-synthesis, auditability]
 summary: "LLM writes a sandboxed program or DSL script, a static taint checker verifies data flows, and an interpreter runs it in a locked sandbox"
 signals: ["Security-sensitive workflows where tainted input must not reach dangerous sinks", "Multi-step agents such as SQL copilots or workflow automators that need auditability", "You need formal verification or replay logs of agent actions"]
 anti_signals: ["You cannot invest in DSL design and static-analysis infrastructure", "Simple tasks where sandbox execution overhead outweighs audit value"]
-updated_at: "2026-10-13"
+updated_at: "2026-11-23"
 ---
 
 ## Problem
@@ -29,6 +29,8 @@ The key shift is to move from "reasoning about actions" to "compiling actions" i
 Scope note: step 2 is an optional hardening layer, not part of the base pattern. The survey's Code-Then-Execute pattern (Beurer-Kellner et al., §3.1, pattern 5) defines no checker step and states it cannot stop injected content that arrives inside tool data. CaMeL (Debenedetti et al.) is the stronger variant that adds taint tracking and security-classified variables on top.
 
 This pattern also serves a complementary purpose: **token optimization**. When tool calls execute within the sandbox rather than through special tokens, only condensed results return to the LLM context. Published measurements: Anthropic reports 98.7% (150K → 2K tokens) for tool definitions loaded on demand, and Bifrost measures 58.2-92.8% input-token reductions for code-mode tool calling.
+
+For token reduction alone, see [Code-Over-API Pattern](code-over-api-pattern.md). This pattern complements it with a security control: a static check separates control flow (which tool runs, with which fixed arguments) from untrusted data, so that a tainted value cannot reach a dangerous sink.
 
 ```dsl
 x = calendar.read(today)

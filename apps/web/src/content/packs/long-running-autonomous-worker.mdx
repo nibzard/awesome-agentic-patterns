@@ -1,0 +1,131 @@
+---
+title: 'Long-Running Autonomous Worker'
+summary: 'Durability, cost, credential, and self-monitoring patterns for agent jobs that run unattended for hours or on a schedule.'
+domain: 'Autonomous Operations'
+patterns:
+  - filesystem-based-agent-state
+  - context-window-auto-compaction
+  - prompt-caching-via-exact-prefix-preservation
+  - credential-free-outbox
+  - dead-mans-switch-for-scheduled-agent-jobs
+order: 4
+---
+
+## Overview
+
+This pack is for agent jobs that run without a person watching: a nightly repository maintenance job, a
+weekend-long migration, or a scheduled report that reads several systems. Three things differ from an
+interactive session. The run outlives the context window, nobody is there to notice that it stalled, and
+the job holds credentials the whole time.
+
+The patterns give the worker durable state, a stable and affordable context, a safe way to publish its
+work, and an external check that notices when it stops.
+
+## When to Use This Pack
+
+- **The job runs for hours or days**, longer than one context window
+- **The job runs on a schedule or in CI**, where nobody watches the output
+- **The job must survive interruption** and resume without repeating completed work
+- **The job publishes results** to a repository, a branch, or an external system
+
+## Patterns Included
+
+### 1. [Filesystem-Based Agent State](/patterns/filesystem-based-agent-state)
+
+**Status**: foundational.
+
+Stores intermediate results and working state in files instead of keeping them in the context window. The
+agent checkpoints after each expensive operation and writes state files with metadata. Writes are atomic
+(write to a temporary file, then rename), and files are locked when several writers are possible. A later
+run reads the state and resumes.
+
+**Role in this pack**: Durability. A restarted job continues from the last checkpoint.
+
+### 2. [Context Window Auto-Compaction](/patterns/context-window-auto-compaction)
+
+**Status**: foundational.
+
+Handles the moment when a run outgrows its context window. The runner catches the context overflow error,
+compacts the transcript, validates the result for the rules of the provider, and reserves a capped share of
+the budget as headroom. It confirms that the token estimate decreased and then retries. It stops after a
+small fixed number of attempts.
+
+**Role in this pack**: Keeps a long run inside the context window without manual intervention.
+
+### 3. [Prompt Caching via Exact Prefix Preservation](/patterns/prompt-caching-via-exact-prefix-preservation)
+
+**Status**: foundational.
+
+Makes each request cheap to repeat. A provider gives a cache hit only when the start of the prompt matches
+token for token. The pattern puts static content first (system prompt, tool definitions in a fixed order,
+standing instructions) and variable content last. It only appends new messages, and it inserts a new
+message instead of editing an earlier one when a configuration changes. A changed tool list or model
+invalidates the cache.
+
+**Role in this pack**: Cost efficiency. A long run of similar requests costs much less per step.
+
+One interaction matters inside this pack: compaction trades context for a cache reset. Everything after a
+compacted summary is processed as new tokens.
+
+### 4. [Credential-Free Outbox](/patterns/credential-free-outbox)
+
+**Status**: emerging.
+
+Keeps publishing credentials out of the agent. The agent commits its work locally and writes it to an
+outbox as a `git` bundle. A separate courier job, with its own short-lived token, validates the bundle,
+rebases it onto the main branch, pushes it, and opens the pull request. The courier deletes the bundle
+only after a successful push.
+
+**Role in this pack**: Credential safety. The long-running job never holds a token that can write to a
+shared system.
+
+### 5. [Dead-Man's Switch for Scheduled Agent Jobs](/patterns/dead-mans-switch-for-scheduled-agent-jobs)
+
+**Status**: emerging.
+
+Makes a missing run visible. Each job writes a success sentinel to its log as its final act. A separate
+freshness checker, on a different cadence, compares the sentinel with the expected schedule and files a
+task when the sentinel is missing or stale. Jobs that run only on demand are exempt through a flag.
+
+**Role in this pack**: Self-monitoring. A job that silently stops running produces an alert instead of
+silence.
+
+The switch does not detect a job that ran and produced a wrong result.
+
+## How They Fit Together
+
+The patterns turn a long job into a loop with four guarantees. Adopt them in this order:
+
+1. **State on disk first.** Add Filesystem-Based Agent State, so that an interrupted job resumes instead of
+   repeating completed work.
+2. **Bound the context.** Add Context Window Auto-Compaction so that the loop cannot stop on an overflow
+   error.
+3. **Make each step cheap.** Arrange the prompts for Prompt Caching: static prefix, append-only history,
+   fixed tool order. Compact only when needed, and keep the compacted prefix stable afterward.
+4. **Separate the publish step.** For a job that publishes, move the credentials out of the worker with the
+   Credential-Free Outbox.
+5. **Watch from outside.** Add the Dead-Man's Switch once two or more jobs run on a schedule.
+
+The outbox and the dead-man's switch both add a second process outside the worker. The worker then holds
+less privilege, and something else notices when it stops.
+
+## Honest Trade-offs
+
+- **State hygiene**: On-disk state adds input and output cost and becomes stale when the task changes, so
+  it needs a cleanup policy.
+- **Summary loss**: Compaction keeps a summary, and a summary drops detail that a later step can need.
+- **Delivery delay**: The outbox delivers only when the courier runs, so publishing is asynchronous by
+  design.
+- **Trust boundaries that remain**: The courier needs read access to the outbox, and the worker still holds
+  its model API key.
+- **Narrow detection**: The dead-man's switch detects a missing run, not a wrong result.
+- **Maturity**: The outbox and the dead-man's switch are `emerging`. Treat them as designs to adapt, not as
+  finished components.
+
+## What to Leave Out Until Later
+
+- **Multi-agent fan-out**: One worker with clean checkpoints is better than several workers with shared
+  state.
+- **Scheduling platforms**: A cron entry and a log file are enough until the number of jobs grows.
+- **Elaborate retry policies**: Let a failed job stop at its last checkpoint. A manual restart is
+  acceptable for the first version.

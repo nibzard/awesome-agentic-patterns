@@ -131,4 +131,4 @@ Include subjective eval after each run:
 * [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al. (arXiv, 2022)
 * [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al. (NeurIPS, 2023)
 
-Distinct from [Dogfooding with Rapid Iteration for Agent Improvement](dogfooding-with-rapid-iteration-for-agent-improvement.md) (improving agents by building with them) and from [Rich Feedback Loops](rich-feedback-loops.md) (machine-readable tool feedback within one session): this pattern is the organizational loop around prompts and skills between runs.
+Distinct from [Dogfooding with Rapid Iteration for Agent Improvement](../principles/dogfooding-with-rapid-iteration-for-agent-improvement.md) (the companion principle on improving agents by building with them) and from [Rich Feedback Loops](rich-feedback-loops.md) (machine-readable tool feedback within one session): this pattern is the organizational loop around prompts and skills between runs.

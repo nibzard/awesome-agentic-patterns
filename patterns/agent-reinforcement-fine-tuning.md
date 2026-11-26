@@ -60,101 +60,30 @@ This is the umbrella pattern for the loop; see the distinct-from note under Refe
 - **Align with domain knowledge**: Measure grader-human consistency (e.g., Cohen's Kappa) before training
 - **Multi-dimensional evaluation**: Consider correctness, format compliance, efficiency, and safety
 
+Illustrative job setup (OpenAI demo path; see the provider status note above):
+
 ```python
-# Agent RFT Training Setup (OpenAI demo path; see provider status note above)
-from openai import OpenAI
+tools = [{"name": "search",    "url": "https://your-tools.modal.run/search",    "headers": AUTH},
+         {"name": "read_file", "url": "https://your-tools.modal.run/read_file", "headers": AUTH}]
 
-client = OpenAI()
-
-# 1. Define your tools with hosted endpoints
-tools = [
-    {
-        "name": "search",
-        "url": "https://your-tools.modal.run/search",
-        "headers": {"Authorization": "Bearer YOUR_TOKEN"}
-    },
-    {
-        "name": "read_file",
-        "url": "https://your-tools.modal.run/read_file",
-        "headers": {"Authorization": "Bearer YOUR_TOKEN"}
-    }
-]
-
-# 2. Define your grader (model-based or endpoint-based)
-grader = {
-    "type": "model",  # or "endpoint" for custom grading logic
+grader = {                                    # model-based, or "endpoint" for custom grading logic
+    "type": "model",
     "model": "gpt-4o",
-    "response_format": {
-        "type": "json_schema",
-        "json_schema": {
-            "name": "grader_response",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "score": {"type": "number"},  # 0.0 to 1.0
-                    "reasoning": {"type": "string"}
-                }
-            }
-        }
-    },
-    "prompt": """
-    Evaluate the agent's answer based on:
-    1. Correctness vs ground truth
-    2. Completeness of reasoning
-
-    Ground truth: {ground_truth}
-    Agent answer: {final_answer}
-
-    Provide score (0-1) and reasoning.
-    """
+    "response_format": {"type": "json_schema", "json_schema": {"name": "grader_response", "schema": {
+        "type": "object",
+        "properties": {"score": {"type": "number"}, "reasoning": {"type": "string"}},  # score: 0.0 to 1.0
+    }}},
+    "prompt": "Score the agent answer on (1) correctness vs ground truth and (2) completeness of reasoning.",
 }
 
-# 3. Start fine-tuning job
 job = client.fine_tuning.jobs.create(
     training_file="file-abc123",
     model="gpt-4o-2024-08-06",
     method="rft",
-    rft={
-        "tools": tools,
-        "grader": grader,
-        "hyperparameters": {
-            "n_epochs": 3,
-            "batch_size": 16,
-            "compute_multiplier": 1  # Exploration factor
-        }
-    }
+    rft={"tools": tools, "grader": grader,
+         "hyperparameters": {"n_epochs": 3, "batch_size": 16, "compute_multiplier": 1}},  # exploration factor
 )
 ```
-
-## How to use it
-
-**Prerequisites:**
-
-- Well-specified, constrained task with consensus on correct answers
-- Non-zero baseline performance (model sometimes gets it right)
-- Quality training data (100-1000 samples, quality over quantity)
-- Hosted tool endpoints that mirror production behavior
-
-**Training Process:**
-
-1. **Baseline evaluation**: Run your base model multiple times per sample to measure variance
-2. **Host tools**: Deploy tool endpoints (FastAPI, Modal, etc.) that handle bursty traffic
-3. **Design grader**: Create reward function that's hard to game, provides gradient (not just binary)
-4. **Monitor training**: Watch reward curves, tool call distributions, and reasoning token counts
-5. **Evaluate results**: Compare fine-tuned model on validation set for accuracy and latency
-
-**What Agent RFT Optimizes:**
-
-- **ML Performance**: Better final answer quality through improved reasoning and tool use
-- **Latency**: Fewer tool calls and reasoning tokens (in the Build Hour demo: tool calls per rollout fell from 6.9 to 4.2 and latency dropped roughly 10%)
-- **Sample Efficiency**: Can achieve strong results with as few as 100 quality samples
-
-**Tool Call Optimization Patterns:**
-
-Models naturally learn to optimize tool use through exploration:
-- **Parallelization**: Make independent tool calls simultaneously rather than sequentially
-- **Early termination**: Stop exploration once sufficient information is gathered
-- **Tool selection**: Learn which tools are most effective for specific task types
 
 ```mermaid
 graph TD
@@ -175,47 +104,41 @@ graph TD
     style J fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
 ```
 
-## Real-World Examples
+## How to use it
 
-**Cognition (Devin)**
+**Prerequisites:**
 
-- Task: File planning agent to identify which files to edit
-- Tools: `read_file`, `shell` (grep, find)
-- Results:
+- Well-specified, constrained task with consensus on correct answers
+- Non-zero baseline performance (model sometimes gets it right)
+- Quality training data (100-1000 samples, quality over quantity)
+- Hosted tool endpoints that mirror production behavior
 
-- Cut planning back-and-forths from 8-10 to 4
-  - Learned to parallelize tool calls automatically
-  - Improved F1 score on file identification
+**Training process:**
 
-**Ambience Healthcare**
+1. **Baseline evaluation**: Run your base model multiple times per sample to measure variance
+2. **Host tools**: Deploy tool endpoints (FastAPI, Modal, etc.) that handle bursty traffic
+3. **Design grader**: Create reward function that's hard to game, provides gradient (not just binary)
+4. **Monitor training**: Watch reward curves, tool call distributions, and reasoning token counts
+5. **Evaluate results**: Compare fine-tuned model on validation set for accuracy and latency
 
-- Task: ICD-10 medical coding from transcripts
-- Tools: Semantic search over 70K medical codes
-- Results:
-  
-- F1 score: 0.52 → 0.57 (significant given 0.75 human ceiling)
-  - 18% latency reduction
-  - 50% reduction in samples exceeding latency threshold
+**What Agent RFT optimizes:**
 
-**Rogo Finance**
+- **ML Performance**: Better final answer quality through improved reasoning and tool use
+- **Latency**: Fewer tool calls and reasoning tokens (in the Build Hour demo: tool calls per rollout fell from 6.9 to 4.2 and latency dropped roughly 10%)
+- **Sample Efficiency**: Can achieve strong results with as few as 100 quality samples
 
-- Task: Financial reasoning and summarization from filings
-- Tools: Document retrieval, analysis tools
-- Results:
-  
-- 21% ML performance improvement
-  - Reduced hallucinations and missing citations
-  - Required hardening grader against reward hacking
+**Tool call optimization patterns** that models learn through exploration:
 
-**Modular (Mojo GPU Kernels)**
+- **Parallelization**: Make independent tool calls simultaneously rather than sequentially
+- **Early termination**: Stop exploration once sufficient information is gathered
+- **Tool selection**: Learn which tools are most effective for specific task types
 
-- Task: Write performant GPU kernels for new hardware
-- Tools: Compiler, kernel execution environment
-- Results:
-  
-- 72% improvement in correct + performant kernels
-  - Only 100 PyTorch prompts needed (sample efficient)
-  - No code examples required in training data
+### Reported results from the Build Hour
+
+- **Cognition (Devin)**: a file planning agent that identifies which files to edit, with `read_file` and `shell` (grep, find) tools. Planning back-and-forths fell from 8-10 to 4, the model learned to parallelize tool calls automatically, and the F1 score on file identification improved.
+- **Ambience Healthcare**: ICD-10 medical coding from transcripts, with semantic search over 70K medical codes. F1 rose from 0.52 to 0.57 (significant given a 0.75 human ceiling), latency fell 18%, and samples exceeding the latency threshold fell 50%.
+- **Rogo Finance**: financial reasoning and summarization from filings, with document retrieval and analysis tools. 21% ML performance improvement with reduced hallucinations and missing citations; the grader had to be hardened against reward hacking.
+- **Modular (Mojo GPU kernels)**: writing performant GPU kernels for new hardware, with a compiler and a kernel execution environment. 72% improvement in correct + performant kernels, using only 100 PyTorch prompts and no code examples in the training data.
 
 ## Trade-offs
 

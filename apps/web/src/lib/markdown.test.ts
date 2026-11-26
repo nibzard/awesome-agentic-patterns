@@ -1,5 +1,5 @@
 // ABOUTME: Tests for rendering pattern Markdown to HTML.
-// ABOUTME: Covers links between pattern files, which use repository-relative .md paths.
+// ABOUTME: Covers pattern file links, which use repository-relative .md paths, and auto-links for bare text.
 
 import { describe, expect, test } from 'bun:test';
 import { renderMarkdown } from './markdown';
@@ -30,5 +30,24 @@ describe('renderMarkdown pattern links', () => {
     const html = renderMarkdown('[x](https://example.com/readme.md) [y](/agents)');
     expect(html).toContain('href="https://example.com/readme.md"');
     expect(html).toContain('href="/agents"');
+  });
+});
+
+describe('renderMarkdown auto-links', () => {
+  test('keeps bare Markdown file names as text', () => {
+    const html = renderMarkdown('Keep rules in CLAUDE.md and SKILL.md.');
+    expect(html).not.toContain('<a');
+    expect(html).toContain('CLAUDE.md and SKILL.md');
+  });
+
+  test('still links a URL that has a scheme', () => {
+    const html = renderMarkdown('See https://example.com/docs and http://example.org');
+    expect(html).toContain('href="https://example.com/docs"');
+    expect(html).toContain('href="http://example.org');
+  });
+
+  test('still turns a Markdown pattern link into a site URL', () => {
+    const html = renderMarkdown('See [Other](other-pattern.md).');
+    expect(html).toContain('href="/patterns/other-pattern"');
   });
 });

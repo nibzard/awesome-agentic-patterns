@@ -1,6 +1,6 @@
 ---
 title: "Fair-Share Task Queues with Heartbeat Leases"
-status: "proposed"
+status: proposed
 authors: ["Retsumdk (@Retsumdk)"]
 based_on: []
 category: "Orchestration & Control"

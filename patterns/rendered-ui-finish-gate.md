@@ -1,6 +1,6 @@
 ---
 title: Rendered UI Finish Gate
-status: emerging
+status: proposed
 authors: ["Samuel Bushi (@samuelbushi)"]
 based_on: ["UIZZE anti-ui-slop workflow (UIZZE)"]
 category: "Feedback Loops"

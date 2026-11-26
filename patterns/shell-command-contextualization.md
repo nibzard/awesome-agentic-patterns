@@ -1,6 +1,6 @@
 ---
 title: Shell Command Contextualization
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Boris Cherny (via Claude Code)"]
 category: UX & Collaboration
@@ -9,6 +9,7 @@ tags: [shell integration, context management, local execution, bash, cli, intera
 summary: "Lets the user run a shell command with a prefix such as ! and injects the command and its full output into the agent's context"
 signals: ["Agent works in a local development environment", "Users paste command output into prompts by hand", "Agent needs linter, git, or file listing output to reason"]
 anti_signals: ["Agent has no local shell access", "Commands produce large output that inflates token costs"]
+related: ["dynamic-context-injection", "intelligent-bash-tool-execution", "context-budget-as-a-governed-resource"]
 updated_at: "2026-10-13"
 ---
 

@@ -47,3 +47,40 @@ MkDocs had category-based navigation (e.g., "Context & Memory", "Feedback Loops"
 - `/patterns/` - All patterns index with filtering by category
 
 No category page redirects needed as these were never standalone URLs.
+
+---
+
+## Wave 2 Catalog Consolidation Redirects (November 2026)
+
+Configured as permanent (301) redirects in `vercel.json`.
+
+### Merged Duplicate Patterns
+
+| Retired URL | Canonical Destination |
+|---|---|
+| `/patterns/code-first-tool-interface-pattern` (+ `.md`) | `/patterns/code-over-api-pattern` |
+| `/patterns/code-mode-mcp-tool-interface-improvement-pattern` | `/patterns/code-over-api-pattern` |
+| `/patterns/tool-search-lazy-loading` (+ `.md`) | `/patterns/progressive-tool-discovery` |
+| `/patterns/approval-bound-transactional-write` (+ `.md`) | `/patterns/exact-action-authorization-binding` |
+| `/patterns/patch-steering-via-prompted-tool-selection` (+ `.md`) | `/patterns/tool-use-steering-via-prompting` |
+| `/patterns/tool-selection-guide` (+ `.md`) | `/patterns/tool-use-steering-via-prompting` |
+| `/patterns/cli-first-skill-design` (+ `.md`) | `/patterns/dual-use-tool-design` |
+| `/patterns/spec-as-test-feedback-loop` (+ `.md`) | `/patterns/specification-driven-agent-development` |
+| `/patterns/ai-web-search-agent-loop` (+ `.md`) | `/patterns/agent-driven-research` |
+| `/patterns/cross-protocol-agent-discovery` (+ `.md`) | `/patterns/agent-first-tool-discovery` |
+| `/patterns/disposable-scaffolding-over-durable-features` (+ `.md`) | `/patterns/progressive-autonomy-with-model-evolution` |
+
+### Separated Principles (Moved to `principles/`)
+
+Each retired `/patterns/<slug>` path redirects permanently to its file in `principles/<slug>.md` on GitHub:
+
+- `burn-the-boats`
+- `latent-demand-product-discovery`
+- `frontier-focused-development`
+- `shipping-as-research`
+- `dogfooding-with-rapid-iteration-for-agent-improvement`
+- `democratization-of-tooling-via-agents`
+- `ai-accelerated-learning-and-skill-development`
+- `dev-tooling-assumptions-reset`
+- `no-token-limit-magic`
+- `shared-core-native-shells`

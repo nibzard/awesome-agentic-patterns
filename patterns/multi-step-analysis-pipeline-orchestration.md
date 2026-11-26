@@ -1,6 +1,6 @@
 ---
 title: Artifact-Driven Analysis Pipeline Orchestration
-status: emerging
+status: proposed
 authors: ["shmlkv (@shmlkv)"]
 based_on: ["Anthropic Claude Code"]
 category: "Orchestration & Control"

@@ -6,7 +6,7 @@ authors:
 based_on:
   - Sam Pretty (Cognition)
   - Devon Engineering Team
-category: Security & Safety
+category: Learning & Adaptation
 source: 'https://youtu.be/1s_7RMG4O4U'
 tags:
   - isolation
@@ -23,7 +23,7 @@ summary: >-
   access.
 signals: ["RL training runs many parallel rollouts of an agent with shell or other stateful tools", "One rollout's side effects could corrupt another rollout's reward", "Infrastructure can handle bursts of hundreds of VMs or containers"]
 anti_signals: ["Tools are read-only or stateless, so shared infrastructure is safe", "Budget or provider quotas cannot support one VM per concurrent rollout", "State can live in a database keyed by rollout ID with no filesystem tools"]
-updated_at: '2026-10-13'
+updated_at: '2026-11-23'
 ---
 
 ## Problem
@@ -56,148 +56,32 @@ Cognition faced this when training Devon's file planning agent: the agent had ac
 - **State Isolation**: No shared filesystems or databases between VMs
 - **Timeout Handling**: VMs auto-destroy after timeout to prevent resource leaks
 
+**Tool server shape** (Cognition used Modal; one instance per rollout VM):
+
 ```python
-# Infrastructure setup (Cognition's approach)
-from modal import Image, App, method
-import uuid
-
-# Base VM image with all dependencies
-base_image = (
-    Image.debian_slim()
-    .apt_install("git", "build-essential")
-    .pip_install("pandas", "numpy", "openai")
-    .copy_local_dir("./corpus", "/workspace/corpus")  # Training data
-)
-
-app = App("agent-rft-tool-server")
-
-@app.cls(
-    image=base_image,
-    cpu=2,
-    memory=4096,
-    timeout=600,  # 10 min per rollout max
-)
+base_image = (Image.debian_slim().apt_install("git", "build-essential").pip_install("pandas", "numpy", "openai")
+              .copy_local_dir("./corpus", "/workspace/corpus"))                 # training data, replicated per VM
+@app.cls(image=base_image, cpu=2, memory=4096, timeout=600,                    # 10 min per rollout max
+         concurrency_limit=500, container_idle_timeout=60)                      # burst capacity; 1 min idle cleanup
 class IsolatedToolExecutor:
-    """
-    Each instance gets its own isolated VM
-    Spun up per-rollout during RL training
-    """
-
-    def __init__(self):
-        """Initialize fresh state for this rollout"""
-        self.rollout_id = None
-        self.workspace = "/workspace"
-        self.history = []
-
-    @method()
-    def initialize_rollout(self, rollout_id: str):
-        """
-        Called first when rollout starts
-        Sets up isolated state for this specific rollout
-        """
-        self.rollout_id = rollout_id
-        print(f"[{rollout_id}] Initialized isolated VM")
-
-        # Create isolated working directory
-        import os
-        self.work_dir = f"{self.workspace}/rollout_{rollout_id}"
-        os.makedirs(self.work_dir, exist_ok=True)
-
-        return {"status": "ready", "rollout_id": rollout_id}
-
-    @method()
+    def initialize_rollout(self, rollout_id: str):                              # called first
+        self.rollout_id, self.history = rollout_id, []
+        self.work_dir = f"/workspace/rollout_{rollout_id}"                       # isolated working directory
     def execute_shell(self, rollout_id: str, command: str):
-        """
-        Execute shell command in isolated environment
-        Safe because this VM is dedicated to this rollout
-        """
-        if rollout_id != self.rollout_id:
+        if rollout_id != self.rollout_id:                                         # every endpoint validates the id
             raise ValueError(f"Rollout ID mismatch: {rollout_id} != {self.rollout_id}")
-
-        import subprocess
-
-        print(f"[{rollout_id}] Executing: {command}")
-
-        # Even destructive commands are safe in isolated VM
-        result = subprocess.run(
-            command,
-            shell=True,
-            cwd=self.work_dir,
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
-
-        self.history.append({
-            "command": command,
-            "returncode": result.returncode,
-            "stdout": result.stdout[:1000],  # Limit output
-            "stderr": result.stderr[:1000]
-        })
-
-        return {
-            "stdout": result.stdout,
-            "stderr": result.stderr,
-            "returncode": result.returncode
-        }
-
-    @method()
-    def read_file(self, rollout_id: str, filepath: str):
-        """Read file from corpus or workspace"""
-        if rollout_id != self.rollout_id:
-            raise ValueError(f"Rollout ID mismatch")
-
-        # Files are isolated to this VM
-        full_path = f"{self.workspace}/{filepath}"
-
-        try:
-            with open(full_path, 'r') as f:
-                content = f.read()
-            return {"content": content, "error": None}
-        except Exception as e:
-            return {"content": None, "error": str(e)}
-
-    @method()
-    def search_corpus(self, rollout_id: str, query: str):
-        """Semantic search over documents"""
-        if rollout_id != self.rollout_id:
-            raise ValueError(f"Rollout ID mismatch")
-
-        # Search implementation here...
-        # Corpus is read-only, copied into VM at startup
-
-        return {"results": [...]}
-
-    @method()
-    def cleanup(self, rollout_id: str):
-        """
-        Optional cleanup (Modal handles VM destruction automatically)
-        """
-        print(f"[{rollout_id}] Rollout complete, VM will be destroyed")
-        return {"history": self.history}
-
-
-# Tool endpoint configuration for OpenAI Agent RFT
-tools_config = [
-    {
-        "name": "shell",
-        "url": "https://your-app.modal.run/execute_shell",
-        "headers": {"Authorization": "Bearer YOUR_TOKEN"}
-    },
-    {
-        "name": "read_file",
-        "url": "https://your-app.modal.run/read_file",
-        "headers": {"Authorization": "Bearer YOUR_TOKEN"}
-    },
-    {
-        "name": "search",
-        "url": "https://your-app.modal.run/search_corpus",
-        "headers": {"Authorization": "Bearer YOUR_TOKEN"}
-    }
+        result = subprocess.run(command, shell=True, cwd=self.work_dir, capture_output=True, text=True, timeout=60)
+        self.history.append({"command": command, "returncode": result.returncode,
+                             "stdout": result.stdout[:1000], "stderr": result.stderr[:1000]})
+        return {"stdout": result.stdout, "stderr": result.stderr, "returncode": result.returncode}
+tools_config = [  # registered with OpenAI Agent RFT: one HTTPS endpoint per tool; AUTH = {"Authorization": "Bearer YOUR_TOKEN"}
+    {"name": "shell",     "url": "https://your-app.modal.run/execute_shell", "headers": AUTH},
+    {"name": "read_file", "url": "https://your-app.modal.run/read_file",    "headers": AUTH},
+    {"name": "search",    "url": "https://your-app.modal.run/search_corpus", "headers": AUTH},
 ]
 ```
 
-**Request Flow:**
+The `read_file` and `search_corpus` endpoints follow the same pattern: validate the `rollout_id`, read only inside that VM (the corpus is a read-only copy), and return the result. Modal destroys the VM when the rollout ends.
 
 ```mermaid
 sequenceDiagram
@@ -205,30 +89,22 @@ sequenceDiagram
     participant LB as Load Balancer
     participant VM1 as VM (Rollout 1)
     participant VM2 as VM (Rollout 2)
-
     Note over OAI: Training Step Starts
     OAI->>LB: Rollout 1: shell("grep TODO")
     OAI->>LB: Rollout 2: shell("rm temp.txt")
-
     LB->>VM1: Route to isolated VM 1
     LB->>VM2: Route to isolated VM 2
-
     Note over VM1: Executes grep TODO<br/>(safe, isolated)
     Note over VM2: Executes rm temp.txt<br/>(safe, isolated)
-
     VM1->>LB: grep results
     VM2->>LB: success
-
     LB->>OAI: Return results
-
     Note over VM1,VM2: Rollouts complete<br/>VMs destroyed
 ```
 
 ## How to use it
 
-**Phase 1: Infrastructure Setup**
-
-Choose your isolation technology:
+**Phase 1: Infrastructure setup.** Choose your isolation technology:
 
 - **Modal/E2B**: MicroVMs with ~1s startup, Firecracker isolation (recommended for agent training)
 - **Modal/Lambda**: Serverless functions with container isolation (easiest)
@@ -236,43 +112,27 @@ Choose your isolation technology:
 - **Kubernetes Jobs**: K8s pods per rollout (production-grade)
 - **Cloud VMs**: EC2/GCP instances per rollout (maximum isolation, 30-120s startup)
 
-**Phase 2: Implement Rollout ID Tracking**
+**Phase 2: Rollout ID tracking.** All tool endpoints accept and validate `rollout_id`, and the router maps it to a dedicated VM:
 
 ```python
-# All tool endpoints must accept and validate rollout_id
 @app.post("/tool/{tool_name}")
 async def execute_tool(tool_name: str, rollout_id: str, params: dict):
-    # Get or create isolated environment for this rollout
-    vm = get_or_create_vm(rollout_id)
-
-    # Execute in isolated context
-    result = vm.execute(tool_name, params)
-
-    return result
+    vm = get_or_create_vm(rollout_id)                 # isolated environment for this rollout
+    try:
+        return await vm.execute(tool_name, params)
+    except Exception as e:
+        # Log the failure; an infrastructure error must not be scored as a zero reward
+        logger.error(f"rollout={rollout_id} tool={tool_name} status=error error={str(e)}")
+        return {"error": "Infrastructure error, please retry", "retryable": True}
 ```
 
-**Phase 3: Handle Bursty Traffic**
-
-Agent RFT sends traffic in bursts:
+**Phase 3: Bursty traffic.** Agent RFT sends traffic in bursts, so size concurrency limits and idle timeouts for the peak, not the average (see `concurrency_limit` and `container_idle_timeout` above):
 
 - **Training step boundary**: 100-500 simultaneous rollout requests
 - **Tool call latency**: Brief pauses while agent thinks
 - **Cleanup phase**: Mass VM destruction
 
-Configure auto-scaling:
-
-```python
-# Modal example
-@app.cls(
-    image=base_image,
-    concurrency_limit=500,  # Max concurrent VMs
-    container_idle_timeout=60,  # Cleanup after 1 min idle
-)
-```
-
-**Phase 4: Monitor Infrastructure**
-
-Critical metrics:
+**Phase 4: Monitor infrastructure.** Critical metrics:
 
 - **VM provisioning time**: Should be <5 seconds (alert if >10s)
 - **Infrastructure error rate**: Target <1%, alert if >5% (higher rates cause training collapse)
@@ -283,64 +143,15 @@ Sam's advice from Cognition:
 
 > "Sometimes like let's say there's infrastructure error and the VMs fail... that does lead to the training kind of collapsing because even the model might have done something good, it got a zero reward."
 
-**Set up monitoring:**
+Log `rollout`, `tool`, and `status` for every call, and return a retryable error to the trainer instead of letting an infrastructure failure become a zero-reward rollout.
 
-```python
-import logging
+### Worked example: Cognition (Devon)
 
-logger = logging.getLogger("rollout-infra")
-
-@method()
-def execute_tool(self, rollout_id: str, tool: str, params: dict):
-    try:
-        result = self._execute(tool, params)
-
-        # Log success
-        logger.info(f"rollout={rollout_id} tool={tool} status=success")
-
-        return result
-
-    except Exception as e:
-        # Log failure - critical for debugging training collapse
-        logger.error(
-            f"rollout={rollout_id} tool={tool} status=error error={str(e)}"
-        )
-
-        # Return error to model (don't give zero reward for infra issues)
-        return {
-            "error": "Infrastructure error, please retry",
-            "retryable": True
-        }
-```
-
-## Real-World Example: Cognition Devon
-
-**Challenge**: Train Devon's file planning agent with shell tool access
-
-**Requirements:**
-
-- Agent uses `shell` tool to run `grep`, `find`, `ls`, etc.
-- Need to prevent one rollout from affecting others
-- Must handle potentially destructive commands safely
-
-**Solution:**
-
-1. **Modal Infrastructure**: Used Modal for fast VM provisioning
-2. **Isolation**: Each rollout gets dedicated VM with fresh filesystem
-3. **Corpus Replication**: Copied entire repository corpus into each VM
-4. **Scaling**: Handled 500+ simultaneous VMs during training bursts
-
-**Results:**
-
-- Safe training despite shell access
-- No cross-contamination between rollouts
-- Deterministic behavior for reward calculation
-- Successfully trained agent to reduce planning from 8-10 tool calls → 4 tool calls
-
-**Infrastructure Lessons Learned:**
-
+- **Challenge**: train Devon's file planning agent, which uses `shell` to run `grep`, `find`, `ls`, and so on, without one rollout affecting another and while tolerating destructive commands.
+- **Solution**: Modal for fast VM provisioning; a dedicated VM with a fresh filesystem per rollout; the whole repository corpus copied into each VM; capacity for 500+ simultaneous VMs during training bursts.
+- **Results**: safe training despite shell access, no cross-contamination between rollouts, deterministic behavior for reward calculation, and a planning agent trained to go from 8-10 tool calls down to 4.
 - **Bursty traffic is real**: "At the beginning of every rollout they would send us like 500 new rollout requests"
-- **Monitor failures**: Infrastructure errors causing zero rewards can collapse training
+- **Monitor failures**: infrastructure errors causing zero rewards can collapse training
 - **Reuse production code**: "We use VMs because we could reuse the production Devon VM info"
 
 **Corroboration beyond the webinar (2026):**
@@ -364,25 +175,11 @@ The Cognition case study remains the primary narrative source (the video's host 
 - **Scaling limits**: Cloud provider quotas may limit concurrent VMs
 - **Failure modes**: Infrastructure issues can cause training collapse
 
-## Alternatives
+### Alternatives
 
-**Shared Infrastructure with Namespacing:**
-
-- Use filesystem namespacing (chroot, Docker volumes)
-- Cheaper but less isolation
-- Risk of leakage through shared resources
-
-**Database-Backed State:**
-
-- Store state in database keyed by rollout ID
-- Simpler infrastructure
-- Doesn't work for filesystem-based tools
-
-**Optimistic Isolation:**
-
-- Let rollouts share infrastructure
-- Detect and discard contaminated rollouts
-- Wastes compute on discarded rollouts
+- **Shared infrastructure with namespacing** (chroot, Docker volumes): cheaper but less isolation, with a risk of leakage through shared resources.
+- **Database-backed state** keyed by rollout ID: simpler infrastructure, but it does not work for filesystem-based tools.
+- **Optimistic isolation**: let rollouts share infrastructure, detect contaminated rollouts, and discard them; this wastes compute on the discarded rollouts.
 
 ## References
 
@@ -390,7 +187,7 @@ The Cognition case study remains the primary narrative source (the video's host 
 - [Microsoft agent-lightning](https://github.com/microsoft/agent-lightning) — open-source agent-RL trainer whose rollout controller runs each rollout as a Kubernetes Job, providing per-rollout pod isolation natively
 - Mnih et al. (2016). "Asynchronous Methods for Deep Reinforcement Learning". [arXiv:1602.01783](https://arxiv.org/abs/1602.01783) — A3C foundation for parallel isolated environments
 - Schulman et al. (2017). "Proximal Policy Optimization Algorithms". [arXiv:1707.06347](https://arxiv.org/abs/1707.06347) — PPO parallel rollout collection
-- Liang et al. (2018). "Ray RLLib: A Scalable Reinforcement Learning Library". [arXiv:1807.03343](https://arxiv.org/abs/1807.03343) — Actor-model isolation for RL
+- Liang et al. (2018). "RLlib: Abstractions for Distributed Reinforcement Learning". [arXiv:1712.09381](https://arxiv.org/abs/1712.09381) — Actor-model isolation for distributed RL
 - [Modal Documentation](https://modal.com/docs)
 - [E2B Documentation](https://e2b.dev/docs) — Firecracker microVMs for agent sandboxes
 - Related patterns: Agent Reinforcement Fine-Tuning, Adaptive Sandbox Fanout Controller, Sandboxed Tool Authorization, Egress Lockdown, Virtual Machine Operator Agent

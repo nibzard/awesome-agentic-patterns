@@ -1,6 +1,6 @@
 ---
 title: "Curated Code Context Window"
-status: validated-in-production
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anonymous Speaker (Open Source Agent RL Talk)", "Will Brown (Prime Intellect Talk)", "Thorsten Ball"]
 category: "Context & Memory"
@@ -9,6 +9,7 @@ tags: [context-management, code-agent, file-selection, noise-reduction]
 summary: "A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context"
 signals: ["Coding agent works in a large repository", "Loading all files adds noise and inflates token usage", "Long-horizon tasks risk blowing up context length"]
 anti_signals: ["Small codebase that fits in context", "A frequently changing code index cannot be kept fresh"]
+related: ["sub-agent-spawning", "agentic-search-over-vector-embeddings", "precomputed-code-graph-lookup", "context-window-auto-compaction", "agent-powered-codebase-qa-onboarding"]
 updated_at: "2026-10-14"
 ---
 

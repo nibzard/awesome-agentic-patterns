@@ -1,6 +1,6 @@
 ---
 title: Budget-Aware Model Routing with Hard Cost Caps
-status: established
+status: emerging
 authors: ["Codex (@openai)"]
 based_on: ["Multi-model routing practices from production LLM systems"]
 category: "Orchestration & Control"

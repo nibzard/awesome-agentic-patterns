@@ -1,6 +1,6 @@
 ---
 title: Plan-Then-Execute Pattern
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Luca Beurer-Kellner et al. (2025)", "He et al. (2025)"]
 category: Orchestration & Control
@@ -9,6 +9,7 @@ tags: [planning, control-flow-integrity, prompt-injection]
 summary: "Has the LLM fix the full sequence of tool calls before it reads untrusted data, then runs that sequence so tool outputs change only parameters"
 signals: ["Tool outputs contain untrusted content that can carry prompt injections", "The set of actions is known up front but parameters vary", "Complex tasks benefit from a reviewed plan before execution"]
 anti_signals: ["The next action depends on what earlier tool results reveal", "Poisoned output content, such as a bad email body, is the main risk", "Simple task that a capable model can one-shot"]
+related: ["action-selector-pattern", "code-then-execute-pattern", "dual-llm-pattern", "context-minimization-pattern", "discrete-phase-separation"]
 updated_at: "2026-10-13"
 ---
 

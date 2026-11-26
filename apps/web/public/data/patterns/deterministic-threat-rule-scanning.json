@@ -1,6 +1,7 @@
 {
   "title": "Deterministic Threat Rule Scanning",
   "status": "proposed",
+  "evidence_grade": "medium",
   "authors": [
     "eeee2345 (@eeee2345)"
   ],

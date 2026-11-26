@@ -31,14 +31,20 @@ jobs:
       - name: Run tests
         run: bun run test
 
+      - name: Validate pattern schema
+        run: bun run validate:patterns
+
+      - name: Validate pattern content
+        run: bun run validate:patterns:content
+
       - name: Check generated data is in sync
         run: |
           bun run build:data
           # Star count is live-fetched data, not derived from patterns/*.md; keep it out of the check.
           git restore apps/web/src/data/github-stars.json
-          git add -A apps/web/public README.md
+          git add -A apps/web/public README.md llms.txt
           if ! git diff --cached --exit-code; then
-            echo "::error::Generated artifacts under apps/web/public (or the README catalog) do not match patterns/*.md. Run 'npm run build:data' and commit its output together with your pattern change."
+            echo "::error::Generated artifacts under apps/web/public, the README catalog, or llms.txt do not match patterns/*.md. Run 'bun run build:data' and commit its output together with your pattern change."
             exit 1
           fi
 
@@ -50,3 +56,90 @@ jobs:
         with:
           name: dist
           path: apps/web/dist
+
+  # Informational only: the similarity checker exits 1 whenever it finds any
+  # match, so its exit code never fails this job.
+  pr-similarity:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Find changed pattern files
+        id: changed
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git diff --name-only --diff-filter=AM "origin/${BASE_REF}"...HEAD -- 'patterns/*.md' \
+            | grep -v '^patterns/TEMPLATE\.md$' > "$RUNNER_TEMP/changed-patterns.txt" || true
+          count="$(grep -c . "$RUNNER_TEMP/changed-patterns.txt" || true)"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "Changed pattern files: $count"
+
+      - name: Check similarity against existing patterns
+        if: steps.changed.outputs.count != '0'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CHANGED_LIST: ${{ runner.temp }}/changed-patterns.txt
+          SUMMARY_BODY: ${{ runner.temp }}/similarity-body.md
+        run: |
+          {
+            echo "## Pattern similarity check"
+            echo
+            echo "Top matches from \`scripts/pattern_similarity_checker.py\` for each added or modified pattern:"
+          } > "$SUMMARY_BODY"
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            name="$(basename "$file" .md)"
+            export_file="$RUNNER_TEMP/similarity-$name.md"
+            # The checker exits 1 when it finds any match, which is expected.
+            python3 scripts/pattern_similarity_checker.py "$file" --threshold=0.1 --export "$export_file" > "$RUNNER_TEMP/similarity-$name.log" 2>&1 || true
+            {
+              echo
+              echo "### \`$file\`"
+              echo
+            } >> "$SUMMARY_BODY"
+            if [ ! -s "$export_file" ] || grep -q '^Total pairs found: 0$' "$export_file"; then
+              echo "No comparable patterns found." >> "$SUMMARY_BODY"
+              continue
+            fi
+            # The export separates entries with `---`; keep the first three entries.
+            awk '/^---$/ { sep++; if (sep == 4) exit; next } sep >= 1 { print }' "$export_file" >> "$SUMMARY_BODY"
+          done < "$CHANGED_LIST"
+          cat "$SUMMARY_BODY" >> "$GITHUB_STEP_SUMMARY"
+
+      # Fork pull requests get a read-only token, so commenting is limited to
+      # same-repository branches and can never fail the job.
+      - name: Post similarity comment on the PR
+        if: steps.changed.outputs.count != '0' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          SUMMARY_BODY: ${{ runner.temp }}/similarity-body.md
+        run: |
+          marker='<!-- pattern-similarity-check -->'
+          { echo "$marker"; cat "$SUMMARY_BODY"; } > "$RUNNER_TEMP/similarity-comment.md"
+          existing_id="$(gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" --paginate \
+            --jq ".[] | select(.body | contains(\"$marker\")) | .id" 2>/dev/null | head -n 1)"
+          if [ -n "$existing_id" ]; then
+            jq -n --rawfile body "$RUNNER_TEMP/similarity-comment.md" '{body: $body}' > "$RUNNER_TEMP/similarity-payload.json"
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/issues/comments/${existing_id}" \
+              --input "$RUNNER_TEMP/similarity-payload.json" \
+              || echo "::notice::Could not update the existing similarity comment (token may be read-only)."
+          else
+            gh pr comment "$PR_NUMBER" --body-file "$RUNNER_TEMP/similarity-comment.md" \
+              || echo "::notice::Could not post the similarity comment (token may be read-only)."
+          fi

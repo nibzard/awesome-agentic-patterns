@@ -1,6 +1,6 @@
 ---
 title: Soulbound Identity Verification
-status: emerging
+status: proposed
 authors: ["Eiji Motomura (@EijiAC24)"]
 based_on: ["Chitin (launch-stage implementation)", "ERC-5192", "ERC-8004"]
 category: Security & Safety
@@ -48,6 +48,13 @@ graph TD
 - In agent marketplaces or multi-org delegations.
 - For compliance workflows requiring auditable agent-state continuity.
 
+## How to use it
+
+- Hash the normalized system prompt and configuration at registration, and commit the hash with the identity credential.
+- Issue the non-transferable credential to the agent's own address so it cannot be reassigned.
+- Record every prompt, operator, or policy change as a signed event in the append-only log.
+- Before delegating, verify all three: the credential is valid and locked, the agent's current state hash matches the latest committed hash, and the change log has no gaps.
+
 ## Trade-offs
 
 - **Pros:** Non-transferability prevents credential delegation and theft; tamper-resistant logging provides auditable state history; enables verification without identity disclosure.
@@ -58,13 +65,6 @@ graph TD
 - [Chitin](https://chitin.id) — on-chain agent identity on Base L2: EIP-5192 soulbound tokens, Merkle-proof selective disclosure, and a Chronicle log on Arweave; ERC-8004 passport compatible; launch-stage.
 - [Chitin MCP Server](https://www.npmjs.com/package/chitin-mcp-server)
 - [Chitin Contracts](https://github.com/chitin-id/chitin-contracts)
-
-## How to use it
-
-- Hash the normalized system prompt and configuration at registration, and commit the hash with the identity credential.
-- Issue the non-transferable credential to the agent's own address so it cannot be reassigned.
-- Record every prompt, operator, or policy change as a signed event in the append-only log.
-- Before delegating, verify all three: the credential is valid and locked, the agent's current state hash matches the latest committed hash, and the change log has no gaps.
 
 ## References
 

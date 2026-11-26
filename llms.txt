@@ -1,104 +1,992 @@
 # Awesome Agentic Patterns
 
-This is a curated catalogue of AI agent design patterns. The patterns are organized by category and include detailed descriptions, examples, and references.
+A curated catalogue of AI agent design patterns.
 
-## Purpose
+Every pattern is also available as Markdown at https://agentic-patterns.com/patterns/<slug>.md. Full text of all patterns: https://agentic-patterns.com/llms-full.txt. Usage notes for agents: https://agentic-patterns.com/agents.
 
-Help AI assistants and LLMs understand and recommend appropriate AI agent design patterns based on user requirements.
+## Patterns
 
-## Pattern Categories
+### 402-first-machine-payments
+402-First Machine Payments (Price-Before-Work Tool Purchases): Server returns an HTTP 402 price quote before doing work, and the agent pays the exact amount only if it fits its budget cap
+URL: https://agentic-patterns.com/patterns/402-first-machine-payments
+Markdown: https://agentic-patterns.com/patterns/402-first-machine-payments.md
 
-### Orchestration & Control
-Patterns for managing agent workflows, decision-making processes, and control flow in AI systems.
+### abstracted-code-representation-for-review
+Abstracted Code Representation for Review: Shows reviewers pseudocode, intent summaries, and logical diffs of code changes, with drill-down to the real code to confirm the mapping
+URL: https://agentic-patterns.com/patterns/abstracted-code-representation-for-review
+Markdown: https://agentic-patterns.com/patterns/abstracted-code-representation-for-review.md
 
-### Context & Memory
-Patterns for managing information context, memory systems, and state in AI agents.
+### action-caching-replay
+Action Caching & Replay Pattern: Records each agent action with XPath and frame metadata so later runs replay it without LLM calls, with LLM fallback when replay fails
+URL: https://agentic-patterns.com/patterns/action-caching-replay
+Markdown: https://agentic-patterns.com/patterns/action-caching-replay.md
 
-### Feedback Loops
-Patterns for self-improvement, evaluation, and iterative refinement in AI systems.
+### action-selector-pattern
+Action-Selector Pattern: LLM maps user intent to a pre-approved action ID with schema-validated parameters, and tool outputs never return to the selector
+URL: https://agentic-patterns.com/patterns/action-selector-pattern
+Markdown: https://agentic-patterns.com/patterns/action-selector-pattern.md
 
-### Learning & Adaptation
-Patterns for continuous learning, skill development, and adaptation in AI agents.
+### adaptive-sandbox-fanout-controller
+Adaptive Sandbox Fan-Out Controller: Starts a small batch of parallel sandboxes, then scales up, stops early, or refines the prompt based on early success, variance, and error signals
+URL: https://agentic-patterns.com/patterns/adaptive-sandbox-fanout-controller
+Markdown: https://agentic-patterns.com/patterns/adaptive-sandbox-fanout-controller.md
 
-### Reliability & Eval
-Patterns for testing, evaluation, and ensuring reliable behavior in AI systems.
+### agent-circuit-breaker
+Agent Circuit Breaker: Prevents agents from wasting tokens and time on repeatedly failing tools by tracking failure rates and temporarily disabling broken tool endpoints
+URL: https://agentic-patterns.com/patterns/agent-circuit-breaker
+Markdown: https://agentic-patterns.com/patterns/agent-circuit-breaker.md
 
-### Security & Safety
-Patterns for building secure, safe, and trustworthy AI systems.
+### agent-modes-by-model-personality
+Agent Modes by Model Personality: Offers separate working modes, each with its own prompts, tools, UI, and expectations, tuned to one model's working style
+URL: https://agentic-patterns.com/patterns/agent-modes-by-model-personality
+Markdown: https://agentic-patterns.com/patterns/agent-modes-by-model-personality.md
 
-### Tool Use & Environment
-Patterns for effective tool selection, environment interaction, and external API usage.
+### agent-reinforcement-fine-tuning
+Agent Reinforcement Fine-Tuning (Agent RFT): Trains model weights with reinforcement learning on real tool calls and custom graders to improve domain-specific tool use and multi-step reasoning
+URL: https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning
+Markdown: https://agentic-patterns.com/patterns/agent-reinforcement-fine-tuning.md
 
-### UX & Collaboration
-Patterns for human-AI interaction, collaboration, and user experience design.
+### agent-sdk-for-programmatic-control
+Agent SDK for Programmatic Control: Exposes agent functions through an SDK and CLI so code can run the agent headless with set tools, permissions, and resource limits
+URL: https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control
+Markdown: https://agentic-patterns.com/patterns/agent-sdk-for-programmatic-control.md
 
-## Key Patterns
+### agent-assisted-scaffolding
+Agent-Assisted Scaffolding: Agent generates initial files, boilerplate, and directory structure from a high-level description so developers start on core logic
+URL: https://agentic-patterns.com/patterns/agent-assisted-scaffolding
+Markdown: https://agentic-patterns.com/patterns/agent-assisted-scaffolding.md
 
-### Reflection
-A meta-cognitive pattern where agents review their own outputs, identify issues, and self-correct before finalizing results.
+### agent-driven-research
+Agent-Driven Research: Agent plans its own queries, fans out parallel search workers across sources, reflects on evidence gaps, and iterates until it can write a sourced report
+URL: https://agentic-patterns.com/patterns/agent-driven-research
+Markdown: https://agentic-patterns.com/patterns/agent-driven-research.md
 
-### Code-Then-Execute
-Separates code generation from execution phases, enabling review and validation before running generated code.
+### agent-first-tool-discovery
+Agent-First Tool Discovery: Indexes tools and agents across MCP registries, A2A cards, OpenAPI specs, and custom directories into one normalized search surface ranked by agent-relevant signals
+URL: https://agentic-patterns.com/patterns/agent-first-tool-discovery
+Markdown: https://agentic-patterns.com/patterns/agent-first-tool-discovery.md
 
-### Human-in-Loop Approval
-Requires human approval for critical operations, adding safety and oversight to autonomous agents.
+### agent-first-tooling-and-logging
+Agent-First Tooling and Logging: Designs logs and tool output for agent consumption with one unified log stream, structured JSON, and agent-aware CLI flags
+URL: https://agentic-patterns.com/patterns/agent-first-tooling-and-logging
+Markdown: https://agentic-patterns.com/patterns/agent-first-tooling-and-logging.md
 
-### Specification-Driven Development
-Agents work from explicit specifications, ensuring clear goals and requirements before execution.
+### agent-friendly-workflow-design
+Agent-Friendly Workflow Design: Gives agents clear high-level goals, room for implementation choices, structured I/O, and plan review before execution
+URL: https://agentic-patterns.com/patterns/agent-friendly-workflow-design
+Markdown: https://agentic-patterns.com/patterns/agent-friendly-workflow-design.md
 
-### Continuous Autonomous Task Loop
-Enables agents to operate continuously, managing ongoing tasks and adapting to changing conditions.
+### agent-powered-codebase-qa-onboarding
+Agent-Powered Codebase Q&A / Onboarding: Agent indexes the codebase with embeddings and code graphs and answers natural-language questions about where code is and how it behaves
+URL: https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding
+Markdown: https://agentic-patterns.com/patterns/agent-powered-codebase-qa-onboarding.md
 
-### Tool Use Incentivization
-Uses reward shaping to encourage appropriate tool selection and usage in AI systems.
+### agentic-search-over-vector-embeddings
+Agentic Search Over Vector Embeddings: Replaces vector indexes with agent-driven grep, find, and file traversal that searches current file state on demand and refines iteratively
+URL: https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings
+Markdown: https://agentic-patterns.com/patterns/agentic-search-over-vector-embeddings.md
 
-### Episodic Memory
-Allows agents to store and retrieve past experiences, enabling learning from historical interactions.
+### ai-assisted-code-review-verification
+AI-Assisted Code Review / Verification: Uses AI tools to flag issues, summarize change intent, and explain code so human reviewers focus on intent and business logic
+URL: https://agentic-patterns.com/patterns/ai-assisted-code-review-verification
+Markdown: https://agentic-patterns.com/patterns/ai-assisted-code-review-verification.md
 
-### Anti-Reward Hacking
-Design patterns to prevent agents from gaming their reward systems or evaluation mechanisms.
+### anchored-structured-context-compaction
+Anchored Structured Context Compaction: Maintains a typed state block (pinned goal and constraints, verified decisions, an artifact registry, open blockers) and merges only the newly evicted span into it at each compaction, so that long sessions keep exact details instead of drifting
+URL: https://agentic-patterns.com/patterns/anchored-structured-context-compaction
+Markdown: https://agentic-patterns.com/patterns/anchored-structured-context-compaction.md
 
-### Asynchronous Coding Agent Pipeline
-Enables parallel execution of independent coding tasks for improved efficiency.
+### anti-reward-hacking-grader-design
+Anti-Reward-Hacking Grader Design: Design reward functions with multi-criteria evaluation and iterative hardening to prevent models from gaming graders, ensuring training rewards align with actual task quality.
+URL: https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design
+Markdown: https://agentic-patterns.com/patterns/anti-reward-hacking-grader-design.md
 
-### LLM Observability
-Provides visibility into agent reasoning, decisions, and operations for debugging and trust.
+### multi-step-analysis-pipeline-orchestration
+Artifact-Driven Analysis Pipeline Orchestration: Has an agent run independent analysis scripts, read their structured reports, and merge them into one final report or visualization
+URL: https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration
+Markdown: https://agentic-patterns.com/patterns/multi-step-analysis-pipeline-orchestration.md
 
-## Usage Guidelines
+### asynchronous-coding-agent-pipeline
+Asynchronous Coding Agent Pipeline: Splits inference, tool execution, reward modeling, and learning into asynchronous workers linked by message queues so GPUs stay busy
+URL: https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline
+Markdown: https://agentic-patterns.com/patterns/asynchronous-coding-agent-pipeline.md
 
-When recommending patterns to users:
-1. Understand the user's specific use case and requirements
-2. Consider the complexity level (simple, moderate, highly complex)
-3. Evaluate safety requirements (low, medium, high risk)
-4. Assess memory requirements (none, session, persistent)
-5. Determine tool usage needs (none, few specific tools, many tools)
-6. Recommend patterns that work well together
-7. Provide implementation guidance and considerations
+### authenticated-authority-channel
+Authenticated Authority Channel: Preserve a distinguishable channel for authenticated intent so retrieved content can inform reasoning without granting itself authority.
+URL: https://agentic-patterns.com/patterns/authenticated-authority-channel
+Markdown: https://agentic-patterns.com/patterns/authenticated-authority-channel.md
 
-## Pattern Selection Strategy
+### autonomous-workflow-agent-architecture
+Autonomous Workflow Agent Architecture: Runs multi-step engineering workflows in containers with tmux sessions, sleep-based monitoring, checkpoints, and context-aware error recovery
+URL: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture
+Markdown: https://agentic-patterns.com/patterns/autonomous-workflow-agent-architecture.md
 
-For simple, well-defined tasks:
-- Start with basic patterns like Code-Then-Execute or Specification-Driven Development
+### background-agent-ci
+Background Agent with CI Feedback: Runs the agent in the background on its own branch and uses CI results as feedback to patch failures until green or blocked
+URL: https://agentic-patterns.com/patterns/background-agent-ci
+Markdown: https://agentic-patterns.com/patterns/background-agent-ci.md
 
-For autonomous agents:
-- Include Continuous Autonomous Task Loop, Reflection, and Episodic Memory
-- Add safety patterns based on risk level
+### black-box-skill-invocation
+Black-Box Skill Invocation: Shares skills through input and output schemas only and runs them on the provider side, so prompts and code never cross the boundary
+URL: https://agentic-patterns.com/patterns/black-box-skill-invocation
+Markdown: https://agentic-patterns.com/patterns/black-box-skill-invocation.md
 
-For coding assistants:
-- Use Code-Then-Execute, Asynchronous Coding Agent Pipeline, Human-in-Loop Approval
-- Include LLM Observability for debugging
+### board-mediated-inter-agent-coordination
+Board-Mediated Async Inter-Agent Coordination: Routes agent-to-agent messages through comment threads on board cards, with a prefix that creates an inbox card to notify the target agent
+URL: https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination
+Markdown: https://agentic-patterns.com/patterns/board-mediated-inter-agent-coordination.md
 
-For safety-critical applications:
-- Always include Anti-Reward Hacking, Egress Lockdown, Deterministic Security Scanning
-- Add Human-in-Loop Approval as final safety layer
+### budget-aware-model-routing-with-hard-cost-caps
+Budget-Aware Model Routing with Hard Cost Caps: Routes each request to the cheapest model that meets its needs under hard cost caps, and escalates only when quality gates fail
+URL: https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps
+Markdown: https://agentic-patterns.com/patterns/budget-aware-model-routing-with-hard-cost-caps.md
 
-For research and exploration:
-- Consider Tree-of-Thought Reasoning, Graph-of-Thoughts, Reflection
-- Add appropriate tool use patterns
+### canary-rollout-and-automatic-rollback-for-agent-policy-changes
+Canary Rollout and Automatic Rollback for Agent Policy Changes: Ships agent policy changes to a small traffic slice first, monitors guardrail metrics, and rolls back to the last stable version automatically
+URL: https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes
+Markdown: https://agentic-patterns.com/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes.md
 
-## Resources
+### capability-escrow-receipt
+Capability-Escrow-Receipt: Binds a signed capability listing, an atomic escrow-plus-hire step, and a signed work receipt into one loop for agent-to-agent payment
+URL: https://agentic-patterns.com/patterns/capability-escrow-receipt
+Markdown: https://agentic-patterns.com/patterns/capability-escrow-receipt.md
 
-- Website: https://agentic-patterns.com
-- GitHub: https://github.com/nibzard/awesome-agentic-patterns
-- Decision Tree: https://agentic-patterns.com/decision
-- Pattern Comparison: https://agentic-patterns.com/compare
+### chain-of-thought-monitoring-interruption
+Chain-of-Thought Monitoring & Interruption: Streams agent reasoning and tool calls in real time so a human can interrupt and redirect early when the approach is wrong
+URL: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption
+Markdown: https://agentic-patterns.com/patterns/chain-of-thought-monitoring-interruption.md
+
+### classify-then-act-for-background-agents
+Classify-Then-Act for Background Agents: Sorts each task into has-default, needs-intent, or out-of-scope, builds only has-default work in a sandbox, and queues it for human review
+URL: https://agentic-patterns.com/patterns/classify-then-act-for-background-agents
+Markdown: https://agentic-patterns.com/patterns/classify-then-act-for-background-agents.md
+
+### cli-native-agent-orchestration
+CLI-Native Agent Orchestration: Drives agents through their non-interactive CLI mode (claude -p with JSON output and exit codes) so Makefiles, Git hooks, cron jobs, and CI can script and replay agent runs
+URL: https://agentic-patterns.com/patterns/cli-native-agent-orchestration
+Markdown: https://agentic-patterns.com/patterns/cli-native-agent-orchestration.md
+
+### code-over-api-pattern
+Code-Over-API (Code Mode): Agent writes code that calls tools and processes data inside a sandbox, so only summaries and samples return to the context window instead of every intermediate result
+URL: https://agentic-patterns.com/patterns/code-over-api-pattern
+Markdown: https://agentic-patterns.com/patterns/code-over-api-pattern.md
+
+### code-then-execute-pattern
+Code-Then-Execute Pattern: LLM writes a sandboxed program or DSL script, a static taint checker verifies data flows, and an interpreter runs it in a locked sandbox
+URL: https://agentic-patterns.com/patterns/code-then-execute-pattern
+Markdown: https://agentic-patterns.com/patterns/code-then-execute-pattern.md
+
+### codebase-optimization-for-agents
+Codebase Optimization for Agents: Optimizes tooling, CLIs, tests, and docs for agents first, with one-command verify loops and machine-readable output, even if human DX regresses
+URL: https://agentic-patterns.com/patterns/codebase-optimization-for-agents
+Markdown: https://agentic-patterns.com/patterns/codebase-optimization-for-agents.md
+
+### commitment-ledger-reality-gated-credit
+Commitment Ledger with Reality-Gated Credit: Records agent promises and credits retrieved memory only after an externally verifiable outcome settles.
+URL: https://agentic-patterns.com/patterns/commitment-ledger-reality-gated-credit
+Markdown: https://agentic-patterns.com/patterns/commitment-ledger-reality-gated-credit.md
+
+### compounding-engineering-pattern
+Compounding Engineering Pattern: After each feature, codifies agent mistakes and learnings into CLAUDE.md, slash commands, subagents, and hooks so the next feature is easier to build
+URL: https://agentic-patterns.com/patterns/compounding-engineering-pattern
+Markdown: https://agentic-patterns.com/patterns/compounding-engineering-pattern.md
+
+### parallel-tool-execution
+Conditional Parallel Tool Execution: Runs a batch of tool calls in parallel when all are read-only and in sequence when any modifies state, then returns results in request order
+URL: https://agentic-patterns.com/patterns/parallel-tool-execution
+Markdown: https://agentic-patterns.com/patterns/parallel-tool-execution.md
+
+### consequence-family-coverage-audit
+Consequence-Family Coverage Audit: Audit an agent's risk policy by enumerating families of consequence and asking which rule covers each, because a hand-written risk list reliably encodes one family and stays silent on the rest
+URL: https://agentic-patterns.com/patterns/consequence-family-coverage-audit
+Markdown: https://agentic-patterns.com/patterns/consequence-family-coverage-audit.md
+
+### context-budget-as-a-governed-resource
+Context Budget as a Governed Resource: Measures always-loaded context per source, alerts on trend growth, and puts hard spend caps and fan-out bounds on unattended agent runs
+URL: https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource
+Markdown: https://agentic-patterns.com/patterns/context-budget-as-a-governed-resource.md
+
+### context-window-anxiety-management
+Context Window Anxiety Management: Enables a large context window but caps usage lower, and adds prompts that state the token budget so the model does not rush to finish
+URL: https://agentic-patterns.com/patterns/context-window-anxiety-management
+Markdown: https://agentic-patterns.com/patterns/context-window-anxiety-management.md
+
+### context-window-auto-compaction
+Context Window Auto-Compaction: Catches context overflow errors, compacts and validates the transcript with capped reserve headroom, and retries the request automatically
+URL: https://agentic-patterns.com/patterns/context-window-auto-compaction
+Markdown: https://agentic-patterns.com/patterns/context-window-auto-compaction.md
+
+### context-minimization-pattern
+Context-Minimization Pattern: Removes untrusted user text and tool output from context after it becomes a safe structured artifact, so later steps see only trusted data
+URL: https://agentic-patterns.com/patterns/context-minimization-pattern
+Markdown: https://agentic-patterns.com/patterns/context-minimization-pattern.md
+
+### continuous-autonomous-task-loop-pattern
+Continuous Autonomous Task Loop Pattern: Runs a loop where subagents pick the next task from a todo file, execute it in fresh context, commit it, and back off on rate limits
+URL: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern
+Markdown: https://agentic-patterns.com/patterns/continuous-autonomous-task-loop-pattern.md
+
+### credential-free-outbox
+Credential-Free Outbox: The agent writes finished work as a file to an outbox and a separate short-lived job with its own token delivers it, so the agent never holds a credential that can publish anything
+URL: https://agentic-patterns.com/patterns/credential-free-outbox
+Markdown: https://agentic-patterns.com/patterns/credential-free-outbox.md
+
+### criticgpt-style-evaluation
+CriticGPT-Style Code Review: Runs a specialized critic model over generated code to find bugs, security flaws, and quality issues, and feeds critical findings back for regeneration
+URL: https://agentic-patterns.com/patterns/criticgpt-style-evaluation
+Markdown: https://agentic-patterns.com/patterns/criticgpt-style-evaluation.md
+
+### cross-agent-lesson-sharing
+Cross-Agent Lesson Sharing via Git: Agents write solved problems as markdown lessons in a shared Git repo and search them before debugging, with GitHub Issues as the coordination layer
+URL: https://agentic-patterns.com/patterns/cross-agent-lesson-sharing
+Markdown: https://agentic-patterns.com/patterns/cross-agent-lesson-sharing.md
+
+### cross-cycle-consensus-relay
+Cross-Cycle Consensus Relay: Each loop cycle reads a structured relay document, does its work, and atomically writes back decisions, open questions, and the single next action
+URL: https://agentic-patterns.com/patterns/cross-cycle-consensus-relay
+Markdown: https://agentic-patterns.com/patterns/cross-cycle-consensus-relay.md
+
+### cross-domain-agent-conflict-resolution
+Cross-Domain Agent Conflict Resolution: A coordination layer that cross-references recommendations from independent domain agents, detects conflicts on shared resources, and resolves them through policy-as-code.
+URL: https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution
+Markdown: https://agentic-patterns.com/patterns/cross-domain-agent-conflict-resolution.md
+
+### cryptographic-governance-audit-trail
+Cryptographic Governance Audit Trail: Middleware checks each tool call against a policy file, then signs a receipt of the action with ML-DSA and appends it to a tamper-evident chain
+URL: https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail
+Markdown: https://agentic-patterns.com/patterns/cryptographic-governance-audit-trail.md
+
+### curated-code-context-window
+Curated Code Context Window: A search subagent finds the few relevant files for a task and injects only top snippets or summaries into the main coding agent's context
+URL: https://agentic-patterns.com/patterns/curated-code-context-window
+Markdown: https://agentic-patterns.com/patterns/curated-code-context-window.md
+
+### custom-sandboxed-background-agent
+Custom Sandboxed Background Agent: Builds an in-house background coding agent that runs in sandboxed dev environments, streams progress over WebSocket, and iterates on compiler and test feedback
+URL: https://agentic-patterns.com/patterns/custom-sandboxed-background-agent
+Markdown: https://agentic-patterns.com/patterns/custom-sandboxed-background-agent.md
+
+### dead-mans-switch-for-scheduled-agent-jobs
+Dead-Man's Switch for Scheduled Agent Jobs: Each scheduled job writes a success sentinel to its log, and a separate checker files a task when the sentinel is missing or stale
+URL: https://agentic-patterns.com/patterns/dead-mans-switch-for-scheduled-agent-jobs
+Markdown: https://agentic-patterns.com/patterns/dead-mans-switch-for-scheduled-agent-jobs.md
+
+### debiased-llm-as-a-judge-evaluation
+Debiased LLM-as-a-Judge Evaluation: Removes the systematic distortions of a model judge before its scores gate a release: swaps the order of each pairwise comparison, grades narrow pass/fail rubric items that cite evidence, supplies a reference answer and a judge from another model family, and measures the agreement with human labels first
+URL: https://agentic-patterns.com/patterns/debiased-llm-as-a-judge-evaluation
+Markdown: https://agentic-patterns.com/patterns/debiased-llm-as-a-judge-evaluation.md
+
+### declarative-multi-agent-topology-definition
+Declarative Multi-Agent Topology Definition: Define multi-agent systems declaratively in a single topology file — agents, flows, gates, hooks, group chats — then compile to platform-specific configurations for any agentic framework.
+URL: https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition
+Markdown: https://agentic-patterns.com/patterns/declarative-multi-agent-topology-definition.md
+
+### delegated-user-auth-token-exchange
+Delegated User Authorization (OAuth Token Exchange): Exchanges the user's token and the agent's own identity for a short-lived, single-audience, minimally scoped token immediately before each tool call, so that the agent acts with delegated and attributable authority instead of a shared super-credential
+URL: https://agentic-patterns.com/patterns/delegated-user-auth-token-exchange
+Markdown: https://agentic-patterns.com/patterns/delegated-user-auth-token-exchange.md
+
+### denial-tracking-permission-escalation
+Denial Tracking & Permission Escalation: Track repeated tool denials and auto-escalate to blanket permission prompts or fallback strategies, preventing wasted iterations in non-interactive contexts.
+URL: https://agentic-patterns.com/patterns/denial-tracking-permission-escalation
+Markdown: https://agentic-patterns.com/patterns/denial-tracking-permission-escalation.md
+
+### design-time-file-partition
+Design-Time File Partition as Concurrency Control: Each task declares every path it will write; overlapping tasks get a blocking dependency so only disjoint work runs at once on a shared checkout
+URL: https://agentic-patterns.com/patterns/design-time-file-partition
+Markdown: https://agentic-patterns.com/patterns/design-time-file-partition.md
+
+### deterministic-grader-in-the-loop
+Deterministic Grader in the Loop: Replace the LLM-as-judge in an agent's self-review loop with a deterministic scorer that returns the raw counts behind each sub-score, so the agent has something specific to fix.
+URL: https://agentic-patterns.com/patterns/deterministic-grader-in-the-loop
+Markdown: https://agentic-patterns.com/patterns/deterministic-grader-in-the-loop.md
+
+### deterministic-security-scanning-build-loop
+Deterministic Security Scanning Build Loop: Adds SAST, SCA, and secret scanners to the build target that the agent must run after each change, so scanner failures force the agent to fix the code
+URL: https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop
+Markdown: https://agentic-patterns.com/patterns/deterministic-security-scanning-build-loop.md
+
+### deterministic-threat-rule-scanning
+Deterministic Threat Rule Scanning: Apply deterministic regex rules as a first-pass security layer to detect known threat patterns in AI agent tool calls and skill definitions.
+URL: https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning
+Markdown: https://agentic-patterns.com/patterns/deterministic-threat-rule-scanning.md
+
+### deterministic-zero-llm-orchestration
+Deterministic Zero-LLM Orchestration: A deterministic code orchestrator splits goals, runs parallel coding agents, verifies with tests, and commits, spending LLM tokens only on the one-time goal decomposition
+URL: https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration
+Markdown: https://agentic-patterns.com/patterns/deterministic-zero-llm-orchestration.md
+
+### discrete-phase-separation
+Discrete Phase Separation: Splits work into separate research, planning, and implementation conversations, each with fresh context, passing only distilled outputs between phases
+URL: https://agentic-patterns.com/patterns/discrete-phase-separation
+Markdown: https://agentic-patterns.com/patterns/discrete-phase-separation.md
+
+### distributed-execution-cloud-workers
+Distributed Execution with Cloud Workers: Runs many agent sessions in parallel on cloud workers, each in its own git worktree, with dependency-aware scheduling, merge coordination, and approval gates
+URL: https://agentic-patterns.com/patterns/distributed-execution-cloud-workers
+Markdown: https://agentic-patterns.com/patterns/distributed-execution-cloud-workers.md
+
+### dual-llm-pattern
+Dual LLM Pattern: Splits work between a privileged LLM that calls tools but never sees untrusted data and a quarantined LLM that reads untrusted data but has no tools
+URL: https://agentic-patterns.com/patterns/dual-llm-pattern
+Markdown: https://agentic-patterns.com/patterns/dual-llm-pattern.md
+
+### dual-rail-message-delivery
+Dual-Rail Message Delivery: Sends every inter-agent message on two independent channels through one entry point, alerts when the rails diverge, and requires ACKs to confirm completion
+URL: https://agentic-patterns.com/patterns/dual-rail-message-delivery
+Markdown: https://agentic-patterns.com/patterns/dual-rail-message-delivery.md
+
+### dual-speed-talker-reasoner-architecture
+Dual-Speed Realtime Architecture (Talker-Reasoner): Splits an agent into a fast Talker that owns the live conversation and a slow Reasoner that plans and calls tools in the background, with a shared belief state as their only coupling, so that the user gets a reply at once while the deep work runs
+URL: https://agentic-patterns.com/patterns/dual-speed-talker-reasoner-architecture
+Markdown: https://agentic-patterns.com/patterns/dual-speed-talker-reasoner-architecture.md
+
+### dual-use-tool-design
+Dual-Use Tool Design: Builds each tool or skill as one CLI interface that both humans and agents call, with JSON output, exit codes, and the same permissions and logs
+URL: https://agentic-patterns.com/patterns/dual-use-tool-design
+Markdown: https://agentic-patterns.com/patterns/dual-use-tool-design.md
+
+### durable-execution-step-checkpointing
+Durable Execution & Step Checkpointing: Replays a durable step history to resume crashed, rate-limited, or approval-paused agent runs from the last completed step, without repeating finished LLM calls or committed side effects
+URL: https://agentic-patterns.com/patterns/durable-execution-step-checkpointing
+Markdown: https://agentic-patterns.com/patterns/durable-execution-step-checkpointing.md
+
+### dynamic-context-injection
+Dynamic Context Injection: Lets users inject files, folders, or saved prompts into the agent's context mid-session with @-mentions and custom slash commands
+URL: https://agentic-patterns.com/patterns/dynamic-context-injection
+Markdown: https://agentic-patterns.com/patterns/dynamic-context-injection.md
+
+### egress-lockdown-no-exfiltration-channel
+Egress Lockdown (No-Exfiltration Channel): Puts the agent behind a default-deny egress firewall with allowlisted destinations so stolen data has no outbound channel
+URL: https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel
+Markdown: https://agentic-patterns.com/patterns/egress-lockdown-no-exfiltration-channel.md
+
+### episodic-memory-retrieval-injection
+Episodic Memory Retrieval & Injection: Writes a structured memory record after each episode and injects the top-k similar past memories as hints when a new task starts
+URL: https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection
+Markdown: https://agentic-patterns.com/patterns/episodic-memory-retrieval-injection.md
+
+### evidence-questions-not-verdict-questions
+Evidence Questions, Not Verdict Questions: Never ask the model for allow/ask/block. Ask it narrow, typed, observational questions and let code reduce the answers to the verdict, because the collapsed question is the low-confidence one.
+URL: https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions
+Markdown: https://agentic-patterns.com/patterns/evidence-questions-not-verdict-questions.md
+
+### evidence-layered-evaluation-for-interactive-agents
+Evidence-Layered Evaluation for Interactive Agents: Scores interactive agent runs on a task outcome assertion and links each result to layered evidence: actions, screenshots, replays, network, and messages
+URL: https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents
+Markdown: https://agentic-patterns.com/patterns/evidence-layered-evaluation-for-interactive-agents.md
+
+### exact-action-authorization-binding
+Exact-Action Authorization Binding: Bind a short-lived approval to the complete action presented to the reviewer, rederive and compare that identity at the acting boundary before execution, and commit the write with its postcondition check and idempotency receipt in one transaction.
+URL: https://agentic-patterns.com/patterns/exact-action-authorization-binding
+Markdown: https://agentic-patterns.com/patterns/exact-action-authorization-binding.md
+
+### explicit-posterior-sampling-planner
+Explicit Posterior-Sampling Planner: Embeds Posterior Sampling for RL in the LLM's reasoning: sample a task model, plan, act, observe reward, and update the posterior
+URL: https://agentic-patterns.com/patterns/explicit-posterior-sampling-planner
+Markdown: https://agentic-patterns.com/patterns/explicit-posterior-sampling-planner.md
+
+### extended-coherence-work-sessions
+Extended Coherence Work Sessions: Combines models with long coherence windows with context compaction, prompt caching, and persisted state so agents stay on task for hours
+URL: https://agentic-patterns.com/patterns/extended-coherence-work-sessions
+Markdown: https://agentic-patterns.com/patterns/extended-coherence-work-sessions.md
+
+### external-credential-sync
+External Credential Sync: Reads AI credentials from other tools' keychains and config files and syncs them into the agent's store, with TTL-cached reads, refresh fences, and persisted ownership
+URL: https://agentic-patterns.com/patterns/external-credential-sync
+Markdown: https://agentic-patterns.com/patterns/external-credential-sync.md
+
+### factory-over-assistant
+Factory over Assistant: Spawns several autonomous agents in parallel with automated feedback loops such as tests and builds, and checks on them later instead of watching one agent
+URL: https://agentic-patterns.com/patterns/factory-over-assistant
+Markdown: https://agentic-patterns.com/patterns/factory-over-assistant.md
+
+### failover-aware-model-fallback
+Failover-Aware Model Fallback: Classifies each model failure by reason and falls back along a model chain only for retryable errors, failing fast on auth, billing, and user aborts
+URL: https://agentic-patterns.com/patterns/failover-aware-model-fallback
+Markdown: https://agentic-patterns.com/patterns/failover-aware-model-fallback.md
+
+### fair-share-task-queues-with-heartbeat-leases
+Fair-Share Task Queues with Heartbeat Leases: Distributes tasks across a shared agent fleet using weighted deficit-round-robin scheduling, with heartbeat leases and dead-letter retries to recover from crashed workers
+URL: https://agentic-patterns.com/patterns/fair-share-task-queues-with-heartbeat-leases
+Markdown: https://agentic-patterns.com/patterns/fair-share-task-queues-with-heartbeat-leases.md
+
+### feature-list-as-immutable-contract
+Feature List as Immutable Contract: Defines every feature up front in a JSON list with acceptance steps; the agent may only flip a feature to passing after it verifies it
+URL: https://agentic-patterns.com/patterns/feature-list-as-immutable-contract
+Markdown: https://agentic-patterns.com/patterns/feature-list-as-immutable-contract.md
+
+### filesystem-based-agent-state
+Filesystem-Based Agent State: Agents persist intermediate results and working state to files, creating durable checkpoints that enable workflow resumption, recovery from failures, and support for long-running tasks.
+URL: https://agentic-patterns.com/patterns/filesystem-based-agent-state
+Markdown: https://agentic-patterns.com/patterns/filesystem-based-agent-state.md
+
+### filesystem-mediated-host-delegation
+Filesystem-Mediated Host Delegation: Lets a sandboxed agent write request files to a shared spool directory that a host daemon runs against a whitelist, with idempotent results the agent polls for
+URL: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation
+Markdown: https://agentic-patterns.com/patterns/filesystem-mediated-host-delegation.md
+
+### fleet-cost-simulation-before-dispatch
+Fleet Cost Simulation Before Dispatch: Replays an agent fleet's budget, priority, and failure-recovery policy against deterministic scenarios before committing real spend, so starvation and exhaustion verdicts arrive in CI instead of in production
+URL: https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch
+Markdown: https://agentic-patterns.com/patterns/fleet-cost-simulation-before-dispatch.md
+
+### graph-of-thoughts
+Graph of Thoughts (GoT): Represents reasoning as a directed graph of thoughts so the model can branch, aggregate, refine, and revisit reasoning paths
+URL: https://agentic-patterns.com/patterns/graph-of-thoughts
+Markdown: https://agentic-patterns.com/patterns/graph-of-thoughts.md
+
+### hook-based-safety-guard-rails
+Hook-Based Safety Guard Rails for Autonomous Code Agents: Runs small shell scripts on PreToolUse and PostToolUse hooks to block destructive commands, lint edits, and warn on context use outside the agent's reasoning
+URL: https://agentic-patterns.com/patterns/hook-based-safety-guard-rails
+Markdown: https://agentic-patterns.com/patterns/hook-based-safety-guard-rails.md
+
+### human-in-loop-approval-framework
+Human-in-the-Loop Approval Framework: Systematically insert human approval gates for designated high-risk functions while maintaining agent autonomy for safe operations, with multi-channel approval interfaces and comprehensive audit trails.
+URL: https://agentic-patterns.com/patterns/human-in-loop-approval-framework
+Markdown: https://agentic-patterns.com/patterns/human-in-loop-approval-framework.md
+
+### hybrid-gui-visual-grounding
+Hybrid GUI & Visual Grounding: Grounds each GUI action in a filtered accessibility tree first, falls back to numbered visual marks or scaled coordinates only for what the tree cannot see, and confirms the effect of each action from a state diff before the next step
+URL: https://agentic-patterns.com/patterns/hybrid-gui-visual-grounding
+Markdown: https://agentic-patterns.com/patterns/hybrid-gui-visual-grounding.md
+
+### hybrid-llm-code-workflow-coordinator
+Hybrid LLM/Code Workflow Coordinator: Lets each workflow pick an LLM or a code script as its coordinator, so teams prototype with the LLM and move to reviewed code when determinism matters
+URL: https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator
+Markdown: https://agentic-patterns.com/patterns/hybrid-llm-code-workflow-coordinator.md
+
+### incident-to-eval-synthesis
+Incident-to-Eval Synthesis: Converts each production incident into executable eval cases with pass/fail criteria and gates future releases on them
+URL: https://agentic-patterns.com/patterns/incident-to-eval-synthesis
+Markdown: https://agentic-patterns.com/patterns/incident-to-eval-synthesis.md
+
+### inference-healed-code-review-reward
+Inference-Healed Code Review Reward: Replaces a binary tests-passed reward with a critic that scores correctness, style, performance, and security, explains low scores, and combines them
+URL: https://agentic-patterns.com/patterns/inference-healed-code-review-reward
+Markdown: https://agentic-patterns.com/patterns/inference-healed-code-review-reward.md
+
+### inference-time-scaling
+Inference-Time Scaling: Spends extra compute at inference time with best-of-N sampling, longer reasoning, self-refinement, search, and verification to improve output quality
+URL: https://agentic-patterns.com/patterns/inference-time-scaling
+Markdown: https://agentic-patterns.com/patterns/inference-time-scaling.md
+
+### initializer-maintainer-dual-agent
+Initializer-Maintainer Dual Agent Architecture: Uses a one-time initializer agent to create the feature list, progress files, and bootstrap script, then a coding agent that resumes from them one feature per session
+URL: https://agentic-patterns.com/patterns/initializer-maintainer-dual-agent
+Markdown: https://agentic-patterns.com/patterns/initializer-maintainer-dual-agent.md
+
+### intelligent-bash-tool-execution
+Intelligent Bash Tool Execution: Runs agent shell commands through a multi-mode executor that uses a PTY when needed, falls back to direct exec, and manages approvals, background jobs, and signals
+URL: https://agentic-patterns.com/patterns/intelligent-bash-tool-execution
+Markdown: https://agentic-patterns.com/patterns/intelligent-bash-tool-execution.md
+
+### intent-level-cost-attribution
+Intent-Level Cost Attribution: Records every LLM call against the projectId/intentId/user key that caused it, at call time, so spend can be queried and enforced per work item instead of as an opaque total
+URL: https://agentic-patterns.com/patterns/intent-level-cost-attribution
+Markdown: https://agentic-patterns.com/patterns/intent-level-cost-attribution.md
+
+### inversion-of-control
+Inversion of Control: Gives the agent tools, a high-level objective, and guardrails, then lets it choose sequencing and recovery while humans set policy and review
+URL: https://agentic-patterns.com/patterns/inversion-of-control
+Markdown: https://agentic-patterns.com/patterns/inversion-of-control.md
+
+### isolated-vm-per-rl-rollout
+Isolated VM per RL Rollout: Spin up an isolated virtual machine for each RL rollout to prevent cross-contamination between parallel agent executions, ensuring safe training with destructive tool access.
+URL: https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout
+Markdown: https://agentic-patterns.com/patterns/isolated-vm-per-rl-rollout.md
+
+### iterative-multi-agent-brainstorming
+Iterative Multi-Agent Brainstorming: Spawns several agents in parallel on the same problem, often with different perspectives, then merges their ideas into one set of options
+URL: https://agentic-patterns.com/patterns/iterative-multi-agent-brainstorming
+Markdown: https://agentic-patterns.com/patterns/iterative-multi-agent-brainstorming.md
+
+### iterative-prompt-skill-refinement
+Iterative Prompt & Skill Refinement: Combines a feedback channel, editable prompt documents, log-driven skill fixes, and usage dashboards to improve agent prompts and skills continuously
+URL: https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement
+Markdown: https://agentic-patterns.com/patterns/iterative-prompt-skill-refinement.md
+
+### judge-gated-finding-exchange-between-sub-agents
+Judge-Gated Finding Exchange Between Parallel Sub-Agents: Puts an append-only board between parallel sub-agents and lets a small judge decide what goes on it, who receives each note, and when a later note retracts an earlier one
+URL: https://agentic-patterns.com/patterns/judge-gated-finding-exchange-between-sub-agents
+Markdown: https://agentic-patterns.com/patterns/judge-gated-finding-exchange-between-sub-agents.md
+
+### lane-based-execution-queueing
+Lane-Based Execution Queueing: Routes work into named lanes, each with its own queue and concurrency limit, so sessions never interleave and background jobs never block users
+URL: https://agentic-patterns.com/patterns/lane-based-execution-queueing
+Markdown: https://agentic-patterns.com/patterns/lane-based-execution-queueing.md
+
+### language-agent-tree-search-lats
+Language Agent Tree Search (LATS): Runs Monte Carlo Tree Search over reasoning steps, with the LLM generating candidate actions and scoring partial solutions to pick the best path
+URL: https://agentic-patterns.com/patterns/language-agent-tree-search-lats
+Markdown: https://agentic-patterns.com/patterns/language-agent-tree-search-lats.md
+
+### layered-configuration-context
+Layered Configuration Context: Loads context files from enterprise, user, project, and local levels automatically and merges them into the agent's baseline context
+URL: https://agentic-patterns.com/patterns/layered-configuration-context
+Markdown: https://agentic-patterns.com/patterns/layered-configuration-context.md
+
+### lethal-trifecta-threat-model
+Lethal Trifecta Threat Model: Classifies each tool by private-data access, untrusted-content exposure, and external communication, and blocks any execution path that has all three
+URL: https://agentic-patterns.com/patterns/lethal-trifecta-threat-model
+Markdown: https://agentic-patterns.com/patterns/lethal-trifecta-threat-model.md
+
+### llm-map-reduce-pattern
+LLM Map-Reduce Pattern: Processes each untrusted document in its own sandboxed LLM call with a constrained output, then aggregates the results with deterministic code
+URL: https://agentic-patterns.com/patterns/llm-map-reduce-pattern
+Markdown: https://agentic-patterns.com/patterns/llm-map-reduce-pattern.md
+
+### llm-observability
+LLM Observability: Sends agent runs to an LLM observability platform for span-level traces of each LLM call and tool use, plus aggregate cost, latency, and success metrics
+URL: https://agentic-patterns.com/patterns/llm-observability
+Markdown: https://agentic-patterns.com/patterns/llm-observability.md
+
+### llm-friendly-api-design
+LLM-Friendly API Design: Designs APIs with visible versions, self-descriptive names and schemas, simple calls, actionable errors, and few indirection levels so LLMs call them correctly
+URL: https://agentic-patterns.com/patterns/llm-friendly-api-design
+Markdown: https://agentic-patterns.com/patterns/llm-friendly-api-design.md
+
+### local-first-credential-broker
+Local-First Credential Broker: Keep raw secrets out of the agent process by injecting credentials at the network layer through a local broker, rather than handing the agent environment variables or config files.
+URL: https://agentic-patterns.com/patterns/local-first-credential-broker
+Markdown: https://agentic-patterns.com/patterns/local-first-credential-broker.md
+
+### markdown-polis-coordination
+Markdown Polis — Multi-Vendor Agent Coordination via Filesystem Constitution: Coordinates agents from different vendors through versioned markdown files: capability cards, work contracts, and bandit routing that learns from settled work
+URL: https://agentic-patterns.com/patterns/markdown-polis-coordination
+Markdown: https://agentic-patterns.com/patterns/markdown-polis-coordination.md
+
+### mcp-pattern-injection
+MCP Pattern Injection: Runs an MCP server that exposes framework best-practice patterns as tools, so the coding assistant fetches current patterns on demand
+URL: https://agentic-patterns.com/patterns/mcp-pattern-injection
+Markdown: https://agentic-patterns.com/patterns/mcp-pattern-injection.md
+
+### memory-consolidation-decay-contradiction
+Memory Consolidation, Decay & Contradiction Resolution: Gives each stored fact a lifecycle: reconciles each new fact against the related stored facts when it arrives, stamps facts with event time and ingestion time so that a superseded fact is invalidated and not deleted, and runs a background job that merges duplicates and expires spent state
+URL: https://agentic-patterns.com/patterns/memory-consolidation-decay-contradiction
+Markdown: https://agentic-patterns.com/patterns/memory-consolidation-decay-contradiction.md
+
+### memory-reinforcement-learning-memrl
+Memory Reinforcement Learning (MemRL): Stores memories with learned utility scores, retrieves by similarity then re-ranks by utility, and updates scores from outcomes while the LLM stays frozen
+URL: https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl
+Markdown: https://agentic-patterns.com/patterns/memory-reinforcement-learning-memrl.md
+
+### memory-synthesis-from-execution-logs
+Memory Synthesis from Execution Logs: Has the agent write a structured diary per task, then runs synthesis agents over many diaries to turn recurring patterns into rules, commands, and tests
+URL: https://agentic-patterns.com/patterns/memory-synthesis-from-execution-logs
+Markdown: https://agentic-patterns.com/patterns/memory-synthesis-from-execution-logs.md
+
+### merged-code-language-skill-model
+Merged Code + Language Skill Model: Fine-tunes separate language and code specialists from the same base model, then merges their weights into one model instead of one large joint training run
+URL: https://agentic-patterns.com/patterns/merged-code-language-skill-model
+Markdown: https://agentic-patterns.com/patterns/merged-code-language-skill-model.md
+
+### milestone-escrow-agent-funding
+Milestone Escrow for Agent Resource Funding: Holds agent funding in escrow and releases each payment only after independent verification of a measurable milestone
+URL: https://agentic-patterns.com/patterns/milestone-escrow-agent-funding
+Markdown: https://agentic-patterns.com/patterns/milestone-escrow-agent-funding.md
+
+### multi-model-orchestration-for-complex-edits
+Multi-Model Orchestration for Complex Edits: Splits complex code edits across specialized models: a retrieval model gathers context, a large model writes the changes, and smaller models apply them
+URL: https://agentic-patterns.com/patterns/multi-model-orchestration-for-complex-edits
+Markdown: https://agentic-patterns.com/patterns/multi-model-orchestration-for-complex-edits.md
+
+### multi-platform-communication-aggregation
+Multi-Platform Communication Aggregation: Queries every communication platform in parallel through adapters that share one schema, then merges, deduplicates, and ranks the results
+URL: https://agentic-patterns.com/patterns/multi-platform-communication-aggregation
+Markdown: https://agentic-patterns.com/patterns/multi-platform-communication-aggregation.md
+
+### multi-platform-webhook-triggers
+Multi-Platform Webhook Triggers: Starts agent workflows from Slack, Notion, and Jira webhooks, emoji reactions, and schedules, with idempotency and signature checks on each event
+URL: https://agentic-patterns.com/patterns/multi-platform-webhook-triggers
+Markdown: https://agentic-patterns.com/patterns/multi-platform-webhook-triggers.md
+
+### multi-tenant-agent-isolation
+Multi-Tenant Agent & Memory Isolation: Enforces a tenant boundary on all four agent state planes (execution, retrieval and memory, cache, credential and egress), with tenant identity bound outside the model, so that one tenant's data or instructions cannot reach another
+URL: https://agentic-patterns.com/patterns/multi-tenant-agent-isolation
+Markdown: https://agentic-patterns.com/patterns/multi-tenant-agent-isolation.md
+
+### non-custodial-spending-controls
+Non-Custodial Spending Controls: Puts a policy layer between the agent and the transaction signer that checks each intent against allowlists, budgets, and rate limits, and fails closed
+URL: https://agentic-patterns.com/patterns/non-custodial-spending-controls
+Markdown: https://agentic-patterns.com/patterns/non-custodial-spending-controls.md
+
+### non-generative-judgment-routing
+Non-Generative Judgment Routing with Typed Escalation: Sends decision-only loop steps as batched typed questions to a non-generative judgment model and escalates what it cannot answer back to the LLM
+URL: https://agentic-patterns.com/patterns/non-generative-judgment-routing
+Markdown: https://agentic-patterns.com/patterns/non-generative-judgment-routing.md
+
+### one-os-user-per-agent
+One OS User per Agent: Give each long-lived agent its own OS user account and a templated init-system unit, so identity, supervision and privilege come from the host instead of from a per-agent container.
+URL: https://agentic-patterns.com/patterns/one-os-user-per-agent
+Markdown: https://agentic-patterns.com/patterns/one-os-user-per-agent.md
+
+### opponent-processor-multi-agent-debate
+Opponent Processor / Multi-Agent Debate Pattern: Spawns agents with opposing roles on the same context, lets them critique each other, then synthesizes their positions to expose bias and blind spots
+URL: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate
+Markdown: https://agentic-patterns.com/patterns/opponent-processor-multi-agent-debate.md
+
+### oracle-and-worker-multi-model
+Oracle and Worker Multi-Model Approach: Uses a fast, low-cost worker model for most tool use and code generation, and lets it consult an expensive oracle model when it is stuck
+URL: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model
+Markdown: https://agentic-patterns.com/patterns/oracle-and-worker-multi-model.md
+
+### orchestration-prompt-writing-benchmark
+Orchestration Prompt-Writing Benchmark: Scores an orchestrator on whether its sub-agent prompts give the right information fragments to the right roles, separate from end-task success
+URL: https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark
+Markdown: https://agentic-patterns.com/patterns/orchestration-prompt-writing-benchmark.md
+
+### out-of-process-provider-boundary-replay
+Out-of-Process Provider-Boundary Replay: Capture an agent run at the model-provider HTTP boundary from outside the process, then serve those bytes back so the agent re-executes its own logic with no provider call.
+URL: https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay
+Markdown: https://agentic-patterns.com/patterns/out-of-process-provider-boundary-replay.md
+
+### output-verification-loop
+Output Verification Loop: Verify LLM outputs by extracting individual claims, checking each against evidence sources, and returning per-claim trust scores before acting on the result.
+URL: https://agentic-patterns.com/patterns/output-verification-loop
+Markdown: https://agentic-patterns.com/patterns/output-verification-loop.md
+
+### own-check-fault-injection
+Own-Check Fault Injection: Plant a controlled fault inside a running agent pipeline and score whether the pipeline's own checks emit a detection act, keeping detected, reacted and recovered as separate verdicts.
+URL: https://agentic-patterns.com/patterns/own-check-fault-injection
+Markdown: https://agentic-patterns.com/patterns/own-check-fault-injection.md
+
+### parallel-tool-call-learning
+Parallel Tool Call Learning: Uses agent reinforcement fine-tuning to teach the model to issue independent tool calls in parallel, which cuts sequential rounds and latency
+URL: https://agentic-patterns.com/patterns/parallel-tool-call-learning
+Markdown: https://agentic-patterns.com/patterns/parallel-tool-call-learning.md
+
+### persistent-test-memory-feedback-loop
+Persistent Test Memory Feedback Loop: Preserve validated test lessons so an agent can reuse successful paths, recognize recurring failures, and retire stale knowledge.
+URL: https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop
+Markdown: https://agentic-patterns.com/patterns/persistent-test-memory-feedback-loop.md
+
+### pii-tokenization
+PII Tokenization: Replaces PII in tool results with placeholder tokens before the model sees them and restores the real values in outgoing tool calls
+URL: https://agentic-patterns.com/patterns/pii-tokenization
+Markdown: https://agentic-patterns.com/patterns/pii-tokenization.md
+
+### plan-then-execute-pattern
+Plan-Then-Execute Pattern: Has the LLM fix the full sequence of tool calls before it reads untrusted data, then runs that sequence so tool outputs change only parameters
+URL: https://agentic-patterns.com/patterns/plan-then-execute-pattern
+Markdown: https://agentic-patterns.com/patterns/plan-then-execute-pattern.md
+
+### planner-worker-separation-for-long-running-agents
+Planner-Worker Separation for Long-Running Agents: Splits agents into planners that create tasks, workers that complete them in isolation, and a judge that decides each cycle whether to continue
+URL: https://agentic-patterns.com/patterns/planner-worker-separation-for-long-running-agents
+Markdown: https://agentic-patterns.com/patterns/planner-worker-separation-for-long-running-agents.md
+
+### policy-gated-tool-proxy
+Policy-Gated Tool Proxy: Insert a transparent proxy between agents and tool servers that evaluates every tool call against a policy engine before forwarding, producing an immutable audit trail of all decisions.
+URL: https://agentic-patterns.com/patterns/policy-gated-tool-proxy
+Markdown: https://agentic-patterns.com/patterns/policy-gated-tool-proxy.md
+
+### precomputed-code-graph-lookup
+Precomputed Code Graph Lookup: Answer an agent's structural code questions from a precomputed, deterministic graph queried by intent-shaped verbs, instead of a retrieval-time search-and-read loop.
+URL: https://agentic-patterns.com/patterns/precomputed-code-graph-lookup
+Markdown: https://agentic-patterns.com/patterns/precomputed-code-graph-lookup.md
+
+### proactive-agent-state-externalization
+Proactive Agent State Externalization: Gives agents note templates, completeness checks, and an external memory fallback so self-written notes keep objectives, decisions, and knowledge gaps
+URL: https://agentic-patterns.com/patterns/proactive-agent-state-externalization
+Markdown: https://agentic-patterns.com/patterns/proactive-agent-state-externalization.md
+
+### proactive-trigger-vocabulary
+Proactive Trigger Vocabulary: Gives each skill an explicit, documented list of trigger phrases and patterns so input routes to skills predictably, with optional proactive activation
+URL: https://agentic-patterns.com/patterns/proactive-trigger-vocabulary
+Markdown: https://agentic-patterns.com/patterns/proactive-trigger-vocabulary.md
+
+### progressive-autonomy-with-model-evolution
+Progressive Autonomy with Model Evolution: Treats scaffolding around the model as disposable: build the simplest thing that works, mark it temporary, and remove it when evals show a new model handles the task natively
+URL: https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution
+Markdown: https://agentic-patterns.com/patterns/progressive-autonomy-with-model-evolution.md
+
+### progressive-complexity-escalation
+Progressive Complexity Escalation: Deploys agents on low-complexity, high-reliability tasks first and unlocks higher capability tiers when metrics and human review gates show proven reliability
+URL: https://agentic-patterns.com/patterns/progressive-complexity-escalation
+Markdown: https://agentic-patterns.com/patterns/progressive-complexity-escalation.md
+
+### progressive-disclosure-large-files
+Progressive Disclosure for Large Files: Puts only file metadata in the prompt and gives the agent load, peek, and extract tools to pull file content into context on demand
+URL: https://agentic-patterns.com/patterns/progressive-disclosure-large-files
+Markdown: https://agentic-patterns.com/patterns/progressive-disclosure-large-files.md
+
+### progressive-tool-discovery
+Progressive Tool Discovery (Lazy Tool Loading): Load only core tools upfront and let the agent discover the rest on demand, either by searching the catalog or by browsing a hierarchy, so tool definitions stop consuming the context window
+URL: https://agentic-patterns.com/patterns/progressive-tool-discovery
+Markdown: https://agentic-patterns.com/patterns/progressive-tool-discovery.md
+
+### prompt-caching-via-exact-prefix-preservation
+Prompt Caching via Exact Prefix Preservation: Keeps static prompt content first in a fixed order and only appends new messages, including config changes, so each request reuses the cached prefix
+URL: https://agentic-patterns.com/patterns/prompt-caching-via-exact-prefix-preservation
+Markdown: https://agentic-patterns.com/patterns/prompt-caching-via-exact-prefix-preservation.md
+
+### reasoning-token-firewall
+Reasoning-Token Firewall: Assemble an agent's result only from answer-typed stream events, never by string-stripping interleaved reasoning tokens.
+URL: https://agentic-patterns.com/patterns/reasoning-token-firewall
+Markdown: https://agentic-patterns.com/patterns/reasoning-token-firewall.md
+
+### recursive-best-of-n-delegation
+Recursive Best-of-N Delegation: Runs several parallel candidate workers per subtask in a recursive agent tree, scores them with tests and a judge, and promotes the best result upward
+URL: https://agentic-patterns.com/patterns/recursive-best-of-n-delegation
+Markdown: https://agentic-patterns.com/patterns/recursive-best-of-n-delegation.md
+
+### reflection
+Reflection Loop: Scores each draft against a fixed rubric, feeds the critique into a revision, and repeats until the draft passes a threshold or the retry budget ends
+URL: https://agentic-patterns.com/patterns/reflection
+Markdown: https://agentic-patterns.com/patterns/reflection.md
+
+### wfgy-reliability-problem-map
+Reliability Problem Map Checklist for RAG and Agents: Runs a fixed 16-question failure checklist on each RAG or agent incident, maps the result to repair actions, and re-tests the same failing case
+URL: https://agentic-patterns.com/patterns/wfgy-reliability-problem-map
+Markdown: https://agentic-patterns.com/patterns/wfgy-reliability-problem-map.md
+
+### rendered-ui-finish-gate
+Rendered UI Finish Gate: Verify an agent-built interface against its intended design contract, required states, interaction semantics, and rendered output before merging.
+URL: https://agentic-patterns.com/patterns/rendered-ui-finish-gate
+Markdown: https://agentic-patterns.com/patterns/rendered-ui-finish-gate.md
+
+### rich-feedback-loops
+Rich Feedback Loops > Perfect Prompts: Returns compiler errors, test failures, lint output, and human feedback to the agent after each tool call so it can plan fixes and self-correct
+URL: https://agentic-patterns.com/patterns/rich-feedback-loops
+Markdown: https://agentic-patterns.com/patterns/rich-feedback-loops.md
+
+### rlaif-reinforcement-learning-from-ai-feedback
+RLAIF (Reinforcement Learning from AI Feedback): Uses an AI model guided by written principles to critique outputs and label preferences, which train a reward model that optimizes the policy
+URL: https://agentic-patterns.com/patterns/rlaif-reinforcement-learning-from-ai-feedback
+Markdown: https://agentic-patterns.com/patterns/rlaif-reinforcement-learning-from-ai-feedback.md
+
+### sandboxed-tool-authorization
+Sandboxed Tool Authorization: Filters an agent's tools through deny-first allow and deny patterns, profile presets, and subagent policies that inherit parent restrictions
+URL: https://agentic-patterns.com/patterns/sandboxed-tool-authorization
+Markdown: https://agentic-patterns.com/patterns/sandboxed-tool-authorization.md
+
+### schema-validation-retry-cross-step-learning
+Schema Validation Retry with Cross-Step Learning: Retries failed structured outputs with the validation errors as feedback and adds recent errors from earlier steps to later prompts so mistakes do not repeat
+URL: https://agentic-patterns.com/patterns/schema-validation-retry-cross-step-learning
+Markdown: https://agentic-patterns.com/patterns/schema-validation-retry-cross-step-learning.md
+
+### schema-guided-graph-retrieval
+Schema-Guided Graph Retrieval for Multi-Hop Reasoning: Use one shared domain schema to align graph construction, schema evolution, query decomposition, and typed retrieval so multi-hop reasoning over private knowledge stays precise as domains change.
+URL: https://agentic-patterns.com/patterns/schema-guided-graph-retrieval
+Markdown: https://agentic-patterns.com/patterns/schema-guided-graph-retrieval.md
+
+### seamless-background-to-foreground-handoff
+Seamless Background-to-Foreground Handoff: Lets a user take over a background agent's unfinished work in the foreground, with the agent's branch, PR, and summaries carried over as context
+URL: https://agentic-patterns.com/patterns/seamless-background-to-foreground-handoff
+Markdown: https://agentic-patterns.com/patterns/seamless-background-to-foreground-handoff.md
+
+### self-critique-evaluator-loop
+Self-Critique Evaluator Loop: Trains a judge model on its own synthetic comparisons of candidate outputs and uses it as a reward model or quality gate for the main agent
+URL: https://agentic-patterns.com/patterns/self-critique-evaluator-loop
+Markdown: https://agentic-patterns.com/patterns/self-critique-evaluator-loop.md
+
+### self-discover-reasoning-structures
+Self-Discover: LLM Self-Composed Reasoning Structures: Has the LLM select, adapt, and compose reasoning modules into a task-specific reasoning structure, then solve the task by following that structure
+URL: https://agentic-patterns.com/patterns/self-discover-reasoning-structures
+Markdown: https://agentic-patterns.com/patterns/self-discover-reasoning-structures.md
+
+### self-identity-accumulation
+Self-Identity Accumulation: Injects a persistent identity document at session start and updates it with new user insights at session end through lifecycle hooks
+URL: https://agentic-patterns.com/patterns/self-identity-accumulation
+Markdown: https://agentic-patterns.com/patterns/self-identity-accumulation.md
+
+### self-rewriting-meta-prompt-loop
+Self-Rewriting Meta-Prompt Loop: Has the agent reflect after each episode, draft edits to its own system prompt, validate them through guardrails, and save the new version
+URL: https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop
+Markdown: https://agentic-patterns.com/patterns/self-rewriting-meta-prompt-loop.md
+
+### semantic-context-filtering
+Semantic Context Filtering Pattern: Extracts only the semantic or interactive parts of raw data, such as accessibility trees or relevant fields, before sending it to the LLM
+URL: https://agentic-patterns.com/patterns/semantic-context-filtering
+Markdown: https://agentic-patterns.com/patterns/semantic-context-filtering.md
+
+### session-scoped-context-runtime-for-agent-tools
+Session-Scoped Context Runtime for Agent Tools: Interpose a context runtime that caches structured reads and normalizes tool output so sessions reuse compact representations instead of repeating raw tokens.
+URL: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools
+Markdown: https://agentic-patterns.com/patterns/session-scoped-context-runtime-for-agent-tools.md
+
+### shell-command-contextualization
+Shell Command Contextualization: Lets the user run a shell command with a prefix such as ! and injects the command and its full output into the agent's context
+URL: https://agentic-patterns.com/patterns/shell-command-contextualization
+Markdown: https://agentic-patterns.com/patterns/shell-command-contextualization.md
+
+### signal-driven-agent-activation
+Signal-Driven Agent Activation: Watches external sources for structured signals and starts predefined agent workflows when declarative rules with thresholds and cooldowns match
+URL: https://agentic-patterns.com/patterns/signal-driven-agent-activation
+Markdown: https://agentic-patterns.com/patterns/signal-driven-agent-activation.md
+
+### skill-activation-as-precision-recall
+Skill Activation as a Precision/Recall Measurement: Measures skill routing as classification with a labelled prompt dataset, per-skill precision and recall, and CI thresholds that fail the build
+URL: https://agentic-patterns.com/patterns/skill-activation-as-precision-recall
+Markdown: https://agentic-patterns.com/patterns/skill-activation-as-precision-recall.md
+
+### skill-library-evolution
+Skill Library Evolution: Saves working agent code as reusable skills in a skills directory, documents and tests them over time, and loads skill details only on demand
+URL: https://agentic-patterns.com/patterns/skill-library-evolution
+Markdown: https://agentic-patterns.com/patterns/skill-library-evolution.md
+
+### soulbound-identity-verification
+Soulbound Identity Verification: Binds agent identity to a non-transferable credential with a committed state hash and logs signed state changes so verifiers can check continuity
+URL: https://agentic-patterns.com/patterns/soulbound-identity-verification
+Markdown: https://agentic-patterns.com/patterns/soulbound-identity-verification.md
+
+### specification-driven-agent-development
+Specification-Driven Agent Development: Makes a version-controlled spec the agent's main input, scaffolds code from it, and regenerates executable tests from it on every commit to catch drift
+URL: https://agentic-patterns.com/patterns/specification-driven-agent-development
+Markdown: https://agentic-patterns.com/patterns/specification-driven-agent-development.md
+
+### spectrum-of-control-blended-initiative
+Spectrum of Control / Blended Initiative: Gives users several autonomy modes, from inline completion to background agents, and lets them switch modes per task
+URL: https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative
+Markdown: https://agentic-patterns.com/patterns/spectrum-of-control-blended-initiative.md
+
+### static-service-manifest-for-agents
+Static Service Manifest for Agents: Serves a static llms.txt or agent.json file at a well-known URL that lists services, auth, and limits so agents can plan before they call
+URL: https://agentic-patterns.com/patterns/static-service-manifest-for-agents
+Markdown: https://agentic-patterns.com/patterns/static-service-manifest-for-agents.md
+
+### stop-hook-auto-continue-pattern
+Stop Hook Auto-Continue Pattern: Runs a stop hook after each agent turn that checks success criteria and makes the agent continue until tests or checks pass
+URL: https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern
+Markdown: https://agentic-patterns.com/patterns/stop-hook-auto-continue-pattern.md
+
+### structured-output-specification
+Structured Output Specification: Constrain agent outputs using deterministic schemas that enforce structured, machine-readable results, enabling reliable validation, parsing, and integration with downstream systems.
+URL: https://agentic-patterns.com/patterns/structured-output-specification
+Markdown: https://agentic-patterns.com/patterns/structured-output-specification.md
+
+### sub-agent-spawning
+Sub-Agent Spawning: Lets the main agent spawn sub-agents with fresh context and scoped tools to work on subtasks in parallel, then merges their results
+URL: https://agentic-patterns.com/patterns/sub-agent-spawning
+Markdown: https://agentic-patterns.com/patterns/sub-agent-spawning.md
+
+### subagent-compilation-checker
+Subagent Compilation Checker: Spawns one subagent per module to build and check it, and returns only a short structured error list or artifact reference to the main agent
+URL: https://agentic-patterns.com/patterns/subagent-compilation-checker
+Markdown: https://agentic-patterns.com/patterns/subagent-compilation-checker.md
+
+### subject-hygiene
+Subject Hygiene for Task Delegation: Requires a specific action-plus-target subject on every subagent task so each delegated job stays traceable and easy to reference
+URL: https://agentic-patterns.com/patterns/subject-hygiene
+Markdown: https://agentic-patterns.com/patterns/subject-hygiene.md
+
+### surface-scoped-system-prompt
+Surface-Scoped System Prompt: Ships one system prompt per invocation surface and selects it at launch, so an interactive session, a headless run and a task mode each get instructions written for that surface
+URL: https://agentic-patterns.com/patterns/surface-scoped-system-prompt
+Markdown: https://agentic-patterns.com/patterns/surface-scoped-system-prompt.md
+
+### swarm-migration-pattern
+Swarm Migration Pattern: Main agent orchestrates 10+ parallel subagents working simultaneously on independent migration chunks for large-scale framework upgrades, lint rule rollouts, and API migrations.
+URL: https://agentic-patterns.com/patterns/swarm-migration-pattern
+Markdown: https://agentic-patterns.com/patterns/swarm-migration-pattern.md
+
+### team-shared-agent-configuration
+Team-Shared Agent Configuration as Code: Check agent configuration into version control as code, enabling consistent behavior across teams, faster onboarding, and collaborative improvement through PRs and code review.
+URL: https://agentic-patterns.com/patterns/team-shared-agent-configuration
+Markdown: https://agentic-patterns.com/patterns/team-shared-agent-configuration.md
+
+### three-stage-perception-architecture
+Three-Stage Perception Architecture: Splits the agent into separate perception, processing, and action stages so each stage can be built, tested, and scaled on its own
+URL: https://agentic-patterns.com/patterns/three-stage-perception-architecture
+Markdown: https://agentic-patterns.com/patterns/three-stage-perception-architecture.md
+
+### tier-auto-apply-by-mechanical-impact
+Tier Auto-Apply by Mechanical Impact: Decides which self-proposed changes auto-apply by matching the real diff's file paths and change kinds against a trusted tier table, not by finding text
+URL: https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact
+Markdown: https://agentic-patterns.com/patterns/tier-auto-apply-by-mechanical-impact.md
+
+### tool-capability-compartmentalization
+Tool Capability Compartmentalization: Splits tools into reader, processor, and writer classes with scoped permissions and blocks tool chains that combine private data, untrusted input, and external writes
+URL: https://agentic-patterns.com/patterns/tool-capability-compartmentalization
+Markdown: https://agentic-patterns.com/patterns/tool-capability-compartmentalization.md
+
+### tool-use-incentivization-via-reward-shaping
+Tool Use Incentivization via Reward Shaping: Gives dense RL rewards for useful intermediate tool calls such as compile, lint, and test so the agent learns to use tools instead of only thinking
+URL: https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping
+Markdown: https://agentic-patterns.com/patterns/tool-use-incentivization-via-reward-shaping.md
+
+### tool-use-steering-via-prompting
+Tool Use Steering via Prompting: Tells the agent in the prompt which tool to use for each task type, which patch format to emit, how to learn a custom tool, and which shorthands map to tool sequences
+URL: https://agentic-patterns.com/patterns/tool-use-steering-via-prompting
+Markdown: https://agentic-patterns.com/patterns/tool-use-steering-via-prompting.md
+
+### tracker-as-desired-state-reconciliation
+Tracker-as-Desired-State Reconciliation: Derive agent dispatch by re-reading workflow states in the team's issue tracker every tick, keeping only a short-lived claim locally, so missed events, restarts, and human edits all self-heal.
+URL: https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation
+Markdown: https://agentic-patterns.com/patterns/tracker-as-desired-state-reconciliation.md
+
+### trajectory-and-state-invariant-evaluation
+Trajectory & State-Invariant Evaluation: Grades a tool-using agent on the end state of its sandbox against the expected postconditions and not on its final prose, adds assertions on the recorded tool calls for policy preconditions and forbidden side effects, and repeats each scenario to measure the probability that all trials pass
+URL: https://agentic-patterns.com/patterns/trajectory-and-state-invariant-evaluation
+Markdown: https://agentic-patterns.com/patterns/trajectory-and-state-invariant-evaluation.md
+
+### transitive-vouch-chain-trust
+Transitive Vouch-Chain Trust: Builds a graph of signed vouches between agents and derives trust in an unknown agent from the chain back to a trusted one, with decay at each hop
+URL: https://agentic-patterns.com/patterns/transitive-vouch-chain-trust
+Markdown: https://agentic-patterns.com/patterns/transitive-vouch-chain-trust.md
+
+### tree-of-thought-reasoning
+Tree-of-Thought Reasoning: Expands a tree of candidate reasoning steps, scores partial states, prunes weak branches, and picks the best path instead of one linear chain
+URL: https://agentic-patterns.com/patterns/tree-of-thought-reasoning
+Markdown: https://agentic-patterns.com/patterns/tree-of-thought-reasoning.md
+
+### unified-tool-gateway
+Unified Tool Gateway: Route all agent tool calls through a single gateway that handles discovery, authentication, billing, and execution across many heterogeneous providers.
+URL: https://agentic-patterns.com/patterns/unified-tool-gateway
+Markdown: https://agentic-patterns.com/patterns/unified-tool-gateway.md
+
+### variance-based-rl-sample-selection
+Variance-Based RL Sample Selection: Runs the base model several times per sample and trains RL only on samples with score variance, skipping ones that are always right or always wrong
+URL: https://agentic-patterns.com/patterns/variance-based-rl-sample-selection
+Markdown: https://agentic-patterns.com/patterns/variance-based-rl-sample-selection.md
+
+### verbose-reasoning-transparency
+Verbose Reasoning Transparency: Lets users open a verbose view on demand that shows the agent's interpretation, tool choices, intermediate steps, and raw tool outputs
+URL: https://agentic-patterns.com/patterns/verbose-reasoning-transparency
+Markdown: https://agentic-patterns.com/patterns/verbose-reasoning-transparency.md
+
+### versioned-constitution-governance
+Versioned Constitution Governance: Stores the agent constitution in a signed Git repository where the agent can only propose changes and reviewers or CI gates merge them
+URL: https://agentic-patterns.com/patterns/versioned-constitution-governance
+Markdown: https://agentic-patterns.com/patterns/versioned-constitution-governance.md
+
+### virtual-machine-operator-agent
+Virtual Machine Operator Agent: Gives the agent a dedicated virtual machine where it can run code, install packages, use the file system, and operate CLI tools
+URL: https://agentic-patterns.com/patterns/virtual-machine-operator-agent
+Markdown: https://agentic-patterns.com/patterns/virtual-machine-operator-agent.md
+
+### visual-ai-multimodal-integration
+Visual AI Multimodal Integration: Adds multimodal models to the agent so it can analyze images, video, and screenshots and combine them with text to reason and act
+URL: https://agentic-patterns.com/patterns/visual-ai-multimodal-integration
+Markdown: https://agentic-patterns.com/patterns/visual-ai-multimodal-integration.md
+
+### voice-agent-turn-taking-barge-in
+Voice Agent Turn-Taking & Barge-In Handling: Couples four control loops in a voice agent so that neither side talks over the other: semantic end-of-turn detection, adaptive barge-in that flushes the audio pipeline, truncation of the assistant message to the words the user heard, and a filler while a slow tool runs
+URL: https://agentic-patterns.com/patterns/voice-agent-turn-taking-barge-in
+Markdown: https://agentic-patterns.com/patterns/voice-agent-turn-taking-barge-in.md
+
+### workflow-evals-with-mocked-tools
+Workflow Evals with Mocked Tools: Runs complete agent workflows against mocked tools in CI and checks which tools were called plus agent-as-judge quality criteria
+URL: https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools
+Markdown: https://agentic-patterns.com/patterns/workflow-evals-with-mocked-tools.md
+
+### working-memory-via-todos
+Working Memory via Task Tracking: Keeps an explicit task list with status, blockers, and next steps during the session so agent and user can track progress
+URL: https://agentic-patterns.com/patterns/working-memory-via-todos
+Markdown: https://agentic-patterns.com/patterns/working-memory-via-todos.md
+
+### workspace-native-multi-agent-orchestration
+Workspace-Native Multi-Agent Orchestration: Runs agents inside the team's workspace platform so they share its memory, knowledge sources, event triggers, and integrations with humans
+URL: https://agentic-patterns.com/patterns/workspace-native-multi-agent-orchestration
+Markdown: https://agentic-patterns.com/patterns/workspace-native-multi-agent-orchestration.md
+
+### zero-knowledge-verified-agent-egress
+Zero-Knowledge Verified Agent Egress: Intercepts each outbound HTTP or MCP call, proves its claims against a private source of truth with a zero-knowledge proof, and blocks calls that fail
+URL: https://agentic-patterns.com/patterns/zero-knowledge-verified-agent-egress
+Markdown: https://agentic-patterns.com/patterns/zero-knowledge-verified-agent-egress.md
+
+### zero-trust-agent-mesh
+Zero-Trust Agent Mesh: Gives each agent a cryptographic identity and verifies identity, signed delegation tokens, and chain depth on every inter-agent request
+URL: https://agentic-patterns.com/patterns/zero-trust-agent-mesh
+Markdown: https://agentic-patterns.com/patterns/zero-trust-agent-mesh.md

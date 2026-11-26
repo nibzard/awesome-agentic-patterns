@@ -12,8 +12,9 @@ Patterns are stored as Markdown files in the `patterns/` directory at the reposi
 patterns/
   pattern-slug.md
   another-pattern.md
-  TEMPLATE.md
 ```
+
+The canonical pattern template lives at `TEMPLATE.md` in the repository root, not inside `patterns/`.
 
 ---
 
@@ -35,7 +36,7 @@ Every pattern MUST include these fields:
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
 | `title` | string | Human-readable pattern name | `Reflection Loop` |
-| `status` | enum | Maturity status (see values below) | `established` |
+| `status` | enum | Status tier (see values below) | `production` |
 | `authors` | array of strings | Contributors with GitHub handles | `["Nikola Balic (@nibzard)"]` |
 | `category` | enum | Primary category (see values below) | `Feedback Loops` |
 | `source` | string (URL) | Primary reference/origin | `https://arxiv.org/abs/2303.11366` |
@@ -43,18 +44,27 @@ Every pattern MUST include these fields:
 | `summary` | string | One sentence that says what the pattern does (the solution) | `Critiques and revises its own draft before it returns the answer` |
 | `signals` | array of strings | When this pattern helps (2-4 items, shown as "Use when") | `["Quality-critical output", "Iterative refinement possible"]` |
 | `anti_signals` | array of strings | When to avoid it (2-3 items, shown as "Avoid when") | `["Single-pass generation", "Tight latency budget"]` |
+| `updated_at` | string (date) | Last content change (YYYY-MM-DD); required so generated data stays deterministic | `2025-01-13` |
 
 #### Status Values
 
+`status` is one of four tiers. Each tier has an objective entry criterion, so a reviewer can audit the claim against public evidence.
+
 ```yaml
-status: "proposed"                # New pattern, not yet implemented
-status: "emerging"                # Early adoption, experimental
-status: "established"             # Known and used in practice
-status: "validated-in-production" # Proven in real systems
-status: "best-practice"           # Widely accepted as optimal
-status: "experimental-but-awesome" # Cutting edge, high risk/reward
-status: "rapidly-improving"       # Evolving quickly
+status: "proposed"      # 0-1 public implementations
+status: "emerging"      # 2+ independent implementations, or 1 detailed production write-up
+status: "production"    # Proven across multiple independent production systems
+status: "foundational"  # Industry-default baseline whenever its signals apply
 ```
+
+| Status | Objective entry criterion | Catalog role |
+|--------|---------------------------|--------------|
+| `proposed` | 0-1 public implementations: the contributor's own repo, a single paper, or a launch-stage startup. | Incubator or single-source proposal. |
+| `emerging` | 2+ independent implementations or teams, or 1 detailed production write-up or major lab paper with active industry iteration. | Standard catalog entry. |
+| `production` | Proven across multiple independent production systems, with documented failure modes and operational trade-offs. | Eligible for Pattern Packs and primary Decision Explorer recommendations. |
+| `foundational` | Industry-default architectural baseline whenever its `signals` apply. Every pattern has `anti_signals`, so this tier replaces the old `best-practice`. | Core starting building block (about 12-18 patterns in total). |
+
+The earlier seven-value scale (`established`, `validated-in-production`, `best-practice`, `experimental-but-awesome`, `rapidly-improving`) is retired. Re-justify a migrated pattern against these criteria; do not map its old value by name. A submission backed only by a contributor-owned repo or a single launch-stage product enters as `proposed` (see "Status Tiers & Independent-Adoption Bar" in `CONTRIBUTING.md`).
 
 #### Category Values
 
@@ -86,7 +96,9 @@ These fields MAY be included to enhance pattern metadata:
 |-------|------|-------------|---------|
 | `based_on` | array of strings | Originators/inspiration | `["Shinn et al. (2023)"]` |
 | `slug` | string | URL identifier (auto-generated if omitted) | `reflection-loop` |
-| `maturity` | enum | Development phase | `maturing` |
+| `evidence_grade` | enum | Strength of the evidence behind the pattern (see values below) | `high` |
+| `evidence_snapshot` | string | 1-2 high-signal findings and the key uncertainty behind the grade | `"Two independent production write-ups agree on the latency cost; neither documents failure modes"` |
+| `maturity` | enum | **Deprecated.** Superseded by the four-tier `status`; retained only for backward compatibility | `maturing` |
 | `complexity` | enum | Implementation difficulty | `medium` |
 | `effort` | enum | Time to implement | `days` |
 | `impact` | enum | Potential benefit | `high` |
@@ -95,9 +107,22 @@ These fields MAY be included to enhance pattern metadata:
 | `anti_patterns` | array of strings | Opposing patterns | `["one-shot-generation"]` |
 | `tools` | array of strings | Required tool types | `["evaluator", "loop-controller"]` |
 | `domains` | array of strings | Use cases | `["coding", "writing", "research"]` |
-| `updated_at` | string (date) | Last update (YYYY-MM-DD) | `2025-01-13` |
 
-#### Maturity Values
+#### Evidence Grade Values
+
+```yaml
+evidence_grade: "high"    # Strong, independent, verifiable evidence
+evidence_grade: "medium"  # Credible evidence with gaps in independence or depth
+evidence_grade: "low"     # Single-source or anecdotal evidence
+evidence_grade: "mixed"   # Strong for some claims, weak for others
+evidence_grade: "unknown" # Not yet assessed
+```
+
+`evidence_grade` backs the `status` claim. The validator flags a `production` or `foundational` pattern whose `evidence_grade` is `low`, or whose primary source is contributor-owned with no independent references.
+
+#### Maturity Values (deprecated)
+
+`maturity` is superseded by the four-tier `status`. Do not add it to new patterns; the validator accepts it in existing files for backward compatibility.
 
 ```yaml
 maturity: "early"      # Initial concept
@@ -140,7 +165,7 @@ Every pattern MUST include these sections (in order):
 1. **Problem** - What challenge does this pattern solve?
 2. **Solution** - How does the pattern address the problem?
 3. **How to use it** - Practical implementation guidance
-4. **Trade-offs** - Pros and cons
+4. **Trade-offs** - Pros and cons, plus the recommended **Failure modes** subsection (see below)
 5. **References** - Source links and further reading
 
 #### Section Format
@@ -159,6 +184,8 @@ Section content goes here. Use:
 
 These sections MAY be added after required sections:
 
+- **Evidence** - Research-backed findings and their grade; `TEMPLATE.md` places it between Solution and How to use it
+- **Failure modes** / **Gotchas** - Recommended as a `###` subsection inside `Trade-offs`, not as its own `##` section, so the required section order stays intact. List 2-4 concrete ways a naive implementation breaks: the symptom, the cause, and the guard or fix.
 - **When to use** - Specific scenarios where this pattern shines
 - **When not to use** - Situations to avoid this pattern
 - **Signals** - Indicators this pattern is a good fit
@@ -166,6 +193,10 @@ These sections MAY be added after required sections:
 - **Variations** - Adaptations and alternatives
 - **Pitfalls** - Common mistakes to avoid
 - **Benchmarks** - Performance data if available
+
+### Length Target
+
+Keep each pattern file between **70 and 180 lines**. This range is the target that `scripts/validate-patterns.ts` names. Its guardrails are warnings only: under 55 lines (stub) and over 220 lines (bloat). To stay in range, use one short illustrative snippet (about 15-25 lines) for each mechanism in place of long synthetic classes, and do not restate the same list across sections.
 
 ### Code Blocks
 
@@ -200,14 +231,15 @@ graph TD
 ```yaml
 ---
 title: Reflection Loop
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Shinn et al. (2023)"]
 category: Feedback Loops
 source: "https://arxiv.org/abs/2303.11366"
 tags: [self-feedback, iterative-improvement, evaluation]
 summary: Improves model outputs via iterative self-feedback and evaluation
-maturity: mature
+evidence_grade: high
+evidence_snapshot: "Independent teams report the same quality gains and the same latency cost; results depend on a well-defined metric"
 complexity: medium
 effort: days
 impact: high
@@ -220,6 +252,7 @@ updated_at: "2025-01-13"
 ---
 ```
 
+````markdown
 ## Problem
 Generative models may produce subpar output if they never review or critique their own work.
 
@@ -243,23 +276,30 @@ Use when you care about quality or adherence to explicit criteria—writing, rea
 * **Cons:** Extra compute; may stall if the metric is poorly defined.
 
 ## References
-* [Self-Refine: Improving Reasoning in Language Models via Iterative Feedback](https://arxiv.org/abs/2303.11366)
-```
+* [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
+* [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651) - Madaan et al., 2023
+````
 
 ---
 
 ## Validation
 
-Patterns are validated automatically by:
+Patterns are validated by `scripts/validate-patterns.ts`:
 
-1. **Zod schema** - Type-safe front matter validation (TypeScript)
-2. **Section checker** - Ensures required headings exist
-3. **Section order validator** - Enforces correct heading sequence
+1. **Front-matter validator** - Checks required fields, enum values, the `source` URL, and the `updated_at` date (`bun run validate:patterns`)
+2. **Content checker** - The same run with `--check-content` (`bun run validate:patterns:content`), which adds:
+
+   - Required sections: `## Problem`, `## Solution`, `## How to use it`, `## Trade-offs`, and `## References` must be present. A missing section is an error; out-of-order or duplicate headings are warnings.
+   - Referential integrity: every slug in `related:` must resolve to an existing pattern file, relative Markdown links must resolve, and `/patterns/<slug>` links in packs and guides must resolve.
+   - Status vs. evidence: a pattern that claims `production` or `foundational` is flagged when its `evidence_grade` is `low`, or when its primary source is contributor-owned and it has no independent references.
+   - Length guardrails: a warning for a file under 55 lines (stub) or over 220 lines (bloat). The recommended target is 70-180 lines (see "Length Target").
+
+`scripts/build-data.ts` also fails on any pattern whose `updated_at` is missing or not in `YYYY-MM-DD` form.
 
 Validation runs during:
-- Pre-commit hooks (optional)
-- CI/CD pipeline
-- Astro build process
+
+- Local checks before you open a PR (see "Local checks" in `CONTRIBUTING.md`)
+- The CI pipeline, where `bun run validate:patterns:content` must pass with 0 errors, and `bun run build:data` and `bun run build` must succeed with generated files that match `patterns/*.md`
 
 ---
 
@@ -319,7 +359,7 @@ Complete pattern content for LLM context. Located at `/llms-full.txt`.
 
 ## Reflection Loop
 
-**Status:** established
+**Status:** production
 **Category:** Feedback Loops
 **Authors:** Nikola Balic (@nibzard)
 **Source:** https://arxiv.org/abs/2303.11366
@@ -338,7 +378,8 @@ Use when you care about quality or adherence to explicit criteria...
 **Cons:** Extra compute; may stall if the metric is poorly defined.
 
 ### References
-- Self-Refine: https://arxiv.org/abs/2303.11366
+- Reflexion: https://arxiv.org/abs/2303.11366
+- Self-Refine: https://arxiv.org/abs/2303.17651
 
 ---
 
@@ -359,4 +400,4 @@ Use when you care about quality or adherence to explicit criteria...
 
 Current version: `1.0.0`
 
-Last updated: 2025-01-13
+Last updated: 2026-11-25

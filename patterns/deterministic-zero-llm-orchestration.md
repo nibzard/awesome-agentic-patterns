@@ -1,6 +1,6 @@
 ---
 title: Deterministic Zero-LLM Orchestration
-status: emerging
+status: proposed
 authors: ["Alex Chernysh (@chernistry)"]
 based_on: []
 category: Orchestration & Control

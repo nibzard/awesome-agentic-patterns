@@ -15,19 +15,24 @@ Refer to the [contribution guidelines](https://github.com/nibzard/awesome-agenti
 <!-- Clearly and Concisely Describe the Pattern (e.g., "Reactive Task Prioritization") -->
 
 ### **Status:**
-<!-- Choose one: Proposed | Established | Best Practice | Deprecated -->
+<!-- Choose one: proposed | emerging | production | foundational -->
 
 ### **Author(s):**
 <!-- List main authors/originators and their affiliation or the source if applicable. E.g., "Jane Doe (OpenAI)", "From the '''XYZ Framework''' documentation" -->
 
 ### **Category:**
-<!-- Choose one: Orchestration & Control | Context & Memory | Feedback Loops | Tool Use & Environment | UX & Collaboration | Reliability & Eval -->
+<!-- Choose one: Orchestration & Control | Context & Memory | Feedback Loops | Learning & Adaptation | Reliability & Eval | Security & Safety | Tool Use & Environment | UX & Collaboration -->
 
 ### **Primary Source URL:**
 <!-- Link to the primary blog post, talk, repository, or academic paper describing this pattern. -->
 
 ### **Tags (Comma-separated):**
 <!-- Add relevant keywords, e.g., planning, RAG, tool-use, LLM-critic -->
+
+### **Closest existing pattern(s) & how this is distinct:**
+<!-- Name the 1-3 existing patterns in patterns/ that are closest to this proposal.
+- How is this proposal different from each of them?
+- Why can this not be a new section inside one of those existing pattern files? -->
 
 ### **Policy checks (required):**
 

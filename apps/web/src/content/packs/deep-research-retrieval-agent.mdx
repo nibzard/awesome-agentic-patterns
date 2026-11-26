@@ -1,0 +1,124 @@
+---
+title: 'Deep Research Retrieval Agent'
+summary: 'Patterns for agents that search in many rounds, read large documents on demand, and verify each claim they report.'
+domain: 'Research & Retrieval'
+patterns:
+  - agent-driven-research
+  - agentic-search-over-vector-embeddings
+  - progressive-disclosure-large-files
+  - semantic-context-filtering
+  - output-verification-loop
+order: 7
+---
+
+## Overview
+
+This pack is for agents that answer hard questions with evidence: a research agent that searches across
+several rounds, or an analysis agent that works through a large document set. Such an agent has three
+recurring needs. It must search in iterations, because the first query is rarely the right one. It must read
+large sources without filling the context window. It must not report a claim that it cannot support.
+
+## When to Use This Pack
+
+- **The answer needs several rounds of search and reading**, not one retrieval
+- **The sources are large**: long PDFs, code repositories, or document collections
+- **The report needs citations**, and a wrong claim has a cost
+- **The source files change often**, so a prebuilt index is stale
+
+## Patterns Included
+
+### 1. [Agent-Driven Research](/patterns/agent-driven-research)
+
+**Status**: production.
+
+Lets the agent plan its own queries. It fans out parallel search workers across domains, angles, and time
+ranges, removes duplicates, and then reflects on the evidence gaps and starts narrower workers for them. It
+stops when the satisfaction criteria are met or the step budget is used. Each session keeps a claim-to-source
+index for the final cited report.
+
+**Role in this pack**: The iterative search loop at the center of the agent.
+
+The pattern estimates its cost at 5 to 10 times a single-round search. That is an estimate, not a benchmark.
+
+### 2. [Agentic Search Over Vector Embeddings](/patterns/agentic-search-over-vector-embeddings)
+
+**Status**: emerging.
+
+Replaces a vector index with agent-driven search over the current state of a codebase: grep, find,
+directory listing, and file reading, refined over several iterations. Because the search runs on the files
+as they are, there is no index to rebuild when the codebase changes. Optional semantic search can be added
+through a tool server.
+
+**Role in this pack**: Retrieval over a repository that stays current without an index.
+
+This pattern is about searching files, not the web. It fits a codebase that command-line tools can cover.
+It is slow on very large trees, and it matches keywords better than meaning.
+
+### 3. [Progressive Disclosure for Large Files](/patterns/progressive-disclosure-large-files)
+
+**Status**: emerging.
+
+Keeps file content out of the prompt until the content is needed. The prompt lists each file with metadata
+only (identifier, name, size), with an optional small preload. The agent then uses tools to load a whole
+file, to read a range of a file, or to extract text from formats such as PDF, DOCX, and PPT. Extractions are
+cached so that a file is converted once.
+
+**Role in this pack**: Reading of large documents on demand.
+
+### 4. [Semantic Context Filtering Pattern](/patterns/semantic-context-filtering)
+
+**Status**: emerging.
+
+Reduces raw data to the parts that carry meaning before the model sees it: the accessibility tree of a web
+page, the relevant fields of an API response, or the semantic sections of a document. Each filtered element
+keeps a reference back to its position in the original, so that the agent can still act on it. The pattern
+advises a conservative filter at first and a bypass for debugging.
+
+**Role in this pack**: Filters what each search result or page puts into the context.
+
+### 5. [Output Verification Loop](/patterns/output-verification-loop)
+
+**Status**: emerging.
+
+Verifies a draft before anyone acts on it. The loop extracts the individual claims, retrieves evidence for
+each claim, and scores each claim separately. It then proceeds, retries with feedback, or escalates to a
+person. In a multi-agent pipeline, verification runs at every hand-off. Signed, timestamped receipts record
+each verification.
+
+**Role in this pack**: Claim-level evidence checks on the final report.
+
+Verification is only as good as the evidence that is available, and it adds latency to each call. It does
+not fit a latency budget of less than about 500 milliseconds.
+
+## How They Fit Together
+
+The patterns follow the path of one research task. Adopt them in this order:
+
+1. **Start with the search loop.** Build on Agent-Driven Research, with a step budget and explicit stop
+   criteria, because the loop drives both quality and cost.
+2. **Choose the retrieval method for the source files.** Use Agentic Search Over Vector Embeddings for a
+   codebase that changes often. Keep an index only when the files are too large to scan.
+3. **Load sources on demand.** Add Progressive Disclosure for Large Files and Semantic Context Filtering so
+   that a long source costs context only for the parts that are read.
+4. **Verify before you report.** Add the Output Verification Loop on the final draft, with citations for
+   each claim.
+
+## Honest Trade-offs
+
+- **Cost and latency**: Iterative search costs several times a single-round search, and verification adds a
+  round of calls to every report.
+- **Index-free search has limits**: Grep-based retrieval is slow on very large trees and is weaker on
+  meaning-based queries.
+- **Tool round trips**: Loading files in ranges takes more steps than loading them whole.
+- **Filter risk**: An aggressive semantic filter can remove content that the task needed. Hidden page
+  sections, dynamic content, and canvas or SVG elements are known edge cases.
+- **Verification limits**: The loop can only check a claim against evidence that it can retrieve.
+- **Maturity**: One pattern is `production` and four are `emerging`.
+
+## What to Leave Out Until Later
+
+- **Multi-agent report pipelines**: One agent with verification is enough until the single-agent quality is
+  stable.
+- **Custom vector infrastructure**: Do not build an index before a scan of the real files proves too slow.
+- **Real-time expectations**: Do not promise sub-second answers while the agent searches in rounds and
+  verifies claims.

@@ -1,6 +1,6 @@
 ---
 title: Proactive Trigger Vocabulary
-status: emerging
+status: proposed
 authors:
   - Lucas Carlson
 based_on:

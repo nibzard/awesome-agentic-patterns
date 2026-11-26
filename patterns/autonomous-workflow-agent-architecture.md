@@ -1,6 +1,6 @@
 ---
 title: Autonomous Workflow Agent Architecture
-status: emerging
+status: proposed
 authors:
   - Nikola Balic (@nibzard)
 based_on:
@@ -92,7 +92,7 @@ Traditional workflow automation follows a pre-defined script; autonomous agents 
 ## Evidence
 
 - **Evidence Grade:** `low`
-- The evidence base is a single vendor case study (Together AI, August 2025). No independent replications of this exact architecture exist in the references, hence the `emerging` status.
+- The evidence base is a single vendor case study (Together AI, August 2025). No independent replications of this exact architecture exist in the references, hence the `proposed` status.
 - The 1.22x-1.37x figure in the source post is the inference tokens-per-second speedup of the 32B target model achieved by the speculative-decoding model the pipeline trained. It is not a measurement of workflow-execution or token-processing gains from this agent architecture.
 
 ## How to use it

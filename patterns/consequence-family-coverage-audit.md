@@ -1,6 +1,6 @@
 ---
 title: Consequence-Family Coverage Audit
-status: emerging
+status: proposed
 authors: ["Tulip Labs (@fede-kamel)"]
 based_on: ["Tulip Labs (Policy blindness, 2026)"]
 category: "Security & Safety"

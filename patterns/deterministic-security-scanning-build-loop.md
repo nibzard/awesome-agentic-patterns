@@ -123,7 +123,7 @@ graph TD
 * [Geoffrey Huntley's blog post on secure code generation](https://ghuntley.com/secure-codegen/) (2025-09-03) - primary source; full content is behind a subscription paywall, so the specific build-loop advice cannot be verified publicly
 * [Claude Code best practices](https://code.claude.com/docs/en/best-practices) - public corroboration of the gating mechanism: "Give Claude a check it can run: tests, a build" and "a Stop hook runs your check as a script and blocks the turn from ending until it passes"; "Unlike CLAUDE.md instructions which are advisory, hooks are deterministic"
 * [SLSA (Supply-chain Levels for Software Artifacts)](https://slsa.dev) - Framework for supply chain security
-* [Build Systems a la Carte (Mokhov, Mitchell, Peyton Jones, POPL 2020)](https://dl.acm.org/doi/10.1145/3371091) - Formal build system theory including backpressure
+* [Build Systems à la Carte (Mokhov, Mitchell, Peyton Jones, ICFP 2018)](https://dl.acm.org/doi/10.1145/3236774) - Formal build system theory including incremental recomputation and dependencies
 * [Reproducible Builds Project](https://reproducible-builds.org) - Community initiative for verifiable builds
 * Related pattern: [Background Agent with CI Feedback](background-agent-ci.md) - the outer loop; this pattern is the per-change inner loop that runs in the agent's own workspace, while CI feedback covers the slower pipeline after the branch is pushed
 * Related pattern: [Deterministic Threat Rule Scanning](deterministic-threat-rule-scanning.md) - the same deterministic-control idea applied to scanning agent tool traffic for injected threats, rather than scanning generated code

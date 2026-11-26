@@ -1,6 +1,6 @@
 ---
 title: Agent-Assisted Scaffolding
-status: validated-in-production
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Lukas Möller (Cursor)"]
 category: UX & Collaboration
@@ -9,6 +9,7 @@ tags: [code-generation, bootstrapping, scaffolding, feature-development, ide, in
 summary: "Agent generates initial files, boilerplate, and directory structure from a high-level description so developers start on core logic"
 signals: ["Starting a new feature, module, or greenfield project", "Standardized framework with repetitive boilerplate"]
 anti_signals: ["Integration with an old legacy codebase", "Complex business logic that needs deep domain expertise", "Highly regulated environment with strict compliance"]
+related: ["specification-driven-agent-development", "progressive-autonomy-with-model-evolution", "skill-library-evolution", "agent-friendly-workflow-design"]
 updated_at: "2026-10-13"
 ---
 

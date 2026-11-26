@@ -1,6 +1,7 @@
 {
   "title": "Dual-Rail Message Delivery",
-  "status": "validated-in-production",
+  "status": "emerging",
+  "evidence_grade": "medium",
   "authors": [
     "Anton Dziatkovskii (@Palo-Alto-AI-Research-Lab)"
   ],

@@ -1,6 +1,6 @@
 ---
 title: "Judge-Gated Finding Exchange Between Parallel Sub-Agents"
-status: emerging
+status: proposed
 authors: ["qybaihe (@qybaihe)"]
 based_on: ["mu hive (@qybaihe)", "Erman et al., Hearsay-II blackboard architecture (1980)"]
 category: "Orchestration & Control"

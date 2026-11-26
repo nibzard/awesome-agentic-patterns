@@ -1,6 +1,6 @@
 ---
 title: Sub-Agent Spawning
-status: validated-in-production
+status: foundational
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Quinn Slack", "Thorsten Ball", "Will Larson (lethain.com)"]
 category: Orchestration & Control
@@ -9,6 +9,7 @@ tags: [orchestration, context, scalability, subagents, yaml-configuration, virtu
 summary: "Lets the main agent spawn sub-agents with fresh context and scoped tools to work on subtasks in parallel, then merges their results"
 signals: ["Large multi-file task overflows the main agent's context", "Subtasks are independent and can run in parallel", "Some work needs isolated tools or files for safety"]
 anti_signals: ["Small task that fits in one context window", "Subtasks depend on each other and need tight coordination", "Token budget cannot cover several agents at once"]
+related: ["curated-code-context-window", "agent-driven-research", "swarm-migration-pattern", "discrete-phase-separation", "sandboxed-tool-authorization"]
 updated_at: "2026-10-13"
 ---
 
@@ -20,49 +21,45 @@ Large multi-file tasks blow out the main agent's context window and reasoning bu
 
 Let the main agent **spawn focused sub-agents**, each with its own fresh context, to work in parallel on shardable subtasks. Aggregate their results when done.
 
-**Critical requirement**: Each subagent invocation must have a clear, specific task subject for traceability. Empty or generic subjects make parallel work untraceable and synthesis difficult. See [Subject Hygiene](subject-hygiene.md) for details.
+**Critical requirement**: each subagent invocation must have a clear, specific task subject for traceability. Empty or generic subjects make parallel work untraceable and synthesis difficult. See [Subject Hygiene](subject-hygiene.md) for details.
 
-**Implementation approaches:**
-
-### 1. Declarative YAML Configuration
+### 1. Declarative YAML configuration
 
 Define subagent types in configuration files with their own system prompts, allowed tools, and context windows:
 
 ```yaml
-# subagents/planning.yaml
+# agents.yaml: which subagents each agent may spawn
+subagents:
+  planning:
+    file: subagents/planning.yaml
+    allowed_in: [main_agent, research_agent]
+  think:
+    file: subagents/think.yaml
+    allowed_in: [main_agent]
+
+# subagents/planning.yaml: the subagent's own prompt and tools
 name: planning
 system_prompt: "Break down complex tasks into steps..."
-tools:
-  - list_files
-  - read_file
-  # or inherit: all (from parent agent)
+tools: [list_files, read_file]   # or inherit: all (from the parent agent)
 
 # subagents/think.yaml
 name: think
 system_prompt: "Analyze and refine reasoning..."
-tools:
-  - read_file
-  - search
+tools: [read_file, search]
 ```
 
-Agents invoke subagents via a dedicated tool:
+The main agent invokes a subagent through a dedicated tool, `subagent(agent_name, prompt, files)`, which gives:
+
+- **Virtual file isolation**: the subagent sees only the files explicitly passed to it
+- **Tool scoping**: subagents can inherit all parent tools or use a subset
+- **Specialized system prompts**: each subagent type has predefined behavior
+
+### 2. Dynamic spawning for parallel work
+
+Spawn subagents on demand for parallel task execution:
 
 ```pseudo
-subagent(agent_name, prompt, files)
-```
-
-This allows:
-
-- **Virtual file isolation**: Subagent only sees files explicitly passed to it
-- **Tool scoping**: Subagents can inherit all parent tools or use a subset
-- **Specialized system prompts**: Each subagent type has predefined behavior
-
-### 2. Dynamic Spawning
-
-Spawn subagents on-demand for parallel task execution:
-
-```pseudo
-# Main agent creates todo list
+# Main agent creates a todo list
 files = glob("**/*.md")
 batches = chunk(files, 9)
 
@@ -78,16 +75,14 @@ for batch in batches:
 
 **Parallel delegation best practices:**
 
-- **Launch independent tasks simultaneously**: Don't explore A, then B, then C sequentially
-- **Use clear task subjects**: Each subagent needs a traceable identity (see [Subject Hygiene](subject-hygiene.md))
-- **Plan synthesis upfront**: Define how main agent will combine subagent findings
-- **Limit to 2-4 subagents**: Observed maximum in effective sessions; more adds coordination overhead
+- **Launch independent tasks simultaneously**: do not explore A, then B, then C sequentially
+- **Use clear task subjects**: each subagent needs a traceable identity (see [Subject Hygiene](subject-hygiene.md))
+- **Plan synthesis upfront**: define how the main agent will combine the subagent findings
+- **Limit to 2-4 subagents**: the observed maximum in effective sessions; more adds coordination overhead
 
-Recent developments show that improved agent [state externalization capabilities](proactive-agent-state-externalization.md) may make subagent delegation more practical by helping agents better identify which tasks are suitable for delegation and how to communicate necessary context to subagents.
+Recent developments show that improved agent [state externalization capabilities](proactive-agent-state-externalization.md) may make subagent delegation more practical, because they help agents better identify which tasks suit delegation and how to communicate the necessary context to subagents.
 
-## Example (YAML front-matter refactor)
-
-**Parallel delegation with clear subjects:**
+### Example: YAML front-matter refactor
 
 ```mermaid
 sequenceDiagram
@@ -111,54 +106,23 @@ sequenceDiagram
   MainAgent->>Git: merge branches ➜ single PR
 ```
 
-**Real-world example from nibzard-web:**
+**Real-world example from nibzard-web:** four parallel subagents launched simultaneously:
 
-Four parallel subagents launched simultaneously:
 - `"Newsletter component exploration"` → agent-a7911db
 - `"Modal pattern discovery"` → agent-adeac17
 - `"Search implementation research"` → agent-a03b9c9
 - `"Log page analysis"` → agent-b84c3d1
 
-Main agent synthesized findings and implemented unified approach.
+The main agent synthesized the findings and implemented a unified approach.
 
 ## How to use it
 
 **Use cases for subagents:**
 
-1. **Context window management**: Process large files in subagents without polluting main context
-   - Upload files to subagent
-   - Extract specific data
-   - Return summary to main agent
-
-2. **Concurrent work**: Run multiple subagents in parallel, join on completion
-   - Reduces clock-time for I/O-bound workflows
-   - Network API calls can happen simultaneously
-
-3. **Code-driven LLM invocation**: Hand off control to LLM for specific determination
-   - Code workflow calls subagent
-   - Subagent makes LLM-powered decision
-   - Control returns to code with result
-
-4. **Security isolation**: Separate tools/contexts in mutually isolated subagents
-   - External resource retrieval isolated from internal access
-   - Reduced blast radius for sensitive operations
-
-**Declarative subagent setup:**
-
-```yaml
-# agents.yaml
-subagents:
-  planning:
-    file: subagents/planning.yaml
-    allowed_in:
-      - main_agent
-      - research_agent
-
-  think:
-    file: subagents/think.yaml
-    allowed_in:
-      - main_agent
-```
+1. **Context window management**: upload large files to a subagent, extract the specific data, and return a summary to the main agent
+2. **Concurrent work**: run several subagents in parallel and join on completion, which reduces clock-time for I/O-bound workflows because network API calls can happen simultaneously
+3. **Code-driven LLM invocation**: a code workflow calls the subagent, the subagent makes an LLM-powered decision, and control returns to the code with the result
+4. **Security isolation**: separate tools and contexts in mutually isolated subagents, so external resource retrieval stays apart from internal access and the blast radius of sensitive operations shrinks
 
 **Virtual file passing:**
 
@@ -169,47 +133,46 @@ result = subagent(
     prompt="Analyze these files and create migration plan",
     files=["file1.ts", "file2.ts", "file3.ts"]
 )
-# Only these 3 files visible to planning subagent
+# Only these 3 files are visible to the planning subagent
 ```
 
-**Recursive architecture insight:**
+**Recursive architecture:** some implementations treat every agent as a subagent, which enables flexible composition and consistent behavior across the system.
 
-Some implementations treat every agent as a subagent, enabling flexible composition and consistent behavior across the system.
+**Swarm migrations:** for massive parallelization (10+ subagents) and large-scale code migrations, see the [Swarm Migration Pattern](swarm-migration-pattern.md).
 
-## Advanced usage: Swarm migrations
+**Failure modes / gotchas:**
 
-For massive parallelization (10+ subagents) and large-scale code migrations, see the [Swarm Migration Pattern](swarm-migration-pattern.md).
+- **Generic subjects:** an empty or generic task subject makes parallel work untraceable and synthesis difficult. Give each subagent task a clear, specific subject.
+- **Sequential launches:** exploring A, then B, then C removes the latency benefit. Launch independent tasks simultaneously.
+- **Unplanned synthesis:** without a defined way to combine findings, the main agent must merge conflicting results ad hoc. Plan the synthesis before you spawn.
+- **Too many subagents:** more than 2-4 subagents adds coordination overhead.
+- **Subagents by default:** the source author reports, "frequently thought we needed subagents, then found more natural alternative". Look for the simpler design first.
 
 ## Trade-offs
 
 **Pros:**
 
-- **Context isolation**: Each subagent has clean context window
-- **Parallelization**: Reduce workflow latency through concurrent execution
-- **Specialization**: Different subagent types for different tasks (planning, thinking, analysis)
-- **Virtual files**: Precise control over what each subagent can see
-- **Tool scoping**: Limit subagent capabilities for security/simplicity
-- **Declarative config**: Reusable subagent definitions via YAML
+- **Context isolation**: each subagent has a clean context window
+- **Parallelization**: concurrent execution reduces workflow latency
+- **Specialization**: different subagent types for different tasks (planning, thinking, analysis)
+- **Virtual files**: precise control over what each subagent can see
+- **Tool scoping**: limit subagent capabilities for security and simplicity
+- **Declarative config**: reusable subagent definitions through YAML
 
 **Cons:**
 
-- **Overhead**: Spawning and coordinating subagents adds complexity
-- **Cost**: Running multiple agents simultaneously increases token usage
-- **Coordination**: Main agent must track and aggregate subagent results
-- **Not always necessary**: Author notes "frequently thought we needed subagents, then found more natural alternative"
-- **Latency visibility**: User-facing latency is "invisible feature" until it becomes problematic
+- **Overhead**: spawning and coordinating subagents adds complexity
+- **Cost**: running multiple agents simultaneously increases token usage
+- **Coordination**: the main agent must track and aggregate subagent results
+- **Not always necessary**: see the "found more natural alternative" note above
+- **Latency visibility**: user-facing latency is an "invisible feature" until it becomes problematic
 
-**When subagents matter most:**
-
-- Context window management (large file processing)
-- I/O-bound workflows (network API calls)
-- Code-driven workflows needing LLM delegation
-- Massive parallelization needs (10+ concurrent agents)
+**When subagents matter most:** context window management (large file processing), I/O-bound workflows (network API calls), code-driven workflows that need LLM delegation, and massive parallelization (10+ concurrent agents).
 
 ## References
 
 * Claude Code documentation, [Create custom subagents](https://code.claude.com/docs/en/subagents) - the official subagent configuration reference
-* Vezhnevets, A., et al. (2017). [Feudal Networks for Hierarchical Reinforcement Learning](https://arxiv.org/abs/1706.06121). ICML. - Manager-worker separation with goal-setting in latent space
+* Vezhnevets, A., et al. (2017). [FeUdal Networks for Hierarchical Reinforcement Learning](https://arxiv.org/abs/1703.01161). ICML. - Manager-worker separation with goal-setting in latent space
 * Raising An Agent - Episode 6: Claude 4 Sonnet edits 36 blog posts via four sub-agents.
 * Boris Cherny (Anthropic) on swarm migrations for framework changes and lint rules
 * [AI & I Podcast: How to Use Claude Code Like the People Who Built It](https://every.to/podcast/transcript-how-to-use-claude-code-like-the-people-who-built-it)

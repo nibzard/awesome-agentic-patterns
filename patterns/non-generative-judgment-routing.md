@@ -1,6 +1,6 @@
 ---
 title: Non-Generative Judgment Routing with Typed Escalation
-status: emerging
+status: proposed
 authors: ["shitianfang (@shitianfang)"]
 based_on: ["jev-use (@shitianfang)"]
 category: "Orchestration & Control"

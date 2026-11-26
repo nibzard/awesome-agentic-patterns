@@ -1,6 +1,6 @@
 ---
 title: Design-Time File Partition as Concurrency Control
-status: emerging
+status: proposed
 authors: ["Jed Arden (@jedarden)"]
 based_on: ["Jed Arden (@jedarden), NEEDLE ADR-015"]
 category: "Orchestration & Control"

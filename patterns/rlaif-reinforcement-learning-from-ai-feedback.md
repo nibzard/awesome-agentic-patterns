@@ -1,6 +1,6 @@
 ---
 title: "RLAIF (Reinforcement Learning from AI Feedback)"
-status: established
+status: production
 authors: ["Nikola Balic (@nibzard)"]
 based_on: ["Anthropic", "Google DeepMind"]
 category: "Reliability & Eval"
@@ -9,6 +9,7 @@ tags: [rlhf, rlaif, constitutional-ai, synthetic-data, feedback, alignment, eval
 summary: "Uses an AI model guided by written principles to critique outputs and label preferences, which train a reward model that optimizes the policy"
 signals: ["Human preference annotation is too expensive or slow to scale", "Domain experts for labeling are scarce", "Evaluation criteria can be written as explicit principles"]
 anti_signals: ["No capable, well-aligned supervisory model for the target domain", "Critical outputs need human validation that AI labels cannot replace"]
+related: ["self-critique-evaluator-loop", "anti-reward-hacking-grader-design", "inference-healed-code-review-reward", "variance-based-rl-sample-selection"]
 updated_at: "2026-10-13"
 ---
 
@@ -76,28 +77,30 @@ class RLAIFAgent:
         return self.base_model.generate(improvement_prompt)
 ```
 
-## Trade-offs
-
-**Pros:**
-- **Cost Efficiency**: Shifts labeling spend from human annotation to inference; the RLAIF paper reports alignment performance comparable to RLHF using AI-generated preferences
-- **Scalability**: Can generate unlimited feedback data without human bottlenecks
-- **Consistency**: AI feedback is more consistent than varying human annotators
-- **Speed**: Near-instantaneous feedback generation
-
-**Cons:**
-- **Bias Amplification**: May reinforce existing model biases
-- **Alignment Dependency**: Inherits alignment properties of the supervisory model
-- **Chicken-and-Egg Problem**: Requires a capable supervisory model to train frontier models
-- **Principle Design**: Requires careful crafting of constitutional principles
-
-**Where AI feedback still fits (2026):** reinforcement learning from verifiable rewards (RLVR) now dominates domains with checkable answers, such as math and code. Learned AI-feedback rewards persist mainly in open-ended domains — writing quality, tone, safety — where no programmatic verifier exists.
-
 ## How to use it
 
 - Use this when you need scalable feedback for alignment training beyond human annotation capacity
 - Start with a well-aligned supervisory model capable of evaluating your target domain
 - Implement hybrid RLAIF/RLHF for critical applications where human validation is important
 - Use constitutional principles for explicit control over evaluation criteria
+
+## Trade-offs
+
+**Pros:**
+
+- **Cost Efficiency**: Shifts labeling spend from human annotation to inference; the RLAIF paper reports alignment performance comparable to RLHF using AI-generated preferences
+- **Scalability**: Can generate unlimited feedback data without human bottlenecks
+- **Consistency**: AI feedback is more consistent than varying human annotators
+- **Speed**: Near-instantaneous feedback generation
+
+**Cons:**
+
+- **Bias Amplification**: May reinforce existing model biases
+- **Alignment Dependency**: Inherits alignment properties of the supervisory model
+- **Chicken-and-Egg Problem**: Requires a capable supervisory model to train frontier models
+- **Principle Design**: Requires careful crafting of constitutional principles
+
+**Where AI feedback still fits (2026):** reinforcement learning from verifiable rewards (RLVR) now dominates domains with checkable answers, such as math and code. Learned AI-feedback rewards persist mainly in open-ended domains — writing quality, tone, safety — where no programmatic verifier exists.
 
 ## References
 

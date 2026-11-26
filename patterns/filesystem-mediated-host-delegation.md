@@ -1,6 +1,6 @@
 ---
 title: Filesystem-Mediated Host Delegation
-status: emerging
+status: proposed
 authors: ["Abhinay Krupa (@abhinaykrupa)"]
 based_on: ["Maildir-style spool directories", "Claude Code / Cowork sandbox split"]
 category: "Tool Use & Environment"
