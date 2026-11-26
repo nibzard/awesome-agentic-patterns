@@ -1,8 +1,8 @@
-// ABOUTME: Tests for the social share image: text fitting and the rendered 1200x630 PNG.
+// ABOUTME: Tests for the social share image: text fitting, title sizing, and the rendered 1200x630 PNG.
 // ABOUTME: Renders real PNGs with Satori and resvg, so it also checks that the bundled fonts load.
 
 import { describe, expect, test } from 'bun:test';
-import { clampText, renderOgImage } from './og-image';
+import { clampText, renderOgImage, titleSize } from './og-image';
 
 const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
 
@@ -27,24 +27,26 @@ describe('clampText', () => {
   });
 });
 
+describe('titleSize', () => {
+  test('sets short titles larger than long ones', () => {
+    expect(titleSize('Dual LLM Pattern')).toBeGreaterThan(
+      titleSize('Canary Rollout and Automatic Rollback for Agent Policy Changes')
+    );
+  });
+});
+
 describe('renderOgImage', () => {
   test('renders a 1200x630 PNG for a pattern', async () => {
     const png = await renderOgImage({
       title: 'Dual LLM Pattern',
-      summary:
-        'Splits work between a privileged LLM that calls tools but never sees untrusted data and a quarantined LLM that reads untrusted data but has no tools',
-      category: 'Orchestration & Control',
-      status: 'emerging',
+      eyebrow: 'Orchestration & Control',
     });
     expect(Array.from(png.slice(0, 8))).toEqual(PNG_SIGNATURE);
     expect(pngSize(png)).toEqual({ width: 1200, height: 630 });
   });
 
-  test('renders the site card without category or status', async () => {
-    const png = await renderOgImage({
-      title: 'Agent design patterns',
-      summary: 'An open catalog of patterns for building AI agents.',
-    });
+  test('renders a card without an eyebrow', async () => {
+    const png = await renderOgImage({ title: 'Agent design patterns' });
     expect(pngSize(png)).toEqual({ width: 1200, height: 630 });
   });
 });

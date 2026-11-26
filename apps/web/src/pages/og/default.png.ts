@@ -10,7 +10,7 @@ export const GET: APIRoute = async () => {
   const patterns = await getAllPatterns();
   const png = await renderOgImage({
     title: 'Agent design patterns',
-    summary: `An open catalog of ${patterns.length} patterns for building AI agents. Each pattern is a plain Markdown file for people and agents.`,
+    eyebrow: `${patterns.length} patterns · open source`,
   });
   return new Response(png, { headers: { 'Content-Type': 'image/png' } });
 };

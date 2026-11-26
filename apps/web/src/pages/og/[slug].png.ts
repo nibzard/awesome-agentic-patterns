@@ -14,11 +14,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ props }) => {
   const { pattern } = props as { pattern: PatternEntry };
-  const png = await renderOgImage({
-    title: pattern.title,
-    summary: pattern.summary,
-    category: pattern.category,
-    status: pattern.status,
-  });
+  const png = await renderOgImage({ title: pattern.title, eyebrow: pattern.category });
   return new Response(png, { headers: { 'Content-Type': 'image/png' } });
 };

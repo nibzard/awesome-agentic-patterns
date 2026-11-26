@@ -1,27 +1,26 @@
 // ABOUTME: Renders the 1200x630 social share image for a page as a PNG, with Satori and resvg.
-// ABOUTME: Uses the dark site palette and the Geist fonts from the geist package, so builds need no network.
+// ABOUTME: One large title, one small line above it, and the brand; built to read at thumbnail size.
 
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
-import { SITE_URL } from './pattern-markdown';
 
 export const OG_WIDTH = 1200;
 export const OG_HEIGHT = 630;
-const PAD_X = 72;
-const PAD_Y = 56;
-const TOP_BORDER = 6;
-// Satori sizes boxes as content-box: width and height exclude padding and border.
+const PAD_X = 80;
+const PAD_Y = 72;
+// Satori sizes boxes as content-box: width and height exclude padding.
 const CONTENT_WIDTH = OG_WIDTH - PAD_X * 2;
-const CONTENT_HEIGHT = OG_HEIGHT - PAD_Y * 2 - TOP_BORDER;
+const CONTENT_HEIGHT = OG_HEIGHT - PAD_Y * 2;
+const MARK_SIZE = 220;
+const TEXT_WIDTH = CONTENT_WIDTH - MARK_SIZE - 80;
 
 export interface OgCard {
   title: string;
-  summary?: string;
-  category?: string;
-  status?: string;
+  /** One short line above the title, for example the pattern category. */
+  eyebrow?: string;
 }
 
 // Dark theme tokens from global.css.
@@ -29,15 +28,7 @@ const COLORS = {
   bg: '#0e0f11',
   text: '#e8e9eb',
   muted: '#9aa0a8',
-  border: '#262a30',
   primary: '#f0826a',
-};
-
-const STATUS_COLORS: Record<string, { fg: string; bg: string }> = {
-  foundational: { fg: '#7fa7e6', bg: 'rgba(127, 167, 230, 0.14)' },
-  production: { fg: '#5fbf8a', bg: 'rgba(95, 191, 138, 0.14)' },
-  emerging: { fg: '#e0b04d', bg: 'rgba(224, 176, 77, 0.14)' },
-  proposed: { fg: '#9aa0a8', bg: '#202328' },
 };
 
 /** Collapses whitespace and cuts text at a word boundary so it is at most `max` characters. */
@@ -52,9 +43,19 @@ export function clampText(text: string, max: number): string {
   return `${kept.replace(/[\s,.;:]+$/, '')}…`;
 }
 
-let fontCache: { name: string; data: Buffer; weight: 400 | 600; style: 'normal' }[] | null = null;
+/** Title font size in px: short titles are set larger so the card reads at thumbnail size. */
+export function titleSize(title: string): number {
+  const length = title.length;
+  if (length <= 22) return 96;
+  if (length <= 36) return 80;
+  if (length <= 56) return 66;
+  return 56;
+}
 
-function loadFonts() {
+type Font = { name: string; data: Buffer; weight: 400 | 700; style: 'normal' };
+let fontCache: Font[] | null = null;
+
+function loadFonts(): Font[] {
   if (fontCache) return fontCache;
   const require = createRequire(import.meta.url);
   // `geist/font` resolves to geist/dist/font.js; the TTF files are in geist/dist/fonts.
@@ -62,8 +63,7 @@ function loadFonts() {
   const fontsDir = join(dirname(require.resolve('geist/font')), 'fonts');
   const read = (file: string) => readFileSync(join(fontsDir, file));
   fontCache = [
-    { name: 'Geist', data: read('geist-sans/Geist-Regular.ttf'), weight: 400, style: 'normal' },
-    { name: 'Geist', data: read('geist-sans/Geist-SemiBold.ttf'), weight: 600, style: 'normal' },
+    { name: 'Geist', data: read('geist-sans/Geist-Bold.ttf'), weight: 700, style: 'normal' },
     {
       name: 'Geist Mono',
       data: read('geist-mono/GeistMono-Regular.ttf'),
@@ -100,117 +100,66 @@ function mark(size: number): Node {
     });
   return el(
     'svg',
-    {},
+    { flexShrink: 0 },
     [cell(2, 2, true), cell(13, 2, false), cell(2, 13, false), cell(13, 13, true)],
     { width: size, height: size, viewBox: '0 0 24 24' }
   );
 }
 
-function card({ title, summary, category, status }: OgCard): Node {
-  const statusColor = status ? STATUS_COLORS[status] || STATUS_COLORS.proposed : null;
-  const host = SITE_URL.replace(/^https?:\/\//, '');
-  const footerItems: Node[] = [];
-  if (status && statusColor) {
-    footerItems.push(
-      el(
-        'div',
-        {
-          display: 'flex',
-          flexShrink: 0,
-          padding: '6px 14px',
-          borderRadius: 6,
-          background: statusColor.bg,
-          color: statusColor.fg,
-          fontFamily: 'Geist Mono',
-          fontSize: 22,
-        },
-        status
-      )
-    );
-  }
-  if (category) {
-    footerItems.push(
-      el('div', { display: 'flex', flexShrink: 0, color: COLORS.muted, fontSize: 24 }, category)
-    );
-  }
-  footerItems.push(
-    el(
-      'div',
-      {
-        display: 'flex',
-        marginLeft: 'auto',
-        color: COLORS.muted,
-        fontFamily: 'Geist Mono',
-        fontSize: 22,
-      },
-      host
-    )
-  );
-
+function card({ title, eyebrow }: OgCard): Node {
+  const text = clampText(title, 80);
   return el(
     'div',
     {
       width: CONTENT_WIDTH,
       height: CONTENT_HEIGHT,
       display: 'flex',
-      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       padding: `${PAD_Y}px ${PAD_X}px`,
       background: COLORS.bg,
       color: COLORS.text,
-      fontFamily: 'Geist',
-      borderTop: `${TOP_BORDER}px solid ${COLORS.primary}`,
     },
     [
-      el('div', { display: 'flex', alignItems: 'center', gap: 16 }, [
-        mark(40),
-        el('div', { display: 'flex', fontFamily: 'Geist Mono', fontSize: 28 }, [
-          el('span', {}, 'agentic'),
-          el('span', { color: COLORS.muted }, '/'),
-          el('span', {}, 'patterns'),
-        ]),
-      ]),
       el(
         'div',
         {
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          flexGrow: 1,
-          width: CONTENT_WIDTH,
+          justifyContent: 'space-between',
+          width: TEXT_WIDTH,
+          height: CONTENT_HEIGHT,
         },
         [
           el(
             'div',
-            { display: 'flex', fontSize: 64, fontWeight: 600, lineHeight: 1.1, letterSpacing: -1 },
-            clampText(title, 90)
+            { display: 'flex', fontFamily: 'Geist Mono', fontSize: 28, color: COLORS.primary },
+            eyebrow || ' '
           ),
-          summary
-            ? el(
-                'div',
-                {
-                  display: 'flex',
-                  marginTop: 24,
-                  fontSize: 28,
-                  lineHeight: 1.4,
-                  color: COLORS.muted,
-                },
-                clampText(summary, 170)
-              )
-            : el('div', { display: 'flex' }),
+          el(
+            'div',
+            {
+              display: 'flex',
+              fontFamily: 'Geist',
+              fontWeight: 700,
+              fontSize: titleSize(text),
+              lineHeight: 1.05,
+              letterSpacing: -2,
+            },
+            text
+          ),
+          el(
+            'div',
+            { display: 'flex', fontFamily: 'Geist Mono', fontSize: 30, color: COLORS.muted },
+            [
+              el('span', { color: COLORS.text }, 'agentic'),
+              el('span', {}, '/'),
+              el('span', { color: COLORS.text }, 'patterns'),
+            ]
+          ),
         ]
       ),
-      el(
-        'div',
-        {
-          display: 'flex',
-          alignItems: 'center',
-          gap: 20,
-          width: CONTENT_WIDTH,
-          paddingTop: 28,
-          borderTop: `1px solid ${COLORS.border}`,
-        },
-        footerItems
-      ),
+      mark(MARK_SIZE),
     ]
   );
 }
