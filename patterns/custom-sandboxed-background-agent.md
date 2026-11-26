@@ -81,9 +81,7 @@ flowchart TD
     Svc -->|"Spin up sandbox"| Sandbox
     Sandbox <-->|"Read/Write Files"| VCS
 
-    loop Iterative Refinement
-        Sandbox -->|"Compiler/Linter/Test Feedback"| Sandbox
-    end
+    Sandbox -->|"Iterate on compiler/linter/test feedback"| Sandbox
 
     Sandbox -->|"Final PR/Result"| Svc
     Svc -->|"Notification"| UI

@@ -60,7 +60,7 @@ sequenceDiagram
     B->>Board: Post [agent-a] response on card #42
     Handler->>Board: Create return inbox card for Agent A
     A->>Board: Read response on card #42
-    Board->>Board: Inbox cards closed; card #42 retains full thread
+    Board->>Board: Inbox cards closed, card #42 retains full thread
 ```
 
 **Why coordination belongs on the work card:**  The comment thread becomes the audit trail.  A review, a clarifying question, a decision to change approach -- these are work events, not side conversations.  Co-locating them with the card means a future agent reading the card history sees not just what was done but why, and what debate preceded the decision.  The single source of truth gets richer with every exchange.
