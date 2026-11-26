@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import rehypeMermaid from 'rehype-mermaid';
 import { remarkAssetPaths } from './src/lib/remark-asset-paths.ts';
@@ -11,9 +12,12 @@ export default defineConfig({
   publicDir: 'public',
   integrations: [mdx()],
   adapter: vercel(),
+  compressHTML: true,
   markdown: {
-    remarkPlugins: [[remarkAssetPaths, { basePath: '' }]],
-    rehypePlugins: [rehypeMermaid],
+    processor: unified({
+      remarkPlugins: [[remarkAssetPaths, { basePath: '' }]],
+      rehypePlugins: [rehypeMermaid],
+    }),
     shikiConfig: {
       // Pattern files use these fence labels for pseudocode; render them as plain text.
       langAlias: { pseudo: 'plaintext', dsl: 'plaintext' },
@@ -21,7 +25,7 @@ export default defineConfig({
   },
   vite: {
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         external: ['/pagefind/pagefind.js'],
       },
     },

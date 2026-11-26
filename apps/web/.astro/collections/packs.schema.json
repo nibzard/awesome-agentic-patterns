@@ -32,6 +32,5 @@
     "summary",
     "domain",
     "patterns"
-  ],
-  "additionalProperties": false
+  ]
 }

@@ -162,6 +162,5 @@
     "category",
     "source",
     "tags"
-  ],
-  "additionalProperties": false
+  ]
 }
