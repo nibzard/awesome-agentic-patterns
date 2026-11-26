@@ -1,5 +1,5 @@
 ---
-title: 'How Freshness Labels Work'
+title: 'How freshness labels work'
 description: 'What NEW and UPDATED mean on the site, and how freshness is derived from pattern metadata.'
 order: 11
 ---
@@ -10,7 +10,7 @@ The site uses freshness labels to help readers spot entries that were added rece
 
 Which patterns should I look at first if I want recent signal?
 
-## What the Labels Mean
+## What the labels mean
 
 ### `NEW`
 
@@ -22,7 +22,7 @@ Use this when an existing pattern has been revised recently enough that returnin
 
 `NEW` should take precedence over `UPDATED`.
 
-## Where Freshness Comes From
+## Where freshness comes from
 
 Freshness in the current site is driven by pattern metadata, especially `updated_at`, with a fallback to the file modification date when `updated_at` is missing.
 
@@ -31,7 +31,7 @@ That means:
 - if you materially revise a pattern, update `updated_at`
 - if a pattern does not specify `updated_at`, generated data will fall back to the markdown file's modification time
 
-## For Contributors
+## For contributors
 
 You do not need a separate tracking file for freshness labels.
 
@@ -46,7 +46,7 @@ bun run validate:patterns
 bun run build:data
 ```
 
-## Recommended Contributor Rule
+## Recommended contributor rule
 
 Update `updated_at` when any of these change:
 
@@ -57,13 +57,13 @@ Update `updated_at` when any of these change:
 
 Do not update it for trivial formatting or typo-only edits.
 
-## Why This Is Better Than Manual Tracking
+## Why this is better than manual tracking
 
 - Freshness stays attached to the pattern itself
 - The site can derive recent updates automatically during data generation
 - Contributors only need to maintain one source of truth: the pattern file
 
-## Related Files
+## Related files
 
 - [SCHEMA.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/SCHEMA.md)
 - [CONTRIBUTING.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/CONTRIBUTING.md)

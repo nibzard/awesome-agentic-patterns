@@ -241,19 +241,25 @@ const isActive = (item: (typeof navItems)[number]) =>
       // Load Pagefind index
       async function loadSearchIndex() {
         if (searchIndex) return searchIndex;
+        // In `astro dev`, Vite serves /public through its own pipeline and shows an error
+        // overlay for this import, so the catch below never runs. Skip the import in dev.
+        if (import.meta.env.DEV) {
+          searchResults.innerHTML =
+            '<div class="search-error" role="alert">Search needs the Pagefind index, which only a production build creates. Run <code>bun run build</code> to test search.</div>';
+          return null;
+        }
         try {
           // Pagefind's JS API is an ES module; load it with a dynamic import.
           // (It does NOT set window.pagefind, so a <script>-tag + global poll never resolves.)
           // The index exists only after a production build, so keep the URL out of Vite's
-          // import analysis. In `astro dev` the import fails and search shows its error message.
+          // import analysis.
           const pagefindUrl = '/pagefind/pagefind.js';
           searchIndex = await import(/* @vite-ignore */ pagefindUrl);
           return searchIndex;
         } catch (e) {
           // Show error message in search results
-          searchResults.innerHTML = import.meta.env.DEV
-            ? '<div class="search-error" role="alert">Search needs the Pagefind index, which only a production build creates. Run <code>bun run build</code> to test search.</div>'
-            : '<div class="search-error" role="alert">Search is currently unavailable. Please try again later or use the navigation to browse patterns.</div>';
+          searchResults.innerHTML =
+            '<div class="search-error" role="alert">Search is not available. Use the filter on the catalog page instead.</div>';
           return null;
         }
       }

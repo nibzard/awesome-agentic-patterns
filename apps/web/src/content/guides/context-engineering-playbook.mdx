@@ -1,14 +1,14 @@
 ---
-title: 'Context Engineering Playbook'
+title: 'Context engineering playbook'
 description: 'How exact prefix caching, auto-compaction, progressive tool discovery, code-over-API, and semantic filtering work together—and when they conflict.'
 order: 4
 ---
 
-## Diagnose Before You Add a Pattern
+## Diagnose before you add a pattern
 
 Every pattern in this playbook trades something: latency, detail, infrastructure, or flexibility. Stacking two of them without knowing the symptom is how a lean agent becomes an expensive one. Find the symptom first, then reach for one pattern.
 
-## Context Cost Diagnosis
+## Context cost diagnosis
 
 | Symptom                                                                   | Root Cause                                                                | First Pattern to Reach For                                                                                                                                                                   |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -26,7 +26,7 @@ Every pattern in this playbook trades something: latency, detail, infrastructure
 | Always-loaded files and unattended fan-out quietly drain the budget       | Nobody measures or caps context spend                                     | [Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource)                                                                                                     |
 | The model wraps up early while plenty of context remains                  | The model rations its remaining budget                                    | [Context Window Anxiety Management](/patterns/context-window-anxiety-management)                                                                                                             |
 
-## How the Patterns Interact and Conflict
+## How the patterns interact and conflict
 
 These patterns are not independent. Some reinforce each other. Some quietly cancel each other out.
 
@@ -53,7 +53,7 @@ Externalize critical state before you depend on compaction:
 
 Treat compaction as the safety net, not the strategy.
 
-### Code-Over-API removes the middle of the conversation
+### Code-over-API removes the middle of the conversation
 
 [Code-Over-API (Code Mode)](/patterns/code-over-api-pattern) has the agent write code that calls tools and processes the results inside a sandbox. Only summaries and samples return to the context window. The reduction happens in code, not in a lossy model summary, because the full result never needs to fit. The pattern also reports lower latency from fewer large round-trips, and credentials stay in the MCP servers and never reach the model.
 
@@ -75,7 +75,7 @@ A large file can pass through both: extract first, then filter. Each step can dr
 
 [Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource) measures always-loaded context per source, alerts on trend growth, and puts hard spend caps and fan-out bounds on unattended runs. It is how you find out that a new integration quietly doubled the baseline. Its own warning applies: size a cap as a belt, not a governor, or it will abort a legitimately heavy run.
 
-## Rollout Sequence
+## Rollout sequence
 
 Add these in order. Each step makes the next one cheaper to evaluate.
 
@@ -96,7 +96,7 @@ Hold two patterns until you have evidence:
 - [Context Window Anxiety Management](/patterns/context-window-anxiety-management) pays off only when the model shows the behavior. Otherwise it adds tokens and model-specific tuning for nothing. Shrinking the load is the cheaper cure
 - Episodic memory, such as [Episodic Memory Retrieval and Injection](/patterns/episodic-memory-retrieval-injection), adds storage, retrieval cost, and a corpus you must review and prune. Do not add it before one session is stable
 
-## Next Steps
+## Next steps
 
 - Pick the rest of your starting stack with [Choosing the Right Patterns](/guides/pattern-selection)
 - Sub-agents get a clean context each. See [Multi-Agent Topologies Compared](/guides/multi-agent-topologies-compared)

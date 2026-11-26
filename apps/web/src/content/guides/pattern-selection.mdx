@@ -1,10 +1,10 @@
 ---
-title: 'Choosing the Right Patterns'
+title: 'Choosing the right patterns'
 description: 'A practical guide to narrowing the catalog, assembling a small starting stack, and avoiding unnecessary pattern sprawl.'
 order: 1
 ---
 
-## Start with the Failure Mode
+## Start with the failure mode
 
 Do not start by asking which pattern is popular. Start by asking what is most likely to break first.
 
@@ -18,22 +18,22 @@ Usually that is one of five things:
 
 Once you know the failure mode, the catalog becomes much easier to narrow.
 
-## Use the Three Discovery Surfaces
+## Use the three discovery surfaces
 
-The site now has three useful ways to narrow the library:
+The site has three ways to narrow the library:
 
-- Use the [Decision Guide](/decision) when you want a fast shortlist
-- Use [Browse Patterns](/patterns) when you want to compare trade-offs directly
-- Use the [Pattern Graph](/graph) when you want to see what tends to cluster together
+- Use the [decision guide](/decision) when you want a fast shortlist
+- Use the [catalog](/) when you want to compare trade-offs directly
+- Use the [pattern graph](/graph) when you want to see what tends to cluster together
 
-The best workflow is:
+A good order is:
 
 1. Start with `/decision`
 2. Open 3-6 candidate patterns in `/patterns`
 3. Use `/graph` to spot adjacent patterns worth considering
 4. Commit to a small stack for v1
 
-## Match the Pattern to the Problem
+## Match the pattern to the problem
 
 ### If control is the main risk
 
@@ -93,7 +93,7 @@ Start with orchestration patterns that reduce idle time and improve routing:
 
 Use these when the system already works in principle but cannot ship efficiently.
 
-## Good Starting Stacks
+## Good starting stacks
 
 Start with 2-4 patterns, not 8-12.
 
@@ -124,7 +124,7 @@ This is a good default when the agent needs to operate beyond a single request-r
 
 This is a good default when the cost of a bad action is much higher than the cost of slower execution.
 
-## What Not to Add Too Early
+## What not to add too early
 
 Teams usually over-add patterns in the first version. Common mistakes:
 
@@ -136,23 +136,23 @@ Teams usually over-add patterns in the first version. Common mistakes:
 
 If you cannot explain why a pattern reduces a current failure mode, leave it out of v1.
 
-## A Practical Selection Workflow
+## A practical selection workflow
 
 Use this sequence when you are unsure where to start:
 
 1. Write down the primary task and the most expensive failure mode.
-2. Use the [Decision Guide](/decision) to narrow to a short list.
+2. Use the [decision guide](/decision) to narrow to a short list.
 3. Open the candidate patterns and compare:
    - control model
    - memory requirements
    - tool surface
    - safety bar
    - operational cost
-4. Use the [Pattern Graph](/graph) to find adjacent patterns worth adding later, not immediately.
+4. Use the [pattern graph](/graph) to find adjacent patterns worth adding later, not immediately.
 5. Pick 2-4 patterns for the first version.
 6. Add more only after you can explain what the previous stack still fails to solve.
 
-## A Useful Rule of Thumb
+## A useful rule of thumb
 
 If you are building your first production version, bias toward:
 
@@ -164,9 +164,9 @@ If you are building your first production version, bias toward:
 
 Most systems need fewer clever patterns and more operational clarity.
 
-## Next Steps
+## Next steps
 
-- Start with the [Decision Guide](/decision)
+- Start with the [decision guide](/decision)
 - Browse the full catalog in [Patterns](/patterns)
-- Use the [Pattern Graph](/graph) to see neighboring ideas
+- Use the [pattern graph](/graph) to see neighboring ideas
 - Read the detail pages for the 2-4 patterns you plan to combine

@@ -1,10 +1,10 @@
 ---
-title: 'Multi-Agent Topologies Compared'
+title: 'Multi-agent topologies compared'
 description: 'How to choose between sub-agent spawning, planner-worker separation, initializer-maintainer loops, swarm migrations, board-mediated threads, and tracker reconciliation.'
 order: 2
 ---
 
-## Start With the Bottleneck
+## Start with the bottleneck
 
 A second agent is a tax. It costs tokens, it adds a handoff, and it creates one more place for state to disappear. Pay that tax only when a single-agent loop hits a concrete bottleneck.
 
@@ -18,7 +18,7 @@ If your bottleneck is "the agent is not smart enough" or "the output is unreliab
 
 If the bottleneck is slow I/O, try [Parallel Tool Execution](/patterns/parallel-tool-execution) inside one agent before you add a second one. It runs read-only tool calls concurrently and falls back to sequence when any call modifies state.
 
-## Comparison Matrix
+## Comparison matrix
 
 Every topology below answers the same two questions differently: where does coordination state live, and who owns it?
 
@@ -34,7 +34,7 @@ Every topology below answers the same two questions differently: where does coor
 
 Tier is the pattern's catalog `status`. `proposed` means 0-1 public implementations. `emerging` means 2+ independent implementations or one detailed production write-up. `production` means proven across multiple independent production systems. `foundational` means an industry-default baseline whenever its signals apply. The pattern page is authoritative if a tier moves.
 
-## Distinctions People Get Wrong
+## Distinctions people get wrong
 
 ### A swarm is not just many sub-agents
 
@@ -52,7 +52,7 @@ Both target work that outlives one session. [Initializer-Maintainer Dual Agent](
 
 [Board-Mediated Coordination](/patterns/board-mediated-inter-agent-coordination) passes messages between specific agents through card comments. Each prefix must map to exactly one active agent, or routing breaks. [Tracker-as-Desired-State Reconciliation](/patterns/tracker-as-desired-state-reconciliation) ignores messages. It re-reads ticket state every tick and derives dispatch from it, so restarts and human edits self-heal.
 
-## Decision Tree
+## Decision tree
 
 Ask these questions in order and stop at the first "yes".
 
@@ -74,7 +74,7 @@ Ask these questions in order and stop at the first "yes".
 
 7. **Still unsure?** Stay single-agent. Revisit once the single-agent loop is stable and measured.
 
-## Companion Patterns for Concurrency and Isolation
+## Companion patterns for concurrency and isolation
 
 No topology above handles concurrency on its own. These four plug into whichever one you pick.
 
@@ -85,7 +85,7 @@ No topology above handles concurrency on its own. These four plug into whichever
 
 If your bottleneck is privilege isolation, add [Sandboxed Tool Authorization](/patterns/sandboxed-tool-authorization). Its subagent policies inherit the parent's restrictions and can only narrow them.
 
-## Common Failure Modes
+## Common failure modes
 
 | Failure Mode           | What It Looks Like                                                                                     | Mitigate With                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ---------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -95,7 +95,7 @@ If your bottleneck is privilege isolation, add [Sandboxed Tool Authorization](/p
 | Runaway token fan-out  | Ten agents become thirty, and the budget is gone before anyone notices                                 | [Context Budget as a Governed Resource](/patterns/context-budget-as-a-governed-resource) adds hard spend caps and fan-out bounds to unattended runs. [Lane-Based Execution Queueing](/patterns/lane-based-execution-queueing) limits concurrency per lane. [Budget-Aware Model Routing with Hard Cost Caps](/patterns/budget-aware-model-routing-with-hard-cost-caps) routes each request to the cheapest capable model under hard cost caps     |
 | Untraceable delegation | You cannot tell which sub-agent did what, or why                                                       | [Subject Hygiene for Task Delegation](/patterns/subject-hygiene) requires an action-plus-target subject on every delegated task                                                                                                                                                                                                                                                                                                                  |
 
-## Next Steps
+## Next steps
 
 - Not sure which failure mode you have? Start with [Choosing the Right Patterns](/guides/pattern-selection)
 - Sub-agents get fresh context, so make it count. See the [Context Engineering Playbook](/guides/context-engineering-playbook)

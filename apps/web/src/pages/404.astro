@@ -1,53 +1,67 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+// ABOUTME: Not-found page in the docs shell: says the URL has no page and links to the places to look next.
+// ABOUTME: The sidebar stays visible so a reader can go straight to a category.
+import DocsLayout from '../layouts/DocsLayout.astro';
 ---
 
-<BaseLayout title="Page Not Found - Awesome Agentic Patterns">
-  <div class="not-found">
-    <h1>404</h1>
-    <h2>Page Not Found</h2>
-    <p>The pattern you're looking for doesn't exist.</p>
-    <a href="/" class="button">Go Home</a>
-  </div>
-</BaseLayout>
+<DocsLayout title="Page not found - Agentic Patterns">
+  <article class="not-found">
+    <p class="section-label">404</p>
+    <h1>Page not found</h1>
+    <p class="not-found-lede">
+      There is no page at this URL. The pattern may have a different slug, or the link may be old.
+    </p>
+    <ul>
+      <li><a href="/">Browse all patterns</a> and filter by name or tag</li>
+      <li>Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to search the full text</li>
+      <li><a href="/llms.txt">/llms.txt</a> lists every slug</li>
+      <li>
+        <a
+          href="https://github.com/nibzard/awesome-agentic-patterns/issues"
+          target="_blank"
+          rel="noreferrer">Report a broken link</a
+        >
+      </li>
+    </ul>
+  </article>
+</DocsLayout>
 
 <style>
   .not-found {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: var(--spacing-2xl) var(--spacing-lg);
-    text-align: center;
+    max-width: 46rem;
+    line-height: 1.7;
   }
 
   .not-found h1 {
-    font-size: 6rem;
-    font-weight: 700;
+    margin-top: 0.4rem;
+    font-size: 1.75rem;
+  }
+
+  .not-found-lede {
+    margin-top: 0.5rem;
+    color: var(--text-muted-strong);
+    font-size: 1.0625rem;
+  }
+
+  .not-found ul {
+    margin-top: 1.25rem;
+    padding-left: 1.2rem;
+  }
+
+  .not-found li {
+    margin: 0.3rem 0;
+  }
+
+  .not-found a {
     color: var(--color-primary);
-    margin-bottom: var(--spacing-md);
   }
 
-  .not-found h2 {
-    font-size: 2rem;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .not-found p {
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .button {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    background-color: var(--color-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-  }
-
-  .button:hover {
-    background-color: var(--color-primary-hover);
+  .not-found kbd {
+    padding: 0.05rem 0.3rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--code-bg);
+    font-family: var(--font-mono);
+    font-size: 0.8em;
   }
 </style>

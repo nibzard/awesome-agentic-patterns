@@ -1,104 +1,57 @@
 ---
+// ABOUTME: Source block in the pattern page rail: a label and one link to the primary source.
+// ABOUTME: Shows a short host/path label on one line; the full URL is in the title attribute.
+import { sourceLabel } from '../lib/source-label';
+
 interface Props {
   source?: string;
 }
 
 const { source } = Astro.props;
+const isUrl = Boolean(source && /^https?:\/\//.test(source));
 ---
 
 {
   source && (
     <div class="pattern-source-block">
-      <div class="pattern-source-header">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="pattern-source-icon"
+      <p class="section-label">Source</p>
+      {isUrl ? (
+        <a
+          href={source}
+          title={source}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="pattern-source-link"
         >
-          <path
-            d="M8 0L3 5V11C3 11.5523 3.44772 12 4 12H12C12.5523 12 13 11.5523 13 11V5L8 0Z"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path d="M6 16H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-          <path d="M8 12V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-        </svg>
-        <span class="pattern-source-label">Source</span>
-      </div>
-      <a href={source} target="_blank" rel="noopener noreferrer" class="pattern-source-link">
-        {source}
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="external-link-icon"
-        >
-          <path
-            d="M1 6H11M6 1L11 6L6 11"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </a>
+          {sourceLabel(source)}
+        </a>
+      ) : (
+        <p class="pattern-source-text">{source}</p>
+      )}
     </div>
   )
 }
 
 <style>
-  .pattern-source-block {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: 1rem;
-    background: var(--surface-card);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--surface-border-strong);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .pattern-source-header {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-  }
-
-  .pattern-source-icon {
-    color: var(--color-primary);
-    flex-shrink: 0;
-  }
-
-  .pattern-source-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted-strong);
-  }
-
   .pattern-source-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    font-size: 0.9rem;
-    color: var(--color-text);
-    word-break: break-all;
+    display: block;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
   }
 
   .pattern-source-link:hover {
-    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
-  .external-link-icon {
-    flex-shrink: 0;
-    color: var(--text-muted-strong);
+  .pattern-source-text {
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
   }
 </style>

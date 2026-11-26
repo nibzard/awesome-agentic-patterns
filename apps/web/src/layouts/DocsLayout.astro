@@ -20,7 +20,7 @@ const patterns = await getAllPatterns();
 const hasRail = Astro.slots.has('rail');
 ---
 
-<BaseLayout {...layoutProps} footerNewsletter={false}>
+<BaseLayout {...layoutProps}>
   <div class:list={['docs-shell', { 'docs-shell--rail': hasRail }]}>
     <aside class="docs-shell-sidebar">
       <DocsSidebar {patterns} {activeCategory} {activeSlug} />

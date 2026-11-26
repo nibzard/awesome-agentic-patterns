@@ -348,9 +348,8 @@ select {
 }
 
 .status-pill--foundational {
-  background: var(--color-primary-light);
-  color: var(--color-primary);
-  font-weight: 600;
+  background: var(--color-info-bg);
+  color: var(--color-info);
 }
 
 .status-pill--production {
@@ -369,9 +368,11 @@ select {
   border: 1px dashed var(--color-border);
 }
 
+/* Diagrams render at their natural size so labels stay readable; wide ones scroll. */
 .mermaid {
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
+  overflow-x: auto;
   margin: var(--spacing-lg) 0;
   background-color: var(--color-bg-elevated);
   padding: var(--spacing-md);
@@ -380,6 +381,107 @@ select {
 }
 
 .mermaid svg {
-  max-width: 100%;
+  flex-shrink: 0;
+  max-width: none;
   height: auto;
+}
+
+/* Rendered Markdown body for pattern and guide pages. */
+.prose {
+  margin-top: 0.9rem;
+  line-height: 1.7;
+}
+
+.prose p {
+  margin: 0 0 0.9rem;
+}
+
+.prose h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.prose h4 {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 0.9rem;
+  padding-left: 1.3rem;
+}
+
+.prose li {
+  margin: 0.25rem 0;
+}
+
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose code {
+  padding: 0.1rem 0.3rem;
+  border-radius: var(--radius-sm);
+  background: var(--code-bg);
+  font-size: 0.85em;
+}
+
+.prose pre {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--code-block-bg);
+  color: var(--code-block-fg);
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose blockquote {
+  margin: 0 0 1rem;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid var(--color-divider);
+  color: var(--color-text-muted);
+}
+
+.prose table {
+  display: block;
+  width: 100%;
+  margin: 0 0 1rem;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.prose th,
+.prose td {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--color-bg-soft);
+  font-weight: 600;
+}
+
+.prose img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
 }

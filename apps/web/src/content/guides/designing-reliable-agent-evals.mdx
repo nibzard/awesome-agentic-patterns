@@ -1,10 +1,10 @@
 ---
-title: 'Designing Reliable Agent Evals'
+title: 'Designing reliable agent evals'
 description: 'Combining deterministic graders, mocked-tool CI workflows, replayable traces, incident-to-eval loops, and canary rollouts so agent changes ship without silent regressions.'
 order: 5
 ---
 
-## The Four-Stage Pyramid
+## The four-stage pyramid
 
 An agent change ships safely when each stage of the pyramid only has to catch what the stage below it already ruled out. Skip a stage and the one above drowns.
 
@@ -15,7 +15,7 @@ An agent change ships safely when each stage of the pyramid only has to catch wh
 | 3. Grader and rubric evals         | [Skill Activation as Precision/Recall Measurement](/patterns/skill-activation-as-precision-recall), [Evidence-Layered Evaluation for Interactive Agents](/patterns/evidence-layered-evaluation-for-interactive-agents), [Output Verification Loop](/patterns/output-verification-loop), [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design) | Is the behavior good, not only valid?                                        | Model calls per row, plus labelling and instrumentation time                                  |
 | 4. Production feedback and rollout | [LLM Observability](/patterns/llm-observability), [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis), [Canary Rollout and Automatic Rollback](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes)                                                                                                                                  | What is breaking for real users, and can you get back to a known-good state? | Observability spend, triage time, and release orchestration                                   |
 
-### Stage 1: Deterministic Checks
+### Stage 1: Deterministic checks
 
 Start with what a machine can verify without a model in the loop.
 
@@ -24,7 +24,7 @@ Start with what a machine can verify without a model in the loop.
 - [Deterministic Grader in the Loop](/patterns/deterministic-grader-in-the-loop) replaces the LLM-as-judge in a self-review loop with a scorer that returns the raw counts behind each sub-score. It is reproducible, so you can assert it in a test or a CI gate
 - [Rendered UI Finish Gate](/patterns/rendered-ui-finish-gate) checks an agent-built interface against its design contract, required states, and rendered output before merge
 
-### Stage 2: Mocked-Tool and Replay CI
+### Stage 2: Mocked-tool and replay CI
 
 Then test the pieces together, with no side effects and no bill.
 
@@ -33,7 +33,7 @@ Then test the pieces together, with no side effects and no bill.
 
 Know the limit of replay: blocking provider egress is not sandboxing. The agent still executes its recorded tool calls for real.
 
-### Stage 3: Grader and Rubric Evals
+### Stage 3: Grader and rubric evals
 
 Now ask whether the behavior is good.
 
@@ -42,7 +42,7 @@ Now ask whether the behavior is good.
 - [Output Verification Loop](/patterns/output-verification-loop) extracts individual claims, checks each against evidence sources, and returns per-claim trust scores before anything acts on the result
 - [Anti-Reward-Hacking Grader Design](/patterns/anti-reward-hacking-grader-design) hardens any grader a model optimizes against, with multi-criteria evaluation and iterative hardening
 
-### Stage 4: Production Feedback and Rollout
+### Stage 4: Production feedback and rollout
 
 Finally, let production tell you what the suite missed.
 
@@ -50,7 +50,7 @@ Finally, let production tell you what the suite missed.
 - [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis) converts each production incident into executable eval cases with pass/fail criteria, and gates future releases on them
 - [Canary Rollout and Automatic Rollback for Agent Policy Changes](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes) ships a policy change to a small traffic slice, monitors guardrail metrics, and rolls back to the last stable version automatically
 
-## Comparison Matrix
+## Comparison matrix
 
 | Eval Technique                                                                                                     | Speed and Cost                                                            | What It Catches                                                                | What It Misses                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
@@ -68,7 +68,7 @@ Finally, let production tell you what the suite missed.
 | [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis)                                                 | Triage time per incident                                                  | Failures that recur after an operational fix                                   | Anything before you have traffic and capturable incident data                                     |
 | [Canary Rollout and Automatic Rollback](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes)  | Release orchestration and telemetry                                       | Regressions that only appear on live traffic                                   | Anything without real-time telemetry and versioned policies                                       |
 
-## Anti-Patterns
+## Anti-patterns
 
 ### LLM-as-judge with no deterministic checks underneath
 
@@ -90,7 +90,7 @@ Any metric an agent can read, it will learn to satisfy. The deterministic grader
 
 An operational fix without an eval case is a promise to debug the same thing twice. [Incident-to-Eval Synthesis](/patterns/incident-to-eval-synthesis) names the symptom: incidents recur after they were fixed operationally, and the eval suite drifts away from what production shows. When a regression slips past the suite anyway, [Canary Rollout and Automatic Rollback](/patterns/canary-rollout-and-automatic-rollback-for-agent-policy-changes) is the last line. It limits the blast radius and shortens time-to-recovery.
 
-## Close the Loop
+## Close the loop
 
 The stages form a cycle, not a ladder. Production incidents become eval cases at stage 3. Those cases gate releases, and the next policy change ships behind a canary. Each turn of the cycle moves a failure from "surprised us in production" to "fails a PR check".
 
@@ -104,7 +104,7 @@ A minimum loop for a new agent:
 6. Turn each incident into an eval case
 7. Ship policy changes behind a canary with automatic rollback
 
-## Next Steps
+## Next steps
 
 - Choose the patterns that feed the evals with [Choosing the Right Patterns](/guides/pattern-selection)
 - A rubber-stamp judge is a topology failure too. See [Multi-Agent Topologies Compared](/guides/multi-agent-topologies-compared)

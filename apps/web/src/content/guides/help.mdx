@@ -1,12 +1,12 @@
 ---
-title: 'Local Development'
+title: 'Local development'
 description: 'Set up the site locally, validate patterns, and work with the current Bun-based workflow.'
 order: 10
 ---
 
 ## Overview
 
-This repository is now Bun-first and Astro-first. The main workflow is:
+This repository is Bun-first and Astro-first. The main workflow is:
 
 1. Install dependencies with Bun
 2. Run the web app locally
@@ -19,7 +19,7 @@ This repository is now Bun-first and Astro-first. The main workflow is:
 - Git
 - A code editor
 
-## Clone and Install
+## Clone and install
 
 ```bash
 git clone https://github.com/nibzard/awesome-agentic-patterns.git
@@ -27,7 +27,7 @@ cd awesome-agentic-patterns
 bun install
 ```
 
-## Core Commands
+## Core commands
 
 Run these from the repository root unless noted otherwise.
 
@@ -50,7 +50,7 @@ bun run build:data
 
 The local site is available at `http://localhost:4321`.
 
-## What Lives Where
+## What lives where
 
 ```text
 awesome-agentic-patterns/
@@ -68,7 +68,7 @@ awesome-agentic-patterns/
 └── README.md                # Project overview and generated catalog sections
 ```
 
-## Adding or Editing Patterns
+## Adding or editing patterns
 
 1. Start from [TEMPLATE.md](https://github.com/nibzard/awesome-agentic-patterns/blob/main/TEMPLATE.md).
 2. Add or update the markdown file in `patterns/`.
@@ -92,7 +92,7 @@ This regenerates the README catalog sections as well as the site data under `app
 
 5. Preview the site with `bun run dev` and check the pattern page in the browser.
 
-## Editing Guides and Site Copy
+## Editing guides and site copy
 
 - Guides live in `apps/web/src/content/guides/`
 - Shared UI lives in `apps/web/src/components/`
@@ -100,13 +100,13 @@ This regenerates the README catalog sections as well as the site data under `app
 
 If you only changed guides or page copy, `bun run dev` is usually enough. If you changed pattern source files, regenerate data with `bun run build:data`.
 
-## Build Outputs
+## Build outputs
 
 The production site build goes to `apps/web/dist/`.
 
 Generated public data for the site lives under `apps/web/public/data/`.
 
-## Common Tasks
+## Common tasks
 
 ### Work on the design or UI
 

@@ -1,7 +1,7 @@
 ---
 // ABOUTME: Decision guide page: four failure-mode-first questions that produce a short, linked pattern list.
 // ABOUTME: Recommendation rules are declared here and checked against patterns/*.md at build time.
-import BaseLayout from '../layouts/BaseLayout.astro';
+import DocsLayout from '../layouts/DocsLayout.astro';
 import questions from '../data/decision-questions.json';
 import { getAllPatterns } from '../lib/patterns';
 
@@ -406,43 +406,27 @@ const engine = JSON.stringify({
 }).replace(/</g, '\\u003c');
 
 const initialQuestion = questions[0];
-const initialProgress = (1 / questions.length) * 100;
 ---
 
-<BaseLayout
-  title="Pattern Decision Tree - Awesome Agentic Patterns"
+<DocsLayout
+  title="Decision guide - Agentic Patterns"
   description="Answer four questions about your failure mode, trust boundary, execution shape, and domain to get a shortlist of agentic patterns."
 >
   <div class="decision-page">
     <section class="decision-hero">
       <div class="decision-hero-copy">
-        <span class="section-label">Decision Guide</span>
         <h1>Decision guide</h1>
         <p class="decision-subtitle">
-          Answer a few questions about failure modes, trust boundaries, execution shape, and domain.
-          You get a short list of linked patterns and the reason for each.
+          Answer four questions about what breaks first, trust boundaries, execution shape, and
+          domain. You get a short list of linked patterns and the reason for each.
         </p>
       </div>
     </section>
 
-    <section class="decision-stage surface-panel">
+    <section class="decision-stage">
       <div id="decision-root">
         <div class="decision-question">
-          <div class="decision-stage-heading">
-            <div>
-              <p class="decision-stage-kicker">Route builder</p>
-              <p class="decision-stage-copy">
-                Each answer adds its own picks to the shortlist, and every recommendation keeps the
-                reason it fits your failure mode, trust boundary, execution shape, and domain.
-              </p>
-            </div>
-            <div class="decision-progress">
-              <div class="question-progress">Question 1 of {questions.length}</div>
-              <div class="progress-track" aria-hidden="true">
-                <span style={`width: ${initialProgress}%`}></span>
-              </div>
-            </div>
-          </div>
+          <p class="question-progress">Question 1 / {questions.length}</p>
           <h2 class="question-title">{initialQuestion.question}</h2>
           <div class="question-options">
             {
@@ -467,7 +451,7 @@ const initialProgress = (1 / questions.length) * 100;
       </div>
     </section>
   </div>
-</BaseLayout>
+</DocsLayout>
 
 <script type="application/json" id="decision-engine" set:html={engine} />
 
@@ -690,18 +674,8 @@ const initialProgress = (1 / questions.length) * 100;
     };
   };
 
-  const renderProgress = (index: number, total: number): string => {
-    const progress = ((index + 1) / total) * 100;
-
-    return `
-      <div class="decision-progress">
-        <div class="question-progress">Question ${index + 1} of ${total}</div>
-        <div class="progress-track" aria-hidden="true">
-          <span style="width: ${progress}%"></span>
-        </div>
-      </div>
-    `;
-  };
+  const renderProgress = (index: number, total: number): string =>
+    `<p class="question-progress">Question ${index + 1} / ${total}</p>`;
 
   const renderQuestion = (question: Question, answers: Answer[], index: number): string => {
     const optionsHtml = question.options
@@ -733,16 +707,7 @@ const initialProgress = (1 / questions.length) * 100;
 
     return `
       <div class="decision-question">
-        <div class="decision-stage-heading">
-          <div>
-            <p class="decision-stage-kicker">Route builder</p>
-            <p class="decision-stage-copy">
-              Each answer narrows the shortlist. Every recommendation keeps the reason it fits your failure
-              mode, trust boundary, execution shape, and domain.
-            </p>
-          </div>
-          ${renderProgress(index, engine.questions.length)}
-        </div>
+        ${renderProgress(index, engine.questions.length)}
         <h2 class="question-title">${escapeHtml(question.question)}</h2>
         <div class="question-options">${optionsHtml}</div>
         <div class="decision-nav">${previousLink}<span></span></div>
@@ -804,7 +769,7 @@ const initialProgress = (1 / questions.length) * 100;
         </div>
         <div class="decision-actions">
           <a href="/decision" class="button button--primary">Start Over</a>
-          <a href="/patterns" class="button button--secondary">Browse All Patterns</a>
+          <a href="/patterns" class="button button--secondary">Browse all patterns</a>
         </div>
       </div>
     `;
@@ -829,138 +794,70 @@ const initialProgress = (1 / questions.length) * 100;
 
 <style is:global>
   .decision-page {
-    max-width: var(--page-max);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl);
-  }
-
-  .decision-hero {
-    padding: 1.75rem 0 1.25rem;
+    max-width: 48rem;
   }
 
   .decision-hero-copy h1 {
-    margin-top: 0.4rem;
     font-size: 1.75rem;
   }
 
   .decision-subtitle {
-    margin-top: var(--spacing-lg);
-    max-width: 44rem;
-    color: var(--color-text-muted);
-    font-size: 1.08rem;
-    line-height: 1.75;
-  }
-
-  .decision-stage {
-    padding: clamp(1.2rem, 2.5vw, 2rem);
-  }
-
-  .decision-stage-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: flex-start;
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .decision-stage-kicker {
-    margin: 0;
-    color: var(--color-primary);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .decision-stage-copy {
-    margin: 0.5rem 0 0;
-    max-width: 34rem;
-    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+    color: var(--text-muted-strong);
+    font-size: 1.0625rem;
     line-height: 1.7;
   }
 
-  .decision-progress {
-    display: grid;
-    gap: 0.75rem;
-    min-width: min(17rem, 100%);
+  .decision-stage {
+    margin-top: 1.75rem;
   }
 
   .question-progress {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.38rem 0.72rem;
-    border-radius: 999px;
-    background: var(--color-primary-light);
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: var(--color-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .progress-track {
-    position: relative;
-    height: 0.45rem;
-    border-radius: 999px;
-    background: var(--color-bg-panel);
-    overflow: hidden;
-  }
-
-  .progress-track span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
   }
 
   .question-title {
-    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    margin: 0.3rem 0 1rem;
+    font-size: 1.3rem;
     color: var(--color-text);
-    margin-bottom: var(--spacing-xl);
-    max-width: 16ch;
   }
 
   .question-options {
     display: grid;
-    gap: var(--spacing-md);
+    gap: 0.5rem;
   }
 
   .option-card {
     display: block;
-    padding: clamp(1rem, 2vw, 1.25rem);
+    padding: 0.7rem 0.9rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     color: var(--color-text);
     background: var(--surface-card);
-    box-shadow: var(--shadow-sm);
-    transition:
-      border-color 0.2s ease,
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+    transition: border-color 0.15s ease;
     cursor: pointer;
   }
 
   .option-card:hover {
-    border-color: var(--color-primary);
-    background-color: var(--color-bg-elevated);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    border-color: var(--color-text-muted);
   }
 
   .option-header {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
+    gap: 0.75rem;
+    margin-bottom: 0.15rem;
   }
 
   .option-radio {
     display: inline-grid;
     place-content: center;
     flex-shrink: 0;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border: 2px solid var(--color-divider);
     border-radius: 50%;
     transition: border-color 0.2s ease;
@@ -968,8 +865,8 @@ const initialProgress = (1 / questions.length) * 100;
 
   .option-radio::after {
     content: '';
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--color-primary);
     transform: scale(0);
@@ -987,17 +884,17 @@ const initialProgress = (1 / questions.length) * 100;
   }
 
   .option-label {
-    font-size: 1.12rem;
+    font-size: 0.975rem;
     font-weight: 600;
   }
 
   .option-description {
     display: block;
-    font-size: 0.95rem;
     color: var(--text-muted-strong);
     margin: 0;
-    margin-left: 36px;
-    line-height: 1.65;
+    margin-left: calc(16px + 0.75rem);
+    font-size: 0.875rem;
+    line-height: 1.5;
   }
 
   .decision-nav {
@@ -1126,10 +1023,7 @@ const initialProgress = (1 / questions.length) * 100;
   }
 
   .result-pattern:hover {
-    border-color: var(--color-primary);
-    background-color: var(--color-bg-elevated);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    border-color: var(--color-text-muted);
   }
 
   .result-icon {
@@ -1195,36 +1089,13 @@ const initialProgress = (1 / questions.length) * 100;
     }
   }
 
-  @media (max-width: 960px) {
-    .decision-hero {
-      grid-template-columns: 1fr;
-    }
-
-    .decision-stage-heading {
-      flex-direction: column;
-    }
-  }
-
   @media (max-width: 640px) {
-    .decision-page {
-      padding-left: var(--spacing-md);
-      padding-right: var(--spacing-md);
-    }
-
     .decision-actions {
       flex-direction: column;
     }
 
-    .decision-progress {
-      min-width: 100%;
-    }
-
     .button {
       width: 100%;
-    }
-
-    .question-title {
-      max-width: none;
     }
 
     .result-arrow {

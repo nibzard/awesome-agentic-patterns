@@ -33,14 +33,12 @@ const label = (status: string) => status.replace(/-/g, ' ');
   <header class="catalog-intro">
     <h1>Agent design patterns</h1>
     <p>
-      An open catalogue of {patterns.length} patterns for building AI agents. Each pattern is a plain
-      Markdown file: read it here, get it as <a href="/agents">.md for your agent</a>, or <a
+      An open catalog of {patterns.length} patterns for building AI agents. Each pattern is a plain Markdown
+      file: read it here, get it as <a href="/agents">.md for your agent</a>, or <a
         href="/contribute">propose your own</a
       >.
     </p>
   </header>
-
-  <slot name="after-intro" />
 
   <div class="catalog-controls" role="search">
     <label class="catalog-filter">
@@ -53,7 +51,7 @@ const label = (status: string) => status.replace(/-/g, ' ');
       <input
         id="catalog-filter"
         type="search"
-        placeholder="Filter by name, tag, or keyword"
+        placeholder="Filter patterns"
         autocomplete="off"
         data-catalog-filter
       />
@@ -75,6 +73,7 @@ const label = (status: string) => status.replace(/-/g, ' ');
         </button>
       ))
     }
+    <span class="catalog-chip-divider" aria-hidden="true"></span>
     <button type="button" class="catalog-chip" data-chip-code aria-pressed="false">
       has code <span>{codeCount}</span>
     </button>
@@ -346,6 +345,7 @@ const label = (status: string) => status.replace(/-/g, ' ');
 
   .catalog-filter {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -370,8 +370,13 @@ const label = (status: string) => status.replace(/-/g, ' ');
     font-size: 0.9375rem;
   }
 
+  .catalog-sort {
+    flex: 0 0 auto;
+  }
+
   .catalog-sort select {
     height: 100%;
+    max-width: 10rem;
     padding: 0 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -395,6 +400,13 @@ const label = (status: string) => status.replace(/-/g, ' ');
     color: var(--color-text-muted);
     font-size: 0.8125rem;
     cursor: pointer;
+  }
+
+  .catalog-chip-divider {
+    align-self: stretch;
+    width: 1px;
+    margin: 0.2rem 0.25rem;
+    background: var(--color-border);
   }
 
   .catalog-chip span {

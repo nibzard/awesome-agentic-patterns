@@ -85,15 +85,14 @@ function getCategoryColor(category: string): string {
 }
 ---
 
-<BaseLayout title="Pattern Graph - Awesome Agentic Patterns">
+<BaseLayout title="Pattern graph - Agentic Patterns">
   <div class="graph-page">
     <section class="graph-hero">
       <div class="graph-hero-copy">
-        <span class="section-label">Graph Explorer</span>
         <h1>Pattern graph</h1>
         <p class="graph-subtitle">
-          See which patterns connect by shared tags, category, explicit links, or similarity. Click
-          a node to open the pattern.
+          See which patterns link to each other. Color shows the category. Click a node to open the
+          pattern.
         </p>
       </div>
     </section>
@@ -105,6 +104,10 @@ function getCategoryColor(category: string): string {
           <h3 class="filter-title">Connections</h3>
           <div class="filter-options">
             <label class="filter-option">
+              <input type="radio" name="graph-mode" value="related" data-mode />
+              <span>Explicit links</span>
+            </label>
+            <label class="filter-option">
               <input type="radio" name="graph-mode" value="tag" data-mode />
               <span>Shared tags</span>
             </label>
@@ -113,15 +116,13 @@ function getCategoryColor(category: string): string {
               <span>Shared category</span>
             </label>
             <label class="filter-option">
-              <input type="radio" name="graph-mode" value="related" data-mode />
-              <span>Explicit links</span>
-            </label>
-            <label class="filter-option">
               <input type="radio" name="graph-mode" value="similarity" data-mode />
               <span>Semantic similarity</span>
             </label>
           </div>
-          <p class="filter-hint">Change how connections are drawn between patterns.</p>
+          <p class="filter-hint">
+            Explicit links come from each pattern's <code>related</code> list.
+          </p>
         </div>
 
         <div class="filter-section">
@@ -131,6 +132,11 @@ function getCategoryColor(category: string): string {
               categories.map((category) => (
                 <label class="filter-option">
                   <input type="checkbox" value={category} data-filter="category" />
+                  <span
+                    class="filter-swatch"
+                    style={`background: ${getCategoryColor(category)}`}
+                    aria-hidden="true"
+                  />
                   <span>{category}</span>
                   <span class="filter-count">
                     {graphNodes.filter((n: GraphNode) => n.category === category).length}
@@ -210,20 +216,20 @@ function getCategoryColor(category: string): string {
         }
 
         <a href="/graph" class="clear-filters" id="graph-clear-filters" hidden>
-          Clear All Filters
+          Clear all filters
         </a>
       </aside>
 
       <!-- Graph Canvas -->
       <div class="graph-canvas-container">
-        <div class="graph-info surface-panel">
+        <div class="graph-info">
           Showing <span id="graph-count">{graphNodes.length}</span> of {graphNodes.length}
           patterns · <span id="graph-edge-count">0</span> connections ·
-          <span id="graph-mode-label">Shared tags</span>
+          <span id="graph-mode-label">Explicit links</span>
         </div>
 
         <div class="graph-search">
-          <input type="text" id="graph-search" placeholder="Search patterns..." />
+          <input type="text" id="graph-search" placeholder="Filter nodes by title" />
           <button id="clear-search" aria-label="Clear search" hidden>×</button>
         </div>
 
@@ -399,7 +405,12 @@ function getCategoryColor(category: string): string {
   const selectedNodeId = params.get('node');
   const modeParam = params.get('mode');
   const modeOptions = new Set(['tag', 'category', 'related', 'similarity']);
-  let activeMode = modeOptions.has(modeParam) ? modeParam : 'tag';
+  // Explicit links are curated by authors, so they make the clearest first view.
+  const DEFAULT_MODE = 'related';
+  // Labels are 12 SVG units tall; show them once they render at 10px or more on screen.
+  const LABEL_MIN_SCREEN_PX = 10;
+  const LABEL_SVG_PX = 12;
+  let activeMode = modeOptions.has(modeParam) ? modeParam : DEFAULT_MODE;
 
   const clearFiltersLink = document.getElementById('graph-clear-filters');
   const countEl = document.getElementById('graph-count');
@@ -684,7 +695,7 @@ function getCategoryColor(category: string): string {
     }
 
     if (modeLabelEl) {
-      modeLabelEl.textContent = modeLabels[activeMode] || modeLabels.tag;
+      modeLabelEl.textContent = modeLabels[activeMode] || modeLabels[DEFAULT_MODE];
     }
   };
 
@@ -760,6 +771,10 @@ function getCategoryColor(category: string): string {
       .scaleExtent([0.1, 3])
       .on('zoom', (event) => {
         viewport.setAttribute('transform', event.transform.toString());
+        // At the full-graph zoom level the labels overlap; the hover tooltip shows the title.
+        const screenScale = svg ? svg.getBoundingClientRect().width / width : 1;
+        const labelPx = LABEL_SVG_PX * event.transform.k * screenScale;
+        svg?.classList.toggle('labels-visible', labelPx >= LABEL_MIN_SCREEN_PX);
       });
 
     svgSelection.call(zoomBehavior);
@@ -913,7 +928,7 @@ function getCategoryColor(category: string): string {
   };
 
   const updateEdgesForMode = (mode) => {
-    activeMode = modeOptions.has(mode) ? mode : 'tag';
+    activeMode = modeOptions.has(mode) ? mode : DEFAULT_MODE;
     currentEdges = buildEdges(activeMode);
     renderEdges(currentEdges);
 
@@ -950,7 +965,7 @@ function getCategoryColor(category: string): string {
       input.addEventListener('change', () => {
         const nextMode = input.value;
         const params = new URLSearchParams(window.location.search);
-        if (nextMode === 'tag') {
+        if (nextMode === DEFAULT_MODE) {
           params.delete('mode');
         } else {
           params.set('mode', nextMode);
@@ -1187,25 +1202,24 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-hero {
-    padding: 1.75rem 0 1.25rem;
+    padding: 0 0 1.25rem;
   }
 
   .graph-hero-copy h1 {
-    margin-top: 0.4rem;
     font-size: 1.75rem;
   }
 
   .graph-subtitle {
-    margin-top: var(--spacing-lg);
+    margin-top: 0.5rem;
     max-width: 44rem;
-    color: var(--color-text-muted);
-    font-size: 1.08rem;
-    line-height: 1.75;
+    color: var(--text-muted-strong);
+    font-size: 1.0625rem;
+    line-height: 1.7;
   }
 
   .graph-layout {
     display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-columns: 240px minmax(0, 1fr);
     gap: clamp(1rem, 3vw, 2rem);
   }
 
@@ -1226,18 +1240,19 @@ function getCategoryColor(category: string): string {
   }
 
   .filter-title {
-    font-size: 0.82rem;
-    font-weight: 700;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted-strong);
-    margin-bottom: var(--spacing-md);
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
   }
 
   .filter-options {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: 1px;
   }
 
   .filter-hint {
@@ -1252,8 +1267,8 @@ function getCategoryColor(category: string): string {
     align-items: center;
     gap: var(--spacing-sm);
     cursor: pointer;
-    padding: 0.55rem 0.6rem;
-    border-radius: var(--radius-md);
+    padding: 0.28rem 0.4rem;
+    border-radius: var(--radius-sm);
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease;
@@ -1261,8 +1276,7 @@ function getCategoryColor(category: string): string {
   }
 
   .filter-option:hover {
-    background-color: var(--surface-card);
-    border-color: var(--surface-border-strong);
+    background-color: var(--color-bg-soft);
   }
 
   .filter-option input[type='checkbox'],
@@ -1271,19 +1285,24 @@ function getCategoryColor(category: string): string {
     accent-color: var(--color-primary);
   }
 
-  .filter-option span:first-of-type {
+  .filter-swatch {
+    flex-shrink: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+  }
+
+  .filter-option > span:not(.filter-swatch):not(.filter-count) {
     flex: 1;
     font-size: 0.875rem;
     color: var(--color-text);
   }
 
   .filter-count {
+    font-family: var(--font-mono);
     font-size: 0.72rem;
-    color: var(--text-muted-strong);
-    background-color: var(--color-bg-soft);
-    padding: 2px 6px;
-    border-radius: 999px;
-    font-weight: 700;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
   }
 
   .clear-filters {
@@ -1308,10 +1327,10 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-info {
-    margin-bottom: var(--spacing-md);
-    padding: 0.95rem 1.1rem;
-    font-size: 0.875rem;
-    color: var(--text-muted-strong);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
   }
 
   .graph-svg {
@@ -1423,7 +1442,7 @@ function getCategoryColor(category: string): string {
   }
 
   .graph-edge[data-edge-type='related'] {
-    opacity: 0.5;
+    opacity: 0.35;
   }
 
   .graph-edge[data-edge-type='anti-pattern'] {
@@ -1463,6 +1482,11 @@ function getCategoryColor(category: string): string {
     font-size: 12px;
     fill: rgba(232, 233, 235, 0.88);
     pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .graph-svg:not(.labels-visible) .node-label {
+    opacity: 0;
   }
 
   .node-tooltip {

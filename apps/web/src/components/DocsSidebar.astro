@@ -1,7 +1,6 @@
 ---
 // ABOUTME: Left navigation for the docs shell: categories with counts, learning links, and project links.
-// ABOUTME: On a pattern page it expands the active category to list its patterns; a newsletter signup sits at the end.
-import NewsletterCTA from './NewsletterCTA.astro';
+// ABOUTME: On a pattern page it expands the active category to list its patterns.
 interface SidebarPattern {
   slug: string;
   title: string;
@@ -130,14 +129,12 @@ const projectLinks = [
         ))
       }
     </ul>
-
-    <div class="docs-sidebar-newsletter">
-      <NewsletterCTA variant="compact" title="Get new patterns by email" buttonText="Subscribe" />
-    </div>
   </nav>
 </div>
 
 <script>
+  import { centerInContainer } from '../lib/scroll';
+
   document.querySelectorAll('[data-docs-sidebar]').forEach((sidebar) => {
     const toggle = sidebar.querySelector('[data-docs-sidebar-toggle]');
     toggle?.addEventListener('click', () => {
@@ -146,8 +143,9 @@ const projectLinks = [
     });
 
     // Keep the active child link in view when the category list is long.
+    // Scroll only the sidebar: scrollIntoView would also scroll the page.
     const activeChild = sidebar.querySelector('.docs-sidebar-child.active');
-    activeChild?.scrollIntoView({ block: 'center' });
+    if (activeChild && sidebar instanceof HTMLElement) centerInContainer(sidebar, activeChild);
   });
 </script>
 
@@ -204,32 +202,6 @@ const projectLinks = [
   .docs-sidebar-link.active {
     background: var(--color-primary-light);
     color: var(--color-primary);
-  }
-
-  .docs-sidebar-newsletter {
-    margin: 1.5rem 0 0 0.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .docs-sidebar-newsletter :global(.newsletter-cta) {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-  }
-
-  .docs-sidebar-newsletter :global(.newsletter-cta-title) {
-    font-size: 0.8125rem;
-  }
-
-  .docs-sidebar-newsletter :global(.newsletter-cta-form) {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-  }
-
-  .docs-sidebar-newsletter :global(.newsletter-cta-input) {
-    width: 100%;
   }
 
   .docs-sidebar-count {

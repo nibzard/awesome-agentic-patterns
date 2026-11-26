@@ -224,7 +224,19 @@ const extraFacts = [
   const mermaidNodes = document.querySelectorAll<HTMLElement>('.mermaid');
   if (mermaidNodes.length > 0) {
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'neutral' });
+    // useMaxWidth: false keeps each diagram at its natural size instead of shrinking it to fit.
+    const naturalSize = { useMaxWidth: false };
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: dark ? 'dark' : 'neutral',
+      flowchart: naturalSize,
+      sequence: naturalSize,
+      state: naturalSize,
+      class: naturalSize,
+      er: naturalSize,
+      gantt: naturalSize,
+      journey: naturalSize,
+    });
     mermaid.run({ nodes: mermaidNodes });
   }
 
@@ -348,105 +360,6 @@ const extraFacts = [
   .pattern-anchor:hover::after {
     content: ' #';
     color: var(--color-text-muted);
-  }
-
-  .prose {
-    margin-top: 0.9rem;
-    line-height: 1.7;
-  }
-
-  .prose :global(p) {
-    margin: 0 0 0.9rem;
-  }
-
-  .prose :global(h3) {
-    margin: 1.5rem 0 0.5rem;
-    font-size: 1.05rem;
-  }
-
-  .prose :global(h4) {
-    margin: 1.25rem 0 0.4rem;
-    font-size: 0.95rem;
-  }
-
-  .prose :global(ul),
-  .prose :global(ol) {
-    margin: 0 0 0.9rem;
-    padding-left: 1.3rem;
-  }
-
-  .prose :global(li) {
-    margin: 0.25rem 0;
-  }
-
-  .prose :global(a) {
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    overflow-wrap: anywhere;
-  }
-
-  .prose :global(strong) {
-    font-weight: 600;
-  }
-
-  .prose :global(code) {
-    padding: 0.1rem 0.3rem;
-    border-radius: var(--radius-sm);
-    background: var(--code-bg);
-    font-size: 0.85em;
-  }
-
-  .prose :global(pre) {
-    margin: 0 0 1rem;
-    padding: 0.9rem 1rem;
-    border-radius: var(--radius-md);
-    background: var(--code-block-bg);
-    color: var(--code-block-fg);
-    overflow-x: auto;
-    font-size: 0.8125rem;
-    line-height: 1.6;
-  }
-
-  .prose :global(pre code) {
-    padding: 0;
-    background: none;
-    color: inherit;
-    font-size: inherit;
-  }
-
-  .prose :global(blockquote) {
-    margin: 0 0 1rem;
-    padding: 0.25rem 0 0.25rem 1rem;
-    border-left: 3px solid var(--color-divider);
-    color: var(--color-text-muted);
-  }
-
-  .prose :global(table) {
-    display: block;
-    width: 100%;
-    margin: 0 0 1rem;
-    overflow-x: auto;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-  }
-
-  .prose :global(th),
-  .prose :global(td) {
-    padding: 0.45rem 0.7rem;
-    border: 1px solid var(--color-border);
-    text-align: left;
-    vertical-align: top;
-  }
-
-  .prose :global(th) {
-    background: var(--color-bg-soft);
-    font-weight: 600;
-  }
-
-  .prose :global(img) {
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
   }
 
   .pattern-related {
