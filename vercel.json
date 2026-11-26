@@ -1,6 +1,6 @@
 {
   "framework": null,
-  "installCommand": "bun install",
+  "installCommand": "rm -rf node_modules apps/web/node_modules && bun install --frozen-lockfile",
   "buildCommand": "bun run build",
   "outputDirectory": "apps/web/dist",
   "redirects": [
