@@ -119,6 +119,9 @@ For the newsletter subscription feature to work, you need to configure the follo
 - `RESEND_SEGMENT_ID`: Your Resend segment ID for newsletter subscriptions
   - Create or choose a segment in the Resend dashboard
   - New and existing subscribers will be added to this segment when configured
+- `RESEND_FROM_EMAIL`: Verified sender address for transactional welcome emails, Pattern Pack bundles, and Decision Guide architecture briefs
+  - Example: `Agentic Patterns <digest@agentic-patterns.com>`
+  - Must use a domain verified in Resend; if omitted or if the API key is Contacts-only, signups still succeed and users receive direct `.md` bundle links in the UI
 
 ### Setting Environment Variables in Vercel
 

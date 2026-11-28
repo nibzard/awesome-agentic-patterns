@@ -2,6 +2,7 @@
 // ABOUTME: Guide page in the docs shell: title, one-line description, and the rendered MDX body.
 // ABOUTME: The body uses the shared .prose styles so guides read like pattern pages.
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -20,6 +21,7 @@ const { Content } = await render(guide);
   title={`${guide.data.title} - Agentic Patterns`}
   description={guide.data.description}
   type="article"
+  footerNewsletter={false}
 >
   <article class="guide" data-pagefind-body>
     <nav class="guide-crumbs" aria-label="Breadcrumb">
@@ -31,6 +33,19 @@ const { Content } = await render(guide);
     <div class="prose guide-body">
       <Content />
     </div>
+
+    <section class="guide-subscribe" data-pagefind-ignore>
+      <NewsletterCTA
+        variant="default"
+        source="guide-end"
+        deliverable="starter-pack"
+        eyebrow="FREE DIGEST + STARTER PACK"
+        title="Get new guides and production agent patterns"
+        description="1–2×/month technical digest of vetted architectures, evals, and safety playbooks—plus the AGENTS.md Starter Pack."
+        buttonText="Subscribe"
+        metaNote="Free · Zero fluff · 1-click unsubscribe"
+      />
+    </section>
   </article>
 </DocsLayout>
 
@@ -70,5 +85,14 @@ const { Content } = await render(guide);
     padding-bottom: 0.4rem;
     border-bottom: 1px solid var(--color-border);
     font-size: 1.3rem;
+  }
+
+  .guide-subscribe {
+    margin-top: 2.5rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
   }
 </style>

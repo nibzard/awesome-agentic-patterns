@@ -1,3 +1,170 @@
 ---
-return Astro.redirect('/patterns');
+// ABOUTME: Pattern packs index: flagship Production Starter Pack signup plus curated multi-pattern stacks.
+// ABOUTME: Links each pack to its detail page and AGENTS.md Markdown bundle.
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
+import { getCollection } from 'astro:content';
+import { STARTER_PACK } from '../../lib/starter-pack';
+
+const packs = await getCollection('packs');
+const sortedPacks = [...packs].sort((a, b) => {
+  const aOrder = a.data.order ?? 999;
+  const bOrder = b.data.order ?? 999;
+  if (aOrder !== bOrder) return aOrder - bOrder;
+  return a.data.title.localeCompare(b.data.title);
+});
 ---
+
+<DocsLayout
+  title="Pattern Packs - Agentic Patterns"
+  description="Curated pattern stacks and AGENTS.md bundles for common AI agent architectures."
+  footerNewsletter={false}
+>
+  <article class="packs-page">
+    <h1>Pattern packs</h1>
+    <p class="packs-lede">
+      Curated stacks of patterns that work together for specific agent architectures. Read each
+      stack or grab its <code>.md</code> bundle for your coding agent.
+    </p>
+
+    <section class="packs-starter" aria-label="Production Agent Starter Pack">
+      <NewsletterCTA
+        variant="hero"
+        source="packs-index"
+        deliverable="starter-pack"
+        eyebrow="FLAGSHIP BUNDLE · 12 CORE PATTERNS"
+        title={`Get the ${STARTER_PACK.title}`}
+        description="12 battle-tested patterns for safety boundaries, context discipline, evals, and execution control as an AGENTS.md bundle + 1–2×/month digest."
+        buttonText="Send me the pack"
+        metaNote="Free · 1–2×/month · 1-click unsubscribe"
+      />
+      <p class="packs-starter-direct">
+        Or inspect the raw Markdown bundle directly: <a href="/starter-pack.md">/starter-pack.md</a>
+      </p>
+    </section>
+
+    <h2 class="packs-section-heading">All curated stacks ({sortedPacks.length})</h2>
+    <ol class="packs-grid">
+      {
+        sortedPacks.map((pack) => (
+          <li>
+            <a href={`/packs/${pack.id}`} class="pack-card">
+              <span class="pack-card-meta">
+                <span>{pack.data.domain}</span>
+                <span>{pack.data.patterns.length} patterns</span>
+              </span>
+              <span class="pack-card-title">{pack.data.title}</span>
+              <span class="pack-card-summary">{pack.data.summary}</span>
+              <span class="pack-card-link">Open stack →</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</DocsLayout>
+
+<style>
+  .packs-page {
+    max-width: 52rem;
+  }
+
+  .packs-page h1 {
+    font-size: 1.75rem;
+  }
+
+  .packs-lede {
+    margin-top: 0.5rem;
+    line-height: var(--leading-prose);
+    color: var(--text-muted-strong);
+    font-size: 1.0625rem;
+  }
+
+  .packs-lede code {
+    padding: 0.1rem 0.3rem;
+    border-radius: var(--radius-sm);
+    background: var(--code-bg);
+    font-size: 0.85em;
+  }
+
+  .packs-starter {
+    margin-top: 1.35rem;
+  }
+
+  .packs-starter-direct {
+    margin: 0.5rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .packs-starter-direct a {
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .packs-section-heading {
+    margin: 2.25rem 0 0.9rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 1.25rem;
+  }
+
+  .packs-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 0.85rem;
+  }
+
+  .pack-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    height: 100%;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .pack-card:hover {
+    border-color: var(--color-divider);
+  }
+
+  .pack-card:hover .pack-card-title {
+    color: var(--color-primary);
+  }
+
+  .pack-card-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .pack-card-title {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .pack-card-summary {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .pack-card-link {
+    margin-top: auto;
+    padding-top: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+</style>

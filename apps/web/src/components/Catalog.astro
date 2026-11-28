@@ -3,12 +3,16 @@
 // ABOUTME: Mobile viewports paginate the list with a show-more button; filters read and write URL parameters (category, status, tag, domain, maturity, complexity, q, code, sort).
 import type { PatternEntry } from '../types';
 import { hasCodeExample } from '../lib/code-example';
+import { getGithubStarCount } from '../lib/github-stars';
+import NewsletterCTA from './NewsletterCTA.astro';
 
 interface Props {
   patterns: PatternEntry[];
 }
 
 const { patterns } = Astro.props;
+const githubStarCount = getGithubStarCount();
+const heroMetaNote = `${githubStarCount ? `${githubStarCount} GitHub stars · ` : ''}1–2×/month · 1-click unsubscribe`;
 
 const sorted = [...patterns].sort(
   (a, b) => (b.updated_at || '').localeCompare(a.updated_at || '') || a.title.localeCompare(b.title)
@@ -39,6 +43,19 @@ const label = (status: string) => status.replace(/-/g, ' ');
       >.
     </p>
   </header>
+
+  <section class="catalog-newsletter" aria-label="Newsletter signup">
+    <NewsletterCTA
+      variant="hero"
+      source="homepage-hero"
+      deliverable="starter-pack"
+      eyebrow="FREE DIGEST + STARTER PACK"
+      title="Get new production agent patterns in your inbox"
+      description="1–2×/month distilled from real agent systems & postmortems. Subscribe to also get the Starter Pack (AGENTS.md bundle)."
+      buttonText="Subscribe"
+      metaNote={heroMetaNote}
+    />
+  </section>
 
   <div class="catalog-controls" role="search">
     <label class="catalog-filter">
@@ -113,6 +130,16 @@ const label = (status: string) => status.replace(/-/g, ' ');
         </li>
       ))
     }
+    <li class="catalog-feed-cta" id="catalog-feed-cta" data-catalog-feed-cta hidden>
+      <NewsletterCTA
+        variant="inline-feed"
+        source="homepage-feed"
+        deliverable="starter-pack"
+        title="Don't want to check back for new patterns?"
+        description="Get 3–5 newly vetted patterns and Markdown links for your coding agent, 1–2×/month."
+        buttonText="Subscribe"
+      />
+    </li>
   </ol>
 
   <div class="catalog-more" id="catalog-more" hidden>
@@ -129,10 +156,13 @@ const label = (status: string) => status.replace(/-/g, ' ');
 </div>
 
 <script>
+  import { SUBSCRIBED_EVENT, isSubscribed } from '../lib/newsletter-client';
+
   const MULTI_KEYS = ['category', 'status', 'tag', 'domain', 'maturity', 'complexity'] as const;
 
   const list = document.getElementById('catalog-list');
   const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-pattern-row]'));
+  const feedCta = document.getElementById('catalog-feed-cta');
   const filterInput = document.querySelector<HTMLInputElement>('[data-catalog-filter]');
   const sortSelect = document.querySelector<HTMLSelectElement>('[data-catalog-sort]');
   const statusChips = Array.from(
@@ -230,12 +260,23 @@ const label = (status: string) => status.replace(/-/g, ' ');
     if (!list) return;
     const limit = paginationActive ? shownCount : Infinity;
     let matched = 0;
+    const visibleRows: HTMLElement[] = [];
     Array.from(list.children).forEach((child) => {
       const row = child as HTMLElement;
+      if (!row.hasAttribute('data-pattern-row')) return;
       if (row.hidden) return;
       matched += 1;
       row.hidden = matched > limit;
+      if (!row.hidden) visibleRows.push(row);
     });
+    if (feedCta) {
+      if (!isSubscribed() && visibleRows.length >= 10) {
+        visibleRows[9].insertAdjacentElement('afterend', feedCta);
+        feedCta.hidden = false;
+      } else {
+        feedCta.hidden = true;
+      }
+    }
     if (moreWrap) moreWrap.hidden = !paginationActive || matchedCount <= shownCount;
     if (moreStatus) {
       moreStatus.textContent = `Showing ${Math.min(matchedCount, limit)} of ${matchedCount} patterns`;
@@ -318,6 +359,10 @@ const label = (status: string) => status.replace(/-/g, ' ');
     paginationActive = mobileMedia.matches;
     applyFiltersFromStart();
   });
+
+  window.addEventListener(SUBSCRIBED_EVENT, () => {
+    if (feedCta) feedCta.hidden = true;
+  });
 </script>
 
 <style>
@@ -335,6 +380,16 @@ const label = (status: string) => status.replace(/-/g, ' ');
     color: var(--color-primary);
     text-decoration: underline;
     text-underline-offset: 2px;
+  }
+
+  .catalog-newsletter {
+    margin-top: 1.1rem;
+  }
+
+  .catalog-feed-cta {
+    list-style: none;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .catalog-controls {

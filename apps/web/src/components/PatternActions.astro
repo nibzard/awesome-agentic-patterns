@@ -140,9 +140,61 @@ const jsonContent = JSON.stringify(pattern, null, 2);
   <span class="copy-feedback" aria-live="polite"></span>
 </div>
 
+<div class="copy-nudge" data-copy-nudge data-category={pattern.category || ''} hidden>
+  <div class="copy-nudge-header">
+    <p class="copy-nudge-text">
+      Copied for your agent. Want new <strong>{pattern.category || 'agent'}</strong> patterns like this
+      (1–2×/mo) + our Starter Pack?
+    </p>
+    <button
+      type="button"
+      class="copy-nudge-dismiss"
+      data-copy-nudge-dismiss
+      aria-label="Dismiss signup prompt"
+    >
+      ×
+    </button>
+  </div>
+  <form class="copy-nudge-form" data-copy-nudge-form>
+    <input
+      type="email"
+      name="email"
+      placeholder="you@company.com"
+      required
+      class="copy-nudge-input"
+      aria-label="Email address"
+    />
+    <button type="submit" class="copy-nudge-submit">Subscribe</button>
+    <span class="copy-nudge-status" data-copy-nudge-status role="status" aria-live="polite"></span>
+  </form>
+</div>
+
 <script>
+  import {
+    NUDGE_DISMISSED_KEY,
+    SUBSCRIBED_EVENT,
+    isDismissedWithinDays,
+    isSubscribed,
+    markDismissed,
+    submitSubscription,
+    trackNewsletterEvent,
+  } from '../lib/newsletter-client';
+
   const buttons = document.querySelectorAll('[data-copy]');
   const feedback = document.querySelector('.copy-feedback');
+  const copyNudge = document.querySelector<HTMLElement>('[data-copy-nudge]');
+  const copyNudgeForm = document.querySelector<HTMLFormElement>('[data-copy-nudge-form]');
+  const copyNudgeDismiss = document.querySelector<HTMLButtonElement>('[data-copy-nudge-dismiss]');
+  const copyNudgeStatus = document.querySelector<HTMLElement>('[data-copy-nudge-status]');
+
+  function maybeShowCopyNudge() {
+    if (!copyNudge || !copyNudge.hidden) return;
+    if (isSubscribed() || isDismissedWithinDays(NUDGE_DISMISSED_KEY, 30)) return;
+    copyNudge.hidden = false;
+    trackNewsletterEvent('copy_nudge_shown', {
+      category: copyNudge.dataset.category || '',
+    });
+  }
 
   buttons.forEach((button) => {
     button.addEventListener('click', async () => {
@@ -153,17 +205,80 @@ const jsonContent = JSON.stringify(pattern, null, 2);
 
       try {
         await navigator.clipboard.writeText(content);
-        feedback!.textContent = `Copied ${format}.`;
-        setTimeout(() => {
-          feedback!.textContent = '';
-        }, 2000);
-      } catch (err) {
-        feedback!.textContent = 'Failed to copy';
-        setTimeout(() => {
-          feedback!.textContent = '';
-        }, 2000);
+        if (feedback) {
+          feedback.textContent = `Copied ${format}.`;
+          setTimeout(() => {
+            feedback.textContent = '';
+          }, 2000);
+        }
+        maybeShowCopyNudge();
+      } catch {
+        if (feedback) {
+          feedback.textContent = 'Failed to copy';
+          setTimeout(() => {
+            feedback.textContent = '';
+          }, 2000);
+        }
       }
     });
+  });
+
+  copyNudgeDismiss?.addEventListener('click', () => {
+    markDismissed(NUDGE_DISMISSED_KEY);
+    if (copyNudge) copyNudge.hidden = true;
+  });
+
+  copyNudgeForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const input = copyNudgeForm.querySelector<HTMLInputElement>('input[type="email"]');
+    const submitBtn = copyNudgeForm.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const email = input?.value.trim();
+    if (!email || !submitBtn || !copyNudgeStatus) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    copyNudgeStatus.textContent = '';
+    copyNudgeStatus.className = 'copy-nudge-status';
+
+    try {
+      const result = await submitSubscription({
+        email,
+        source: 'post-copy',
+        category: copyNudge?.dataset.category || undefined,
+        deliverable: 'starter-pack',
+      });
+
+      if (result.ok) {
+        copyNudgeStatus.textContent = '';
+        copyNudgeStatus.classList.add('copy-nudge-status--success');
+        const msg = document.createTextNode(`${result.message || 'Subscribed!'} `);
+        copyNudgeStatus.appendChild(msg);
+        if (result.downloadUrl) {
+          const link = document.createElement('a');
+          link.href = result.downloadUrl;
+          link.textContent = 'Open Starter Pack (.md) →';
+          copyNudgeStatus.appendChild(link);
+        }
+        if (input) input.value = '';
+        submitBtn.textContent = 'Subscribed ✓';
+      } else {
+        copyNudgeStatus.textContent = result.error || 'Could not subscribe.';
+        copyNudgeStatus.classList.add('copy-nudge-status--error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Subscribe';
+      }
+    } catch {
+      copyNudgeStatus.textContent = 'Network error. Please try again.';
+      copyNudgeStatus.classList.add('copy-nudge-status--error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Subscribe';
+    }
+  });
+
+  window.addEventListener(SUBSCRIBED_EVENT, () => {
+    if (copyNudge && !copyNudgeForm?.contains(document.activeElement)) {
+      copyNudge.hidden = true;
+    }
   });
 </script>
 
@@ -329,5 +444,118 @@ const jsonContent = JSON.stringify(pattern, null, 2);
     color: var(--color-success);
     margin-left: var(--spacing-sm);
     align-self: center;
+  }
+
+  .copy-nudge {
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .copy-nudge-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .copy-nudge-text {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--text-muted-strong);
+  }
+
+  .copy-nudge-dismiss {
+    border: 0;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.1rem 0.25rem;
+    cursor: pointer;
+  }
+
+  .copy-nudge-dismiss:hover {
+    color: var(--color-text);
+  }
+
+  .copy-nudge-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .copy-nudge-input {
+    flex: 1 1 12rem;
+    min-width: 0;
+    max-width: 17rem;
+    height: 2rem;
+    padding: 0 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    font-size: 0.8125rem;
+  }
+
+  .copy-nudge-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .copy-nudge-submit {
+    height: 2rem;
+    padding: 0 0.8rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .copy-nudge-submit:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  .copy-nudge-submit:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+
+  .copy-nudge-status {
+    flex-basis: 100%;
+    font-size: 0.78rem;
+  }
+
+  .copy-nudge-status:empty {
+    display: none;
+  }
+
+  .copy-nudge-status--success {
+    color: var(--color-success);
+  }
+
+  .copy-nudge-status--success a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .copy-nudge-status--error {
+    color: var(--color-error);
+  }
+
+  @media (pointer: coarse) {
+    .copy-nudge-input {
+      font-size: 16px;
+    }
   }
 </style>

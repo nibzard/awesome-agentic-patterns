@@ -1,6 +1,14 @@
-// ABOUTME: API endpoint for newsletter subscription using Resend
+// ABOUTME: API endpoint for newsletter subscription, attribution tagging, and best-effort deliverable emails via Resend.
 
 import type { APIRoute } from 'astro';
+import {
+  buildTransactionalEmail,
+  normalizeResendTag,
+  sanitizeDecisionBrief,
+  sanitizeDeliverable,
+  sanitizeSlug,
+  sanitizeText,
+} from '../../lib/newsletter-emails';
 
 export const prerender = false;
 
@@ -12,7 +20,7 @@ const JSON_HEADERS = {
 // Rate limiting: Store IP addresses with timestamps in memory
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 3;
+const MAX_REQUESTS_PER_WINDOW = 6;
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -84,6 +92,71 @@ function jsonResponse(body: Record<string, unknown>, status: number) {
   });
 }
 
+async function sendTransactionalEmail(params: {
+  resendApiKey: string;
+  fromEmail: string;
+  toEmail: string;
+  subject: string;
+  html: string;
+  text: string;
+  tags: { name: string; value: string }[];
+}): Promise<boolean> {
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${params.resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: params.fromEmail,
+        to: [params.toEmail],
+        subject: params.subject,
+        html: params.html,
+        text: params.text,
+        tags: params.tags,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Resend email delivery error:', errorData);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Resend email delivery error:', error);
+    return false;
+  }
+}
+
+function buildSuccessMessage(params: {
+  alreadySubscribed: boolean;
+  deliverable: string;
+  emailSent: boolean;
+}): string {
+  if (params.deliverable === 'decision-brief') {
+    return params.emailSent
+      ? 'Sent! Check your inbox for your architecture brief and agent prompt.'
+      : 'Subscribed! Your architecture brief is ready to copy or download below.';
+  }
+
+  if (params.deliverable === 'pack') {
+    return params.emailSent
+      ? 'Sent! Check your inbox for this pattern pack.'
+      : 'Subscribed! You can open the full pattern pack (.md) below.';
+  }
+
+  if (params.alreadySubscribed) {
+    return "You're already subscribed and will receive future updates.";
+  }
+
+  return params.emailSent
+    ? 'Subscribed! Check your inbox for the Production Starter Pack.'
+    : 'Thanks for subscribing! You can also open the Starter Pack (.md) below.';
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     // Get client IP for rate limiting
@@ -102,7 +175,8 @@ export const POST: APIRoute = async ({ request }) => {
       return jsonResponse({ error: 'Invalid request body.' }, 400);
     }
 
-    const { email } = body;
+    const rawBody = body as Record<string, unknown>;
+    const { email } = rawBody;
 
     // Validate email
     if (!email || typeof email !== 'string') {
@@ -114,6 +188,13 @@ export const POST: APIRoute = async ({ request }) => {
     if (!EMAIL_REGEX.test(trimmedEmail)) {
       return jsonResponse({ error: 'Please enter a valid email address.' }, 400);
     }
+
+    const safeSource = sanitizeSlug(rawBody.source, 64) || 'unknown';
+    const safePath = sanitizeText(rawBody.path, 200);
+    const safeCategory = sanitizeText(rawBody.category, 80);
+    const safeDeliverable = sanitizeDeliverable(rawBody.deliverable);
+    const safePackSlug = sanitizeSlug(rawBody.packSlug, 80);
+    const safeBrief = sanitizeDecisionBrief(rawBody.decisionBrief);
 
     // Get Resend API key from environment
     const resendApiKey = getServerEnv('RESEND_API_KEY');
@@ -128,7 +209,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const segmentId = getServerEnv('RESEND_SEGMENT_ID') ?? getServerEnv('RESEND_AUDIENCE_ID');
 
-    // Create or update contact in Resend
+    // Create or update contact in Resend (keep payload strictly within Resend's contact schema)
     const resendResponse = await fetch('https://api.resend.com/contacts', {
       method: 'POST',
       headers: {
@@ -141,6 +222,9 @@ export const POST: APIRoute = async ({ request }) => {
         segments: segmentId ? [{ id: segmentId }] : undefined,
       }),
     });
+
+    let alreadySubscribed = false;
+    let contactId: string | undefined;
 
     if (!resendResponse.ok) {
       const errorData = await resendResponse.json().catch(() => ({}));
@@ -159,30 +243,68 @@ export const POST: APIRoute = async ({ request }) => {
         );
       }
 
-      // Handle specific error cases
       if (resendResponse.status === 422) {
+        alreadySubscribed = true;
         // Contact already exists. Ensure it is part of the configured newsletter segment.
         await addContactToSegmentByEmail(trimmedEmail, resendApiKey, segmentId);
-
-        return jsonResponse(
-          { message: "You're already subscribed and will receive future updates." },
-          200
-        );
-      }
-
-      if (resendResponse.status === 400 && errorMessage) {
+      } else if (resendResponse.status === 400 && errorMessage) {
         return jsonResponse({ error: errorMessage }, 502);
+      } else {
+        return jsonResponse({ error: 'Failed to subscribe. Please try again.' }, 502);
       }
-
-      return jsonResponse({ error: 'Failed to subscribe. Please try again.' }, 502);
+    } else {
+      const data = (await resendResponse.json().catch(() => ({}))) as { id?: string };
+      contactId = data.id;
     }
 
-    const data = await resendResponse.json();
+    const emailContent = buildTransactionalEmail({
+      source: safeSource,
+      category: safeCategory,
+      deliverable: safeDeliverable,
+      packSlug: safePackSlug,
+      decisionBrief: safeBrief,
+    });
+
+    const fromEmail = getServerEnv('RESEND_FROM_EMAIL');
+    const shouldSendEmail =
+      Boolean(fromEmail) &&
+      (!alreadySubscribed || safeDeliverable === 'decision-brief' || safeDeliverable === 'pack');
+
+    let emailSent = false;
+    if (shouldSendEmail && fromEmail) {
+      const tags: { name: string; value: string }[] = [
+        { name: 'source', value: normalizeResendTag(safeSource, 'unknown') },
+        { name: 'deliverable', value: normalizeResendTag(safeDeliverable, 'starter_pack') },
+      ];
+      if (safeCategory) {
+        tags.push({ name: 'category', value: normalizeResendTag(safeCategory, 'general') });
+      }
+      if (safePath) {
+        tags.push({ name: 'path', value: normalizeResendTag(safePath, 'root') });
+      }
+
+      emailSent = await sendTransactionalEmail({
+        resendApiKey,
+        fromEmail,
+        toEmail: trimmedEmail,
+        subject: emailContent.subject,
+        html: emailContent.html,
+        text: emailContent.text,
+        tags,
+      });
+    }
 
     return jsonResponse(
       {
-        message: 'Thanks for subscribing! You will receive future updates at this address.',
-        contactId: data.id,
+        message: buildSuccessMessage({
+          alreadySubscribed,
+          deliverable: safeDeliverable,
+          emailSent,
+        }),
+        contactId,
+        alreadySubscribed,
+        emailSent,
+        downloadUrl: emailContent.downloadUrl,
       },
       200
     );

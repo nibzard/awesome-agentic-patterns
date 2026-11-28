@@ -4,6 +4,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ReaderSlideIn from '../components/ReaderSlideIn.astro';
 
 interface Props {
   title?: string;
@@ -97,5 +98,6 @@ const themeScript = `
       <slot />
     </main>
     <Footer newsletter={footerNewsletter} />
+    <ReaderSlideIn />
   </body>
 </html>

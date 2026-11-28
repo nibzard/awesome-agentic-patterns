@@ -2,6 +2,7 @@
 // ABOUTME: Site header: logo, main navigation, search (Pagefind, opened with ⌘K), GitHub link, theme toggle.
 // ABOUTME: Includes the search modal and the mobile navigation menu.
 import ThemeToggle from './ThemeToggle.astro';
+import NewsletterCTA from './NewsletterCTA.astro';
 import { getGithubStarCount } from '../lib/github-stars';
 
 interface Props {
@@ -15,6 +16,7 @@ const githubStarCount = getGithubStarCount();
 const navItems = [
   { href: '/', label: 'Patterns', match: ['/', '/patterns'] },
   { href: '/guides', label: 'Guides', match: ['/guides'] },
+  { href: '/packs', label: 'Packs', match: ['/packs'] },
   { href: '/decision', label: 'Decide', match: ['/decision'] },
   { href: '/graph', label: 'Graph', match: ['/graph'] },
   { href: '/agents', label: 'For agents', match: ['/agents'] },
@@ -120,6 +122,16 @@ const isActive = (item: (typeof navItems)[number]) =>
         </svg>
         <span>Search patterns</span>
         <kbd class="search-toggle-kbd">⌘K</kbd>
+      </button>
+      <button
+        id="subscribe-toggle"
+        type="button"
+        class="subscribe-toggle"
+        aria-haspopup="dialog"
+        aria-controls="subscribe-modal"
+        data-open-subscribe
+      >
+        Subscribe
       </button>
       <ThemeToggle />
     </div>
@@ -469,6 +481,9 @@ const isActive = (item: (typeof navItems)[number]) =>
         </ul>
       </nav>
       <div class="mobile-menu-footer">
+        <button type="button" class="subscribe-toggle subscribe-toggle--mobile" data-open-subscribe>
+          Get Starter Pack
+        </button>
         <a
           class="repo-link repo-link--mobile"
           href={repoUrl}
@@ -494,6 +509,130 @@ const isActive = (item: (typeof navItems)[number]) =>
     </div>
   </div>
 </header>
+
+<!-- Subscribe Modal -->
+<div
+  id="subscribe-modal"
+  class="subscribe-modal"
+  hidden
+  inert
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="subscribe-modal-title"
+>
+  <div class="subscribe-backdrop" data-subscribe-close></div>
+  <div class="subscribe-container">
+    <button
+      type="button"
+      class="subscribe-close"
+      data-subscribe-close
+      aria-label="Close signup modal"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        ></path>
+      </svg>
+    </button>
+    <p class="subscribe-modal-eyebrow">FREE DIGEST + STARTER PACK</p>
+    <h2 id="subscribe-modal-title" class="subscribe-modal-title">
+      Get new production agent patterns
+    </h2>
+    <ul class="subscribe-modal-list">
+      <li>1–2×/month technical digest of newly vetted patterns and architecture trade-offs</li>
+      <li>Instant <strong>Production Agent Starter Pack</strong> (12-pattern AGENTS.md bundle)</li>
+      <li>Zero spam, plain-text friendly, 1-click unsubscribe</li>
+    </ul>
+    <NewsletterCTA
+      variant="banner"
+      source="header-modal"
+      deliverable="starter-pack"
+      title=""
+      description=""
+      buttonText="Get the Starter Pack"
+      metaNote={`Free${githubStarCount ? ` · Backed by ${githubStarCount} GitHub stars` : ''} · 1-click unsubscribe`}
+    />
+  </div>
+</div>
+
+<script>
+  import { SUBSCRIBED_EVENT, isSubscribed, trackNewsletterEvent } from '../lib/newsletter-client';
+
+  const subscribeModal = document.getElementById('subscribe-modal');
+  const subscribeTriggers = document.querySelectorAll<HTMLButtonElement>('[data-open-subscribe]');
+  const subscribeCloseControls = subscribeModal?.querySelectorAll('[data-subscribe-close]');
+  const mobileMenuEl = document.getElementById('mobile-menu');
+  const mobileMenuToggleEl = document.getElementById('mobile-menu-toggle');
+  let lastSubscribeTrigger: HTMLElement | null = null;
+
+  function syncSubscribeTriggers() {
+    const subscribed = isSubscribed();
+    subscribeTriggers.forEach((btn) => {
+      btn.classList.toggle('subscribe-toggle--subscribed', subscribed);
+      if (btn.classList.contains('subscribe-toggle--mobile')) {
+        btn.textContent = subscribed ? 'Subscribed ✓ (Starter Pack)' : 'Get Starter Pack';
+      } else {
+        btn.textContent = subscribed ? 'Subscribed ✓' : 'Subscribe';
+      }
+    });
+  }
+
+  function setSubscribeOpenState(isOpen: boolean) {
+    if (!subscribeModal) return;
+    subscribeModal.hidden = !isOpen;
+    subscribeModal.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    subscribeModal.toggleAttribute('inert', !isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  function openSubscribeModal(trigger: HTMLElement | null) {
+    if (!subscribeModal) return;
+    if (mobileMenuEl && !mobileMenuEl.hidden) {
+      mobileMenuEl.hidden = true;
+      mobileMenuEl.setAttribute('aria-hidden', 'true');
+      mobileMenuToggleEl?.setAttribute('aria-expanded', 'false');
+    }
+    lastSubscribeTrigger = trigger;
+    setSubscribeOpenState(true);
+    trackNewsletterEvent('newsletter_modal_open', { source: 'header' });
+    const emailInput = subscribeModal.querySelector<HTMLInputElement>('input[type="email"]');
+    if (emailInput && !emailInput.closest('[hidden]')) {
+      emailInput.focus();
+    } else {
+      subscribeModal.querySelector<HTMLElement>('.subscribe-close')?.focus();
+    }
+  }
+
+  function closeSubscribeModal() {
+    if (!subscribeModal || subscribeModal.hidden) return;
+    setSubscribeOpenState(false);
+    if (lastSubscribeTrigger) lastSubscribeTrigger.focus();
+  }
+
+  subscribeTriggers.forEach((btn) => {
+    btn.addEventListener('click', () => openSubscribeModal(btn));
+  });
+
+  subscribeCloseControls?.forEach((el) => {
+    el.addEventListener('click', closeSubscribeModal);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && subscribeModal && !subscribeModal.hidden) {
+      closeSubscribeModal();
+    }
+  });
+
+  syncSubscribeTriggers();
+  window.addEventListener(SUBSCRIBED_EVENT, syncSubscribeTriggers);
+</script>
 
 <script>
   // Keep the build-time value visible until the cached live count arrives.
@@ -649,6 +788,122 @@ const isActive = (item: (typeof navItems)[number]) =>
     font-family: var(--font-mono);
     font-size: 0.7rem;
     line-height: 1.4;
+  }
+
+  .subscribe-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .subscribe-toggle:hover {
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  .subscribe-toggle--subscribed {
+    background: var(--color-bg-elevated);
+    border-color: var(--color-border);
+    color: var(--color-success);
+  }
+
+  .subscribe-toggle--subscribed:hover {
+    background: var(--color-bg-soft);
+    border-color: var(--color-divider);
+  }
+
+  .subscribe-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 12vh 1rem 1rem;
+  }
+
+  .subscribe-modal[hidden] {
+    display: none !important;
+  }
+
+  .subscribe-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .subscribe-container {
+    position: relative;
+    width: 100%;
+    max-width: 30rem;
+    padding: 1.35rem 1.4rem 1.4rem;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .subscribe-close {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .subscribe-close:hover {
+    background-color: var(--color-bg-soft);
+    color: var(--color-text);
+  }
+
+  .subscribe-modal-eyebrow {
+    margin: 0 0 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+  }
+
+  .subscribe-modal-title {
+    font-size: 1.25rem;
+    margin: 0 2rem 0.65rem 0;
+    color: var(--color-text);
+  }
+
+  .subscribe-modal-list {
+    margin: 0 0 1rem;
+    padding-left: 1.15rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-muted-strong);
+  }
+
+  .subscribe-modal-list li + li {
+    margin-top: 0.25rem;
   }
 
   .search-modal {
@@ -958,9 +1213,12 @@ const isActive = (item: (typeof navItems)[number]) =>
     padding: var(--spacing-lg);
     border-top: 1px solid var(--color-border);
     display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
     justify-content: center;
   }
 
+  .subscribe-toggle--mobile,
   .repo-link--mobile {
     width: 100%;
     justify-content: center;

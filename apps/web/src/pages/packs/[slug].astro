@@ -1,12 +1,275 @@
 ---
-import { getCollection } from 'astro:content';
+// ABOUTME: Individual pattern pack page: curated stack of patterns, AGENTS.md bundle copy/view, and email delivery.
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import NewsletterCTA from '../../components/NewsletterCTA.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getAllPatterns } from '../../lib/patterns';
+import { buildPackMarkdown, getPackCatalogEntry } from '../../lib/starter-pack';
+import type { PatternEntry } from '../../types';
 
 export async function getStaticPaths() {
   const packs = await getCollection('packs');
   return packs.map((pack) => ({
     params: { slug: pack.id },
+    props: { pack },
   }));
 }
 
-return Astro.redirect('/patterns');
+const { pack } = Astro.props as { pack: CollectionEntry<'packs'> };
+const { Content } = await render(pack);
+
+const allPatterns = await getAllPatterns();
+const bySlug = new Map(allPatterns.map((p) => [p.slug, p]));
+const includedPatterns = pack.data.patterns
+  .map((slug) => bySlug.get(slug))
+  .filter((entry): entry is PatternEntry => Boolean(entry));
+
+const packEntry = getPackCatalogEntry(pack.id) ?? {
+  slug: pack.id,
+  title: pack.data.title,
+  summary: pack.data.summary,
+  domain: pack.data.domain,
+  patterns: pack.data.patterns,
+  downloadUrl: `/packs/${pack.id}.md`,
+};
+const packMarkdown = buildPackMarkdown(packEntry, allPatterns);
+const markdownPath = `/packs/${pack.id}.md`;
 ---
+
+<DocsLayout
+  title={`${pack.data.title} - Pattern Pack - Agentic Patterns`}
+  description={pack.data.summary}
+  type="article"
+  {markdownPath}
+  footerNewsletter={false}
+>
+  <article class="pack-page" data-pagefind-body>
+    <nav class="pack-crumbs" aria-label="Breadcrumb">
+      <a href="/packs">Packs</a>
+      <span aria-hidden="true">/</span>
+      <span>{pack.data.domain}</span>
+    </nav>
+
+    <h1>{pack.data.title}</h1>
+    <p class="pack-summary">{pack.data.summary}</p>
+
+    <div class="pack-actions" data-pagefind-ignore>
+      <button type="button" class="pack-copy-btn" data-copy-pack data-content={packMarkdown}>
+        Copy pack for agent
+      </button>
+      <a href={markdownPath} class="pack-md-link">View .md</a>
+      <span class="pack-copy-feedback" data-pack-copy-feedback aria-live="polite"></span>
+    </div>
+
+    <section class="pack-subscribe" data-pagefind-ignore>
+      <NewsletterCTA
+        variant="default"
+        source="pack-page"
+        category={pack.data.domain}
+        deliverable="pack"
+        packSlug={pack.id}
+        allowRepeatDelivery={true}
+        eyebrow="EMAIL THIS PACK"
+        title={`Send "${pack.data.title}" to your inbox`}
+        description="Get this stack as an AGENTS.md prompt bundle + linked checklist, plus 1–2×/month new pattern digests."
+        buttonText="Email me this pack"
+        metaNote="Free · Instant bundle link · 1-click unsubscribe"
+      />
+    </section>
+
+    <section class="pack-patterns" aria-label="Included patterns">
+      <h2>Included patterns ({includedPatterns.length})</h2>
+      <ul class="pack-patterns-grid">
+        {
+          includedPatterns.map((entry) => (
+            <li>
+              <a href={`/patterns/${entry.slug}`} class="pack-pattern-card">
+                <span class="pack-pattern-meta">
+                  <span>{entry.category}</span>
+                  <span class={`status-pill status-pill--${entry.status}`}>
+                    {entry.status.replace(/-/g, ' ')}
+                  </span>
+                </span>
+                <span class="pack-pattern-title">{entry.title}</span>
+                {entry.summary && <span class="pack-pattern-summary">{entry.summary}</span>}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <div class="prose pack-body">
+      <Content />
+    </div>
+  </article>
+</DocsLayout>
+
+<script>
+  const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy-pack]');
+  const feedback = document.querySelector<HTMLElement>('[data-pack-copy-feedback]');
+
+  copyBtn?.addEventListener('click', async () => {
+    const content = copyBtn.getAttribute('data-content');
+    if (!content) return;
+    try {
+      await navigator.clipboard.writeText(content);
+      if (feedback) {
+        feedback.textContent = 'Copied pack Markdown.';
+        setTimeout(() => {
+          feedback.textContent = '';
+        }, 2200);
+      }
+    } catch {
+      if (feedback) feedback.textContent = 'Failed to copy.';
+    }
+  });
+</script>
+
+<style>
+  .pack-page {
+    max-width: 48rem;
+  }
+
+  .pack-crumbs {
+    display: flex;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .pack-crumbs a:hover {
+    color: var(--color-primary);
+  }
+
+  .pack-page h1 {
+    margin-top: 0.5rem;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+
+  .pack-summary {
+    margin: 0.6rem 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--text-muted-strong);
+  }
+
+  .pack-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .pack-copy-btn {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-text);
+    border-radius: var(--radius-md);
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .pack-copy-btn:hover {
+    background: var(--text-muted-strong);
+    border-color: var(--text-muted-strong);
+  }
+
+  .pack-md-link {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .pack-md-link:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .pack-copy-feedback {
+    font-size: 0.8125rem;
+    color: var(--color-success);
+  }
+
+  .pack-subscribe {
+    margin-top: 1.5rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .pack-patterns {
+    margin-top: 2rem;
+  }
+
+  .pack-patterns h2 {
+    font-size: 1.25rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pack-patterns-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.65rem;
+    margin-top: 0.9rem;
+  }
+
+  .pack-pattern-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .pack-pattern-card:hover {
+    border-color: var(--color-divider);
+  }
+
+  .pack-pattern-card:hover .pack-pattern-title {
+    color: var(--color-primary);
+  }
+
+  .pack-pattern-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+  }
+
+  .pack-pattern-title {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .pack-pattern-summary {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  .pack-body {
+    margin-top: 2rem;
+  }
+
+  .pack-body :global(h2) {
+    margin: 2rem 0 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 1.2rem;
+  }
+</style>

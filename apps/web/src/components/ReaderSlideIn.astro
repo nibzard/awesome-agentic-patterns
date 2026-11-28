@@ -1,0 +1,196 @@
+---
+// ABOUTME: Non-blocking corner slide-in shown only on the 2nd+ content page view after scrolling 45%.
+// ABOUTME: Never renders on landing, respects 30-day dismissal cooldown, and hides when subscribed.
+import NewsletterCTA from './NewsletterCTA.astro';
+---
+
+<aside
+  class="reader-slidein"
+  id="reader-slidein"
+  data-reader-slidein
+  aria-label="Newsletter signup"
+  hidden
+>
+  <button
+    type="button"
+    class="reader-slidein-close"
+    data-reader-slidein-close
+    aria-label="Dismiss newsletter suggestion"
+  >
+    ×
+  </button>
+  <p class="reader-slidein-eyebrow">FREE DIGEST + STARTER PACK</p>
+  <h2 class="reader-slidein-title">Finding these patterns useful?</h2>
+  <p class="reader-slidein-desc">
+    Get 3–5 newly vetted production patterns + our AGENTS.md Starter Pack (1–2×/month).
+  </p>
+  <NewsletterCTA
+    variant="compact"
+    source="reader-slidein"
+    deliverable="starter-pack"
+    title=""
+    buttonText="Subscribe"
+  />
+</aside>
+
+<script>
+  import {
+    SLIDEIN_DISMISSED_KEY,
+    SUBSCRIBED_EVENT,
+    isContentPath,
+    isDismissedWithinDays,
+    isSubscribed,
+    markDismissed,
+    recordContentView,
+    trackNewsletterEvent,
+  } from '../lib/newsletter-client';
+
+  const slideIn = document.getElementById('reader-slidein');
+  const closeBtn = slideIn?.querySelector<HTMLButtonElement>('[data-reader-slidein-close]');
+  const views = recordContentView(window.location.pathname);
+
+  let shown = false;
+
+  function checkScrollDepth() {
+    if (!slideIn || shown) return;
+    if (isSubscribed() || isDismissedWithinDays(SLIDEIN_DISMISSED_KEY, 30)) {
+      window.removeEventListener('scroll', onScroll);
+      return;
+    }
+
+    const doc = document.documentElement;
+    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const ratio = window.scrollY / maxScroll;
+    if (ratio >= 0.45) {
+      shown = true;
+      slideIn.hidden = false;
+      window.removeEventListener('scroll', onScroll);
+      trackNewsletterEvent('slidein_shown', { path: window.location.pathname, views });
+    }
+  }
+
+  function onScroll() {
+    checkScrollDepth();
+  }
+
+  if (
+    slideIn &&
+    isContentPath(window.location.pathname) &&
+    views >= 2 &&
+    !isSubscribed() &&
+    !isDismissedWithinDays(SLIDEIN_DISMISSED_KEY, 30)
+  ) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    checkScrollDepth();
+  }
+
+  closeBtn?.addEventListener('click', () => {
+    markDismissed(SLIDEIN_DISMISSED_KEY);
+    if (slideIn) slideIn.hidden = true;
+    window.removeEventListener('scroll', onScroll);
+  });
+
+  window.addEventListener(SUBSCRIBED_EVENT, (event) => {
+    window.removeEventListener('scroll', onScroll);
+    if (!slideIn || slideIn.hidden) return;
+    const detail = (event as CustomEvent<{ source?: string }>).detail;
+    if (detail?.source === 'reader-slidein') {
+      setTimeout(() => {
+        slideIn.hidden = true;
+      }, 3000);
+    } else {
+      slideIn.hidden = true;
+    }
+  });
+</script>
+
+<style>
+  .reader-slidein {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 90;
+    width: min(22rem, calc(100vw - 2rem));
+    padding: 0.95rem 1rem 1rem;
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-elevated);
+    box-shadow: var(--shadow-lg);
+    animation: slidein-enter 0.22s ease-out;
+  }
+
+  @keyframes slidein-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reader-slidein {
+      animation: none;
+    }
+  }
+
+  .reader-slidein-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.6rem;
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .reader-slidein-close:hover {
+    background: var(--color-bg-soft);
+    color: var(--color-text);
+  }
+
+  .reader-slidein-eyebrow {
+    margin: 0 1.5rem 0.2rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+  }
+
+  .reader-slidein-title {
+    margin: 0 1.5rem 0.25rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .reader-slidein-desc {
+    margin: 0 0 0.7rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  .reader-slidein :global(.newsletter-cta-form) {
+    min-width: 0;
+    max-width: none;
+  }
+
+  @media (max-width: 640px) {
+    .reader-slidein {
+      right: 0.75rem;
+      left: 0.75rem;
+      bottom: 0.75rem;
+      width: auto;
+    }
+  }
+</style>

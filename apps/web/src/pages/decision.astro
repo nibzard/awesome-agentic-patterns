@@ -456,6 +456,9 @@ const initialQuestion = questions[0];
 <script type="application/json" id="decision-engine" set:html={engine} />
 
 <script>
+  import { submitSubscription, trackNewsletterEvent } from '../lib/newsletter-client';
+  import { buildDecisionBriefMarkdown } from '../lib/newsletter-emails';
+
   interface QuestionOption {
     value: string;
     label: string;
@@ -767,12 +770,125 @@ const initialQuestion = questions[0];
           <h3>What to avoid</h3>
           <ul>${avoidHtml}</ul>
         </div>
+        <section class="decision-export" aria-label="Email architecture brief">
+          <p class="decision-export-eyebrow">SAVE &amp; SHARE YOUR STACK</p>
+          <h3 class="decision-export-title">Email me this architecture brief + agent prompt</h3>
+          <p class="decision-export-description">
+            Get your 4-answer profile, linked patterns, &ldquo;What to avoid&rdquo; checklist, and a ready-to-paste prompt for Claude Code / Cursor—plus 1–2×/month pattern updates.
+          </p>
+          <form class="decision-export-form" data-decision-export-form>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@company.com"
+              required
+              class="decision-export-input"
+              aria-label="Email address"
+            />
+            <button type="submit" class="decision-export-button">Email my brief</button>
+          </form>
+          <div class="decision-export-status" data-decision-export-status role="status" aria-live="polite"></div>
+          <div class="decision-export-fallback" data-decision-export-fallback hidden></div>
+          <div class="decision-export-tools">
+            <button type="button" class="decision-copy-btn" data-copy-decision-brief>
+              Copy brief as Markdown
+            </button>
+            <span class="decision-copy-feedback" data-copy-decision-feedback aria-live="polite"></span>
+          </div>
+        </section>
         <div class="decision-actions">
           <a href="/decision" class="button button--primary">Start Over</a>
           <a href="/patterns" class="button button--secondary">Browse all patterns</a>
         </div>
       </div>
     `;
+  };
+
+  const wireDecisionExport = (recommendation: Recommendation): void => {
+    const form = root?.querySelector<HTMLFormElement>('[data-decision-export-form]');
+    const statusEl = root?.querySelector<HTMLElement>('[data-decision-export-status]');
+    const fallbackEl = root?.querySelector<HTMLElement>('[data-decision-export-fallback]');
+    const copyBtn = root?.querySelector<HTMLButtonElement>('[data-copy-decision-brief]');
+    const copyFeedback = root?.querySelector<HTMLElement>('[data-copy-decision-feedback]');
+
+    copyBtn?.addEventListener('click', async () => {
+      const markdown = buildDecisionBriefMarkdown(recommendation);
+      try {
+        await navigator.clipboard.writeText(markdown);
+        if (copyFeedback) {
+          copyFeedback.textContent = 'Copied brief as Markdown.';
+          setTimeout(() => {
+            copyFeedback.textContent = '';
+          }, 2500);
+        }
+        trackNewsletterEvent('decision_brief_copy', {
+          failureMode: recommendation.route[0]?.value || '',
+        });
+      } catch {
+        if (copyFeedback) copyFeedback.textContent = 'Failed to copy.';
+      }
+    });
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const input = form.querySelector<HTMLInputElement>('input[type="email"]');
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const email = input?.value.trim();
+      if (!email || !submitBtn || !statusEl) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      statusEl.textContent = '';
+      statusEl.className = 'decision-export-status';
+      if (fallbackEl) {
+        fallbackEl.textContent = '';
+        fallbackEl.hidden = true;
+      }
+
+      const failureModeLabel = recommendation.route.find(
+        (stop) => stop.label === 'Failure mode'
+      )?.value;
+
+      try {
+        const result = await submitSubscription({
+          email,
+          source: 'decision-export',
+          category: failureModeLabel,
+          deliverable: 'decision-brief',
+          decisionBrief: recommendation,
+        });
+
+        if (result.ok) {
+          statusEl.textContent = result.message || 'Subscribed! Brief ready.';
+          statusEl.classList.add('decision-export-status--success');
+          if (input) input.value = '';
+          submitBtn.textContent = result.emailSent ? 'Sent ✓' : 'Subscribed ✓';
+
+          if (!result.emailSent && fallbackEl) {
+            const markdown = buildDecisionBriefMarkdown(recommendation);
+            const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
+            const blobUrl = URL.createObjectURL(blob);
+            const dlLink = document.createElement('a');
+            dlLink.href = blobUrl;
+            dlLink.download = 'agentic-patterns-brief.md';
+            dlLink.className = 'decision-export-download';
+            dlLink.textContent = 'Download architecture brief (.md) →';
+            fallbackEl.appendChild(dlLink);
+            fallbackEl.hidden = false;
+          }
+        } else {
+          statusEl.textContent = result.error || 'Something went wrong. Please try again.';
+          statusEl.classList.add('decision-export-status--error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Email my brief';
+        }
+      } catch {
+        statusEl.textContent = 'Network error. Please try again.';
+        statusEl.classList.add('decision-export-status--error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Email my brief';
+      }
+    });
   };
 
   const renderDecision = (): void => {
@@ -786,7 +902,9 @@ const initialQuestion = questions[0];
       return;
     }
 
-    root.innerHTML = renderResults(getRecommendations(answers));
+    const recommendation = getRecommendations(answers);
+    root.innerHTML = renderResults(recommendation);
+    wireDecisionExport(recommendation);
   };
 
   renderDecision();
@@ -1072,6 +1190,146 @@ const initialQuestion = questions[0];
     display: flex;
     gap: var(--spacing-md);
     flex-wrap: wrap;
+  }
+
+  .decision-export {
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .decision-export-eyebrow {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+  }
+
+  .decision-export-title {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--color-text);
+  }
+
+  .decision-export-description {
+    margin: 0.35rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .decision-export-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+
+  .decision-export-input {
+    flex: 1 1 15rem;
+    min-width: 0;
+    max-width: 22rem;
+    height: 2.3rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    font-size: 0.875rem;
+  }
+
+  .decision-export-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .decision-export-button {
+    height: 2.3rem;
+    padding: 0 1rem;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .decision-export-button:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  .decision-export-button:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+
+  .decision-export-status {
+    margin-top: 0.45rem;
+    font-size: 0.8125rem;
+  }
+
+  .decision-export-status:empty {
+    display: none;
+  }
+
+  .decision-export-status--success {
+    color: var(--color-success);
+  }
+
+  .decision-export-status--error {
+    color: var(--color-error);
+  }
+
+  .decision-export-fallback {
+    margin-top: 0.4rem;
+  }
+
+  :global(.decision-export-download) {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .decision-export-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .decision-copy-btn {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-soft);
+    color: var(--color-text);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .decision-copy-btn:hover {
+    border-color: var(--color-divider);
+  }
+
+  .decision-copy-feedback {
+    font-size: 0.8rem;
+    color: var(--color-success);
+  }
+
+  @media (pointer: coarse) {
+    .decision-export-input {
+      font-size: 16px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

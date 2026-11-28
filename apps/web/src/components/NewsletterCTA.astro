@@ -1,30 +1,62 @@
 ---
-// ABOUTME: NewsletterCTA component - A reusable newsletter subscription form component
-// ABOUTME: Shown in the footer, the docs sidebar, and at the end of each pattern page.
+// ABOUTME: NewsletterCTA component - Reusable email capture with terracotta primary CTA, attribution, and subscriber state sync.
+// ABOUTME: Supports hero, default, rail, inline-feed, compact, banner, and minimal variants.
+import type { DeliverableType } from '../lib/newsletter-client';
 
 interface Props {
-  variant?: 'default' | 'compact' | 'banner' | 'minimal';
+  variant?: 'default' | 'compact' | 'banner' | 'hero' | 'rail' | 'inline-feed' | 'minimal';
+  source?: string;
+  category?: string;
+  deliverable?: DeliverableType;
+  packSlug?: string;
+  eyebrow?: string;
   title?: string;
   description?: string;
   buttonText?: string;
+  metaNote?: string;
+  allowRepeatDelivery?: boolean;
 }
 
 const {
   variant = 'default',
-  title = 'Stay Updated',
-  description = 'Get notified when we add new patterns or publish guides.',
+  source = 'unknown',
+  category,
+  deliverable = 'starter-pack',
+  packSlug,
+  eyebrow,
+  title = 'Get new production agent patterns',
+  description = '1–2×/month digest distilled from real agent systems, plus the Starter Pack for coding agents.',
   buttonText = 'Subscribe',
+  metaNote,
+  allowRepeatDelivery = false,
 } = Astro.props;
+
+const hasContent = Boolean(eyebrow || title || (variant !== 'compact' && description));
 ---
 
-<div class={`newsletter-cta newsletter-cta--${variant}`}>
-  <div class="newsletter-cta-content">
-    <h3 class="newsletter-cta-title">{title}</h3>
-    {variant !== 'compact' && <p class="newsletter-cta-description">{description}</p>}
-  </div>
+<div
+  class={`newsletter-cta newsletter-cta--${variant}`}
+  data-newsletter-root
+  data-allow-repeat={allowRepeatDelivery ? 'true' : 'false'}
+>
+  {
+    hasContent && (
+      <div class="newsletter-cta-content">
+        {eyebrow && <p class="newsletter-cta-eyebrow">{eyebrow}</p>}
+        {title && <h3 class="newsletter-cta-title">{title}</h3>}
+        {variant !== 'compact' && description && (
+          <p class="newsletter-cta-description">{description}</p>
+        )}
+      </div>
+    )
+  }
   <form
     class="newsletter-cta-form"
     data-newsletter-form
+    data-source={source}
+    data-category={category || ''}
+    data-deliverable={deliverable}
+    data-pack-slug={packSlug || ''}
     data-nonce={Math.random().toString(36).substring(7)}
   >
     {variant === 'minimal' && <p class="newsletter-cta-invite">Get new patterns in your inbox</p>}
@@ -32,7 +64,7 @@ const {
       <input
         type="email"
         name="email"
-        placeholder="your@email.com"
+        placeholder="you@company.com"
         required
         class="newsletter-cta-input"
         aria-label="Email address"
@@ -46,6 +78,7 @@ const {
           viewBox="0 0 16 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
           <circle
             cx="8"
@@ -60,26 +93,58 @@ const {
         </svg>
       </button>
     </div>
+    {metaNote && <p class="newsletter-cta-meta">{metaNote}</p>}
     <div class="newsletter-cta-message" role="status" aria-live="polite"></div>
+    <div class="newsletter-cta-download" data-newsletter-download hidden></div>
   </form>
+  <div class="newsletter-cta-subscribed" data-newsletter-subscribed hidden>
+    <span class="newsletter-cta-subscribed-badge">Subscribed ✓</span>
+    <span class="newsletter-cta-subscribed-links">
+      <a href="/starter-pack.md">Starter Pack (.md)</a>
+      <span aria-hidden="true">·</span>
+      <a href="/packs">Pattern Packs</a>
+    </span>
+  </div>
 </div>
 
 <script>
-  async function parseJsonSafely(response: Response) {
-    try {
-      return await response.json();
-    } catch {
-      return {};
-    }
+  import {
+    SUBSCRIBED_EVENT,
+    isSubscribed,
+    submitSubscription,
+    type DeliverableType,
+  } from '../lib/newsletter-client';
+
+  function syncSubscribedState(excludeRoot?: Element | null) {
+    if (!isSubscribed()) return;
+    document.querySelectorAll('[data-newsletter-root]').forEach((root) => {
+      if (excludeRoot && root === excludeRoot) return;
+      if (root.getAttribute('data-allow-repeat') === 'true') return;
+      const form = root.querySelector<HTMLElement>('[data-newsletter-form]');
+      const content = root.querySelector<HTMLElement>('.newsletter-cta-content');
+      const subscribedBox = root.querySelector<HTMLElement>('[data-newsletter-subscribed]');
+      if (!subscribedBox) return;
+      root.classList.add('newsletter-cta--subscribed');
+      if (form) form.hidden = true;
+      if (content) content.hidden = true;
+      subscribedBox.hidden = false;
+    });
   }
 
   document.querySelectorAll('[data-newsletter-form]').forEach((formElement) => {
     const form = formElement as HTMLFormElement;
+    if (form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
+
+    const root = form.closest('[data-newsletter-root]');
     const input = form.querySelector('input[type="email"]') as HTMLInputElement | null;
     const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
     const buttonText = button?.querySelector('.newsletter-cta-button-text') as HTMLElement | null;
     const spinner = button?.querySelector('.newsletter-cta-spinner') as SVGElement | null;
     const messageContainer = form.querySelector('.newsletter-cta-message') as HTMLElement | null;
+    const downloadContainer = form.querySelector(
+      '[data-newsletter-download]'
+    ) as HTMLElement | null;
     const defaultButtonText = buttonText?.textContent?.trim() || 'Subscribe';
 
     form.addEventListener('submit', async (e) => {
@@ -90,26 +155,53 @@ const {
 
       messageContainer.textContent = '';
       messageContainer.className = 'newsletter-cta-message';
+      if (downloadContainer) {
+        downloadContainer.textContent = '';
+        downloadContainer.hidden = true;
+      }
+
       button.disabled = true;
-      buttonText.textContent = 'Subscribing...';
+      buttonText.textContent = 'Sending...';
       spinner?.classList.add('spinner-spinning');
 
       try {
-        const response = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+        const source = form.dataset.source || 'unknown';
+        const category = form.dataset.category || undefined;
+        const deliverable = (form.dataset.deliverable || 'starter-pack') as DeliverableType;
+        const packSlug = form.dataset.packSlug || undefined;
+
+        const result = await submitSubscription({
+          email,
+          source,
+          category,
+          deliverable,
+          packSlug,
         });
 
-        const data = await parseJsonSafely(response);
-
-        if (response.ok) {
-          messageContainer.textContent = data.message || 'Thanks for subscribing.';
+        if (result.ok) {
+          messageContainer.textContent = result.message || 'Thanks for subscribing.';
           messageContainer.classList.add('newsletter-cta-message--success');
-          input.value = '';
-          buttonText.textContent = 'Subscribed';
+          if (input) input.value = '';
+
+          if (result.downloadUrl && downloadContainer) {
+            const link = document.createElement('a');
+            link.href = result.downloadUrl;
+            link.className = 'newsletter-cta-download-link';
+            link.textContent =
+              deliverable === 'pack' ? 'Open Pattern Pack (.md) →' : 'Open Starter Pack (.md) →';
+            downloadContainer.appendChild(link);
+            downloadContainer.hidden = false;
+          }
+
+          if (form.dataset.deliverable === 'pack') {
+            button.disabled = false;
+            buttonText.textContent = 'Sent ✓';
+          } else {
+            buttonText.textContent = 'Subscribed ✓';
+            syncSubscribedState(root);
+          }
         } else {
-          messageContainer.textContent = data.error || 'Something went wrong. Please try again.';
+          messageContainer.textContent = result.error || 'Something went wrong. Please try again.';
           messageContainer.classList.add('newsletter-cta-message--error');
           button.disabled = false;
           buttonText.textContent = defaultButtonText;
@@ -124,6 +216,13 @@ const {
       }
     });
   });
+
+  syncSubscribedState();
+  window.addEventListener(SUBSCRIBED_EVENT, () => {
+    // Let the active form display its own confirmation message; update any sibling forms.
+    const activeForm = document.activeElement?.closest?.('[data-newsletter-root]');
+    syncSubscribedState(activeForm);
+  });
 </script>
 
 <style>
@@ -131,27 +230,43 @@ const {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem 1rem;
+    gap: 0.65rem 1.25rem;
+  }
+
+  .newsletter-cta-content {
+    flex: 1 1 16rem;
+    min-width: 0;
+  }
+
+  .newsletter-cta-eyebrow {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
   }
 
   .newsletter-cta-title {
     font-family: var(--font-sans);
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--color-text);
   }
 
   .newsletter-cta-description,
   .newsletter-cta-invite {
-    margin: 0.15rem 0 0;
+    margin: 0.2rem 0 0;
     font-size: 0.8125rem;
+    line-height: 1.45;
     color: var(--color-text-muted);
   }
 
   .newsletter-cta-form {
-    flex: 1;
-    min-width: min(100%, 18rem);
+    flex: 1 1 18rem;
+    min-width: min(100%, 17rem);
     max-width: 26rem;
   }
 
@@ -163,8 +278,8 @@ const {
   .newsletter-cta-input {
     flex: 1;
     min-width: 0;
-    height: 2rem;
-    padding: 0 0.6rem;
+    height: 2.15rem;
+    padding: 0 0.65rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-bg-elevated);
@@ -173,31 +288,44 @@ const {
 
   .newsletter-cta-input:focus {
     outline: none;
-    border-color: var(--color-text-muted);
+    border-color: var(--color-primary);
   }
 
   .newsletter-cta-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.35rem;
-    height: 2rem;
-    padding: 0 0.75rem;
-    border: 1px solid var(--color-border);
+    height: 2.15rem;
+    padding: 0 0.85rem;
+    border: 1px solid var(--color-primary);
     border-radius: var(--radius-md);
-    background: var(--color-bg-elevated);
-    color: var(--color-text);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: 600;
+    white-space: nowrap;
     cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .newsletter-cta-button:hover:not(:disabled) {
-    border-color: var(--color-divider);
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
   }
 
   .newsletter-cta-button:disabled {
-    opacity: 0.6;
+    opacity: 0.7;
     cursor: default;
+  }
+
+  .newsletter-cta-meta {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
   }
 
   .newsletter-cta-spinner {
@@ -230,25 +358,93 @@ const {
     }
   }
 
+  /* Variant: hero (above-the-fold catalog strip and packs index) */
+  .newsletter-cta--hero {
+    padding: 0.95rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Variant: inline-feed (mid-catalog capture band) */
+  .newsletter-cta--inline-feed {
+    padding: 0.95rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--surface-card-soft);
+  }
+
+  /* Variant: banner (stacked full width, e.g. header modal) */
   .newsletter-cta--banner {
     flex-direction: column;
     align-items: stretch;
     gap: 0.5rem;
   }
 
+  .newsletter-cta--banner .newsletter-cta-content,
   .newsletter-cta--banner .newsletter-cta-form {
+    flex: none;
     width: 100%;
     min-width: 0;
     max-width: none;
   }
 
-  .newsletter-cta--banner .newsletter-cta-input {
+  /* Variant: rail (narrow 13rem right rail on pattern pages) */
+  .newsletter-cta--rail {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+    padding: 0.75rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-top: 2px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+  }
+
+  .newsletter-cta--rail .newsletter-cta-content,
+  .newsletter-cta--rail .newsletter-cta-form {
+    flex: none;
     width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .newsletter-cta--rail .newsletter-cta-title {
+    font-size: 0.8125rem;
+  }
+
+  .newsletter-cta--rail .newsletter-cta-description {
+    font-size: 0.75rem;
+  }
+
+  .newsletter-cta--rail .newsletter-cta-input-group {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .newsletter-cta--rail .newsletter-cta-input,
+  .newsletter-cta--rail .newsletter-cta-button {
+    width: 100%;
+    height: 1.95rem;
+  }
+
+  /* Variant: compact (footer, sidebar, slide-in) */
+  .newsletter-cta--compact .newsletter-cta-title {
+    font-size: 0.875rem;
+  }
+
+  .newsletter-cta--compact .newsletter-cta-input,
+  .newsletter-cta--compact .newsletter-cta-button {
+    height: 2rem;
   }
 
   .newsletter-cta-message {
-    margin-top: 0.3rem;
-    font-size: 0.75rem;
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
   }
 
   .newsletter-cta-message:empty {
@@ -261,5 +457,48 @@ const {
 
   .newsletter-cta-message--error {
     color: var(--color-error);
+  }
+
+  .newsletter-cta-download {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+  }
+
+  .newsletter-cta-download-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .newsletter-cta-subscribed {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem 0.75rem;
+    width: 100%;
+    font-size: 0.8125rem;
+  }
+
+  .newsletter-cta-subscribed-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-success);
+  }
+
+  .newsletter-cta-subscribed-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text-muted);
+  }
+
+  .newsletter-cta-subscribed-links a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 </style>
